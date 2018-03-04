@@ -1,7 +1,3 @@
-node_modules/
 .git-credentials
-[Bb]ackup/
-[Dd]ata/
-[Ll]ogs/
 package-lock.json
 *.swp
