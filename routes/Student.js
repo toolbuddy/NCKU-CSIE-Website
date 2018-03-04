@@ -7,13 +7,13 @@ router.get('/',function(req,res){
 	);
 })
 
-router.get('/CourseIntroduce',function(req,res){
+router.get('/ci',function(req,res){
 	res.render(
-		'student/ci' 
+		'student/courseintroduce' 
 	);
 })
 
-router.get('/College',function(req,res){
+router.get('/college',function(req,res){
 	res.render(
 		'student/college'
 	);
@@ -25,15 +25,15 @@ router.get( '/graduate',function(req,res){
 	);
 } )
 
-router.get( '/Money' ,function(req,res){
+router.get( '/money' ,function(req,res){
 	res.render(
 		'student/money'
 	);
 })
 
-router.get( '/International' ,function(req,res){
+router.get( '/international' ,function(req,res){
 	res.render(
-		'student/international'
+		'student/internationalinteraction'
 	);
 })
 
