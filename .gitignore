@@ -1,0 +1,4 @@
+.git-credentials
+npm-debug.log
+package-lock.json
+*.swp
