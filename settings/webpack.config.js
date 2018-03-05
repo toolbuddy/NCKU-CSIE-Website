@@ -10,7 +10,7 @@ let getEntry = ()=>{
         console.log(file)
     }
     return entry;
-};
+}; 
 
 module.exports =
 {
