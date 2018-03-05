@@ -1,40 +1,35 @@
+// router for /student
 const express = require('express');
 const router = express.Router();
 
-router.get('/',function(req,res){
-    res.render(
-        'student/index'
-    );
+// route to /student/course
+router.get('/course', function(req, res, next){
+    res.render('student/course');
 })
 
-router.get('/ci',function(req,res){
-    res.render(
-        'student/courseintroduce' 
-    );
+// route to /student/college
+router.get('/college', function(req, res, next){
+    res.render('student/college');
 })
 
-router.get('/college',function(req,res){
-    res.render(
-        'student/college'
-    );
+// route to /student/master
+router.get('/master', function(req, res, next){
+    res.render('student/master');
 })
 
-router.get( '/graduate',function(req,res){
-    res.render(
-        'student/graduate'
-    );
-} )
-
-router.get( '/money' ,function(req,res){
-    res.render(
-        'student/money'
-    );
+// route to /student/phd
+router.get('/phd', function(req, res, next){
+    res.render('student/phd');
 })
 
-router.get( '/international' ,function(req,res){
-    res.render(
-        'student/internationalinteraction'
-    );
+// route to /student/scholarship
+router.get('/scholarship', function(req, res, next){
+    res.render('student/scholarship');
+})
+
+// route to /student/international
+router.get('/international', function(req, res, next){
+    res.render('student/international');
 })
 
 module.exports=router;

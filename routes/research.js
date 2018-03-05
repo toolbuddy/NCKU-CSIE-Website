@@ -1,39 +1,39 @@
+// router for /research
 const express = require( 'express' );
 const router = express.Router();
 
-router.get( '/', function(req, res) {
+// route to /research/labs
+router.get( '/labs', function(req, res) {
     res.render(
-        'research/research'
+        'research/labs'
     );
 } );
 
-router.get( '/lab', function(req, res) {
+// route to /research/groups
+router.get( '/groups', function(req, res) {
     res.render(
-        'research/lab'
+        'research/groups'
     );
 } );
 
-router.get( '/research_group', function(req, res) {
+// route to /research/publications
+router.get( '/publications', function(req, res) {
     res.render(
-        'research/research_group'
+        'research/publications'
     );
 } );
 
-router.get( '/publication', function(req, res) {
+// route to /research/awards
+router.get( '/awards', function(req, res) {
     res.render(
-        'research/publication'
+        'research/awards'
     );
 } );
 
-router.get( '/award', function(req, res) {
+// route to /research/conferences
+router.get( '/conferences', function(req, res) {
     res.render(
-        'research/award'
-    );
-} );
-
-router.get( '/conference', function(req, res) {
-    res.render(
-        'research/conference'
+        'research/conferences'
     );
 } );
 
