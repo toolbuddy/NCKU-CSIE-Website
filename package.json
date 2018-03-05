@@ -1,35 +1,26 @@
 {
-  "name": "ncku-csie-website",
+  "name": "webtemplate",
   "version": "1.0.0",
-  "description": "NCKU CSIE Website",
+  "description": "ncku csie web",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "nodemon server.js",
-    "webpack": "webpack --watch --config ./settings/webpack.config.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/toolbuddy/webtemplate.git"
+    "url": "git+https://github.com/ProFatXuanAll/webtemplate.git"
   },
-  "author": "ToolBuddyTeam",
+  "author": "ProFatXuanAll",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/toolbuddy/webtemplate/issues"
+    "url": "https://github.com/ProFatXuanAll/webtemplate/issues"
   },
-  "homepage": "https://github.com/toolbuddy/webtemplate#readme",
+  "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "pug": "^2.0.0-rc.4",
-    "spdy": "^3.4.7"
-  },
-  "devDependencies": {
-    "eslint": "^4.18.2",
-    "nodemon": "^1.17.1",
-    "webpack": "^4.1.0",
-    "webpack-cli": "^2.0.10"
+    "pug": "^2.0.0-rc.4"
   }
 }

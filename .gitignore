@@ -1,11 +1,4 @@
-# Common
-node_modules/
+.git-credentials
 npm-debug.log
 package-lock.json
-.git-credentials
 *.swp
-
-# Other
-[Bb]ackup/
-[Dd]ata/
-[Ll]ogs/
