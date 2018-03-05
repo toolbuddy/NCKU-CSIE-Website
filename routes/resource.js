@@ -1,35 +1,32 @@
-// 資源連結的路由
+// router for resource pages
 
-const express = require('express');
+const express = require( 'express' );
 const router = express.Router();
 
-// 法規
-router.get('/', function(req, res, next) {
-    res.render('resource/law');
-});
-router.get('/law', function(req, res, next) {
-    res.render('resource/law');
-});
+// route to resource/law
+router.get( '/law', function( req, res ) {
+    res.render( 'resource/law' );
+} );
 
-// 線上租借
-router.get('/rent', function(req, res, next) {
-    res.render('resource/rent');
-});
+// route to resource/rent
+router.get( '/rent', function( req, res ) {
+    res.render( 'resource/rent' );
+} );
 
-// 修繕登記
-router.get('/fix', function(req, res, next) {
-    res.render('resource/fix');
-});
+// route to resource/fix
+router.get( '/fix', function( req, res ) {
+    res.render( 'resource/fix' );
+} );
 
-// 工程認證
-router.get('/certification', function(req, res, next) {
-    res.render('resource/certification');
-});
+// route to resource/ieet
+router.get( '/ieet', function( req, res ) {
+    res.render( 'resource/ieet' );
+} );
 
-// 線上資源
-router.get('/res', function(req, res, next) {
-    res.render('resource/res');
-});
+// route to resource/law
+router.get( '/resources', function( req, res ) {
+    res.render( 'resource/resources' );
+} );
 
 
 module.exports = router;
