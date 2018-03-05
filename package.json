@@ -1,0 +1,26 @@
+{
+  "name": "webtemplate",
+  "version": "1.0.0",
+  "description": "ncku csie web",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProFatXuanAll/webtemplate.git"
+  },
+  "author": "ProFatXuanAll",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProFatXuanAll/webtemplate/issues"
+  },
+  "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "pug": "^2.0.0-rc.4"
+  }
+}
