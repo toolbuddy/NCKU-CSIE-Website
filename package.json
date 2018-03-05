@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "nodemon server.js",
-    "webpack": "webpack --watch"
+    "webpack": "webpack --watch --config ./settings/webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "spdy": "^3.4.7"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
     "nodemon": "^1.17.1",
     "webpack": "^4.1.0"
   }

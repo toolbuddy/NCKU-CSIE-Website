@@ -1,12 +1,21 @@
+const config = require( './server/config' );
+const glob = require( 'glob' );
+
+let getEntry = ()=>{
+    var entry = {};
+    glob.sync(config.rootPath + '/views/**/*.js')
+        .forEach(function(name) {
+            entry[n] = name;
+        });
+    return entry;
+};
+
 module.exports =
 {
-    entry:
-    {
-        background: './frontend/js-pre/xxx.js',
-    },
+    entry: getEntry(),
     output:
     {
-        path:       __dirname + '/frontend/js',
+        path:       config.rootPath + '/static/dist',
         filename:   '[name].js'
     },
     module:
