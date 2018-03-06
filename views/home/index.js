@@ -1,1 +1,1 @@
-require('path')
+import 'path'
