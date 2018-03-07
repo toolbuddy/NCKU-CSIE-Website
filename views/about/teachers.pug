@@ -5,3 +5,8 @@ html
   body
     h1 teachers
     p teachers content
+    - let x = 0;
+  while x < 4
+      a(href='/about/teachers?tid='+(x++)) | teachers
+      //there should be a query from MariaDB
+      //after onclick the site will be /about/teachers?tid=x
