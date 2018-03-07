@@ -3,9 +3,14 @@
 const express = require( 'express' );
 const router = express.Router();
 
+
 // route to /announcement/all
-router.get( '/all', function( req, res ) {
-    res.render( 'announcement/all' );
+router.get( '/all', function( req, res, next ) {
+    var url = req.query;
+    if (url.tag === undefined)
+        next(new Error)
+        res.render( 'announcement/all' );
+    
 } );
 
 // route to /announcement/administrator
@@ -27,5 +32,9 @@ router.get( '/speech', function( req, res ) {
 router.get( '/recruitment', function( req, res ) {
     res.render( 'announcement/recruitment' );
 } );
+
+function errorHandler( err, req, res, next ) {
+    if ( res. )
+}
 
 module.exports = router;
