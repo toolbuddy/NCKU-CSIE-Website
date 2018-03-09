@@ -29,8 +29,10 @@
   "devDependencies": {
     "css-loader": "^0.28.10",
     "file-loader": "^1.1.11",
+    "html-webpack-plugin": "github:webpack-contrib/html-webpack-plugin",
     "node-sass": "^4.7.2",
     "nodemon": "^1.17.1",
+    "pug-loader": "https://github.com/pugjs/pug-loader/tarball/master",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "url-loader": "^1.0.1",
