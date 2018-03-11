@@ -10,6 +10,8 @@ const query_handler = ( page_name ) => {
 	    obj_to_send.page = req.query.page;
     	obj_to_send.announcement_id = req.query.announcement_id;
     	obj_to_send.tag = req.query.tag;
+        obj_to_send.announcement_num = 'ask db';
+        obj_to_send.announcement_data = 'ask db';
 
 	    if(obj_to_send.page == undefined) obj_to_send.page = 1;
 	
