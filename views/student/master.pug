@@ -4,4 +4,11 @@ html
     title master
   body
     h1 master
-    p!= 'page:' + page
+    p#tag!= 'tag:' + content.tag
+    p#title!= 'title:' + content.title
+    p#date!= 'date:' + content.date
+    p#time!= 'time:' + content.time
+    p#pic!= 'picture:' + content.picture
+    p#file!= 'file:' + content.file
+    p#data_numbe!= 'data_number:' + data_number
+
