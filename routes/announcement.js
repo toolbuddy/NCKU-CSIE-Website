@@ -23,9 +23,6 @@ const query_handler = ( page_name ) => {
 
 
 // route to /announcement/all
-router.get( '/all', function( req, res, next ) {
-    
-} );
 router.get( '/all', query_handler('/all') );
 
 // route to /announcement/administrator
