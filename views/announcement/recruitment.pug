@@ -4,3 +4,9 @@ html
     title 企業徵才
   body
     h1 企業徵才
+
+    p#page!= 'page:' + page
+    p#tag!= 'tag:' + tag
+    p#announcement!= 'announce_id:' + announce_id
+    script.
+      if(tag !== undefined ) document.getElementById('tag').innerHTML = 'tag:' + #{tag} + ', should remove the left column';
