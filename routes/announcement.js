@@ -6,7 +6,6 @@ const testDB = require( './testDB' );
 
 const query_handler = ( page_name ) => {
     return function(req, res, next){
-
 	    let obj_to_send = {page: req.query.page, annoucement_id: req.query.announcement_id, tag: req.query.tag, data_number: 0};
 	    
         if(obj_to_send.page == undefined) obj_to_send.page = 1;
