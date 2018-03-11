@@ -10,7 +10,9 @@ const query_handler = ( page_name ) => {
         obj_to_send.announcement_id = req.query.announcement_id;
         obj_to_send.tag = req.query.tag;
 
-        if(obj_to_send.page == undefined) obj_to_send.page = 1;
+        if(obj_to_send.page == undefined){
+			obj_to_send.page = 1;
+		}
 
         if(obj_to_send.announcement_id != undefined){
             res.render( 'student/detail', { announcement_id: obj_to_send.announcement_id } );
@@ -21,21 +23,21 @@ const query_handler = ( page_name ) => {
 }
 
 // route to /student/course
-router.get( '/course', query_handler("course"));
+router.get( '/course', query_handler("/course"));
 
 // route to /student/college
-router.get( '/college', query_handler("college"));
+router.get( '/college', query_handler("/college"));
 
 // route to /student/master
-router.get( '/master', query_handler("master"));
+router.get( '/master', query_handler("/master"));
 
 // route to /student/phd
-router.get( '/phd', query_handler("phd"));
+router.get( '/phd', query_handler("/phd"));
 
 // route to /student/scholarship
-router.get( '/scholarship',query_handler("scholarship"));
+router.get( '/scholarship',query_handler("/scholarship"));
 
 // route to /student/international
-router.get( '/international', query_handler("international"));
+router.get( '/international', query_handler("/international"));
 
 module.exports = router;
