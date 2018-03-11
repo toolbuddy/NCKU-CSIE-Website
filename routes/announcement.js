@@ -3,40 +3,45 @@
 const express = require( 'express' );
 const router = express.Router();
 
+const query_handler = ( page_name ) => {
+    return function(req, res, next){
+	    let obj_to_send = new Object();
+    
+	    obj_to_send.page = req.query.page;
+    	obj_to_send.announcement_id = req.query.announcement_id;
+    	obj_to_send.tag = req.query.tag;
+	
+	    if(obj_to_send.page == undefined) obj_to_send.page = 1;
+	
+    	if(obj_to_send.announcement_id != undefined){
+	    	res.render( 'announcement/detail', { announcement_id: obj_to_send.announcement_id } );
+    	}else{
+	    	res.render( 'announcement/' + page_name, obj_to_send );
+    	}
+    }    
+}
+
 
 // route to /announcement/all
 router.get( '/all', function( req, res, next ) {
-    var url = req.query;
-    if (url.tag === undefined)
-        next(new Error)
-
-	var next_page=req.query.page;
-    res.render( 'announcement/all',{} );
     
 } );
+router.get( '/all', query_handler('/all') );
 
 // route to /announcement/administrator
-router.get( '/administrator', function( req, res ) {
-    res.render( 'announcement/administrator' );
-} );
+router.get( '/administrator', query_handler('/administrator') );
 
 // route to /announcement/activity
-router.get( '/activity', function( req, res ) {
-    res.render( 'announcement/activity' );
-} );
+router.get( '/activity', query_handler('/activity') );
 
 // route to /announcement/speech
-router.get( '/speech', function( req, res ) {
-    res.render( 'announcement/speech' );
-} );
+router.get( '/speech', query_handler('/speech') );
 
 // route to /announcement/recruitment
-router.get( '/recruitment', function( req, res ) {
-    res.render( 'announcement/recruitment' );
-} );
+router.get( '/recruitment', query_handler('/recruitment') );
 
-//function errorHandler( err, req, res, next ) {
-  //  if ( res. )
-//}
+function errorHandler( err, req, res, next ) {
+    //if ( res. )
+}
 
 module.exports = router;
