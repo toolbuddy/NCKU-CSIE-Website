@@ -9,7 +9,9 @@ router.get( '/all', function( req, res, next ) {
     var url = req.query;
     if (url.tag === undefined)
         next(new Error)
-        res.render( 'announcement/all' );
+
+	var next_page=req.query.page;
+    res.render( 'announcement/all',{} );
     
 } );
 
@@ -33,8 +35,8 @@ router.get( '/recruitment', function( req, res ) {
     res.render( 'announcement/recruitment' );
 } );
 
-function errorHandler( err, req, res, next ) {
-    if ( res. )
-}
+//function errorHandler( err, req, res, next ) {
+  //  if ( res. )
+//}
 
 module.exports = router;
