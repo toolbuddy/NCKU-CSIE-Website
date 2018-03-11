@@ -10,12 +10,14 @@ const query_handler = ( page_name ) => {
 	    obj_to_send.page = req.query.page;
     	obj_to_send.announcement_id = req.query.announcement_id;
     	obj_to_send.tag = req.query.tag;
-	
+
 	    if(obj_to_send.page == undefined) obj_to_send.page = 1;
 	
-    	if(obj_to_send.announcement_id != undefined){
+    	if(obj_to_send.announcement_id != undefined){ // check if aid is valid
 	    	res.render( 'announcement/detail', { announcement_id: obj_to_send.announcement_id } );
     	}else{
+            // check if page is valid
+            // check if tag is valid
 	    	res.render( 'announcement/' + page_name, obj_to_send );
     	}
     }    
