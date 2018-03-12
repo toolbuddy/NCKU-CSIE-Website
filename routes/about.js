@@ -1,5 +1,9 @@
 const express = require( 'express' );
+const csie = require( '../settings/database/connect' )( 'csie' );
 const router = express.Router();
+
+// connect to csie database and use tables in it
+const teachers = csie.import( '../models/csie/TEACHERS' );
 
 // deal with the URL about/intro
 router.get( '/intro', function( req, res ) {
@@ -9,6 +13,13 @@ router.get( '/intro', function( req, res ) {
 // deal with the URL about/teachers
 router.get( '/teachers', function( req, res ) {
     res.render( 'about/teachers' );
+} );
+
+// deal with URLs to teachers pages
+router.get( '/teachers/:id', function( req, res ){
+    teachers.findOne( { where: { ID: req.params.id }, raw: true } ).then( teacher => {
+        res.send( teacher );
+    } );
 } );
 
 // deal with the URL about/members

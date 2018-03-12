@@ -21,6 +21,11 @@
   "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
     "express": "^4.16.2",
-    "pug": "^2.0.0-rc.4"
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.2",
+    "node-sass": "^4.7.2",
+    "pug": "^2.0.0-rc.4",
+    "sequelize": "^4.35.2",
+    "sequelize-auto": "^0.4.29"
   }
 }
