@@ -1,7 +1,7 @@
 const express = require( 'express' );
 const pug = require( 'pug' );
 
-const config = require( './settings/server/config.js' );
+const config = require( './settings/server/config' );
 const routes = require( './routes/urls' );
 
 const server = express();
