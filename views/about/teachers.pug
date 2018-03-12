@@ -4,4 +4,13 @@ html
     title teachers
   body
     h1 teachers
-    p teachers content
+    each T in teacher
+      section.icon
+        article
+          p #{ T.EMAIL }
+          p #{ T.TEL }
+        article
+          a(href='/about/teachers/' + T.ID) #{ T.CNAME }
+          p #{ T.CTITLE }
+          p #{ T.C_department }
+          p 辦公室： #{ T.office_no }
