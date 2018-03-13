@@ -17,6 +17,7 @@ router.get( '/teachers', function( req, res ) {
         attributes: ['ID', 'CNAME', 'CTITLE', 'TEL', 'EMAIL', 'office_no', 'C_department'],
         raw: true,
     }).then( Ts => {
+        console.log(Ts);
         res.render( 'about/teachers', {
             teacher: Ts
         } );
