@@ -1,7 +1,7 @@
 
 
 mixin icon(id)
-  a(href='/about/teachers/'+id) teacher
+  a(href='/about/teachers/'+id)
 doctype html
 html
   head
@@ -9,8 +9,8 @@ html
   body
     h1 teachers
     p teachers content
-
-    +icon(`${10}`)
+    each x in [1,2,3]
+      +icon(`${x}`)
 
 
   
