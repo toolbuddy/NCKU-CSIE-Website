@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.json * --quiet; eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.json * --quiet; exit 0;"
+    "eslint": "eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.js * --quiet; eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.js * --quiet; exit 0;"
   },
   "repository": {
     "type": "git",
