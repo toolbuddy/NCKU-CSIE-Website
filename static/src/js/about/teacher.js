@@ -1,0 +1,1 @@
+require('../../sass/about/teacher.sass')

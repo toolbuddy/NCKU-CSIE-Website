@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 取得所有文件
 let getEntry = ()=>{
     let entry = {}
-    for (let file of glob.sync(path.resolve('./static/src/*.js')))
+    for (let file of glob.sync(path.resolve('./static/src/js/**/*.js')))
     {
         entry[path.parse(file).name] = file
     }
@@ -27,7 +27,7 @@ module.exports =
     module: {
     rules: [
         {
-            test: /\.scss$/,
+            test: /\.sass$/,
             use: [
                 'style-loader',
                 'css-loader',
@@ -55,7 +55,7 @@ module.exports =
     plugins: [
         new HtmlWebpackPlugin(
         {
-            template: './static/src/index.pug',
+            template: './views/about/teacher.pug',
             // 設定壓縮規則
             minify: {
                 removeAttributeQuotes: true,
@@ -67,18 +67,6 @@ module.exports =
             },
         }),
     ],
-
-    // 各種優化設定
-    optimization: {
-        // 提取共用模組設定 (有預設提取條件)
-        splitChunks: {
-            // cacheGroups:{ // 設定自訂的chunk
-            //     index: { // key為entry的key
-            //         test: /glob|webpack/, // 要提取的共用模組，用正規表達式
-            //         name: "vendor", // 提取的chunk名 
-            //     }
-        }
-    },
 
     // 添加Source Map
     devtool: "source-map", // 最詳細的種類
