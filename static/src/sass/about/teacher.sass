@@ -1,5 +1,5 @@
 $cardWidth: 300px
-$cardHeight: 85vh
+$cardHeight: 85%
 
 *
   padding: 0
@@ -12,7 +12,7 @@ body
 
 #grid
   display: grid
-  height: 100vh
+  height: 200vh
   grid-template-columns: auto
   grid-template-rows: 200px auto
   grid-template-areas: "cover""intro"
@@ -31,16 +31,15 @@ body
 #card
   display: flex
   flex-direction: column
-  position: absolute
-  top: (100vh-$cardHeight)/2
+  position: fixed
+  top: (100%-$cardHeight)/2
   left: 100px
   height: $cardHeight
   width: $cardWidth
   background: #842f2f
   box-shadow: 0px 5px 50px 1px #515151
   #pic
-    flex: -20px
-    height: 100px
+    height: $cardWidth
     background: #7a4eb7
   #contect
     flex: 1
@@ -49,6 +48,6 @@ body
 #nav
   position: absolute
   top: 0
-  width: 100vw
+  width: 100%
   height: 40px
   background: #37507a
