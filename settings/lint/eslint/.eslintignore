@@ -1,7 +1,0 @@
-package.json
-package-lock.json
-README.md
-settings/server/config.default.js
-node_modules/
-backendlint.js
-frontendlint.js
