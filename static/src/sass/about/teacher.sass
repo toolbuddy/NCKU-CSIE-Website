@@ -1,13 +1,49 @@
-$cardWidth: 300px
-$cardHeight: 85%
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css)
 
+
+// 變數
+$cardWidth: 300px
+$cardHeight: 75%
+
+
+// Reset
 *
   padding: 0
   margin: 0
+  font-family: 'Noto Sans TC', Microsoft JhengHei
+  color: rgba(224, 224, 224, 1)
+  letter-spacing: 0.1em
+::selection
+	background: rgba(92, 134, 214, 0.5)
+	color: inherit
+::-moz-selection 
+	background: rgba(92, 134, 214, 0.5)
+	color: inherit
 
 
-body
-  background: #55d68b
+// 導覽列
+#nav
+  position: fixed
+  z-index: 1
+  top: 0
+  width: 100%
+  height: 40px
+  background: rgba(68, 68, 68, 0.6)
+  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
+  nav
+    display: flex
+    flex-direction: row
+    position: absolute
+    right: 0
+    padding: 0 20px
+    li
+      list-style-type: none
+      cursor: pointer
+      padding: 7px 20px
+      user-select: none
+    li:hover
+      border-bottom: 7px rgb(67, 186, 219) solid
+      
 
 
 #grid
@@ -18,16 +54,35 @@ body
   grid-template-areas: "cover""intro"
     
 
+// 封面
 #cover
   grid-area: cover
-  background: #e0435d
+  background: rgb(70, 79, 140)
+  svg
+    position: absolute
+    top: 120px
+    fill: rgb(70, 79, 140)
+    filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
+  p
+    position: relative
+    width: 300px
+    top: 140px
+    left: $cardWidth+150
+    z-index: 1
+  #name
+    font-size: 2em
+  #position
+    font-size: 0.7em
+    // margin: 0 50px
+    
 
-
+// 資訊
 #intro
   grid-area: intro
   background: #dadee5
 
-  
+
+// 卡片
 #card
   display: flex
   flex-direction: column
@@ -36,18 +91,36 @@ body
   left: 100px
   height: $cardHeight
   width: $cardWidth
-  background: #842f2f
-  box-shadow: 0px 5px 50px 1px #515151
+  // background: #842f2f
+  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.3)
+  border-radius: 10px
   #pic
     height: $cardWidth
-    background: #7a4eb7
+    background: rgb(36, 41, 91)
+    border-radius: 10px 10px 0 0
+    img
+      margin: $cardWidth*0.2 $cardWidth*0.25
+      width: $cardWidth*0.5
+      border-radius: 50%
+      user-select: none
   #contect
     flex: 1
+    display: flex
+    flex-direction: column
     background: #f7f7f7
+    border-radius: 0 0 10px 10px
+    section
+      flex: 1
+      display: flex
+      justify-content: space-between
+      svg
+        flex: 1
+        // margin: 40px 30px
+      p
+        flex: 1
+        text-align: right
+        font-size: 0.9em
+        letter-spacing: 1px
+        margin: 40px 30px
+        color: rgb(140, 140, 140)
 
-#nav
-  position: absolute
-  top: 0
-  width: 100%
-  height: 40px
-  background: #37507a
