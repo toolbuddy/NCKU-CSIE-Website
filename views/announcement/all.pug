@@ -1,0 +1,11 @@
+extends ../layouts/announcement.pug
+
+block css
+  link(rel='stylesheet' href='/css/announcement/all.css')
+block header
+block content
+  h1 所有公告
+  div(class='main')
+    +announce("title","2018 02 02","excerpt",3)
+block footer
+block script
