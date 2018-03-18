@@ -9,4 +9,5 @@ const server = express();
 server.listen( config.port );
 
 server.set( 'view engine', 'pug' );
+server.use( '/', express.static('./static/dist') )
 server.use( '/', routes );
