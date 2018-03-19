@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "gulp": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.json * --quiet; eslint --ignore-path settings/lint/eslint/.eslintignore -c settings/lint/eslint/frontendlint.json * --quiet; exit 0;"
   },
@@ -22,6 +23,9 @@
   "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sass": "^3.1.0",
     "node-sass": "^4.7.2",
     "pug": "^2.0.0-rc.4"
   },
