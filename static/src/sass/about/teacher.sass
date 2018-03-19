@@ -60,6 +60,7 @@ $cardHeight: 75%
   background: rgb(70, 79, 140)
   svg
     position: absolute
+    z-index: 0
     top: 120px
     fill: rgb(70, 79, 140)
     filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
@@ -67,7 +68,7 @@ $cardHeight: 75%
     position: relative
     width: 300px
     top: 140px
-    left: $cardWidth+150
+    left: $cardWidth+160
     z-index: 1
   #name
     font-size: 2em
@@ -80,6 +81,12 @@ $cardHeight: 75%
 #intro
   grid-area: intro
   background: #dadee5
+  article
+    // background: rgb(36, 41, 91)
+    margin: 90px 50px 0 460px
+    h1,p
+      color: rgb(96, 96, 96)
+
 
 
 // 卡片
@@ -113,14 +120,14 @@ $cardHeight: 75%
       flex: 1
       display: flex
       justify-content: space-between
-      svg
-        flex: 1
-        // margin: 40px 30px
+      svg > path
+        // flex: 1
+        fill: rgb(140, 140, 140)
       p
         flex: 1
         text-align: right
         font-size: 0.9em
         letter-spacing: 1px
-        margin: 40px 30px
+        margin: 30px 30px
         color: rgb(140, 140, 140)
 
