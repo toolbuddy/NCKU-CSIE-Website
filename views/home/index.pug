@@ -47,3 +47,9 @@ html
           a(href='/resource/fix') | fix 
           a(href='/resource/ieet') | IEET 
           a(href='/resource/resources') | resources 
+    section
+      p#time!= 'time:' + time
+      p#tag!= 'tag:' + tag
+      p#announcement!= 'announce_id:' + announcement_id
+      script.
+        if(tag !== undefined ) document.getElementById('tag').innerHTML = 'tag:' + #{tag} + ', should remove the left column';
