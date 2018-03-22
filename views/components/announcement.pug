@@ -8,5 +8,5 @@ mixin announce( title, time, excerpt, articleUrl, imageUrl, ...tags )
     img(src=imageUrl)
     aside
       each tag in tags
-        button
+        button(class=tag)
           a= tag
