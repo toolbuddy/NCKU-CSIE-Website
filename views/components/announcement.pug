@@ -1,6 +1,6 @@
 mixin announce(title,time,excerpt,tagnum,url)
   section
-    article
+    div(class='flex-item item1')
       p(class='article-title')= title
       p(class='article-time')= time
       p(class='article-content')= excerpt
@@ -9,5 +9,5 @@ mixin announce(title,time,excerpt,tagnum,url)
         a(class='course') course
         a(class='graduate') graduate
         a(class='college') college
-    div(class='fakeimg' src=url)
+    div(class='flex-item item2' src=url)
          

@@ -1,29 +1,37 @@
+.flex-container
+  position: absolute
+  top:295px
+  left: 584.27px
+  display: -webkit-flex
+  display: flex
+  width: 1112.73px
+  height: auto
+  background-color: lightgrey
+  flex-direction: column
 section
   padding: 0
   margin: 0 0 20.14px 0
-  width: 100%
   height: 270.86px
-.fakeimg
-  float: right
-  background-color: #343434
-  width: 31%
-  height: 100%
-  padding: 0
-  opacity: 0.7
-article
-  position: relative
-  float: left
-  width: 69%
-  height: 100%
-  padding: 0
-  margin: 0
+  display: flex
+.flex-item
+  margin: 0px
+.item1
+  -webkit-flex: 2.2
+  flex: 2.2
+  background-color:white
+  padding: 0px
   border: 1px solid #707070
-  background-color: #ffffff
+  line-height: 4px
+.item2
+  -webkit-flex: 1
+  flex: 1
+  background-color:#343434
+  opacity: 0.7
+  color: white
+.tag
+  float: right
 
 .article-title
-  position: absolute
-  top: 46px
-  left: 31.73px
   width: 629px
   height: 43px
   font-size: 30px
@@ -33,9 +41,6 @@ article
   margin: 0
 
 .article-time 
-  position: absolute
-  top: 89.63px
-  left: 40.73px
   width: 162px
   height: 28px
   font-size: 20px
@@ -45,9 +50,6 @@ article
   padding: 0
 
 .article-content 
-  position: absolute
-  top: 121px
-  left: 38.73px
   width: 513px
   height: 37px
   font-size: 20px
@@ -71,14 +73,6 @@ article > a
   padding: 8.5px
   margin: 0
 
-.tag
-  position: absolute
-  right: 39.52px
-  bottom: 45.86px
-  color: #ffffff
-  padding: 0
-  margin: 0
-
 .tag a
   display: inline-block
   padding: 4px 2px
@@ -92,10 +86,3 @@ article > a
 
 .graduate
   background-color: #F9D907
-.main
-  position: absolute
-  top: 295px
-  left: 584.27px
-  width: 58%
-  max-width: 1112.73px
-
