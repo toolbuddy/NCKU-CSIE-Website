@@ -6,6 +6,13 @@ html
     block css
   body
     block header
-    block content
+    section#top-announcement
+      h1 置頂公告
+      block top-announcement
+    section#all-announcement
+      h1 所有公告
+      block all-announcement
+    section#page
+      block page 
     block footer
     block script
