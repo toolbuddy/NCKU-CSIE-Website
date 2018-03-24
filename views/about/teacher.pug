@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title 高宏宇 | 教授資訊 
+    title #{T.c_name} | 教授資訊
   body
     //- 導覽列
     header#nav
@@ -16,9 +16,10 @@ html
     section#grid()
       //- 封面
       section#cover()
-        img#head(src="../../static/src/img/about/kao.png", alt="載入中...")
-        p#name 高宏宇
-        p#position 教授 | 系主任 | 醫資所所長
+        img#head(src="kao.png", alt="載入中...")
+        p#name #{T.c_name}
+        each name in T.c_title_name
+          p#position #{name} |
         svg(width='100%',height='300',viewBox='0 0 400 300', preserveAspectRatio='none')
           path(d='M0,0 L0,100  C229,175 195,29 400,100  L400,0 Z')
         
@@ -43,45 +44,17 @@ html
       section#intro()
         article
           h1 專長及研究領域
-          p.
-            資訊檢索 / 資訊擷取、資料探勘、機器學習、全球資訊網資訊系統、生物資訊、社群網路計算
+          each name in T.specialty
+            p #{name}
           br
           h1 學歷
-          p
-            |台灣 \ 國立台灣大學 \ 電機工程 \ 博士(1999 ~ 2003)
-            br
-            |台灣 \ 國立清華大學 \ 資訊科學 \ 碩士(1994 ~ 1996)
-            br
-            |台灣 \ 國立清華大學 \ 資訊科學 \ 學士(1989 ~ 1994)
+          each name in T.education
+            p #{name}
           br
           h1 經歷
-          p
-            |國立成功大學 \ 資訊工程系 \ 教授 (2014 ~ now)
-            br
-            |國立成功大學 \ 資訊工程系 \ 副教授 (2011 ~ 2014)
-            br
-            |國立成功大學 \ 資訊工程系 \ 助理教授 (2004 ~ 2011)
-            br
-            |中央研究院 \ 資訊科學所 \ 博士後研究員 (2003 ~ 2004)
-            br
-            |中央研究院 \ 資訊科學所 \ 研究助理 (1996 ~ 2003)
-          br
-          h1 榮譽及獲獎
-          p
-            |國立成功大學電資學院輔導優良導師, 2014
-            br
-            |台灣綜合大學系統年輕學者創新競賽佳作獎, 2014
-            br
-            |國立成功大學教學傑出教師, 2011
-            br
-            |Reseach Grant of Intel Research Quad Core Seeding Program, 2007
-            br
-            |Biographical Listings in Marquis\'s Who\'s Who in Science and Engineering 10th Anniversary Edition, 2007-2008
-            br
-            |Research Grant of Intel Research Quad Core Seeding Program
-            br
-            |Biographical Listings in Marquis\'s Who\'s Who in Science and Engineering 9th Anniversary Edition, 2006-2007
-            br
-            |龍騰論文獎, 2003
+          each name in T.experience
+            p #{name}
+  script(src="teacher.js")
+  script(src="vendors.js")
             
 
