@@ -58,6 +58,15 @@ $cardHeight: 75%
 #cover
   grid-area: cover
   background: rgb(70, 79, 140)
+  #head
+    position: absolute
+    z-index: 1
+    top: 100px
+    left: 230px
+    width: $cardWidth*0.4
+    border-radius: 50%
+    user-select: none
+    box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3)
   svg
     position: absolute
     z-index: 0
@@ -93,7 +102,7 @@ $cardHeight: 75%
 #card
   display: flex
   flex-direction: column
-  position: fixed
+  position: absolute
   top: (100%-$cardHeight)/2
   left: 100px
   height: $cardHeight
