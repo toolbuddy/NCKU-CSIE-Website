@@ -8,6 +8,9 @@ router.get( '/intro', function( req, res ) {
 
 // deal with the URL about/teachers
 router.get( '/teachers', function( req, res ) {
+
+    //get tid
+    console.log( req.query.tid );
     res.render( 'about/teachers' );
 } );
 
