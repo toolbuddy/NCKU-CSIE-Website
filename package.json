@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "nodemon server.js",
-    "webpack": "webpack --watch --config ./settings/webpack/config.js"
+    "webpack": "webpack --watch --config ./settings/webpack/config.js",
+    "build-css": "node-sass ./static/src/sass/about/teacher.sass ./static/dist/css/about/teacher.css"
   },
   "repository": {
     "type": "git",

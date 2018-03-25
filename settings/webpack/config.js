@@ -55,7 +55,7 @@ module.exports =
     plugins: [
         new HtmlWebpackPlugin(
         {
-            template: './views/about/teacher.pug',
+            template: './views/layouts/default.pug',
             // 設定壓縮規則
             minify: {
                 removeAttributeQuotes: true,
