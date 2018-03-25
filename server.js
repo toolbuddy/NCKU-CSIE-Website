@@ -5,6 +5,8 @@ const routes = require( './routes/urls' );
 
 const server = express();
 
+server.use( express.static( __dirname + '/static/dist' ) );
+
 server.listen( config.port );
 
 server.set( 'view engine', 'pug' );

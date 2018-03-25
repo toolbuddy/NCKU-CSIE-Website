@@ -1,0 +1,143 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css)
+@import '../components/reset'
+
+@mixin selection($R, $G, $B, $A)
+  &::selection
+    +color($R, $G, $B, $A)
+  &::-moz-selection
+    +color($R, $G, $B, $A)
+
+@mixin color($R, $G, $B, $A)  
+  background: rgba($R, $G, $B, $A)
+  color: inherit
+
+body
+  +selection(92, 134, 214, 0.5)
+
+// variable
+$cardWidth: 300px
+$cardHeight: 75%
+
+// nav
+#nav
+  position: fixed
+  z-index: 1
+  top: 0
+  width: 100%
+  height: 40px
+  background: rgba(68, 68, 68, 0.6)
+  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
+  nav
+    display: flex
+    flex-direction: row
+    position: absolute
+    right: 0
+    padding: 0 20px
+    li
+      font-size: 0.5rem
+      color: rgb(224, 224, 224)
+      list-style-type: none
+      cursor: pointer
+      padding: 7px 20px
+      user-select: none
+    li:hover
+      border-bottom: 7px rgb(67, 186, 219) solid
+      
+
+body
+  display: grid
+  height: 200vh
+  grid-template-columns: auto
+  grid-template-rows: 200px auto
+  grid-template-areas: "cover""intro"
+    
+
+// cover
+#cover
+  grid-area: cover
+  background: rgb(70, 79, 140)
+  >img
+    position: absolute
+    z-index: 1
+    top: 100px
+    left: 230px
+    width: $cardWidth*0.4
+    border-radius: 50%
+    user-select: none
+    box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3)
+  svg
+    position: absolute
+    z-index: 0
+    top: 120px
+    fill: rgb(70, 79, 140)
+    filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
+  p
+    position: relative
+    width: 300px
+    top: 140px
+    left: $cardWidth+160
+    z-index: 1
+    font-size: 1rem
+    color: rgb(224, 224, 224)
+  #position
+    font-size: 0.3rem
+    color: rgb(224, 224, 224)
+    // margin: 0 50px
+    
+
+// intro
+#intro
+  grid-area: intro
+  background: #dadee5
+  article
+    // background: rgb(36, 41, 91)
+    margin: 90px 50px 0 460px
+    h1,p
+      font-size: 0.5rem
+      letter-spacing: 0.05rem
+      color: rgb(96, 96, 96)
+
+
+
+// card
+// #card
+//   display: flex
+//   flex-direction: column
+//   position: absolute
+//   top: (100%-$cardHeight)/2
+//   left: 100px
+//   height: $cardHeight
+//   width: $cardWidth
+//   // background: #842f2f
+//   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.3)
+//   border-radius: 10px
+//   #pic
+//     height: $cardWidth
+//     background: rgb(36, 41, 91)
+//     border-radius: 10px 10px 0 0
+//     img
+//       margin: $cardWidth*0.2 $cardWidth*0.25
+//       width: $cardWidth*0.5
+//       border-radius: 50%
+//       user-select: none
+//   #contect
+//     flex: 1
+//     display: flex
+//     flex-direction: column
+//     background: #f7f7f7
+//     border-radius: 0 0 10px 10px
+//     section
+//       flex: 1
+//       display: flex
+//       justify-content: space-between
+//       svg > path
+//         // flex: 1
+//         fill: rgb(140, 140, 140)
+//       p
+//         flex: 1
+//         text-align: right
+//         font-size: 0.9em
+//         letter-spacing: 1px
+//         margin: 30px 30px
+//         color: rgb(140, 140, 140)
+
