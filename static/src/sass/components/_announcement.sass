@@ -1,24 +1,30 @@
-mixin article
-  width: 80%
-  height: 10%
-  
-  h1
-    text-align: left
-    font-size: 30px
-    color: #000000
-  
-  time
-    display: block
-    font-size: 20px
-    color: #000000
-    opacity: .5
+@import tags
+@mixin article
+  article
+    width: 80%
+    min-height: 10%
+    
+    
+    h1
+      text-align: left
+      font-family: "Sego UI", Regular;
+      //inin say can apport google font api
+      font-size: 30px
+      color: #000000
+    
+    time
+      display: block
+      font-size: 20px
+      color: #000000
+      opacity: .5
 
-  p 
-    font-size: 20px
-    color: #000000
+    p 
+      font-size: 20px
+      color: #000000
 
-  button
-    display: block
-    text-align: center
-    background: rgba( 66, 66, 66, .93 )
+    button
+      display: block
+      text-align: center
+      background: rgba( 66, 66, 66, .93 )
 
+    +tags
