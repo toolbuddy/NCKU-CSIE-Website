@@ -7,7 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:sass": "node-sass static/src/sass/main.scss  static/dist/css/style.css -w",
+    "devserver": "live-server --browser=firefox",
+    "start": "npm-run-all --parallel devserver watch:sass",
+    "compile:sass": "node-sass static/src/sass/main.scss  static/dist/css/style.css"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,8 @@
   "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "node-sass": "^4.8.3",
+    "npm-run-all": "^4.1.2",
     "pug": "^2.0.0-rc.4"
   }
 }
