@@ -7,7 +7,7 @@ const research = require( './research' );
 const announcement = require( './announcement' );
 const resource = require( './resource' );
 
-const router = express.Router();
+const router = new express.Router();
 
 router.use( '/', home );
 
