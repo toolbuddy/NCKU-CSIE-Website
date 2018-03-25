@@ -8,10 +8,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:sass": "node-sass static/src/sass/main.scss  static/dist/css/style.css -w",
-    "devserver": "live-server --browser=firefox",
-    "start": "npm-run-all --parallel devserver watch:sass",
-    "compile:sass": "node-sass static/src/sass/main.scss  static/dist/css/style.css"
+    "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
+    "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+    "eslint-frontend":"./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
+    "eslint-frontend-fix":"./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
+    "eslint-backend":"./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
+    "eslint-backend-fix":"./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;"
+    ,
+    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0"
   },
   "repository": {
     "type": "git",
@@ -26,7 +30,13 @@
   "dependencies": {
     "express": "^4.16.2",
     "node-sass": "^4.8.3",
-    "npm-run-all": "^4.1.2",
+    "node": "^9.8.0",
+    "npm": "^5.7.1",
     "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "pug-lint": "^2.5.0",
+    "sass-lint": "^1.12.1"
   }
 }
