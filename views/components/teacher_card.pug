@@ -1,0 +1,10 @@
+mixin teacher_card( imageSrc, name, title, dept, address)
+    div(class='overview__item')
+        figure(class='overview__figure')
+            img(src=imageSrc, alt='', class='overview__photo')
+            
+            figcaption(class='overview__intro')= name
+            article
+                h1= title
+                p= dept
+                address= address
