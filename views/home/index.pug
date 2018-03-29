@@ -4,6 +4,8 @@ html
     link(rel='stylesheet' type='text/css' href=`${ static }/css/index.css`)
     title ncku csie
   body
+    include ../components/header.pug
+    +header(index)
     h1 welcome to ncku csie
     ul
       li(class='dropdown')
