@@ -6,13 +6,12 @@ html
     block css
   body
     block header
-    section#top-announcement
-      h1 置頂公告
-      block top-announcement
-    section#all-announcement
-      h1 所有公告
-      block all-announcement
-    section#page
+    section#content-container
+      h1(class='item1') undergraduate
+        br
+        span 大學部
+      block content
+      //section#page
       block page 
     block footer
     block script

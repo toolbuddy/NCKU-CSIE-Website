@@ -1,6 +1,47 @@
 @import ../components/reset
-@import ../components/announcement
-
+@import ../components/announcement 
+#content-container
+  padding: 5%
+  display: grid
+  grid-gap: 2% 0
+  grid-template-columns: repeat(6,1fr)
+  background-color: #ECECEC
+      
+#main-container
+  padding: 2%
+  display: grid
+  grid-template-columns: repeat(4,1fr) 
+  background-color: #FFFFFF
+  div
+    margin: 30% 2% 35% 2% 
+.item1
+  grid-column-start: 1
+  grid-column-end: 7
+  font-size: 1em
+  border-bottom: 0.5px solid #000000
+  margin: 0 10% 35% 10%
+  span
+    font-size: 2em
+  //text-decoration: underline;
+.item2
+  min-height: 10%
+  height: 100%
+  grid-column-start: 2
+  grid-column-end: 6
+  +article
+.main-item
+  grid-column-start: 1
+  grid-column-end: 4
+  text-decoration: none
+.main-item-img
+  grid-column-start: 4
+  grid-column-end: 5
+  grid-row-start: 1
+  grid-row-end: 4
+  background-color: #343434
+.main-flex
+  display: flex
+  justify-content: space-between
 #top-announcement
   width: 100%
   height: 10%

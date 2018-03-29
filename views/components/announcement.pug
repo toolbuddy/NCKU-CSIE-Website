@@ -1,12 +1,14 @@
 mixin announce( title, time, excerpt, articleUrl, imageUrl, ...tags )
-  article
-    h1= title
-    time= time
-    p= excerpt
-    button
-      a(href=articleUrl) see more
-    img(src=imageUrl)
-    aside
-      each tag in tags
-        button(class=tag)
-          a= tag
+  main#main-container(class='item2')
+    h1(class='main-item')= title
+    article(class='main-item')
+      time= time
+      p= excerpt
+    div(class='main-item main-flex')
+      button
+        a(href=articleUrl) see more
+      aside
+        each tag in tags
+          button(class=tag)
+            a= tag
+    img(class='main-item-img' src=imageUrl)
