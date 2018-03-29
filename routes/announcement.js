@@ -8,27 +8,27 @@ router.get( '/', (req, res) => {
 
 // route to /announcement/all
 router.get( '/all', (req, res) => {
-    res.render('/all');
+    res.render('announcement/all');
 } );
 
 // route to /announcement/administrator
 router.get( '/administrator', (req, res) => {
-    res.render( '/administrator' );
+    res.render( 'announcement/administrator' );
 } );
 
 // route to /announcement/activity
 router.get( '/activity', (req, res) => {
-    res.render( '/acivity' );
+    res.render( 'announcement/activity' );
 } );
 
 // route to /announcement/speech
 router.get( '/speech', () => {
-    res.render( '/speech' );
+    res.render( 'announcement/speech' );
 } );
 
 // route to /announcement/recruitment
 router.get( '/recruitment', () => {
-    res.render( '/recruitment' );
+    res.render( 'announcement/recruitment' );
 } );
 
 function errorHandler( err, req, res, next ) {

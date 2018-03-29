@@ -1,38 +1,43 @@
 mixin header(page)
-  section
-    navBar#navBarUl
-      a(href='/index') 首頁
-      a(href='/about') 關於本系
-      a(href='/research') 學術研究
-      a(href='/student') 學生事務
-      a(href='/announcement') 系所公告
-      a(href='/resource') 資源連結
-    div#dropAbout
+  section#headerSec
+    div#csieTitle
+      img
+      h1 成功大學資訊工程學系暨研究所
+      h2 Department of Computer Science and Information Engineering
+    div#navBarUl
+      button(id='linkIndex') 首頁
+      button(id='linkAbout') 關於本系
+      button(id='linkResearch') 學術研究
+      button(id='linkStudent') 學生事務
+      button(id='linkAnnouncement') 系所公告
+      button(id='linkResource') 資源連結
+    div#triangle(class = 'drop')
+    div(id = 'dropAbout' class='drop')
       a(href='/about/intro') 系所介紹
       a(href='/about/teachers') 師資陣容
       a(href='/about/members') 系辦成員
       a(href='/about/honor') 榮譽事蹟
       a(href='/about/location') 聯絡我們
-    div#dropResearch
+    div#dropResearch(class='drop')
       a(href='/research/labs') 實驗室
       a(href='/research/groups') 研究群
       a(href='/research/publications') Publications
       a(href='/research/awards') Awards
       a(href='/research/conferences') 研討會
-    div#dropStudent
+    div#dropStudent(class='drop')
       a(href='/student/course') 課程資訊
       a(href='/student/college') 大學部
       a(href='/student/master') 碩士
       a(href='/student/phd') 博士
       a(href='/student/scholarship') 獎學金
       a(href='/student/international') 國際交流
-    div#dropAnnouncement
+    div#dropAnnouncement(class='drop')
       a(href='/announcement/all') 全部公告
       a(href='/announcement/administrator') 行政公告
       a(href='/announcement/activity') 活動訊息
       a(href='/announcement/speech') 演講公告
       a(href='/announcement/recruitment') 企業徵才
-    div#dropResource
+    div#dropResource(class='drop')
       a(href='/resource/law') 法規彙編
       a(href='/resource/rent') 線上租借
       a(href='/resource/fix') 修繕登記
