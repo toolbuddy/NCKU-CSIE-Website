@@ -7,7 +7,7 @@
   opacity: 0.7
   padding: 2rem 2rem 1rem 2rem
   display: grid
-  grid-template-rows: auto auto
+  grid-template-rows: auto auto auto
   h1
     font-size: 2rem
     font-weight: normal
@@ -19,6 +19,7 @@
     display: none
     justify-self: end
   button
+    display: inline
     font-size: 1.5rem
     background-color: rgba(0, 0, 0, 0)
     color: #ffffff
@@ -36,12 +37,12 @@
     &:visited
     &:hover
       color: #000000
+  .triangle
+    width: 0
+    height: 0
+    display: none
+    border-style: solid
+    border-width: 0 20px 20px 20px
+    border-color: transparent transparent #ffffff transparent
 #navBarUl
   justify-self: end
-#triangle
-  width: 0
-  height: 0
-  display: none
-  border-style: solid
-  border-width: 0 20px 20px 20px
-  border-color: transparent transparent #ffffff transparent

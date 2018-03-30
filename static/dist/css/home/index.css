@@ -16,7 +16,7 @@
   opacity: 0.7;
   padding: 2rem 2rem 1rem 2rem;
   display: grid;
-  grid-template-rows: auto auto; }
+  grid-template-rows: auto auto auto; }
   #headerSec h1 {
     font-size: 2rem;
     font-weight: normal;
@@ -28,6 +28,7 @@
     display: none;
     justify-self: end; }
   #headerSec button {
+    display: inline;
     font-size: 1.5rem;
     background-color: transparent;
     color: #ffffff;
@@ -43,14 +44,13 @@
     margin: 2rem 2rem .5rem 1rem; }
     #headerSec a:hover {
       color: #000000; }
+  #headerSec .triangle {
+    width: 0;
+    height: 0;
+    display: none;
+    border-style: solid;
+    border-width: 0 20px 20px 20px;
+    border-color: transparent transparent #ffffff transparent; }
 
 #navBarUl {
   justify-self: end; }
-
-#triangle {
-  width: 0;
-  height: 0;
-  display: none;
-  border-style: solid;
-  border-width: 0 20px 20px 20px;
-  border-color: transparent transparent #ffffff transparent; }
