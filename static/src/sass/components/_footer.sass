@@ -1,0 +1,44 @@
+@import './_reset.sass'
+
+.footer
+  display: grid
+  width: 1fr
+  height: 1fr
+  padding: 5vh 7vw 5vh 7vw
+  background-color: #000000
+  grid-template-columns: 0.5fr 0.5fr
+  grid-template-rows: 0.25fr 0.25fr 0.25fr 0.25fr
+  grid-template-areas: "first-1 first-2" "second-1 second-2" "third-1 third-2" "forth-1 forth-2"
+  opacity: 0.7
+  font-size: 25px
+  #name
+    grid-area: first-1
+    padding: 1vh
+    justify-self: start
+    color: #FEFEFE
+  #address
+    grid-area: second-1
+    padding: 1vh
+    justify-self: start
+    color: #FEFEFE
+    #addressLink
+      color: #FEFEFE
+  #phone
+    grid-area: third-1
+    padding: 1vh
+    justify-self: start
+    color: #FEFEFE
+  #emailLink
+    grid-area: forth-1
+    padding: 1vh
+    justify-self: start
+    color: #FEFEFE
+  #fbPic
+    grid-area: third-2
+    padding: 1vh
+    justify-self: end
+  #visit
+    grid-area: forth-2
+    padding: 1vh
+    justify-self: end
+    color: #FEFEFE
