@@ -12,10 +12,8 @@
   }
   &__figure {
     grid-column: 1/2;
-    &:hover {
-      background-color: $hover-color;
-      opacity: .7;
-    }
+    //position: relative;
+   
   }
   &__photo {
     display: block;
@@ -27,6 +25,9 @@
     padding: 1.6rem .6rem 1rem 2.8rem;
     background-color: #fff;
     font-size: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   &__hover {
     position: absolute; // 用top left right bottom來決定而不是用hight width來決定absolute positioning的物件
@@ -39,8 +40,10 @@
       height:100%;
       display: none;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
+      background-color: $hover-color;
+      
     }
   }
 }
