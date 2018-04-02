@@ -1,17 +1,10 @@
 mixin teacher_card( imageSrc, name, title, dept, address)
-    article(class='overview__item')
+    div(class='overview__item')
         figure(class='overview__figure')
-          img(src=imageSrc, alt='', class='overview__photo')
+            img(src=imageSrc, alt='', class='overview__photo')
             
-        figcaption(class='overview__intro')= name
-          h1= title
-          p= dept
-          address= address
-        
-        figcation(class='overview__hover fontsize__small-1')
-          div(id="hover-event")
-            a(href="#") link
-            p j2081499@gmail.com
-            p jjjjjjjjjjjjjj
-        
-        
+            figcaption(class='overview__intro')= name
+            article
+                h1= title
+                p= dept
+                address= address
