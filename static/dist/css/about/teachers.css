@@ -1,0 +1,89 @@
+:root {
+  --row-number:10;
+  --column-number:4;
+  --font-var:"Yu Gothic UI" "Regular";
+  --hover-color:#343434; }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+
+body {
+  padding: 0 15rem;
+  font-family: "Yu Gothic UI","Regular";
+  background-color: #555252; }
+
+.title {
+  display: flex;
+  color: #fff;
+  justify-content: space-between;
+  padding: 1.5rem;
+  margin: 4.3rem auto 0 auto;
+  border-bottom: 1px solid #fff; }
+  .title__filter {
+    display: flex;
+    align-items: flex-end; }
+    .title__filter svg {
+      fill: #fff;
+      width: 2rem;
+      height: 2rem; }
+
+.fontsize__large {
+  font-size: 3.5rem; }
+
+.fontsize__small-1 {
+  font-size: 2rem; }
+
+.fontsize__small-2 {
+  font-size: 1.5rem; }
+
+.sp-block {
+  display: block; }
+
+.overview {
+  margin: 4.3rem auto 0 auto;
+  font-family: var(--font-var);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 6rem; }
+  .overview__item {
+    position: relative;
+    display: grid;
+    grid-template-rows: 2fr 1fr; }
+  .overview__figure {
+    grid-column: 1/2; }
+  .overview__photo {
+    display: block;
+    height: 100%;
+    width: 100%; }
+  .overview__intro {
+    grid-row: 2/3;
+    padding: 1.6rem .6rem 1rem 2.8rem;
+    background-color: #fff;
+    font-size: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+  .overview__hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 33.3%;
+    z-index: 20; }
+    .overview__hover div {
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(52, 52, 52, 0.7); }
