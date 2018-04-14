@@ -1,12 +1,10 @@
 module.exports = {
     disallowAttributeConcatenation:true,
     disallowBlockExpansion:true,
-    disallowClassAttributeWithStaticValue:true,
     disallowClassLiteralsBeforeIdLiterals:true,
     disallowClassLiterals: true,
     disallowDuplicateAttributes: true,
     disallowHtmlText: true,
-    disallowIdAttributeWithStaticValue: true,
     disallowIdLiterals: true,
     disallowLegacyMixinCall: true,
     disallowMultipleLineBreaks: true,
