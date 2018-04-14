@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
-    "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+    "watch:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
+    "compile:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
     "eslint-frontend": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
     "eslint-frontend-fix": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
     "eslint-backend": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
