@@ -2,9 +2,9 @@
 @import '../components/reset'
 
 @mixin selection($R, $G, $B, $A)
-  &::selection
+  ::selection
     +color($R, $G, $B, $A)
-  &::-moz-selection
+  ::-moz-selection
     +color($R, $G, $B, $A)
 
 @mixin color($R, $G, $B, $A)  
@@ -28,7 +28,7 @@ body
     
 
 // cover
-.cover
+.content_cover
   grid-area: cover
   background: rgb(70, 79, 140)
   >img
@@ -37,6 +37,7 @@ body
     top: 100px
     left: 230px
     width: $cardWidth*0.4
+    height: $cardWidth*0.4
     border-radius: 50%
     user-select: none
     box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3)
@@ -54,23 +55,32 @@ body
     z-index: 1
     font-size: 1rem
     color: rgb(224, 224, 224)
-  .position
+  .content_position
+    display: inline
+    position: relative
+    top: 115px
     font-size: 0.3rem
     color: rgb(224, 224, 224)
-    // margin: 0 50px
+    margin: 0 10px 0 0
     
 
 // detail
-.detail
+.content_detail
   grid-area: detail
   background: #dadee5
+  padding: 90px 50px 0 460px
   article
     // background: rgb(36, 41, 91)
-    margin: 90px 50px 0 460px
+    margin-bottom: 45px
     h1,p
+      color: rgb(96, 96, 96)
+    h1
+      font-size: 0.6rem
+      letter-spacing: 0.05rem
+    p
       font-size: 0.5rem
       letter-spacing: 0.05rem
-      color: rgb(96, 96, 96)
+      font-weight: normal
 
 
 
