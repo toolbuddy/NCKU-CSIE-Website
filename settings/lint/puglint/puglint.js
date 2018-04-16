@@ -1,16 +1,16 @@
 module.exports = {
-    disallowAttributeConcatenation:true,
-    disallowBlockExpansion:true,
-    disallowClassLiteralsBeforeIdLiterals:true,
+    disallowAttributeConcatenation: true,
+    disallowBlockExpansion: true,
+    disallowClassLiteralsBeforeIdLiterals: true,
     disallowDuplicateAttributes: true,
     disallowHtmlText: true,
     disallowIdLiterals: true,
     disallowLegacyMixinCall: true,
     disallowMultipleLineBreaks: true,
-    disallowSpecificTags: ['div','font','embed','strike','s',
-        'u','applet','basefont','center','dir',
-        'isindex','listing','menu','plaintext','xmp',
-        'b','i'],
+    disallowSpecificTags: [ 'div', 'font', 'embed', 'strike', 's',
+        'u', 'applet', 'basefont', 'center', 'dir',
+        'isindex', 'listing', 'menu', 'plaintext', 'xmp',
+        'b', 'i', ],
     disallowStringConcatenation: true,
     disallowTrailingSpaces: true,
     maximumLineLength: 80,
@@ -23,7 +23,7 @@ module.exports = {
     requireSpacesInsideAttributeBrackets: true,
     requireStrictEqualityOperators: true,
     validateAttributeQuoteMarks: '\'',
-    validateAttributeSeparator: { 
+    validateAttributeSeparator: {
         'separator': ', ',
         'multiLineSeparator': ',\n  ',
     },
@@ -31,6 +31,6 @@ module.exports = {
     validateIndentation: 2,
     validateLineBreaks: 'LF',
     validateSelfClosingTags: true,
-    validateTemplateString: ['concatenation'],
+    validateTemplateString: [ 'concatenation', ],
 
 };
