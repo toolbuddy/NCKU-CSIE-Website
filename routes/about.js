@@ -7,6 +7,7 @@ router.get( '/intro', function ( req, res ) {
 } );
 
 // deal with the URL about/teachers
+
 router.get( '/teachers', function ( req, res ) {
     res.render( 'about/teachers' );
 } );
