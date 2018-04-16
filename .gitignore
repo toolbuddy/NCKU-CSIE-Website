@@ -1,5 +1,7 @@
+>>>>>>> another
 s.git-credentials
 npm-debug.log
 package-lock.json
 .DS_Store
 *.swp
+.vscode

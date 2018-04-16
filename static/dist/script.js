@@ -3,7 +3,7 @@ var UIController = (function () {
   setEventHandler = () => {
 
     // check if the cursor actually enter a div or not
-    //var isEnterDiv = false;
+    var isEnterDiv = false;
     // select parent element which is the overview page
     var hoverOnCardParent = document.querySelector(".overview");
     //var hoverOnCardDiv = document.querySelectorAll("#hover-event");
