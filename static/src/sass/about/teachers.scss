@@ -1,10 +1,21 @@
-@import "../components/reset";
+@import "../components/common/reset";
+@import "../components/about/teachers/header";
+@import "../components/about/teachers/card";
 
-@import "../components/header";
-@import "../components/component";
-@import "../components/overview";
-
-
+.main {
+  background-color: rgb(85, 82, 82);
+  display: grid;
+  grid-template-areas: ". . ." ". topic ." ". cards ." ". . .";
+  grid-template-columns: 10% 1fr 10%;
+  grid-row-gap: 2rem;
+  align-items: space-around;
+  .topic{
+    grid-area: topic;
+  }
+  .cards{
+    grid-area:cards;
+  }
+}
 
 
 

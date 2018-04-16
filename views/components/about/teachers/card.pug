@@ -1,0 +1,14 @@
+mixin cards__card( imageURL, nameText, titleText, deptText, addressText, linkURL, emailURL, phoneText )  
+  figure.cards__card.card
+    img.card__photo( src=imageURL, alt='' )
+    article.card__intro.intro
+      h1.intro__name= nameText
+      h2.intro__title= titleText
+      p.intro__department= deptText
+      address.intro__address= addressText
+    article.card__info.info
+      a.info__personal-website(href=linkURL) 個人網頁
+      p.info__email= emailURL
+      p.info__phone= phoneText
+        
+        
