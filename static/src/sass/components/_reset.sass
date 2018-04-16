@@ -1,4 +1,15 @@
-// Reset
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css)
+
+@mixin selection($R, $G, $B, $A)
+  ::selection
+    +color($R, $G, $B, $A)
+  ::-moz-selection
+    +color($R, $G, $B, $A)
+
+@mixin color($R, $G, $B, $A)  
+  background: rgba($R, $G, $B, $A)
+  color: inherit
+
 *
   padding: 0
   margin: 0
@@ -6,9 +17,14 @@
   box-sizing: border-box
   font-family: 'Noto Sans TC', Microsoft JhengHei
   color: inherit
-  letter-spacing: 0.1rem
+  font-weight: 100
+  letter-spacing: 2px
 
 html, body
   width: 100%
   height: 100%
   font-size: 32px
+  +selection(92, 134, 214, 0.5)
+
+a
+  text-decoration: none

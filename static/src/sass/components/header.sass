@@ -1,26 +1,49 @@
-@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css)
 @import '../components/reset'
 
-.nav
+$navHeight: 60px
+$navColor: rgba(68, 68, 68, 0.6)
+$fontColor: rgba(224, 224, 224, 0.6)
+$borderColor: rgba(67, 186, 219, 0.6)
+
+.header_grid
+  *
+    user-select: none
+    color: $fontColor
+  display: grid
+  grid-template-columns: 50px 700px auto
+  grid-template-areas: "logo title nav"
   position: fixed
   z-index: 1
   top: 0
   width: 100%
-  height: 40px
-  background: rgba(68, 68, 68, 0.6)
-  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
-  nav
+  height: $navHeight
+  background: $navColor
+  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3)) 
+  >.header_logo
+    grid-area: logo
+  >.header_title
+    grid-area: title
+    padding: $navHeight*0.2 20px
+    .header_title-zh
+      font-size: 0.5rem
+      font-weight: normal
+    .header_title-en
+      font-size: 0.3rem
+  >.header_nav
+    grid-area: nav
+    justify-self: end
     display: flex
     flex-direction: row
-    position: absolute
-    right: 0
-    padding: 0 20px
+    padding: $navHeight*0.2 20px
     li
       font-size: 0.5rem
-      color: rgb(224, 224, 224)
+      color: $fontColor
       list-style-type: none
       cursor: pointer
       padding: 7px 20px
-      user-select: none
     li:hover
-      border-bottom: 7px rgb(67, 186, 219) solid
+      padding: 7px 20px
+      border: 1px $borderColor solid
+      border-radius: 10px
+      a
+       color: $borderColor

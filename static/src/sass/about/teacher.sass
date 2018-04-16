@@ -1,18 +1,4 @@
-@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css)
 @import '../components/reset'
-
-@mixin selection($R, $G, $B, $A)
-  ::selection
-    +color($R, $G, $B, $A)
-  ::-moz-selection
-    +color($R, $G, $B, $A)
-
-@mixin color($R, $G, $B, $A)  
-  background: rgba($R, $G, $B, $A)
-  color: inherit
-
-body
-  +selection(92, 134, 214, 0.5)
 
 // variable
 $cardWidth: 300px
@@ -23,45 +9,41 @@ body
   display: grid
   height: 200vh
   grid-template-columns: auto
-  grid-template-rows: 200px auto
+  grid-template-rows: 500px auto
   grid-template-areas: "cover""detail"
     
 
 // cover
-.content_cover
+.cover_grid
+  display: grid
+  grid-template-columns: 1fr 3fr
+  grid-template-areas: "profile info"
   grid-area: cover
-  background: rgb(70, 79, 140)
-  >img
-    position: absolute
-    z-index: 1
-    top: 100px
-    left: 230px
+  background: #1c2236
+  background: -webkit-linear-gradient(bottom left,#1c2236,#414d71)
+  background: -o-linear-gradient(bottom left,#1c2236,#414d71)
+  background: -moz-linear-gradient(bottom left,#1c2236,#414d71)
+  background: linear-gradient(bottom left, #1c2236, #414d71)
+  >.cover_profile
+    grid-area: profile
+    justify-self: end
+    align-self: center
+    margin: 0 10px
     width: $cardWidth*0.4
     height: $cardWidth*0.4
     border-radius: 50%
     user-select: none
     box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3)
-  svg
-    position: absolute
-    z-index: 0
-    top: 120px
-    fill: rgb(70, 79, 140)
-    filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3))
-  p
-    position: relative
-    width: 300px
-    top: 140px
-    left: $cardWidth+160
-    z-index: 1
-    font-size: 1rem
-    color: rgb(224, 224, 224)
-  .content_position
-    display: inline
-    position: relative
-    top: 115px
-    font-size: 0.3rem
-    color: rgb(224, 224, 224)
-    margin: 0 10px 0 0
+  >.cover_info
+    grid-area: info
+    padding: 150px 100px
+    >.cover_name
+      font-size: 1rem
+      color: rgb(224, 224, 224)
+    >.cover_position
+      font-size: 0.4rem
+      color: rgb(224, 224, 224)
+      margin: 0 0 0 10px
     
 
 // detail
