@@ -28,11 +28,7 @@
   "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
     "express": "^4.16.2",
-<<<<<<< HEAD
-    "node-sass": "^4.8.3",
-=======
     "inspect": "0.0.2",
->>>>>>> a9c074b8dc0e70f9067757425ed1e81584305a40
     "node": "^9.8.0",
     "node-sass": "^4.8.3",
     "npm": "^5.7.1",
