@@ -1,6 +1,6 @@
 const express = require( 'express' );
 const csie = require( '../settings/database/connect' )( 'csie' );
-const router = express.Router();
+const router = new express.Router();
 
 // connect to csie database and use tables in it
 const table = {
@@ -44,12 +44,12 @@ router.get( '/members', function( req, res ) {
 } );
 
 // deal with the URL about/honor
-router.get( '/honor', function( req, res ) {
+router.get( '/honor', function ( req, res ) {
     res.render( 'about/honor' );
 } );
 
 // deal with the URL about/location
-router.get( '/location', function( req, res ) {
+router.get( '/location', function ( req, res ) {
     res.render( 'about/location' );
 } );
 

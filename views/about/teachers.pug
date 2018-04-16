@@ -1,16 +1,69 @@
-doctype html
-html
-  head
-    title teachers
-  body
-    h1 teachers
-    each T in teacher
-      section.icon
-        article
-          p #{ T.EMAIL }
-          p #{ T.TEL }
-        article
-          a(href='/about/teachers/' + T.ID) #{ T.CNAME }
-          p #{ T.CTITLE }
-          p #{ T.C_department }
-          p 辦公室： #{ T.office_no }
+extends ../layouts/about.pug
+
+block stylesheets
+  link( rel='stylesheet', type='text/css', media='screen',
+    href='/css/about/teachers.css'
+  )
+
+block header
+
+block content
+  include ../components/about/topic.pug
+  include ../components/about/teachers/card.pug
+  main.main
+    +topic( 'Faculty of Computer Science','師資陣容' )
+    section.cards
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+
+block footer
+
+block scripts
