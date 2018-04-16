@@ -2,7 +2,6 @@ module.exports = {
     disallowAttributeConcatenation:true,
     disallowBlockExpansion:true,
     disallowClassLiteralsBeforeIdLiterals:true,
-    disallowClassLiterals: true,
     disallowDuplicateAttributes: true,
     disallowHtmlText: true,
     disallowIdLiterals: true,
@@ -26,7 +25,7 @@ module.exports = {
     validateAttributeQuoteMarks: '\'',
     validateAttributeSeparator: { 
         'separator': ', ',
-        'multiLineSeparator': '\n  ',
+        'multiLineSeparator': ',\n  ',
     },
     validateExtensions: true,
     validateIndentation: 2,
