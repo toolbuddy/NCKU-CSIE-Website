@@ -5,44 +5,70 @@ html
   body
     h1 welcome to ncku csie
     ul
-      li( class='dropdown' )
+      li.dropdown
         a( href='#student' ) | student
-        nav( class='dropdown-content' )
-          a( href='/student/course' ) | course
-          a( href='/student/college' ) | college
-          a( href='/student/master' ) | master
-          a( href='/student/phd' ) | phd
-          a( href='/student/scholarship' ) | scholarship
-          a( href='/student/international' ) | international
-      li( class='dropdown' )
+        ul.dropdown__content
+          li
+            a( href='/student/course' ) | course
+          li
+            a( href='/student/college' ) | college
+          li
+            a( href='/student/master' ) | master
+          li
+            a( href='/student/phd' ) | phd
+          li
+            a( href='/student/scholarship' ) | scholarship
+          li
+            a( href='/student/international' ) | international
+      li.dropdown
         a( href='#about' ) | about
-        nav( class='dropdown-content' )
-          a( href='/about/intro' ) | introduction
-          a( href='/about/teachers' ) | teachers
-          a( href='/about/members' ) | members
-          a( href='/about/honor' ) | honor
-          a( href='/about/location' ) | location
-      li( class='dropdown' )
+        ul.dropdown__content
+          li
+            a( href='/about/intro' ) | introduction
+          li
+            a( href='/about/teachers' ) | teachers
+          li
+            a( href='/about/members' ) | members
+          li
+            a( href='/about/honor' ) | honor
+          li
+            a( href='/about/location' ) | location
+      li.dropdown
         a( href='#research' ) | research
-        nav( class='dropdown-content' )
-          a( href='/research/labs' ) | labs
-          a( href='/research/groups' ) | groups
-          a( href='/research/publications' ) | publications
-          a( href='/research/awards' ) | awards
-          a( href='/research/conferences' ) | conferences
-      li( class='dropdown' )
+        ul.dropdown__content
+          li
+            a( href='/research/labs' ) | labs
+          li
+            a( href='/research/groups' ) | groups
+          li
+            a( href='/research/publications' ) | publications
+          li
+            a( href='/research/awards' ) | awards
+          li
+            a( href='/research/conferences' ) | conferences
+      li.dropdown
         a( href='#announcement' ) | announcement
-        nav( class='dropdown-content' )
-          a( href='/announcement/all' ) | all announcement
-          a( href='/announcement/administrator' ) | administrator
-          a( href='/announcement/activity' ) | activity
-          a( href='/announcement/speech' ) | speech
-          a( href='/announcement/recruitment' ) | recruitment
-      li( class='dropdown' )
+        ul.dropdown__content
+          li
+            a( href='/announcement/all' ) | all announcement
+          li
+            a( href='/announcement/administrator' ) | administrator
+          li
+            a( href='/announcement/activity' ) | activity
+          li
+            a( href='/announcement/speech' ) | speech
+          li
+            a( href='/announcement/recruitment' ) | recruitment
+      li.dropdown
         a( href='#resource' ) | resource
-        nav( class='dropdown-content' )
-          a( href='/resource/law' ) | law
-          a( href='/resource/rent' ) | rent
-          a( href='/resource/fix' ) | fix
-          a( href='/resource/ieet' ) | IEET
-          a( href='/resource/resources' ) | resources
+        ul.dropdown__content
+          li
+            a( href='/resource/law' ) | law
+          li
+            a( href='/resource/rent' ) | rent
+          li
+            a( href='/resource/fix' ) | fix
+          li
+            a( href='/resource/ieet' ) | IEET
+          li
+            a( href='/resource/resources' ) | resources
