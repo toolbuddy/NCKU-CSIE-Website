@@ -1,5 +1,4 @@
 module.exports = {
-
     disallowAttributeConcatenation: true,
     disallowBlockExpansion: true,
     disallowClassLiteralsBeforeIdLiterals: true,
@@ -33,5 +32,4 @@ module.exports = {
     validateLineBreaks: 'LF',
     validateSelfClosingTags: true,
     validateTemplateString: [ 'concatenation', ],
-
 };
