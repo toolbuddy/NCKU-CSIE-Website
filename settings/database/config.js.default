@@ -1,0 +1,16 @@
+module.exports = {
+    username: '',
+    password: '',
+    host: 'localhost',
+    port: 3306,
+    protocol: '',
+    pool: {
+        max: 0,
+        min: 0,
+        acquire: 0,
+        idle: 0,
+    },
+    url ( databaseName ) {
+        return `${ this.protocol }://${ this.username }:${ this.password }@${ this.host }:${ this.port }/${ databaseName }`;
+    }
+};
