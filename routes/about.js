@@ -1,5 +1,4 @@
 const express = require( 'express' );
-
 // const csie = require( '../settings/database/connect' )( 'csie' );
 const router = new express.Router();
 
@@ -20,11 +19,11 @@ router.get( '/teachers', function ( req, res ) {
         attributes: [ 'ID', ],
         raw: true,
     } )
-        .then( Ts => {
-            res.render( 'about/teachers', {
-                teacher: Ts,
-            } );
-        } );*/
+    .then( Ts => {
+        res.render( 'about/teachers', {
+            teacher: Ts,
+        } );
+    } );*/
     res.render( 'about/teachers' );
 } );
 
@@ -37,9 +36,9 @@ router.get( '/teacher/:id', function ( req, res ) {
         },
         raw: true,
     } )
-        .then( teacher => {
-            res.send( teacher );
-        } );*/
+    .then( teacher => {
+        res.send( teacher );
+    } );*/
     res.render( 'about/teacher', {
         profileInfo:
         {
