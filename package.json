@@ -7,9 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nodemon server.js",
-    "webpack": "webpack --watch --config ./settings/webpack/config.js",
-    "build-css": "node-sass -w ./static/src/sass/ -o ./static/dist/css/"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
+    "compile:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+    "eslint-frontend": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
+    "eslint-frontend-fix": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
+    "eslint-backend": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
+    "eslint-backend-fix": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
+    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0"
   },
   "repository": {
     "type": "git",
@@ -22,22 +27,20 @@
   },
   "homepage": "https://github.com/toolbuddy/webtemplate#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "pug": "^2.0.0-rc.4",
-    "spdy": "^3.4.7"
+    "express": "^4.16.3",
+    "inspect": "0.0.2",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "node": "^9.8.0",
+    "node-sass": "^4.8.3",
+    "npm": "^5.7.1",
+    "pug": "^2.0.3",
+    "sequelize": "^4.37.6",
+    "sequelize-auto": "^0.4.29"
   },
   "devDependencies": {
-    "css-loader": "^0.28.10",
-    "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.0.6",
-    "node-sass": "^4.7.2",
-    "nodemon": "^1.17.1",
-    "pug-loader": "^2.3.0",
-    "sass-loader": "^6.0.7",
-    "style-loader": "^0.20.2",
-    "url-loader": "^1.0.1",
-    "webpack": "^3.11.0",
-    "webpack-cli": "^2.0.10"
+    "eslint": "^4.19.1",
+    "pug-lint": "^2.5.0",
+    "sass-lint": "^1.12.1"
   }
 }

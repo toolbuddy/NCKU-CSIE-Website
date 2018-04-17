@@ -1,12 +1,6 @@
-# Common
-node_modules/
-package-lock.json
-npm-debug.log
 .git-credentials
+npm-debug.log
+package-lock.json
+.DS_Store
 *.swp
-
-# Other
-[Bb]ackup/
-[Dd]ata/
-[Ll]ogs/
-static/dist/
+.vscode

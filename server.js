@@ -1,14 +1,14 @@
+// including public module
 const express = require( 'express' );
-const pug = require( 'pug' );
 
 const config = require( './settings/server/config' );
 const routes = require( './routes/urls' );
 
+// start server
 const server = express();
-
-server.use(express.static(__dirname + '/static/dist'))
-
 server.listen( config.port );
 
+// set render engine
 server.set( 'view engine', 'pug' );
+server.use( express.static( 'static/dist' ) );
 server.use( '/', routes );

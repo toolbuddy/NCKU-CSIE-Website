@@ -1,0 +1,7 @@
+package.json
+package-lock.json
+README.md
+**/node_modules/
+../../../static/dist/js/
+../../../static/src/js/
+../../../models/
