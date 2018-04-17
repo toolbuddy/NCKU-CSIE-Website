@@ -1,0 +1,93 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Sans TC', Microsoft JhengHei;
+  color: inherit;
+  letter-spacing: 0.1rem; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-size: 32px; }
+
+body::selection {
+  background: rgba(92, 134, 214, 0.5);
+  color: inherit; }
+
+body::-moz-selection {
+  background: rgba(92, 134, 214, 0.5);
+  color: inherit; }
+
+#nav {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  background: rgba(68, 68, 68, 0.6);
+  filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3)); }
+  #nav nav {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 0;
+    padding: 0 20px; }
+    #nav nav li {
+      font-size: 0.5rem;
+      color: #e0e0e0;
+      list-style-type: none;
+      cursor: pointer;
+      padding: 7px 20px;
+      user-select: none; }
+    #nav nav li:hover {
+      border-bottom: 7px #43badb solid; }
+
+body {
+  display: grid;
+  height: 200vh;
+  grid-template-columns: auto;
+  grid-template-rows: 200px auto;
+  grid-template-areas: "cover" "intro"; }
+
+#cover {
+  grid-area: cover;
+  background: #464f8c; }
+  #cover > img {
+    position: absolute;
+    z-index: 1;
+    top: 100px;
+    left: 230px;
+    width: 120px;
+    border-radius: 50%;
+    user-select: none;
+    box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3); }
+  #cover svg {
+    position: absolute;
+    z-index: 0;
+    top: 120px;
+    fill: #464f8c;
+    filter: drop-shadow(0px 7px 3px rgba(0, 0, 0, 0.3)); }
+  #cover p {
+    position: relative;
+    width: 300px;
+    top: 140px;
+    left: 460px;
+    z-index: 1;
+    font-size: 1rem;
+    color: #e0e0e0; }
+  #cover #position {
+    font-size: 0.3rem;
+    color: #e0e0e0; }
+
+#intro {
+  grid-area: intro;
+  background: #dadee5; }
+  #intro article {
+    margin: 90px 50px 0 460px; }
+    #intro article h1, #intro article p {
+      font-size: 0.5rem;
+      letter-spacing: 0.05rem;
+      color: #606060; }
