@@ -16,7 +16,7 @@ body
 // cover
 .cover_grid
   display: grid
-  grid-template-columns: 1fr 3fr
+  grid-template-columns: 1fr 4fr
   grid-template-areas: "profile info"
   grid-area: cover
   background: #1c2236
@@ -35,76 +35,109 @@ body
     user-select: none
     box-shadow: 3px 3px 50px 1px rgba(0, 0, 0, 0.3)
   >.cover_info
+    color: rgb(224, 224, 224)
     grid-area: info
     padding: 150px 100px
     >.cover_name
       font-size: 1rem
-      color: rgb(224, 224, 224)
     >.cover_position
       font-size: 0.4rem
-      color: rgb(224, 224, 224)
-      margin: 0 0 0 10px
-    
+      margin-left: 10px
+    >.cover_dept
+      font-size: 0.45rem
+      margin: 20px 0
+    >.cover_locate-grid
+      display: grid
+      grid-template-columns: 25px auto
+      grid-template-areas: "icon lab"
+      >.cover_locate-icon
+        grid-area: icon
+        width: 20px
+      >.cover_lab
+        grid-area: lab
+        font-size: 0.45rem
+        color: #739EFE
+        >.cover_locate
+            font-size: 0.45rem
+            color: rgb(224, 224, 224)
+      >.cover_lab>a:hover
+        color: #486CBA
+        
+    >.cover_specialty
+      font-size: 0.45rem
+      margin: 20px 0
+      color: rgb(150, 150, 150)
+      
+      
 
 // detail
 .content_detail
   grid-area: detail
-  background: #dadee5
-  padding: 90px 50px 0 460px
-  article
-    // background: rgb(36, 41, 91)
-    margin-bottom: 45px
-    h1,p
-      color: rgb(96, 96, 96)
-    h1
-      font-size: 0.6rem
-      letter-spacing: 0.05rem
-    p
-      font-size: 0.5rem
-      letter-spacing: 0.05rem
-      font-weight: normal
-
-
-
-// card
-// #card
-//   display: flex
-//   flex-direction: column
-//   position: absolute
-//   top: (100%-$cardHeight)/2
-//   left: 100px
-//   height: $cardHeight
-//   width: $cardWidth
-//   // background: #842f2f
-//   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.3)
-//   border-radius: 10px
-//   #pic
-//     height: $cardWidth
-//     background: rgb(36, 41, 91)
-//     border-radius: 10px 10px 0 0
-//     img
-//       margin: $cardWidth*0.2 $cardWidth*0.25
-//       width: $cardWidth*0.5
-//       border-radius: 50%
-//       user-select: none
-//   #contect
-//     flex: 1
-//     display: flex
-//     flex-direction: column
-//     background: #f7f7f7
-//     border-radius: 0 0 10px 10px
-//     section
-//       flex: 1
-//       display: flex
-//       justify-content: space-between
-//       svg > path
-//         // flex: 1
-//         fill: rgb(140, 140, 140)
-//       p
-//         flex: 1
-//         text-align: right
-//         font-size: 0.9em
-//         letter-spacing: 1px
-//         margin: 30px 30px
-//         color: rgb(140, 140, 140)
-
+  background: rgb(250, 250, 250)
+  >.content_card-grid
+    display: grid
+    grid-template-rows: auto
+    grid-template-columns: 3fr 2fr
+    grid-template-areas: "award contact""award education""student experience""refereed-paper refereed-paper""conference-paper conference-paper"
+    position: relative
+    top: -80px
+    width: auto
+    margin: 0 120px
+    color: rgb(100, 100, 100)
+    >section
+      margin: 10px 20px
+      padding: 25px 35px
+      background: rgb(255, 255, 255)
+      box-shadow: 1px 1px 100px 0.5px rgba(0, 0, 0, 0.1)
+      border-radius: 10px
+      >.content_title
+        font-size: 0.6rem
+        font-weight: normal
+      >.content_info
+        margin: 10px 0
+        color: rgb(150, 150, 150)
+        font-size: 0.45rem
+        font-weight: 400
+        letter-spacing: 1px
+    >.content_contact
+      grid-area: contact
+      >.content_contact-grid
+        display: grid
+        height: 200px
+        grid-template-rows: 1fr 1fr 1fr
+        grid-template-columns: 25px auto
+        grid-template-areas: "mail_icon mail""phone_icon phone""web_icon web"
+        font-size: 0.5rem
+        color: #739EFE
+        >*
+          align-self: center
+          font-weight: 400
+          letter-spacing: 1px
+        >a:hover
+          color: #486CBA
+        >img
+          width: 20px
+        >.content_contact_mail-icon
+          grid-area: mail_icon
+        >.content_contact_mail
+          grid-area: mail
+        >.content_contact_phone-icon
+          grid-area: phone_icon
+        >.content_contact_phone
+          grid-area: phone
+        >.content_contact_web-icon
+          grid-area: web_icon
+        >.content_contact_web
+          grid-area: web
+    >.content_education
+      grid-area: education
+    >.content_experience
+      grid-area: experience
+    >.content_award
+      grid-area: award
+    >.content_refereed-paper
+      grid-area: refereed-paper
+    >.content_conference-paper
+      grid-area: conference-paper
+    >.content_student
+      grid-area: student

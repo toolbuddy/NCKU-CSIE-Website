@@ -1,5 +1,4 @@
-mixin detail(title,contents)
-  article
-    h1=title
-      each name in contents
-        p=name
+mixin detail(title, contents)
+  h1.content_title=title
+  each name in contents
+    p.content_info=name
