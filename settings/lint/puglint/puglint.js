@@ -32,5 +32,4 @@ module.exports = {
     validateLineBreaks: 'LF',
     validateSelfClosingTags: true,
     validateTemplateString: [ 'concatenation', ],
-
 };
