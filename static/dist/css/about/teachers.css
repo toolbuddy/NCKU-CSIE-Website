@@ -70,8 +70,12 @@ html, body {
       align-items: center;
       color: #fff;
       background-color: rgba(52, 52, 52, 0.7);
+
       transition: opacity .3;
       z-index: 999; }
+
+      
+
       .cards .card .info:hover {
         opacity: 1; }
 
