@@ -1,0 +1,11 @@
+@mixin font__family--YuGothicUI(){
+  @font-face {
+    font-family: 'Yu Gothic UI';
+    src: url('');
+  }
+}
+
+:root{
+  --font__family--default: "Yu Gothic UI" "Regular";
+}
+

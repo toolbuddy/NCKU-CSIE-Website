@@ -8,8 +8,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
     "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+=======
+    "watch:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
+    "compile:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+>>>>>>> 1ac65bc6c7a62ae3705b04005005a9ad5257bb26
     "eslint-frontend": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
     "eslint-frontend-fix": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
     "eslint-backend": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
@@ -27,15 +32,19 @@
   },
   "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
   "dependencies": {
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "inspect": "0.0.2",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
     "node": "^9.8.0",
     "node-sass": "^4.8.3",
     "npm": "^5.7.1",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.3",
+    "sequelize": "^4.37.6",
+    "sequelize-auto": "^0.4.29"
   },
   "devDependencies": {
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "pug-lint": "^2.5.0",
     "sass-lint": "^1.12.1"
   }

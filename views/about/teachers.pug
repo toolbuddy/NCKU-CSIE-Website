@@ -1,28 +1,69 @@
 extends ../layouts/about.pug
 
 block stylesheets
-	link(rel='stylesheet' type='text/css' media='screen' href='/css/about/teachers.css')
+  link( rel='stylesheet', type='text/css', media='screen',
+    href='/css/about/teachers.css'
+  )
 
 block header
-	header(class='title')
-		div(class='title__text')
-			span(class='fontsize__small-1 sp-block') Faculty of Computer Science
-			span(class='fontsize__large') 師資陣容
-		div(class='title__filter fontsize__small-1')
-			span Filter
-			svg
 
 block content
-	include ../components/teacher_card.pug
-	main(class='overview')
-		+teacher_card( 'http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher17.jpg', '連震杰', '製造所所長', '資訊系 / 資訊所 / 製造所', '辦公室：資訊系館新大樓11F 65B12' )
-		+teacher_card( 'http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher17.jpg', '連震杰', '製造所所長', '資訊系 / 資訊所 / 製造所', '辦公室：資訊系館新大樓11F 65B12' )
-		+teacher_card( 'http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher17.jpg', '連震杰', '製造所所長', '資訊系 / 資訊所 / 製造所', '辦公室：資訊系館新大樓11F 65B12' )
-		+teacher_card( 'http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher17.jpg', '連震杰', '製造所所長', '資訊系 / 資訊所 / 製造所', '辦公室：資訊系館新大樓11F 65B12' )
-		+teacher_card( 'http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher17.jpg', '連震杰', '製造所所長', '資訊系 / 資訊所 / 製造所', '辦公室：資訊系館新大樓11F 65B12' )
+  include ../components/about/topic.pug
+  include ../components/about/teachers/card.pug
+  main.main
+    +topic( 'Faculty of Computer Science','師資陣容' )
+    section.cards
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
+      +cards__card( {
+        imageURL: 'http://via.placeholder.com/300x600',
+        nameText: '連震杰',
+        titleText: '製造所所長',
+        deptText: '資訊系 / 資訊所 / 製造所',
+        addressText: '辦公室：資訊系館新大樓11F 65B12',
+        linkURL: 'http://example.com',
+        emailURL: 'example@email.com',
+        phoneText: '(06)2345345'
+      } )
 
 block footer
 
 block scripts
-	script(src="/script.js")
-
