@@ -1,9 +1,6 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
 :root {
-  --font__family--default: "Yu Gothic UI" "Regular"; }
-
-@font-face {
-  font-family: 'Yu Gothic UI';
-  src: url(""); }
+  --font__family--default: "Arial", "Noto Sans TC", "Microsoft JhengHei"; }
 
 * {
   margin: 0;

@@ -1,2 +1,1 @@
-# webtemplate
-Modern website template created by node js
+# NCKU CSIE Website

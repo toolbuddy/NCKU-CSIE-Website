@@ -1,31 +1,31 @@
 {
-  "name": "webtemplate",
+  "name": "ncku-csie-website",
   "version": "1.0.0",
-  "description": "ncku csie web",
+  "description": "NCKU CSIE Website",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
-    "compile:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
-    "eslint-frontend": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
-    "eslint-frontend-fix": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
-    "eslint-backend": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
-    "eslint-backend-fix": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
+    "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
+    "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
+    "eslint-frontend": "eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
+    "eslint-frontend-fix": "eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
+    "eslint-backend": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
+    "eslint-backend-fix": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
     "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProFatXuanAll/webtemplate.git"
+    "url": "git+https://github.com/toolbuddy/webtemplate.git"
   },
   "author": "ProFatXuanAll",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ProFatXuanAll/webtemplate/issues"
+    "url": "https://github.com/toolbuddy/webtemplate/issues"
   },
-  "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
+  "homepage": "https://github.com/toolbuddy/webtemplate#readme",
   "dependencies": {
     "express": "^4.16.3",
     "inspect": "0.0.2",
