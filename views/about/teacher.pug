@@ -1,51 +1,15 @@
-extends ../layouts/teacher.pug
+extends ../layouts/about.pug
 
 block stylesheets
-  link(rel="stylesheet", href="/css/about/teacher.css")
+  link( rel="stylesheet", href="/css/about/teacher.css" )
 
 block header
-  include ../components/header.pug
   
 block content
-  include ../components/teacher/detail.pug
-  //- cover
-  section.cover_grid
-    img.cover_profile(src=`${static}/images/teacher/${T.id}`, alt='')
-    section.cover_info
-      span.cover_name=T.c_name
-      each name in T.c_title_name
-        span.cover_position=`${name}`
-      p.cover_dept=T.dept
-      section.cover_locate-grid
-        img.cover_locate-icon(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAADhklEQVRYheVWTYgcRRT+qt3NZrsXxhhlsyvx4MVlDRsvnhQFA8EIMQaEeIxXDwpqiKLEixcRvPgHGiQ3E/QiQgKrl1VQQQ2JQtwVSdDALqziuF3f65nZme3nwddQGaZnpidBBB8U3dT73vu+etX1uoD/u7kqYFUdazQaB/M8fxzAvQBmzbUK4Nsoij6enJz81DnXueECROSAqr4BYG4AdNk592ySJOeGyRsNAqiqE5GXVfWska8AeB7AQqvVqrVarRqABZv7GcCcqp4VkZdUtVKFexrJF0kqyS2Sx1V1vI/YcZLHDaskX7he8n0kc5K5iDw2bFyWZYeLOJL7RiJX1YjkRZIqIieqxovIK1aFC6o6cKt7JXjEEvyqqttDX6PRuIPkaZJrNk5nWba7awHbSf5mCzhQxlOqLM/zQwDgnHvfOdcs5rMs2721tXUBwBEAu2wcyfP8YijCOdd0zr0X5qokwDl3n71ec5zyPH8dwA4Ai865WefcLIBFADvMF9o5y3V/ZQGwJtNuty93zT9oSY8mSbKWJMmac+6o+R4IgZ1O54q9zowioAPg91qt9lcfTF/b3Nxsm9htlQU45+6xoV2uJQBQ1VMiMiMiM6p6ynxfhMA4jucMe6mMZ6zMkSTJqqpOqOpY2NujKDqW5/l+APtVdTUIqUdRdCzMoaqH7Xm+jKe0Aqo6LiI/kFwKu18cx1ejKNoL4AyANRtnoijaG8fx1QK3vr4+BeBJE32yjKfUrBGtkFTv/VNV40m+Zn3km8rkQZKHLckf9Xr95mHjvPd7SLZN/EMjC7Bkn1g3e2cYvFVuyYR/eF3kANBsNu8k2bTVPDEILyIniqqJyOwg/FBG8hlLSu/9fB/yQ4br2/8HmqpuE5EvSRZn3pH8wJJf6f7xAID3fl5EvFXq1UD8UvdJGmgknzOylUDUhPf+q2Ke5HThy7LsdpKXzXcyvAkFJ+npoci997eR3LAyHuwStktEfjGiH9M03UlymuSy4T9S1ZvCGBF51PB/pmm6cxgB71rAYq87na12xTDfFZcWw0904237PjOBb/YlJ7lg97mO9/7uMpyIzJC8VHxw3vuvrfOVLWpPkLf3R2xKPzelb/VV+o/YaZLnSX6/sbFxyyC8iLxtgntf14O9qg+1VxUtTdNbSda7j2j4tS4DuOtGE5fYT1NTU/PAtX/DkS8eI1j6L3L9x+1v3n4WTVpq6yUAAAAASUVORK5CYII=")
-        span.cover_lab 
-          a(href='https://sites.google.com/site/nckuikm/home', target='_blank')=T.lab
-          span.cover_locate=T.locate
-      p.cover_specialty=T.specialty
-  //- detail
-  section.content_detail
-    section.content_card-grid
-      section.content_contact
-        h1.content_title='聯絡資訊'
-        section.content_contact-grid
-          img.content_contact_mail-icon(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABU0lEQVRYhe2WsWrDMBRFj0rxnClfEWLokA5Z4hqiDp3yoZk6VIUQLx3SJajkKzx19vK6WK0xji3Z4HTwnWQh3j3oXT8EkybdWMotTGZPCKtxTFW2TZYJwN0YhnUJsrmFLwDmaMUcrbjvm9xAVfduYTJ7AtCb+NHtvR+/XgWZUbDTOs5DChtj50TsFep7myxfrp37uwFhVQ+hIDNgTcTBGDsPND8A67LGVbW3oGAHXICFL0TFfAFcyhr9ALSOcwpSX4gG87SrdZ0h9IXoY+4F4APR19wboA1iiHkQwDWIIebBAI0QA8yhMojaVB8qWse5MTaViDcAVfDszEOHVydAtceCfLj9svhD/XxteA37DUOHChA8vNozELEnsMcNQd33B4BC4BwaMAchcAaKtrOtGdBJ/ORr2gjRkJG6/s97wKn6WhlDvzegUNlororP0bwmTerSD3vlzQxzNV/0AAAAAElFTkSuQmCC")
-          a.content_contact_mail(href=`mailto:${T.mail}`)=T.mail
-          img.content_contact_phone-icon(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAEP0lEQVRYheWXXWxTZRjHf8972g4NUBKgLBBvjMmIZBuQ4gcsQLeuZXJBCKQBg18BIxgTvNIYYzIvjCRegHpjFNEohlijRhDYOWPtJoncFFg3UYmRRC9ENmYYMJC15zxedJtd98HIyo3+b3rOe/6n/1/f97zP0wP/d8l4g21tnYtckTdViIBYoB0m73u5sXHJ73cdwG7rWo3Rb4A5o51yFVea4g3V35cTwBSftKTPPYDRw0PhRyTnLrJcUwl8gepsjGfbbd0r7wqAqoqQPwgEEXH6e32bY7Hlf0Sj1Zf6e89vFeVTYGa5IUaWoDWdfcSDUwqXb/kr7t9Qt/hasTGZTFpz5lV9pMITCD0BzS2JRMKXpwswMgMe7CwQ6Xul4QCJRMK9cvn8M0ALSmgQ3+7pho8CAOoKH/L5ROZEIuEqvD3kqy0vgHAfwKyKgV8nvUGlpuDXi+UFgDxAX19g3NoA0JLuiqro6wDiSbIcAL6RI+U4sPDmzQu3xjPa7d2NqHcYmIHq3lj90rZyAEz4a4vlpM6uUjEngBmIvn+qvXZXc7N45QAwt7eAGrMSmAG46vJhucLHADjOmYV2OrvXtrOh4vG5M3P7gC8BS4w4x9vPrrgrAOo3TwIvEuAzVR1ZnnA4nJs7K7d1CCJo1LSWC2IUgOVWfAD0AlG7o/vp4mvjQJxsSWU3TRdgbDdMZ7cAh4ArauUeXLc6PGq/ZzIZf9/1QAeqj4L8jVIXr685XexxUl2PgbdZRSqBMwFy+yYq22MAVFVa27uPKLoeIdXf42tKJJYMlkDc23fVl0bkIeCKYBpjkepMMpm0gvOq3kXYVZLSg2s2jtfKx+wCEdE8uhP4E6U+OD93oPh5AAiHwzfmzs7XUViOOYrXaqeyDwdDVQeGwgdQdivSiHAMJTRRF52wDrR2dC7zPPkOmAmyJx6peaXUk8lk/H3X/IeATSgeggEGVGhat7b2JBS6aHD+4o9BtwHX8Uy8eCYmLUROW2dMjRwFfILZH4tUPzspREn4sJLJpBUMVX2C8jgiV/NuvmZ9w/Lf4DaFKNaw1DGevgageDucdOee5mYddc/I7lB5znPNytJwKHTRgP71lAhfoTrbZ6y3pjQDw7I7sq/i0Qz4QA7291rbSx/MKX2PnQ0R4BJCT3xt7QKYYimOr6l9QzxdDwyAbguG8scd58zCOwVwAwSGDvPDY1MCgMJyoLIGoQelXv3Wj3Y6u710h0ykY8d+qTCwHwCV1B0DAMTra07LoLsM+BYIAvud9i7HSZ1dNRlIOp2ZZ91z42uBONCr1uBLw9emRF8qVRW7I7tNVN7h3/eHnxEOGNETDOYvALh+33KQqCjPF3xy0RhpaFxT/dO0AIZ1NH2u0kf+BWAHsGBSs4hj5dkVjdZcGDU8HYBhJZPnAsH5uY2qskFEV4BUUvi39QOqJz3Rw02RZe3lyPrv6R/HEL3TCzGmDAAAAABJRU5ErkJggg==")
-          a.content_contact_phone(href=`tel:${T.phone}`)=T.phone
-          img.content_contact_web-icon(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAADKElEQVRYhe2WTWgUZxjHf8/sLqlJDCh4q940NouIsEjSTcBxWQUPoYV+SEtP0VqUIK1ITj20h56sIIiiJhcDosGTl7RG0k2Y1RzmUnE3alGonvxATJsNTpKZx8POpEk3ycy6Rj34v8zX/33+v3k/5h14r7csqbbBsFVIGmJ8C5pF2eBXeQAy5Kl3dmd7srAiALZtJyadhl9BDwKxJWwuyKnGutKRVCo1E6WuETW85NQPgnb7bc6p0hZXoymuRpMqbUBv+Zl2l5z6Qdu2E1Fqx6OY/DfPAI9QvtnR3jL0P8sYMJazigMI/QqZSafhGHA4rHboEJTHXG4CgrJ7kfAFylnFLMJVwPVUt4bNidAhKE84DKAvLBzA9/QCMRHZH1o/zACaBVClL9zrt/C9ArtqB/CXWgIj8vKa511fO0At0vA5Fg4gPACYwUtGzZ3zGvxdOwAyBCBCV1SAOa/KtZoBPPXOAi7QlbOK2TD/SH58F7APmHLR4zUDlNexnAIEoX85iJxVzCp6HkDg50y6JXQIIn0JG+tKR0pOfYtCBuH3XL7Yp0pfMNtn8JJ+t++bayT6RFVFRHS52tVuRsdAD7HsZsQzYJ1/PRbz4l93dGy6XzXA8PVCxlDpUfjBTLfcmrtvFZIist//yKwHpoG7omLNip5cJasfT3v/fI9ID9AETKjoXvPj5G+RAf6wiq0C1xAaFP3cTCcvLwW6lEZH/1rnxWZ7QTsBR0U/WQyiAmDYut1siHcDWKMqZ8z2j76rNjyQbduJyRf1lxA+Bf51cbdl0lvuzfdUrAJD3NPAGoSBHenNB181HCCVSs00fjD1JcgVYHWM2AVVXfDSCwBGrMIXICbwSB3ngIh4tQAEEDptdAETwPbRfPGrJQFU+Mk/PWqa257XGh7INJufAr+UM+THRQFGro9vAdkM8rixburi6woPNDWROAE8BJpz+fG2CgDF+8w/9kf9oaxGe/ZsdBQdABD1OisAUGkFQMR63eH/hRlX/YzKHsD/eYi78ZsrBTCL3gFQ2Bjcm78XfAjgGrP3cvniSjEEWhuczOsBtVc6NZAIf76prHdfLwHJYSni78yZ3QAAAABJRU5ErkJggg==")
-          a.content_contact_web(href=`${T.web}`, target='_blank')=T.web
-      section.content_education
-        +detail('學歷', T.education)
-      section.content_experience
-        +detail('經歷', T.experience)
-      section.content_award
-        +detail('榮譽及獲獎', T.award)
-      section.content_refereed-paper
-        +detail('Refereed Papers', T.refereedPaper)
-      section.content_conference-paper
-        +detail('Conference Papers', T.conferencePaper)
-      section.content_
-        +detail('指導學生情況', T.student)
+  include ../components/teacher/profile.pug
+  main.main
+    //- profile
+    +profile( profileInfo )
 
 block footer
 
