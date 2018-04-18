@@ -1,29 +1,28 @@
 // router for /announcement
-
 const express = require( 'express' );
 const router = new express.Router();
 
-// route to /announcement/all
+// resolve URL /announcement/all
 router.get( '/all', function ( req, res ) {
     res.render( 'announcement/all' );
 } );
 
-// route to /announcement/administrator
+// resolve URL /announcement/administrator
 router.get( '/administrator', function ( req, res ) {
     res.render( 'announcement/administrator' );
 } );
 
-// route to /announcement/activity
+// resolve URL /announcement/activity
 router.get( '/activity', function ( req, res ) {
     res.render( 'announcement/activity' );
 } );
 
-// route to /announcement/speech
+// resolve URL /announcement/speech
 router.get( '/speech', function ( req, res ) {
     res.render( 'announcement/speech' );
 } );
 
-// route to /announcement/recruitment
+// resolve URL /announcement/recruitment
 router.get( '/recruitment', function ( req, res ) {
     res.render( 'announcement/recruitment' );
 } );
