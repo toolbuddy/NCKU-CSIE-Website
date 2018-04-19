@@ -58,3 +58,9 @@ We are going to build a website which have following feature:
 Anyone can help make this project better!
 We are currently a 16 members group, lead by [ProFatXuanAll](https://github.com/ProFatXuanAll).
 Feel free to contact us if you have question.
+
+## Team ProFatXuanAll
+Special thanks for
+* [lanhsincheng](https://github.com/lanhsincheng) designing our website.
+* [Rispolyv0n](https://github.com/Rispolyv0n), [kaeteyaruyo](https://github.com/kaeteyaruyo), [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [IsabelTseng](https://github.com/IsabelTseng), [f26401004](https://github.com/f26401004), [ya-sin](https://github.com/ya-sin), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115) working on frontend and backend.
+* [kevinbird61](https://github.com/kevinbird61) our mentor, also the founder of [Toolbuddy](https://github.com/toolbuddy) Organization.
