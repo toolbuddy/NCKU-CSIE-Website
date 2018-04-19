@@ -8,8 +8,11 @@
 # npm files
 npm-debug.log
 package-lock.json
+<<<<<<< HEAD
 .npmrc
 .lock-wscript
+=======
+>>>>>>> e2b8b575e096ccf793625622806cf386b83c6fd1
 
 # OS generated files
 ## Mac OS
@@ -19,6 +22,9 @@ package-lock.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+<<<<<<< HEAD
 
 # other files
 ._*
+=======
+>>>>>>> e2b8b575e096ccf793625622806cf386b83c6fd1
