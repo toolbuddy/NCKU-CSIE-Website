@@ -11,19 +11,19 @@ const router = new express.Router();
 
 router.use( '/', home );
 
-// route to pages belongs to /student
+// resolve URL /student
 router.use( '/student', student );
 
-// route to pages belongs to /about
+// resolve URL /about
 router.use( '/about', about );
 
-// route to pages belongs to /research
+// resolve URL /research
 router.use( '/research', research );
 
-// route to pages belongs to /announcement
+// resolve URL /announcement
 router.use( '/announcement', announcement );
 
-// route to pages belongs to /resource
+// resolve URL /resource
 router.use( '/resource', resource );
 
 module.exports = router;

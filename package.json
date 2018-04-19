@@ -1,6 +1,6 @@
 {
-  "name": "ncku-csie-website",
-  "version": "1.0.0",
+  "name": "NCKU-CSIE-Website",
+  "version": "1.1.1",
   "description": "NCKU CSIE Website",
   "main": "server.js",
   "directories": {
@@ -14,18 +14,19 @@
     "eslint-frontend-fix": "eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
     "eslint-backend": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
     "eslint-backend-fix": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
-    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0"
+    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0",
+    "pre-build": "./bin/pre-build.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/toolbuddy/webtemplate.git"
+    "url": "git+https://github.com/toolbuddy/NCKU-CSIE-Website.git"
   },
   "author": "ProFatXuanAll",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/toolbuddy/webtemplate/issues"
+    "url": "https://github.com/toolbuddy/NCKU-CSIE-Website/issues"
   },
-  "homepage": "https://github.com/toolbuddy/webtemplate#readme",
+  "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
   "dependencies": {
     "express": "^4.16.3",
     "inspect": "0.0.2",
@@ -33,7 +34,7 @@
     "mysql2": "^1.5.3",
     "node": "^9.8.0",
     "node-sass": "^4.8.3",
-    "npm": "^5.7.1",
+    "npm": "^5.8.0",
     "pug": "^2.0.3",
     "sequelize": "^4.37.6",
     "sequelize-auto": "^0.4.29"
