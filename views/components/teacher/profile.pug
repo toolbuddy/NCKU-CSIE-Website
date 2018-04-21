@@ -1,0 +1,45 @@
+mixin profile( profileInfo = {} )
+  section.profile
+    img.profile__photo(
+      src=`${ static }/images/teacher/${ profileInfo.id }`,
+      alt=''
+    )
+    span.profile__name= profileInfo.cName
+    article.profile__titles
+      each title in profileInfo.cTitleName
+        span.profile__title= `${ title }`
+    span.profile__dept= profileInfo.dept
+    a.profile__lab(
+      href='https://sites.google.com/site/nckuikm/home',
+      target='_blank'
+    )= profileInfo.lab
+    address.profile__locate= profileInfo.locate
+    span.profile__specialty= profileInfo.specialty
+
+    a.profile__email(
+      href=`mailto:${ profileInfo.mail }`
+    )= profileInfo.mail
+    a.profile__phone(
+      href=`tel:${ profileInfo.phone }`
+    )= profileInfo.phone
+    a.profile__personal-website(
+      href=`${ profileInfo.web }`,
+      target='_blank'
+    )= profileInfo.web
+    article.profile__education.list
+      +list__item( '學歷', profileInfo.education )
+    article.profile__experience.list
+      +list__item( '經歷', profileInfo.experience )
+    article.profile__award.list
+      +list__item( '榮譽及獲獎', profileInfo.award )
+    article.profile__refereed-paper.list
+      +list__item( 'Refereed Papers', profileInfo.refereedPaper )
+    article.profile__conference-paper.list
+      +list__item( 'Conference Papers', profileInfo.conferencePaper )
+    article.profile__student.list
+      +list__item( '指導學生情況', profileInfo.student )
+
+mixin list__item( titleText = '', listItemTexts = {} )
+  h1.list__title= titleText
+  each listItemText in listItemTexts
+    p.list__item= listItemText

@@ -1,0 +1,4 @@
+# `settings/database/config.js` should be create by config.js.default
+# And fill in sensitive information about database
+# Therefore should not be uploaded
+config.js

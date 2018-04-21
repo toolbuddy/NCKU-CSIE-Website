@@ -1,3 +1,10 @@
+#
+# backup directory
+#
+# This directory is used for database backup
+# Backup file will contain sql file which is classified
+# Therefore should only leave folder and not upload any file
+
 *
 
 !.gitignore

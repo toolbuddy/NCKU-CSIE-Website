@@ -1,32 +1,30 @@
-// router for resource pages
-
+// router for /resource
 const express = require( 'express' );
 const router = new express.Router();
 
-// route to resource/law
+// resolve URL resource/law
 router.get( '/law', function ( req, res ) {
     res.render( 'resource/law' );
 } );
 
-// route to resource/rent
+// resolve URL resource/rent
 router.get( '/rent', function ( req, res ) {
     res.render( 'resource/rent' );
 } );
 
-// route to resource/fix
+// resolve URL resource/fix
 router.get( '/fix', function ( req, res ) {
     res.render( 'resource/fix' );
 } );
 
-// route to resource/ieet
+// resolve URL resource/ieet
 router.get( '/ieet', function ( req, res ) {
     res.render( 'resource/ieet' );
 } );
 
-// route to resource/law
+// resolve URL resource/law
 router.get( '/resources', function ( req, res ) {
     res.render( 'resource/resources' );
 } );
-
 
 module.exports = router;

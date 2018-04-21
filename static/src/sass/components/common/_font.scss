@@ -1,0 +1,30 @@
+@mixin font__load--YuGothicUI(){
+  @font-face {
+    font-family: 'Yu Gothic UI';
+    src: url('');
+  }
+}
+
+@mixin font__family--YuGothicUI(){
+  font: {
+    family: 'Yu Gothic UI';
+  }
+}
+
+@mixin font__load--NotoSansTC(){
+  @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+}
+
+@mixin font__family--NotoSansTC(){
+  font: {
+    family: "Noto Sans TC";
+    weight: 100;
+  }
+  letter-spacing: .0625rem;
+}
+
+:root{
+  --font__family--default: "Arial", "Noto Sans TC", "Microsoft JhengHei";
+}
+
