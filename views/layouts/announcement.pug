@@ -1,17 +1,16 @@
 include ../components/announcement.pug
+include ../components/title.pug
+include ../components/tags.pug
 doctype html
 html
   head
-    title= title
     block css
   body
     block header
     section#content-container
-      h1(class='item1') undergraduate
-        br
-        span 大學部
+      block titles
+      block filter
       block content
-      //section#page
       block page 
     block footer
     block script
