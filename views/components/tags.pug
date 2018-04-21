@@ -1,0 +1,5 @@
+mixin tags( ...tags )
+  aside(class='tags filter__tags')
+    each tag in tags
+      button(class=tag)
+        a= tag
