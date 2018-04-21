@@ -1,0 +1,68 @@
+.filter {
+  display: grid;
+  grid-template-area: 'filter__tags filter__time';
+  grid-template-columns: 80% 20% 
+  
+  &__tags{
+    grid-area: filter_tags
+  }
+
+  .tags{
+    
+    &__tag{
+      &--college{
+
+      }
+      &--master{
+      }
+      &--phd{
+      }
+      &--teacher{
+      }
+      &--administrator{
+      }
+      &--international{
+      }
+      &--exhibition{
+      }
+      &--speech{
+        
+      }
+      &--competition{
+      }
+      &--conference{
+      }
+      &--internship{
+      }
+      &--law{
+      }
+      &--recruitment{
+      }
+      &--scholarship{
+      }
+
+  &__time{
+    grid-area: filter_time
+  }
+
+  button
+    border-radius: 1em
+    height: 2em
+    width: 5em
+    a
+      display: inline-block
+    &.course
+      background: #ef6000
+      color: #fefefe
+
+    &.graduate
+      background: #f9d907
+      color: #fefefe
+
+    &.college
+      background: #00b8e3
+      color: #fefefe
+
+    &.activity
+      background: #103eac
+      color: #fefefe

@@ -3,16 +3,25 @@ extends ../layouts/announcement.pug
 block css
   link(rel='stylesheet' href='/css/announcement/all.css')
 block header
-block titles
+block title
   +title( 'Undergraduate', '大學部' )
 block filter
-  +tags( 'course', 'graduate' ) 
+  +filter( 'course', 'graduate' ) 
 block content
-  +announce( '標題一', '2018-2-2 | 15:02', '一小段內文', '', '', 'course', 'graduate', 'college' )
-  +announce( '標題二', '2018-2-2 | 15:02', '二小段內文', '', '' )
-  +announce( '標題三', '2018-2-2 | 15:02', '三小段內文', '', '' )
-  +announce( '標題四', '2018-2-2 | 15:02', '四小段內文', '', '' )
-  +announce( '標題五', '2018-2-2 | 15:02', '五小段內文', '', '' )
+  main.announcement
+    +announcement__briefing(
+      {
+        title: '標題一',
+        time: '2018-2-2 | 15:02',
+        excerpt: '一小段內文',
+        articleUrl: '', 
+        tags: [ 'course', 'graduate', 'college' ]
+      }
+    )
+    +announcement__briefing( '標題二', '2018-2-2 | 15:02', '二小段內文', '', '' )
+    +announcement__briefing( '標題三', '2018-2-2 | 15:02', '三小段內文', '', '' )
+    +announcement__briefing( '標題四', '2018-2-2 | 15:02', '四小段內文', '', '' )
+    +announcement__briefing( '標題五', '2018-2-2 | 15:02', '五小段內文', '', '' )
 block page 
 block footer
 block script

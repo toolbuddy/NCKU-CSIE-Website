@@ -1,0 +1,20 @@
+mixin filter( ...tags )
+  section.filter
+    +filter__tags( ...tags )
+    +filter__time()
+  
+mixin filter__tags( ...tags )
+  //- let validation = [
+      'college', 'master', 'phd', 'teacher', 'administrator', 
+      'international', 'exhibition', 'speech', 'competition', 'conference',
+      'internship', 'law', 'recruitment', 'scholarship',
+    ];
+    for( tag of tags )
+      if( !validation.include(tag) )
+        throw new Error( `invalid tag ${ tag }` );
+  article.filter__tags.tags
+    each tag in tags
+      button( class=`tags__tag--${ tag }` )= tag
+
+mixin filter__time()
+  article.filter__time

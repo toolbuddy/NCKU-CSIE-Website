@@ -1,9 +1,0 @@
-mixin announce( title, time, excerpt, articleUrl, imageUrl, ...tags )
-  main#main-container(class='post')
-    h1(class='post__title')= title
-    aside(class='tags post__tags')
-      each tag in tags
-        button(class=tag)
-          a= tag
-    p(class='post__article')= excerpt
-    time(class='post__time')= time

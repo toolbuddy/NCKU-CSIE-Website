@@ -1,0 +1,13 @@
+.title {
+  grid-column-start: 1;
+  grid-column-end: 11;
+  border-bottom: 0.5px solid #000000;
+  &__text {
+    &--english {
+      font-size: 1em;
+    }
+    &--chinese {
+      font-size: 2em;
+    }
+  }
+}

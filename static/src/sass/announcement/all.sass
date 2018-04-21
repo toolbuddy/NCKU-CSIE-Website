@@ -1,6 +1,7 @@
-@import ../components/reset
-@import ../components/tags
- 
+@import ../components/common/reset
+@import ../components/announcement/tags
+@import ../components/announcement/title
+
 #content-container
   padding: 5%
   display: grid
@@ -8,26 +9,17 @@
   grid-template-columns: repeat(10,1fr)
   background-color: #ECECEC
       
-#main-container
-  padding: 1em
-  display: grid
-  grid-template-columns: repeat(2,1fr) 
-  background-color: #FFFFFF
-  height: 7rem
-.title
-  grid-column-start: 1
-  grid-column-end: 11
-  border-bottom: 0.5px solid #000000
-.title__english
-  font-size: 1em
-.title__chinese
-  font-size: 2em
 
 .post
   min-height: 10%
   height: 100%
   grid-column-start: 2
   grid-column-end: 10
+  padding: 1em
+  display: grid
+  grid-template-columns: repeat(2,1fr) 
+  background-color: #FFFFFF
+  height: 7rem
 .post__title
   display: flex
   grid-column-start: 1

@@ -1,6 +1,6 @@
-include ../components/announcement.pug
-include ../components/title.pug
-include ../components/tags.pug
+include ../components/announcement/announcement.pug
+include ../components/announcement/title.pug
+include ../components/announcement/filter.pug
 doctype html
 html
   head
@@ -8,7 +8,7 @@ html
   body
     block header
     section#content-container
-      block titles
+      block title
       block filter
       block content
       block page 
