@@ -13,7 +13,7 @@ Build a better website for NCKU CSIE
     * files mentioned about will not exist if you didn't run pre-build script
 
 ## Run
-* `node server.js`
+* `npm start`
 
 ## Develop Guide
 This project use [node.js](https://nodejs.org/en/) as backend infrastructure.

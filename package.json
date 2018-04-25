@@ -8,13 +8,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
-    "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
-    "eslint-frontend": "eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
-    "eslint-frontend-fix": "eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
-    "eslint-backend": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
-    "eslint-backend-fix": "eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
-    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0",
+    "sass:pre-build": "gulp --gulpfile settings/gulp/gulpfile.js sass:pre-build",
+    "build:css": "gulp --gulpfile settings/gulp/gulpfile.js build:css",
+    "sass:watch": "gulp --gulpfile settings/gulp/gulpfile.js sass:watch",
+    "lint:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-frontend",
+    "lint:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-backend",
+    "lint:pug": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0",
     "pre-build": "./bin/pre-build.sh"
   },
   "repository": {
@@ -29,6 +28,7 @@
   "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "gulp-file": "^0.4.0",
     "inspect": "0.0.2",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
@@ -41,6 +41,15 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-csso": "^3.0.1",
+    "gulp-eslint": "^4.0.2",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
     "pug-lint": "^2.5.0",
     "sass-lint": "^1.12.1"
   }
