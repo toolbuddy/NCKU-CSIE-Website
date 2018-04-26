@@ -8,6 +8,8 @@ const file = require( 'gulp-file' );
 const plumber = require( 'gulp-plumber' );
 const rename = require( 'gulp-rename' );
 const sourcemaps = require( 'gulp-sourcemaps' );
+const cached = require( 'gulp-cached' );
+const remember = require( 'gulp-remember' );
 const config = require( './config' );
 
 /**
@@ -16,14 +18,14 @@ const config = require( './config' );
  */
 gulp.task( 'lint:js-frontend', () => {
     return gulp.src( config.js.frontend.src )
-    .pipe( plumber() )
-    .pipe(
-        eslint( {
-            configFile: config.js.frontend.lint.rule,
-            fix: true,
-            ignorePath: config.js.frontend.lint.ignoreFile,
-        } ) 
-    )
+        .pipe( plumber() )
+        .pipe(
+            eslint( {
+                configFile: config.js.frontend.lint.rule,
+                fix: true,
+            } )
+        )
+        .pipe( eslint.format() );
 } );
 
 /**
@@ -32,55 +34,80 @@ gulp.task( 'lint:js-frontend', () => {
  */
 gulp.task( 'lint:js-backend', () => {
     return gulp.src( config.js.backend.src )
-    .pipe( plumber() )
-    .pipe(
-        eslint( {
+        .pipe( plumber() )
+        .pipe( cached( 'lint:js-backend' ) )
+        .pipe( eslint( {
             configFile: config.js.backend.lint.rule,
             fix: true,
-            ignorePath: config.js.backend.lint.ignoreFile,
-        } ) 
-    )
-    .pipe( eslint.failOnError() );
-} );
-
-gulp.task( 'js', () => {
-    return gulp.src( [] )
-        .pipe( eslint( {
-            configFile: `${ global.rootdir }/settings/lint/eslint/`,
-            fix: true,
         } ) )
+        .pipe( eslint.format() )
+        .pipe( eslint.result( result => {
+            const boundary = 0;
+
+            // if a file jhas errors/warnings uncache it
+            if( result.warningCount > boundary || result.errorCount > boundary )
+                delete cached.caches[ 'lint:js-backend' ][ result.filePath ];
+
+        } ) )
+        .pipe(gulp.dest());
 } );
 
-gulp.task( 'sass:pre-build', () => {
-    return file( config.sass.static.fileName, config.sass.static.data, { src: true } )
+/**
+ * task `watch:js-frontend`:
+ *     watch frontend JavaScript file, trigger `lint:js-frontend` if changed.
+ */
+gulp.task( 'watch:js-frontend', () => {
+    gulp.watch( config.js.frontend.src, gulp.parallel( 'lint:js-frontend' ) );
+} );
+
+/**
+ * task `watch:js-backend`:
+ *     watch backend JavaScript file, trigger `lint:js-frontend` if changed.
+ */
+gulp.task( 'watch:js-backend', () => {
+    gulp.watch( config.js.backend.src, gulp.parallel( 'lint:js-backend' ) );
+} );
+
+/**
+ * task `pre-build:css`: use `gulp-file` to write scss files static settings
+ */
+gulp.task( 'pre-build:css', () => {
+    return file( config.sass.static.fileName, config.sass.static.data, { src: true, } )
         .pipe( plumber() )
         .pipe( gulp.dest( config.sass.static.dest ) );
 } );
+
 /**
  * task `build:css`: use `sass` to convert scss files into css files
  */
 gulp.task( 'build:css', () => {
     return gulp.src( config.sass.src )
-        .pipe( plumber() ) 
+        .pipe( plumber() )
         .pipe( sourcemaps.init() )
-        .pipe( sass( { outputStyle: 'compressed' } ) )
+        .pipe( sass( { outputStyle: 'compressed', } ) )
         .pipe( gulp.dest( config.sass.dest ) )
         .pipe( autoprefixer( {
             browsers: config.browserlist,
             grid: true,
         } ) )
         .pipe( csso() )
-        .pipe( rename( { suffix: '.min' } ) )
+        .pipe( rename( { suffix: '.min', } ) )
         .pipe( sourcemaps.write( config.sourcemaps.dest ) )
         .pipe( gulp.dest( config.sass.dest ) );
 } );
 
-// task `sass:watch`: watch scss files and trigger task `sass` if files had been changed
-gulp.task( 'sass:watch', () => {
+/**
+ * task `watch:css`: watch scss files, trigger task `build:css` if files changed
+ */
+gulp.task( 'watch:css', () => {
     gulp.watch(
         config.sass.src,
         gulp.parallel( 'sass' )
     );
+} );
+
+gulp.task( 'clear', () => {
+    cached.clearAll();
 } );
 
 gulp.task( 'develop', () => {

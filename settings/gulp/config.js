@@ -10,24 +10,28 @@ module.exports = {
             src: [
                 `${ projectRoot }/static/src/js/**/*.js`,
             ],
+            dest: `${ projectRoot }/static/dist/js`,
             lint: {
                 rule: `${ projectRoot }/settings/lint/eslint/frontend.js`,
-                ignoreFile: `${ projectRoot }/settings/lint/eslint/.frontend_ignore`,
             },
         },
         backend: {
             src: [
                 `${ projectRoot }/**/*.js`,
+                `!${ projectRoot }/node_modules/**/*.*`,
+                `!${ projectRoot }/src/**/*.js`,
+                `!${ projectRoot }/models/**/*.js`,
             ],
+            dest: `${ projectRoot}`,
             lint: {
                 rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
-                ignoreFile: `${ projectRoot }/settings/lint/eslint/.backend_ignore`,
             },
         },
     },
     sass: {
         src: [
             `${ projectRoot }/static/src/sass/**/*.scss`,
+            `!${ projectRoot }/static/src/sass/components/**/*.scss`,
         ],
         dest: `${ projectRoot }/static/dist/css`,
         static: {
@@ -37,8 +41,10 @@ module.exports = {
                 `// don't change anthing because it will be overwrite next time\n` +
                 `// change file content at ${ __dirname }/config.js\n` +
                 `$staticRoot: '${ host }';\n` +
+                `$projectRoot: '${ projectRoot }';\n` +
                 `$font: '#{ $staticRoot }/font';\n` +
-                `$image: '#{ $staticRoot }/image';\n`,
+                `$image: '#{ $staticRoot }/image';\n` + 
+                `$sass: '#{ $projectRoot }/static/src/sass';`,
             dest: `${ projectRoot }/static/src/sass/components/common`,
         },
     },
@@ -50,5 +56,6 @@ module.exports = {
     browserlist,
     sourcemaps: {
         dest: '.',
-    }
+    },
+    projectRoot,
 };
