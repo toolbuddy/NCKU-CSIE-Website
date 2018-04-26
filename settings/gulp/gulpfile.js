@@ -1,39 +1,71 @@
 const gulp = require( 'gulp' );
 const nodemon = require( 'gulp-nodemon' );
 const eslint = require( 'gulp-eslint' );
+const uglify = require( 'gulp-uglify-es' ).default;
 const sass = require( 'gulp-sass' );
 const autoprefixer = require( 'gulp-autoprefixer' );
 const csso = require( 'gulp-csso' );
 const file = require( 'gulp-file' );
 const plumber = require( 'gulp-plumber' );
 const rename = require( 'gulp-rename' );
+const size = require( 'gulp-size' );
 const sourcemaps = require( 'gulp-sourcemaps' );
+const gulpIf = require( 'gulp-if' );
 const cached = require( 'gulp-cached' );
-const remember = require( 'gulp-remember' );
+const debug = require( 'gulp-debug' );
+const del = require( 'del' );
 const config = require( './config' );
 
 /**
  * task `lint:js-frontend`:
- *     use `eslint` to lint frontend JavaScript file
+ *     Use `eslint` to lint frontend JavaScript files.
  */
 gulp.task( 'lint:js-frontend', () => {
-    return gulp.src( config.js.frontend.src )
+
+    /**
+     * helper function:
+     *     Judge `eslint` has fixed the file contents or not.
+     */
+    function isFixed ( file ) {
+        return file.eslint != null && file.eslint.fixed;
+    }
+
+    return gulp.src( config.js.frontend.lint.src )
         .pipe( plumber() )
+        .pipe( cached( 'lint:js-frontend' ) )
         .pipe(
             eslint( {
                 configFile: config.js.frontend.lint.rule,
                 fix: true,
             } )
         )
-        .pipe( eslint.format() );
+        .pipe( eslint.format() )
+        .pipe( eslint.result( result => {
+            const threshold = 0;
+
+            // If a file has errors/warnings, uncache it.
+            if( result.warningCount > threshold || result.errorCount > threshold )
+                delete cached.caches[ 'lint:js-frontend' ][ result.filePath ];
+        } ) )
+        .pipe( debug() )
+        .pipe( gulpIf( isFixed, gulp.dest( config.js.frontend.lint.dest ) ) );
 } );
 
 /**
  * task `lint:js-backend`:
- *     use `eslint` to lint backend JavaScript file
+ *     Use `eslint` to lint backend JavaScript files.
  */
 gulp.task( 'lint:js-backend', () => {
-    return gulp.src( config.js.backend.src )
+
+    /**
+     * helper function:
+     *     Judge `eslint` has fixed the file contents or not.
+     */
+    function isFixed ( file ) {
+        return file.eslint != null && file.eslint.fixed;
+    }
+
+    return gulp.src( config.js.backend.lint.src )
         .pipe( plumber() )
         .pipe( cached( 'lint:js-backend' ) )
         .pipe( eslint( {
@@ -42,30 +74,69 @@ gulp.task( 'lint:js-backend', () => {
         } ) )
         .pipe( eslint.format() )
         .pipe( eslint.result( result => {
-            const boundary = 0;
+            const threshold = 0;
 
-            // if a file jhas errors/warnings uncache it
-            if( result.warningCount > boundary || result.errorCount > boundary )
+            // If a file has errors/warnings, uncache it.
+            if( result.warningCount > threshold || result.errorCount > threshold )
                 delete cached.caches[ 'lint:js-backend' ][ result.filePath ];
-
         } ) )
-        .pipe(gulp.dest());
+        .pipe( debug() )
+        .pipe( gulpIf( isFixed, gulp.dest( config.js.backend.lint.dest ) ) );
+} );
+
+/**
+ * task `build:js-frontend`:
+ *     Build frontend JavaScript files.
+ */
+gulp.task( 'build:js-frontend', () => {
+    return gulp.src( config.js.frontend.build.src )
+        .pipe( plumber() )
+        .pipe( gulp.dest( config.js.frontend.build.dest ) )
+        .pipe( sourcemaps.init() )
+        .pipe( uglify() )
+        .pipe( rename( { suffix: '.min', } ) )
+        .pipe( size( { showFiles: true, } ) )
+        .pipe( sourcemaps.write( config.sourcemaps.dest ) )
+        .pipe( gulp.dest( config.js.frontend.build.dest ) );
 } );
 
 /**
  * task `watch:js-frontend`:
- *     watch frontend JavaScript file, trigger `lint:js-frontend` if changed.
+ *     Watch frontend JavaScript files.
+ *     Trigger `lint:js-frontend` and `build:js-frontend` if changed.
  */
 gulp.task( 'watch:js-frontend', () => {
-    gulp.watch( config.js.frontend.src, gulp.parallel( 'lint:js-frontend' ) );
+    gulp.watch(
+        config.js.frontend.lint.src,
+        gulp.parallel( 'lint:js-frontend', 'build:js-frontend' )
+    );
 } );
 
 /**
  * task `watch:js-backend`:
- *     watch backend JavaScript file, trigger `lint:js-frontend` if changed.
+ *     Watch backend JavaScript files.
+ *     Trigger `lint:js-frontend` if changed.
  */
 gulp.task( 'watch:js-backend', () => {
-    gulp.watch( config.js.backend.src, gulp.parallel( 'lint:js-backend' ) );
+    gulp.watch( config.js.backend.lint.src, gulp.parallel( 'lint:js-backend' ) );
+} );
+
+/**
+ * task `clear:js-frontend`:
+ *     Clean `lint:js-frontend` generated caches.
+ *     Clean `build:js-frontend` generated files.
+ */
+gulp.task( 'clear:js-frontend', () => {
+    delete cached.caches[ 'lint:js-frontend' ];
+    del( config.js.frontend.build.dest );
+} );
+
+/**
+ * task `clear:js-backend`:
+ *     clean cache
+ */
+gulp.task( 'clear:js-backend', () => {
+    delete cached.caches[ 'lint:js-backend' ];
 } );
 
 /**
@@ -92,8 +163,9 @@ gulp.task( 'build:css', () => {
         } ) )
         .pipe( csso() )
         .pipe( rename( { suffix: '.min', } ) )
-        .pipe( sourcemaps.write( config.sourcemaps.dest ) )
-        .pipe( gulp.dest( config.sass.dest ) );
+        .pipe( sourcemaps.write( config.sourcemaps.dest ) );
+
+    // .pipe( gulp.dest( config.sass.dest ) );
 } );
 
 /**
