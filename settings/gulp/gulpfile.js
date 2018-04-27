@@ -15,8 +15,6 @@ const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const filter = require( 'gulp-filter' );
 const del = require( 'del' );
-
-// const browserSync = require( 'browser-sync' );
 const config = require( './config' );
 
 /**
