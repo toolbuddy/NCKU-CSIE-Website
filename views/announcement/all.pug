@@ -6,22 +6,28 @@ block header
 block title
   +title( 'Undergraduate', '大學部' )
 block filter
-  +filter( 'course', 'graduate' ) 
+  +filter( 'master', 'administrator','international','phd','scholarship','internship','law','conference','competition','law','conference','competition','law','conference','competition','law','conference','competition' ) 
 block content
   main.announcement
-    +announcement__briefing(
+    +announcement__briefing(  
       {
         title: '標題一',
         time: '2018-2-2 | 15:02',
         excerpt: '一小段內文',
         articleUrl: '', 
-        tags: [ 'course', 'graduate', 'college' ]
+        tags: [ 'college', 'speech', 'phd' ]
       }
-    )
-    +announcement__briefing( '標題二', '2018-2-2 | 15:02', '二小段內文', '', '' )
-    +announcement__briefing( '標題三', '2018-2-2 | 15:02', '三小段內文', '', '' )
-    +announcement__briefing( '標題四', '2018-2-2 | 15:02', '四小段內文', '', '' )
-    +announcement__briefing( '標題五', '2018-2-2 | 15:02', '五小段內文', '', '' )
+   )
+    +announcement__briefing(  
+      {
+        title: '標題二',
+        time: '2018-2-2 | 15:02',
+        excerpt: '兩小段內文',
+        articleUrl: '', 
+        tags: [ 'recruitment', 'teacher', 'exhibition' ]
+      }
+   )
 block page 
 block footer
 block script
+

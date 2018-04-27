@@ -1,68 +1,101 @@
 .filter {
+  grid-column-start: 2;
+  grid-column-end: 10;
   display: grid;
-  grid-template-area: 'filter__tags filter__time';
-  grid-template-columns: 80% 20% 
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "filter__tags filter__time";
+  margin-bottom: 3.7rem;
   
   &__tags{
-    grid-area: filter_tags
   }
-
-  .tags{
-    
-    &__tag{
-      &--college{
-
-      }
-      &--master{
-      }
-      &--phd{
-      }
-      &--teacher{
-      }
-      &--administrator{
-      }
-      &--international{
-      }
-      &--exhibition{
-      }
-      &--speech{
-        
-      }
-      &--competition{
-      }
-      &--conference{
-      }
-      &--internship{
-      }
-      &--law{
-      }
-      &--recruitment{
-      }
-      &--scholarship{
-      }
-
   &__time{
-    grid-area: filter_time
+    
+  }
+}
+.tags{
+  display: inline-block;
+  border-radius: 1em;
+  color: #FFFFFF;
+  font-size: 0.625rem;
+  &__tag{
+    &--radius{
+      background: none;
+      border-radius: 1rem;
+      padding: 0.1rem 0.5rem 0.2rem 0.5rem;
+      margin-right: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    &--college{
+      background: #F5C150;
+    }
+    &--master{
+      background: #E64D3A;
+    }
+    &--phd{
+      background: #434A54;
+    }
+    &--teacher{
+      background: #01B259;
+    }
+    &--administrator{
+      background: #B352C7;
+    }
+    &--international{
+      border: 0.03rem solid #E45C75;
+      color: #E45C75;
+    }
+    &--exhibition{
+      border: 0.03rem solid #00B1BD;
+      color: #00B1BD;
+    }
+    &--speech{
+      border: 0.03rem solid #FD5540;
+      color: #FD5540;
+    }
+    &--competition{
+      border: 0.03rem solid #386AE8;
+      color: #386AE8;
+    }
+    &--conference{
+      border: 0.03rem solid #006786;
+      color: #006786;
+    }
+    &--internship{
+      border: 0.03rem solid #01ADDF;
+      color: #01ADDF;
+    }
+    &--law{
+      border: 0.03rem solid #B13B2D;
+      color: #B13B2D;
+    }
+    &--recruitment{
+      border: 0.03rem solid #38E8DE;
+      color: #38E8DE;
+    }
+    &--scholarship{
+      border: 0.03rem solid #6ABC50;
+      color: #6ABC50;
+    }
+  }
+}
+.time{
+  display: grid;
+  grid-template-columns: repeat(2,1fr) ;
+  font-size: 0.625rem;
+  margin-left: 6rem;
+  &__datetext{
+    &--property{
+
+    }
+  }
+  &__dateinput{
+    &--background{
+      border-radius: 1rem;
+      display: flex;
+      align-self: center;
+      padding: 0.4rem 0.5rem;
+      width: 6rem;
+    }
   }
 
-  button
-    border-radius: 1em
-    height: 2em
-    width: 5em
-    a
-      display: inline-block
-    &.course
-      background: #ef6000
-      color: #fefefe
-
-    &.graduate
-      background: #f9d907
-      color: #fefefe
-
-    &.college
-      background: #00b8e3
-      color: #fefefe
-
-    &.activity
-      background: #103eac
-      color: #fefefe
+}
