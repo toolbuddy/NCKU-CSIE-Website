@@ -6,14 +6,18 @@ Build a better website for NCKU CSIE
 * install dependencies - `npm install`
 
 ## Build
-* run pre-build script - `npm run pre-build`
-* fill in required configuration file
-    * server configuration - `settings/server/config.js`
-    * database configuration - `settings/database/config.js`
-    * files mentioned about will not exist if you didn't run pre-build script
+* run pre-build script to setup config files - `npm run pre-build`
+    * fill in required configuration file
+        * server configuration - `settings/server/config.js`
+        * database configuration - `settings/database/config.js`
+        * files mentioned about will not exist if you didn't run pre-build script
+* build css file and js file - `npm run build`
 
 ## Run
-* `node server.js`
+* `npm start`
+
+## Run in develop mode
+* `npm run develop`
 
 ## Develop Guide
 This project use [node.js](https://nodejs.org/en/) as backend infrastructure.
@@ -25,13 +29,13 @@ Here are a few standard:
     * ECMAScript6 syntax mainly used
     * Camel form naming style
     * Other rules can be check by running following command:
-        * frontend: `npm run eslint-frontend`
-        * backend: `npm run eslint-backend`
+        * frontend: `npm run lint:js-frontend`
+        * backend: `npm run lint:js-backend`
 * HTML
     * Using pug template engine
     * HTML5 tags only
     * Semantic tags only, don't use tags like `div`, `i`, `b`, etc.
-    * Other rules can be check by running `npm run puglint`
+    * Other rules can be check by running `npm run lint:pug`
 * CSS
     * Using Sass
     * CSS3 syntax mainly used
@@ -39,6 +43,7 @@ Here are a few standard:
         * Block: control layout of its elements (structure)
         * Element: control outfit of itself (skin)
         * Modifier: modified style of specific element
+    * Build css files: `npm run build:css`
 * Git
     * Using Git flow as develop standard
     * `master`: major stable version branch
