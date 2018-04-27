@@ -239,6 +239,11 @@ gulp.task( 'watch', gulp.parallel(
     'watch:css'
 ) );
 
+/**
+ * Task `develop`:
+ *     Automatically restart server when files changed and need to restart.
+ *     Automatically run `lint` and `build` when server restart.
+ */
 gulp.task( 'develop', ( done ) => {
     const stream = nodemon( {
         script: config.nodemon.main,
