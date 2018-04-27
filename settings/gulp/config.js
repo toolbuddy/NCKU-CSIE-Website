@@ -29,6 +29,7 @@ const config = {
             build: {
                 src: [
                     `${ projectRoot }/**/*.js`,
+                    `!${ projectRoot }/static/src/**/*.js`,
                 ],
                 dest: `${ projectRoot }/build`,
             },
