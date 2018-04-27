@@ -11,6 +11,9 @@ package-lock.json
 .npmrc
 .lock-wscript
 
+# sass files
+.sass-cache
+
 # OS generated files
 ## Mac OS
 .DS_Store
