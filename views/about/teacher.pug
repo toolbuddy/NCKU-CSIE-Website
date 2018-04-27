@@ -1,4 +1,4 @@
-extends ../layouts/about.pug
+extends /views/layouts/about.pug
 
 block stylesheets
   link( rel="stylesheet", href="/css/about/teacher.css" )
@@ -6,7 +6,7 @@ block stylesheets
 block header
   
 block content
-  include ../components/teacher/profile.pug
+  include /views/components/teacher/profile.pug
   main.main
     //- profile
     +profile( profileInfo )
