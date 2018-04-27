@@ -5,7 +5,7 @@ const projectRoot = path.dirname( path.dirname( __dirname ) );
 const host = require( `${ projectRoot }/settings/server/config` ).host;
 const browserlist = require( `${ projectRoot }/settings/browserlist/config` );
 
-module.exports = {
+const config = {
     js: {
         frontend: {
             build: {
@@ -45,11 +45,19 @@ module.exports = {
         },
     },
     sass: {
-        src: [
-            `${ projectRoot }/static/src/sass/**/*.scss`,
-            `!${ projectRoot }/static/src/sass/components/**/*.scss`,
-        ],
-        dest: `${ projectRoot }/static/dist/css`,
+        build: {
+            src: [
+                `${ projectRoot }/static/src/sass/**/*.scss`,
+                `!${ projectRoot }/static/src/sass/components/**/*.scss`,
+            ],
+            dest: `${ projectRoot }/static/dist/css`,
+        },
+        lint: {
+            src: [
+                `${ projectRoot }/static/src/sass/**/*.scss`,
+            ],
+            dest: `${ projectRoot }/static/src/sass`,
+        },
         static: {
             fileName: '_static.scss',
             data:
@@ -73,5 +81,20 @@ module.exports = {
     sourcemaps: {
         dest: '.',
     },
+    nodemon: {
+        main: `${ projectRoot }/server.js`,
+        watch: {
+            src: [
+                `${ projectRoot }`,
+            ],
+            ignore: [
+                `${ projectRoot }/node_modules`,
+                `${ projectRoot }/static/dist`,
+            ],
+        },
+    },
     projectRoot,
+    host,
 };
+
+module.exports = config;

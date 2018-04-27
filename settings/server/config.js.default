@@ -1,4 +1,13 @@
-module.exports = {
-    host: '',
+const config = {
+    domainName: 'localhost',
+    protocal: 'http',
     port: '3000',
+    get host() {
+        return `${ config.protocal }://${ config.domainName }` +
+            ( config.port === '80' || config.port === '443' ?
+                '' :
+                `:${ config.port }`
+            );
+    },
 };
+module.exports = config;

@@ -13,17 +13,19 @@ const sourcemaps = require( 'gulp-sourcemaps' );
 const gulpIf = require( 'gulp-if' );
 const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
+const filter = require( 'gulp-filter' );
 const del = require( 'del' );
+const browserSync = require( 'browser-sync' );
 const config = require( './config' );
 
 /**
- * task `lint:js-frontend`:
+ * Task `lint:js-frontend`:
  *     Use `eslint` to lint frontend JavaScript files.
  */
 gulp.task( 'lint:js-frontend', () => {
 
     /**
-     * helper function:
+     * Helper Function:
      *     Judge `eslint` has fixed the file contents or not.
      */
     function isFixed ( file ) {
@@ -52,13 +54,13 @@ gulp.task( 'lint:js-frontend', () => {
 } );
 
 /**
- * task `lint:js-backend`:
+ * Task `lint:js-backend`:
  *     Use `eslint` to lint backend JavaScript files.
  */
 gulp.task( 'lint:js-backend', () => {
 
     /**
-     * helper function:
+     * Helper Function:
      *     Judge `eslint` has fixed the file contents or not.
      */
     function isFixed ( file ) {
@@ -85,7 +87,7 @@ gulp.task( 'lint:js-backend', () => {
 } );
 
 /**
- * task `build:js-frontend`:
+ * Task `build:js-frontend`:
  *     Build frontend JavaScript files.
  */
 gulp.task( 'build:js-frontend', () => {
@@ -101,7 +103,27 @@ gulp.task( 'build:js-frontend', () => {
 } );
 
 /**
- * task `watch:js-frontend`:
+ * task `clear:js-frontend`:
+ *     Clean `lint:js-frontend` generated caches.
+ *     Clean `build:js-frontend` generated files.
+ */
+gulp.task( 'clear:js-frontend', ( done ) => {
+    delete cached.caches[ 'lint:js-frontend' ];
+    del( config.js.frontend.build.dest, { force: true, } );
+    done();
+} );
+
+/**
+ * Task `clear:js-backend`:
+ *     Clean `lint:js-backend` generated caches.
+ */
+gulp.task( 'clear:js-backend', ( done ) => {
+    delete cached.caches[ 'lint:js-backend' ];
+    done();
+} );
+
+/**
+ * Task `watch:js-frontend`:
  *     Watch frontend JavaScript files.
  *     Trigger `lint:js-frontend` and `build:js-frontend` if changed.
  */
@@ -122,25 +144,8 @@ gulp.task( 'watch:js-backend', () => {
 } );
 
 /**
- * task `clear:js-frontend`:
- *     Clean `lint:js-frontend` generated caches.
- *     Clean `build:js-frontend` generated files.
- */
-gulp.task( 'clear:js-frontend', () => {
-    delete cached.caches[ 'lint:js-frontend' ];
-    del( config.js.frontend.build.dest );
-} );
-
-/**
- * task `clear:js-backend`:
- *     clean cache
- */
-gulp.task( 'clear:js-backend', () => {
-    delete cached.caches[ 'lint:js-backend' ];
-} );
-
-/**
- * task `pre-build:css`: use `gulp-file` to write scss files static settings
+ * Task `pre-build:css`:
+ *     Use `gulp-file` to write scss files static settings.
  */
 gulp.task( 'pre-build:css', () => {
     return file( config.sass.static.fileName, config.sass.static.data, { src: true, } )
@@ -149,42 +154,102 @@ gulp.task( 'pre-build:css', () => {
 } );
 
 /**
- * task `build:css`: use `sass` to convert scss files into css files
+ * Task `build:css`:
+ *     Use `sass` to convert scss files into css files.
  */
 gulp.task( 'build:css', () => {
-    return gulp.src( config.sass.src )
+    return gulp.src( config.sass.build.src )
         .pipe( plumber() )
         .pipe( sourcemaps.init() )
         .pipe( sass( { outputStyle: 'compressed', } ) )
-        .pipe( gulp.dest( config.sass.dest ) )
+        .pipe( sourcemaps.write( config.sourcemaps.dest ) )
+        .pipe( gulp.dest( config.sass.build.dest ) )
+        .pipe( filter( '**/*.css' ) )
         .pipe( autoprefixer( {
             browsers: config.browserlist,
             grid: true,
         } ) )
         .pipe( csso() )
         .pipe( rename( { suffix: '.min', } ) )
-        .pipe( sourcemaps.write( config.sourcemaps.dest ) );
-
-    // .pipe( gulp.dest( config.sass.dest ) );
+        .pipe( size( { showFiles: true, } ) )
+        .pipe( sourcemaps.write( config.sourcemaps.dest ) )
+        .pipe( gulp.dest( config.sass.build.dest ) );
 } );
 
 /**
- * task `watch:css`: watch scss files, trigger task `build:css` if files changed
+ * Task `clear:css`:
+ *     Clean `build:css` generated files.
+ */
+gulp.task( 'clear:css', ( done ) => {
+    del( config.sass.build.dest, { force: true, } );
+    done();
+} );
+
+/**
+ * Task `watch:css`:
+ *     Watch scss files.
+ *     Trigger task `build:css` if files changed.
  */
 gulp.task( 'watch:css', () => {
     gulp.watch(
-        config.sass.src,
-        gulp.parallel( 'sass' )
+        config.sass.lint.src,
+        gulp.parallel( 'build:css' )
     );
 } );
 
-gulp.task( 'clear', () => {
-    cached.clearAll();
-} );
+/**
+ * Task `lint`:
+ *     Trigger all `lint` related tasks.
+ *     Including `lint:js-frontend`, `lint:js-backend`.
+ */
+gulp.task( 'lint', gulp.parallel(
+    'lint:js-frontend',
+    'lint:js-backend'
+) );
 
-gulp.task( 'develop', () => {
-    nodemon( {
-        script: `${ global.rootdir }/server.js`,
-        ext: 'js sass pug',
+/**
+ * Task `build`:
+ *     Trigger all `build` related tasks.
+ *     Including `build:js-frontend`, `build:css`
+ */
+gulp.task( 'build', gulp.parallel(
+    'build:js-frontend',
+    'build:css'
+) );
+
+/**
+ * Task `clear`:
+ *     Trigger all `clear` related tasks.
+ *     Including `clear:js-frontend`, `clear:js-backend`, `clear:css`
+ */
+gulp.task( 'clear', gulp.parallel(
+    'clear:js-frontend',
+    'clear:js-backend',
+    'clear:css'
+) );
+
+/**
+ * Task `watch`:
+ *     Trigger all `watch` related tasks.
+ *     Including `watch:js-frontend`, `watch:js-backend`, `watch:css`
+ */
+gulp.task( 'watch', gulp.parallel(
+    'watch:js-frontend',
+    'watch:js-backend',
+    'watch:css'
+) );
+
+gulp.task( 'develop', ( done ) => {
+    const stream = nodemon( {
+        script: config.nodemon.main,
+        watch: config.nodemon.watch.src,
+        ignore: config.nodemon.watch.ignore,
+        ext: 'js json scss pug',
+        tasks: [ 'lint', 'build', ],
     } );
+    stream.on( 'restart', [ 'lint', 'build', ] );
+    stream.on( 'start', () => {
+
+    } );
+    done();
 } );
