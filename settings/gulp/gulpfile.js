@@ -15,7 +15,6 @@ const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const filter = require( 'gulp-filter' );
 const del = require( 'del' );
-const browserSync = require( 'browser-sync' );
 const config = require( './config' );
 
 /**
@@ -108,9 +107,13 @@ gulp.task( 'build:js-frontend', () => {
  *     Clean `build:js-frontend` generated files.
  */
 gulp.task( 'clear:js-frontend', ( done ) => {
-    delete cached.caches[ 'lint:js-frontend' ];
-    del( config.js.frontend.build.dest, { force: true, } );
-    done();
+    del( config.js.frontend.build.dest, { force: true, } )
+        .then( () => {
+            delete cached.caches[ 'lint:js-frontend' ];
+        } )
+        .then( () => {
+            done();
+        } );
 } );
 
 /**
@@ -250,9 +253,8 @@ gulp.task( 'develop', ( done ) => {
         watch: config.nodemon.watch.src,
         ignore: config.nodemon.watch.ignore,
         ext: 'js json scss pug',
-        tasks: [ 'lint', 'build', ],
     } );
-    stream.on( 'restart', [ 'lint', 'build', ] );
+    stream.on( 'restart', gulp.series( 'lint', 'build' ) );
     stream.on( 'start', () => {
 
     } );
