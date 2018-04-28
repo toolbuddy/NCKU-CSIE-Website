@@ -1,50 +1,76 @@
 {
-  "name": "webtemplate",
-  "version": "1.0.0",
-  "description": "ncku csie web",
+  "name": "NCKU-CSIE-Website",
+  "version": "1.1.1",
+  "description": "NCKU CSIE Website",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< HEAD
-    "watch:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
-    "compile:sass": "node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
-=======
-    "watch:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css -w",
-    "compile:sass": "./node_modules/.bin/node-sass static/src/sass/about/teachers.scss  static/dist/css/about/teachers.css",
->>>>>>> 1ac65bc6c7a62ae3705b04005005a9ad5257bb26
-    "eslint-frontend": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet; exit 0;",
-    "eslint-frontend-fix": "./node_modules/.bin/eslint --ignore-path ./settings/lint/eslint/.frontend_lint_ignore -c ./settings/lint/eslint/frontend_lint.js ./static/src/js/* --quiet --fix; exit 0;",
-    "eslint-backend": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet; exit 0;",
-    "eslint-backend-fix": "./node_modules/.bin/eslint --ignore-path settings/lint/eslint/.backend_lint_ignore -c settings/lint/eslint/backend_lint.js * --quiet --fix; exit 0;",
-    "puglint": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0"
+    "pre-build:settings": "./bin/pre-build.sh",
+    "lint:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-frontend",
+    "lint:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-backend",
+    "build:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js build:js-frontend",
+    "clear:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-frontend",
+    "clear:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-backend",
+    "watch:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-frontend",
+    "watch:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-backend",
+    "pre-build:css": "gulp --gulpfile settings/gulp/gulpfile.js sass:pre-build",
+    "build:css": "gulp --gulpfile settings/gulp/gulpfile.js build:css",
+    "clear:css": "gulp --gulpfile settings/gulp/gulpfile.js clear:css",
+    "watch:css": "gulp --gulpfile settings/gulp/gulpfile.js watch:css",
+    "lint:pug": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0",
+    "lint": "gulp --gulpfile settings/gulp/gulpfile.js lint",
+    "build": "gulp --gulpfile settings/gulp/gulpfile.js build",
+    "clear": "gulp --gulpfile settings/gulp/gulpfile.js clear",
+    "watch": "gulp --gulpfile settings/gulp/gulpfile.js watch",
+    "develop": "gulp --gulpfile settings/gulp/gulpfile.js develop"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProFatXuanAll/webtemplate.git"
+    "url": "git+https://github.com/toolbuddy/NCKU-CSIE-Website.git"
   },
   "author": "ProFatXuanAll",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ProFatXuanAll/webtemplate/issues"
+    "url": "https://github.com/toolbuddy/NCKU-CSIE-Website/issues"
   },
-  "homepage": "https://github.com/ProFatXuanAll/webtemplate#readme",
+  "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "gulp-file": "^0.4.0",
     "inspect": "0.0.2",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "node": "^9.8.0",
-    "node-sass": "^4.8.3",
-    "npm": "^5.7.1",
+    "node-sass": "^4.9.0",
+    "npm": "^5.8.0",
     "pug": "^2.0.3",
     "sequelize": "^4.37.6",
     "sequelize-auto": "^0.4.29"
   },
   "devDependencies": {
+    "browser-sync": "^2.23.7",
+    "del": "^3.0.0",
     "eslint": "^4.19.1",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-debug": "^3.2.0",
+    "gulp-eslint": "^4.0.2",
+    "gulp-filter": "^5.1.0",
+    "gulp-if": "^2.0.2",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-remember": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-size": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify-es": "^1.0.1",
+    "nodemon": "^1.17.3",
     "pug-lint": "^2.5.0",
     "sass-lint": "^1.12.1"
   }

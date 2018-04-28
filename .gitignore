@@ -1,6 +1,27 @@
-s.git-credentials
-npm-debug.log
-package-lock.json
-.DS_Store
+# editor files
 *.swp
 .vscode
+
+# git extension files
+.git-credentials
+
+# npm files
+npm-debug.log
+package-lock.json
+.npmrc
+.lock-wscript
+
+# sass files
+.sass-cache
+
+# OS generated files
+## Mac OS
+.DS_Store
+.DS_Store?
+## Windows
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# other files
+._*

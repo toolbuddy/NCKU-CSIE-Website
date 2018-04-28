@@ -1,15 +1,15 @@
-extends ../layouts/about.pug
+extends /views/layouts/about.pug
 
 block stylesheets
   link( rel='stylesheet', type='text/css', media='screen',
-    href='/css/about/teachers.css'
+    href='/css/about/teachers.min.css'
   )
 
 block header
 
 block content
-  include ../components/about/topic.pug
-  include ../components/about/teachers/card.pug
+  include /views/components/about/topic.pug
+  include /views/components/about/teachers/card.pug
   main.main
     +topic( 'Faculty of Computer Science','師資陣容' )
     section.cards

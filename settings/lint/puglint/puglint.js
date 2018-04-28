@@ -13,7 +13,7 @@ module.exports = {
         'b', 'i', ],
     disallowStringConcatenation: true,
     disallowTrailingSpaces: true,
-    maximumLineLength: 80,
+    maximumLineLength: 160,
     requireClassLiteralsBeforeAttributes: true,
     requireIdLiteralsBeforeAttributes: true,
     requireLineFeedAtFileEnd: true,
@@ -32,5 +32,4 @@ module.exports = {
     validateLineBreaks: 'LF',
     validateSelfClosingTags: true,
     validateTemplateString: [ 'concatenation', ],
-
 };
