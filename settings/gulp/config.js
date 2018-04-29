@@ -1,50 +1,75 @@
 const path = require( 'path' );
 
-// setup project root path
+/**
+ * Settings: project root directory path
+ *     
+ * @constant    
+ * @type {string}
+ */
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const host = require( `${ projectRoot }/settings/server/config` ).host;
+
+/** 
+ * Settings: server host name
+ * 
+ * @constant
+ * @type {string}
+ */
+const staticFilesHost = require( `${ projectRoot }/settings/server/config` ).host;
+
+/**
+ * Settings: supported brwoser list
+ * 
+ * @constant
+ * @type {string[]}
+ */
 const browserlist = require( `${ projectRoot }/settings/browserlist/config` );
 
-const config = {
-    js: {
-        frontend: {
-            build: {
-                src: [
-                    `${ projectRoot }/static/src/js/**/*.js`,
+/**
+ * Settings: gulp source path configuration
+ */
+const config = {};
+config.js = {
+    frontend: {
+        build: {
+            src: [
+                `${ projectRoot }/static/src/js/**/*.js`,
 
-                    // should use webpack to bundle
-                    // `!${ projectRoot }/static/src/js/components/**/*.js`,
-                ],
-                dest: `${ projectRoot }/static/dist/js`,
-            },
-            lint: {
-                rule: `${ projectRoot }/settings/lint/eslint/frontend.js`,
-                src: [
-                    `${ projectRoot }/static/src/js/**/*.js`,
-                ],
-                dest: `${ projectRoot }/static/src/js`,
-            },
+                // should use webpack to bundle
+                // `!${ projectRoot }/static/src/js/components/**/*.js`,
+            ],
+            dest: `${ projectRoot }/static/dist/js`,
         },
-        backend: {
-            build: {
-                src: [
-                    `${ projectRoot }/**/*.js`,
-                    `!${ projectRoot }/static/src/**/*.js`,
-                ],
-                dest: `${ projectRoot }/build`,
-            },
-            lint: {
-                rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
-                src: [
-                    `${ projectRoot }/**/*.js`,
-                    `!${ projectRoot }/node_modules/**/*.*`,
-                    `!${ projectRoot }/static/**/*.js`,
-                    `!${ projectRoot }/models/**/*.js`,
-                ],
-                dest: `${ projectRoot }`,
-            },
+        lint: {
+            rule: `${ projectRoot }/settings/lint/eslint/frontend.js`,
+            src: [
+                `${ projectRoot }/static/src/js/**/*.js`,
+            ],
+            dest: `${ projectRoot }/static/src/js`,
         },
     },
+    backend: {
+        build: {
+            src: [
+                `${ projectRoot }/**/*.js`,
+                `!${ projectRoot }/static/src/**/*.js`,
+            ],
+            dest: `${ projectRoot }/build`,
+        },
+        lint: {
+            rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
+            src: [
+                `${ projectRoot }/**/*.js`,
+                `!${ projectRoot }/node_modules/**/*.*`,
+                `!${ projectRoot }/static/**/*.js`,
+                `!${ projectRoot }/models/**/*.js`,
+            ],
+            dest: `${ projectRoot }`,
+        },
+    },
+};
+Object.freeze( config );
+
+const config = {
     sass: {
         build: {
             src: [

@@ -15,6 +15,7 @@ const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const filter = require( 'gulp-filter' );
 const del = require( 'del' );
+const path = require( 'path' );
 const config = require( './config' );
 
 /**
@@ -253,10 +254,17 @@ gulp.task( 'develop', ( done ) => {
         watch: config.nodemon.watch.src,
         ignore: config.nodemon.watch.ignore,
         ext: 'js json scss pug',
-    } );
-    stream.on( 'restart', gulp.series( 'lint', 'build' ) );
-    stream.on( 'start', () => {
+        tasks: ( changedFile ) => {
+            const tasks = [];
+            if( !changedFile ) return tasks;
+            
+            changedFile.forEach( file => {
+                if( path.extname( file ) === '.js' && !~tasks.indexOf( 'lint' ) )
+                    tasks.push( 'lint' );
+            } );
 
+            return tasks;
+        }
     } );
     done();
 } );
