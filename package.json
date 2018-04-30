@@ -26,7 +26,7 @@
     "clear": "gulp --gulpfile settings/gulp/gulpfile.js clear",
     "watch": "gulp --gulpfile settings/gulp/gulpfile.js watch",
     "develop": "gulp --gulpfile settings/gulp/gulpfile.js develop",
-    "stylelint": "stylelint --config settings/lint/stylelint/stylelint.js static/src/sass/about/*.scss"
+    "stylelint": "stylelint --config settings/lint/stylelint/stylelint.js static/src/sass/*/*.scss"
   },
   "repository": {
     "type": "git",
