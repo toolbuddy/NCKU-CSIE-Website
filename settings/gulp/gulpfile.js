@@ -15,7 +15,6 @@ const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const filter = require( 'gulp-filter' );
 const del = require( 'del' );
-const path = require( 'path' );
 const config = require( './config' );
 
 /**
@@ -67,7 +66,7 @@ gulp.task( 'lint:js-backend', () => {
         return file.eslint != null && file.eslint.fixed;
     }
 
-    return gulp.src( config.js.backend.lint.src )
+    return gulp.src( config.js.backend.lint.src, { base: config.projectRoot, } )
         .pipe( plumber() )
         .pipe( cached( 'lint:js-backend' ) )
         .pipe( eslint( {
@@ -131,11 +130,12 @@ gulp.task( 'clear:js-backend', ( done ) => {
  *     Watch frontend JavaScript files.
  *     Trigger `lint:js-frontend` and `build:js-frontend` if changed.
  */
-gulp.task( 'watch:js-frontend', () => {
+gulp.task( 'watch:js-frontend', ( done ) => {
     gulp.watch(
         config.js.frontend.lint.src,
         gulp.parallel( 'lint:js-frontend', 'build:js-frontend' )
     );
+    done();
 } );
 
 /**
@@ -143,8 +143,9 @@ gulp.task( 'watch:js-frontend', () => {
  *     Watch backend JavaScript files.
  *     Trigger `lint:js-frontend` if changed.
  */
-gulp.task( 'watch:js-backend', () => {
+gulp.task( 'watch:js-backend', ( done ) => {
     gulp.watch( config.js.backend.lint.src, gulp.parallel( 'lint:js-backend' ) );
+    done();
 } );
 
 /**
@@ -194,11 +195,12 @@ gulp.task( 'clear:css', ( done ) => {
  *     Watch scss files.
  *     Trigger task `build:css` if files changed.
  */
-gulp.task( 'watch:css', () => {
+gulp.task( 'watch:css', ( done ) => {
     gulp.watch(
         config.sass.lint.src,
         gulp.parallel( 'build:css' )
     );
+    done();
 } );
 
 /**
@@ -245,26 +247,16 @@ gulp.task( 'watch', gulp.parallel(
 
 /**
  * Task `develop`:
- *     Automatically restart server when files changed and need to restart.
- *     Automatically run `lint` and `build` when server restart.
+ *     Automatically restart server when backend files changed and need to restart.
+ *     Automatically run `lint` and `build` on frontend files when server restart.
  */
-gulp.task( 'develop', ( done ) => {
-    const stream = nodemon( {
+gulp.task( 'develop', gulp.parallel( 'build', 'watch:js-frontend', 'watch:css', ( done ) => {
+    nodemon( {
         script: config.nodemon.main,
         watch: config.nodemon.watch.src,
         ignore: config.nodemon.watch.ignore,
-        ext: 'js json scss pug',
-        tasks: ( changedFile ) => {
-            const tasks = [];
-            if( !changedFile ) return tasks;
-            
-            changedFile.forEach( file => {
-                if( path.extname( file ) === '.js' && !~tasks.indexOf( 'lint' ) )
-                    tasks.push( 'lint' );
-            } );
-
-            return tasks;
-        }
+        ext: 'js json pug',
+        tasks: [ 'lint:js-backend', ],
     } );
     done();
-} );
+} ) );
