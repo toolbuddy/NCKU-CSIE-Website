@@ -1,64 +1,91 @@
 const indentation = 2;
 
 module.exports = {
-    //no attribute concatenation
+
+    // no attribute concatenation
     disallowAttributeConcatenation: true,
-    //no block expansion
+
+    // no block expansion
     disallowBlockExpansion: true,
-    //id literals must before class literals
+
+    // id literals must before class literals
     disallowClassLiteralsBeforeIdLiterals: true,
-    //no duplicate attributes
+
+    // no duplicate attributes
     disallowDuplicateAttributes: true,
-    //no html texts
+
+    // no html texts
     disallowHtmlText: true,
-    //no global id literal
+
+    // no global id literal
     disallowIdLiterals: true,
-    //no old mixin usage
+
+    // no old mixin usage
     disallowLegacyMixinCall: true,
-    //no multiple empty lines
+
+    // no multiple empty lines
     disallowMultipleLineBreaks: true,
-    //pug must not use these specified tags
+
+    // pug must not use these specified tags
     disallowSpecificTags: [ 'div', 'font', 'embed', 'strike', 's',
         'u', 'applet', 'basefont', 'center', 'dir',
         'isindex', 'listing', 'menu', 'plaintext', 'xmp',
         'b', 'i', ],
-    //no string concatenation
+
+    // no string concatenation
     disallowStringConcatenation: true,
-    //no multiple space at the end of line
+
+    // no multiple space at the end of line
     disallowTrailingSpaces: true,
-    //define maximum line length
+
+    // define maximum line length
     maximumLineLength: 160,
-    //class literals must before attributes
+
+    // class literals must before attributes
     requireClassLiteralsBeforeAttributes: true,
-    //id literals must before attributes
+
+    // id literals must before attributes
     requireIdLiteralsBeforeAttributes: true,
-    //need new line at the file end
+
+    // need new line at the file end
     requireLineFeedAtFileEnd: true,
-    //attribute must use lowercase
+
+    // attribute must use lowercase
     requireLowerCaseAttributes: true,
-    //tag must use lowercase
+
+    // tag must use lowercase
     requireLowerCaseTags: true,
-    //need space after operator
+
+    // need space after operator
     requireSpaceAfterCodeOperator: true,
-    //need space befor and after attribute brackets
+
+    // need space befor and after attribute brackets
     requireSpacesInsideAttributeBrackets: true,
-    //need to use !== and === as equal and nonequal
+
+    // need to use !== and === as equal and nonequal
     requireStrictEqualityOperators: true,
-    //use specified quote as attribute quotemark
+
+    // use specified quote as attribute quotemark
     validateAttributeQuoteMarks: '\'',
-    //use specified operator as attribute operator
+
+    // use specified operator as attribute operator
     validateAttributeSeparator: {
         'separator': ', ',
         'multiLineSeparator': ',\n  ',
     },
-    //pug template muse use proper file extensions
+
+    // pug template muse use proper file extensions
     validateExtensions: true,
-    //use 2 space as indentation
+
+    // use 2 space as indentation
     validateIndentation: indentation,
-    //use LF as line breaks
+
+    // use LF as line breaks
     validateLineBreaks: 'LF',
-    //must not contain any unnecessary self colsing tags
+
+    // must not contain any unnecessary self colsing tags
     validateSelfClosingTags: true,
-    //must use ES6 string concatenation
+
+    // must use ES6 string concatenation
     validateTemplateString: [ 'concatenation', ],
 };
