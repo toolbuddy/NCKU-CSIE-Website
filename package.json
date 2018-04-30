@@ -15,8 +15,8 @@
     "clear:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-frontend",
     "clear:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-backend",
     "watch:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-frontend",
-    "watch:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-backend",,
-    "lint:css": "stylelint --config settings/lint/stylelint/stylelint.js static/src/sass/**/*.scss"
+    "watch:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-backend",
+    "lint:css": "stylelint --config settings/lint/stylelint/stylelint.js static/src/sass/**/*.scss",
     "pre-build:css": "gulp --gulpfile settings/gulp/gulpfile.js sass:pre-build",
     "build:css": "gulp --gulpfile settings/gulp/gulpfile.js build:css",
     "clear:css": "gulp --gulpfile settings/gulp/gulpfile.js clear:css",
