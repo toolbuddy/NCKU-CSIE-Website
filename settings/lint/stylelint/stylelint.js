@@ -2,12 +2,14 @@ const indentation = 2;
 const emptyLines = 1;
 const lineLength = 160;
 const maxSelectorId = 1;
+const maxDeclaration = 1;
 const maxSelectorUniversal = 1;
 const maxSelectorEmpyLines = 1;
-const numberPrecision = 3;
+const numberPrecision = 4;
 const maxValueListEmptyLines = 0;
 const maxFunctionEmptyLines = 0;
 module.exports = {
+    'plugins': [ 'stylelint-scss', ],
     'rules': {
 
         /* Possible Errors category*/
@@ -62,14 +64,8 @@ module.exports = {
         // no unknown @media
         'media-feature-name-no-unknown': true,
 
-        // no unknown @rule
-        'at-rule-no-unknown': true,
-
         // no empty comment
         'comment-no-empty': true,
-
-        // specifty properties override order(multiple selectors)
-        'no-descending-specificity': true,
 
         // no duplicate import files
         'no-duplicate-at-import-rules': true,
@@ -115,8 +111,8 @@ module.exports = {
         // must not use !important
         'declaration-no-important': true,
 
-        // declaration must not only use single line
-        'declaration-block-single-line-max-declarations': true,
+        // one line can have only one declaration
+        'declaration-block-single-line-max-declarations': maxDeclaration,
 
         // specified class pattern
         'selector-class-pattern':
@@ -214,7 +210,10 @@ module.exports = {
         'declaration-colon-newline-after': 'always-multi-line',
 
         // need space after declaration colon
-        'declaration-colon-space-after': 'always',
+        'declaration-colon-space-after': 'always-single-line',
+
+        // don't need space before declaration colon
+        'declaration-colon-space-before': 'never',
 
         // must have empty before declaration
         'declaration-empty-line-before': 'never',
@@ -235,10 +234,10 @@ module.exports = {
         'block-closing-brace-newline-before': 'always',
 
         // don't need space after closing brace
-        'block-closing-brace-space-after': 'never',
+        'block-closing-brace-space-after': 'never-single-line',
 
-        // don't need space before closing brace
-        'block-closing-brace-space-before': 'never',
+        // need space before closing brace
+        'block-closing-brace-space-before': 'always-single-line',
 
         // need newline after opening brace
         'block-opening-brace-newline-after': 'always',
@@ -348,5 +347,139 @@ module.exports = {
         // need new line at end of source file
         'no-missing-end-of-source-newline': true,
 
+        /** stylelint-scss plugin rules */
+        // There must always be a newline after the closing brace of @else
+        // that is the last statement in a conditional statement chain.
+        // If it's not, there must not be a newline.
+        'scss/at-else-closing-brace-newline-after': 'always-last-in-chain',
+
+        // There must never be a whitespace after the closing brace of @else
+        // that is not the last statement in a conditional statement chain.
+        'scss/at-else-closing-brace-space-after': 'never-intermediate',
+
+        // There must never be an empty line before @else statements.
+        'scss/at-else-empty-line-before': 'never',
+
+        // There must always be exactly one space
+        // between the @else if and the condition opening parenthesis.
+        'scss/at-else-if-parentheses-space-before': 'always',
+
+        // Disallow at-extends (@extend) with missing placeholders.
+        'scss/at-extend-no-missing-placeholder': true,
+
+        // Require named parameters in SCSS function call rule.
+        'scss/at-function-named-arguments': [ 'always', { 'ignore': [ 'single-argument', ], }, ],
+
+        // There must always be exactly one space
+        // between the function name and the opening parenthesis.
+        'scss/at-function-parentheses-space-before': 'always',
+
+        // Disallow leading underscore in partial names in @import.
+        'scss/at-import-no-partial-leading-underscore': true,
+
+        // There must always be parentheses in mixin calls, even if no arguments are passed.
+        'scss/at-mixin-argumentless-call-parentheses': 'always',
+
+        // Require named parameters in at-mixin call rule.
+        'scss/at-mixin-named-arguments': [ 'always', { 'ignore': [ 'single-argument', ], }, ],
+
+        // There must always be exactly one space
+        // between the mixin name and the opening parenthesis.
+        'scss/at-mixin-parentheses-space-before': 'always',
+
+        // Specify a pattern for Sass/SCSS-like mixin names.
+        'scss/at-mixin-pattern':
+        '(&|[a-z][a-z0-9]*(-[a-z0-9]+)*)(|--([a-z][a-z0-9]*(-[a-z0-9]+)*))(|__([a-z][a-z0-9]*(-[a-z0-9]+)*)(|--([a-z][a-z0-9]*(-[a-z0-9]+)*)))',
+
+        // Disallow unknown at-rules.
+        // This rule is basically a wrapper around the mentioned core rule,
+        // but with added SCSS-specific @-directives.
+        'scss/at-rule-no-unknown': true,
+
+        // There must always be a newline after the colon
+        // if the variable value is multi-line.
+        'scss/dollar-variable-colon-newline-after': 'always-multi-line',
+
+        // There must always be a single space after the colon
+        // if the variable value is single-line.
+        'scss/dollar-variable-colon-space-after': 'always-single-line',
+
+        // There must never be whitespace before the colon.
+        'scss/dollar-variable-colon-space-before': 'never',
+
+        // There must always be one empty line before a $-variable declaration.
+        'scss/dollar-variable-empty-line-before': [ 'always', {
+            'except': [
+
+                // Reverse the primary option for a $-variable declaration
+                // if it's the first child of its parent.
+                'first-nested',
+
+                // Reverse the primary option for $-variable declarations
+                // that go right after another $-variable declaration.
+                'after-dollar-variable',
+            ],
+            'ignore': [
+
+                // Ignore $-variables that go after a comment.
+                'after-comment',
+
+                // Ignore $-variables that are inside single-line blocks.
+                'inside-single-line-block',
+            ],
+        }, ],
+
+        // Disallow Sass variables that are used without interpolation
+        // with CSS features that use custom identifiers.
+        'scss/dollar-variable-no-missing-interpolation': true,
+
+        // There must always be an empty line before //-comments.
+        'scss/double-slash-comment-empty-line-before': [ 'always', {
+            'except': [
+
+                // Reverse the primary option for //-comments
+                // that are nested and the first child of their parent node.
+                'first-nested',
+            ],
+            'ignore': [
+
+                // Don't require an empty line before //-comments
+                // that are placed after other //-comments or CSS comments.
+                'between-comments',
+
+                // Ignore //-comments that deliver commands to stylelint
+                'stylelint-commands',
+            ],
+        }, ],
+
+        // //-comments must always be inline comments.
+        'scss/double-slash-comment-inline': [ 'never', {
+
+            // Ignore //-comments that deliver commands to stylelint.
+            'ignore': [ 'stylelint-commands', ],
+        }, ],
+
+        // There must always be whitespace after the // inside //-comments.
+        'scss/double-slash-comment-whitespace-inside': 'always',
+
+        // Require or disallow properties with - in their names to be in a form of a nested group.
+        'scss/declaration-nested-properties': [ 'always', {
+
+            // Works only with "always" and reverses its effect for a property
+            // if it is the only one with the corresponding "namespace" in a ruleset.
+            'except': [ 'only-of-namespace', ],
+        }, ],
+
+        // Disallow nested properties of the same "namespace" be divided into multiple groups.
+        'scss/declaration-nested-properties-no-divided-groups': true,
+
+        // Disallow unspaced operators in Sass operations.
+        'scss/operator-no-unspaced': true,
+
+        // Disallow redundant nesting selectors (&).
+        'scss/selector-no-redundant-nesting-selector': true,
+
+        // Disallow duplicate dollar variables within a stylesheet.
+        'scss/no-duplicate-dollar-variables': true,
     },
 };
