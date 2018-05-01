@@ -101,6 +101,7 @@ config.sass = {
         dest: `${ config.projectRoot }/static/dist/css`,
     },
     lint: {
+        rule: `${ config.projectRoot }/settings/lint/stylelint/stylelint.js`,
         src: [
             `${ config.projectRoot }/static/src/sass/**/*.scss`,
         ],

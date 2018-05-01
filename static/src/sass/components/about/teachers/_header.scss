@@ -1,19 +1,19 @@
 
-.topic{
-    display: flex;
-    flex-direction: column;
-    color:#fff;
-    justify-content: space-between;
-    border-bottom:1px solid #fff;
-    &__text{
-      &--small{
-        font-size: .625rem;
-      }
-      &--large{
-        font-size: 1.25rem;
-      }
+.topic {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff;
+
+  &__text {
+
+    &--small {
+      font-size: .625rem;
     }
+
+    &--large {
+      font-size: 1.25rem;
+    }
+  }
 }
-
-
-

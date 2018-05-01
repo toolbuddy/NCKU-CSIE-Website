@@ -1,49 +1,59 @@
 .cards {
-  
   --hover-color: #343434;
-  font-family: var(--font__family--default); 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, 11.2rem);
-  grid-gap: .625rem;
+  font-family: var( --font__family--default );
+  display: grid;
+  grid: {
+    template-columns: repeat( auto-fill, 11.2rem );
+    gap: .625rem;
+  }
+
   &__card {
     height: 15rem;
   }
+
   .card {
     display: grid;
-    grid-template-rows: 2fr 1fr;
-    grid-template-areas: "card__photo" "card__intro";
+    grid-template: {
+      areas: 'card__photo' 'card__intro';
+      rows: 2fr 1fr;
+    }
+
     &__photo {
       grid-area: card__photo;
       display: block;
-      width:100%;
-      height:100% ;
+      width: 100%;
+      height: 100% ;
       object-fit: cover;
-      
     }
+
     &__intro {
-      background-color: #fff;
+      background-color: #ffffff;
       font-size: .5rem;
       grid-area: card__intro;
     }
+
     .intro {
-      padding: .3rem .88rem .3rem .88rem;
+      padding: .3rem .88rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
+
     &__info {
-      grid-area: card__photo; 
+      grid-area: card__photo;
     }
+
     .info {
       opacity: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: #fff;
-      background-color: rgba(52, 52, 52, .7);
+      color: #ffffff;
+      background-color: rgba( 52, 52, 52, .7 );
       transition: opacity .3;
-      z-index:999;
+      z-index: 999;
+
       &:hover {
         opacity: 1;
       }

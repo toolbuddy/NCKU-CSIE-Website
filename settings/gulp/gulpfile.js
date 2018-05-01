@@ -3,6 +3,7 @@ const nodemon = require( 'gulp-nodemon' );
 const eslint = require( 'gulp-eslint' );
 const uglify = require( 'gulp-uglify-es' ).default;
 const sass = require( 'gulp-sass' );
+const stylelint = require( 'gulp-stylelint' );
 const autoprefixer = require( 'gulp-autoprefixer' );
 const csso = require( 'gulp-csso' );
 const file = require( 'gulp-file' );
@@ -149,6 +150,24 @@ gulp.task( 'watch:js-backend', ( done ) => {
 } );
 
 /**
+ * Task `lint:css`:
+ *     Use `stylelint` to lint CSS files.
+ */
+gulp.task( 'lint:css', () => {
+    return gulp.src( config.sass.lint.src, { since: gulp.lastRun( 'lint:css' ), } )
+        .pipe( plumber() )
+        .pipe( stylelint( {
+            configFile: config.sass.lint.rule,
+            fix: true,
+            reporters: [
+                { formatter: 'string', console: true, },
+            ],
+        } ) )
+        .pipe( debug() )
+        .pipe( gulp.dest( config.sass.lint.dest ) );
+} );
+
+/**
  * Task `pre-build:css`:
  *     Use `gulp-file` to write scss files static settings.
  */
@@ -198,7 +217,7 @@ gulp.task( 'clear:css', ( done ) => {
 gulp.task( 'watch:css', ( done ) => {
     gulp.watch(
         config.sass.lint.src,
-        gulp.parallel( 'build:css' )
+        gulp.parallel( 'lint:css', 'build:css' )
     );
     done();
 } );
@@ -206,11 +225,12 @@ gulp.task( 'watch:css', ( done ) => {
 /**
  * Task `lint`:
  *     Trigger all `lint` related tasks.
- *     Including `lint:js-frontend`, `lint:js-backend`.
+ *     Including `lint:js-frontend`, `lint:js-backend`, `lint:css`.
  */
 gulp.task( 'lint', gulp.parallel(
     'lint:js-frontend',
-    'lint:js-backend'
+    'lint:js-backend',
+    'lint:css'
 ) );
 
 /**
@@ -250,13 +270,18 @@ gulp.task( 'watch', gulp.parallel(
  *     Automatically restart server when backend files changed and need to restart.
  *     Automatically run `lint` and `build` on frontend files when server restart.
  */
-gulp.task( 'develop', gulp.parallel( 'build', 'watch:js-frontend', 'watch:css', ( done ) => {
-    nodemon( {
-        script: config.nodemon.main,
-        watch: config.nodemon.watch.src,
-        ignore: config.nodemon.watch.ignore,
-        ext: 'js json pug',
-        tasks: [ 'lint:js-backend', ],
-    } );
-    done();
-} ) );
+gulp.task( 'develop', gulp.parallel( 
+    gulp.series( 'clear', 'build' ), 
+    'watch:js-frontend',
+    'watch:css',
+    ( done ) => {
+        nodemon( {
+            script: config.nodemon.main,
+            watch: config.nodemon.watch.src,
+            ignore: config.nodemon.watch.ignore,
+            ext: 'js json pug',
+            tasks: [ 'lint:js-backend', ],
+        } );
+        done();
+    }
+) );
