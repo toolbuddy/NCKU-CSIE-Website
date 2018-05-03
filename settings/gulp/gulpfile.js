@@ -16,6 +16,7 @@ const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const filter = require( 'gulp-filter' );
 const del = require( 'del' );
+const browserSync = require( 'browser-sync' );
 const config = require( './config' );
 
 /**
@@ -217,7 +218,9 @@ gulp.task( 'clear:css', ( done ) => {
 gulp.task( 'watch:css', ( done ) => {
     gulp.watch(
         config.sass.lint.src,
-        gulp.parallel( 'lint:css', 'build:css' )
+        gulp.parallel( 'lint:css', 'build:css', () => {
+            browserSync.reload();
+        } )
     );
     done();
 } );
@@ -270,18 +273,40 @@ gulp.task( 'watch', gulp.parallel(
  *     Automatically restart server when backend files changed and need to restart.
  *     Automatically run `lint` and `build` on frontend files when server restart.
  */
-gulp.task( 'develop', gulp.parallel( 
-    gulp.series( 'clear', 'build' ), 
-    'watch:js-frontend',
-    'watch:css',
-    ( done ) => {
-        nodemon( {
-            script: config.nodemon.main,
-            watch: config.nodemon.watch.src,
-            ignore: config.nodemon.watch.ignore,
-            ext: 'js json pug',
-            tasks: [ 'lint:js-backend', ],
-        } );
-        done();
-    }
+gulp.task( 'develop', gulp.series(
+    gulp.series( 'clear', 'build' ),
+    gulp.parallel( 'watch:js-frontend', 'watch:css' ),
+    gulp.series(
+
+        // nodemon start
+        ( done ) => {
+            nodemon( {
+                script: config.nodemon.main,
+                watch: config.nodemon.watch.src,
+                ignore: config.nodemon.watch.ignore,
+                ext: 'js json pug',
+                tasks: [ 'lint:js-backend', ],
+            } )
+                .on( 'restart', () => {
+                    browserSync.get( 'browser' ).reload();
+                } );
+            done();
+        },
+
+        // browser-sync start
+        ( done ) => {
+            const browser = browserSync.create( 'browser' );
+            browser.init( {
+                port: config.browserSync.port,
+                ui: config.browserSync.ui,
+                proxy: config.browserSync.proxy,
+                files: config.browserSync.files,
+                logLevel: 'debug',
+                logConnections: true,
+                notify: false,
+                startPath: '/',
+            } );
+            done();
+        }
+    )
 ) );
