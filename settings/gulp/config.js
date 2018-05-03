@@ -24,7 +24,7 @@ const deepFreeze = require( `${ config.projectRoot }/lib/deep-freeze` );
  * @type {string} host - URL for host.
  * @type {string} staticFilesHost - URL for static files host.
  */
-( { 
+( {
     host: config.host,
     staticFilesHost: config.staticFilesHost,
     port: config.port,
@@ -199,15 +199,17 @@ config.nodemon = {
  * @readonly {string[]} config.browserSync.ui.port - Port Browser-Sync UI run on.
  * @readonly {string[]} config.browserSync.proxy   - Proxy server.
  */
+const nextPort = 1;
 config.browserSync = {
-    port: config.port + 1,
+    port: config.port + nextPort,
     ui: {
-        port: config.port + 2,
+        port: config.port + nextPort + nextPort,
     },
     proxy: config.host,
     files: [
         `${ config.js.frontend.build.dest }`,
         `${ config.sass.build.dest }`,
+        ...config.pug.lint.src,
     ],
 };
 

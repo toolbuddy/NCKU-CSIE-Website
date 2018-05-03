@@ -286,7 +286,10 @@ gulp.task( 'develop', gulp.series(
                 ignore: config.nodemon.watch.ignore,
                 ext: 'js json pug',
                 tasks: [ 'lint:js-backend', ],
-            } );
+            } )
+                .on( 'restart', () => {
+                    browserSync.get( 'browser' ).reload();
+                } );
             done();
         },
 
