@@ -22,14 +22,14 @@
       background: none;
       border-radius: 1rem;
       padding: 0.1rem 0.5rem 0.2rem 0.5rem;
-      margin-right: 0.9rem;
+      margin-right: 0.6rem;
       margin-bottom: 1rem;
     }
     &--college{
       background: #F5C150;
     }
     &--master{
-      background: #E64D3A;
+      background: rgb(100, 40, 32);
     }
     &--phd{
       background: #434A54;
@@ -79,9 +79,14 @@
   }
 }
 .time{
-  display: grid;
-  grid-template-columns: repeat(2,1fr) ;
   font-size: 0.625rem;
+  &__begin{
+    margin-right: 1rem;
+  }
+  &__end{
+    margin-right: 1rem;
+  }
+
   &__datetext{
     &--property{
 

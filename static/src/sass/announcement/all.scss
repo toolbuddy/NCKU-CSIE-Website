@@ -2,6 +2,10 @@
 @import '../components/announcement/filter';
 @import '../components/announcement/title';
 
+@media screen and (min-width: 1500px) {
+  .time {display: flex;}
+}
+
 #content-container {
   padding: 5%;
   display: grid;
@@ -21,7 +25,7 @@
   display: grid;
   grid-template-columns: repeat(2,1fr) ;
   background-color: #FFFFFF;
-  height: 7rem;
+  //height: 7rem;
   margin-bottom: 1rem;
   box-shadow: 0 0.2rem 0.1rem rgba(0,0,0,0.1);
   font-size: 0.625rem;
