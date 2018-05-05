@@ -4,8 +4,13 @@
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "filter__tags filter__time";
+<<<<<<< HEAD
   margin-bottom: 2rem;
 
+=======
+  //margin-bottom: 3.7rem;
+  
+>>>>>>> ea064655d568e451d3c45baa8300b5e5205bb051
   &__tags{
     grid-area: filter__tags;
   }
