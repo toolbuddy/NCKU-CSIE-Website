@@ -2,16 +2,16 @@
 Build a better website for NCKU CSIE
 
 ## Installation
-* clone from GitHub - `git clone https://github.com/toolbuddy/NCKU-CSIE-Website.git`
-* install dependencies - `npm install`
+* Clone from GitHub - `git clone https://github.com/toolbuddy/NCKU-CSIE-Website.git`
+* Install dependencies - `npm install`
 
 ## Build
-* run pre-build script to setup config files - `npm run pre-build`
-    * fill in required configuration file
-        * server configuration - `settings/server/config.js`
-        * database configuration - `settings/database/config.js`
-        * files mentioned about will not exist if you didn't run pre-build script
-* build css file and js file - `npm run build`
+* Run pre-build script to setup config files - `npm run pre-build:settings`
+    * Filling-in required configuration files
+        * Server configuration - `settings/server/config.js`
+        * Database configuration - `settings/database/config.js`
+        * Files mentioned above will not exist if you didn't run the pre-build script
+* Build CSS and ECMAScript files - `npm run build`
 
 ## Run
 * `npm start`
@@ -21,43 +21,46 @@ Build a better website for NCKU CSIE
 
 ## Develop Guide
 This project use [node.js](https://nodejs.org/en/) as backend infrastructure.
-We use a lot of tools to help develop (ex. pug (HTML5), Sass (css)), and we have setup some basic rule to make our coding style unified.
+We use a lot of tools to help develop (ex. Pug (HTML5), Sass (css)), and we have setup some basic rule to make our coding style unified.
 Make sure you follow our convention before you submit a pull request!
 Here are a few standard:
-* Javascript
-    * Using pure JavaScript
-    * ECMAScript6 syntax mainly used
-    * Camel form naming style
-    * Other rules can be check by running following command:
-        * frontend: `npm run lint:js-frontend`
-        * backend: `npm run lint:js-backend`
+* ECMAScript ( JavaScript )
+    * Using pure ECMAScript to build everything on our server.
+    * ECMAScript6 syntax mainly used.
+    * Camel form naming style.
+    * Other rules can be check by running following commands:
+        * Frontend: `npm run lint:js-frontend`
+        * Backend: `npm run lint:js-backend`
+    * Build ECMAScript files: `npm run build:js-frontend`
 * HTML
-    * Using pug template engine
-    * HTML5 tags only
+    * Using Pug template engine.
+    * HTML5 tags only.
     * Semantic tags only, don't use tags like `div`, `i`, `b`, etc.
-    * Other rules can be check by running `npm run lint:pug`
+    * Other rules can be check by running `npm run lint:pug`.
 * CSS
-    * Using Sass
-    * CSS3 syntax mainly used
-    * BEM naming convention
-        * Block: control layout of its elements (structure)
-        * Element: control outfit of itself (skin)
-        * Modifier: modified style of specific element
-    * Build css files: `npm run build:css`
+    * Using Sass.
+    * CSS3 syntax mainly used.
+    * BEM naming convention:
+        * Block: Control layout of its elements (structure).
+        * Element: Control outfit of itself (skin).
+        * Modifier: Modified style of specific element.
+    * Other rules can be check by running `npm run lint:css`.
+    * Build CSS files: `npm run build:css`
 * Git
-    * Using Git flow as develop standard
-    * `master`: major stable version branch
-    * `release`: ready to release version branch, need test to be proof stable
-    * `develop`: develop version branch, not ready yet to publish
-    * `feature-*`: new feature branch, may or may not be merge back to `develop`
-    * `hotfix-*`: quick fix branch for major version
+    * Using Git flow as develop standard.
+    * Following branches are used:
+        * `master`: Major stable version.
+        * `release`: Ready to release version, need test to be proof stable.
+        * `develop`: Develop version, not yet ready to publish.
+        * `feature-*`: New feature, may or may not be merge back to `develop`.
+        * `hotfix-*`: Quick fix for major version.
 
 ## Long Term Goal
 We are going to build a website which have following feature:
-* Frequently updated information about this very department
-* Total information transparency
-* Fancy UI build with WebGL and make student contribute to it
-* Student forum with members of both undergraduate and graduate student
+* Frequently updated information about this very department, every student has rights knowing what happened.
+* Total information transparency, we are equally treated no matter which grade you are.
+* Fancy UI build with WebGL, make student like it and want to contribute to it.
+* Student forum with members of both undergraduate and graduate student, let fill this department with energy.
 
 ## Want to contribute?
 Anyone can help make this project better!
