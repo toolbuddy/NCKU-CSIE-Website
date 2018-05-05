@@ -4,8 +4,8 @@
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "filter__tags filter__time";
-  margin-bottom: 3.7rem;
-  
+  margin-bottom: 2rem;
+
   &__tags{
     grid-area: filter__tags;
   }
@@ -23,8 +23,9 @@
       background: none;
       border-radius: 1rem;
       padding: 0.1rem 0.5rem 0.2rem 0.5rem;
-      margin-right: 0.9rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
+      margin-right: 0.4rem;
+      width: 5rem
     }
     &--college{
       background: #F5C150;
@@ -80,8 +81,6 @@
   }
 }
 .time{
-  display: grid;
-  grid-template-columns: repeat(2,1fr) ;
   font-size: 0.625rem;
   &__datetext{
     &--property{
@@ -95,6 +94,8 @@
       align-self: center;
       padding: 0.4rem 0.5rem;
       max-width: 7rem;
+      margin-top: 0.5rem;
+      margin-right: 0.6rem;
     }
   }
 

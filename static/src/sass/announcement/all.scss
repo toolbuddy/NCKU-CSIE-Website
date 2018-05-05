@@ -2,14 +2,18 @@
 @import '../components/announcement/filter';
 @import '../components/announcement/title';
 
+@media screen and (min-width: 1500px){
+  .time {display: flex;}
+}
+
 #content-container {
-  padding: 5%;
+  padding: 2rem 4.5rem;
   display: grid;
-  grid-gap: 2rem 0;
+  grid-gap: 1.5rem 0;
   grid-template-columns: repeat(10,1fr);
   background-color: #F2F4F7;
 }
-      
+
 .announcement {
   grid-column-start: 2;
   grid-column-end: 10;
@@ -17,14 +21,15 @@
 .post {
   min-height: 10%;
   height: 100%;
-  padding: 1em;
+  padding: 1rem 1.5rem;
   display: grid;
   grid-template-columns: repeat(2,1fr) ;
   background-color: #FFFFFF;
-  height: 7rem;
+  height: 5rem;
   margin-bottom: 1rem;
   box-shadow: 0 0.2rem 0.1rem rgba(0,0,0,0.1);
   font-size: 0.625rem;
+  grid-template-rows: 1.2rem;
 }
 .post__title {
   display: flex;
@@ -34,10 +39,12 @@
   font-family: "Sego UI", Regular;
   color: #000000;
   font-size: 0.75rem;
+  min-width: 3rem;
 }
 .post__article {
   grid-column-start: 1;
   grid-column-end: 2;
+  overflow: hidden;
 }
 .post__time {
   display: flex;
@@ -51,6 +58,7 @@
   display: flex;
   justify-content: flex-end;
   align-self: center;
+  margin-top: 0.8rem;
 }
 #page{
   width: 100%;
