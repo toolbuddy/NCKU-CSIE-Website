@@ -1,0 +1,11 @@
+mixin post_detailArticle( post )
+  section.detail
+    h1.detail__title= post.title
+    time.detail__time= post.time
+    article.detail__article
+    a.detail__button= post.button
+    //- const test = `document.getElementsByClassName("detail__article")[0].innerHTML= "${ post.article }"`
+    //script !{test}
+    script window.config = {}; window.config.postArticle = '#{post.article}';
+    script(src= `../js/announcement/post_detail.js`)
+    aside.detail__watchThrough= post.watch

@@ -13,24 +13,12 @@
     "clear:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-backend",
     "watch:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-frontend",
     "watch:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-backend",
-<<<<<<< HEAD
-
-=======
-    "lint:css": "gulp --gulpfile settings/gulp/gulpfile.js lint:css",
->>>>>>> 6c9d329e6cded122ca2099764706077373f176f7
     "pre-build:css": "gulp --gulpfile settings/gulp/gulpfile.js sass:pre-build",
     "build:css": "gulp --gulpfile settings/gulp/gulpfile.js build:css",
     "clear:css": "gulp --gulpfile settings/gulp/gulpfile.js clear:css",
     "watch:css": "gulp --gulpfile settings/gulp/gulpfile.js watch:css",
-<<<<<<< HEAD
-
     "lint:pug": "& {pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0}",
     "lint": "gulp --gulpfile settings/gulp/gulpfile.js lint;npm run lint:pug",
-
-=======
-    "lint:pug": "pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0",
-    "lint": "gulp --gulpfile settings/gulp/gulpfile.js lint",
->>>>>>> 6c9d329e6cded122ca2099764706077373f176f7
     "build": "gulp --gulpfile settings/gulp/gulpfile.js build",
     "clear": "gulp --gulpfile settings/gulp/gulpfile.js clear",
     "watch": "gulp --gulpfile settings/gulp/gulpfile.js watch",
