@@ -1,0 +1,22 @@
+.post {
+  padding: .7rem 0;
+  font-size: .656rem;
+
+  &__title {
+    font-size: .75rem;
+    min-width: 3rem;
+  }
+
+  &__article {
+    overflow: hidden;
+    margin-bottom: .6rem;
+  }
+
+  &__time {
+    color: #b5babf;
+  }
+}
+
+.post--eachborder {
+  border-bottom: .03rem solid #868686;
+}

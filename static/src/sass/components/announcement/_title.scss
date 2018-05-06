@@ -1,14 +1,19 @@
 .title {
-  grid-column-start: 1;
-  grid-column-end: 11;
-  border-bottom: 0.5px solid #000000;
+  grid-column: {
+    start: 1;
+    end: 11;
+  }
+  border-bottom: .5px solid #000000;
+
   &__text {
+
     &--english {
-      font-size: 0.625em;
+      font-size: .625rem;
     }
+
     &--chinese {
-      font-size: 1.25em;
-      padding-bottom: 0.4rem;
+      font-size: 1.25rem;
+      padding-bottom: .4rem;
       line-height: 1.4rem;
     }
   }

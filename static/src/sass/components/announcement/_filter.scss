@@ -1,102 +1,126 @@
 .filter {
-  grid-column-start: 2;
-  grid-column-end: 10;
   display: grid;
-  grid-template-columns: 70% 30%;
-  grid-template-areas: "filter__tags filter__time";
+  grid: {
+    column: {
+      start: 2;
+      end: 10;
+    }
+    template: {
+      columns: 70% 30%;
+      areas: 'filter__tags filter__time';
+    }
+  }
   margin-bottom: 2rem;
 
-  &__tags{
+  &__tags {
     grid-area: filter__tags;
   }
-  &__time{
+
+  &__time {
     grid-area: filter__time;
   }
 }
-.tags{
+
+.tags {
   display: inline-block;
-  border-radius: 1em;
-  color: #FFFFFF;
-  font-size: 0.625rem;
-  &__tag{
-    &--radius{
+  color: #ffffff;
+  font-size: .625rem;
+
+  &__tag {
+
+    &--radius {
       background: none;
       border-radius: 1rem;
-      padding: 0.1rem 0.5rem 0.2rem 0.5rem;
-      margin-bottom: 0.6rem;
-      margin-right: 0.4rem;
-      width: 5rem
+      padding: .1rem .5rem .2rem;
+      margin: {
+        bottom: .6rem;
+        right: .4rem;
+      }
+      width: 5rem;
     }
-    &--college{
-      background: #F5C150;
+
+    &--college {
+      background: #f5c150;
     }
-    &--master{
-      background: #E64D3A;
+
+    &--master {
+      background: #e64d3a;
     }
-    &--phd{
-      background: #434A54;
+
+    &--phd {
+      background: #434a54;
     }
-    &--teacher{
-      background: #01B259;
+
+    &--teacher {
+      background: #01b259;
     }
-    &--administrator{
-      background: #B352C7;
+
+    &--administrator {
+      background: #b352c7;
     }
-    &--international{
-      border: 0.03rem solid #E45C75;
-      color: #E45C75;
+
+    &--international {
+      border: .03rem solid #e45c75;
+      color: #e45c75;
     }
-    &--exhibition{
-      border: 0.03rem solid #00B1BD;
-      color: #00B1BD;
+
+    &--exhibition {
+      border: .03rem solid #00b1bd;
+      color: #00b1bd;
     }
-    &--speech{
-      border: 0.03rem solid #FD5540;
-      color: #FD5540;
+
+    &--speech {
+      border: .03rem solid #fd5540;
+      color: #fd5540;
     }
-    &--competition{
-      border: 0.03rem solid #386AE8;
-      color: #386AE8;
+
+    &--competition {
+      border: .03rem solid #386ae8;
+      color: #386ae8;
     }
-    &--conference{
-      border: 0.03rem solid #006786;
+
+    &--conference {
+      border: .03rem solid #006786;
       color: #006786;
     }
-    &--internship{
-      border: 0.03rem solid #01ADDF;
-      color: #01ADDF;
+
+    &--internship {
+      border: .03rem solid #01addf;
+      color: #01addf;
     }
-    &--law{
-      border: 0.03rem solid #B13B2D;
-      color: #B13B2D;
+
+    &--law {
+      border: .03rem solid #b13b2d;
+      color: #b13b2d;
     }
-    &--recruitment{
-      border: 0.03rem solid #38E8DE;
-      color: #38E8DE;
+
+    &--recruitment {
+      border: .03rem solid #38e8de;
+      color: #38e8de;
     }
-    &--scholarship{
-      border: 0.03rem solid #6ABC50;
-      color: #6ABC50;
+
+    &--scholarship {
+      border: .03rem solid #6abc50;
+      color: #6abc50;
     }
   }
 }
-.time{
-  font-size: 0.625rem;
-  &__datetext{
-    &--property{
 
-    }
-  }
-  &__dateinput{
-    &--background{
+.time {
+  font-size: .625rem;
+
+  &__dateinput {
+
+    &--background {
       border-radius: 1rem;
       display: flex;
       align-self: center;
-      padding: 0.4rem 0.5rem;
+      padding: .4rem .5rem;
       max-width: 7rem;
-      margin-top: 0.5rem;
-      margin-right: 0.6rem;
+      margin: {
+        top: .5rem;
+        right: .6rem;
+      }
     }
   }
-
 }
