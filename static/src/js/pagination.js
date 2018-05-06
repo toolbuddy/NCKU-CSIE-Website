@@ -6,12 +6,31 @@ window.addEventListener( 'load', function addPages () {
     const nowPage = 6;   // you are now in this page
     const pagination = document.getElementById( 'pagination' );
 
+    function createLaquoPage ( text, link, classType ) {
+        const newLink = document.createElement( 'a' );
+
+        // newLink.innerHTML = text;
+        const linkText = document.createTextNode( text );
+        newLink.appendChild( linkText );
+        newLink.href = link;
+        newLink.classList.add( 'pagination__page' );
+        newLink.classList.add( 'pagination__page__laquo' );
+        const headPage = 1, previousPage = 2, nextPage = 3, endPage = 4;
+        switch( classType ) {
+        case headPage: newLink.classList.add( 'pagination__page__laquo__head' ); break;
+        case previousPage: newLink.classList.add( 'pagination__page__laquo__previous' ); break;
+        case nextPage: newLink.classList.add( 'pagination__page__laquo__next' ); break;
+        case endPage: newLink.classList.add( 'pagination__page__laquo__end' ); break;
+        }
+        pagination.appendChild( newLink );
+    }
+
     function createPage ( text, link ) {
         const newLink = document.createElement( 'a' );
 
         // newLink.innerHTML = text;
-        const Link_text = document.createTextNode( text );
-        newLink.appendChild( Link_text );
+        const linkText = document.createTextNode( text );
+        newLink.appendChild( linkText );
         newLink.href = link;
         newLink.classList.add( 'pagination__page' );
         pagination.appendChild( newLink );
@@ -21,8 +40,8 @@ window.addEventListener( 'load', function addPages () {
         const newLink = document.createElement( 'a' );
 
         // newLink.innerHTML = text;
-        const Link_text = document.createTextNode( text );
-        newLink.appendChild( Link_text );
+        const linkText = document.createTextNode( text );
+        newLink.appendChild( linkText );
         newLink.href = link;
         newLink.classList.add( 'pagination__page' );
         newLink.classList.add( 'pagination__page--active' );
@@ -32,14 +51,16 @@ window.addEventListener( 'load', function addPages () {
     if( totalPage > singlePage ) {    // then show x pages
 
         // laquo -> add link to first page
-        createPage ( '«', '#' );
+        createLaquoPage ( 'Head', '#', 1 );
+        createLaquoPage ( 'Previous', '#', 2 );
 
-        const center = Math.ceil( singlePage / 2 );   // to judge if u are in the very begin pages or in the end pages
+        const half = 2, next = 1;
+        const center = Math.ceil( singlePage / half );   // to judge if u are in the very begin pages or in the end pages
         let beginPages = 0, endPages = 0;   // beginPages=num of pages before and include u. endPages=num of pages after u
         if( nowPage < center ) {    // in the begin pages
             beginPages = nowPage;
             endPages = singlePage - nowPage;
-        }else if( nowPage > totalPage - center + 1 ) {   // in the end pages
+        }else if( nowPage > totalPage - center + next ) {   // in the end pages
             endPages = totalPage - nowPage;
             beginPages = singlePage - endPages;
             console.log( beginPages, endPages );
@@ -49,32 +70,34 @@ window.addEventListener( 'load', function addPages () {
         }
 
         for( let i = 1; i <= beginPages; ++i ) {    // create pages in part beginPages (include nowPage)
-            let page_num = nowPage - beginPages + i;
-            if( page_num === nowPage )
-                createPageActive ( page_num, '#' );
+            let pageNum = nowPage - beginPages + i;
+            if( pageNum === nowPage )
+                createPageActive ( pageNum, '#' );
             else
-                createPage ( page_num, '#' );
+                createPage ( pageNum, '#' );
 
         }
 
         for( let i = 1; i <= endPages; ++i ) {  // in part endPages
-            let page_num = nowPage + i;
-            createPage ( page_num, '#' );
+            let pageNum = nowPage + i;
+            createPage ( pageNum, '#' );
         }
 
         // raquo -> add link to last page
-        createPage ( '»', '#', false );
+        createLaquoPage ( 'Next', '#', 3 );
+        createLaquoPage ( 'End', '#', 4 );
 
-    }else    // then show all the pages
-        for( let i = 1; i <= totalPage; ++i ) {
-            apage.innerHTML = i;
+    }else {    // then show all the pages
+        createLaquoPage ( 'Previous', '#', 1 );
+        for( let i = 1; i <= totalPage; ++i )
             if( i === nowPage )
-                createPageActive ( page_num, '#' );
+                createPageActive ( i, '#' );
             else
-                createPage ( page_num, '#' );
+                createPage ( i, '#' );
 
-        }
 
+        createLaquoPage ( 'Next', '#', 3 );
+    }
 
     window.removeEventListener( 'load', addPages );
 } );

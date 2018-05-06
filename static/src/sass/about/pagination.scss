@@ -1,26 +1,55 @@
-#pagination{
+#pagination {
   display: table;
-  margin:auto;
+  margin: auto;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
-   
-.pagination{
 
-  &__page{
-    color: black;
+.pagination {
+
+  &__page {
+    color: #b5babf;
     float: left;
-    padding: 8px 16px;
+    padding: 10px 15px;
     text-decoration: none;
+    margin-top: 5px;
 
-    &--active{
-      background-color: rgb(0,184,227);
-      color: white;
-      border-radius: 5px;
+    &__laquo {
+      background-color: #00c3d0;
+      color: #f8f8f2;
+      border-radius: 20px;
+      margin: 2px;
+
+      &__head::before {
+        content: '«';
+        margin-right: 15px;
+      }
+
+      &__previous::before {
+        content: '◃';
+        margin-right: 15px;
+      }
+
+      &__next::after {
+        content: '▹';
+        margin-left: 15px;
+      }
+
+      &__end::after {
+        content: '»';
+        margin-left: 15px;
+      }
     }
-      
-      
-    &:hover:not(&--active){
-      background-color: rgb(206,245,255);
-      border-radius: 5px;
+
+    &--active {
+      border: 1px solid rgb( 0, 195, 208 );
+      color: rgb( 0, 195, 208 );
+      border-radius: 20px;
+    }
+
+    &:hover:not( &--active ):not( &__laquo ) {
+      background-color: rgb( 206, 245, 255 );
+      border-radius: 20px;
     }
   }
 }

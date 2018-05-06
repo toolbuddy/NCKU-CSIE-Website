@@ -218,9 +218,7 @@ gulp.task( 'clear:css', ( done ) => {
 gulp.task( 'watch:css', ( done ) => {
     gulp.watch(
         config.sass.lint.src,
-        gulp.parallel( 'lint:css', 'build:css', () => {
-            browserSync.reload();
-        } )
+        gulp.parallel( 'lint:css', 'build:css' )
     );
     done();
 } );
