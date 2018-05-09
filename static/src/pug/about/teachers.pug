@@ -1,4 +1,4 @@
-extends /views/layouts/about.pug
+extends /layouts/about.pug
 
 block stylesheets
   link( rel='stylesheet', type='text/css', media='screen',
@@ -8,8 +8,8 @@ block stylesheets
 block header
 
 block content
-  include /views/components/about/topic.pug
-  include /views/components/about/teachers/card.pug
+  include /components/about/topic.pug
+  include /components/about/teachers/card.pug
   main.main
     +topic( 'Faculty of Computer Science','師資陣容' )
     section.cards
