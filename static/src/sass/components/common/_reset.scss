@@ -1,7 +1,6 @@
-@charset "utf-8";
-@import "font";
-
-@include font__family--YuGothicUI();
+@charset 'utf-8';
+@import 'font';
+@include font__load--NotoSansTC();
 
 * {
   margin: 0;
@@ -18,6 +17,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  font-size: 32px;
-  font-family: var(--font__family--default);
+  font: {
+    family: var( --font__family--default );
+    size: 32px;
+  }
 }
