@@ -1,32 +1,27 @@
-module.exports = function ( databaseName ) {
+const Sequelize = require( 'sequelize' );
+const config = require( './config' );
 
-    const Sequelize = require( 'sequelize' );
-    const databaseConfig = require( './config' );
+module.exports = async ( databaseName ) => {
     const database = new Sequelize(
         databaseName,
-        databaseConfig.username,
-        databaseConfig.password,
+        config.username,
+        config.password,
         {
-            host: databaseConfig.host,
+            host: config.host,
             dialect: 'mysql',
             operatorsAliases: false,
-            pool: {
-                max: 5,
-                min: 0,
-                acquire: 30000,
-                idle: 10000,
-            },
+            pool: config.pool,
         }
     );
 
-    database.authenticate()
-        .then( () => {
-            console.log( 'Connection has been established successfully.' );
-        } )
-        .catch( err => {
-            console.error( 'Unable to connect to the database: ', err );
-            throw Error( 'database need to be checked.' );
-        } );
+    try {
+        await database.authenticate();
+        console.log( 'Connection has been established successfully.' );
+    }
+    catch( err ) {
+        console.error( 'Unable to connect to the database: ', err );
+        throw Error( 'database need to be checked.' );
+    }
 
     return database;
 };

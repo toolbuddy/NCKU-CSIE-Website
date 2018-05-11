@@ -40,7 +40,7 @@ config.browserSync = {
     files: [
         `${ config.js.frontend.build.dest }`,
         `${ config.css.build.dest }`,
-        `${ config.html.build.dest }`,
+        `${ config.html.build.dest.all }`,
     ],
 };
 
