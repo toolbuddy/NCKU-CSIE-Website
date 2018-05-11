@@ -24,6 +24,7 @@
     "lint:js-backend": "gulp --cwd . --gulpfile settings/gulp/js-backend/gulpfile.js lint:js-backend",
     "lint:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js lint:html",
     "pre-build:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js pre-build:css",
+    "pre-build:database": "node settings/database/sequelize_auto.js",
     "pre-build:settings": "gulp --cwd . --gulpfile settings/gulp/settings/gulpfile.js pre-build:settings",
     "watch": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js watch",
     "watch:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js watch:css",
