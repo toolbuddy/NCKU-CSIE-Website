@@ -1,9 +1,9 @@
-doctype html
-html
-  head
-    title ncku csie
-  body
-    h1 welcome to ncku csie
+extends ../layouts/home.pug
+
+block css
+  link(rel='stylesheet' href='/css/announcement/all.css')
+block header
+  h1 welcome to ncku csie
     ul
       li.dropdown
         a( href='#student' ) | student
@@ -72,3 +72,75 @@ html
             a( href='/resource/ieet' ) | IEET
           li
             a( href='/resource/resources' ) | resources
+block content__photowall
+block content__announcement
+  section.gridcontainer
+    main.news
+      +title( 'News & Enents', '最新消息' )
+      +announcement__briefing(  
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+          articleUrl: '', 
+          tags: [ 'college', 'phd' ]
+        }
+      )
+      +announcement__briefing(  
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '兩小段內文',
+          articleUrl: '', 
+          tags: [ 'master', 'teacher' ]
+        }
+      )
+      button.button--attribute
+        a more... >
+    section.hotnews
+      +title( 'Hot News', '最近熱門' )
+      main.maincontainer
+        p 01
+        +announcement__briefing(  
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '',
+            tags:[]
+          }
+      )
+        p 02
+        +announcement__briefing(  
+            {
+              title: '標題四',
+              time: '2018-2-2 | 15:02',
+              excerpt: '兩小段內文',
+              articleUrl: '',
+              tags:[]
+            }
+        )
+        p 03
+        +announcement__briefing(  
+              {
+                title: '標題四',
+                time: '2018-2-2 | 15:02',
+                excerpt: '兩小段內文',
+                articleUrl: '',
+                tags:[]
+              }
+          )
+        p 04
+        +announcement__briefing(  
+              {
+                title: '標題四',
+                time: '2018-2-2 | 15:02',
+                excerpt: '兩小段內文',
+                articleUrl: '',
+                tags:[]
+              }
+          )
+block content__researchInstitute
+block content__upcomingEvent
+block footer
+block script

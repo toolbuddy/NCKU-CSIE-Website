@@ -1,0 +1,52 @@
+@import '../components/common/reset';
+@import '../components/announcement/title';
+@import '../components/home/post';
+@import '../components/announcement/filter';
+
+.gridcontainer {
+  padding: 3.6rem 6.9rem;
+  display: grid;
+  grid: {
+    gap: 1.5rem 0;
+    template-columns: repeat( 10, 1fr );
+  }
+  background-color: #f8fbfc;
+}
+
+.maincontainer {
+
+  > p {
+    font-size: 1.06rem;
+    padding: .7rem 0;
+    color: #9aa0ab;
+    min-width: 2rem;
+  }
+  display: grid;
+  grid-template-columns: repeat( 1, 1fr 6fr );
+}
+
+.button--attribute {
+  background-color: #fd5540;
+  color: white;
+  padding: .2rem .7rem;
+  border-radius: .2rem;
+  float: right;
+  margin-top: 1rem;
+  font-size: .75rem;
+}
+
+.news {
+  grid-column: {
+    start: 1;
+    end: 7;
+  }
+}
+
+.hotnews {
+  grid-column: {
+    start: 8;
+    end: 11;
+  }
+  margin-top: 2.5rem;
+  border-bottom: .03rem solid #868686;
+}
