@@ -1,15 +1,9 @@
-mixin announcement__briefing( briefing )
+git mixin announcement__briefing( briefing )
   section(class=`post post--${briefing.classname}` href=briefing.href)
     h1(class=`post__title post__title--${briefing.classname}`)= briefing.title
     aside(class=`tags post__tags--${briefing.classname}`)
       each tag in briefing.tags
         button(class=`tags__tag--${ tag } tags__tag--radius`)
           a= tag
-<<<<<<< HEAD
     p(class=`post__article post__article--${briefing.classname}`)= briefing.excerpt
     time(class=`post__time post__time--${briefing.classname}`)= briefing.time 
-=======
-    p(class='post__article')= briefing.excerpt
-    time(class='post__time post__time--announcement')= briefing.time 
-
->>>>>>> 18a08a7875c28ebe1683deeaa9430760164b3874

@@ -5,7 +5,7 @@ const router = new express.Router();
 
 // route to root directory
 router.get( '/', function ( req, res ) {
-    res.render( 'home/index' );
+    res.sendFile( `${ global.projectRoot }/static/dist/html/home/index.html` );
 } );
 
 module.exports = router;
