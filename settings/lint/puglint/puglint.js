@@ -59,9 +59,6 @@ module.exports = {
     // need space after operator
     requireSpaceAfterCodeOperator: true,
 
-    // need space befor and after attribute brackets
-    requireSpacesInsideAttributeBrackets: true,
-
     // need to use !== and === as equal and nonequal
     requireStrictEqualityOperators: true,
 

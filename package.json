@@ -4,6 +4,7 @@
   "description": "NCKU CSIE Website",
   "main": "server.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1",
     "pre-build:settings": "./bin/pre-build.sh",
     "lint:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-frontend",
@@ -23,6 +24,32 @@
     "clear": "gulp --gulpfile settings/gulp/gulpfile.js clear",
     "watch": "gulp --gulpfile settings/gulp/gulpfile.js watch",
     "develop": "gulp --gulpfile settings/gulp/gulpfile.js develop"
+=======
+    "build": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js build",
+    "build:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js build:css",
+    "build:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js build:html",
+    "build:js-frontend": "gulp --cwd . --gulpfile settings/gulp/js-frontend/gulpfile.js build:js-frontend",
+    "clear": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js clear",
+    "clear:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js clear:css",
+    "clear:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js clear:html",
+    "clear:js-frontend": "gulp --cwd . --gulpfile settings/gulp/js-frontend/gulpfile.js clear:js-frontend",
+    "clear:js-backend": "gulp --cwd . --gulpfile settings/gulp/js-backend/gulpfile.js clear:js-backend",
+    "clear:settings": "gulp --cwd . --gulpfile settings/gulp/settings/gulpfile.js clear:settings",
+    "develop": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js develop",
+    "lint": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js lint",
+    "lint:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js lint:css",
+    "lint:js-frontend": "gulp --cwd . --gulpfile settings/gulp/js-frontend/gulpfile.js lint:js-frontend",
+    "lint:js-backend": "gulp --cwd . --gulpfile settings/gulp/js-backend/gulpfile.js lint:js-backend",
+    "lint:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js lint:html",
+    "pre-build:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js pre-build:css",
+    "pre-build:settings": "gulp --cwd . --gulpfile settings/gulp/settings/gulpfile.js pre-build:settings",
+    "watch": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js watch",
+    "watch:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js watch:css",
+    "watch:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js watch:html",
+    "watch:js-frontend": "gulp --cwd . --gulpfile settings/gulp/js-frontend/gulpfile.js watch:js-frontend",
+    "watch:js-backend": "gulp --cwd . --gulpfile settings/gulp/js-backend/gulpfile.js watch:js-backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> 7acd6e3cf7964c86869dc6d69f466d7a9c1c79ea
   },
   "repository": {
     "type": "git",
@@ -58,9 +85,12 @@
     "gulp-debug": "^4.0.0",
     "gulp-eslint": "^4.0.2",
     "gulp-filter": "^5.1.0",
+    "gulp-hub": "frankwallis/gulp-hub#4.1.0",
     "gulp-if": "^2.0.2",
     "gulp-nodemon": "^2.2.1",
     "gulp-plumber": "^1.2.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-pug-linter": "^0.5.1",
     "gulp-remember": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
@@ -72,5 +102,8 @@
     "pug-lint": "^2.5.0",
     "stylelint": "^9.2.0",
     "stylelint-scss": "^3.1.0"
+  },
+  "pugLintConfig": {
+    "extends": "./settings/lint/puglint/puglint.js"
   }
 }
