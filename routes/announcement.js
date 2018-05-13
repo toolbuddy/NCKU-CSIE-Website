@@ -27,4 +27,8 @@ router.get( '/recruitment', function ( req, res ) {
     res.render( 'announcement/recruitment' );
 } );
 
+router.get( '/post_detail', function( req, res ) {
+    res.render( 'announcement/post_detail' );
+} );
+
 module.exports = router;
