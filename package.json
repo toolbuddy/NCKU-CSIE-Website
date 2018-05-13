@@ -4,27 +4,6 @@
   "description": "NCKU CSIE Website",
   "main": "server.js",
   "scripts": {
-<<<<<<< HEAD
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pre-build:settings": "./bin/pre-build.sh",
-    "lint:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-frontend",
-    "lint:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js lint:js-backend",
-    "build:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js build:js-frontend",
-    "clear:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-frontend",
-    "clear:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js clear:js-backend",
-    "watch:js-frontend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-frontend",
-    "watch:js-backend": "gulp --gulpfile settings/gulp/gulpfile.js watch:js-backend",
-    "pre-build:css": "gulp --gulpfile settings/gulp/gulpfile.js sass:pre-build",
-    "build:css": "gulp --gulpfile settings/gulp/gulpfile.js build:css",
-    "clear:css": "gulp --gulpfile settings/gulp/gulpfile.js clear:css",
-    "watch:css": "gulp --gulpfile settings/gulp/gulpfile.js watch:css",
-    "lint:pug": "& {pug-lint -c settings/lint/puglint/puglint.js views/*; exit 0;}",
-    "lint": "gulp --gulpfile settings/gulp/gulpfile.js lint;npm run lint:pug",
-    "build": "gulp --gulpfile settings/gulp/gulpfile.js build",
-    "clear": "gulp --gulpfile settings/gulp/gulpfile.js clear",
-    "watch": "gulp --gulpfile settings/gulp/gulpfile.js watch",
-    "develop": "gulp --gulpfile settings/gulp/gulpfile.js develop"
-=======
     "build": "gulp --cwd . --gulpfile settings/gulp/develop/gulpfile.js build",
     "build:css": "gulp --cwd . --gulpfile settings/gulp/css/gulpfile.js build:css",
     "build:html": "gulp --cwd . --gulpfile settings/gulp/html/gulpfile.js build:html",
@@ -49,7 +28,6 @@
     "watch:js-frontend": "gulp --cwd . --gulpfile settings/gulp/js-frontend/gulpfile.js watch:js-frontend",
     "watch:js-backend": "gulp --cwd . --gulpfile settings/gulp/js-backend/gulpfile.js watch:js-backend",
     "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> 7acd6e3cf7964c86869dc6d69f466d7a9c1c79ea
   },
   "repository": {
     "type": "git",
