@@ -5,5 +5,11 @@ mixin announcement__briefing( briefing )
       each tag in briefing.tags
         button(class=`tags__tag--${ tag } tags__tag--radius`)
           a= tag
+<<<<<<< HEAD
     p(class=`post__article post__article--${briefing.classname}`)= briefing.excerpt
     time(class=`post__time post__time--${briefing.classname}`)= briefing.time 
+=======
+    p(class='post__article')= briefing.excerpt
+    time(class='post__time post__time--announcement')= briefing.time 
+
+>>>>>>> 18a08a7875c28ebe1683deeaa9430760164b3874
