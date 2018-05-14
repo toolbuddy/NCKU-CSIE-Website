@@ -1,7 +1,6 @@
 @import '../components/common/reset';
 @import '../components/announcement/filter';
 @import '../components/announcement/title';
-
 @media screen and ( min-width: 1500px ) {
 
   .time {
@@ -37,8 +36,10 @@
     min-width: 1rem;
   }
   display: grid;
-  grid-template-columns: 15% 85%;
-  grid-gap: .5rem 0;
+  grid: {
+    template-columns: 15% 85%;
+    gap: .5rem 0;
+  }
   margin: 1rem 0;
 }
 
@@ -53,13 +54,6 @@
   position: relative;
 }
 
-.arrow {
-  width: 0;
-	height: 0;
-	border-top: red 20px solid;
-	border-right: orange 20px solid;
-	border-left: green 20px solid;
-}
 
 .news {
   grid-column: {
@@ -91,8 +85,10 @@
     padding: .7rem 0;
     border-bottom: .03rem solid #868686;
     display: grid;
-    grid-template-rows: 25% 25% 25% 25%;
-    grid-template-areas: 'b' 'a' 'c' 'd';
+    grid-template: {
+      rows: 25% 25% 25% 25%;
+      areas: 'b' 'a' 'c' 'd';
+    }
   }
 
   &--homehot {
