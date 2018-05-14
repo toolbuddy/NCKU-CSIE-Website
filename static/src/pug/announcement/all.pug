@@ -7,6 +7,18 @@ block title
   +title( 'Undergraduate', '大學部' )
 block filter
   +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
+block main_content
+  main.announcemen.announcement--main
+    +announcement__briefing(  
+      {
+        title: '至頂標題',
+        time: '2018-2-2 | 15:02',
+        excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
+        articleUrl: '', 
+        tags: [ 'college', 'speech', 'phd' ],
+        href: '/about/teachers',
+      }
+   )
 block content
   main.announcement
     +announcement__briefing(  
@@ -16,7 +28,7 @@ block content
         excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
         articleUrl: '', 
         tags: [ 'college', 'speech', 'phd' ],
-        href: '/about/teachers'
+        href: '/about/teachers',
       }
    )
     +announcement__briefing(  
