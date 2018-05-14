@@ -32,12 +32,13 @@
 
   > p {
     font-size: 1.06rem;
-    padding: .7rem 0;
     color: #9aa0ab;
-    min-width: 2rem;
+    min-width: 1rem;
   }
   display: grid;
-  grid-template-columns: repeat( 1, 1fr 6fr );
+  grid-template-columns: 15% 85%;
+  grid-gap: .5rem 0;
+  margin: 1rem 0;
 }
 
 .button--attribute {
@@ -48,6 +49,15 @@
   float: right;
   margin-top: 1rem;
   font-size: .75rem;
+  position: relative;
+}
+
+.arrow {
+  width: 0;
+	height: 0;
+	border-top: red 20px solid;
+	border-right: orange 20px solid;
+	border-left: green 20px solid;
 }
 
 .news {
@@ -76,8 +86,16 @@
 .post {
   font-size: .625rem;
 
-  &--home {
+  &--homenews {
     padding: .7rem 0;
+    border-bottom: .03rem solid #868686;
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-areas: 'b' 'a' 'c' 'd';
+  }
+
+  &--homehot {
+    display: grid;
   }
 
   &--announcement {
@@ -94,35 +112,44 @@
     }
   }
 
-  &--eachbottomborder {
-    border-bottom: .03rem solid #868686;
-  }
+  &__tags {
 
-  &__tags--announcement {
-    display: flex;
-    justify-content: flex-end;
-    align-self: center;
-    margin-top: .8rem;
+    &--homenews {
+      grid-area: b;
+    }
+
+    &--announcement {
+      display: flex;
+      justify-content: flex-end;
+      align-self: center;
+      margin-top: .8rem;
+    }
   }
 
   &__title {
     color: #000000;
     font-size: .75rem;
     min-width: 3rem;
+
+    &--homenews {
+      grid-area: a;
+    }
   }
 
   &__article {
     overflow: hidden;
 
-    &--home { 
+    &--homenews { 
       margin-bottom: .6rem;
+      grid-area: c;
     }
   }
 
   &__time {
 
-    &--home {
+    &--homenews {
       color: #b5babf;
+      grid-area: d;
     }
 
     &--announcement {
