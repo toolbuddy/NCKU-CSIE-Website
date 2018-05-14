@@ -6,7 +6,22 @@ block header
 block title
   +title( 'Undergraduate', '大學部' )
 block filter
-  +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' )
+  +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
+block topContent
+  main.announcement.announcement--main
+    section.announcement__title
+      p.announcement__title__icon
+      h.announcement__title__text 置頂貼文
+    +announcement__briefing(  
+      {
+        title: '至頂標題',
+        time: '2018-2-2 | 15:02',
+        excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
+        articleUrl: '', 
+        tags: [ 'college', 'speech', 'phd' ],
+        classname: 'announcement'
+      }
+   )
 block content
   main.announcement
     +announcement__briefing(
