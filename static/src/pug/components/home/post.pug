@@ -1,16 +1,16 @@
-mixin announcement__briefing( briefing ) 
-    - let k =  briefing 
+mixin announcement__briefing( briefing )
+    - let k =  briefing
     if k.tags.length
-      section(class='post post--eachbottomborder post--home' href=briefing.href)
+      section(class='post post--eachbottomborder post--home', href=briefing.href)
         aside(class='tags')
             each tag in briefing.tags
                 button(class=`tags__tag--${ tag } tags__tag--radius`)
                   a= tag
         h1(class='post__title')= briefing.title
         p(class='post__article post__article--home')= briefing.excerpt
-        time(class='post__time post__time--home')= briefing.time 
+        time(class='post__time post__time--home')= briefing.time
     else
-      section(class='post post--home' href=briefing.href)
+      section(class='post post--home', href=briefing.href)
         h1(class='post__title')= briefing.title
         p(class='post__article post__article--home')= briefing.excerpt
         time(class='post__time post__time--home')= briefing.time
