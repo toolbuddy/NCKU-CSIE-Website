@@ -7,8 +7,11 @@ block title
   +title( 'Undergraduate', '大學部' )
 block filter
   +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
-block main_content
-  main.announcemen.announcement--main
+block topContent
+  main.announcement.announcement--main
+    section.announcement__title
+      p.announcement__title__icon
+      h.announcement__title__text 置頂貼文
     +announcement__briefing(  
       {
         title: '至頂標題',
@@ -16,7 +19,7 @@ block main_content
         excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
         articleUrl: '', 
         tags: [ 'college', 'speech', 'phd' ],
-        href: '/about/teachers',
+        classname: 'announcement'
       }
    )
 block content
