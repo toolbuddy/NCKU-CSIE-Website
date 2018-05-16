@@ -64,9 +64,6 @@ module.exports = {
         // no unknown @media
         'media-feature-name-no-unknown': true,
 
-        // no empty comment
-        'comment-no-empty': true,
-
         // no duplicate import files
         'no-duplicate-at-import-rules': true,
 

@@ -85,6 +85,9 @@
     "stylelint": "^9.2.0",
     "stylelint-scss": "^3.1.0"
   },
+  "eslintConfig": {
+    "root": true
+  },
   "pugLintConfig": {
     "extends": "./settings/lint/puglint/puglint.js"
   }

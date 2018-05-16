@@ -16,9 +16,7 @@ module.exports = async ( databaseName ) => {
 
     try {
         await database.authenticate();
-        console.log( 'Connection has been established successfully.' );
-    }
-    catch( err ) {
+    } catch( err ) {
         console.error( 'Unable to connect to the database: ', err );
         throw Error( 'database need to be checked.' );
     }
