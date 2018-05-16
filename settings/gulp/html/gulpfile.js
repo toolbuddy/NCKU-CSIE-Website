@@ -35,17 +35,17 @@ gulp.task( 'lint:html', () => {
         .pipe( debug() );
 } );
 
-function buildHTML( src, dest, data ) {
-    return async ( done ) => {
+function buildHTML ( src, dest, data ) {
+    return async () => {
         gulp.src( src )
             .pipe( plumber() )
-            .pipe( 
+            .pipe(
                 pug( {
                     basedir: config.lint.dest,
                     data: await data(),
                 } )
             )
-            .pipe( gulp.dest( dest ) )
+            .pipe( gulp.dest( dest ) );
     };
 }
 

@@ -1,103 +1,102 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 const getTeacherProfile = require( `${ projectRoot }/models/teacher/operation/get-teacher-profile` );
 
 const data = {
     about: {
-        async honor() {
+        async honor () {
             return null;
         },
-        async intro() {
+        async intro () {
             return null;
         },
-        async location() {
+        async location () {
             return null;
         },
-        async members() {
+        async members () {
             return null;
         },
-        async teacher() {
+        async teacher () {
             return null;
         },
-        async teachers() {
-            return { teachers: await getTeacherProfile() };
+        async teachers () {
+            return { teachers: await getTeacherProfile(), };
         },
     },
     announcement: {
-        async activity() {
-
+        async activity () {
+            return null;
         },
-        async administrator() {
-
+        async administrator () {
+            return null;
         },
-        async all() {
-
+        async all () {
+            return null;
         },
-        async recruitment() {
-
+        async recruitment () {
+            return null;
         },
-        async speech() {
-
+        async speech () {
+            return null;
         },
     },
     home: {
-        async index() {
-
+        async index () {
+            return null;
         },
     },
     research: {
-        async awards() {
-
+        async awards () {
+            return null;
         },
-        async conferences() {
-
+        async conferences () {
+            return null;
         },
-        async groups() {
-
+        async groups () {
+            return null;
         },
-        async labs() {
-
+        async labs () {
+            return null;
         },
-        async publications() {
-
+        async publications () {
+            return null;
         },
     },
     resource: {
-        async fix() {
-
+        async fix () {
+            return null;
         },
-        async ieet() {
-
+        async ieet () {
+            return null;
         },
-        async law() {
-
+        async law () {
+            return null;
         },
-        async rent() {
-
+        async rent () {
+            return null;
         },
-        async resources() {
-
+        async resources () {
+            return null;
         },
     },
     student: {
-        async college() {
-
+        async college () {
+            return null;
         },
-        async course() {
-
+        async course () {
+            return null;
         },
-        async international() {
-
+        async international () {
+            return null;
         },
-        async master() {
-
+        async master () {
+            return null;
         },
-        async phd() {
-
+        async phd () {
+            return null;
         },
-        async scholarship() {
-            
+        async scholarship () {
+            return null;
         },
     },
 };
