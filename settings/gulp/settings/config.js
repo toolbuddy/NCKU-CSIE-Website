@@ -11,6 +11,7 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
  * @readonly {string}   config.database.dest - Glob of destination directory for copying database configuration.
  * @readonly {string}   config.database.copy - Glob of the very copy file of database configuration.
  */
+
 const config = {
     server: {
         src: [

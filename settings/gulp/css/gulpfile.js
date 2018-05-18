@@ -20,36 +20,42 @@ const config = require( `${ projectRoot }/settings/gulp/css/config` );
  * Task `lint:css`:
  *     Use `stylelint` to lint CSS files.
  */
-gulp.task( 'lint:css', () => {
-    return gulp.src( config.lint.src, { since: gulp.lastRun( 'lint:css' ), } )
+
+gulp.task(
+    'lint:css',
+    () => gulp.src( config.lint.src, { since: gulp.lastRun( 'lint:css' ), } )
         .pipe( plumber() )
         .pipe( stylelint( {
             configFile: config.lint.rule,
-            fix: true,
-            reporters: [
+            fix:        true,
+            reporters:  [
                 { formatter: 'string', console: true, },
             ],
         } ) )
         .pipe( debug() )
-        .pipe( gulp.dest( config.lint.dest ) );
-} );
+        .pipe( gulp.dest( config.lint.dest ) )
+);
 
 /**
  * Task `pre-build:css`:
  *     Use `gulp-file` to write SCSS files static settings.
  */
-gulp.task( 'pre-build:css', () => {
-    return file( config.static.fileName, config.static.data, { src: true, } )
+
+gulp.task(
+    'pre-build:css',
+    () => file( config.static.fileName, config.static.data, { src: true, } )
         .pipe( plumber() )
-        .pipe( gulp.dest( config.static.dest ) );
-} );
+        .pipe( gulp.dest( config.static.dest ) )
+);
 
 /**
  * Task `build:css`:
  *     Use `sass` to convert SCSS files into CSS files.
  */
-gulp.task( 'build:css', () => {
-    return gulp.src( config.build.src )
+
+gulp.task(
+    'build:css',
+    () => gulp.src( config.build.src )
         .pipe( plumber() )
         .pipe( sourcemaps.init() )
         .pipe( sass( { outputStyle: 'compressed', } ) )
@@ -58,33 +64,41 @@ gulp.task( 'build:css', () => {
         .pipe( filter( '**/*.css' ) )
         .pipe( autoprefixer( {
             browsers: config.browserlist,
-            grid: true,
+            grid:     true,
         } ) )
         .pipe( csso() )
         .pipe( rename( { suffix: '.min', } ) )
         .pipe( size( { showFiles: true, } ) )
         .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( config.build.dest ) );
-} );
+        .pipe( gulp.dest( config.build.dest ) )
+);
 
 /**
  * Task `clear:css`:
  *     Clean `build:css` generated files.
  */
-gulp.task( 'clear:css', ( done ) => {
-    del( config.build.dest, { force: true, } )
-        .then( () => done() );
-} );
+
+gulp.task(
+    'clear:css',
+    ( done ) => {
+        del( config.build.dest, { force: true, } )
+            .then( () => done() );
+    }
+);
 
 /**
  * Task `watch:css`:
  *     Watch SCSS files.
  *     Trigger task `build:css` if files changed.
  */
-gulp.task( 'watch:css', ( done ) => {
-    gulp.watch(
-        config.lint.src,
-        gulp.series( 'lint:css', 'build:css' )
-    );
-    done();
-} );
+
+gulp.task(
+    'watch:css',
+    ( done ) => {
+        gulp.watch(
+            config.lint.src,
+            gulp.series( 'lint:css', 'build:css' )
+        );
+        done();
+    }
+);

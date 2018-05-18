@@ -2,6 +2,10 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 const { host, port, } = require( `${ projectRoot }/settings/server/config` );
+const jsFrontend = require( `${ projectRoot }/settings/gulp/js-frontend/config` );
+const jsBackend = require( `${ projectRoot }/settings/gulp/js-backend/config` );
+const css = require( `${ projectRoot }/settings/gulp/css/config` );
+const html = require( `${ projectRoot }/settings/gulp/html/config` );
 
 /**
  * @constant
@@ -10,17 +14,18 @@ const { host, port, } = require( `${ projectRoot }/settings/server/config` );
  * @readonly {Object} config.css         - Configuration for CSS.
  * @readonly {Object} config.html        - Configuration for HTML.
  */
+
 const config = {
     js: {
-        frontend: require( `${ projectRoot }/settings/gulp/js-frontend/config` ),
-        backend: require( `${ projectRoot }/settings/gulp/js-backend/config` ),
+        frontend: jsFrontend,
+        backend:  jsBackend,
     },
-    css: require( `${ projectRoot }/settings/gulp/css/config` ),
-    html: require( `${ projectRoot }/settings/gulp/html/config` ),
+    css,
+    html,
 };
 
 config.nodemon = {
-    main: `${ projectRoot }/server.js`,
+    main:  `${ projectRoot }/server.js`,
     watch: {
         src: [
             ...( config.js.backend.lint.src.filter(
@@ -33,7 +38,7 @@ config.nodemon = {
 const nextPort = 1;
 config.browserSync = {
     port: port + nextPort,
-    ui: {
+    ui:   {
         port: port + nextPort + nextPort,
     },
     proxy: host,

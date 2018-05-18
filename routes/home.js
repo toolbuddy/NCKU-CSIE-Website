@@ -1,10 +1,10 @@
-// router for /home
+// Router for /home
 const express = require( 'express' );
 
-const router = new express.Router();
+const router = express.Router();
 
-// route to root directory
-router.get( '/', function ( req, res ) {
+// Route to root directory
+router.get( '/', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/home/index.html` );
 } );
 

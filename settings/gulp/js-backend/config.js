@@ -10,6 +10,7 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
  * @readonly {string[]} config.lint.src    - Array of glob of source files for linting Backend JavaScript.
  * @readonly {string}   config.lint.dest   - Glob of destination directory for linting Backend JavaScript.
  */
+
 const config = {
     build: {
         src: [
@@ -23,7 +24,7 @@ const config = {
     },
     lint: {
         rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
-        src: [
+        src:  [
             `${ projectRoot }/server.js`,
             `${ projectRoot }/apis/**/*.js`,
             `${ projectRoot }/routes/**/*.js`,

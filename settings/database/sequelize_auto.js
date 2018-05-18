@@ -8,15 +8,17 @@ const auto = new SequelizeAuto(
     config.username,
     config.password,
     {
-        host: config.host,
-        dialect: 'mysql',
-        directory: `${ projectRoot }/models/teacher/tables`,
-        port: config.port,
+        host:       config.host,
+        dialect:    'mysql',
+        directory:  `${ projectRoot }/models/teacher/tables`,
+        port:       config.port,
         additional: {
             timestamps: false,
         },
-    } );
+    }
+);
 
 auto.run( ( err ) => {
-    if ( err ) throw err;
+    if ( err )
+        throw err;
 } );

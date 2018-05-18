@@ -7,23 +7,23 @@ const research = require( './research' );
 const announcement = require( './announcement' );
 const resource = require( './resource' );
 
-const router = new express.Router();
+const router = express.Router();
 
 router.use( '/', home );
 
-// resolve URL /student
+// Resolve URL /student
 router.use( '/student', student );
 
-// resolve URL /about
+// Resolve URL /about
 router.use( '/about', about );
 
-// resolve URL /research
+// Resolve URL /research
 router.use( '/research', research );
 
-// resolve URL /announcement
+// Resolve URL /announcement
 router.use( '/announcement', announcement );
 
-// resolve URL /resource
+// Resolve URL /resource
 router.use( '/resource', resource );
 
 module.exports = router;
