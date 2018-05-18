@@ -28,7 +28,7 @@ router.use( '/resource', resource );
 
 // test component
 router.get( '/test', ( req, res )=>{
-    res.render( 'announcement/pagination' );
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/pagination.html` );
 } );
 
 module.exports = router;
