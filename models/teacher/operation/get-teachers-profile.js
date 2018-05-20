@@ -48,7 +48,7 @@ module.exports = async ( language = 'zh-TW' ) => {
             } ),
             tables.departmentI18n.findAll( {
                 attributes: ['department_id', 'department'],
-                where: { language },
+                where: { language, },
             } ),
             tables.office.findAll( {
                 attributes: ['profile_id', 'office_id', 'tel'],

@@ -47,5 +47,6 @@ module.exports = async ( lang = 'zh-TW' ) => {
         });    
     }
 
-    console.log(JSON.stringify(profileByDepartment.instIMIS));
+    return profileByDepartment;
+
 };
