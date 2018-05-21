@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const getTeacherProfile = require( `${ projectRoot }/models/teacher/operation/get-teacher-profile` );
+const getTeachersProfile = require( `${ projectRoot }/models/teacher/operation/get-teachers-profile` );
 
 const data = {
     about: {
@@ -20,7 +20,7 @@ const data = {
             return null;
         },
         async teachers () {
-            return { teachers: await getTeacherProfile(), };
+            return { teachers: await getTeachersProfile(), };
         },
     },
     announcement: {
