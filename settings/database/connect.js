@@ -8,7 +8,7 @@ module.exports = async ( databaseName ) => {
         config.password,
         {
             host:             config.host,
-            dialect:          'mysql',
+            dialect:          config.protocol,
             operatorsAliases: false,
             pool:             config.pool,
         }

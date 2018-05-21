@@ -3,7 +3,7 @@ module.exports = {
     password: '',
     host: 'localhost',
     port: 3306,
-    protocol: '',
+    protocol: 'mysql',
     pool: {
         max: 5,
         min: 0,
