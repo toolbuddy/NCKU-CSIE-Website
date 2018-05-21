@@ -1,17 +1,35 @@
 const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
+const del = require( 'del' );
 const eslint = require( 'gulp-eslint' );
 const gulp = require( 'gulp' );
 const gulpIf = require( 'gulp-if' );
 const path = require( 'path' );
 const plumber = require( 'gulp-plumber' );
+const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const config = require( `${ projectRoot }/settings/gulp/js-backend/config` );
 
 /**
+ * Task `pre-build:js-backend`:
+ *     Use pure `gulp` to copy server configuration files.
+ */
+
+gulp.task(
+    'pre-build:js-backend',
+    () => gulp.src( config.preBuild.src )
+        .pipe( rename(
+            ( file ) => {
+                file.extname = '';
+            }
+        ) )
+        .pipe( gulp.dest( config.preBuild.dest ) )
+);
+
+/**
  * Task `lint:js-backend`:
- *     Use `eslint` to lint Backend JavaScript files.
+ *     Use `eslint` to lint server ECMAScript files.
  */
 
 gulp.task(
@@ -48,15 +66,18 @@ gulp.task(
 
 /**
  * Task `clear:js-backend`:
- *     Clean `lint:js-backend` generated caches.
+ *     Clean `pre-build:js-backend` and `lint:js-backend` generated caches.
  */
 
 gulp.task(
     'clear:js-backend',
-    ( done ) => {
-        delete cached.caches[ 'lint:js-backend' ];
-        done();
-    }
+    gulp.parallel(
+        ( done ) => {
+            delete cached.caches[ 'lint:js-backend' ];
+            done();
+        },
+        done => del( config.preBuild.copy, { force: true, } ).then( () => done() )
+    )
 );
 
 /**

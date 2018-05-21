@@ -10,11 +10,20 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
  */
 
 const config = {
-    src: [
-        `${ projectRoot }/settings/database/config.js.default`,
-    ],
-    dest: `${ projectRoot }/settings/database`,
-    copy: `${ projectRoot }/settings/database/config.js`,
+    preBuild: {
+        src: [
+            `${ projectRoot }/settings/database/config.js.default`,
+        ],
+        dest: `${ projectRoot }/settings/database`,
+        copy: `${ projectRoot }/settings/database/config.js`,
+    },
+    lint: {
+        rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
+        src:  [
+            `${ projectRoot }/models/*/operation/**/*.js`,
+        ],
+        dest: `${ projectRoot }/models`,
+    },
 };
 
 module.exports = deepFreeze( config );

@@ -6,6 +6,7 @@ const jsFrontend = require( `${ projectRoot }/settings/gulp/js-frontend/config` 
 const jsBackend = require( `${ projectRoot }/settings/gulp/js-backend/config` );
 const css = require( `${ projectRoot }/settings/gulp/css/config` );
 const html = require( `${ projectRoot }/settings/gulp/html/config` );
+const database = require( `${ projectRoot }/settings/gulp/database/config` );
 
 /**
  * @constant
@@ -22,6 +23,7 @@ const config = {
     },
     css,
     html,
+    database,
 };
 
 config.nodemon = {
@@ -31,6 +33,7 @@ config.nodemon = {
             ...( config.js.backend.lint.src.filter(
                 glob => glob !== `${ projectRoot }/server.js`
             ) ),
+            ...config.database.lint.src,
         ],
     },
 };

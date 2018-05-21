@@ -13,6 +13,7 @@ gulp.registry( new Hub(
         '../js-backend/gulpfile.js',
         '../css/gulpfile.js',
         '../html/gulpfile.js',
+        '../database/gulpfile.js',
     ]
 ) );
 
@@ -28,7 +29,8 @@ gulp.task(
         'lint:js-frontend',
         'lint:js-backend',
         'lint:css',
-        'lint:html'
+        'lint:html',
+        'lint:database',
     )
 );
 
@@ -66,7 +68,7 @@ gulp.task(
 /**
  * Task `watch`:
  *     Trigger all `watch` related tasks.
- *     Including `watch:js-frontend`, `watch:js-backend`, `watch:css`, `watch:html`
+ *     Including `watch:js-frontend`, `watch:js-backend`, `watch:css`, `watch:html`, `watch:database`.
  */
 
 gulp.task(
@@ -75,7 +77,8 @@ gulp.task(
         'watch:js-frontend',
         'watch:js-backend',
         'watch:css',
-        'watch:html'
+        'watch:html',
+        'watch:database'
     )
 );
 
@@ -88,7 +91,6 @@ gulp.task(
 gulp.task(
     'develop',
     gulp.series(
-        gulp.series( 'clear', 'build' ),
         gulp.parallel( 'watch:js-frontend', 'watch:css', 'watch:html' ),
         gulp.series(
 
