@@ -30,32 +30,44 @@ module.exports = async ( language = 'zh-TW' ) => {
     ] = await Promise.all(
         [
             tables.profile.findAll( {
-                attributes: [ 'profileId',
+                attributes: [
+                    'profileId',
                     'personalWeb',
                     'email',
-                    'position', ],
+                    'position',
+                ],
             } ),
             tables.profileI18n.findAll( {
-                attributes: [ 'profileId',
-                    'name', ],
+                attributes: [
+                    'profileId',
+                    'name',
+                ],
                 where:      { language, },
             } ),
             tables.title.findAll( {
-                attributes: [ 'profileId',
-                    'titleId', ],
+                attributes: [
+                    'profileId',
+                    'titleId',
+                ],
             } ),
             tables.titleI18n.findAll( {
-                attributes: [ 'titleId',
-                    'title', ],
+                attributes: [
+                    'titleId',
+                    'title',
+                ],
                 where:      { language, },
             } ),
             tables.department.findAll( {
-                attributes: [ 'profileId',
-                    'departmentId', ],
+                attributes: [
+                    'profileId',
+                    'departmentId',
+                ],
             } ),
             tables.departmentI18n.findAll( {
-                attributes: [ 'departmentId',
-                    'department', ],
+                attributes: [
+                    'departmentId',
+                    'department',
+                ],
                 where:      { language, },
             } ),
             tables.office.findAll( {
@@ -64,8 +76,10 @@ module.exports = async ( language = 'zh-TW' ) => {
                     'tel', ],
             } ),
             tables.officeI18n.findAll( {
-                attributes: [ 'officeId',
-                    'address', ],
+                attributes: [
+                    'officeId',
+                    'address',
+                ],
                 where:      { language, },
             } ),
         ]

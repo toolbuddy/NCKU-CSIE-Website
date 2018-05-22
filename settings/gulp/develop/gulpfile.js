@@ -91,7 +91,13 @@ gulp.task(
 gulp.task(
     'develop',
     gulp.series(
-        gulp.parallel( 'watch:js-frontend', 'watch:css', 'watch:html' ),
+        gulp.parallel(
+            'watch:js-backend',
+            'watch:js-frontend',
+            'watch:css',
+            'watch:html',
+            'watch:database'
+        ),
         gulp.series(
 
         // Nodemon start
@@ -100,7 +106,6 @@ gulp.task(
                     script: config.nodemon.main,
                     watch:  config.nodemon.watch.src,
                     ext:    'js json',
-                    tasks:  [ 'lint:js-backend', ],
                 } )
                     .on( 'restart', () => {
                         browserSync.get( 'browser' ).reload();
@@ -120,6 +125,7 @@ gulp.task(
                     logConnections: true,
                     notify:         false,
                     startPath:      '/',
+                    reloadDelay:    1000,
                 } );
                 done();
             }
