@@ -13,18 +13,15 @@ block content
   main.main
     +topic( 'Faculty of Computer Science','師資陣容' )
     section.cards
-      each t in teachers
+      each teacher in teachers
         +cards__card( {
-          imageURL: 'http://via.placeholder.com/300x600',
-          nameText: t.name,
-          titleText: t.title,
-          deptText: t.department,
-          addressText: t.address,
-          linkURL: t.personal_web,
-          emailURL: t.email,
-          phoneText: t.tel
-        } )
-
+          name: teacher.name,
+          imageURL: teacher.img,
+          linkURL:  teacher.personalWeb,
+          emailURL: teacher.email,
+          titles:    teacher.title,
+          depts:     teacher.department,
+          offices:   teacher.office,
+      } )
 block footer
-
 block scripts

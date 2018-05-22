@@ -1,10 +1,12 @@
+@import '../../common/icon.scss';
+
 .cards {
   --hover-color: #343434;
   font-family: var( --font__family--default );
   display: grid;
   grid: {
-    template-columns: repeat( auto-fill, 11.2rem );
-    gap: .625rem;
+    template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
+    gap: 2.625rem;
   }
 
   &__card {
@@ -18,9 +20,18 @@
       rows: 2fr 1fr;
     }
 
+    &__info {
+      grid-area: card__photo;
+    }
+
     &__photo {
       grid-area: card__photo;
+
+      // get rid of little white space
+      // if image is display inline there will be a little white space
       display: block;
+
+      // image setting
       width: 100%;
       height: 100% ;
       object-fit: cover;
@@ -34,29 +45,80 @@
 
     .intro {
       padding: .3rem .88rem;
+
+      // flex-box align items from start of container
       display: flex;
       flex-direction: column;
-      justify-content: center;
-    }
+      justify-content: flex-start;
 
-    &__info {
-      grid-area: card__photo;
-    }
+      &__address {
+        // get rid of italic
+        font-style: normal;
+        word-break: break-all;
+        @include icon--location();
 
-    .info {
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #ffffff;
-      background-color: rgba( 52, 52, 52, .7 );
-      transition: opacity .3;
-      z-index: 999;
-
-      &:hover {
-        opacity: 1;
+        &::before {
+          margin-right: .2rem;
+          height: .5rem;
+          width: .5rem;
+        }
       }
+
+      &__phone {
+        word-break: break-all;
+        @include icon--phone();
+
+        &::before {
+          margin-right: .2rem;
+          height: .5rem;
+          width: .5rem;
+        }
+      }
+
+      %intro__wrapping {
+        // all spans should display to incline-block
+        // The <span> tag is inline by default,
+        // so the text inside will break when wrapping happens.
+        // You can set it to `display: inline-block`
+        // so that it renders as a whole block also remains inline level.
+        // Note, wrapping may still happen but only if the text length exceeds the parent container.
+        // Note is what we want
+
+        &:not( :last-of-type ) {
+          margin-right: .2rem;
+          display: inline-block;
+        }
+      }
+
+      &__title, &__dept {
+        @extend %intro__wrapping;
+      }
+    }
+  }
+
+  .info {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background-color: rgba( 52, 52, 52, .7 );
+
+    // hover effect
+    transition: opacity .3s;
+
+    // set it to visible 
+    z-index: 999;
+    padding: 0 .5rem;
+
+    &__email {
+      // break words by force, so they won't overflow
+      word-break: break-all;
+    }
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

@@ -18,6 +18,10 @@
   };
   align-items: space-around;
 
+  // @media ( min-width: 1393px){
+  //   justify-self: center;
+  // }
+
   .topic {
     grid-area: topic;
   }
