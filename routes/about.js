@@ -13,7 +13,7 @@ router.get( '/teachers', ( req, res ) => {
 } );
 
 // Deal with URLs to teachers pages
-router.get( '/teacher', ( req, res ) => {
+router.get( '/teacher/:id', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/about/teacher.html` );
 } );
 

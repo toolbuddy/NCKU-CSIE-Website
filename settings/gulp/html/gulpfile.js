@@ -1,4 +1,3 @@
-const cached = require( 'gulp-cached' );
 const del = require( 'del' );
 const gulp = require( 'gulp' );
 const debug = require( 'gulp-debug' );
@@ -18,25 +17,17 @@ const data = require( `${ projectRoot }/settings/gulp/html/data` );
 
 gulp.task(
     'lint:html',
-    () => {
-        /**
-         * Helper Function:
-         *     Judge `puglint` has error or not.
-         */
-
-        function isError ( errors ) {
-            const errorIndex = 0;
-            if ( errors.length )
-                delete cached.caches[ 'lint:html' ][ errors[ errorIndex ].filename ];
+    () => gulp.src(
+        config.lint.src,
+        {
+            base:  config.lint.dest,
+            since: gulp.lastRun( 'lint:js-frontend' ),
         }
-        return gulp.src( config.lint.src )
-            .pipe( plumber() )
-            .pipe( cached( 'lint:html' ) )
-            .pipe( puglint() )
-            .pipe( puglint.reporter() )
-            .pipe( puglint.reporter( isError ) )
-            .pipe( debug() );
-    }
+    )
+        .pipe( plumber() )
+        .pipe( puglint() )
+        .pipe( puglint.reporter() )
+        .pipe( debug() )
 );
 
 function buildHTML ( src, dest, data ) {
@@ -253,10 +244,7 @@ gulp.task(
 
 gulp.task(
     'clear:html',
-    ( done ) => {
-        del( config.build.dest.all, { force: true, } )
-            .then( () => done() );
-    }
+    done => del( config.build.dest.all, { force: true, } ).then( () => done() )
 );
 
 /**

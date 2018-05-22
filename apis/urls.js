@@ -1,10 +1,10 @@
 const express = require( 'express' );
 
-const about = require( './about' );
+const teacher = require( './teacher' );
 
 const apis = express.Router();
 
 // Resolve URL /api/about
-apis.use( '/about', about );
+apis.use( '/teacher', teacher );
 
 module.exports = apis;

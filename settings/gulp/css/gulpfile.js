@@ -83,10 +83,7 @@ gulp.task(
 
 gulp.task(
     'clear:css',
-    ( done ) => {
-        del( config.build.dest, { force: true, } )
-            .then( () => done() );
-    }
+    done => del( config.build.dest, { force: true, } ).then( () => done() )
 );
 
 /**

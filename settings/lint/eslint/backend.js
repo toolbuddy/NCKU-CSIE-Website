@@ -340,7 +340,8 @@ module.exports = {
             {
 
                 // An array of numbers to ignore.
-                'ignore': [ 1, ],
+                'ignore': [ 0,
+                    1, ],
 
                 // Array indexes are considered okay.
                 'ignoreArrayIndexes': true,

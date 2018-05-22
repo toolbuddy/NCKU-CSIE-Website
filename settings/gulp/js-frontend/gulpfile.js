@@ -1,9 +1,7 @@
-const cached = require( 'gulp-cached' );
 const debug = require( 'gulp-debug' );
 const del = require( 'del' );
 const eslint = require( 'gulp-eslint' );
 const gulp = require( 'gulp' );
-const gulpIf = require( 'gulp-if' );
 const path = require( 'path' );
 const plumber = require( 'gulp-plumber' );
 const rename = require( 'gulp-rename' );
@@ -21,36 +19,23 @@ const config = require( `${ projectRoot }/settings/gulp/js-frontend/config` );
 
 gulp.task(
     'lint:js-frontend',
-    () => {
-        /**
-         * Helper Function:
-         *     Judge `eslint` has fixed the file contents or not.
-         */
-
-        function isFixed ( file ) {
-            return file.eslint != null && file.eslint.fixed;
+    () => gulp.src(
+        config.lint.src,
+        {
+            base:  config.lint.dest,
+            since: gulp.lastRun( 'lint:js-frontend' ),
         }
-
-        return gulp.src( config.lint.src )
-            .pipe( plumber() )
-            .pipe( cached( 'lint:js-frontend' ) )
-            .pipe(
-                eslint( {
-                    configFile: config.lint.rule,
-                    fix:        true,
-                } )
-            )
-            .pipe( eslint.format() )
-            .pipe( eslint.result( ( result ) => {
-                const threshold = 0;
-
-                // If a file has errors/warnings, uncache it.
-                if ( result.warningCount > threshold || result.errorCount > threshold )
-                    delete cached.caches[ 'lint:js-frontend' ][ result.filePath ];
-            } ) )
-            .pipe( debug() )
-            .pipe( gulpIf( isFixed, gulp.dest( config.lint.dest ) ) );
-    }
+    )
+        .pipe( plumber() )
+        .pipe(
+            eslint( {
+                configFile: config.lint.rule,
+                fix:        true,
+            } )
+        )
+        .pipe( eslint.format() )
+        .pipe( debug() )
+        .pipe( gulp.dest( config.lint.dest ) )
 );
 
 /**
@@ -73,21 +58,12 @@ gulp.task(
 
 /**
  * Task `clear:js-frontend`:
- *     Clean `lint:js-frontend` generated caches.
  *     Clean `build:js-frontend` generated files.
  */
 
 gulp.task(
     'clear:js-frontend',
-    ( done ) => {
-        del( config.build.dest, { force: true, } )
-            .then( () => {
-                delete cached.caches[ 'lint:js-frontend' ];
-            } )
-            .then( () => {
-                done();
-            } );
-    }
+    done => del( config.build.dest, { force: true, } ).then( () => done() )
 );
 
 /**
