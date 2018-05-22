@@ -58,7 +58,10 @@ gulp.task(
     () => gulp.src( config.build.src )
         .pipe( plumber() )
         .pipe( sourcemaps.init() )
-        .pipe( sass( { outputStyle: 'compressed', } ) )
+        .pipe( sass( {
+            outputStyle:  'compressed',
+            includePaths: [ config.lint.dest, ],
+        } ) )
         .pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( config.build.dest ) )
         .pipe( filter( '**/*.css' ) )
