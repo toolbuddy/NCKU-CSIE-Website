@@ -1,38 +1,9 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const connect = require( `${ projectRoot }/settings/database/connect` );
+const associations = require( `${ projectRoot }/models/teacher/operation/associations` );
 
 module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
-    const teacherDatabase = await connect( 'teacher' );
-    const table = {
-        conferenceI18n:         teacherDatabase.import( `${ projectRoot }/models/teacher/tables/conference_i18n` ),
-        conference:             teacherDatabase.import( `${ projectRoot }/models/teacher/tables/conference` ),
-        departmentI18n:         teacherDatabase.import( `${ projectRoot }/models/teacher/tables/department_i18n` ),
-        department:             teacherDatabase.import( `${ projectRoot }/models/teacher/tables/department` ),
-        educationI18n:          teacherDatabase.import( `${ projectRoot }/models/teacher/tables/education_i18n` ),
-        education:              teacherDatabase.import( `${ projectRoot }/models/teacher/tables/education` ),
-        experienceI18n:         teacherDatabase.import( `${ projectRoot }/models/teacher/tables/experience_i18n` ),
-        experience:             teacherDatabase.import( `${ projectRoot }/models/teacher/tables/experience` ),
-        honorI18n:              teacherDatabase.import( `${ projectRoot }/models/teacher/tables/honor_i18n` ),
-        honor:                  teacherDatabase.import( `${ projectRoot }/models/teacher/tables/honor` ),
-        labI18n:                teacherDatabase.import( `${ projectRoot }/models/teacher/tables/lab_i18n` ),
-        lab:                    teacherDatabase.import( `${ projectRoot }/models/teacher/tables/lab` ),
-        officeI18n:             teacherDatabase.import( `${ projectRoot }/models/teacher/tables/office_i18n` ),
-        office:                 teacherDatabase.import( `${ projectRoot }/models/teacher/tables/office` ),
-        patentI18n:             teacherDatabase.import( `${ projectRoot }/models/teacher/tables/patent_i18n` ),
-        patent:                 teacherDatabase.import( `${ projectRoot }/models/teacher/tables/patent` ),
-        profileI18n:            teacherDatabase.import( `${ projectRoot }/models/teacher/tables/profile_i18n` ),
-        profile:                teacherDatabase.import( `${ projectRoot }/models/teacher/tables/profile` ),
-        projectI18n:            teacherDatabase.import( `${ projectRoot }/models/teacher/tables/project_i18n` ),
-        project:                teacherDatabase.import( `${ projectRoot }/models/teacher/tables/project` ),
-        publicationI18n:        teacherDatabase.import( `${ projectRoot }/models/teacher/tables/publication_i18n` ),
-        publication:            teacherDatabase.import( `${ projectRoot }/models/teacher/tables/publication` ),
-        specialty:              teacherDatabase.import( `${ projectRoot }/models/teacher/tables/specialty` ),
-        technologyTransfer:     teacherDatabase.import( `${ projectRoot }/models/teacher/tables/technology_transfer` ),
-        technologyTransferI18n: teacherDatabase.import( `${ projectRoot }/models/teacher/tables/technology_transfer_i18n` ),
-        titleI18n:              teacherDatabase.import( `${ projectRoot }/models/teacher/tables/title_i18n` ),
-        title:                  teacherDatabase.import( `${ projectRoot }/models/teacher/tables/title` ),
-    };
+    const table = await associations();
 
     const data = {};
 
@@ -79,71 +50,286 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
     ] = await Promise.all(
         [
             table.conference.findAll( {
+                include: [
+                    {
+                        model:      table.conferenceI18n,
+                        attributes: [
+                            'conference',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'hostDate',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.department.find( {
+            table.department.findAll( {
+                include: [
+                    {
+                        model:      table.departmentI18n,
+                        attributes: [
+                            'department',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [],
+                where:      {
+                    profileId,
+                },
+            } ),
+            table.education.findAll( {
+                include: [
+                    {
+                        model:      table.educationI18n,
+                        attributes: [
+                            'major',
+                            'school',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'degree',
+                    'endYear',
+                    'nation',
+                    'startYear',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.education.find( {
+            table.experience.findAll( {
+                include: [
+                    {
+                        model:      table.experienceI18n,
+                        attributes: [
+                            'department',
+                            'organization',
+                            'title',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'endYear',
+                    'startYear',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.experience.find( {
+            table.honor.findAll( {
+                include: [
+                    {
+                        model:      table.honorI18n,
+                        attributes: [
+                            'honor',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'honorYear',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.honor.find( {
+            table.lab.findAll( {
+                include: [
+                    {
+                        model:      table.labI18n,
+                        attributes: [
+                            'address',
+                            'name',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'labWeb',
+                    'tel',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.lab.find( {
+            table.office.findAll( {
+                include: [
+                    {
+                        model:      table.officeI18n,
+                        attributes: [
+                            'address',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'tel',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.office.find( {
+            table.patent.findAll( {
+                include: [
+                    {
+                        model:      table.patentI18n,
+                        attributes: [
+                            'inventor',
+                            'patent',
+                            'patentOwner',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'applicationDate',
+                    'certificationNumber',
+                    'expireDate',
+                    'issueDate',
+                    'nation',
+                    'nscNumber',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.patent.find( {
+            table.profile.findOne( {
+                include: [
+                    {
+                        model:      table.profileI18n,
+                        attributes: [
+                            'name',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'email',
+                    'fax',
+                    'nation',
+                    'personalWeb',
+                    'photo',
+                    'position',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.profile.find( {
+            table.project.findAll( {
+                include: [
+                    {
+                        model:      table.projectI18n,
+                        attributes: [
+                            'name',
+                            'support',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'category',
+                    'endYear',
+                    'startYear',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.project.find( {
+            table.publication.findAll( {
+                include: [
+                    {
+                        model:      table.publicationI18n,
+                        attributes: [
+                            'publication',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'category',
+                    'issueYear',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.publication.find( {
+            table.specialty.findAll( {
+                attributes: [
+                    'specialty',
+                ],
+                where: {
+                    profileId,
+                    language,
+                },
+            } ),
+            table.technologyTransfer.findAll( {
+                include: [
+                    {
+                        model:      table.technologyTransferI18n,
+                        attributes: [
+                            'authority',
+                            'patent',
+                            'receiver',
+                            'technology',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'endDate',
+                    'nscNumber',
+                    'startDate',
+                ],
                 where: {
                     profileId,
                 },
             } ),
-            table.specialty.find( {
-                where: {
-                    profileId,
-                },
-            } ),
-            table.technologyTransfer.find( {
-                where: {
-                    profileId,
-                },
-            } ),
-            table.title.find( {
+            table.title.findAll( {
+                include: [
+                    {
+                        model:      table.titleI18n,
+                        attributes: [
+                            'title',
+                        ],
+                        where: {
+                            language,
+                        },
+                    },
+                ],
+                attributes: [
+                    'endDate',
+                    'startDate',
+                ],
                 where: {
                     profileId,
                 },
@@ -151,12 +337,21 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
         ]
     );
 
-    teacherDatabase.close();
+    /* Data.conference = await Promise.all(
+        data.conference.map(
+            async conference => table.conferenceI18n.findOne( {
+                attributes: [
+                    'conference',
+                ],
+                where: {
+                    conferenceId: conference.conferenceId,
+                    language,
+                },
+            } )
+        )
+    );*/
 
-    return {
-        conference: data.conference.map( conference => ( {
-            conferenceId: conference.conferenceId,
-            profileId:    conference.profileID,
-        } ) ),
-    };
+    table.database.close();
+
+    return data;
 };
