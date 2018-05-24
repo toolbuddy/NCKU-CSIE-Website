@@ -37,144 +37,170 @@ module.exports = async () => {
     // Translation relationship.
     // `conference` has many translations.
     table.conference.hasMany( table.conferenceI18n, {
+        as:         'conferenceI18n',
         foreignKey: 'conferenceId',
         targetKey:  'conferenceId',
     } );
 
     // `department` has many translations.
     table.department.hasMany( table.departmentI18n, {
+        as:         'departmentI18n',
         foreignKey: 'departmentId',
         targetKey:  'departmentId',
     } );
 
     // `education` has many translations.
     table.education.hasMany( table.educationI18n, {
+        as:         'educationI18n',
         foreignKey: 'educationId',
         targetKey:  'educationId',
     } );
 
     // `experience` has many translations.
     table.experience.hasMany( table.experienceI18n, {
+        as:         'experienceI18n',
         foreignKey: 'experienceId',
         targetKey:  'experienceId',
     } );
 
     // `honor` has many translations.
     table.honor.hasMany( table.honorI18n, {
+        as:         'honorI18n',
         foreignKey: 'honorId',
         targetKey:  'honorId',
     } );
 
     // `lab` has many translations.
     table.lab.hasMany( table.labI18n, {
+        as:         'labI18n',
         foreignKey: 'labId',
         targetKey:  'labId',
     } );
 
     // `office` has many translations.
     table.office.hasMany( table.officeI18n, {
+        as:         'officeI18n',
         foreignKey: 'officeId',
         targetKey:  'officeId',
     } );
 
     // `patent` has many translations.
     table.patent.hasMany( table.patentI18n, {
+        as:         'patentI18n',
         foreignKey: 'patentId',
         targetKey:  'patentId',
     } );
 
     // `profile` has many translations.
     table.profile.hasMany( table.profileI18n, {
+        as:         'profileI18n',
         foreignKey: 'profileId',
         targetKey:  'profileId',
     } );
 
     // `project` has many translations.
     table.project.hasMany( table.projectI18n, {
+        as:         'projectI18n',
         foreignKey: 'projectId',
         targetKey:  'projectId',
     } );
 
     // `publication` has many translations.
     table.publication.hasMany( table.publicationI18n, {
+        as:         'publicationI18n',
         foreignKey: 'publicationId',
         targetKey:  'publicationId',
     } );
 
     // `technologyTransfer` has many translations.
     table.technologyTransfer.hasMany( table.technologyTransferI18n, {
+        as:         'technologyTransferI18n',
         foreignKey: 'technologyTransferId',
         targetKey:  'technologyTransferId',
     } );
 
     // `title` has many translations.
     table.title.hasMany( table.titleI18n, {
+        as:         'titleI18n',
         foreignKey: 'titleId',
         targetKey:  'titleId',
     } );
 
     // Profile relationship.
     table.profile.hasMany( table.conference, {
+        as:         'conference',
         foreignKey: 'conferenceId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.department, {
+        as:         'department',
         foreignKey: 'departmentId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.education, {
+        as:         'education',
         foreignKey: 'educationId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.experience, {
+        as:         'experience',
         foreignKey: 'experienceId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.honor, {
+        as:         'honor',
         foreignKey: 'honorId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.lab, {
+        as:         'lab',
         foreignKey: 'labId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.office, {
+        as:         'office',
         foreignKey: 'officeId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.patent, {
+        as:         'patent',
         foreignKey: 'patentId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.project, {
+        as:         'project',
         foreignKey: 'projectId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.publication, {
+        as:         'publication',
         foreignKey: 'publicationId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.specialty, {
+        as:         'specialty',
         foreignKey: 'specialtyId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.technologyTransfer, {
+        as:         'technologyTransfer',
         foreignKey: 'technologyTransferId',
         targetKey:  'profileId',
     } );
 
     table.profile.hasMany( table.title, {
+        as:         'title',
         foreignKey: 'titleId',
         targetKey:  'profileId',
     } );

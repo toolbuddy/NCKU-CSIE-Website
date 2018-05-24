@@ -21,7 +21,7 @@ gulp.task(
         config.lint.src,
         {
             base:  config.lint.dest,
-            since: gulp.lastRun( 'lint:js-frontend' ),
+            since: gulp.lastRun( 'lint:html' ),
         }
     )
         .pipe( plumber() )
