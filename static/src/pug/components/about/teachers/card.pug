@@ -1,23 +1,23 @@
 mixin cards__card( profile = {} )
   figure.cards__card.card
-    img.card__photo( src=profile.image, alt='' )
+    img.card__photo( src=profile.image, alt=profile.name )
     article.card__intro.intro
       h1.intro__name= profile.name
       ul.intro__titles
         +intro__list( 'intro__title', profile.titles )
-      ul.intro__depts
-        +intro__list( 'intro__dept', profile.departments )
+      ul.intro__departments
+        +intro__list( 'intro__department', profile.departments )
       p.intro__email= profile.email
       if profile.offices !== null
         each office in profile.offices
           address.intro__address= office.address
           p.intro__phone= office.tel
-    article.card__info.info
+    article.card__intro--hover.intro
       if profile.personalWeb !== null
-        a.info__personal-website( href=profile.personalWeb )
-      a.info__more( href=`/about/teacher/${ profile.profileId }` ) see more
+        a.intro__personal-website( href=profile.personalWeb )
+      a.intro__more( href=`/about/teacher/${ profile.profileId }` ) see more
 
-mixin intro__list( className, arr)
-  if arr!==null
-    each ele in arr
-      li( class=className )= ele
+mixin intro__list( className, array )
+  if array !== null
+    each element in array
+      li( class=className )= element
