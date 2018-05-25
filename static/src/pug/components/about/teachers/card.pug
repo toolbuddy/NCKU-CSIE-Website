@@ -2,11 +2,23 @@ mixin cards__card( teacherInfo = {} )
   figure.cards__card.card
     img.card__photo( src=teacherInfo.imageURL, alt='' )
     article.card__intro.intro
-      h1.intro__name= teacherInfo.nameText
-      h2.intro__title= teacherInfo.titleText
-      p.intro__department= teacherInfo.deptText
-      address.intro__address= teacherInfo.addressText
+      h1.intro__name= teacherInfo.name
+      //- wrappingArr() -> wrapping a array into multiple spans
+      section.intro__titles
+        +wrappingArr( 'intro__title', teacherInfo.titles )
+      //- wrappingArr() -> wrapping a array into multiple spans
+      section.intro__depts
+        +wrappingArr( 'intro__dept', teacherInfo.depts )
+      if ((teacherInfo.offices.length > 0) && (teacherInfo.offices !== null))
+        each office in teacherInfo.offices
+          address.intro__address= office.address
+          p.intro__phone= office.tel
     article.card__info.info
-      a.info__personal-website( href=teacherInfo.linkURL ) 個人網頁
+      if teacherInfo.linkURL !== null
+        a.info__personal-website( href=teacherInfo.linkURL )
       p.info__email= teacherInfo.emailURL
-      p.info__phone= teacherInfo.phoneText
+
+mixin wrappingArr( className, arr)
+  if arr!==null
+    each ele in arr
+      span( class=className )= ele

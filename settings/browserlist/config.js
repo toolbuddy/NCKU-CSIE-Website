@@ -1,24 +1,23 @@
 module.exports = [
-
-    // the last 2 versions for each browser
+    // The last 2 versions for each browser
     'last 2 versions',
 
-    // use Taiwan usage statistics
+    // Use Taiwan usage statistics
     '> 0.1% in TW',
 
-    // versions of Firefox newer than 20
+    // Versions of Firefox newer than 20
     'Firefox > 20',
 
-    // all minor/patch releases of last 2 major versions
+    // All minor/patch releases of last 2 major versions
     'last 2 major versions',
     'last 2 iOS major versions',
 
-    // all versions released since year 2015
+    // All versions released since year 2015
     'since 2015',
 
-    // not dead
+    // Not dead
     'not dead',
 
-    // exclude ie
+    // Exclude ie
     'not ie <= 11',
 ];

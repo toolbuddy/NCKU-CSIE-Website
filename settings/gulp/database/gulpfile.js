@@ -2,41 +2,41 @@ const debug = require( 'gulp-debug' );
 const del = require( 'del' );
 const eslint = require( 'gulp-eslint' );
 const gulp = require( 'gulp' );
-const path = require( 'path' );
 const plumber = require( 'gulp-plumber' );
+const path = require( 'path' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/js-backend/config` );
+const config = require( `${ projectRoot }/settings/gulp/database/config` );
 
 /**
- * Task `pre-build:js-backend`:
- *     Use pure `gulp` to copy server configuration files.
+ * Task `pre-build:database`:
+ *     Use pure `gulp` to copy database configuration files.
  */
 
 gulp.task(
-    'pre-build:js-backend',
-    () => gulp.src( config.preBuild.src )
+    'pre-build:database',
+    () => gulp.src( config.src )
         .pipe( rename(
             ( file ) => {
                 file.extname = '';
             }
         ) )
-        .pipe( gulp.dest( config.preBuild.dest ) )
+        .pipe( gulp.dest( config.dest ) )
 );
 
 /**
- * Task `lint:js-backend`:
- *     Use `eslint` to lint server ECMAScript files.
+ * Task `lint:database`:
+ *     Use `eslint` to lint database ECMAScript files.
  */
 
 gulp.task(
-    'lint:js-backend',
+    'lint:database',
     () => gulp.src(
         config.lint.src,
         {
             base:  config.lint.dest,
-            since: gulp.lastRun( 'lint:js-backend' ),
+            since: gulp.lastRun( 'lint:database' ),
         }
     )
         .pipe( plumber() )
@@ -49,26 +49,27 @@ gulp.task(
         .pipe( gulp.dest( config.lint.dest ) )
 );
 
+
 /**
- * Task `clear:js-backend`:
- *     Clean `pre-build:js-backend` generated files.
+ * Task `clear:database`:
+ *     Clean `pre-build:database` generated files.
  */
 
 gulp.task(
-    'clear:js-backend',
-    done => del( config.preBuild.copy, { force: true, } ).then( () => done() )
+    'clear:database',
+    done => del( config.copy, { force: true, } ).then( () => done() )
 );
 
 /**
- * Task `watch:js-backend`:
- *     Watch Backend JavaScript files.
- *     Trigger `lint:js-backend` if changed.
+ * Task `watch:database`:
+ *     Watch database ECMAScript files.
+ *     Trigger `lint:database` if changed.
  */
 
 gulp.task(
-    'watch:js-backend',
+    'watch:database',
     ( done ) => {
-        gulp.watch( config.lint.src, gulp.series( 'lint:js-backend' ) );
+        gulp.watch( config.lint.src, gulp.series( 'lint:database' ) );
         done();
     }
 );
