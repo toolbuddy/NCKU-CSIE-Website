@@ -27,7 +27,7 @@ router.get( '/recruitment', function ( req, res ) {
     res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/recruitment.html` );
 } );
 
-router.get( '/post_detail', function( req, res ) {
+router.get( '/post_detail', function ( req, res ) {
     res.sendFile(  `${ global.projectRoot }/static/dist/html/announcement/post_detail.html` );
 } );
 
