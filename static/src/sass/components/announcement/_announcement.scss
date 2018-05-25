@@ -1,21 +1,12 @@
-%equal-font-size {
-  font-size: .625rem;
-}
+@import '../common/icon';
 
 .announcement {
-  --font-size: .625rem;
 
   .title {
     border-style: none;
 
     &__icon{
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 25px 12px 5px;
-      border-color: #f5c150 #f5c150 transparent;
-      display: absolute;
-      border-radius: .1rem .1rem 0 0;
+      @include icon_flag();
     }
   
     &__text{
@@ -32,6 +23,7 @@
   }
 
   &__briefing {
+    --font-size:.625rem;
 
     &--announcement {
       min-height: 10%;
@@ -62,7 +54,7 @@
           color: #000000;
           opacity: .5;
           padding-right: 1rem;
-          font-size: .625rem;
+          font-size: var(--font-size);
         }
   
         &__title {
@@ -70,14 +62,14 @@
         }
   
         &__article {
-          font-size: .625rem;
+          font-size: var(--font-size);
+          overflow: hidden;
         }
       }
     }
   
     &--homenews {
-      //@extend %equal-font-size;
-      font-size: .625rem;
+      font-size: var(--font-size);
       padding: .7rem 0;
       border-bottom: .03rem solid #868686;
       display: grid;
@@ -103,6 +95,7 @@
           overflow: hidden;
           margin-bottom: .6rem;
           grid-area: c;
+          overflow: hidden;
         }
     
         &__time {
@@ -114,11 +107,7 @@
     }
 
     &--homehot {
-      --font-sizez: .625rem;
-
-      //@extend %equal-font-size;
-      font-size: .625rem;
-      font-size: var(--font-sizez);
+      font-size: var(--font-size);
       display: grid;
     }
   
