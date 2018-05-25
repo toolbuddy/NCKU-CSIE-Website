@@ -13,57 +13,15 @@ block content
   main.main
     +topic( 'Faculty of Computer Science','師資陣容' )
     section.cards
-      +cards__card( {
-        imageURL: 'http://via.placeholder.com/300x600',
-        nameText: '連震杰',
-        titleText: '製造所所長',
-        deptText: '資訊系 / 資訊所 / 製造所',
-        addressText: '辦公室：資訊系館新大樓11F 65B12',
-        linkURL: 'http://example.com',
-        emailURL: 'example@email.com',
-        phoneText: '(06)2345345'
+      each teacher in teachers
+        +cards__card( {
+          name: teacher.name,
+          imageURL: teacher.img,
+          linkURL:  teacher.personalWeb,
+          emailURL: teacher.email,
+          titles:    teacher.title,
+          depts:     teacher.department,
+          offices:   teacher.office,
       } )
-      +cards__card( {
-        imageURL: 'http://via.placeholder.com/300x600',
-        nameText: '連震杰',
-        titleText: '製造所所長',
-        deptText: '資訊系 / 資訊所 / 製造所',
-        addressText: '辦公室：資訊系館新大樓11F 65B12',
-        linkURL: 'http://example.com',
-        emailURL: 'example@email.com',
-        phoneText: '(06)2345345'
-      } )
-      +cards__card( {
-        imageURL: 'http://via.placeholder.com/300x600',
-        nameText: '連震杰',
-        titleText: '製造所所長',
-        deptText: '資訊系 / 資訊所 / 製造所',
-        addressText: '辦公室：資訊系館新大樓11F 65B12',
-        linkURL: 'http://example.com',
-        emailURL: 'example@email.com',
-        phoneText: '(06)2345345'
-      } )
-      +cards__card( {
-        imageURL: 'http://via.placeholder.com/300x600',
-        nameText: '連震杰',
-        titleText: '製造所所長',
-        deptText: '資訊系 / 資訊所 / 製造所',
-        addressText: '辦公室：資訊系館新大樓11F 65B12',
-        linkURL: 'http://example.com',
-        emailURL: 'example@email.com',
-        phoneText: '(06)2345345'
-      } )
-      +cards__card( {
-        imageURL: 'http://via.placeholder.com/300x600',
-        nameText: '連震杰',
-        titleText: '製造所所長',
-        deptText: '資訊系 / 資訊所 / 製造所',
-        addressText: '辦公室：資訊系館新大樓11F 65B12',
-        linkURL: 'http://example.com',
-        emailURL: 'example@email.com',
-        phoneText: '(06)2345345'
-      } )
-
 block footer
-
 block scripts

@@ -1,6 +1,6 @@
-@import '../components/common/reset';
-@import '../components/about/teachers/header';
-@import '../components/about/teachers/card';
+@import 'components/common/reset';
+@import 'components/about/teachers/header';
+@import 'components/about/teachers/card';
 
 .main {
   background-color: rgb( 85, 82, 82 );
@@ -17,6 +17,10 @@
     row-gap: 2rem;
   };
   align-items: space-around;
+
+  // @media ( min-width: 1393px){
+  //   justify-self: center;
+  // }
 
   .topic {
     grid-area: topic;

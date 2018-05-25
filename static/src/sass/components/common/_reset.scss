@@ -1,5 +1,5 @@
 @charset 'utf-8';
-@import 'font';
+@import 'components/common/font';
 @include font__load--NotoSansTC();
 
 * {
@@ -20,5 +20,10 @@ html, body {
   font: {
     family: var( --font__family--default );
     size: 32px;
+  }
+
+  // media query
+  @media ( max-width: 400px ) {
+    font-size: 20px;
   }
 }

@@ -13,6 +13,7 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
  * @readonly {string}   config.static.data     - Data of CSS static settings file.
  * @readonly {string}   config.static.dest     - Glob of CSS static settings file.
  */
+
 const config = {
     build: {
         src: [
@@ -23,7 +24,7 @@ const config = {
     },
     lint: {
         rule: `${ projectRoot }/settings/lint/stylelint/stylelint.js`,
-        src: [
+        src:  [
             `${ projectRoot }/static/src/sass/**/*.scss`,
         ],
         dest: `${ projectRoot }/static/src/sass`,

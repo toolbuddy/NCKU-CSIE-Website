@@ -6,12 +6,14 @@ Build a better website for NCKU CSIE
 * Install dependencies - `npm install`
 
 ## Build
-* Run pre-build script to setup config files - `npm run pre-build:settings`
-    * Filling-in required configuration files
-        * Server configuration - `settings/server/config.js`
-        * Database configuration - `settings/database/config.js`
-        * Files mentioned above will not exist if you didn't run the pre-build script
-* Build HTML, CSS and ECMAScript files - `npm run build`
+1. Setup server config files
+    * Create server configuration files by running `npm run pre-build:js-backend`.
+    * Filling-in information required by `settings/server/config.js`.
+2. Setup database config files
+    * Create database configuration files by running `npm run pre-build:database`.
+    * Filling-in information required by `settings/database/config.js`.
+    * Create database ORM files by running `npm run build:database`.
+3. Build HTML, CSS and ECMAScript files by running `npm run build`.
 
 ## Run
 * `npm start`

@@ -15,6 +15,9 @@ package-lock.json
 .sass-cache
 static/src/sass/components/common/_static.scss
 
+# sequelize generated schema
+models/*/tables
+
 # OS generated files
 ## Mac OS
 .DS_Store
