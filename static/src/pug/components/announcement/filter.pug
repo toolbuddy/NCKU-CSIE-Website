@@ -15,7 +15,7 @@ mixin filter__tags( ...tags )
         throw new Error( `invalid tag ${ tag }` );
   article.filter__tags.tags
     each tag in tags
-      button( class=`tags__tag--${ tag } tags__tag--radius`)= tag
+      button( class=`tags__tag--${ tag } tags__tag`)= tag
 
 mixin filter__time()
   article.filter__time.time
