@@ -6,7 +6,8 @@
   border-color: #f5c150 #f5c150 transparent;
   display: absolute;
   border-radius: .1rem .1rem 0 0;
-  
+}
+
 @mixin icon--location() {
 
   &::before {
