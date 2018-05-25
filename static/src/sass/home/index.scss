@@ -1,7 +1,7 @@
-@import '../components/common/reset';
-@import '../components/announcement/title';
-@import '../components/announcement/filter';
-@import '../components/announcement/announcement';
+@import 'components/common/reset';
+@import 'components/announcement/title';
+@import 'components/announcement/filter';
+@import 'components/announcement/announcement';
 
 .gridcontainer {
   padding: 3.6rem 6.9rem;
@@ -14,7 +14,6 @@
 }
 
 .maincontainer {
-
   > p {
     font-size: 1.06rem;
     color: #9aa0ab;

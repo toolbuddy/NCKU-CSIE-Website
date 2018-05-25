@@ -1,14 +1,12 @@
-@import '../common/icon';
+@import 'components/common/icon';
 
 .announcement {
-
   .title {
+    //put
+    display: flex;
+    align-items: center;
     border-style: none;
 
-    &__icon{
-      @include icon_flag();
-    }
-  
     &__text{
       margin: 0 0 .06rem .5rem;
       font-size: .875rem;
@@ -17,9 +15,10 @@
   }
 
   &__title{
+    //skin
+    @include icon_flag();
     margin: 0 0 .5rem .25rem;
-    display: flex;
-    align-items: center;     
+  
   }
 
   &__briefing {
@@ -39,7 +38,6 @@
       }
   
       .briefing{
-
         &__tags {
           display: flex;
           justify-content: flex-end;
@@ -79,7 +77,6 @@
       }
 
       .briefing{
-
         &__tags {
           grid-area: b;
         }
