@@ -1,7 +1,7 @@
 @import '../components/common/reset';
 @import '../components/announcement/title';
-@import '../components/home/post';
 @import '../components/announcement/filter';
+@import '../components/announcement/announcement';
 
 .content--home {
   padding: 3.6rem 6.9rem;
@@ -21,8 +21,10 @@
     min-width: 1rem;
   }
   display: grid;
-  grid-template-columns: 15% 85%;
-  grid-gap: .5rem 0;
+  grid: {
+    template-columns: 15% 85%;
+    gap: .5rem 0;
+  }
   margin: 1rem 0;
 }
 
@@ -52,3 +54,4 @@
   margin-top: 2.5rem;
   border-bottom: .03rem solid #868686;
 }
+

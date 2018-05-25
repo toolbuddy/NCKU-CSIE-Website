@@ -1,5 +1,6 @@
-extends ../layouts/home.pug
-
+extends /layouts/home.pug
+include /components/announcement/announcement.pug
+include /components/announcement/title.pug
 block css
   link(rel='stylesheet' href='/css/home/index.css')
 block header
@@ -74,7 +75,7 @@ block header
             a( href='/resource/resources' ) | resources
 block content__photowall
 block content__announcement
-  main.content.content--home
+  main.gridcontainer
     section.news
       +title( 'News & Enents', '最新消息' )
       +announcement__briefing(  

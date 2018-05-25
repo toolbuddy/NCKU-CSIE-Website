@@ -2,6 +2,7 @@ mixin filter( ...tags )
   section.filter
     +filter__tags( ...tags )
     +filter__time()
+
 mixin filter__tags( ...tags )
   -
     let validation = [
@@ -20,7 +21,7 @@ mixin filter__time()
   article.filter__time.time
     aside
       label(for='filterDateBegin') 開始日期
-      input( type='date', id='filterDateBegin', value='2018-04-25', class='time__dateinput--background' )
+      input#filterDateBegin.time__date( type='date', value='2018-04-25' )
     aside
       label(for='filterDateEnd') 結束日期
-      input( type='date', id='filterDateEnd', value='2018-04-25', class='time__dateinput--background' )
+      input#filterDateEnd.time__date( type='date', value='2018-04-25' )
