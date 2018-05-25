@@ -19,8 +19,10 @@
     padding: .7rem 0;
     border-bottom: .03rem solid #868686;
     display: grid;
-    grid-template-rows: 25% 25% 25% 25%;
-    grid-template-areas: 'b' 'a' 'c' 'd';
+    grid-template: {
+      rows: 25% 25% 25% 25%;
+      areas: 'b' 'a' 'c' 'd';
+    }
   }
 
   &--homehot {

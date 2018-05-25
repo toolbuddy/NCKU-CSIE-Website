@@ -2,11 +2,10 @@ mixin filter( ...tags )
   section.filter
     +filter__tags( ...tags )
     +filter__time()
-  
 mixin filter__tags( ...tags )
-  - 
+  -
     let validation = [
-      'college', 'master', 'phd', 'teacher', 'administrator', 
+      'college', 'master', 'phd', 'teacher', 'administrator',
       'international', 'exhibition', 'speech', 'competition', 'conference',
       'internship', 'law', 'recruitment', 'scholarship',
     ];
@@ -20,8 +19,8 @@ mixin filter__tags( ...tags )
 mixin filter__time()
   article.filter__time.time
     aside
-      label(for="filterDateBegin") 開始日期
-      input( type='date' id='filterDateBegin' value='2018-04-25' class='time__dateinput--background' )
+      label(for='filterDateBegin') 開始日期
+      input( type='date', id='filterDateBegin', value='2018-04-25', class='time__dateinput--background' )
     aside
-      label(for="filterDateEnd") 結束日期
-      input( type='date' id='filterDateEnd' value='2018-04-25' class='time__dateinput--background' )
+      label(for='filterDateEnd') 結束日期
+      input( type='date', id='filterDateEnd', value='2018-04-25', class='time__dateinput--background' )
