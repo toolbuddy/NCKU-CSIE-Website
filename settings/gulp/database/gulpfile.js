@@ -16,13 +16,13 @@ const config = require( `${ projectRoot }/settings/gulp/database/config` );
 
 gulp.task(
     'pre-build:database',
-    () => gulp.src( config.src )
+    () => gulp.src( config.preBuild.src )
         .pipe( rename(
             ( file ) => {
                 file.extname = '';
             }
         ) )
-        .pipe( gulp.dest( config.dest ) )
+        .pipe( gulp.dest( config.preBuild.dest ) )
 );
 
 /**
@@ -57,7 +57,7 @@ gulp.task(
 
 gulp.task(
     'clear:database',
-    done => del( config.copy, { force: true, } ).then( () => done() )
+    done => del( config.preBuild.copy, { force: true, } ).then( () => done() )
 );
 
 /**

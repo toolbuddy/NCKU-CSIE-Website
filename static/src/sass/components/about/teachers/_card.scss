@@ -1,124 +1,177 @@
 @import 'components/common/icon.scss';
 
+// block
+// `.main .cards`
+
 .cards {
-  --hover-color: #343434;
-  font-family: var( --font__family--default );
+  // block [layout]
   display: grid;
   grid: {
     template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
     gap: 2.625rem;
   }
 
+  // element
+  // `.main .cards .cards__card`
+
   &__card {
+    // element [skin]
     height: 15rem;
+    font-family: var( --font__family--default );
   }
 
+  // block
+  // `.main .cards .card`
+
   .card {
+    // block [layout]
     display: grid;
     grid-template: {
       areas: 'card__photo' 'card__intro';
       rows: 2fr 1fr;
     }
 
-    &__info {
-      grid-area: card__photo;
-    }
+    // element
+    // `.main .cards .card .card__photo`
 
     &__photo {
+      // element [position]
       grid-area: card__photo;
 
-      // get rid of little white space
-      // if image is display inline there will be a little white space
-      display: block;
-
-      // image setting
+      // element [skin]
       width: 100%;
       height: 100% ;
       object-fit: cover;
     }
 
+    // element
+    // `.main .cards .card .card__intro`
+
     &__intro {
+      // element [position]
+      grid-area: card__intro;
+
+      // element [skin]
       background-color: #ffffff;
       font-size: .5rem;
-      grid-area: card__intro;
+      padding: .3rem .88rem;
     }
 
-    .intro {
-      padding: .3rem .88rem;
+    // block
+    // `.main .cards .card .intro`
 
-      // flex-box align items from start of container
+    .intro {
+      // block [layout]
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
 
-      &__address {
-        // get rid of italic
-        font-style: normal;
-        word-break: break-all;
-        @include icon--location();
+      // template
+      // `.main .cards .card .intro .intro__list`
 
-        &::before {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
+      %intro__list {
+        // template [skin]
+        display: inline-block;
+        margin-right: .2rem;
       }
 
-      &__phone {
-        word-break: break-all;
-        @include icon--phone();
-
-        &::before {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
-      }
-
-      %intro__wrapping {
-        // all spans should display to incline-block
-        // The <span> tag is inline by default,
-        // so the text inside will break when wrapping happens.
-        // You can set it to `display: inline-block`
-        // so that it renders as a whole block also remains inline level.
-        // Note, wrapping may still happen but only if the text length exceeds the parent container.
-        // Note is what we want
-
-        &:not( :last-of-type ) {
-          margin-right: .2rem;
-          display: inline-block;
-        }
-      }
+      // element
+      // `.main .cards .card .intro .intro__title`
+      // `.main .cards .card .intro .intro__dept`
 
       &__title, &__dept {
-        @extend %intro__wrapping;
+        // element [skin]
+        @extend %intro__list;
+      }
+
+      // element
+      // `.main .cards .card .intro .intro__email`
+
+      &__email {
+        // element [skin]
+        word-break: break-all;
+        @include icon--before__email--small() {
+          margin-right: .2rem;
+          height: .5rem;
+          width: .5rem;
+        }
+      }
+
+      // element
+      // `.main .cards .card .intro .intro__address`
+
+      &__address {
+        // element [skin]
+        font-style: normal;
+        word-break: break-all;
+        @include icon--before__location--small() {
+          margin-right: .2rem;
+          height: .5rem;
+          width: .5rem;
+        }
+      }
+
+      // element
+      // `.main .cards .card .intro .intro__phone`
+
+      &__phone {
+        // element [skin]
+        word-break: break-all;
+        @include icon--before__phone--small() {
+          margin-right: .2rem;
+          height: .5rem;
+          width: .5rem;
+        }
       }
     }
-  }
 
-  .info {
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    background-color: rgba( 52, 52, 52, .7 );
+    // element
+    // `.main .cards .card .card__info`
 
-    // hover effect
-    transition: opacity .3s;
+    &__info {
+      // element [position]
+      // `.card__info` will fly on top of `.card__photo`.
+      grid-area: card__photo;
+      z-index: 1;
 
-    // set it to visible 
-    z-index: 999;
-    padding: 0 .5rem;
+      // element [skin]
+      color: #ffffff;
+      background-color: rgb( 52, 52, 52 );
+      padding: 0 .5rem;
 
-    &__email {
-      // break words by force, so they won't overflow
-      word-break: break-all;
+      // element [interaction]
+      // `.card__info` will be visible when hovered
+      opacity: 0;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: .7;
+      }
     }
 
-    &:hover {
-      opacity: 1;
+    // block
+    // `.main .cards .card .info`
+
+    .info {
+      // block [layout]
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      // element
+      // `.main .cards .card .info .info__more`
+
+      &__more {
+        // element [skin]
+        color: white;
+        background-color: rgb( 0, 195, 208 );
+        border: .1rem solid white;
+        border-radius: 1rem;
+        padding: .5rem;
+        margin-top: .2rem;
+        font-size: .625rem;
+      }
     }
   }
 }

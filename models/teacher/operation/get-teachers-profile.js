@@ -88,26 +88,27 @@ module.exports = async ( language = 'zh-TW' ) => {
     teacherDatabase.close();
 
     return data.profile.map( profile => ( {
-        name: data.profileI18n
+        profileId: profile.profileId,
+        name:      data.profileI18n
             .find( profileI18n => profileI18n.profileId === profile.profileId )
             .name,
         personalWeb: profile.personalWeb,
         email:       profile.email,
-        title:       data.title
+        titles:       data.title
             .filter( title => title.profileId === profile.profileId )
             .map(
                 title => data.titleI18n
                     .find( titleI18n => titleI18n.titleId === title.titleId )
                     .title
             ),
-        department: data.department
+        departments: data.department
             .filter( department => department.profileId === profile.profileId )
             .map(
                 department => data.departmentI18n
                     .find( departmentI18n => departmentI18n.departmentId === department.departmentId )
                     .department
             ),
-        office: data.office
+        offices: data.office
             .filter( office => office.profileId === profile.profileId )
             .map( office => ( {
                 address:

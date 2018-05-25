@@ -1,24 +1,23 @@
-mixin cards__card( teacherInfo = {} )
+mixin cards__card( profile = {} )
   figure.cards__card.card
-    img.card__photo( src=teacherInfo.imageURL, alt='' )
+    img.card__photo( src=profile.image, alt='' )
     article.card__intro.intro
-      h1.intro__name= teacherInfo.name
-      //- wrappingArr() -> wrapping a array into multiple spans
-      section.intro__titles
-        +wrappingArr( 'intro__title', teacherInfo.titles )
-      //- wrappingArr() -> wrapping a array into multiple spans
-      section.intro__depts
-        +wrappingArr( 'intro__dept', teacherInfo.depts )
-      if ((teacherInfo.offices.length > 0) && (teacherInfo.offices !== null))
-        each office in teacherInfo.offices
+      h1.intro__name= profile.name
+      ul.intro__titles
+        +intro__list( 'intro__title', profile.titles )
+      ul.intro__depts
+        +intro__list( 'intro__dept', profile.departments )
+      p.intro__email= profile.email
+      if profile.offices !== null
+        each office in profile.offices
           address.intro__address= office.address
           p.intro__phone= office.tel
     article.card__info.info
-      if teacherInfo.linkURL !== null
-        a.info__personal-website( href=teacherInfo.linkURL )
-      p.info__email= teacherInfo.emailURL
+      if profile.personalWeb !== null
+        a.info__personal-website( href=profile.personalWeb )
+      a.info__more( href=`/about/teacher/${ profile.profileId }` ) see more
 
-mixin wrappingArr( className, arr)
+mixin intro__list( className, arr)
   if arr!==null
     each ele in arr
-      span( class=className )= ele
+      li( class=className )= ele

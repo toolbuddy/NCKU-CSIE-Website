@@ -8,20 +8,13 @@ block stylesheets
 block header
 
 block content
-  include /components/about/topic.pug
+  include /components/common/topic.pug
   include /components/about/teachers/card.pug
   main.main
-    +topic( 'Faculty of Computer Science','師資陣容' )
+    +topic( 'Faculty of Computer Science', '師資陣容' )
     section.cards
       each teacher in teachers
-        +cards__card( {
-          name: teacher.name,
-          imageURL: teacher.img,
-          linkURL:  teacher.personalWeb,
-          emailURL: teacher.email,
-          titles:    teacher.title,
-          depts:     teacher.department,
-          offices:   teacher.office,
-      } )
+        +cards__card( teacher )
+      //-imageURL: teacher.img,
 block footer
 block scripts

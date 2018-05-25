@@ -292,7 +292,22 @@ module.exports = {
         'selector-list-comma-space-after': 'always',
 
         // Need empty line before each rule
-        'rule-empty-line-before': 'always',
+        'rule-empty-line-before': [
+            'always',
+            {
+                'except': [
+                    // Reverse the primary option if the rule comes after a single-line comment.
+                    'after-single-line-comment',
+
+                    // Reverse the primary option if the rule is the first in a block.
+                    'first-nested',
+                ],
+                'ignore': [
+                    // Ignore rules that come after a comment.
+                    'after-comment',
+                ],
+            },
+        ],
 
         // Need space after media colon
         'media-feature-colon-space-after': 'always',
