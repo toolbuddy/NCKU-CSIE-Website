@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-@import '/components/common/reset';
-@import '/components/announcement/filter';
-@import '/components/announcement/title';
-=======
 @import '../components/common/reset';
 @import '../components/announcement/announcement';
 @import '../components/announcement/filter';
 @import '../components/announcement/title';
->>>>>>> 4bf4d6528b2feec8d57ccac0561b454c5f82d286
 
 .content {
   padding: 2rem 4.5rem;
@@ -19,71 +13,6 @@
   }
 }
 
-<<<<<<< HEAD
-.post {
-  font-size: .625rem;
-
-  &--homenews {
-    padding: .7rem 0;
-    border-bottom: .03rem solid #868686;
-    display: grid;
-    grid-template: {
-      rows: 25% 25% 25% 25%;
-      areas: 'b' 'a' 'c' 'd';
-    }
-  }
-
-  &--homehot {
-    display: grid;
-  }
-
-  &--announcement {
-    min-height: 10%;
-    padding: 1rem 1.5rem;
-    background-color: #ffffff;
-    height: 5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 .2rem .1rem rgba( 0, 0, 0, .1 );
-    display: grid;
-    grid-template: {
-      rows: 1.2rem;
-      columns: repeat( 2, 1fr );
-    }
-  }
-
-  &__tags {
-
-    &--homenews {
-      grid-area: b;
-    }
-
-    &--announcement {
-      display: flex;
-      justify-content: flex-end;
-      align-self: center;
-      margin-top: .8rem;
-    }
-  }
-
-  &__title {
-    color: #000000;
-    font-size: .75rem;
-    min-width: 3rem;
-
-    &--homenews {
-      grid-area: a;
-    }
-  }
-
-  &__article {
-    overflow: hidden;
-
-    &--homenews { 
-      margin-bottom: .6rem;
-      grid-area: c;
-    }
-  }
-=======
 .announcement {
   grid-column: {
     start: 2;
@@ -117,7 +46,6 @@
   }
 }
 
->>>>>>> 4bf4d6528b2feec8d57ccac0561b454c5f82d286
 
 
 
