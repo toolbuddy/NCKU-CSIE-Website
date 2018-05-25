@@ -3,7 +3,7 @@
 @import '../components/home/post';
 @import '../components/announcement/filter';
 
-.gridcontainer {
+.content--home {
   padding: 3.6rem 6.9rem;
   display: grid;
   grid: {
@@ -17,12 +17,13 @@
 
   > p {
     font-size: 1.06rem;
-    padding: .7rem 0;
     color: #9aa0ab;
-    min-width: 2rem;
+    min-width: 1rem;
   }
   display: grid;
-  grid-template-columns: repeat( 1, 1fr 6fr );
+  grid-template-columns: 15% 85%;
+  grid-gap: .5rem 0;
+  margin: 1rem 0;
 }
 
 .button--attribute {
@@ -33,6 +34,7 @@
   float: right;
   margin-top: 1rem;
   font-size: .75rem;
+  position: relative;
 }
 
 .news {

@@ -1,10 +1,10 @@
 mixin announcement__briefing( briefing )
   section(class=`post post--${briefing.classname}` href=briefing.href)
     h1(class='post__title')= briefing.title
-    aside(class='tags post__tags--announcement')
+    aside(class=`tags post__tags--${briefing.classname}`)
       each tag in briefing.tags
         button(class=`tags__tag--${ tag } tags__tag--radius`)
           a= tag
     p(class='post__article')= briefing.excerpt
-    time(class='post__time post__time--announcement')= briefing.time 
+    time(class=`post__time post__time--${briefing.classname`)= briefing.time 
 

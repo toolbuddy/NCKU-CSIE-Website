@@ -1,13 +1,13 @@
-extends ../layouts/announcement.pug
+extends /layouts/announcement.pug
 
 block css
-  link(rel='stylesheet' href='/css/announcement/all.css')
+  link( rel='stylesheet', href='/css/announcement/all.css' )
 block header
 block title
   +title( 'Undergraduate', '大學部' )
 block filter
   +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
-block topContent
+block announcement--pinned
   main.announcement.announcement--main
     section.announcement__title
       p.announcement__title__icon
@@ -22,7 +22,7 @@ block topContent
         classname: 'announcement'
       }
    )
-block content
+block announcement
   main.announcement
     +announcement__briefing(  
       {

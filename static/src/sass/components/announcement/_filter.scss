@@ -108,6 +108,9 @@
 
 .time {
   font-size: .625rem;
+  @media screen and ( min-width: 1500px ) {
+    display: flex;
+  }
 
   &__dateinput {
 
