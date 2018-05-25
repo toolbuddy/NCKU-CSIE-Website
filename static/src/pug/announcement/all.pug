@@ -1,17 +1,24 @@
-extends ../layouts/announcement.pug
+extends /layouts/announcement.pug
+
+include /components/announcement/announcement.pug
+include /components/announcement/title.pug
+include /components/announcement/filter.pug
 
 block css
-  link(rel='stylesheet', href='/css/announcement/all.css')
+  link( rel='stylesheet', href='/css/announcement/all.min.css' )
+
 block header
 block title
   +title( 'Undergraduate', '大學部' )
+
 block filter
   +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
-block topContent
-  main.announcement.announcement--main
-    section.announcement__title
-      p.announcement__title__icon
-      h.announcement__title__text 置頂貼文
+
+block announcement--pinned
+  section.announcement
+    section.announcement__title.title
+      p.title__icon
+      h.title__text 置頂貼文
     +announcement__briefing(  
       {
         title: '至頂標題',
@@ -21,9 +28,12 @@ block topContent
         tags: [ 'college', 'speech', 'phd' ],
         classname: 'announcement'
       }
-   )
-block content
-  main.announcement
+    )
+block announcement
+  section.announcement
+    section.announcement__title.title
+      p.title__icon
+      h.title__text 所有貼文
     +announcement__briefing(
       {
         title: '標題二',

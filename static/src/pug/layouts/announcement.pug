@@ -1,18 +1,14 @@
-include ../components/announcement/announcement.pug
-include ../components/announcement/title.pug
-include ../components/announcement/filter.pug
-
 doctype html
 html
   head
     block css
   body
     block header
-    section#content-container
+    main.content
       block title
       block filter
-      block topContent
-      block content
+      block announcement--pinned
+      block announcement
       block page 
     block footer
     block script

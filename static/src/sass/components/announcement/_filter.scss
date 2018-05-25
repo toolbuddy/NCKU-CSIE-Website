@@ -21,23 +21,26 @@
   }
 }
 
+.time {
+  @media screen and ( min-width: 1500px ) {
+    display: flex;
+  }
+}
+
 .tags {
   display: inline-block;
   color: #ffffff;
   font-size: .625rem;
 
   &__tag {
-
-    &--radius {
-      background: none;
-      border-radius: 1rem;
-      padding: .1rem .5rem .2rem;
-      margin: {
-        bottom: .6rem;
-        right: .4rem;
-      }
-      width: 5rem;
+    background: none;
+    border-radius: 1rem;
+    padding: .1rem .5rem .2rem;
+    margin: {
+      bottom: .6rem;
+      right: .4rem;
     }
+    width: 5rem;
 
     &--college {
       background: #f5c150;
@@ -109,18 +112,15 @@
 .time {
   font-size: .625rem;
 
-  &__dateinput {
-
-    &--background {
-      border-radius: 1rem;
-      display: flex;
-      align-self: center;
-      padding: .4rem .5rem;
-      max-width: 7rem;
-      margin: {
-        top: .5rem;
-        right: .6rem;
-      }
+  &__date {
+    border-radius: 1rem;
+    display: flex;
+    align-self: center;
+    padding: .4rem .5rem;
+    max-width: 7rem;
+    margin: {
+      top: .5rem;
+      right: .6rem;
     }
   }
 }

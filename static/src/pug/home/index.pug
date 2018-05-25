@@ -1,7 +1,8 @@
-extends ../layouts/home.pug
-
+extends /layouts/home.pug
+include /components/announcement/announcement.pug
+include /components/announcement/title.pug
 block css
-  link(rel='stylesheet' href='/css/announcement/all.css')
+  link(rel='stylesheet' href='/css/home/index.css')
 block header
   h1 welcome to ncku csie
     ul
@@ -74,8 +75,8 @@ block header
             a( href='/resource/resources' ) | resources
 block content__photowall
 block content__announcement
-  section.gridcontainer
-    main.news
+  main.gridcontainer
+    section.news
       +title( 'News & Enents', '最新消息' )
       +announcement__briefing(  
         {
