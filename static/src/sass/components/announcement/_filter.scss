@@ -1,14 +1,8 @@
 .filter {
   display: grid;
-  grid: {
-    column: {
-      start: 2;
-      end: 10;
-    }
-    template: {
-      columns: 70% 30%;
-      areas: 'filter__tags filter__time';
-    }
+  grid-template: {
+    columns: 70% 30%;
+    areas: 'filter__tags filter__time';
   }
   margin-bottom: 2rem;
 
