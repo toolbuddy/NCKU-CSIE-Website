@@ -15,12 +15,6 @@
   }
 }
 
-.time {
-  @media screen and ( min-width: 1500px ) {
-    display: flex;
-  }
-}
-
 .tags {
   display: inline-block;
   color: #ffffff;
@@ -104,6 +98,9 @@
 }
 
 .time {
+  @media screen and ( min-width: 1500px ) {
+    display: flex;
+  }
   font-size: .625rem;
   @media screen and ( min-width: 1500px ) {
     display: flex;

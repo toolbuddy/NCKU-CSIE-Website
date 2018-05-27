@@ -1,5 +1,5 @@
 extends /layouts/home.pug
-include /components/announcement/announcement.pug
+include /components/announcement/briefing.pug
 include /components/common/topic.pug
 block css
   link(rel='stylesheet' href='/css/home/index.css')
@@ -102,7 +102,7 @@ block content__announcement
         a more... >
     section.hotnews
       +topic( 'Hot News', '最近熱門', 'black' )
-      main.maincontainer
+      main.hotnewscontainer
         p 01
         +announcement__briefing(  
           {

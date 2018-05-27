@@ -1,6 +1,6 @@
-extends /layouts/announcement.pug
+extends /layouts/announcement/briefing.pug
 
-include /components/announcement/announcement.pug
+include /components/announcement/briefing.pug
 include /components/common/topic.pug
 include /components/announcement/filter.pug
 
@@ -17,8 +17,7 @@ block filter
 block announcement--pinned
   section.announcement
     section.announcement__title.title
-      p.title__icon
-      h.title__text 置頂貼文
+      h1.title__text 置頂貼文
     +announcement__briefing(  
       {
         title: '至頂標題',
@@ -32,8 +31,7 @@ block announcement--pinned
 block announcement
   section.announcement
     section.announcement__title.title
-      p.title__icon
-      h.title__text 所有貼文
+      h1.title__text 所有貼文
     +announcement__briefing(
       {
         title: '標題二',

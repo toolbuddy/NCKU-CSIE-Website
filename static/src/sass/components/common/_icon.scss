@@ -1,20 +1,18 @@
-@mixin icon_flag {
-  &::before{
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 25px 12px 5px;
-    border-color: #f5c150 #f5c150 transparent;
-    border-radius: .1rem .1rem 0 0;
-    @content
-  }
-
-}
 @mixin icon--before__template {
   &::before {
     content: '';
     display: inline-block;
+    @content;
+  }
+}
+@mixin icon--before__flag {
+  @include icon--before__template() {
+    border: {
+      style: solid;
+      width: .78rem .375rem .16rem;
+      color: #f5c150 #f5c150 transparent;
+      radius: .1rem .1rem 0 0;
+    }
     @content;
   }
 }
