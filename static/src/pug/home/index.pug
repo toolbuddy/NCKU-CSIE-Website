@@ -1,5 +1,6 @@
 extends /layouts/home.pug
-include /components/announcement/briefing.pug
+include /components/announcement/briefingnews.pug
+include /components/announcement/briefinghotnews.pug
 include /components/common/topic.pug
 block css
   link(rel='stylesheet' href='/css/home/index.css')
@@ -78,73 +79,64 @@ block content__announcement
   main.newscontainer
     section.news
       +topic( 'News & Enents', '最新消息', 'black' )
-      +announcement__briefing(  
-        {
-          title: '標題222222',
-          time: '2018-2-2 | 15:02',
-          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-          articleUrl: '', 
-          tags: [ 'college', 'phd' ],
-          classname: 'homenews'
-        }
-      )
-      +announcement__briefing(  
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '兩小段內文',
-          articleUrl: '', 
-          tags: [ 'master', 'teacher' ],
-          classname: 'homenews'
-        }
-      )
-      button.button--attribute
+      section.news__briefings.briefings
+        +briefings__briefing--news(  
+          {
+            title: '標題222222',
+            time: '2018-2-2 | 15:02',
+            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+            articleUrl: '', 
+            tags: [ 'college', 'phd' ]
+          }
+        )
+        +briefings__briefing--news(  
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '', 
+            tags: [ 'master', 'teacher' ]
+          }
+        )
+      button.news__button
         a more... >
     section.hotnews
       +topic( 'Hot News', '最近熱門', 'black' )
-      main.hotnewscontainer
-        p 01
-        +announcement__briefing(  
+      section.hotnews__briefings.briefings.briefings--twocolumns
+        +briefings__briefing--hotnews(  
           {
             title: '標題二',
             time: '2018-2-2 | 15:02',
             excerpt: '兩小段內文',
             articleUrl: '',
-            tags:[],
-            classname: 'homehot'
+            number: '01'
           }
       )
-        p 02
-        +announcement__briefing(  
+        +briefings__briefing--hotnews(  
             {
               title: '標題四',
               time: '2018-2-2 | 15:02',
               excerpt: '兩小段內文',
               articleUrl: '',
-              tags:[],
-              classname: 'homehot'
+              number: '02'
             }
         )
-        p 03
-        +announcement__briefing(  
+        +briefings__briefing--hotnews(  
               {
                 title: '標題四',
                 time: '2018-2-2 | 15:02',
                 excerpt: '兩小段內文',
                 articleUrl: '',
-                tags:[],
-                classname: 'homehot'
+                number: '03'
               }
-          )
-        p 04
-        +announcement__briefing(  
+        )
+        +briefings__briefing--hotnews(  
               {
                 title: '標題四',
                 time: '2018-2-2 | 15:02',
                 excerpt: '兩小段內文',
                 articleUrl: '',
-                tags:[],
-                classname: 'homehot'
+                number: '04'
               }
           )
 block content__researchInstitute

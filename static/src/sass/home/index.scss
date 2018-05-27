@@ -1,8 +1,8 @@
 @import 'components/common/reset';
 @import 'components/common/topic';
 @import 'components/announcement/filter';
-@import 'components/announcement/briefing';
-
+@import 'components/announcement/briefingnews';
+@import 'components/announcement/briefinghotnews';
 
 .newscontainer {
   display: grid;
@@ -28,7 +28,30 @@
   }
 }
 
+.news {
+  &__briefings {
+    font-size: .625rem;
+  }
+
+  &__button {
+    background-color: #fd5540;
+    color: white;
+    padding: .2rem .7rem;
+    border-radius: .2rem;
+    float: right;
+    margin-top: 1rem;
+    font-size: .75rem;
+    position: relative;
+  }
+}
+
 .hotnews {
+  &__briefings {
+    font-size: .625rem;
+    border-bottom: 1px solid black;
+    margin: 1rem 0;
+  }
+
   grid-column: {
     start: 8;
     end: 11;
@@ -42,35 +65,5 @@
   margin-top: 2.5rem;
 }
 
-.hotnewscontainer {
-  border-bottom: 1px solid black;
-  padding-bottom: 1rem;
-  margin: 1rem 0;
-
-  > p {
-    font-size: 1.06rem;
-    color: #9aa0ab;
-    min-width: 1rem;
-  }
-  display: grid;
-  @media screen and ( max-width: 1200px){
-    grid-template-columns: 10% 90%;
-  }
-  grid: {
-    template-columns: 20% 80%;
-    gap: .5rem 0;
-  }
-}
-
-.button--attribute {
-  background-color: #fd5540;
-  color: white;
-  padding: .2rem .7rem;
-  border-radius: .2rem;
-  float: right;
-  margin-top: 1rem;
-  font-size: .75rem;
-  position: relative;
-}
 
 

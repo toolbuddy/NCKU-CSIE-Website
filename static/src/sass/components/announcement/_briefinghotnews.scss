@@ -1,0 +1,41 @@
+.hotnews {
+  .briefings{
+    .briefing {
+      display: flex;
+
+      &__number {
+        font-size: 1.06rem;
+        color: #9aa0ab;
+        min-width: 1rem;
+        margin-right: .5rem;
+      }
+
+      &__text {
+
+      }
+    
+      
+      .text {
+        &__title {
+          color: #000000;
+          font-size: .75rem;
+          min-width: 3rem;
+        }
+
+        &__article {
+          overflow: hidden;
+          margin-bottom: .3rem;
+        }
+
+        &__time {
+          color: #b5babf;
+        }
+      }
+    }
+
+    &__briefing {
+      font-size: .625rem;
+      margin-bottom: .7rem;
+    }
+  }
+}
