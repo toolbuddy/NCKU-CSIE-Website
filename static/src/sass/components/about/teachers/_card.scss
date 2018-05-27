@@ -55,6 +55,30 @@
       background-color: #ffffff;
       font-size: .5rem;
       padding: .3rem .88rem;
+
+      // element
+      // `.main .cards .card .card__intro--hover`
+
+      &--hover {
+        // element [position]
+        // `.card__intro--hover` will fly on top of `.card__photo`.
+        grid-area: card__photo;
+        z-index: 1;
+
+        // element [skin]
+        color: #ffffff;
+        background-color: rgb( 52, 52, 52 );
+        padding: 0 .5rem;
+
+        // element [interaction]
+        // `.card__intro--hover` will be visible when hovered
+        opacity: 0;
+        transition: opacity .3s;
+
+        &:hover {
+          opacity: .7;
+        }
+      }
     }
 
     // block
@@ -136,30 +160,6 @@
         padding: .5rem;
         margin-top: .2rem;
         font-size: .625rem;
-      }
-    }
-
-    // element
-    // `.main .cards .card .card__intro--hover`
-
-    &__intro--hover {
-      // element [position]
-      // `.card__intro--hover` will fly on top of `.card__photo`.
-      grid-area: card__photo;
-      z-index: 1;
-
-      // element [skin]
-      color: #ffffff;
-      background-color: rgb( 52, 52, 52 );
-      padding: 0 .5rem;
-
-      // element [interaction]
-      // `.card__intro--hover` will be visible when hovered
-      opacity: 0;
-      transition: opacity .3s;
-
-      &:hover {
-        opacity: .7;
       }
     }
   }
