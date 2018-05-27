@@ -1,10 +1,11 @@
-mixin announcement__briefing( briefing )
-  section.briefing.announcement__briefing( class=`announcement__briefing--${ briefing.classname }`, href=briefing.articleUrl )
-    h1.briefing__title= briefing.title
-    aside.tags.briefing__tags
-      each tag in briefing.tags
-        button.tags__tag( class=`tags__tag--${ tag }` )
-          a= tag
-    p.briefing__article= briefing.excerpt
-    time.briefing__time= briefing.time
-
+mixin post_detailArticle( post )
+  section.detail
+    h1.detail__title= post.title
+    time.detail__time= post.time
+    article.detail__article
+    a.detail__button= post.button
+    //- const test = `document.getElementsByClassName("detail__article")[0].innerHTML= "${ post.article }"`
+    //script !{test}
+    script window.config = {}; window.config.postArticle = '#{post.article}';
+    script(src= `../js/announcement/post_detail.js`)
+    aside.detail__watchThrough= post.watch

@@ -1,0 +1,30 @@
+@mixin topic--template () {
+  .topic {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @content;
+
+    &__text {
+      &--small {
+        font-size: .625rem;
+      }
+  
+      &--large {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
+@mixin topic--color-template ( $color ) {
+  @include topic--template() {
+    border-bottom: 1px solid $color;
+    color: $color;
+  }
+}
+@mixin topic--black () {
+  @include topic--color-template( #000000 );
+}
+@mixin topic--white () {
+  @include topic--color-template( #ffffff );
+}

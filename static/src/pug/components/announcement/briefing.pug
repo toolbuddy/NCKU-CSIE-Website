@@ -1,0 +1,10 @@
+mixin announcement__briefing( briefing )
+  section.briefing.announcement__briefing( class=`announcement__briefing--${ briefing.classname }`, href=briefing.articleUrl )
+    h1.briefing__title= briefing.title
+    aside.tags.briefing__tags
+      each tag in briefing.tags
+        button.tags__tag( class=`tags__tag--${ tag }` )
+          a= tag
+    p.briefing__article= briefing.excerpt
+    time.briefing__time= briefing.time
+
