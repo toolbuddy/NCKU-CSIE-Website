@@ -4,13 +4,24 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 
 /**
  * @constant
- * @readonly {string[]} config.build.src   - Array of glob of source files for building Backend JavaScript.
- * @readonly {string}   config.build.dest  - Glob of destination directory for building Backend JavaScript.
- * @readonly {string}   config.lint.rule   - Glob of lint rule file for linting Backend JavaScript.
- * @readonly {string[]} config.lint.src    - Array of glob of source files for linting Backend JavaScript.
- * @readonly {string}   config.lint.dest   - Glob of destination directory for linting Backend JavaScript.
+ * @readonly {string[]} config.preBuild.src  - Array of glob of source files for copying server configuration.
+ * @readonly {string}   config.preBuild.dest - Glob of destination directory for copying server configuration.
+ * @readonly {string}   config.preBuild.copy - Glob of the very copy file of server configuration.
+ * @readonly {string[]} config.build.src     - Array of glob of source files for building server ECMAScript.
+ * @readonly {string}   config.build.dest    - Glob of destination directory for building server ECMAScript.
+ * @readonly {string}   config.lint.rule     - Glob of lint rule file for linting server ECMAScript.
+ * @readonly {string[]} config.lint.src      - Array of glob of source files for linting server ECMAScript.
+ * @readonly {string}   config.lint.dest     - Glob of destination directory for linting server ECMAScript.
  */
+
 const config = {
+    preBuild: {
+        src: [
+            `${ projectRoot }/settings/server/config.js.default`,
+        ],
+        dest: `${ projectRoot }/settings/server`,
+        copy: `${ projectRoot }/settings/server/config.js`,
+    },
     build: {
         src: [
             `${ projectRoot }/server.js`,
@@ -23,7 +34,7 @@ const config = {
     },
     lint: {
         rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
-        src: [
+        src:  [
             `${ projectRoot }/server.js`,
             `${ projectRoot }/apis/**/*.js`,
             `${ projectRoot }/routes/**/*.js`,

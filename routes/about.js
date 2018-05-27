@@ -1,35 +1,35 @@
-// router for /about
+// Router for /about
 const express = require( 'express' );
-const router = new express.Router();
+const router = express.Router();
 
-// resolve URL about/intro
-router.get( '/intro', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/intro.html` );
+// Resolve URL about/intro
+router.get( '/intro', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/intro.${ req.query.language }.html` );
 } );
 
-// resolve URL about/teachers
-router.get( '/teachers', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teachers.html` );
+// Resolve URL about/teachers
+router.get( '/teachers', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teachers.${ req.query.language }.html` );
 } );
 
-// deal with URLs to teachers pages
-router.get( '/teacher/:id', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teacher.html` );
+// Deal with URLs to teachers pages
+router.get( '/teacher/:id', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teacher.${ req.query.language }.html` );
 } );
 
-// resolve URL about/members
-router.get( '/members', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/members.html` );
+// Resolve URL about/members
+router.get( '/members', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/members.${ req.query.language }.html` );
 } );
 
-// resolve URL about/honor
-router.get( '/honor', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/honor.html` );
+// Resolve URL about/honor
+router.get( '/honor', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/honor.${ req.query.language }.html` );
 } );
 
-// resolve URL about/location
-router.get( '/location', function ( req, res ) {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/location.html` );
+// Resolve URL about/location
+router.get( '/location', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/location.${ req.query.language }.html` );
 } );
 
 module.exports = router;

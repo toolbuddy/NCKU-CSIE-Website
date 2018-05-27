@@ -1,18 +1,28 @@
 global.projectRoot = __dirname;
 
-// including public module
 const express = require( 'express' );
 
 const config = require( `${ global.projectRoot }/settings/server/config` );
+const apis = require( `${ global.projectRoot }/apis/urls` );
 const routes = require( `${ global.projectRoot }/routes/urls` );
 
-// start server
+function language ( req, res, next ) {
+    if ( !req.query.language )
+        req.query.language = config.language;
+
+    next();
+}
+
+// Start server
 const server = express();
 server.listen( config.port );
 
-// set static route
+// Set static files routes
 server.use( '/css', express.static( `${ global.projectRoot }/static/dist/css` ) );
 server.use( '/js', express.static( `${ global.projectRoot }/static/dist/js` ) );
 
-// set dynamic route
-server.use( '/', routes );
+// Set HTML files routes
+server.use( '/', language, routes );
+
+// Set web api routes
+server.use( '/api', apis );
