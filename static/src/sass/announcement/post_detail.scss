@@ -1,6 +1,30 @@
 @import 'components/common/reset';
 @import 'components/announcement/post_detail_article';
 
-body{
-  background-color: #f2f4f7;
+.detail{
+  margin:4.6875rem 5.46875rem;
+
+  &__title{
+    padding: .625rem;
+    margin: 0;
+  }
+
+  &__time{
+    display: block;
+    margin: .9375rem 0;
+  }
+
+  &__article{
+    padding: 0 0 0 .625rem;
+  }
+
+  &__button{
+    display: inline-block;
+    padding: .625rem .9375rem;
+    margin: 4.0625rem 0 3.90625rem .625rem;
+  }
+
+  &__watchThrough{
+    padding: 1.5625rem 0 0;
+  }
 }

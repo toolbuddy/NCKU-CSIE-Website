@@ -1,9 +1,19 @@
 .topic {
   display: flex;
   flex-direction: column;
-  color: #ffffff;
   justify-content: space-between;
-  border-bottom: 1px solid #ffffff;
+
+  &__color{
+    &--black{
+      color: #000000;
+      border-bottom: 1px solid #000000;
+    }
+
+    &--white{
+      color: #ffffff;
+      border-bottom: 1px solid #ffffff;
+    }
+  }
 
   &__text {
     &--small {

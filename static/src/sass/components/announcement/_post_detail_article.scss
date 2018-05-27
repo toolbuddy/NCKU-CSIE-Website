@@ -1,14 +1,26 @@
-.detail{
-  margin:4.6875rem 5.46875rem;
+/*@mixin basicSets($backColor, $color, $fontSize, $fontWeight, $textAlign) {
+  background-color: $backColor;
+  color: $color;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  text-align: $textAlign;
+}
+*/
 
+/*@mixin detail-template(){
+
+}
+*/
+
+body{
+  background-color: #f2f4f7;
+}
+
+.detail{
   &__title{
-    padding: .625rem;
-    margin: 0;
     background-color: #ffffff;
-    color: #000000;
     font-size: 1.0625rem;
     font-weight: bold;
-    font-family: Arial;
     text-align: left;
     border-style: solid;
     border-width: 0 0 0 .25rem;
@@ -17,30 +29,20 @@
   }
 
   &__time{
-    display: block;
-    margin: .9375rem 0;
     color: #b5babf;
     font-size: .65625rem;
-    font-family: Arial;
     text-align: right;
   }
 
   &__article{
-    padding: 0 0 0 .625rem;
-    color: #000000;
     font-size: .75rem;
-    font-family: Arial;
     text-align: left;
   }
 
   &__button{
-    display: inline-block;
-    padding: .625rem .9375rem;
-    margin: 4.0625rem 0 3.90625rem .625rem;
     background-color: #00c3d0;
     color: #f8f8f2;
     font-size: .75rem;
-    font-family: Arial;
     text-align: center;
     text-decoration: none;
     border: none;
@@ -48,10 +50,8 @@
   }
 
   &__watchThrough{
-    padding: 1.5625rem 0 0;
     color: #262e3e;
     font-size: .65625rem;
-    font-family: Arial;
     text-align: right;
     border-style: solid;
     border-width: .015625rem 0 0;

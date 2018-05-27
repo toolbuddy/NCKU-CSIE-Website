@@ -11,7 +11,7 @@ block content
   include /components/common/topic.pug
   include /components/about/teachers/card.pug
   main.main
-    +topic( 'Faculty of Computer Science', '師資陣容' )
+    +topic( 'Faculty of Computer Science', '師資陣容', 'white' )
     section.cards
       each teacher in teachers
         +cards__card( teacher )

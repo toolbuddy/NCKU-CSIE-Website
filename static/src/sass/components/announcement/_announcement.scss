@@ -5,7 +5,6 @@
     //put
     display: flex;
     align-items: center;
-    border-style: none;
 
     &__text{
       margin: 0 0 .06rem .5rem;
@@ -18,7 +17,6 @@
     //skin
     @include icon_flag();
     margin: 0 0 .5rem .25rem;
-  
   }
 
   &__briefing {

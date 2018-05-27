@@ -1,7 +1,7 @@
 @import 'components/common/reset';
 @import 'components/announcement/announcement';
 @import 'components/announcement/filter';
-@import 'components/announcement/title';
+@import 'components/common/topic';
 
 
 .content {
@@ -14,7 +14,7 @@
   }
 }
 
-.title {
+.topic {
   grid-column: {
     start: 1;
     end: 11;

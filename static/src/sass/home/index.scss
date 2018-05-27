@@ -1,9 +1,9 @@
 @import 'components/common/reset';
-@import 'components/announcement/title';
+@import 'components/common/topic';
 @import 'components/announcement/filter';
 @import 'components/announcement/announcement';
 
-.gridcontainer {
+.newscontainer {
   padding: 3.6rem 6.9rem;
   display: grid;
   grid: {
@@ -43,6 +43,12 @@
     start: 1;
     end: 7;
   }
+  @media screen and ( max-width: 1100px ) {
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
 }
 
 .hotnews {
@@ -52,5 +58,11 @@
   }
   margin-top: 2.5rem;
   border-bottom: .03rem solid #868686;
+  @media screen and ( max-width: 1100px ) {
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
 }
 

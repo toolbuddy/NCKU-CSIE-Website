@@ -1,6 +1,6 @@
 extends /layouts/home.pug
 include /components/announcement/announcement.pug
-include /components/announcement/title.pug
+include /components/common/topic.pug
 block css
   link(rel='stylesheet' href='/css/home/index.css')
 block header
@@ -75,9 +75,9 @@ block header
             a( href='/resource/resources' ) | resources
 block content__photowall
 block content__announcement
-  main.gridcontainer
+  main.newscontainer
     section.news
-      +title( 'News & Enents', '最新消息' )
+      +topic( 'News & Enents', '最新消息', 'black' )
       +announcement__briefing(  
         {
           title: '標題222222',
@@ -101,7 +101,7 @@ block content__announcement
       button.button--attribute
         a more... >
     section.hotnews
-      +title( 'Hot News', '最近熱門' )
+      +topic( 'Hot News', '最近熱門', 'black' )
       main.maincontainer
         p 01
         +announcement__briefing(  

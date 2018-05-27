@@ -1,7 +1,7 @@
 extends /layouts/announcement.pug
 
 include /components/announcement/announcement.pug
-include /components/announcement/title.pug
+include /components/common/topic.pug
 include /components/announcement/filter.pug
 
 block css
@@ -9,7 +9,7 @@ block css
 
 block header
 block title
-  +title( 'Undergraduate', '大學部' )
+  +topic( 'Undergraduate', '大學部', 'black' )
 
 block filter
   +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
