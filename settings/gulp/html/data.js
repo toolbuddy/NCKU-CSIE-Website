@@ -4,99 +4,99 @@ const getTeachersProfile = require( `${ projectRoot }/models/teacher/operation/g
 
 const data = {
     about: {
-        async honor () {
-            return null;
+        async honor ( language ) {
+            return { language, };
         },
-        async intro () {
-            return null;
+        async intro ( language ) {
+            return { language, };
         },
-        async location () {
-            return null;
+        async location ( language ) {
+            return { language, };
         },
-        async members () {
-            return null;
+        async members ( language ) {
+            return { language, };
         },
-        async teacher () {
-            return null;
+        async teacher ( language ) {
+            return { language, };
         },
-        async teachers () {
-            return { teachers: await getTeachersProfile(), };
+        async teachers ( language ) {
+            return { language, teachers: await getTeachersProfile( language ), };
         },
     },
     announcement: {
-        async activity () {
-            return null;
+        async activity ( language ) {
+            return { language, };
         },
-        async administrator () {
-            return null;
+        async administrator ( language ) {
+            return { language, };
         },
-        async all () {
-            return null;
+        async all ( language ) {
+            return { language, };
         },
-        async recruitment () {
-            return null;
+        async recruitment ( language ) {
+            return { language, };
         },
-        async speech () {
-            return null;
+        async speech ( language ) {
+            return { language, };
         },
     },
     home: {
-        async index () {
-            return null;
+        async index ( language ) {
+            return { language, };
         },
     },
     research: {
-        async awards () {
-            return null;
+        async awards ( language ) {
+            return { language, };
         },
-        async conferences () {
-            return null;
+        async conferences ( language ) {
+            return { language, };
         },
-        async groups () {
-            return null;
+        async groups ( language ) {
+            return { language, };
         },
-        async labs () {
-            return null;
+        async labs ( language ) {
+            return { language, };
         },
-        async publications () {
-            return null;
+        async publications ( language ) {
+            return { language, };
         },
     },
     resource: {
-        async fix () {
-            return null;
+        async fix ( language ) {
+            return { language, };
         },
-        async ieet () {
-            return null;
+        async ieet ( language ) {
+            return { language, };
         },
-        async law () {
-            return null;
+        async law ( language ) {
+            return { language, };
         },
-        async rent () {
-            return null;
+        async rent ( language ) {
+            return { language, };
         },
-        async resources () {
-            return null;
+        async resources ( language ) {
+            return { language, };
         },
     },
     student: {
-        async college () {
-            return null;
+        async college ( language ) {
+            return { language, };
         },
-        async course () {
-            return null;
+        async course ( language ) {
+            return { language, };
         },
-        async international () {
-            return null;
+        async international ( language ) {
+            return { language, };
         },
-        async master () {
-            return null;
+        async master ( language ) {
+            return { language, };
         },
-        async phd () {
-            return null;
+        async phd ( language ) {
+            return { language, };
         },
-        async scholarship () {
-            return null;
+        async scholarship ( language ) {
+            return { language, };
         },
     },
 };

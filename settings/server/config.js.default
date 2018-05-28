@@ -19,6 +19,9 @@ Object.defineProperties( config, {
     'port': {
         value: 3000,
     },
+    'language': {
+        value: 'zh-TW',
+    },
     'host': {
         get () {
             return `${ config.protocol }://${ config.domainName }` +

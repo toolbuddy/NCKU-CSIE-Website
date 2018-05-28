@@ -9,20 +9,20 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
 
     // Promise.all uses iterator, so it will keep the order of the elements in array that passed in
     [
-        data.conference,
-        data.department,
-        data.education,
-        data.experience,
-        data.honor,
-        data.lab,
-        data.office,
-        data.patent,
+        data.conferences,
+        data.departments,
+        data.educations,
+        data.experiences,
+        data.honors,
+        data.labs,
+        data.offices,
+        data.patents,
         data.profile,
-        data.project,
-        data.publication,
-        data.specialty,
-        data.technologyTransfer,
-        data.title,
+        data.projects,
+        data.publications,
+        data.specialties,
+        data.technologyTransfers,
+        data.titles,
     ] = await Promise.all(
         [
             table.conference.findAll( {
@@ -312,6 +312,7 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         photo:       profile.photo,
                         position:    profile.position,
                         name:        profile.profileI18n[ 0 ].name,
+                        profileId,
                     } )
                 ),
             table.project.findAll( {
