@@ -1,7 +1,7 @@
 @import 'components/common/reset';
 @import 'components/common/topic';
 @import 'components/announcement/filter';
-@import 'components/announcement/briefingnews';
+@import 'components/announcement/briefing';
 @import 'components/announcement/briefinghotnews';
 
 .newscontainer {
@@ -15,10 +15,7 @@
 }
 @include topic--black();
 
-.news {
-  &__briefings{
-
-  }
+.announcement--news {
   grid-column: {
     start: 1;
     end: 7;
@@ -37,14 +34,16 @@
   }
 
   &__button {
-    background-color: #fd5540;
-    color: white;
-    padding: .2rem .7rem;
-    border-radius: .2rem;
+    width: 4.625rem;
+    height: 1.5rem;
+    border-radius: 3px;
+    background-color: #f94970;
+    box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
     float: right;
     margin-top: 1rem;
-    font-size: .75rem;
-    position: relative;
+    font-family: Roboto;
+    color: white;
+    font-size: .4375rem;
   }
 }
 
@@ -68,7 +67,7 @@
       end: 11;
     }
   }
-  margin-top: 2.5rem;
+  margin-top: .5rem;
 }
 
 

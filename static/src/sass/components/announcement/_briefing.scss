@@ -1,71 +1,83 @@
 @import 'components/common/icon';
 
 .announcement {
-  &__title {
-    @include icon--before__flag;
-    margin: 0 0 .5rem .25rem;
+  &__title--flag {
+    @include icon--before__flag() {
+      margin: .15rem .5rem 0 0;
+    }
   }
 
   .title {
     display: flex;
-    align-items: center;
 
-    &__text {
-      margin: 0 0 .06rem .5rem;
-      font: {
-        size: .875rem;
-        weight: bold;
+    &__text{
+      font-weight: bold;
+      font-size: .75rem;
+    }
+
+    &__text--underline {
+      display: inline-block;
+      width: 120px;
+      border-bottom: solid .015625rem #000000;
+    }
+
+    &__blank{
+      display: inline-block;
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
+      width: 85%;
+    }
+    
+  }
+
+
+  .briefings{
+    &__briefing {
+      font-size: .4375rem;
+      padding: .25rem 0 .6rem;
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);      
+    }
+
+    .briefing {
+      display: grid;
+      grid: {
+        template: {
+          areas:
+            'tags   .  .'
+            'title  .  .'
+            'content  . time';
+          rows: 10% 1fr 10%;
+        }
+      }
+
+      &__tags {
+        margin-bottom: .1rem;
+        grid-area: tags;
+      }
+
+      &__title {
+        color: #000000;
+        font-size: .5rem;
+        min-width: 3rem;
+        margin-top: .4rem;
+        grid-area: title;
+      }
+
+      &__article {
+        overflow: hidden;
+        grid-area: content;
+      }
+
+      &__time {
+        color: #b5babf;
+        grid-area: time;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
       }
     }
   }
-
 
   &__briefings {
     font-size: .625rem;
   }
-
-  .briefings{
-    &__briefing {
-      min-height: 10%;
-      padding: 1rem 1.5rem;
-      background-color: #ffffff;
-      height: 5rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 .2rem .1rem rgba( 0, 0, 0, .1 );
-      display: grid;
-      grid-template: {
-        rows: 1.2rem;
-        columns: repeat( 2, 1fr );
-      }
-    }
-
-    .briefing {
-      &__tags {
-        display: flex;
-        justify-content: flex-end;
-        align-self: baseline;
-      } 
-
-      &__time {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        color: #000000;
-        opacity: .5;
-        padding-right: 1rem;
-        font-size: var( --font-size );
-      }  
-
-      &__title {
-        font-size: .75rem;
-      }  
-
-      &__article {
-        font-size: var( --font-size );
-        overflow: hidden;
-      }
-    }
-  }
 }
-
-

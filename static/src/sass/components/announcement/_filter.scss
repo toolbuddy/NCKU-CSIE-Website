@@ -18,7 +18,7 @@
 .tags {
   display: inline-block;
   color: #ffffff;
-  font-size: .625rem;
+  font-size: .4375rem;
 
   &__tag {
     background: none;
@@ -31,7 +31,8 @@
     width: 5rem;
 
     &--college {
-      background: #f5c150;
+      color: #399dff;
+      background-color: #dfeffe;
     }
 
     &--master {
@@ -39,7 +40,8 @@
     }
 
     &--phd {
-      background: #434a54;
+      color: #f67057;
+      background-color: #ffe3df;
     }
 
     &--teacher {
@@ -61,8 +63,8 @@
     }
 
     &--speech {
-      border: .03rem solid #fd5540;
-      color: #fd5540;
+      background-color: #e8dafe;
+      color: #9053ff;
     }
 
     &--competition {

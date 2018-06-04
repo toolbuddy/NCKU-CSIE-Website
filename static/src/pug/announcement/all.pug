@@ -16,22 +16,21 @@ block filter
 
 block announcement--pinned
   section.announcement
-    section.announcement__title.title
+    section.announcement__title--flag.announcement__title.title
       h1.title__text 置頂貼文
     section.announcement__briefings.briefings
       +briefings__briefing(  
         {
-          title: '至頂標題',
+          title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
           time: '2018-2-2 | 15:02',
-          excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
+          excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
           articleUrl: '', 
-          tags: [ 'college', 'speech', 'phd' ],
-          classname: 'announcement'
+          tags: [ 'college', 'speech', 'phd' ]
         }
       )
 block announcement
   section.announcement
-    section.announcement__title.title
+    section.announcement__title--flag.announcement__title.title
       h1.title__text 所有貼文
     section.announcement__briefings.briefings
       +briefings__briefing(
@@ -40,20 +39,18 @@ block announcement
           time: '2018-2-2 | 15:02',
           excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
           articleUrl: '/about/teachers',
-          tags: [ 'college', 'speech', 'phd' ],
-          classname: 'announcement'
+          tags: [ 'college', 'speech', 'phd' ]
         }
-    )
+      )
       +briefings__briefing(
         {
           title: '標題二',
           time: '2018-2-2 | 15:02',
           excerpt: '兩小段內文',
           articleUrl: '',
-          tags: [ 'recruitment', 'teacher', 'exhibition' ],
-          classname: 'announcement'
+          tags: [ 'recruitment', 'teacher', 'exhibition' ]
         }
-    )
+      )
 block page
 block footer
 block script
