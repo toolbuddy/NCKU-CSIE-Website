@@ -5,10 +5,15 @@ const plumber = require( 'gulp-plumber' );
 const puglint = require( 'gulp-pug-linter' );
 const path = require( 'path' );
 const pug = require( 'gulp-pug' );
+const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const config = require( `${ projectRoot }/settings/gulp/html/config` );
 const data = require( `${ projectRoot }/settings/gulp/html/data` );
+const languages = [
+    'zh-TW',
+    'en-US',
+];
 
 /**
  * Task `lint:html`:
@@ -31,16 +36,20 @@ gulp.task(
 );
 
 function buildHTML ( src, dest, data ) {
-    return async () => {
-        gulp.src( src )
-            .pipe( plumber() )
-            .pipe(
-                pug( {
-                    basedir: config.lint.dest,
-                    data:    await data(),
-                } )
-            )
-            .pipe( gulp.dest( dest ) );
+    return async ( done ) => {
+        languages.forEach(
+            async language => gulp.src( src )
+                .pipe( plumber() )
+                .pipe(
+                    pug( {
+                        basedir: config.lint.dest,
+                        data:    await data( language ),
+                    } )
+                )
+                .pipe( rename( { suffix: `.${ language }`, } ) )
+                .pipe( gulp.dest( dest ) )
+        );
+        done();
     };
 }
 

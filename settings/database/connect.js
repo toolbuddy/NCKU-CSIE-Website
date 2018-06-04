@@ -1,7 +1,7 @@
 const Sequelize = require( 'sequelize' );
 const config = require( './config' );
 
-module.exports = async ( databaseName ) => {
+module.exports = async ( databaseName, debug = false ) => {
     const database = new Sequelize(
         databaseName,
         config.username,
@@ -11,6 +11,7 @@ module.exports = async ( databaseName ) => {
             dialect:          config.protocol,
             operatorsAliases: false,
             pool:             config.pool,
+            logging:          debug,
         }
     );
 
