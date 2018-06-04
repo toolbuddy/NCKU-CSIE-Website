@@ -18,40 +18,42 @@ block announcement--pinned
   section.announcement
     section.announcement__title.title
       h1.title__text 置頂貼文
-    +announcement__briefing(  
-      {
-        title: '至頂標題',
-        time: '2018-2-2 | 15:02',
-        excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
-        articleUrl: '', 
-        tags: [ 'college', 'speech', 'phd' ],
-        classname: 'announcement'
-      }
-    )
+    section.announcement__briefings.briefings
+      +briefings__briefing(  
+        {
+          title: '至頂標題',
+          time: '2018-2-2 | 15:02',
+          excerpt: '至頂內文 至頂內文 至頂內文 至頂內文 至頂內文 至頂內文',
+          articleUrl: '', 
+          tags: [ 'college', 'speech', 'phd' ],
+          classname: 'announcement'
+        }
+      )
 block announcement
   section.announcement
     section.announcement__title.title
       h1.title__text 所有貼文
-    +announcement__briefing(
-      {
-        title: '標題二',
-        time: '2018-2-2 | 15:02',
-        excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-        articleUrl: '/about/teachers',
-        tags: [ 'college', 'speech', 'phd' ],
-        classname: 'announcement'
-      }
-   )
-    +announcement__briefing(
-      {
-        title: '標題二',
-        time: '2018-2-2 | 15:02',
-        excerpt: '兩小段內文',
-        articleUrl: '',
-        tags: [ 'recruitment', 'teacher', 'exhibition' ],
-        classname: 'announcement'
-      }
-   )
+    section.announcement__briefings.briefings
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+          articleUrl: '/about/teachers',
+          tags: [ 'college', 'speech', 'phd' ],
+          classname: 'announcement'
+        }
+      )
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '兩小段內文',
+          articleUrl: '',
+          tags: [ 'recruitment', 'teacher', 'exhibition' ],
+          classname: 'announcement'
+        }
+      )
 block page
 block footer
 block script

@@ -77,34 +77,35 @@ block content__photowall
 block content__announcement
   main.newscontainer
     section.news
-      +topic( 'News & Enents', '最新消息', 'black' )
-      +announcement__briefing(  
-        {
-          title: '標題222222',
-          time: '2018-2-2 | 15:02',
-          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-          articleUrl: '', 
-          tags: [ 'college', 'phd' ],
-          classname: 'homenews'
-        }
-      )
-      +announcement__briefing(  
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '兩小段內文',
-          articleUrl: '', 
-          tags: [ 'master', 'teacher' ],
-          classname: 'homenews'
-        }
-      )
-      button.button--attribute
-        a more... >
+      +topic( '', '最新消息', 'black' )
+      section.news__briefings.briefings 
+        +briefings__briefing(  
+          {
+            title: '標題222222',
+            time: '2018-2-2 | 15:02',
+            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+            articleUrl: '', 
+            tags: [ 'college', 'phd' ],
+            classname: 'homenews'
+          }
+        )
+        +briefings__briefing(  
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '', 
+            tags: [ 'master', 'teacher' ],
+            classname: 'homenews'
+          }
+        )
+        button.button--attribute
+          a more... >
     section.hotnews
-      +topic( 'Hot News', '最近熱門', 'black' )
-      main.hotnewscontainer
+      +topic( '', '最近熱門', 'black' )
+      section.hotnews__briefings.briefings.briefings--twocolumns
         p 01
-        +announcement__briefing(  
+        +briefings__briefing(  
           {
             title: '標題二',
             time: '2018-2-2 | 15:02',
@@ -115,7 +116,7 @@ block content__announcement
           }
       )
         p 02
-        +announcement__briefing(  
+        +briefings__briefing(  
             {
               title: '標題四',
               time: '2018-2-2 | 15:02',
@@ -126,7 +127,7 @@ block content__announcement
             }
         )
         p 03
-        +announcement__briefing(  
+        +briefings__briefing(  
               {
                 title: '標題四',
                 time: '2018-2-2 | 15:02',
@@ -137,7 +138,7 @@ block content__announcement
               }
           )
         p 04
-        +announcement__briefing(  
+        +briefings__briefing(  
               {
                 title: '標題四',
                 time: '2018-2-2 | 15:02',

@@ -16,6 +16,9 @@
 @include topic--black();
 
 .news {
+  &__briefings{
+
+  }
   grid-column: {
     start: 1;
     end: 7;
@@ -29,6 +32,16 @@
 }
 
 .hotnews {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .14), 0 8px 10px 0 rgba(0, 0, 0, .2);
+  border-radius: 6px; 
+
+  &__briefings{
+    padding-bottom: 1rem;
+    margin: 1rem 0;
+  }
   grid-column: {
     start: 8;
     end: 11;
@@ -38,27 +51,6 @@
       start: 1;
       end: 11;
     }
-  }
-  margin-top: 2.5rem;
-}
-
-.hotnewscontainer {
-  border-bottom: 1px solid black;
-  padding-bottom: 1rem;
-  margin: 1rem 0;
-
-  > p {
-    font-size: 1.06rem;
-    color: #9aa0ab;
-    min-width: 1rem;
-  }
-  display: grid;
-  @media screen and ( max-width: 1200px){
-    grid-template-columns: 10% 90%;
-  }
-  grid: {
-    template-columns: 20% 80%;
-    gap: .5rem 0;
   }
 }
 
