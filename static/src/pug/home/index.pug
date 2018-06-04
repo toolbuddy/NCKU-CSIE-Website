@@ -78,7 +78,10 @@ block content__photowall
 block content__announcement
   main.newscontainer
     section.news
-      +topic( 'News & Enents', '最新消息', 'black' )
+      section.news__title.title
+        h1.title__text 最新消息
+        aside.title__blank
+      //+topic( '', '最新消息', 'double' )
       section.news__briefings.briefings
         +briefings__briefing--news(  
           {
@@ -90,7 +93,7 @@ block content__announcement
           }
         )
         +briefings__briefing--news(  
-          {
+          { 
             title: '標題二',
             time: '2018-2-2 | 15:02',
             excerpt: '兩小段內文',
@@ -101,7 +104,8 @@ block content__announcement
       button.news__button
         a more... >
     section.hotnews
-      +topic( 'Hot News', '最近熱門', 'black' )
+      //+topic( '', '最近熱門', 'none' )
+      h1.hotnews__topic 最近熱門
       section.hotnews__briefings.briefings.briefings--twocolumns
         +briefings__briefing--hotnews(  
           {

@@ -1,16 +1,20 @@
 .hotnews {
-  border-radius: .1875rem;
-  background-color: #ffffff;
-  box-shadow: 0 .0625rem .75rem 0 rgba(0, 0, 0, .14), 0 .25rem .3125rem 0 rgba(0, 0, 0, .2);
-  padding: 2rem;
+  &__topic{
+    font-weight: bold;
+  }
 
   .briefings{
+    padding: 2rem 1.5rem;
+    border-radius: .1875rem;
+    background-color: #ffffff;
+    box-shadow: 0 .0625rem .75rem 0 rgba(0, 0, 0, .14), 0 .25rem .3125rem 0 rgba(0, 0, 0, .2);
+
     .briefing {
       display: flex;
 
       &__number {
-        font-size: 1.06rem;
-        color: #9aa0ab;
+        font-size: .75rem;
+        color: #adacad;
         min-width: 1rem;
         margin-right: .5rem;
       }
@@ -18,22 +22,24 @@
       &__text {
 
       }
-    
-      
+         
       .text {
         &__title {
           color: #000000;
-          font-size: .75rem;
+          font-size: .5rem;
           min-width: 3rem;
+          margin-bottom: .2rem;
         }
 
         &__article {
           overflow: hidden;
           margin-bottom: .3rem;
+          font-size: .4375rem;
         }
 
         &__time {
           color: #b5babf;
+          font-size: .4375rem;
         }
       }
     }

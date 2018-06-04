@@ -1,9 +1,27 @@
 .news{
+  .title{
+    display: flex;
+
+    &__text{
+      display: inline-block;
+      font-weight: bold;
+      font-size: .75rem;
+      width: 96px;
+      border-bottom: solid .015625rem #000000;
+    }
+
+    &__blank{
+      display: inline-block;
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
+      width: 85%;
+    }
+  }
+
   .briefings{
     &__briefing {
       font-size: var( --font-size );
       padding-bottom: .5rem;
-      border-bottom:solid .5px rgba(0, 0, 0, .3);
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
     }
 
     .briefing {
