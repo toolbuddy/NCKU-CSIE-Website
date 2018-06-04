@@ -89,104 +89,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-<<<<<<< HEAD
-
-      // template
-      // `.main .cards .card .intro .intro__list`
-
-      %intro__list {
-        // template [skin]
-        display: inline-block;
-        margin-right: .2rem;
-      }
-
-      // element
-      // `.main .cards .card .intro .intro__title`
-      // `.main .cards .card .intro .intro__dept`
-
-      &__title, &__dept {
-        // element [skin]
-        @extend %intro__list;
-      }
-
-      // element
-      // `.main .cards .card .intro .intro__email`
-
-      &__email {
-        // element [skin]
-        word-break: break-all;
-        @include icon--before__email--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
-      }
-
-      // element
-      // `.main .cards .card .intro .intro__address`
-
-      &__address {
-        // element [skin]
-        font-style: normal;
-        word-break: break-all;
-        @include icon--before__location--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
-      }
-
-      // element
-      // `.main .cards .card .intro .intro__phone`
-
-      &__phone {
-        // element [skin]
-        word-break: break-all;
-        @include icon--before__phone--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
-      }
-    }
-
-    // element
-    // `.main .cards .card .card__info`
-
-    &__info {
-      // element [position]
-      // `.card__info` will fly on top of `.card__photo`.
-      grid-area: card__photo;
-      z-index: 1;
-
-      // element [skin]
-      color: #ffffff;
-      background-color: rgb( 52, 52, 52 );
-      padding: 0 .5rem;
-
-      // element [interaction]
-      // `.card__info` will be visible when hovered
-      opacity: 0;
-      transition: opacity .3s;
-
-      &:hover {
-        opacity: .7;
-      }
-    }
-
-    // block
-    // `.main .cards .card .info`
-
-    .info {
-      // block [layout]
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      // element
-      // `.main .cards .card .info .info__more`
-=======
 
       // template
       // `.main .cards .card .intro .intro__list`
@@ -248,7 +150,6 @@
 
       // element
       // `.main .cards .card .intro .intro__more`
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
 
       &__more {
         // element [skin]
