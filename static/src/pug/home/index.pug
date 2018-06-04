@@ -78,7 +78,9 @@ block content__photowall
 block content__announcement
   main.newscontainer
     section.announcement.announcement--news
-      +topic( 'News & Enents', '最新消息', 'black' )
+      section.announcement__title.title
+        h1.title__text 最新消息
+        aside.title__blank
       section.announcement__briefings.briefings
         +briefings__briefing(  
           {
@@ -101,7 +103,7 @@ block content__announcement
       button.news__button
         a SEE MORE
     section.hotnews
-      +topic( 'Hot News', '最近熱門', 'black' )
+      h1.hotnews__topic 最近熱門
       section.hotnews__briefings.briefings.briefings--twocolumns
         +briefings__briefing--hotnews(  
           {

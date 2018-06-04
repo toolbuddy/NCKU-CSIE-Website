@@ -9,21 +9,30 @@
   .title {
     display: flex;
     align-items: center;
+    display: flex;
 
-    &__text {
-      margin: 0 0 .06rem .5rem;
-      font: {
-        size: .875rem;
-        weight: bold;
-      }
+    &__text{
+      display: inline-block;
+      font-weight: bold;
+      font-size: .75rem;
+      width: 96px;
+      border-bottom: solid .015625rem #000000;
     }
-  }
+
+    &__blank{
+      display: inline-block;
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
+      width: 85%;
+    }
+    
+    }
+
 
   .briefings{
     &__briefing {
       font-size: .4375rem;
       padding: .25rem 0 .6rem;
-      border-bottom: .03rem solid #868686;
+      border-bottom: solid .015625rem rgba(0, 0, 0, .3);      
     }
 
     .briefing {
@@ -61,19 +70,6 @@
         grid-area: time;
         display: flex;
         justify-content: flex-end;
-      }
-    }
-  }
-
-  .title {
-    display: flex;
-    align-items: center;
-
-    &__text {
-      margin: 0 0 .06rem .5rem;
-      font: {
-        size: .875rem;
-        weight: bold;
       }
     }
   }
