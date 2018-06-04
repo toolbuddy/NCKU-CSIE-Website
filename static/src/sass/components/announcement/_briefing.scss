@@ -1,21 +1,23 @@
 @import 'components/common/icon';
 
 .announcement {
-  &__title {
+  &__title--flag {
     @include icon--before__flag() {
+      margin: .15rem .5rem 0 0;
     }
   }
 
   .title {
     display: flex;
-    align-items: center;
-    display: flex;
 
     &__text{
-      display: inline-block;
       font-weight: bold;
       font-size: .75rem;
-      width: 96px;
+    }
+
+    &__text--underline {
+      display: inline-block;
+      width: 120px;
       border-bottom: solid .015625rem #000000;
     }
 
@@ -25,7 +27,7 @@
       width: 85%;
     }
     
-    }
+  }
 
 
   .briefings{
@@ -70,6 +72,7 @@
         grid-area: time;
         display: flex;
         justify-content: flex-end;
+        align-items: flex-end;
       }
     }
   }

@@ -34,8 +34,8 @@
   }
 
   &__button {
-    width: 5.625rem;
-    height: 1.69rem;
+    width: 4.625rem;
+    height: 1.5rem;
     border-radius: 3px;
     background-color: #f94970;
     box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
@@ -48,9 +48,12 @@
 }
 
 .hotnews {
+  &__topic{
+    font-size: .75rem;
+  }
+
   &__briefings {
     font-size: .625rem;
-    border-bottom: 1px solid black;
     margin: 1rem 0;
   }
 
@@ -64,7 +67,7 @@
       end: 11;
     }
   }
-  margin-top: 2.5rem;
+  margin-top: .5rem;
 }
 
 
