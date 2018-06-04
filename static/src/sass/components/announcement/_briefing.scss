@@ -18,30 +18,14 @@
       }
     }
   }
-}
 
-.briefings{
-  &--twocolumns{
-    > p {
-      font-size: 1.06rem;
-      color: #9aa0ab;
-      min-width: 1rem;
-    }
-    display: grid;
-    @media screen and ( max-width: 1200px){
-      grid-template-columns: 10% 90%;
-    }
-    grid: {
-      template-columns: 20% 80%;
-      gap: .5rem 0;
-    }
+
+  &__briefings {
+    font-size: .625rem;
   }
 
-  &__briefing {
-      
-    --font-size: .625rem;
-        
-    &--announcement {
+  .briefings{
+    &__briefing {
       min-height: 10%;
       padding: 1rem 1.5rem;
       background-color: #ffffff;
@@ -53,74 +37,35 @@
         rows: 1.2rem;
         columns: repeat( 2, 1fr );
       }
-        
-      .briefing {
-        &__tags {
-          display: flex;
-          justify-content: flex-end;
-          align-self: baseline;
-        }
-          
-        &__time {
-          display: flex;
-          justify-content: flex-end;
-          align-items: flex-end;
-          color: #000000;
-          opacity: .5;
-          padding-right: 1rem;
-          font-size: var( --font-size );
-        }
-          
-        &__title {
-          font-size: .75rem;
-        }
-          
-        &__article {
-          font-size: var( --font-size );
-          overflow: hidden;
-        }
-      }
     }
-      
-    &--homenews {
-      font-size: var( --font-size );
-      padding: .7rem 0;
-      border-bottom: .03rem solid #868686;
-      display: grid;
-      grid-template: {
-        rows: 25% 25% 25% 25%;
-        areas: 'b' 'a' 'c' 'd';
+
+    .briefing {
+      &__tags {
+        display: flex;
+        justify-content: flex-end;
+        align-self: baseline;
+      } 
+
+      &__time {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        color: #000000;
+        opacity: .5;
+        padding-right: 1rem;
+        font-size: var( --font-size );
+      }  
+
+      &__title {
+        font-size: .75rem;
+      }  
+
+      &__article {
+        font-size: var( --font-size );
+        overflow: hidden;
       }
-        
-      .briefing {
-        &__tags {
-          grid-area: b;
-        }
-          
-        &__title {
-          color: #000000;
-          font-size: .75rem;
-          min-width: 3rem;
-          grid-area: a;
-        }
-          
-        &__article {
-          overflow: hidden;
-          margin-bottom: .6rem;
-          grid-area: c;
-        }
-          
-        &__time {
-          color: #b5babf;
-          grid-area: d;
-        }
-      }
-    }
-      
-    &--homehot {
-      font-size: var( --font-size );
-      display: grid;
     }
   }
 }
+
 

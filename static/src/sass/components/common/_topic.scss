@@ -16,9 +16,9 @@
     }
   }
 }
-@mixin topic--color-template ( $color--dark, $color--light ) {
+@mixin topic--color-template ( $color ) {
   @include topic--template() {
-    border-bottom: 1px solid $color--light;
+    border-bottom: 1px solid $color;
     color: $color;
   }
 }
