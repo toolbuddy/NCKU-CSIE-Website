@@ -6,12 +6,14 @@ Build a better website for NCKU CSIE
 * Install dependencies - `npm install`
 
 ## Build
-* Run pre-build script to setup config files - `npm run pre-build:settings`
-    * Filling-in required configuration files
-        * Server configuration - `settings/server/config.js`
-        * Database configuration - `settings/database/config.js`
-        * Files mentioned above will not exist if you didn't run the pre-build script
-* Build CSS and ECMAScript files - `npm run build`
+1. Setup server config files
+    * Create server configuration files by running `npm run pre-build:js-backend`.
+    * Filling-in information required by `settings/server/config.js`.
+2. Setup database config files
+    * Create database configuration files by running `npm run pre-build:database`.
+    * Filling-in information required by `settings/database/config.js`.
+    * Create database ORM files by running `npm run build:database`.
+3. Build HTML, CSS and ECMAScript files by running `npm run build`.
 
 ## Run
 * `npm start`
@@ -36,7 +38,8 @@ Here are a few standard:
     * Using Pug template engine.
     * HTML5 tags only.
     * Semantic tags only, don't use tags like `div`, `i`, `b`, etc.
-    * Other rules can be check by running `npm run lint:pug`.
+    * Other rules can be check by running `npm run lint:html`.
+    * Build HTML files: `npm run build:html`
 * CSS
     * Using Sass.
     * CSS3 syntax mainly used.
@@ -69,6 +72,6 @@ Feel free to contact us if you have question.
 
 ## Team ProFatXuanAll
 Special thanks for
-* [lanhsincheng](https://github.com/lanhsincheng) designing our website.
-* [Rispolyv0n](https://github.com/Rispolyv0n), [kaeteyaruyo](https://github.com/kaeteyaruyo), [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [IsabelTseng](https://github.com/IsabelTseng), [f26401004](https://github.com/f26401004), [ya-sin](https://github.com/ya-sin), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115) working on frontend and backend.
+* [lanhsincheng](https://github.com/lanhsincheng) for designing our website.
+* [Rispolyv0n](https://github.com/Rispolyv0n), [kaeteyaruyo](https://github.com/kaeteyaruyo), [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [IsabelTseng](https://github.com/IsabelTseng), [f26401004](https://github.com/f26401004), [ya-sin](https://github.com/ya-sin), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115), [laxative](https://github.com/laxative), [HMKRL](https://github.com/HMKRL) working on Frontend and Backend.
 * [kevinbird61](https://github.com/kevinbird61) our mentor, also the founder of [Toolbuddy](https://github.com/toolbuddy) Organization.

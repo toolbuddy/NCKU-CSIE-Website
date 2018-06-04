@@ -1,0 +1,20 @@
+extends /layouts/about.pug
+
+block stylesheets
+  link( rel='stylesheet', type='text/css', media='screen',
+    href='/css/about/teachers.min.css'
+  )
+
+block header
+
+block content
+  include /components/common/topic.pug
+  include /components/about/teachers/card.pug
+  main.main
+    +topic( 'Faculty of Computer Science', '師資陣容' )
+    - teachers.sort( (teacherA, teacherB) => { return teacherA.position - teacherB.position; } )
+    section.cards
+      each teacher in teachers
+        +cards__card( teacher )
+block footer
+block scripts

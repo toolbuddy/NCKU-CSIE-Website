@@ -1,37 +1,48 @@
-/* jshint indent: 2 */
+/* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('profile', {
-    profile_id: {
-      type: DataTypes.INTEGER(10).UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    fax: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-      defaultValue: '2747076'
-    },
-    email: {
-      type: DataTypes.STRING(2083),
-      allowNull: true
-    },
-    personal_web: {
-      type: DataTypes.STRING(2083),
-      allowNull: true
-    },
-    nation: {
-      type: DataTypes.CHAR(2),
-      allowNull: true,
-      defaultValue: 'TW'
-    },
-    photo: {
-      type: DataTypes.STRING(2083),
-      allowNull: true
-    }
-  }, {
-    tableName: 'profile',
-    timestamps: false,
-  });
+	return sequelize.define('profile', {
+		profileId: {
+			type: DataTypes.INTEGER(10).UNSIGNED,
+			allowNull: false,
+			primaryKey: true,
+			autoIncrement: true,
+			field: 'profile_id'
+		},
+		fax: {
+			type: DataTypes.STRING(20),
+			allowNull: true,
+			defaultValue: '2747076',
+			field: 'fax'
+		},
+		email: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'email'
+		},
+		personalWeb: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'personal_web'
+		},
+		nation: {
+			type: DataTypes.CHAR(2),
+			allowNull: true,
+			defaultValue: 'TW',
+			field: 'nation'
+		},
+		photo: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'photo'
+		},
+		position: {
+			type: DataTypes.INTEGER(11),
+			allowNull: true,
+			field: 'position'
+		}
+	}, {
+		tableName: 'profile',
+		timestamps: false
+	});
 };

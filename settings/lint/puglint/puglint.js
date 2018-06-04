@@ -2,90 +2,100 @@ const indentation = 2;
 
 module.exports = {
 
-    // no attribute concatenation
+    // No attribute concatenation
     disallowAttributeConcatenation: true,
 
-    // no block expansion
+    // No block expansion
     disallowBlockExpansion: true,
 
-    // id literals must before class literals
+    // Id literals must before class literals
     disallowClassLiteralsBeforeIdLiterals: true,
 
-    // no duplicate attributes
+    // No duplicate attributes
     disallowDuplicateAttributes: true,
 
-    // no html texts
+    // No html texts
     disallowHtmlText: true,
 
-    // no global id literal
+    // No global id literal
     disallowIdLiterals: true,
 
-    // no old mixin usage
+    // No old mixin usage
     disallowLegacyMixinCall: true,
 
-    // no multiple empty lines
+    // No multiple empty lines
     disallowMultipleLineBreaks: true,
 
-    // pug must not use these specified tags
-    disallowSpecificTags: [ 'div', 'font', 'embed', 'strike', 's',
-        'u', 'applet', 'basefont', 'center', 'dir',
-        'isindex', 'listing', 'menu', 'plaintext', 'xmp',
-        'b', 'i', ],
+    // Pug must not use these specified tags
+    disallowSpecificTags: [ 'div',
+        'font',
+        'embed',
+        'strike',
+        's',
+        'u',
+        'applet',
+        'basefont',
+        'center',
+        'dir',
+        'isindex',
+        'listing',
+        'menu',
+        'plaintext',
+        'xmp',
+        'b',
+        'i', ],
 
-    // no string concatenation
+    // No string concatenation
     disallowStringConcatenation: true,
 
-    // no multiple space at the end of line
+    // No multiple space at the end of line
     disallowTrailingSpaces: true,
 
-    // define maximum line length
+    // Define maximum line length
     maximumLineLength: 160,
 
-    // class literals must before attributes
+    // Class literals must before attributes
     requireClassLiteralsBeforeAttributes: true,
 
-    // id literals must before attributes
+    // Id literals must before attributes
     requireIdLiteralsBeforeAttributes: true,
 
-    // need new line at the file end
+    // Need new line at the file end
     requireLineFeedAtFileEnd: true,
 
-    // attribute must use lowercase
+    // Attribute must use lowercase
     requireLowerCaseAttributes: true,
 
-    // tag must use lowercase
+    // Tag must use lowercase
     requireLowerCaseTags: true,
 
-    // need space after operator
+    // Need space after operator
     requireSpaceAfterCodeOperator: true,
 
-    // need space befor and after attribute brackets
-    requireSpacesInsideAttributeBrackets: true,
-
-    // need to use !== and === as equal and nonequal
+    // Need to use !== and === as equal and nonequal
     requireStrictEqualityOperators: true,
 
-    // use specified quote as attribute quotemark
+    // Use specified quote as attribute quotemark
     validateAttributeQuoteMarks: '\'',
 
-    // use specified operator as attribute operator
+    // Use specified operator as attribute operator
     validateAttributeSeparator: {
-        'separator': ', ',
-        'multiLineSeparator': ',\n  ',
+        separator:          ', ',
+        multiLineSeparator: ',\n  ',
     },
 
-    // pug template muse use proper file extensions
+    // Pug template muse use proper file extensions
     validateExtensions: true,
 
-    // use 2 space as indentation
+    // Use 2 space as indentation
     validateIndentation: indentation,
 
-    // use LF as line breaks
+    // Use LF as line breaks
     validateLineBreaks: 'LF',
 
-    // must not contain any unnecessary self colsing tags
+    // Must not contain any unnecessary self colsing tags
     validateSelfClosingTags: true,
 
-    // must use ES6 string concatenation
+    // Must use ES6 string concatenation
     validateTemplateString: [ 'concatenation', ],
 };
