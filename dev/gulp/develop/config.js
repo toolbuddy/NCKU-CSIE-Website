@@ -1,12 +1,12 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
-const { host, port, } = require( `${ projectRoot }/settings/server/config` );
-const jsFrontend = require( `${ projectRoot }/settings/gulp/js-frontend/config` );
-const jsBackend = require( `${ projectRoot }/settings/gulp/js-backend/config` );
-const css = require( `${ projectRoot }/settings/gulp/css/config` );
-const html = require( `${ projectRoot }/settings/gulp/html/config` );
-const database = require( `${ projectRoot }/settings/gulp/database/config` );
+const { url, port, } = require( `${ projectRoot }/settings/server/config` );
+const jsFrontend = require( `${ projectRoot }/dev/gulp/js/config` );
+const jsBackend = require( `${ projectRoot }/dev/gulp/server/config` );
+const css = require( `${ projectRoot }/dev/gulp/css/config` );
+const html = require( `${ projectRoot }/dev/gulp/html/config` );
+const database = require( `${ projectRoot }/dev/gulp/database/config` );
 
 /**
  * @constant
@@ -38,13 +38,12 @@ config.nodemon = {
     },
 };
 
-const nextPort = 1;
 config.browserSync = {
-    port: port + nextPort,
+    port: port + 1,
     ui:   {
-        port: port + nextPort + nextPort,
+        port: port + 2,
     },
-    proxy: host,
+    proxy: url,
     files: [
         `${ config.js.frontend.build.dest }`,
         `${ config.css.build.dest }`,

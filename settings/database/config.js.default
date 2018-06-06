@@ -1,16 +1,37 @@
-module.exports = {
-    username: '',
-    password: '',
-    host: 'localhost',
-    port: 3306,
-    protocol: 'mysql',
-    pool: {
-        max: 2000,
-        min: 0,
-        acquire: 0,
-        idle: 0,
+/**
+ * Database settings.
+ * @namespace
+ * @readonly {string} username - Database server user account.
+ * @readonly {string} password - Database server user password.
+ * @readonly {string} host     - Database server host address.
+ * @readonly {number} port     - Database server port.
+ * @readonly {string} protocol - Which database server is used.
+ * @readonly {string} url      - Get database server url.
+ */
+
+const config = {};
+
+Object.defineProperties( config, {
+    'username': {
+        value: 'nckucsie',
     },
-    url ( databaseName ) {
-        return `${ this.protocol }://${ this.username }:${ this.password }@${ this.host }:${ this.port }/${ databaseName }`;
-    }
-};
+    'password': {
+        value: 'nckucsie@20180412',
+    },
+    'host': {
+        value: '140.116.245.105',
+    },
+    'port': {
+        value: 3306,
+    },
+    'protocol': {
+        value: 'mysql',
+    },
+    'url': {
+        get ( databaseName ) {
+            return `${ this.protocol }://${ this.username }:${ this.password }@${ this.host }:${ this.port }/${ databaseName }`;
+        },
+    },
+} );
+
+module.exports = config;

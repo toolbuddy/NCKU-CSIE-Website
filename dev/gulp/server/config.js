@@ -33,7 +33,7 @@ const config = {
         dest: `${ projectRoot }/build`,
     },
     lint: {
-        rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
+        rule: `${ projectRoot }/dev/lint/eslint/backend.js`,
         src:  [
             `${ projectRoot }/server.js`,
             `${ projectRoot }/apis/**/*.js`,

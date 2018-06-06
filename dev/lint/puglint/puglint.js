@@ -27,7 +27,8 @@ module.exports = {
     disallowMultipleLineBreaks: true,
 
     // Pug must not use these specified tags
-    disallowSpecificTags: [ 'div',
+    disallowSpecificTags: [
+        'div',
         'font',
         'embed',
         'strike',
@@ -43,7 +44,8 @@ module.exports = {
         'plaintext',
         'xmp',
         'b',
-        'i', ],
+        'i',
+    ],
 
     // No string concatenation
     disallowStringConcatenation: true,

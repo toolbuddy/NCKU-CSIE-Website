@@ -7,7 +7,7 @@ const path = require( 'path' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/database/config` );
+const config = require( `${ projectRoot }/dev/gulp/database/config` );
 
 /**
  * Task `pre-build:database`:

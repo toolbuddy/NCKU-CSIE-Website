@@ -5,12 +5,12 @@ const nodemon = require( 'gulp-nodemon' );
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/develop/config` );
+const config = require( `${ projectRoot }/dev/gulp/develop/config` );
 
 gulp.registry( new Hub(
     [
-        '../js-frontend/gulpfile.js',
-        '../js-backend/gulpfile.js',
+        '../js/gulpfile.js',
+        '../server/gulpfile.js',
         '../css/gulpfile.js',
         '../html/gulpfile.js',
         '../database/gulpfile.js',
@@ -20,14 +20,14 @@ gulp.registry( new Hub(
 /**
  * Task `lint`:
  *     Trigger all `lint` related tasks.
- *     Including `lint:js-frontend`, `lint:js-backend`, `lint:css`.
+ *     Including `lint:js`, `lint:server`, `lint:css`.
  */
 
 gulp.task(
     'lint',
     gulp.parallel(
-        'lint:js-frontend',
-        'lint:js-backend',
+        'lint:js',
+        'lint:server',
         'lint:css',
         'lint:html',
         'lint:database',
@@ -37,13 +37,13 @@ gulp.task(
 /**
  * Task `build`:
  *     Trigger all `build` related tasks.
- *     Including `build:js-frontend`, `build:css`, `build:html`
+ *     Including `build:js`, `build:css`, `build:html`
  */
 
 gulp.task(
     'build',
     gulp.parallel(
-        'build:js-frontend',
+        'build:js',
         'build:css',
         'build:html'
     )
@@ -52,14 +52,14 @@ gulp.task(
 /**
  * Task `clear`:
  *     Trigger all `clear` related tasks.
- *     Including `clear:js-frontend`, `clear:js-backend`, `clear:css`, `clear:html`
+ *     Including `clear:js`, `clear:server`, `clear:css`, `clear:html`
  */
 
 gulp.task(
     'clear',
     gulp.parallel(
-        'clear:js-frontend',
-        'clear:js-backend',
+        'clear:js',
+        'clear:server',
         'clear:css',
         'clear:html'
     )
@@ -68,14 +68,14 @@ gulp.task(
 /**
  * Task `watch`:
  *     Trigger all `watch` related tasks.
- *     Including `watch:js-frontend`, `watch:js-backend`, `watch:css`, `watch:html`, `watch:database`.
+ *     Including `watch:js`, `watch:server`, `watch:css`, `watch:html`, `watch:database`.
  */
 
 gulp.task(
     'watch',
     gulp.parallel(
-        'watch:js-frontend',
-        'watch:js-backend',
+        'watch:js',
+        'watch:server',
         'watch:css',
         'watch:html',
         'watch:database'
@@ -92,8 +92,8 @@ gulp.task(
     'develop',
     gulp.series(
         gulp.parallel(
-            'watch:js-backend',
-            'watch:js-frontend',
+            'watch:server',
+            'watch:js',
             'watch:css',
             'watch:html',
             'watch:database'

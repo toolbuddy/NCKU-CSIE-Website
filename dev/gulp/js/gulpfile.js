@@ -10,20 +10,20 @@ const sourcemaps = require( 'gulp-sourcemaps' );
 const uglify = require( 'gulp-uglify-es' ).default;
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/js-frontend/config` );
+const config = require( `${ projectRoot }/dev/gulp/js/config` );
 
 /**
- * Task `lint:js-frontend`:
+ * Task `lint:js`:
  *     Use `eslint` to lint Frontend JavaScript files.
  */
 
 gulp.task(
-    'lint:js-frontend',
+    'lint:js',
     () => gulp.src(
         config.lint.src,
         {
             base:  config.lint.dest,
-            since: gulp.lastRun( 'lint:js-frontend' ),
+            since: gulp.lastRun( 'lint:js' ),
         }
     )
         .pipe( plumber() )
@@ -39,12 +39,12 @@ gulp.task(
 );
 
 /**
- * Task `build:js-frontend`:
+ * Task `build:js`:
  *     Build Frontend JavaScript files.
  */
 
 gulp.task(
-    'build:js-frontend',
+    'build:js',
     () => gulp.src( config.build.src )
         .pipe( plumber() )
         .pipe( gulp.dest( config.build.dest ) )
@@ -57,27 +57,27 @@ gulp.task(
 );
 
 /**
- * Task `clear:js-frontend`:
- *     Clean `build:js-frontend` generated files.
+ * Task `clear:js`:
+ *     Clean `build:js` generated files.
  */
 
 gulp.task(
-    'clear:js-frontend',
+    'clear:js',
     done => del( config.build.dest, { force: true, } ).then( () => done() )
 );
 
 /**
- * Task `watch:js-frontend`:
+ * Task `watch:js`:
  *     Watch Frontend JavaScript files.
- *     Trigger `lint:js-frontend` and `build:js-frontend` if changed.
+ *     Trigger `lint:js` and `build:js` if changed.
  */
 
 gulp.task(
-    'watch:js-frontend',
+    'watch:js',
     ( done ) => {
         gulp.watch(
             config.lint.src,
-            gulp.series( 'lint:js-frontend', 'build:js-frontend' )
+            gulp.series( 'lint:js', 'build:js' )
         );
         done();
     }

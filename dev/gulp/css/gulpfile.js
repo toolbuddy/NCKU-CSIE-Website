@@ -2,7 +2,6 @@ const autoprefixer = require( 'gulp-autoprefixer' );
 const csso = require( 'gulp-csso' );
 const debug = require( 'gulp-debug' );
 const del = require( 'del' );
-const file = require( 'gulp-file' );
 const filter = require( 'gulp-filter' );
 const gulp = require( 'gulp' );
 const path = require( 'path' );
@@ -14,7 +13,7 @@ const sourcemaps = require( 'gulp-sourcemaps' );
 const stylelint = require( 'gulp-stylelint' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/css/config` );
+const config = require( `${ projectRoot }/dev/gulp/css/config` );
 
 /**
  * Task `lint:css`:
@@ -34,18 +33,6 @@ gulp.task(
         } ) )
         .pipe( debug() )
         .pipe( gulp.dest( config.lint.dest ) )
-);
-
-/**
- * Task `pre-build:css`:
- *     Use `gulp-file` to write SCSS files static settings.
- */
-
-gulp.task(
-    'pre-build:css',
-    () => file( config.static.fileName, config.static.data, { src: true, } )
-        .pipe( plumber() )
-        .pipe( gulp.dest( config.static.dest ) )
 );
 
 /**

@@ -7,15 +7,15 @@ const plumber = require( 'gulp-plumber' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/js-backend/config` );
+const config = require( `${ projectRoot }/dev/gulp/server/config` );
 
 /**
- * Task `pre-build:js-backend`:
+ * Task `pre-build:server`:
  *     Use pure `gulp` to copy server configuration files.
  */
 
 gulp.task(
-    'pre-build:js-backend',
+    'pre-build:server',
     () => gulp.src( config.preBuild.src )
         .pipe( rename(
             ( file ) => {
@@ -26,17 +26,17 @@ gulp.task(
 );
 
 /**
- * Task `lint:js-backend`:
+ * Task `lint:server`:
  *     Use `eslint` to lint server ECMAScript files.
  */
 
 gulp.task(
-    'lint:js-backend',
+    'lint:server',
     () => gulp.src(
         config.lint.src,
         {
             base:  config.lint.dest,
-            since: gulp.lastRun( 'lint:js-backend' ),
+            since: gulp.lastRun( 'lint:server' ),
         }
     )
         .pipe( plumber() )
@@ -50,25 +50,25 @@ gulp.task(
 );
 
 /**
- * Task `clear:js-backend`:
- *     Clean `pre-build:js-backend` generated files.
+ * Task `clear:server`:
+ *     Clean `pre-build:server` generated files.
  */
 
 gulp.task(
-    'clear:js-backend',
+    'clear:server',
     done => del( config.preBuild.copy, { force: true, } ).then( () => done() )
 );
 
 /**
- * Task `watch:js-backend`:
+ * Task `watch:server`:
  *     Watch Backend JavaScript files.
- *     Trigger `lint:js-backend` if changed.
+ *     Trigger `lint:server` if changed.
  */
 
 gulp.task(
-    'watch:js-backend',
+    'watch:server',
     ( done ) => {
-        gulp.watch( config.lint.src, gulp.series( 'lint:js-backend' ) );
+        gulp.watch( config.lint.src, gulp.series( 'lint:server' ) );
         done();
     }
 );

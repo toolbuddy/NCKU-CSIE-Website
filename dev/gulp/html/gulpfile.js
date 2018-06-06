@@ -8,8 +8,8 @@ const pug = require( 'gulp-pug' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/html/config` );
-const data = require( `${ projectRoot }/settings/gulp/html/data` );
+const config = require( `${ projectRoot }/dev/gulp/html/config` );
+const data = require( `${ projectRoot }/dev/gulp/html/data` );
 const languages = [
     'zh-TW',
     'en-US',
