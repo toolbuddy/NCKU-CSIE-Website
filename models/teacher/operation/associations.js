@@ -127,130 +127,91 @@ module.exports = async () => {
     } );
 
     // Profile relationship.
-<<<<<<< HEAD
-=======
     // `profile` has many `conference`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.conference, {
         as:         'conference',
         foreignKey: 'conferenceId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `department`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.department, {
         as:         'department',
         foreignKey: 'departmentId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `education`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.education, {
         as:         'education',
         foreignKey: 'educationId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `experience`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.experience, {
         as:         'experience',
         foreignKey: 'experienceId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `honor`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.honor, {
         as:         'honor',
         foreignKey: 'honorId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `lab`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.lab, {
         as:         'lab',
         foreignKey: 'labId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `office`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.office, {
         as:         'office',
         foreignKey: 'officeId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `patent`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.patent, {
         as:         'patent',
         foreignKey: 'patentId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `project`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.project, {
         as:         'project',
         foreignKey: 'projectId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `publication`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.publication, {
         as:         'publication',
         foreignKey: 'publicationId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `specialty`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.specialty, {
         as:         'specialty',
         foreignKey: 'specialtyId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `technologyTransfer`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.technologyTransfer, {
         as:         'technologyTransfer',
         foreignKey: 'technologyTransferId',
         targetKey:  'profileId',
     } );
 
-<<<<<<< HEAD
-=======
     // `profile` has many `title`.
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
     table.profile.hasMany( table.title, {
         as:         'title',
         foreignKey: 'titleId',
