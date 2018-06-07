@@ -11,7 +11,7 @@ const config = require( `${ projectRoot }/dev/gulp/database/config` );
 
 /**
  * Task `pre-build:database`:
- *     Use pure `gulp` to copy database configuration files.
+ *     Use pure `gulp` to copy database server configuration files.
  */
 
 gulp.task(
@@ -27,7 +27,7 @@ gulp.task(
 
 /**
  * Task `lint:database`:
- *     Use `eslint` to lint database ECMAScript files.
+ *     Use `eslint` to lint database server ECMAScript files.
  */
 
 gulp.task(
@@ -62,7 +62,7 @@ gulp.task(
 
 /**
  * Task `watch:database`:
- *     Watch database ECMAScript files.
+ *     Watch database server ECMAScript files.
  *     Trigger `lint:database` if changed.
  */
 

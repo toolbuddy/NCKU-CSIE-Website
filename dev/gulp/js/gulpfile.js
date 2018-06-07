@@ -14,7 +14,7 @@ const config = require( `${ projectRoot }/dev/gulp/js/config` );
 
 /**
  * Task `lint:js`:
- *     Use `eslint` to lint Frontend JavaScript files.
+ *     Use `eslint` to lint frontend ECMAScript files.
  */
 
 gulp.task(
@@ -40,7 +40,7 @@ gulp.task(
 
 /**
  * Task `build:js`:
- *     Build Frontend JavaScript files.
+ *     Build frontend ECMAScript files.
  */
 
 gulp.task(
@@ -68,7 +68,7 @@ gulp.task(
 
 /**
  * Task `watch:js`:
- *     Watch Frontend JavaScript files.
+ *     Watch frontend ECMAScript files.
  *     Trigger `lint:js` and `build:js` if changed.
  */
 

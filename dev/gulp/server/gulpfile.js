@@ -11,7 +11,7 @@ const config = require( `${ projectRoot }/dev/gulp/server/config` );
 
 /**
  * Task `pre-build:server`:
- *     Use pure `gulp` to copy server configuration files.
+ *     Use pure `gulp` to copy web server configuration files.
  */
 
 gulp.task(
@@ -27,7 +27,7 @@ gulp.task(
 
 /**
  * Task `lint:server`:
- *     Use `eslint` to lint server ECMAScript files.
+ *     Use `eslint` to lint web server ECMAScript files.
  */
 
 gulp.task(
@@ -61,7 +61,7 @@ gulp.task(
 
 /**
  * Task `watch:server`:
- *     Watch Backend JavaScript files.
+ *     Watch web server ECMAScript files.
  *     Trigger `lint:server` if changed.
  */
 

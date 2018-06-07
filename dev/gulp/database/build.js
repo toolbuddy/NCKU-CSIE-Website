@@ -6,7 +6,7 @@ const generateTables = require( `${ projectRoot }/dev/gulp/database/gen-tables` 
 
 /**
  * Task `build:database`:
- *     Clean `pre-build:database` generated files.
+ *     Auto generate database table files.
  */
 
 generateTables( 'teacher', config );

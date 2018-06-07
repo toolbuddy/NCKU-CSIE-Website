@@ -26,7 +26,7 @@ Object.defineProperties( config, {
     },
     'url': {
         get () {
-            return `${ config.protocol }://${ config.domainName }${
+            return `${ config.protocol }://${ config.host }${
                 config.port === '80' || config.port === '443' ?
                     '' :
                     `:${ config.port }`

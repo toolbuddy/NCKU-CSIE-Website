@@ -28,7 +28,7 @@ Object.defineProperties( config, {
         value: 'mysql',
     },
     'url': {
-        get ( databaseName ) {
+        value ( databaseName ) {
             return `${ this.protocol }://${ this.username }:${ this.password }@${ this.host }:${ this.port }/${ databaseName }`;
         },
     },

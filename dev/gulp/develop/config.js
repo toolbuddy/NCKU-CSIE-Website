@@ -2,27 +2,26 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 const { url, port, } = require( `${ projectRoot }/settings/server/config` );
-const jsFrontend = require( `${ projectRoot }/dev/gulp/js/config` );
-const jsBackend = require( `${ projectRoot }/dev/gulp/server/config` );
+const js = require( `${ projectRoot }/dev/gulp/js/config` );
 const css = require( `${ projectRoot }/dev/gulp/css/config` );
 const html = require( `${ projectRoot }/dev/gulp/html/config` );
+const server = require( `${ projectRoot }/dev/gulp/server/config` );
 const database = require( `${ projectRoot }/dev/gulp/database/config` );
 
 /**
  * @constant
- * @readonly {Object} config.js.frontend - Configuration for Frontend JavaScript.
- * @readonly {Object} config.js.frontend - Configuration for Backend JavaScript.
- * @readonly {Object} config.css         - Configuration for CSS.
- * @readonly {Object} config.html        - Configuration for HTML.
+ * @readonly {Object} config.js       - Configuration for frontend ECMAScript.
+ * @readonly {Object} config.css      - Configuration for CSS.
+ * @readonly {Object} config.html     - Configuration for HTML.
+ * @readonly {Object} config.server   - Configuration for web server ECMAScript.
+ * @readonly {Object} config.database - Configuration for database ECMAScript.
  */
 
 const config = {
-    js: {
-        frontend: jsFrontend,
-        backend:  jsBackend,
-    },
+    js,
     css,
     html,
+    server,
     database,
 };
 
@@ -30,7 +29,7 @@ config.nodemon = {
     main:  `${ projectRoot }/server.js`,
     watch: {
         src: [
-            ...( config.js.backend.lint.src.filter(
+            ...( config.server.lint.src.filter(
                 glob => glob !== `${ projectRoot }/server.js`
             ) ),
             ...config.database.lint.src,
@@ -45,7 +44,7 @@ config.browserSync = {
     },
     proxy: url,
     files: [
-        `${ config.js.frontend.build.dest }`,
+        `${ config.js.build.dest }`,
         `${ config.css.build.dest }`,
         `${ config.html.build.dest.all }`,
     ],

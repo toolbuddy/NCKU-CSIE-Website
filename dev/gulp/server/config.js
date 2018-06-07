@@ -4,14 +4,14 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 
 /**
  * @constant
- * @readonly {string[]} config.preBuild.src  - Array of glob of source files for copying server configuration.
- * @readonly {string}   config.preBuild.dest - Glob of destination directory for copying server configuration.
- * @readonly {string}   config.preBuild.copy - Glob of the very copy file of server configuration.
- * @readonly {string[]} config.build.src     - Array of glob of source files for building server ECMAScript.
- * @readonly {string}   config.build.dest    - Glob of destination directory for building server ECMAScript.
- * @readonly {string}   config.lint.rule     - Glob of lint rule file for linting server ECMAScript.
- * @readonly {string[]} config.lint.src      - Array of glob of source files for linting server ECMAScript.
- * @readonly {string}   config.lint.dest     - Glob of destination directory for linting server ECMAScript.
+ * @readonly {string[]} config.preBuild.src  - Array of glob of source files for copying web server configuration.
+ * @readonly {string}   config.preBuild.dest - Glob of destination directory for copying web server configuration.
+ * @readonly {string}   config.preBuild.copy - Glob of the very copy file of web server configuration.
+ * @readonly {string[]} config.build.src     - Array of glob of source files for building web server ECMAScript.
+ * @readonly {string}   config.build.dest    - Glob of destination directory for building web server ECMAScript.
+ * @readonly {string}   config.lint.rule     - Glob of lint rule file for linting web server ECMAScript.
+ * @readonly {string[]} config.lint.src      - Array of glob of source files for linting web server ECMAScript.
+ * @readonly {string}   config.lint.dest     - Glob of destination directory for linting web server ECMAScript.
  */
 
 const config = {
