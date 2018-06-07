@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "lc": "node dev/css/lint.js",
     "build": "gulp --cwd . --gulpfile dev/gulp/develop/gulpfile.js build",
     "build:css": "gulp --cwd . --gulpfile dev/gulp/css/gulpfile.js build:css",
     "build:database": "node dev/gulp/database/build.js",

@@ -9,7 +9,7 @@ const indent = {
             const: 1,
         },
         outerIIFEBody:       1,
-        memberExpression:    1,
+        memberExpression:    0,
         functionDeclaration: {
             body:       1,
             parameters: 2,

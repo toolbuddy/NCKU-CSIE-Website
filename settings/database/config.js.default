@@ -13,13 +13,13 @@ const config = {};
 
 Object.defineProperties( config, {
     'username': {
-        value: 'nckucsie',
+        value: '',
     },
     'password': {
-        value: 'nckucsie@20180412',
+        value: '',
     },
     'host': {
-        value: '140.116.245.105',
+        value: 'localhost',
     },
     'port': {
         value: 3306,

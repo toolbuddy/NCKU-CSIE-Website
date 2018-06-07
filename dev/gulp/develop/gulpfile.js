@@ -107,9 +107,9 @@ gulp.task(
                     watch:  config.nodemon.watch.src,
                     ext:    'js json',
                 } )
-                    .on( 'restart', () => {
-                        browserSync.get( 'browser' ).reload();
-                    } );
+                .on( 'restart', () => {
+                    browserSync.get( 'browser' ).reload();
+                } );
                 done();
             },
 

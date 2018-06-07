@@ -23,16 +23,16 @@ const config = require( `${ projectRoot }/dev/gulp/css/config` );
 gulp.task(
     'lint:css',
     () => gulp.src( config.lint.src, { since: gulp.lastRun( 'lint:css' ), } )
-        .pipe( plumber() )
-        .pipe( stylelint( {
-            configFile: config.lint.rule,
-            fix:        true,
-            reporters:  [
-                { formatter: 'string', console: true, },
-            ],
-        } ) )
-        .pipe( debug() )
-        .pipe( gulp.dest( config.lint.dest ) )
+    .pipe( plumber() )
+    .pipe( stylelint( {
+        configFile: config.lint.rule,
+        fix:        true,
+        reporters:  [
+            { formatter: 'string', console: true, },
+        ],
+    } ) )
+    .pipe( debug() )
+    .pipe( gulp.dest( config.lint.dest ) )
 );
 
 /**
@@ -43,24 +43,24 @@ gulp.task(
 gulp.task(
     'build:css',
     () => gulp.src( config.build.src )
-        .pipe( plumber() )
-        .pipe( sourcemaps.init() )
-        .pipe( sass( {
-            outputStyle:  'compressed',
-            includePaths: [ config.lint.dest, ],
-        } ) )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( config.build.dest ) )
-        .pipe( filter( '**/*.css' ) )
-        .pipe( autoprefixer( {
-            browsers: config.browserlist,
-            grid:     true,
-        } ) )
-        .pipe( csso() )
-        .pipe( rename( { suffix: '.min', } ) )
-        .pipe( size( { showFiles: true, } ) )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( config.build.dest ) )
+    .pipe( plumber() )
+    .pipe( sourcemaps.init() )
+    .pipe( sass( {
+        outputStyle:  'compressed',
+        includePaths: [ config.lint.dest, ],
+    } ) )
+    .pipe( sourcemaps.write( '.' ) )
+    .pipe( gulp.dest( config.build.dest ) )
+    .pipe( filter( '**/*.css' ) )
+    .pipe( autoprefixer( {
+        browsers: config.browserlist,
+        grid:     true,
+    } ) )
+    .pipe( csso() )
+    .pipe( rename( { suffix: '.min', } ) )
+    .pipe( size( { showFiles: true, } ) )
+    .pipe( sourcemaps.write( '.' ) )
+    .pipe( gulp.dest( config.build.dest ) )
 );
 
 /**

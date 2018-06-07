@@ -26,16 +26,16 @@ gulp.task(
             since: gulp.lastRun( 'lint:js' ),
         }
     )
-        .pipe( plumber() )
-        .pipe(
-            eslint( {
-                configFile: config.lint.rule,
-                fix:        true,
-            } )
-        )
-        .pipe( eslint.format() )
-        .pipe( debug() )
-        .pipe( gulp.dest( config.lint.dest ) )
+    .pipe( plumber() )
+    .pipe(
+        eslint( {
+            configFile: config.lint.rule,
+            fix:        true,
+        } )
+    )
+    .pipe( eslint.format() )
+    .pipe( debug() )
+    .pipe( gulp.dest( config.lint.dest ) )
 );
 
 /**
@@ -46,14 +46,14 @@ gulp.task(
 gulp.task(
     'build:js',
     () => gulp.src( config.build.src )
-        .pipe( plumber() )
-        .pipe( gulp.dest( config.build.dest ) )
-        .pipe( sourcemaps.init() )
-        .pipe( uglify() )
-        .pipe( rename( { suffix: '.min', } ) )
-        .pipe( size( { showFiles: true, } ) )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( config.build.dest ) )
+    .pipe( plumber() )
+    .pipe( gulp.dest( config.build.dest ) )
+    .pipe( sourcemaps.init() )
+    .pipe( uglify() )
+    .pipe( rename( { suffix: '.min', } ) )
+    .pipe( size( { showFiles: true, } ) )
+    .pipe( sourcemaps.write( '.' ) )
+    .pipe( gulp.dest( config.build.dest ) )
 );
 
 /**

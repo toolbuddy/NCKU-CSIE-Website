@@ -39,6 +39,7 @@ const config = {
             `${ projectRoot }/apis/**/*.js`,
             `${ projectRoot }/routes/**/*.js`,
             `${ projectRoot }/settings/**/*.js`,
+            `${ projectRoot }/dev/**/*.js`,
         ],
         dest: `${ projectRoot }`,
     },
