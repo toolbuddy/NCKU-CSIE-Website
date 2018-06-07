@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-mixin cards__card( profile = {} )
-  figure.cards__card.card
-    img.card__photo( src=profile.image, alt='' )
-    article.card__intro.intro
-      h1.intro__name= profile.name
-      ul.intro__titles
-        +intro__list( 'intro__title', profile.titles )
-      ul.intro__depts
-        +intro__list( 'intro__dept', profile.departments )
-      p.intro__email= profile.email
-      if profile.offices !== null
-        each office in profile.offices
-          address.intro__address= office.address
-          p.intro__phone= office.tel
-    article.card__info.info
-      if profile.personalWeb !== null
-        a.info__personal-website( href=profile.personalWeb )
-      a.info__more( href=`/about/teacher/${ profile.profileId }` ) see more
-
-mixin intro__list( className, arr)
-  if arr!==null
-    each ele in arr
-      li( class=className )= ele
-=======
 mixin cards__card( teacher = {} )
   figure.cards__card.card
     //- photo of teacher
@@ -64,4 +39,3 @@ mixin intro__list( attribute, array )
   ul( class=`intro__${ attribute }s` )
     each element in array
       li( class=`intro__${ attribute }` )= element[ attribute ]
->>>>>>> 5db0391fbb5c84ae402ca328a7c174bb3b95654e
