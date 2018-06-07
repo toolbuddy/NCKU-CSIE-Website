@@ -7,7 +7,7 @@ Build a better website for NCKU CSIE
 
 ## Build
 1. Setup server config files
-    * Create server configuration files by running `npm run pre-build:js-backend`.
+    * Create server configuration files by running `npm run pre-build:server`.
     * Filling-in information required by `settings/server/config.js`.
 2. Setup database config files
     * Create database configuration files by running `npm run pre-build:database`.
@@ -31,9 +31,9 @@ Here are a few standard:
     * ECMAScript6 syntax mainly used.
     * Camel form naming style.
     * Other rules can be check by running following commands:
-        * Frontend: `npm run lint:js-frontend`
-        * Backend: `npm run lint:js-backend`
-    * Build ECMAScript files: `npm run build:js-frontend`
+        * Frontend: `npm run lint:js`
+        * Backend: `npm run lint:server`
+    * Build ECMAScript files: `npm run build:js`
 * HTML
     * Using Pug template engine.
     * HTML5 tags only.
