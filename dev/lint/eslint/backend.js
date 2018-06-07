@@ -9,7 +9,7 @@ const indent = {
             const: 1,
         },
         outerIIFEBody:       1,
-        memberExpression:    1,
+        memberExpression:    0,
         functionDeclaration: {
             body:       1,
             parameters: 2,
@@ -340,8 +340,13 @@ module.exports = {
             {
 
                 // An array of numbers to ignore.
-                'ignore': [ 0,
-                    1, ],
+                'ignore': [
+                    0,
+                    1,
+                    2,
+                    -1,
+                    -2,
+                ],
 
                 // Array indexes are considered okay.
                 'ignoreArrayIndexes': true,

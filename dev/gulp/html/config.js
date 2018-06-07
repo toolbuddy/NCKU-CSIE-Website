@@ -82,7 +82,7 @@ const config = {
         },
     },
     lint: {
-        rule: `${ projectRoot }/settings/lint/puglint/puglint.js`,
+        rule: `${ projectRoot }/dev/lint/puglint/puglint.js`,
         src:  [
             `${ projectRoot }/static/src/pug/**/*.pug`,
         ],

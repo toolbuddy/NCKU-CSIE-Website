@@ -4,9 +4,9 @@ const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 
 /**
  * @constant
- * @readonly {string[]} config.src  - Array of glob of source files for copying database configuration.
- * @readonly {string}   config.dest - Glob of destination directory for copying database configuration.
- * @readonly {string}   config.copy - Glob of the very copy file of database configuration.
+ * @readonly {string[]} config.src  - Array of glob of source files for copying database server configuration.
+ * @readonly {string}   config.dest - Glob of destination directory for copying database server configuration.
+ * @readonly {string}   config.copy - Glob of the very copy file of database server configuration.
  */
 
 const config = {
@@ -18,7 +18,7 @@ const config = {
         copy: `${ projectRoot }/settings/database/config.js`,
     },
     lint: {
-        rule: `${ projectRoot }/settings/lint/eslint/backend.js`,
+        rule: `${ projectRoot }/dev/lint/eslint/backend.js`,
         src:  [
             `${ projectRoot }/models/*/operation/**/*.js`,
         ],
