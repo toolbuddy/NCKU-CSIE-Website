@@ -7,27 +7,27 @@ const path = require( 'path' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/database/config` );
+const config = require( `${ projectRoot }/dev/gulp/database/config` );
 
 /**
  * Task `pre-build:database`:
- *     Use pure `gulp` to copy database configuration files.
+ *     Use pure `gulp` to copy database server configuration files.
  */
 
 gulp.task(
     'pre-build:database',
     () => gulp.src( config.preBuild.src )
-        .pipe( rename(
-            ( file ) => {
-                file.extname = '';
-            }
-        ) )
-        .pipe( gulp.dest( config.preBuild.dest ) )
+    .pipe( rename(
+        ( file ) => {
+            file.extname = '';
+        }
+    ) )
+    .pipe( gulp.dest( config.preBuild.dest ) )
 );
 
 /**
  * Task `lint:database`:
- *     Use `eslint` to lint database ECMAScript files.
+ *     Use `eslint` to lint database server ECMAScript files.
  */
 
 gulp.task(
@@ -39,14 +39,14 @@ gulp.task(
             since: gulp.lastRun( 'lint:database' ),
         }
     )
-        .pipe( plumber() )
-        .pipe( eslint( {
-            configFile: config.lint.rule,
-            fix:        true,
-        } ) )
-        .pipe( eslint.format() )
-        .pipe( debug() )
-        .pipe( gulp.dest( config.lint.dest ) )
+    .pipe( plumber() )
+    .pipe( eslint( {
+        configFile: config.lint.rule,
+        fix:        true,
+    } ) )
+    .pipe( eslint.format() )
+    .pipe( debug() )
+    .pipe( gulp.dest( config.lint.dest ) )
 );
 
 
@@ -62,7 +62,7 @@ gulp.task(
 
 /**
  * Task `watch:database`:
- *     Watch database ECMAScript files.
+ *     Watch database server ECMAScript files.
  *     Trigger `lint:database` if changed.
  */
 

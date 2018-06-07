@@ -19,7 +19,7 @@ const config = {
         dest: `${ projectRoot }/static/dist/js`,
     },
     lint: {
-        rule: `${ projectRoot }/settings/lint/eslint/frontend.js`,
+        rule: `${ projectRoot }/dev/lint/eslint/frontend.js`,
         src:  [
             `${ projectRoot }/static/src/js/**/*.js`,
         ],

@@ -8,8 +8,8 @@ const pug = require( 'gulp-pug' );
 const rename = require( 'gulp-rename' );
 
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const config = require( `${ projectRoot }/settings/gulp/html/config` );
-const data = require( `${ projectRoot }/settings/gulp/html/data` );
+const config = require( `${ projectRoot }/dev/gulp/html/config` );
+const data = require( `${ projectRoot }/dev/gulp/html/data` );
 const languages = [
     'zh-TW',
     'en-US',
@@ -29,25 +29,25 @@ gulp.task(
             since: gulp.lastRun( 'lint:html' ),
         }
     )
-        .pipe( plumber() )
-        .pipe( puglint() )
-        .pipe( puglint.reporter() )
-        .pipe( debug() )
+    .pipe( plumber() )
+    .pipe( puglint() )
+    .pipe( puglint.reporter() )
+    .pipe( debug() )
 );
 
 function buildHTML ( src, dest, data ) {
     return async ( done ) => {
         languages.forEach(
             async language => gulp.src( src )
-                .pipe( plumber() )
-                .pipe(
-                    pug( {
-                        basedir: config.lint.dest,
-                        data:    await data( language ),
-                    } )
-                )
-                .pipe( rename( { suffix: `.${ language }`, } ) )
-                .pipe( gulp.dest( dest ) )
+            .pipe( plumber() )
+            .pipe(
+                pug( {
+                    basedir: config.lint.dest,
+                    data:    await data( language ),
+                } )
+            )
+            .pipe( rename( { suffix: `.${ language }`, } ) )
+            .pipe( gulp.dest( dest ) )
         );
         done();
     };

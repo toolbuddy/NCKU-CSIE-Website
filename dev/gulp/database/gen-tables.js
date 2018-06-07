@@ -17,7 +17,7 @@ module.exports = ( database, config ) => new SequelizeAuto(
         },
     }
 )
-    .run( ( err ) => {
-        if ( err )
-            throw err;
-    } );
+.run( ( err ) => {
+    if ( err )
+        throw err;
+} );
