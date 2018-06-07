@@ -1,0 +1,5 @@
+mixin js( src, isModule = false )
+  if isModule
+    script( src=src, type='module', async )
+  else
+    script( src=src )
