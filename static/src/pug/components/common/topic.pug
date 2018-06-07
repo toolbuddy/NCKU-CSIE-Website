@@ -1,4 +1,4 @@
-mixin topic( smallText, largeText, color = black )
-  header.topic( class=`topic--${ color }` )
-    span.topic__text--small( class=`topic__text--${ color }` )= smallText
-    span.topic__text--large( class=`topic__text--${ color }` )= largeText
+mixin topic( englishText, chineseText )
+  header.topic
+    span.topic__text--small= englishText
+    span.topic__text--large= chineseText
