@@ -4,7 +4,6 @@
  * @readonly {string} host      - Web server host address.
  * @readonly {string} protocol  - Whick protocol web server is using, can be either 'http' or 'https'.
  * @readonly {number} port      - Web server port.
- * @readonly {number} language  - Web server default language.
  * @readonly {string} url       - Get web server url.
  * @readonly {string} staticUrl - Get static file server url.
  */
@@ -20,9 +19,6 @@ Object.defineProperties( config, {
     },
     'port': {
         value: 3000,
-    },
-    'language': {
-        value: 'zh-TW',
     },
     'url': {
         get () {
