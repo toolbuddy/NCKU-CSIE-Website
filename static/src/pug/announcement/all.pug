@@ -16,7 +16,7 @@ block filter
 
 block announcement--pinned
   section.announcement
-    section.announcement__title--flag.announcement__title.title
+    section.announcement__title.announcement__title--flag.title
       h1.title__text 置頂貼文
     section.announcement__briefings.briefings
       +briefings__briefing(  
@@ -33,6 +33,42 @@ block announcement
     section.announcement__title--flag.announcement__title.title
       h1.title__text 所有貼文
     section.announcement__briefings.briefings
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+          articleUrl: '/about/teachers',
+          tags: [ 'college', 'speech', 'phd' ]
+        }
+      )
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '兩小段內文',
+          articleUrl: '',
+          tags: [ 'recruitment', 'teacher', 'exhibition' ]
+        }
+      )
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+          articleUrl: '/about/teachers',
+          tags: [ 'college', 'speech', 'phd' ]
+        }
+      )
+      +briefings__briefing(
+        {
+          title: '標題二',
+          time: '2018-2-2 | 15:02',
+          excerpt: '兩小段內文',
+          articleUrl: '',
+          tags: [ 'recruitment', 'teacher', 'exhibition' ]
+        }
+      )
       +briefings__briefing(
         {
           title: '標題二',

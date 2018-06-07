@@ -1,9 +1,18 @@
 @import 'components/common/icon';
 
 .announcement {
-  &__title--flag {
-    @include icon--before__flag() {
-      margin: .15rem .5rem 0 0;
+  &__title {
+    height: 1.35rem;
+    margin-bottom: .3rem;
+
+    &--flag {
+      @include icon--before__flag() {
+        margin: .15rem .5rem .2rem 0;
+      }
+    }
+
+    &--underline {
+      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
     }
   }
 
@@ -11,29 +20,24 @@
     display: flex;
 
     &__text{
-      font-weight: bold;
-      font-size: .75rem;
+      height: inherit;
+      font: {
+        weight: bold;
+        size: .75rem;
+      }
     }
 
     &__text--underline {
-      display: inline-block;
-      width: 120px;
-      border-bottom: solid .015625rem #000000;
-    }
-
-    &__blank{
-      display: inline-block;
-      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
-      width: 85%;
-    }
-    
+      width: 3.43rem;
+      border-bottom: solid .0156rem #000000;
+    }    
   }
 
 
-  .briefings{
+  .briefings {
     &__briefing {
       font-size: .4375rem;
-      padding: .25rem 0 .6rem;
+      padding: .9rem 0 0;
       border-bottom: solid .015625rem rgba(0, 0, 0, .3);      
     }
 
@@ -42,37 +46,34 @@
       grid: {
         template: {
           areas:
-            'tags   .  .'
-            'title  .  .'
-            'content  . time';
-          rows: 10% 1fr 10%;
+            'briefing__tags     .  .'
+            'briefing__title    .  .'
+            'briefing__article  . briefing__time';
+          rows: 2fr 1fr 1.6fr;
         }
       }
 
       &__tags {
-        margin-bottom: .1rem;
-        grid-area: tags;
+        grid-area: briefing__tags;
       }
 
       &__title {
         color: #000000;
         font-size: .5rem;
         min-width: 3rem;
-        margin-top: .4rem;
-        grid-area: title;
+        grid-area: briefing__title;
       }
 
       &__article {
         overflow: hidden;
-        grid-area: content;
+        grid-area: briefing__article;
       }
 
       &__time {
         color: #b5babf;
-        grid-area: time;
+        grid-area: briefing__time;
         display: flex;
         justify-content: flex-end;
-        align-items: flex-end;
       }
     }
   }

@@ -18,7 +18,7 @@
 }
 @mixin topic--color-template ( $color ) {
   @include topic--template() {
-    border-bottom: 1px solid $color;
+    border-bottom: .0312rem solid $color;
     color: $color;
   }
 }
