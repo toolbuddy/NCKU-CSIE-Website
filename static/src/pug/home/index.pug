@@ -78,10 +78,9 @@ block content__photowall
 block content__announcement
   main.newscontainer
     section.announcement.announcement--news
-      section.announcement__title.title
+      header.announcement__title.announcement__title--underline.title
         h1.title__text--underline.title__text 最新消息
-        aside.title__blank
-      section.announcement__briefings.briefings
+      nav.announcement__briefings.briefings
         +briefings__briefing(  
           {
             title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
@@ -104,7 +103,7 @@ block content__announcement
         a SEE MORE
     section.hotnews
       h1.hotnews__topic 最近熱門
-      section.hotnews__briefings.briefings.briefings--twocolumns
+      nav.hotnews__briefings.briefings.briefings--twocolumns
         +briefings__briefing--hotnews(  
           {
             title: '標題二',

@@ -1,9 +1,17 @@
 @import 'components/common/icon';
 
 .announcement {
-  &__title--flag {
-    @include icon--before__flag() {
-      margin: .15rem .5rem 0 0;
+  &__title{
+    height: 1.35rem;
+
+    &--flag {
+      @include icon--before__flag() {
+        margin: .15rem .5rem .2rem 0;
+      }
+    }
+
+    &--underline{
+      border-bottom: solid .5px rgba(0, 0, 0, .3);
     }
   }
 
@@ -13,20 +21,13 @@
     &__text{
       font-weight: bold;
       font-size: .75rem;
+      height: inherit;
     }
 
     &__text--underline {
-      display: inline-block;
-      width: 120px;
+      width: 3.43rem;
       border-bottom: solid .015625rem #000000;
-    }
-
-    &__blank{
-      display: inline-block;
-      border-bottom: solid .015625rem rgba(0, 0, 0, .3);
-      width: 85%;
-    }
-    
+    } 
   }
 
 
@@ -45,12 +46,11 @@
             'tags   .  .'
             'title  .  .'
             'content  . time';
-          rows: 10% 1fr 10%;
+          rows: 2fr 1fr 1.6fr;
         }
       }
 
       &__tags {
-        margin-bottom: .1rem;
         grid-area: tags;
       }
 
@@ -72,7 +72,6 @@
         grid-area: time;
         display: flex;
         justify-content: flex-end;
-        align-items: flex-end;
       }
     }
   }
