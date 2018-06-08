@@ -45,14 +45,14 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    conferences => conferences.map(
-                        conference => ( {
-                            hostDate:   conference.hostDate,
-                            conference: conference.conferenceI18n[ 0 ].conference,
-                        } )
-                    )
-                ),
+            .then(
+                conferences => conferences.map(
+                    conference => ( {
+                        hostDate:   conference.hostDate,
+                        conference: conference.conferenceI18n[ 0 ].conference,
+                    } )
+                )
+            ),
             table.department.findAll( {
                 include: [
                     {
@@ -71,13 +71,13 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    departments => departments.map(
-                        department => ( {
-                            department: department.departmentI18n[ 0 ].department,
-                        } )
-                    )
-                ),
+            .then(
+                departments => departments.map(
+                    department => ( {
+                        department: department.departmentI18n[ 0 ].department,
+                    } )
+                )
+            ),
             table.education.findAll( {
                 include: [
                     {
@@ -102,18 +102,18 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    educations => educations.map(
-                        education => ( {
-                            degree:    education.degree,
-                            endYear:   education.endYear,
-                            nation:    education.nation,
-                            startYear: education.startYear,
-                            major:     education.educationI18n[ 0 ].major,
-                            school:    education.educationI18n[ 0 ].school,
-                        } )
-                    )
-                ),
+            .then(
+                educations => educations.map(
+                    education => ( {
+                        degree:    education.degree,
+                        endYear:   education.endYear,
+                        nation:    education.nation,
+                        startYear: education.startYear,
+                        major:     education.educationI18n[ 0 ].major,
+                        school:    education.educationI18n[ 0 ].school,
+                    } )
+                )
+            ),
             table.experience.findAll( {
                 include: [
                     {
@@ -137,17 +137,17 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    experiences => experiences.map(
-                        experience => ( {
-                            endYear:      experience.endYear,
-                            startYear:    experience.startYear,
-                            department:   experience.experienceI18n[ 0 ].department,
-                            organization: experience.experienceI18n[ 0 ].organization,
-                            title:        experience.experienceI18n[ 0 ].title,
-                        } )
-                    )
-                ),
+            .then(
+                experiences => experiences.map(
+                    experience => ( {
+                        endYear:      experience.endYear,
+                        startYear:    experience.startYear,
+                        department:   experience.experienceI18n[ 0 ].department,
+                        organization: experience.experienceI18n[ 0 ].organization,
+                        title:        experience.experienceI18n[ 0 ].title,
+                    } )
+                )
+            ),
             table.honor.findAll( {
                 include: [
                     {
@@ -168,14 +168,14 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    honors => honors.map(
-                        honor => ( {
-                            honorYear: honor.honorYear,
-                            honor:     honor.honorI18n[ 0 ].honor,
-                        } )
-                    )
-                ),
+            .then(
+                honors => honors.map(
+                    honor => ( {
+                        honorYear: honor.honorYear,
+                        honor:     honor.honorI18n[ 0 ].honor,
+                    } )
+                )
+            ),
             table.lab.findAll( {
                 include: [
                     {
@@ -198,16 +198,16 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    labs => labs.map(
-                        lab => ( {
-                            labWeb:  lab.labWeb,
-                            tel:     lab.tel,
-                            address: lab.labI18n[ 0 ].address,
-                            name:    lab.labI18n[ 0 ].name,
-                        } )
-                    )
-                ),
+            .then(
+                labs => labs.map(
+                    lab => ( {
+                        labWeb:  lab.labWeb,
+                        tel:     lab.tel,
+                        address: lab.labI18n[ 0 ].address,
+                        name:    lab.labI18n[ 0 ].name,
+                    } )
+                )
+            ),
             table.office.findAll( {
                 include: [
                     {
@@ -228,14 +228,14 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    offices => offices.map(
-                        office => ( {
-                            tel:     office.tel,
-                            address: office.officeI18n[ 0 ].address,
-                        } )
-                    )
-                ),
+            .then(
+                offices => offices.map(
+                    office => ( {
+                        tel:     office.tel,
+                        address: office.officeI18n[ 0 ].address,
+                    } )
+                )
+            ),
             table.patent.findAll( {
                 include: [
                     {
@@ -263,21 +263,21 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    patents => patents.map(
-                        patent => ( {
-                            applicationDate:     patent.applicationDate,
-                            certificationNumber: patent.certificationNumber,
-                            expireDate:          patent.expireDate,
-                            issueDate:           patent.issueDate,
-                            nation:              patent.nation,
-                            nscNumber:           patent.nscNumber,
-                            inventor:            patent.patentI18n[ 0 ].inventor,
-                            patent:              patent.patentI18n[ 0 ].patent,
-                            patentOwner:         patent.patentI18n[ 0 ].patentOwner,
-                        } )
-                    )
-                ),
+            .then(
+                patents => patents.map(
+                    patent => ( {
+                        applicationDate:     patent.applicationDate,
+                        certificationNumber: patent.certificationNumber,
+                        expireDate:          patent.expireDate,
+                        issueDate:           patent.issueDate,
+                        nation:              patent.nation,
+                        nscNumber:           patent.nscNumber,
+                        inventor:            patent.patentI18n[ 0 ].inventor,
+                        patent:              patent.patentI18n[ 0 ].patent,
+                        patentOwner:         patent.patentI18n[ 0 ].patentOwner,
+                    } )
+                )
+            ),
             table.profile.findOne( {
                 include: [
                     {
@@ -303,18 +303,18 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    profile => ( {
-                        email:       profile.email,
-                        fax:         profile.fax,
-                        nation:      profile.nation,
-                        personalWeb: profile.personalWeb,
-                        photo:       profile.photo,
-                        position:    profile.position,
-                        name:        profile.profileI18n[ 0 ].name,
-                        profileId,
-                    } )
-                ),
+            .then(
+                profile => ( {
+                    email:       profile.email,
+                    fax:         profile.fax,
+                    nation:      profile.nation,
+                    personalWeb: profile.personalWeb,
+                    photo:       profile.photo,
+                    position:    profile.position,
+                    name:        profile.profileI18n[ 0 ].name,
+                    profileId,
+                } )
+            ),
             table.project.findAll( {
                 include: [
                     {
@@ -338,17 +338,17 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    projects => projects.map(
-                        project => ( {
-                            category:  project.category,
-                            endYear:   project.endYear,
-                            startYear: project.startYear,
-                            name:      project.projectI18n[ 0 ].name,
-                            support:   project.projectI18n[ 0 ].support,
-                        } )
-                    )
-                ),
+            .then(
+                projects => projects.map(
+                    project => ( {
+                        category:  project.category,
+                        endYear:   project.endYear,
+                        startYear: project.startYear,
+                        name:      project.projectI18n[ 0 ].name,
+                        support:   project.projectI18n[ 0 ].support,
+                    } )
+                )
+            ),
             table.publication.findAll( {
                 include: [
                     {
@@ -370,15 +370,15 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    publications => publications.map(
-                        publication => ( {
-                            category:    publication.category,
-                            issueYear:   publication.issueYear,
-                            publication: publication.publicationI18n[ 0 ].publication,
-                        } )
-                    )
-                ),
+            .then(
+                publications => publications.map(
+                    publication => ( {
+                        category:    publication.category,
+                        issueYear:   publication.issueYear,
+                        publication: publication.publicationI18n[ 0 ].publication,
+                    } )
+                )
+            ),
             table.specialty.findAll( {
                 attributes: [
                     'specialty',
@@ -413,19 +413,19 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    technologyTransfers => technologyTransfers.map(
-                        technologyTransfer => ( {
-                            endDate:    technologyTransfer.endDate,
-                            nscNumber:  technologyTransfer.nscNumber,
-                            startDate:  technologyTransfer.startDate,
-                            authority:  technologyTransfer.technologyTransferI18n[ 0 ].authority,
-                            patent:     technologyTransfer.technologyTransferI18n[ 0 ].patent,
-                            receiver:   technologyTransfer.technologyTransferI18n[ 0 ].receiver,
-                            technology: technologyTransfer.technologyTransferI18n[ 0 ].technology,
-                        } )
-                    )
-                ),
+            .then(
+                technologyTransfers => technologyTransfers.map(
+                    technologyTransfer => ( {
+                        endDate:    technologyTransfer.endDate,
+                        nscNumber:  technologyTransfer.nscNumber,
+                        startDate:  technologyTransfer.startDate,
+                        authority:  technologyTransfer.technologyTransferI18n[ 0 ].authority,
+                        patent:     technologyTransfer.technologyTransferI18n[ 0 ].patent,
+                        receiver:   technologyTransfer.technologyTransferI18n[ 0 ].receiver,
+                        technology: technologyTransfer.technologyTransferI18n[ 0 ].technology,
+                    } )
+                )
+            ),
             table.title.findAll( {
                 include: [
                     {
@@ -447,15 +447,15 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     profileId,
                 },
             } )
-                .then(
-                    titles => titles.map(
-                        title => ( {
-                            endDate:   title.endDate,
-                            startDate: title.startDate,
-                            title:     title.titleI18n[ 0 ].title,
-                        } )
-                    )
-                ),
+            .then(
+                titles => titles.map(
+                    title => ( {
+                        endDate:   title.endDate,
+                        startDate: title.startDate,
+                        title:     title.titleI18n[ 0 ].title,
+                    } )
+                )
+            ),
         ]
     );
 

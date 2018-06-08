@@ -28,7 +28,7 @@ router.get( '/recruitment', ( req, res ) => {
 } );
 
 router.get( '/post_detail', function ( req, res ) {
-    res.sendFile(  `${ global.projectRoot }/static/dist/html/announcement/post_detail.html` );
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/post_detail.html` );
 } );
 
 module.exports = router;
