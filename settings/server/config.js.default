@@ -31,7 +31,7 @@ Object.defineProperties( config, {
     },
     'staticUrl': {
         get () {
-            return config.host;
+            return config.url;
         },
     },
 } );
