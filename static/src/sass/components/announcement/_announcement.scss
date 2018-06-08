@@ -11,12 +11,7 @@ body{
       weight: bold;
     }
     text-align: left;
-
-    border{
-      style: solid;
-      width: 0 0 0 .25rem;
-      color: #fd5540;
-    }
+    border-left: .25rem solid #fd5540;
     box-shadow: .0625rem .09375rem .1875rem rgba(0,0,0,.1);
   }
 
@@ -28,33 +23,26 @@ body{
 
   &__article{
     font-size: .75rem;
-
-    //text-align: left;
   }
 
   &__button{
     background-color: #00c3d0;
     color: #f8f8f2;
     font-size: .75rem;
-
+    border: none;
+    box-shadow: .0625rem .09375px .1875rem rgba(0,0,0,.1);
     text{
       align: center;
       decoration: none;
     }
-    border: none;
-    box-shadow: .0625rem .09375px .1875rem rgba(0,0,0,.1);
+
   }
 
   &__watchThrough{
     color: #262e3e;
     font-size: .65625rem;
     text-align: right;
-
-    border{
-      style: solid;
-      width: .015625rem 0 0;
-      color: #000000;
-    }
+    border: .015625rem 0 0 solid #000000;
   }
 }
 
