@@ -38,7 +38,7 @@
     &__briefing {
       font-size: .4375rem;
       padding: .9rem 0 0;
-      border-bottom: solid .015625rem rgba(0, 0, 0, .3);      
+      border-bottom: solid .0156rem rgba(0, 0, 0, .3);      
     }
 
     .briefing {
@@ -50,11 +50,19 @@
             'briefing__title    .  .'
             'briefing__article  . briefing__time';
           rows: 2fr 1fr 1.6fr;
+          columns: 6.5fr 1fr 2.5fr;
         }
       }
 
       &__tags {
         grid-area: briefing__tags;
+        text-overflow: ellipsis;
+        overflow-x: scroll;
+        white-space: nowrap;
+      }
+
+      &__tags ::-webkit-scrollbar { 
+        width: 0 !important;
       }
 
       &__title {
@@ -62,11 +70,16 @@
         font-size: .5rem;
         min-width: 3rem;
         grid-area: briefing__title;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       &__article {
-        overflow: hidden;
         grid-area: briefing__article;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       &__time {
