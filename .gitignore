@@ -13,7 +13,7 @@ package-lock.json
 
 # sass files
 .sass-cache
-static/src/sass/components/common/_static.scss
+.stylelintcache*
 
 # sequelize generated schema
 models/*/tables

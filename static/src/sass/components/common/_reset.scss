@@ -1,24 +1,40 @@
 @charset 'utf-8';
 @import 'components/common/font';
-@include font__load--NotoSansTC();
 
-* {
-  margin: 0;
-  outline: 0;
-  border: 0;
-  padding: 0;
-  font-size: inherit;
-  box-sizing: border-box;
-  text-decoration: none;
-  list-style: none;
-  color: inherit;
-}
+// Global reset setting
+@mixin reset () {
+  // Avoid duplicated import file.
+  @if not variable-exists( reset ) {
+    $reset: true !global;
 
-html, body {
-  width: 100%;
-  height: 100%;
-  font: {
-    family: var( --font__family--default );
-    size: 32px;
+    * {
+      // Box model.
+      margin: 0;
+      outline: 0;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+      // Inherit style from parent.
+      font-size: inherit;
+      color: inherit;
+
+      // No extra decoration.
+      text-decoration: none;
+      list-style: none;
+    }
+
+    html, body {
+      // Screen size.
+      width: 100%;
+      height: 100%;
+
+      // Default font.
+      font: {
+        family: var( --font__family--default );
+        size: 32px;
+      }
+    }
   }
 }
+@include reset();
