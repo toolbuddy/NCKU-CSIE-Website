@@ -1,0 +1,63 @@
+@import 'components/common/font';
+@import 'components/common/topic';
+@import 'components/common/reset';
+
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: #f2f4f7;
+  display: grid;
+  grid: {
+    template: {
+      areas:
+        '. topic topic .'
+        '.  map  thsr .'
+        '.  map  train .'
+        '.  map  drive .'
+        '.   .     .   .';
+      columns: 1fr 4fr 4fr 1fr;
+      rows: 6fr 2fr 2fr 6fr 1fr;
+    }
+    row-gap: 2rem;
+    column-gap: 2rem;
+  };
+}
+
+.topic {
+  grid-area: topic;
+}
+
+.title {
+  text-align: left;
+  color: #000000;
+  font: {
+    size: .875rem;
+    family: var( --font__family--default );
+    weight: bold;
+  }
+}
+
+.content {
+  text-align: left;
+  color: #000000;
+  font: {
+    size: .6563rem;
+    family: var( --font__family--default );
+  }
+}
+
+#map {
+  grid-area: map;
+}
+
+.thsr {
+  grid-area: thsr;
+}
+
+.train {
+  grid-area: train;
+}
+
+.drive {
+  grid-area: drive;
+}
