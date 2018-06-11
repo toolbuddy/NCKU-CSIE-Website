@@ -1,6 +1,5 @@
 @import 'components/common/reset';
-@import 'components/common/topic';
-@import 'components/announcement/filter';
+@import 'components/announcement/filter__tags';
 @import 'components/announcement/briefing';
 @import 'components/announcement/briefinghotnews';
 
@@ -11,72 +10,42 @@
     template-columns: repeat( 10, 1fr );
   }
   background-color: #f8fbfc;
-  padding: 3rem 6rem;
-  @media screen and ( max-width: 992px ){
+  padding: 2.2rem 1rem;
+  @media screen and ( min-width: 768px ){
     padding: 4.6rem 3.6rem;
-  }
-  @media screen and ( max-width: 768px ){
-    padding: 2.2rem 1rem;
   }
 }
 
-//@include topic--black();
-
 .announcement--news {
+  
   grid-column: {
     start: 1;
-    end: 7;
+    end: 11;
   }
-  @media screen and ( max-width: 992px){
+  @media screen and ( min-width: 992px){
     grid-column: {
       start: 1;
-      end: 11;
+      end: 7;
     }
   }
   
 }
 
-.news {
-  &__briefings {
-    font-size: .625rem;
-  }
-
-  &__button {
-    width: 4.625rem;
-    height: 1.5rem;
-    border-radius: 3px;
-    background-color: #f94970;
-    box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
-    float: right;
-    margin-top: 1rem;
-    font-family: Roboto;
-    color: white;
-    font-size: .4375rem;
-  }
-}
-
 .hotnews {
-  &__topic{
-    font-size: .75rem;
-  }
-
-  &__briefings {
-    font-size: .625rem;
-    margin: 1rem 0;
-  }
-
+  margin-top: .5rem;
   grid-column: {
-    start: 8;
+    start: 1;
     end: 11;
   }
-  @media screen and ( max-width: 992px){
+  @media screen and ( min-width: 992px){
+    
     grid-column: {
-      start: 1;
+      start: 8;
       end: 11;
     }
-  }
-  margin-top: .5rem;
+  }   
 }
+
 
 
 

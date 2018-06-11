@@ -17,6 +17,23 @@
     }
   }
 
+  &__briefings {
+    font-size: .625rem;
+  }
+
+  &__button {
+    width: 4.625rem;
+    height: 1.5rem;
+    border-radius: 3px;
+    background-color: #f94970;
+    box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
+    float: right;
+    margin-top: 1rem;
+    font-family: Roboto;
+    color: white;
+    font-size: .4375rem;
+  }
+
   .title {
     display: flex;
 
@@ -34,10 +51,7 @@
     }
   }
 
-  &__briefings {
-    font-size: .625rem;
-  }
-
+  
   .briefings {
     &__briefing {
       font-size: .4375rem;

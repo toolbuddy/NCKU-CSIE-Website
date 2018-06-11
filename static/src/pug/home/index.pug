@@ -76,7 +76,6 @@ block append header
 block append content
   include /components/announcement/briefing.pug
   include /components/announcement/briefinghotnews.pug
-  include /components/common/topic.pug
   main.newscontainer
     section.announcement.announcement--news
       header.announcement__title.announcement__title--underline.title
@@ -100,7 +99,7 @@ block append content
             tags: [ 'master', 'teacher' ]
           }
         )
-      button.news__button
+      button.announcement__button
         a SEE MORE
     section.hotnews
       h1.hotnews__topic 最近熱門

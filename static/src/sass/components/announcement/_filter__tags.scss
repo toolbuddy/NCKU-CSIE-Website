@@ -1,22 +1,24 @@
 .tags {
   display: inline-block;
   color: #ffffff;
-  font-size: .4375rem;
+  font-size: .25rem;
+  @media screen and ( min-width:768px ){
+    font-size: .4375rem;
+  }
   
 
   &__tag {
     background: none;
     border-radius: 1rem;
-    padding: .1rem .5rem .2rem;
     margin: {
       bottom: .6rem;
       right: .4rem;
     }
-    width: 4rem;
-    @media screen and ( max-width:768px ){
-      padding: .1rem .2rem .2rem;
-      width: 2.7rem;
-      font-size: .25rem;
+    padding: .1rem .2rem .2rem;
+    width: 2.7rem;
+    @media screen and ( min-width:768px ){
+      padding: .1rem .5rem .2rem;
+      width: 4rem;
     }
 
     &--college {
