@@ -1,4 +1,5 @@
 @import 'components/common/icon';
+@import 'components/announcement/filter__tags';
 
 .announcement {
   &__title {
@@ -19,29 +20,42 @@
   .title {
     display: flex;
 
-    &__text{
+    &__text {
       height: inherit;
       font: {
         weight: bold;
         size: .75rem;
       }
-    }
 
-    &__text--underline {
-      width: 3.43rem;
-      border-bottom: solid .0156rem #000000;
-    }    
+      &--underline {
+        width: 3.43rem;
+        border-bottom: solid .0156rem #000000;
+      }
+    }
   }
 
+  &__briefings {
+    font-size: .625rem;
+  }
 
   .briefings {
     &__briefing {
       font-size: .4375rem;
-      padding: .9rem 0 0;
-      border-bottom: solid .0156rem rgba(0, 0, 0, .3);      
+      padding: .9rem .2rem 0 0;
+      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+    
+    }
+
+    .briefing:hover {
+      cursor: pointer;
+      box-shadow: .1rem .2rem .1rem rgba(0, 0, 0, .1),.1rem .3rem .2rem rgba(0, 0, 0, .1);
     }
 
     .briefing {
+      %overflow-property {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       display: grid;
       grid: {
         template: {
@@ -56,42 +70,33 @@
 
       &__tags {
         grid-area: briefing__tags;
-        text-overflow: ellipsis;
-        overflow-x: scroll;
+        overflow-x: auto;
         white-space: nowrap;
       }
 
-      &__tags ::-webkit-scrollbar { 
-        width: 0 !important;
-      }
-
+      
+      
       &__title {
+        grid-area: briefing__title;
         color: #000000;
         font-size: .5rem;
         min-width: 3rem;
-        grid-area: briefing__title;
-        text-overflow: ellipsis;
         overflow: hidden;
-        white-space: nowrap;
+        @extend %overflow-property;
       }
 
       &__article {
         grid-area: briefing__article;
-        text-overflow: ellipsis;
         overflow: hidden;
-        white-space: nowrap;
+        @extend %overflow-property;
       }
 
       &__time {
-        color: #b5babf;
         grid-area: briefing__time;
         display: flex;
         justify-content: flex-end;
+        color: #b5babf;
       }
     }
-  }
-
-  &__briefings {
-    font-size: .625rem;
   }
 }

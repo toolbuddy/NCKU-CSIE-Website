@@ -1,0 +1,90 @@
+.tags {
+  display: inline-block;
+  color: #ffffff;
+  font-size: .4375rem;
+  
+
+  &__tag {
+    background: none;
+    border-radius: 1rem;
+    padding: .1rem .5rem .2rem;
+    margin: {
+      bottom: .6rem;
+      right: .4rem;
+    }
+    width: 4rem;
+    @media screen and ( max-width:768px ){
+      padding: .1rem .2rem .2rem;
+      width: 2.7rem;
+      font-size: .25rem;
+    }
+
+    &--college {
+      color: #399dff;
+      background-color: #dfeffe;
+    }
+
+    &--master {
+      background: #e64d3a;
+    }
+
+    &--phd {
+      color: #f67057;
+      background-color: #ffe3df;
+    }
+
+    &--teacher {
+      background: #01b259;
+    }
+
+    &--administrator {
+      background: #b352c7;
+    }
+
+    &--international {
+      border: .03rem solid #e45c75;
+      color: #e45c75;
+    }
+
+    &--exhibition {
+      border: .03rem solid #00b1bd;
+      color: #00b1bd;
+    }
+
+    &--speech {
+      background-color: #e8dafe;
+      color: #9053ff;
+    }
+
+    &--competition {
+      border: .03rem solid #386ae8;
+      color: #386ae8;
+    }
+
+    &--conference {
+      border: .03rem solid #006786;
+      color: #006786;
+    }
+
+    &--internship {
+      border: .03rem solid #01addf;
+      color: #01addf;
+    }
+
+    &--law {
+      border: .03rem solid #b13b2d;
+      color: #b13b2d;
+    }
+
+    &--recruitment {
+      border: .03rem solid #38e8de;
+      color: #38e8de;
+    }
+
+    &--scholarship {
+      border: .03rem solid #6abc50;
+      color: #6abc50;
+    }
+  }
+}
+

@@ -1,10 +1,8 @@
 extends /layouts/home.pug
-include /components/announcement/briefing.pug
-include /components/announcement/briefinghotnews.pug
-include /components/common/topic.pug
-block css
-  link(rel='stylesheet' href='/css/home/index.min.css')
-block header
+
+block append stylesheets
+  +css( 'home/index' )
+block append header
   h1 welcome to ncku csie
     ul
       li.dropdown
@@ -74,8 +72,11 @@ block header
             a( href='/resource/ieet' ) | IEET
           li
             a( href='/resource/resources' ) | resources
-block content__photowall
-block content__announcement
+
+block append content
+  include /components/announcement/briefing.pug
+  include /components/announcement/briefinghotnews.pug
+  include /components/common/topic.pug
   main.newscontainer
     section.announcement.announcement--news
       header.announcement__title.announcement__title--underline.title
@@ -87,7 +88,7 @@ block content__announcement
             time: '2018-2-2 | 15:02',
             excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
             articleUrl: '', 
-            tags: [ 'college', 'phd' ]
+            tags: [ 'college', 'phd', 'master', 'teacher','master' ]
           }
         )
         +briefings__briefing(  
@@ -140,7 +141,5 @@ block content__announcement
                 number: '04'
               }
           )
-block content__researchInstitute
-block content__upcomingEvent
-block footer
-block script
+
+block append scripts

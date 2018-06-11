@@ -1,8 +1,11 @@
+@import 'components/announcement/filter__tags';
+@import 'components/announcement/filter__time';
+
 .filter {
   display: grid;
   grid-template: {
-    columns: 70% 30%;
-    areas: 'filter__tags filter__time';
+    columns:  12.3fr 1fr 5.7fr;
+    areas: 'filter__tags . filter__time';
   }
   margin-bottom: 1rem;
 
@@ -15,108 +18,3 @@
   }
 }
 
-.tags {
-  display: inline-block;
-  color: #ffffff;
-  font-size: .4375rem;
-
-  &__tag {
-    background: none;
-    border-radius: 1rem;
-    padding: .1rem .5rem .2rem;
-    margin: {
-      bottom: .6rem;
-      right: .4rem;
-    }
-    width: 3.5rem;
-
-    &--college {
-      color: #399dff;
-      background-color: #dfeffe;
-    }
-
-    &--master {
-      background: #e64d3a;
-    }
-
-    &--phd {
-      color: #f67057;
-      background-color: #ffe3df;
-    }
-
-    &--teacher {
-      background: #01b259;
-    }
-
-    &--administrator {
-      background: #b352c7;
-    }
-
-    &--international {
-      border: .03rem solid #e45c75;
-      color: #e45c75;
-    }
-
-    &--exhibition {
-      border: .03rem solid #00b1bd;
-      color: #00b1bd;
-    }
-
-    &--speech {
-      background-color: #e8dafe;
-      color: #9053ff;
-    }
-
-    &--competition {
-      border: .03rem solid #386ae8;
-      color: #386ae8;
-    }
-
-    &--conference {
-      border: .03rem solid #006786;
-      color: #006786;
-    }
-
-    &--internship {
-      border: .03rem solid #01addf;
-      color: #01addf;
-    }
-
-    &--law {
-      border: .03rem solid #b13b2d;
-      color: #b13b2d;
-    }
-
-    &--recruitment {
-      border: .03rem solid #38e8de;
-      color: #38e8de;
-    }
-
-    &--scholarship {
-      border: .03rem solid #6abc50;
-      color: #6abc50;
-    }
-  }
-}
-
-.time {
-  @media screen and ( min-width: 1500px ) {
-    display: flex;
-  }
-  font-size: .625rem;
-  @media screen and ( min-width: 1500px ) {
-    display: flex;
-  }
-
-  &__date {
-    border-radius: 1rem;
-    display: flex;
-    align-self: center;
-    padding: .4rem .5rem;
-    max-width: 7rem;
-    margin: {
-      top: .5rem;
-      right: .6rem;
-    }
-  }
-}

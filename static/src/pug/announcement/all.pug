@@ -1,92 +1,85 @@
 extends /layouts/announcement/briefing.pug
 
-include /components/announcement/briefing.pug
-include /components/common/topic.pug
-include /components/announcement/filter.pug
+block append stylesheets
+  +css( 'announcement/all' )
 
-block css
-  link( rel='stylesheet', href='/css/announcement/all.min.css' )
+block append content
+  include /components/announcement/briefing.pug
+  include /components/common/topic.pug
+  include /components/announcement/filter.pug
+  main.content
+    +topic( 'Undergraduate', '大學部' )
+    +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' )
+    section.announcement
+      section.announcement__title.announcement__title--flag.title
+        h1.title__text 置頂貼文
+      section.announcement__briefings.briefings
+        +briefings__briefing(
+          {
+            title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
+            time: '2018-2-2 | 15:02',
+            excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
+            articleUrl: '',
+            tags: [ 'college', 'speech', 'phd' ]
+          }
+        )
+    section.announcement
+      section.announcement__title--flag.announcement__title.title
+        h1.title__text 所有貼文
+      section.announcement__briefings.briefings
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+            articleUrl: '/about/teachers',
+            tags: [ 'college', 'speech', 'phd' ]
+          }
+        )
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '',
+            tags: [ 'recruitment', 'teacher', 'exhibition' ]
+          }
+        )
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+            articleUrl: '/about/teachers',
+            tags: [ 'college', 'speech', 'phd' ]
+          }
+        )
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '',
+            tags: [ 'recruitment', 'teacher', 'exhibition' ]
+          }
+        )
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
+            articleUrl: '/about/teachers',
+            tags: [ 'college', 'speech', 'phd' ]
+          }
+        )
+        +briefings__briefing(
+          {
+            title: '標題二',
+            time: '2018-2-2 | 15:02',
+            excerpt: '兩小段內文',
+            articleUrl: '',
+            tags: [ 'recruitment', 'teacher', 'exhibition' ]
+          }
+        )
 
-block header
-block title
-  +topic( 'Undergraduate', '大學部' )
-
-block filter
-  +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' ) 
-
-block announcement--pinned
-  section.announcement
-    section.announcement__title.announcement__title--flag.title
-      h1.title__text 置頂貼文
-    section.announcement__briefings.briefings
-      +briefings__briefing(  
-        {
-          title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
-          time: '2018-2-2 | 15:02',
-          excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
-          articleUrl: '', 
-          tags: [ 'college', 'speech', 'phd' ]
-        }
-      )
-block announcement
-  section.announcement
-    section.announcement__title--flag.announcement__title.title
-      h1.title__text 所有貼文
-    section.announcement__briefings.briefings
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-          articleUrl: '/about/teachers',
-          tags: [ 'college', 'speech', 'phd' ]
-        }
-      )
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '兩小段內文',
-          articleUrl: '',
-          tags: [ 'recruitment', 'teacher', 'exhibition' ]
-        }
-      )
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-          articleUrl: '/about/teachers',
-          tags: [ 'college', 'speech', 'phd' ]
-        }
-      )
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '兩小段內文',
-          articleUrl: '',
-          tags: [ 'recruitment', 'teacher', 'exhibition' ]
-        }
-      )
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-          articleUrl: '/about/teachers',
-          tags: [ 'college', 'speech', 'phd' ]
-        }
-      )
-      +briefings__briefing(
-        {
-          title: '標題二',
-          time: '2018-2-2 | 15:02',
-          excerpt: '兩小段內文',
-          articleUrl: '',
-          tags: [ 'recruitment', 'teacher', 'exhibition' ]
-        }
-      )
-block page
-block footer
-block script
+block append scripts

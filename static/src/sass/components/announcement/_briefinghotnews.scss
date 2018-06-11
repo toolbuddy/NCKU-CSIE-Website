@@ -4,11 +4,14 @@
   }
 
   .briefings{
-    padding: 2rem 1.5rem;
+    padding: 1.7rem 1rem;
     border-radius: .1875rem;
     background-color: #ffffff;
     box-shadow: 0 .0625rem .75rem 0 rgba(0, 0, 0, .14), 0 .25rem .3125rem 0 rgba(0, 0, 0, .2);
-
+    @media screen and ( max-width: 992px ){
+      padding: 2rem 1rem;
+    }
+    
     .briefing {
       display: flex;
 

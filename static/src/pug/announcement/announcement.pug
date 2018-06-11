@@ -1,10 +1,10 @@
 extends /layouts/announcement/announcement.pug
-block css
-  link(rel='stylesheet' href='/css/announcement/announcement.css')
-block header
-  //block title
-  //block time
-block article
+
+block append stylesheets
+  +css( 'announcement/announcement' )
+
+block append content
+  include /components/announcement/announcement.pug
   +post_detailArticle(
     {
       title: '【公告】教育部108年度菁培計劃 學校推薦報名|系上初審4/16收件截止|',
@@ -16,7 +16,4 @@ block article
     }
   )
 
-  //block script
-  //block file
-  //block read
-block footer
+block append scripts
