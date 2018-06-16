@@ -3,13 +3,15 @@
 @import 'components/announcement/briefing';
 @import 'components/announcement/briefinghotnews';
 
+
+
 .newscontainer {
   display: grid;
   grid: {
     gap: 1.5rem 0;
     template-columns: repeat( 10, 1fr );
   }
-  background-color: #f8fbfc;
+  background-color: #f2f4f7;
   padding: 2.2rem 1rem;
   @media screen and ( min-width: 768px ){
     padding: 4.6rem 3.6rem;
