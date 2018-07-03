@@ -1,49 +1,50 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/reset';
+@import 'components/about/location/traffic';
 
 .main {
   width: 100%;
-  height: 100%;
   background-color: #f2f4f7;
   display: grid;
   grid: {
     template: {
       areas:
-        '. topic topic .'
-        '.  map  thsr .'
-        '.  map  train .'
-        '.  map  drive .'
-        '.   .     .   .';
-      columns: 1fr 4fr 4fr 1fr;
-      rows: 6fr 2fr 2fr 6fr 1fr;
+        '. topic .'
+        '. map   .'
+        '. thsr  .'
+        '. train .'
+        '. drive .';
+      columns: 1fr 13fr 1fr;
+      rows: 2fr 3fr 2fr 2fr 4fr;
     }
-    row-gap: 2rem;
-    column-gap: 2rem;
+    row-gap: 1rem;
   };
+  @media screen and ( min-width: 768px ) {
+    grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
+  }
+  @media screen and ( min-width: 1024px ) {
+    grid: {
+      template: {
+        areas:
+          '. topic topic .'
+          '.  map  thsr  .'
+          '.  map  train .'
+          '.  map  drive .'
+          '.   .   drive .'
+          '.   .     .   .';
+        columns: 1fr 6fr 4fr 1fr;
+        rows: 4fr 4fr 4fr 3fr 7fr 2fr;
+      }
+      column-gap: 2rem;
+    };
+  }
 }
 
 .topic {
   grid-area: topic;
-}
-
-.title {
-  text-align: left;
+  align-self: center;
   color: #000000;
-  font: {
-    size: .875rem;
-    family: var( --font__family--default );
-    weight: bold;
-  }
-}
-
-.content {
-  text-align: left;
-  color: #000000;
-  font: {
-    size: .6563rem;
-    family: var( --font__family--default );
-  }
 }
 
 #map {
