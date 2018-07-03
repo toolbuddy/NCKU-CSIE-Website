@@ -1,0 +1,11 @@
+mixin js( src, isModule = false )
+  if isModule
+    script(
+      src=`${ staticUrl }/js/${ src }.min.js`,
+      type='module',
+      async
+    )
+  else
+    script(
+      src=`${ staticUrl }/js/${ src }.min.js`,
+    )

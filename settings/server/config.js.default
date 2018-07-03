@@ -1,16 +1,17 @@
 /**
  * Web server settings
  * @namespace
- * @readonly {string} domainName      - Get domain name of server which hosts web pages.
- * @readonly {string} protocol        - Get protocol of server, can be either 'http' or 'https'.
- * @readonly {number} port            - Get port which server bind.
- * @readonly {string} host            - Get host information of server.
- * @readonly {string} staticFilesHost - Get static files host server information.
+ * @readonly {string} host      - Web server host address.
+ * @readonly {string} protocol  - Whick protocol web server is using, can be either 'http' or 'https'.
+ * @readonly {number} port      - Web server port.
+ * @readonly {string} url       - Get web server url.
+ * @readonly {string} staticUrl - Get static file server url.
  */
+
 const config = {};
 
 Object.defineProperties( config, {
-    'domainName': {
+    'host': {
         value: 'localhost',
     },
     'protocol': {
@@ -19,21 +20,18 @@ Object.defineProperties( config, {
     'port': {
         value: 3000,
     },
-    'language': {
-        value: 'zh-TW',
-    },
-    'host': {
+    'url': {
         get () {
-            return `${ config.protocol }://${ config.domainName }` +
-            ( config.port === '80' || config.port === '443' ?
-                '' :
-                `:${ config.port }`
-            );
+            return `${ config.protocol }://${ config.host }${
+                config.port === '80' || config.port === '443' ?
+                    '' :
+                    `:${ config.port }`
+            }`;
         },
     },
-    'staticFilesHost': {
+    'staticUrl': {
         get () {
-            return config.host;
+            return config.url;
         },
     },
 } );
