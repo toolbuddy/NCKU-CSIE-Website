@@ -4,7 +4,7 @@
 .announcement {
   &__title {
     height: 1.35rem;
-    margin-bottom: .3rem;
+    margin-bottom: .7rem;
 
     &--flag {
       @include icon--before__flag() {
@@ -13,8 +13,13 @@
     }
 
     &--underline {
-      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+      justify-content: center;
+      @media screen and ( min-width: 992px){
+        border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+        justify-content: flex-start;
+      }
     }
+    
   }
 
   &__briefings {
@@ -22,16 +27,19 @@
   }
 
   &__button {
-    width: 4.625rem;
+    position: absolute;
+    width: 4rem;
     height: 1.5rem;
     border-radius: 3px;
     background-color: #f94970;
     box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
     float: right;
-    margin-top: 1rem;
+    margin-top: .5rem;
     font-family: Roboto;
     color: white;
     font-size: .4375rem;
+    right: 50%;
+    margin-right: -2.2rem;
   }
 
   .title {
@@ -55,14 +63,18 @@
   .briefings {
     &__briefing {
       font-size: .4375rem;
-      padding: .9rem .2rem .2rem;
-      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
-    
+      padding: 1rem .5rem;
+      border-radius: 6px;
+      background-color: #ffffff;
+      margin-bottom: .4rem;
+      box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .14), 0 8px 10px 0 rgba(0, 0, 0, .2);
+      @media screen and ( min-width: 768px){
+        padding: .7rem 1rem 0;
+      }
     }
 
     .briefing:hover {
-      cursor: pointer;
-      box-shadow: 0 0 .1rem rgba(0, 0, 0, .1),0 0 .2rem rgba(0, 0, 0, .1);
+      cursor: pointer; 
     }
 
     .briefing {
@@ -71,8 +83,8 @@
         white-space: nowrap;
       }
       display: grid;
-      grid: {
-        template: {
+      @media screen and ( min-width: 992px){
+        grid-template: {
           areas:
             'briefing__tags     .  .'
             'briefing__title    .  .'
@@ -81,42 +93,32 @@
           columns: 6.5fr 1fr 2.5fr;
         }
       }
+      @media screen and ( min-width: 768px){
+        grid-template: {
+          areas:
+            'briefing__tags     briefing__tags  briefing__tags'
+            'briefing__title    briefing__title  .'
+            'briefing__article  . briefing__time';
+          rows: 1fr 1fr 1fr;
+          columns: 6.5fr 1fr 2.5fr;
+        }
+      }
+      grid-template: {
+        areas:
+          'briefing__tags     briefing__tags    briefing__tags'
+          'briefing__title    briefing__title   briefing__title'
+          'briefing__time     briefing__time    .';
+        rows: 1.3rem 2rem;
+        columns: 6.5fr 1fr 2.5fr;
+      }
+      
 
       &__tags {
         grid-area: briefing__tags;
         overflow-x: auto;
         white-space: nowrap;
         position: relative;
-        z-index: 1;
-        overflow-x: auto;
-        width: inherit;
-        max-height: 200px;
-        background-color: #f2f4f7;
-        background-repeat: no-repeat;
-        background-image:
-          radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
-          radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0));
-        background-position: 0 0, 100% 0;
-        background-size: 14px 100%;
       }
-
-      &__tags:before,
-      &__tags:after {
-        content: '';
-        position: relative;
-        z-index: -1;
-        display: block;
-        height: 30px;
-        margin: 0 0 -30px;
-        background: linear-gradient(to bottom, #f2f4f7, #f2f4f7 30%, rgba(255, 255, 255, 0));
-      }
-
-      &__tags:after {
-        margin: -30px 0 0;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #f2f4f7 70%, #f2f4f7);
-      }
-
-      
       
       &__title {
         grid-area: briefing__title;
@@ -124,21 +126,35 @@
         font-size: .5rem;
         min-width: 3rem;
         overflow: hidden;
-        @extend %overflow-property;
+        
       }
 
       &__article {
-        grid-area: briefing__article;
-        overflow: hidden;
-        @extend %overflow-property;
+        display: none;
       }
 
       &__time {
         grid-area: briefing__time;
-        display: flex;
-        justify-content: flex-end;
         color: #b5babf;
       }
+      @media screen and ( min-width: 768px){
+        &__article {
+          display: block;
+          grid-area: briefing__article;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        &__time {
+          grid-area: briefing__time;
+          display: flex;
+          justify-content: flex-end;
+          color: #b5babf;
+        }
+      }
+
+      
     }
   }
 }

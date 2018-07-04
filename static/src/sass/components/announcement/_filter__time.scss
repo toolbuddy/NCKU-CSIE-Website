@@ -1,16 +1,19 @@
 .time {
-  @media screen and ( min-width: 1200px ) {
-    display: flex;
-  }
+  display: flex;
   font-size: .4375rem;
 
   &__date {
+    background: none;
+    border: .0312rem solid gray;
     border-radius: 1rem;
-    display: flex;
     align-self: center;
-    padding: .4rem .5rem;
+    padding: .1rem 0;
     max-width: 7rem;
-    width: 5.4rem;
-    margin: .5rem .6rem .2rem 0;
+    width: 3.4rem;
+    margin: .3rem .6rem .2rem .2rem;
+    text-align: center;
+    @media screen and ( min-width: 768px ){
+      width: 4.4rem;
+    }
   }
 }

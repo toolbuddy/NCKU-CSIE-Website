@@ -3,10 +3,6 @@ extends /layouts/home.pug
 block append stylesheets
   +css( 'home/index' )
 block append header
-  div.scrollbox
-    ul
-      li 111111111111111111111111111111111
-    
     
   h1 welcome to ncku csie
     ul
@@ -92,7 +88,7 @@ block append content
             time: '2018-2-2 | 15:02',
             excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
             articleUrl: '', 
-            tags: [ 'college', 'phd', 'master', 'teacher','master' ]
+            tags: [ 'college', 'administrator', 'international', 'teacher' ]
           }
         )
         +briefings__briefing(  
@@ -105,15 +101,15 @@ block append content
           }
         )
       button.announcement__button
-        a SEE MORE
+        a 更多資訊...
     section.hotnews
-      h1.hotnews__topic 最近熱門
       nav.hotnews__briefings.briefings.briefings--twocolumns
+        h1.hotnews__topic 最近熱門
         +briefings__briefing--hotnews(  
           {
             title: '標題二',
             time: '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
+            excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
             articleUrl: '',
             number: '01'
           }

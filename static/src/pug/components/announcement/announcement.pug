@@ -1,6 +1,11 @@
 mixin post_detailArticle( post )
   section.detail
+    aside.tags.briefing__tags.scrollbox
+      each tag in post.tags
+        button.tags__tag( class=`tags__tag--${ tag }` )
+          a= tag
     h1.detail__title= post.title
+    p.detail__announcer= post.announcer
     time.detail__time= post.time
     article.detail__article
     a.detail__button= post.button

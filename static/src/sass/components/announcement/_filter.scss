@@ -4,8 +4,16 @@
 .filter {
   display: grid;
   grid-template: {
-    columns:  12.3fr 1fr 5.7fr;
-    areas: 'filter__tags . filter__time';
+    areas: 'filter__button'
+      'filter__time'
+      'filter__tags';
+  }
+  grid-template-columns: 100%;
+  @media screen and ( min-width: 992px ){
+    grid-template: {
+      columns:  12.3fr 1fr 5.7fr;
+      areas: 'filter__tags . filter__time';
+    }
   }
   margin-bottom: 1rem;
 
@@ -16,5 +24,19 @@
   &__time {
     grid-area: filter__time;
   }
-}
 
+  &__button{
+    @media screen and ( min-width: 992px ){
+      display: none;
+    }
+    grid-area: filter__button;
+    color: #757575;
+    display: flex;
+    font-size: .5rem;
+    justify-self: end;
+    width: 2.5rem;
+    @include icon--after__arrowUp(){
+      transform:rotate(-45deg);
+    }
+  } 
+}

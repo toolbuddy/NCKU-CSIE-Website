@@ -10,15 +10,16 @@
   &__tag {
     background: none;
     border-radius: 1rem;
-    margin: {
-      bottom: .6rem;
-      right: .4rem;
-    }
+    margin: 0 .1rem .5rem 0;
     padding: .1rem .2rem .2rem;
     width: 2.7rem;
     @media screen and ( min-width:768px ){
-      padding: .1rem .5rem .2rem;
-      width: 4rem;
+      padding: .1rem .4rem .2rem;
+      width: 3.6rem;
+      margin: {
+        bottom: .6rem;
+        right: .2rem;
+      }
     }
 
     &--college {
@@ -27,7 +28,8 @@
     }
 
     &--master {
-      background: #e64d3a;
+      color: #9053ff;
+      background-color: #e8dafe;
     }
 
     &--phd {
@@ -36,21 +38,23 @@
     }
 
     &--teacher {
-      background: #01b259;
+      color: #faad06;
+      background-color: #fff8e6;
     }
 
     &--administrator {
-      background: #b352c7;
+      color: #faad06;
+      background-color: #fff8e6;
     }
 
     &--international {
-      border: .03rem solid #e45c75;
-      color: #e45c75;
+      color: #f67057;
+      background-color: #ffe3df;
     }
 
     &--exhibition {
-      border: .03rem solid #00b1bd;
-      color: #00b1bd;
+      background-color: #e8dafe;
+      color: #9053ff;
     }
 
     &--speech {
@@ -59,33 +63,33 @@
     }
 
     &--competition {
-      border: .03rem solid #386ae8;
-      color: #386ae8;
+      color: #f67057;
+      background-color: #ffe3df;
     }
 
     &--conference {
-      border: .03rem solid #006786;
-      color: #006786;
+      background-color: #e8dafe;
+      color: #9053ff;
     }
 
     &--internship {
-      border: .03rem solid #01addf;
-      color: #01addf;
+      color: #f67057;
+      background-color: #ffe3df;
     }
 
     &--law {
-      border: .03rem solid #b13b2d;
-      color: #b13b2d;
+      color: #0dc589;
+      background-color: #c6ffec;
     }
 
     &--recruitment {
-      border: .03rem solid #38e8de;
-      color: #38e8de;
+      color: #0dc589;
+      background-color: #c6ffec;
     }
 
     &--scholarship {
-      border: .03rem solid #6abc50;
-      color: #6abc50;
+      color: #f67057;
+      background-color: #ffe3df;
     }
   }
 }

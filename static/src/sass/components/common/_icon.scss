@@ -8,6 +8,25 @@
     @content;
   }
 }
+@mixin icon--after__template {
+  // template [skin]
+  &::after {
+    content: '';
+    display: inline-block;
+    @content;
+  }
+}
+@mixin icon--after__arrowUp {
+  @include icon--after__template() {
+    margin-left: .5rem;
+    margin-top: .1rem;
+    width: .22rem;
+    height: .22rem;
+    border-top: .0625rem solid #757575;
+    border-right: .0625rem solid #757575;
+    @content;
+  }
+}
 @mixin icon--before__flag {
   @include icon--before__template() {
     border: {
@@ -16,6 +35,23 @@
       color: #f5c150 #f5c150 transparent;
       radius: .1rem .1rem 0 0;
     }
+    @content;
+  }
+}
+@mixin icon--before__arrow {
+  @include icon--before__template() {
+    position: absolute;
+    overflow: hidden;
+    display: inline-block;
+    font-size: 2px; /*set the size for arrow*/
+    width: 2em;
+    height: 2em;
+    margin-top: -2em;
+    top: 50%;
+    border-top: 1px solid #a9a9a9;
+    border-right: 1px solid #a9a9a9;
+    transform: rotate(136deg) skew(3deg);
+    right: 500px;
     @content;
   }
 }

@@ -27,16 +27,18 @@
     start: 1;
     end: 11;
   }
+  @media screen and ( min-width: 992px ){
+    grid-column: {
+      start: 2;
+      end: 10;
+    }
+  }
 }
 
 .filter {
-  display: none;
-  @media screen and ( min-width: 768px ){
-    display: flex;
-    grid-column: {
-      start: 1;
-      end: 11;
-    }
+  grid-column: {
+    start: 1;
+    end: 11;
   }
   @media screen and ( min-width: 992px ){
     display: flex;
