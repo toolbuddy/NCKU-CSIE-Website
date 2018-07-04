@@ -1,0 +1,10 @@
+mixin traffic( ...content )
+  header.traffic
+    each val, index in content
+      if index === 0
+        span.traffic__text.traffic__text--large= val
+        br
+        br
+      else
+        span.traffic__text.traffic__text--small= val
+        br
