@@ -1,9 +1,10 @@
 .time {
+  $mobile: 768px;
   display: flex;
   font-size: .4375rem;
   margin-bottom: 1rem;
   flex-direction: column;
-  @media screen and ( min-width: 768px ) {
+  @media screen and ( min-width: $mobile ) {
     flex-direction: row;
   }
 
@@ -16,8 +17,4 @@
     margin: .3rem .6rem .2rem .2rem;
     text-align: center;
   }
-}
-
-.time__date::-webkit-inner-spin-button {
-  display: none;
 }

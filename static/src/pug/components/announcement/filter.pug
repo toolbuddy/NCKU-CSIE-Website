@@ -1,22 +1,21 @@
 mixin filter( ...tags )
   section.filter
-    aside#filter__button.filter__button.button
-      p 過濾器
-      button#button__icon.button__icon
+    button#filter__button.filter__button.button
+      span 過濾器
+      span#button__icon.button__icon
     +filter__time()
     +filter__tags( ...tags )
 
 mixin filter__tags( ...tags )
   article#filter__tags.filter__tags.filter__tags--hidden.tags
     each tag in tags
-      button( class=`tags__tag--${ tag } tags__tag`)= tag
+      button( id=`tags__tag--${ tag }` class=`tags__tag--${ tag } tags__tag` )= tag
 
 mixin filter__time()
-
   article#filter__time.filter__time.filter__time--hidden.time
     aside
-      label#startTime(for='filterDateBegin') 開始日期
+      label 開始日期
       input.time__date( type='date' )
     aside
-      label#endTime(for='filterDateEnd') 結束日期
+      label 結束日期
       input.time__date( type='date' )

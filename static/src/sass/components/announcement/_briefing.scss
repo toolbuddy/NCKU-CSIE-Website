@@ -2,6 +2,9 @@
 @import 'components/announcement/filter__tags';
 
 .announcement {
+  $mobile: 768px;
+  $tablet: 992px;
+
   &__title {
     height: 1.35rem;
     margin-bottom: .7rem;
@@ -14,7 +17,7 @@
 
     &--underline {
       justify-content: center;
-      @media screen and ( min-width: 992px ) {
+      @media screen and ( min-width: $tablet ) {
         border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
         justify-content: flex-start;
       }
@@ -79,20 +82,20 @@
         white-space: nowrap;
       }
       display: grid;
-      @media screen and ( min-width: 768px ) {
+      @media screen and ( min-width: $mobile ) {
         grid-template: {
           areas:
-            'briefing__tags     briefing__tags  briefing__tags'
-            'briefing__title    briefing__title  .'
-            'briefing__article  . briefing__time';
+            'briefing__tags    briefing__tags  briefing__tags'
+            'briefing__title   briefing__title .'
+            'briefing__article .               briefing__time';
           columns: 6.5fr 1fr 2.5fr;
         }
       }
       grid-template: {
         areas:
-          'briefing__tags     briefing__tags    briefing__tags'
-          'briefing__title    briefing__title   briefing__title'
-          'briefing__time     briefing__time    .';
+          'briefing__tags  briefing__tags  briefing__tags'
+          'briefing__title briefing__title briefing__title'
+          'briefing__time  briefing__time  .';
         rows: auto;
         columns: 6.5fr 1fr 2.5fr;
       }
@@ -116,7 +119,7 @@
         grid-area: briefing__time;
         color: #b5babf;
       }
-      @media screen and ( min-width: 768px ) {
+      @media screen and ( min-width: $mobile ) {
         &__article {
           display: block;
           grid-area: briefing__article;

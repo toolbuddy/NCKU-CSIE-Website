@@ -2,48 +2,25 @@
 @import 'components/announcement/filter__time';
 
 .filter {
+  $mobile: 768px;
+  $tablet: 992px;
   display: grid;
   grid-template-areas:
     'filter__button'
-    'filter__time '
+    'filter__time'
     'filter__tags';
   margin-bottom: 1rem;
 
-  &__tags {
-    &--hidden {
-      display: none;
-      @media screen and ( min-width: 992px ) {
-        display: grid;
-      }
-    }
-    @media screen and ( min-width: 992px ) {
-      grid-area: filter__tags;
-      display: grid;
-    }
-  }
-
-  &__time {
-    &--hidden {
-      display: none;
-      @media screen and ( min-width: 992px ) {
-        display: flex;
-      }
-    }
-    @media screen and ( min-width: 992px ) {
-      display: flex;
-      grid-area: filter__time;
-      margin-bottom: 1rem;
-    }
-  }
-
   &__button {
+    cursor: pointer;
+    background: none;
     grid-area: filter__button;
     display: flex;
     justify-self: end;
     color: #757575;
     font-size: .5rem;
     width: 3rem;
-    @media screen and ( min-width: 992px ) {
+    @media screen and ( min-width: $tablet ) {
       display: none;
     }
   }
@@ -56,23 +33,37 @@
       height: .4687rem;
       width: .375rem;
       margin: .1rem 0 0 .5rem;
-      @include icon--before__arrowL () {
-        transform: rotate( 45deg );
-      }
-      @include icon--after__arrowR () {
-        transform: rotate( -45deg );
-      }
+      @include icon__arrow ();    
+    }
+  }
+
+  &__time {
+    @media screen and ( min-width: $tablet ) {
+      display: flex;
+      grid-area: filter__time;
+      margin-bottom: 1rem;
     }
 
-    .active {
-      &:before {
-        transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
-      }
-
-      &:after {
-        transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
+    &--hidden {
+      display: none;
+      @media screen and ( min-width: $tablet ) {
+        display: flex;
       }
     }
   }
+
+  &__tags {
+    @media screen and ( min-width: $tablet ) {
+      grid-area: filter__tags;
+      display: grid;
+    }
+
+    &--hidden {
+      display: none;
+      @media screen and ( min-width: $tablet ) {
+        display: grid;
+      }
+    }
+  }  
 }
 

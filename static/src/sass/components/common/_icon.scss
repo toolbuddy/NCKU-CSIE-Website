@@ -16,30 +16,38 @@
     @content;
   }
 }
-@mixin icon--after__arrowR {
+@mixin icon__arrow {
   @include icon--after__template() {
-    right: -3px;
+    right: -.094rem;
     background: none repeat scroll 0 0 #757575;
-    border-radius: 10px;
-    height: 2px;
+    border-radius: .312rem;
+    height: .0625rem;
     position: absolute;
-    top: 6px;
+    top: .1875rem;
     transition: all 300ms ease 0s;
     width: .343rem;
-    @content;
+    transform: rotate( -45deg );
   }
-}
-@mixin icon--before__arrowL {
   @include icon--before__template() {
-    left: -3px;
+    left: -.094rem;
     background: none repeat scroll 0 0 #757575;
-    border-radius: 10px;
-    height: 2px;
+    border-radius: .312rem;
+    height: .0625rem;
     position: absolute;
-    top: 6px;
+    top: .1875rem;
     transition: all 300ms ease 0s;
     width: .343rem;
-    @content;
+    transform: rotate( 45deg );
+  }
+
+  &--active {
+    &::before {
+      transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
+    }
+
+    &::after {
+      transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
+    }
   }
 }
 @mixin icon--before__flag {

@@ -6,16 +6,15 @@
     const filterTime = document.getElementById( 'filter__time' );
     filterButton.onclick = () => {
         flip = ( flip + 1 ) % 2;
-        if ( flip % 2 === 0 ) {
-            filterTags.classList.add( 'filter__tags--hidden' );
-            filterTime.classList.add( 'filter__time--hidden' );
-
-            buttonIcon.classList.remove( 'active' );
-        }
-        else {
+        if ( flip ) {
             filterTags.classList.remove( 'filter__tags--hidden' );
             filterTime.classList.remove( 'filter__time--hidden' );
-            buttonIcon.classList.add( 'active' );
+            buttonIcon.classList.add( 'button__icon--active' );
+        }
+        else {
+            filterTags.classList.add( 'filter__tags--hidden' );
+            filterTime.classList.add( 'filter__time--hidden' );
+            buttonIcon.classList.remove( 'button__icon--active' );
         }
     };
 } )();
