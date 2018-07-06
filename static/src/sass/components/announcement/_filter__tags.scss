@@ -1,11 +1,47 @@
 .tags {
-  display: inline-block;
+  display: grid;
   color: #ffffff;
   font-size: .25rem;
-  @media screen and ( min-width:768px ){
+  grid-template: {
+    areas:
+      'tag__all tag__college tag__speech  '
+      'tag__teacher tag__master tag__conference  '
+      'tag__administrator tag__phd tag__exhibition  '
+      'tag__competition tag__law . '
+      'tag__scholarship tag__recruitment .'
+      'tag__international . .'
+      'tag__internship  . .';
+    columns: 3rem 3rem  3rem;
+  }
+  @media screen and ( min-width: 768px ) {
+    grid-template: {
+      areas:
+        'tag__all tag__college tag__speech tag__competition '
+        'tag__teacher tag__master tag__conference tag__scholarship '
+        'tag__administrator tag__phd tag__exhibition tag__international '
+        '. . . tag__internship '
+        'tag__law . . .'
+        'tag__recruitment . . .';
+      columns: 4rem 4rem  4rem  4rem;
+    }
+  }
+  @media screen and ( min-width: 992px ) {
+    grid-template: {
+      areas:
+        'tag__all tag__college tag__speech tag__competition tag__law'
+        'tag__teacher tag__master tag__conference tag__scholarship tag__recruitment'
+        'tag__administrator tag__phd tag__exhibition tag__international .'
+        '. . . tag__internship .';
+      columns: 4rem 4rem  4rem  4rem  4rem;
+    }
+  }
+  @media screen and ( min-width: 768px ) {
     font-size: .4375rem;
   }
-  
+
+  &--briefing {
+    display: inline-block;
+  }
 
   &__tag {
     background: none;
@@ -13,7 +49,7 @@
     margin: 0 .1rem .5rem 0;
     padding: .1rem .2rem .2rem;
     width: 2.7rem;
-    @media screen and ( min-width:768px ){
+    @media screen and ( min-width: 768px ) {
       padding: .1rem .4rem .2rem;
       width: 3.6rem;
       margin: {
@@ -23,71 +59,91 @@
     }
 
     &--college {
+      grid-area: tag__college;
       color: #399dff;
       background-color: #dfeffe;
     }
 
     &--master {
-      color: #9053ff;
-      background-color: #e8dafe;
+      grid-area: tag__master;
+      color: #399dff;
+      background-color: #dfeffe;
     }
 
     &--phd {
-      color: #f67057;
-      background-color: #ffe3df;
+      grid-area: tag__phd;
+      color: #399dff;
+      background-color: #dfeffe;
+    }
+
+    &--all {
+      grid-area: tag__all;
+      color: #faad06;
+      background-color: #fff8e6;
     }
 
     &--teacher {
+      grid-area: tag__teacher;
       color: #faad06;
       background-color: #fff8e6;
     }
 
     &--administrator {
+      grid-area: tag__administrator;
       color: #faad06;
       background-color: #fff8e6;
     }
 
     &--international {
+      grid-area: tag__international;
       color: #f67057;
       background-color: #ffe3df;
     }
 
     &--exhibition {
+      grid-area: tag__exhibition;
       background-color: #e8dafe;
       color: #9053ff;
     }
 
     &--speech {
+      grid-area: tag__speech;
       background-color: #e8dafe;
       color: #9053ff;
     }
 
     &--competition {
+      grid-area: tag__competition;
       color: #f67057;
       background-color: #ffe3df;
     }
 
     &--conference {
+      grid-area: tag__conference;
       background-color: #e8dafe;
       color: #9053ff;
     }
 
     &--internship {
+      grid-area: tag__internship;
       color: #f67057;
       background-color: #ffe3df;
     }
 
     &--law {
+      grid-area: tag__law;
       color: #0dc589;
       background-color: #c6ffec;
     }
 
     &--recruitment {
+      grid-area: tag__recruitment;
       color: #0dc589;
       background-color: #c6ffec;
     }
 
     &--scholarship {
+      grid-area: tag__scholarship;
       color: #f67057;
       background-color: #ffe3df;
     }

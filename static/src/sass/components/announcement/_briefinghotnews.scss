@@ -1,7 +1,9 @@
 .hotnews {
-  &__topic{
-    font-weight: normal;
-    font-size: .75rem;
+  &__topic {
+    font: {
+      weight: normal;
+      size: .75rem;
+    }
     margin-bottom: 1.25rem;
     text-align: center;
   }
@@ -9,19 +11,19 @@
   &__briefings {
     font-size: .625rem;
     margin: 1rem 0;
-    background-color: rgba(51, 50, 94, .05);
-  } 
-
-  &__briefings:hover {
-    background-color: rgba(51, 50, 94, .05);
+    background-color: rgba( 51, 50, 94, .05 );
   }
 
-  .briefings{
+  &__briefings:hover {
+    background-color: rgba( 51, 50, 94, .05 );
+  }
+
+  .briefings {
     border-radius: .1875rem;
     background-color: #ffffff;
-    box-shadow: 0 .0625rem .75rem 0 rgba(0, 0, 0, .14), 0 .25rem .3125rem 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .3125rem 0 rgba( 0, 0, 0, .2 );
     padding: 2rem 0;
-    @media screen and ( min-width: 992px ){
+    @media screen and ( min-width: 992px ) {
       padding: 1.7rem 0 ;
     }
 
@@ -31,7 +33,7 @@
 
     &__briefing:hover {
       cursor: pointer;
-      background-color: rgba(51, 50, 94, .05);
+      background-color: rgba( 51, 50, 94, .05 );
     }
 
     .briefing {
@@ -47,7 +49,7 @@
       &__text {
         font-size: .4375rem;
       }
-         
+
       .text {
         &__title {
           color: #000000;

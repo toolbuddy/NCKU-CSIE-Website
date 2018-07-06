@@ -1,19 +1,23 @@
 .time {
   display: flex;
   font-size: .4375rem;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  @media screen and ( min-width: 768px ) {
+    flex-direction: row;
+  }
 
   &__date {
     background: none;
-    border: .0312rem solid gray;
+    border: .0312rem solid #757575;
     border-radius: 1rem;
     align-self: center;
-    padding: .1rem 0;
-    max-width: 7rem;
-    width: 3.4rem;
+    padding: .2rem 0;
     margin: .3rem .6rem .2rem .2rem;
     text-align: center;
-    @media screen and ( min-width: 768px ){
-      width: 4.4rem;
-    }
   }
+}
+
+.time__date::-webkit-inner-spin-button {
+  display: none;
 }

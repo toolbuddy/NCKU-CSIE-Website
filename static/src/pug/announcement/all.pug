@@ -9,7 +9,8 @@ block append content
   include /components/announcement/filter.pug
   main.content
     +topic( 'Undergraduate', '大學部' )
-    +filter( 'teacher','master','administrator','phd','scholarship','internship','law','conference','competition','international' )
+    +filter( 'all','recruitment','teacher','college','speech','administrator','phd',
+    'scholarship','internship','law','conference','competition','international','exhibition', 'phd', 'master' )
     section.announcement
       section.announcement__title.announcement__title--flag.title
         h1.title__text 置頂貼文
@@ -81,5 +82,5 @@ block append content
             tags: [ 'recruitment', 'teacher', 'exhibition' ]
           }
         )
-
 block append scripts
+  +js( 'announcement/get-filter' )

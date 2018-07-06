@@ -14,12 +14,11 @@
 
     &--underline {
       justify-content: center;
-      @media screen and ( min-width: 992px){
+      @media screen and ( min-width: 992px ) {
         border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
         justify-content: flex-start;
       }
     }
-    
   }
 
   &__briefings {
@@ -28,18 +27,19 @@
 
   &__button {
     position: absolute;
+    float: right;
     width: 4rem;
     height: 1.5rem;
     border-radius: 3px;
     background-color: #f94970;
-    box-shadow: 0 .0625rem .0625rem 0 rgba(244, 67, 54, .14);
-    float: right;
-    margin-top: .5rem;
-    font-family: Roboto;
+    box-shadow: 0 .0625rem .0625rem 0 rgba( 244, 67, 54, .14 );
+    margin: .5rem -2.2rem 0 0;
     color: white;
-    font-size: .4375rem;
     right: 50%;
-    margin-right: -2.2rem;
+    font: {
+      family: roboto;
+      size: .4375rem;
+    }
   }
 
   .title {
@@ -53,28 +53,24 @@
       }
 
       &--underline {
-        width: 3.43rem;
+        width: 3rem;
         border-bottom: solid .0156rem #000000;
       }
     }
   }
 
-  
   .briefings {
     &__briefing {
       font-size: .4375rem;
-      padding: 1rem .5rem;
+      padding: .8rem 1.2rem;
       border-radius: 6px;
       background-color: #ffffff;
       margin-bottom: .4rem;
-      box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .14), 0 8px 10px 0 rgba(0, 0, 0, .2);
-      @media screen and ( min-width: 768px){
-        padding: .7rem 1rem 0;
-      }
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     }
 
     .briefing:hover {
-      cursor: pointer; 
+      cursor: pointer;
     }
 
     .briefing {
@@ -83,23 +79,12 @@
         white-space: nowrap;
       }
       display: grid;
-      @media screen and ( min-width: 992px){
-        grid-template: {
-          areas:
-            'briefing__tags     .  .'
-            'briefing__title    .  .'
-            'briefing__article  . briefing__time';
-          rows: 2fr 1fr 1.6fr;
-          columns: 6.5fr 1fr 2.5fr;
-        }
-      }
-      @media screen and ( min-width: 768px){
+      @media screen and ( min-width: 768px ) {
         grid-template: {
           areas:
             'briefing__tags     briefing__tags  briefing__tags'
             'briefing__title    briefing__title  .'
             'briefing__article  . briefing__time';
-          rows: 1fr 1fr 1fr;
           columns: 6.5fr 1fr 2.5fr;
         }
       }
@@ -108,25 +93,19 @@
           'briefing__tags     briefing__tags    briefing__tags'
           'briefing__title    briefing__title   briefing__title'
           'briefing__time     briefing__time    .';
-        rows: 1.3rem 2rem;
+        rows: auto;
         columns: 6.5fr 1fr 2.5fr;
       }
-      
 
       &__tags {
         grid-area: briefing__tags;
-        overflow-x: auto;
-        white-space: nowrap;
-        position: relative;
       }
-      
+
       &__title {
         grid-area: briefing__title;
         color: #000000;
         font-size: .5rem;
         min-width: 3rem;
-        overflow: hidden;
-        
       }
 
       &__article {
@@ -137,7 +116,7 @@
         grid-area: briefing__time;
         color: #b5babf;
       }
-      @media screen and ( min-width: 768px){
+      @media screen and ( min-width: 768px ) {
         &__article {
           display: block;
           grid-area: briefing__article;
@@ -153,8 +132,6 @@
           color: #b5babf;
         }
       }
-
-      
     }
   }
 }

@@ -1,45 +1,44 @@
-body{
+body {
   background-color: #f2f4f7;
 }
 
-.detail{
-  &__title{
+.detail {
+  &__title {
     background-color: #ffffff;
 
-    font{
+    font {
       size: 1.0625rem;
       weight: bold;
     }
     text-align: left;
     border-left: .25rem solid #fd5540;
-    box-shadow: .0625rem .09375rem .1875rem rgba(0,0,0,.1);
+    box-shadow: .0625rem .0938rem .1875rem rgba( 0, 0, 0, .1 );
   }
 
-  &__time{
+  &__time {
     color: #b5babf;
-    font-size: .65625rem;
+    font-size: .6563rem;
     text-align: right;
   }
 
-  &__article{
+  &__article {
     font-size: .75rem;
   }
 
-  &__button{
+  &__button {
     background-color: #00c3d0;
     color: #f8f8f2;
     font-size: .75rem;
     border: none;
-    box-shadow: .0625rem .09375px .1875rem rgba(0,0,0,.1);
+    box-shadow: .0625rem .0938px .1875rem rgba( 0, 0, 0, .1 );
 
-    text{
+    text {
       align: center;
       decoration: none;
     }
-
   }
 
-  &__watchThrough{
+  &__watchThrough {
     color: #262e3e;
     font-size: .65625rem;
     text-align: right;

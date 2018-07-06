@@ -16,14 +16,29 @@
     @content;
   }
 }
-@mixin icon--after__arrowUp {
+@mixin icon--after__arrowR {
   @include icon--after__template() {
-    margin-left: .5rem;
-    margin-top: .1rem;
-    width: .22rem;
-    height: .22rem;
-    border-top: .0625rem solid #757575;
-    border-right: .0625rem solid #757575;
+    right: -3px;
+    background: none repeat scroll 0 0 #757575;
+    border-radius: 10px;
+    height: 2px;
+    position: absolute;
+    top: 6px;
+    transition: all 300ms ease 0s;
+    width: .343rem;
+    @content;
+  }
+}
+@mixin icon--before__arrowL {
+  @include icon--before__template() {
+    left: -3px;
+    background: none repeat scroll 0 0 #757575;
+    border-radius: 10px;
+    height: 2px;
+    position: absolute;
+    top: 6px;
+    transition: all 300ms ease 0s;
+    width: .343rem;
     @content;
   }
 }

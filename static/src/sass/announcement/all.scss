@@ -3,7 +3,6 @@
 @import '../components/announcement/filter';
 @import '../components/common/topic';
 
-
 .content {
   display: grid;
   grid: {
@@ -12,13 +11,12 @@
   }
   background-color: #f2f4f7;
   padding: 2.2rem 1rem;
-  @media screen and ( min-width: 768px ){
+  @media screen and ( min-width: 768px ) {
     padding: 4.6rem 3.6rem;
   }
   @media screen and ( min-width: 992px ) {
     padding: 2rem 4.5rem;
   }
-  
 }
 @include topic--black();
 
@@ -27,7 +25,7 @@
     start: 1;
     end: 11;
   }
-  @media screen and ( min-width: 992px ){
+  @media screen and ( min-width: 992px ) {
     grid-column: {
       start: 2;
       end: 10;
@@ -40,14 +38,12 @@
     start: 1;
     end: 11;
   }
-  @media screen and ( min-width: 992px ){
-    display: flex;
+  @media screen and ( min-width: 992px ) {
     grid-column: {
       start: 2;
       end: 10;
     }
   }
-  
 }
 
 .announcement {
@@ -55,7 +51,7 @@
     start: 1;
     end: 11;
   }
-  @media screen and ( min-width: 992px ){
+  @media screen and ( min-width: 992px ) {
     grid-column: {
       start: 2;
       end: 10;

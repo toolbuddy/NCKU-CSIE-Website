@@ -3,40 +3,76 @@
 
 .filter {
   display: grid;
-  grid-template: {
-    areas: 'filter__button'
-      'filter__time'
-      'filter__tags';
-  }
-  grid-template-columns: 100%;
-  @media screen and ( min-width: 992px ){
-    grid-template: {
-      columns:  12.3fr 1fr 5.7fr;
-      areas: 'filter__tags . filter__time';
-    }
-  }
+  grid-template-areas:
+    'filter__button'
+    'filter__time '
+    'filter__tags';
   margin-bottom: 1rem;
 
   &__tags {
-    grid-area: filter__tags;
+    &--hidden {
+      display: none;
+      @media screen and ( min-width: 992px ) {
+        display: grid;
+      }
+    }
+    @media screen and ( min-width: 992px ) {
+      grid-area: filter__tags;
+      display: grid;
+    }
   }
 
   &__time {
-    grid-area: filter__time;
+    &--hidden {
+      display: none;
+      @media screen and ( min-width: 992px ) {
+        display: flex;
+      }
+    }
+    @media screen and ( min-width: 992px ) {
+      display: flex;
+      grid-area: filter__time;
+      margin-bottom: 1rem;
+    }
   }
 
-  &__button{
-    @media screen and ( min-width: 992px ){
+  &__button {
+    grid-area: filter__button;
+    display: flex;
+    justify-self: end;
+    color: #757575;
+    font-size: .5rem;
+    width: 3rem;
+    @media screen and ( min-width: 992px ) {
       display: none;
     }
-    grid-area: filter__button;
-    color: #757575;
-    display: flex;
-    font-size: .5rem;
-    justify-self: end;
-    width: 2.5rem;
-    @include icon--after__arrowUp(){
-      transform:rotate(-45deg);
+  }
+
+  .button {
+    &__icon {
+      position: relative;
+      background: none;
+      cursor: pointer;
+      height: .4687rem;
+      width: .375rem;
+      margin: .1rem 0 0 .5rem;
+      @include icon--before__arrowL () {
+        transform: rotate( 45deg );
+      }
+      @include icon--after__arrowR () {
+        transform: rotate( -45deg );
+      }
     }
-  } 
+
+    .active {
+      &:before {
+        transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
+      }
+
+      &:after {
+        transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
+      }
+    }
+  }
 }
+
