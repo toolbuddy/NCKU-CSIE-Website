@@ -44,6 +44,9 @@
   }
 
   &__tag {
+    &:hover {
+      cursor: pointer;
+    }
     background: none;
     border-radius: 1rem;
     margin: 0 .1rem .5rem 0;
@@ -57,95 +60,116 @@
         right: .2rem;
       }
     }
+    @mixin filter__tag--active( $bgcolor ) {
+      &.filter__tag--active {
+        color: #ffffff;
+        background-color: $bgcolor;
+      }
+    }
 
     &--college {
       grid-area: tag__college;
       color: #399dff;
       background-color: #dfeffe;
+      @include filter__tag--active( #399dff );
     }
 
     &--master {
       grid-area: tag__master;
       color: #399dff;
       background-color: #dfeffe;
+      @include filter__tag--active( #399dff );
     }
 
     &--phd {
       grid-area: tag__phd;
       color: #399dff;
       background-color: #dfeffe;
+      @include filter__tag--active( #399dff );
     }
 
     &--all {
       grid-area: tag__all;
       color: #faad06;
       background-color: #fff8e6;
+      @include filter__tag--active( #faad06 );
     }
 
     &--teacher {
       grid-area: tag__teacher;
       color: #faad06;
       background-color: #fff8e6;
+      @include filter__tag--active( #faad06 );
     }
 
     &--administrator {
       grid-area: tag__administrator;
       color: #faad06;
       background-color: #fff8e6;
+      @include filter__tag--active( #faad06 );
     }
 
     &--international {
       grid-area: tag__international;
       color: #f67057;
       background-color: #ffe3df;
+      @include filter__tag--active( #f67057 );
     }
 
     &--exhibition {
       grid-area: tag__exhibition;
       background-color: #e8dafe;
       color: #9053ff;
+      @include filter__tag--active( #9053ff );
     }
 
     &--speech {
       grid-area: tag__speech;
       background-color: #e8dafe;
       color: #9053ff;
+      @include filter__tag--active( #9053ff );
     }
 
     &--competition {
       grid-area: tag__competition;
       color: #f67057;
       background-color: #ffe3df;
+      @include filter__tag--active( #f67057 );
     }
 
     &--conference {
       grid-area: tag__conference;
       background-color: #e8dafe;
       color: #9053ff;
+      @include filter__tag--active( #9053ff );
     }
 
     &--internship {
       grid-area: tag__internship;
       color: #f67057;
       background-color: #ffe3df;
+      @include filter__tag--active( #f67057 );
     }
 
     &--law {
       grid-area: tag__law;
       color: #0dc589;
       background-color: #c6ffec;
+      @include filter__tag--active( #0dc589 );
     }
 
     &--recruitment {
       grid-area: tag__recruitment;
       color: #0dc589;
       background-color: #c6ffec;
+      @include filter__tag--active( #0dc589 );
     }
 
     &--scholarship {
       grid-area: tag__scholarship;
       color: #f67057;
       background-color: #ffe3df;
+      @include filter__tag--active( #f67057 );
     }
   }
 }
