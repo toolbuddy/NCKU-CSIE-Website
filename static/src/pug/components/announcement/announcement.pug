@@ -1,16 +1,20 @@
 mixin post_detailArticle( post )
-  section.detail
-    aside.tags.briefing__tags.scrollbox
-      each tag in post.tags
-        button.tags__tag( class=`tags__tag--${ tag }` )
-          a= tag
-    h1.detail__title= post.title
-    p.detail__announcer= post.announcer
-    time.detail__time= post.time
+  main.detail
+    - let announcer = `公告人員 : ${post.announcer}`;
+    section.detail__headline.headline
+      aside.headline__tags.tags.tags--briefing
+        each tag in post.tags
+          button.tags__tag( class=`tags__tag--${ tag }` )
+            a= tag
+      h1.headline__title= post.title
+      p.headline__announcer= announcer
+      time.headline__time= post.time
+    section.detail__title
+      h1 公告內容
     article.detail__article
-    a.detail__button= post.button
+    aside.detail__buttons.buttons
+        each button in post.buttons
+          button.buttons__button= button
     //- const test = `document.getElementsByClassName("detail__article")[0].innerHTML= "${ post.article }"`
     //script !{test}
     script window.config = {}; window.config.postArticle = '#{post.article}';
-    script(src= `../js/announcement/post_detail.js`)
-    aside.detail__watchThrough= post.watch

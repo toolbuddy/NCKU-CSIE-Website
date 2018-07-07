@@ -36,24 +36,24 @@ gulp.task( 'lint:js-frontend', () => {
     }
 
     return gulp.src( config.js.frontend.lint.src )
-        .pipe( plumber() )
-        .pipe( cached( 'lint:js-frontend' ) )
-        .pipe(
-            eslint( {
-                configFile: config.js.frontend.lint.rule,
-                fix:        true,
-            } )
-        )
-        .pipe( eslint.format() )
-        .pipe( eslint.result( ( result ) => {
-            const threshold = 0;
+    .pipe( plumber() )
+    .pipe( cached( 'lint:js-frontend' ) )
+    .pipe(
+        eslint( {
+            configFile: config.js.frontend.lint.rule,
+            fix:        true,
+        } )
+    )
+    .pipe( eslint.format() )
+    .pipe( eslint.result( ( result ) => {
+        const threshold = 0;
 
-            // If a file has errors/warnings, uncache it.
-            if ( result.warningCount > threshold || result.errorCount > threshold )
-                delete cached.caches[ 'lint:js-frontend' ][ result.filePath ];
-        } ) )
-        .pipe( debug() )
-        .pipe( gulpIf( isFixed, gulp.dest( config.js.frontend.lint.dest ) ) );
+        // If a file has errors/warnings, uncache it.
+        if ( result.warningCount > threshold || result.errorCount > threshold )
+            delete cached.caches[ 'lint:js-frontend' ][ result.filePath ];
+    } ) )
+    .pipe( debug() )
+    .pipe( gulpIf( isFixed, gulp.dest( config.js.frontend.lint.dest ) ) );
 } );
 
 /**
@@ -72,22 +72,22 @@ gulp.task( 'lint:js-backend', () => {
     }
 
     return gulp.src( config.js.backend.lint.src, { base: config.projectRoot, } )
-        .pipe( plumber() )
-        .pipe( cached( 'lint:js-backend' ) )
-        .pipe( eslint( {
-            configFile: config.js.backend.lint.rule,
-            fix:        true,
-        } ) )
-        .pipe( eslint.format() )
-        .pipe( eslint.result( ( result ) => {
-            const threshold = 0;
+    .pipe( plumber() )
+    .pipe( cached( 'lint:js-backend' ) )
+    .pipe( eslint( {
+        configFile: config.js.backend.lint.rule,
+        fix:        true,
+    } ) )
+    .pipe( eslint.format() )
+    .pipe( eslint.result( ( result ) => {
+        const threshold = 0;
 
-            // If a file has errors/warnings, uncache it.
-            if ( result.warningCount > threshold || result.errorCount > threshold )
-                delete cached.caches[ 'lint:js-backend' ][ result.filePath ];
-        } ) )
-        .pipe( debug() )
-        .pipe( gulpIf( isFixed, gulp.dest( config.js.backend.lint.dest ) ) );
+        // If a file has errors/warnings, uncache it.
+        if ( result.warningCount > threshold || result.errorCount > threshold )
+            delete cached.caches[ 'lint:js-backend' ][ result.filePath ];
+    } ) )
+    .pipe( debug() )
+    .pipe( gulpIf( isFixed, gulp.dest( config.js.backend.lint.dest ) ) );
 } );
 
 /**
@@ -96,14 +96,14 @@ gulp.task( 'lint:js-backend', () => {
  */
 
 gulp.task( 'build:js-frontend', () => gulp.src( config.js.frontend.build.src )
-    .pipe( plumber() )
-    .pipe( gulp.dest( config.js.frontend.build.dest ) )
-    .pipe( sourcemaps.init() )
-    .pipe( uglify() )
-    .pipe( rename( { suffix: '.min', } ) )
-    .pipe( size( { showFiles: true, } ) )
-    .pipe( sourcemaps.write( config.sourcemaps.dest ) )
-    .pipe( gulp.dest( config.js.frontend.build.dest ) ) );
+.pipe( plumber() )
+.pipe( gulp.dest( config.js.frontend.build.dest ) )
+.pipe( sourcemaps.init() )
+.pipe( uglify() )
+.pipe( rename( { suffix: '.min', } ) )
+.pipe( size( { showFiles: true, } ) )
+.pipe( sourcemaps.write( config.sourcemaps.dest ) )
+.pipe( gulp.dest( config.js.frontend.build.dest ) ) );
 
 /**
  * Task `clear:js-frontend`:
@@ -113,12 +113,12 @@ gulp.task( 'build:js-frontend', () => gulp.src( config.js.frontend.build.src )
 
 gulp.task( 'clear:js-frontend', ( done ) => {
     del( config.js.frontend.build.dest, { force: true, } )
-        .then( () => {
-            delete cached.caches[ 'lint:js-frontend' ];
-        } )
-        .then( () => {
-            done();
-        } );
+    .then( () => {
+        delete cached.caches[ 'lint:js-frontend' ];
+    } )
+    .then( () => {
+        done();
+    } );
 } );
 
 /**
@@ -162,16 +162,16 @@ gulp.task( 'watch:js-backend', ( done ) => {
  */
 
 gulp.task( 'lint:css', () => gulp.src( config.sass.lint.src, { since: gulp.lastRun( 'lint:css' ), } )
-    .pipe( plumber() )
-    .pipe( stylelint( {
-        configFile: config.sass.lint.rule,
-        fix:        true,
-        reporters:  [
-            { formatter: 'string', console: true, },
-        ],
-    } ) )
-    .pipe( debug() )
-    .pipe( gulp.dest( config.sass.lint.dest ) ) );
+.pipe( plumber() )
+.pipe( stylelint( {
+    configFile: config.sass.lint.rule,
+    fix:        true,
+    reporters:  [
+        { formatter: 'string', console: true, },
+    ],
+} ) )
+.pipe( debug() )
+.pipe( gulp.dest( config.sass.lint.dest ) ) );
 
 /**
  * Task `pre-build:css`:
@@ -179,8 +179,8 @@ gulp.task( 'lint:css', () => gulp.src( config.sass.lint.src, { since: gulp.lastR
  */
 
 gulp.task( 'pre-build:css', () => file( config.sass.static.fileName, config.sass.static.data, { src: true, } )
-    .pipe( plumber() )
-    .pipe( gulp.dest( config.sass.static.dest ) ) );
+.pipe( plumber() )
+.pipe( gulp.dest( config.sass.static.dest ) ) );
 
 /**
  * Task `build:css`:
@@ -188,21 +188,21 @@ gulp.task( 'pre-build:css', () => file( config.sass.static.fileName, config.sass
  */
 
 gulp.task( 'build:css', () => gulp.src( config.sass.build.src )
-    .pipe( plumber() )
-    .pipe( sourcemaps.init() )
-    .pipe( sass( { outputStyle: 'compressed', } ) )
-    .pipe( sourcemaps.write( config.sourcemaps.dest ) )
-    .pipe( gulp.dest( config.sass.build.dest ) )
-    .pipe( filter( '**/*.css' ) )
-    .pipe( autoprefixer( {
-        browsers: config.browserlist,
-        grid:     true,
-    } ) )
-    .pipe( csso() )
-    .pipe( rename( { suffix: '.min', } ) )
-    .pipe( size( { showFiles: true, } ) )
-    .pipe( sourcemaps.write( config.sourcemaps.dest ) )
-    .pipe( gulp.dest( config.sass.build.dest ) ) );
+.pipe( plumber() )
+.pipe( sourcemaps.init() )
+.pipe( sass( { outputStyle: 'compressed', } ) )
+.pipe( sourcemaps.write( config.sourcemaps.dest ) )
+.pipe( gulp.dest( config.sass.build.dest ) )
+.pipe( filter( '**/*.css' ) )
+.pipe( autoprefixer( {
+    browsers: config.browserlist,
+    grid:     true,
+} ) )
+.pipe( csso() )
+.pipe( rename( { suffix: '.min', } ) )
+.pipe( size( { showFiles: true, } ) )
+.pipe( sourcemaps.write( config.sourcemaps.dest ) )
+.pipe( gulp.dest( config.sass.build.dest ) ) );
 
 /**
  * Task `clear:css`:
@@ -297,9 +297,9 @@ gulp.task( 'develop', gulp.series(
                 ext:    'js json pug',
                 tasks:  [ 'lint:js-backend', ],
             } )
-                .on( 'restart', () => {
-                    browserSync.get( 'browser' ).reload();
-                } );
+            .on( 'restart', () => {
+                browserSync.get( 'browser' ).reload();
+            } );
             done();
         },
 

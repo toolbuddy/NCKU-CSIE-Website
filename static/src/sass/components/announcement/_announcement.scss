@@ -1,48 +1,91 @@
-body {
-  background-color: #f2f4f7;
-}
+@import 'components/common/icon';
 
 .detail {
-  &__title {
-    background-color: #ffffff;
+  font-size: .5rem;
 
-    font {
-      size: 1.0625rem;
-      weight: bold;
-    }
-    text-align: left;
-    border-left: .25rem solid #fd5540;
-    box-shadow: .0625rem .0938rem .1875rem rgba( 0, 0, 0, .1 );
+  &__headline {
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    font-size: .4375rem;
+    padding: .4rem;
+    color: #b5babf;
   }
 
-  &__time {
-    color: #b5babf;
-    font-size: .6563rem;
-    text-align: right;
+  .headline {
+    $tablet: 992px;
+    display: grid;
+    grid-template: {
+      areas:
+        'headline__tags'
+        'headline__title'
+        'headline__announcer '
+        'headline__time';
+      columns: auto;
+    }
+    @media screen and ( min-width: $tablet ) {
+      grid-template: {
+        areas:
+          'headline__tags   headline__announcer'
+          'headline__title  headline__time';
+        columns: auto;
+      }
+    }
+
+    &__tags {
+      grid-area: headline__tags;
+    }
+
+    &__title {
+      grid-area: headline__title;
+      font-size: .5rem;
+      padding-bottom: .5rem;
+      color: #000000;
+    }
+
+    &__announcer {
+      grid-area: headline__announcer;
+      @media screen and ( min-width: $tablet ) {
+        display: flex;
+        justify-self: flex-end;
+        margin-top: .8rem;
+      }
+    }
+
+    &__time {
+      grid-area: headline__time;
+      @media screen and ( min-width: $tablet ) {
+        display: flex;
+        justify-self: flex-end;
+        margin-top: .3rem;
+      }
+    }
+  }
+
+  &__title {
+    @include icon--before__flag() {
+      margin: .05rem .2rem .3rem 0;
+      border-width: .5rem .23rem .1rem;
+    }
   }
 
   &__article {
-    font-size: .75rem;
+    padding: 0 .3rem;
+    line-height: .75rem;
   }
 
-  &__button {
-    background-color: #00c3d0;
+  &__buttons {
     color: #f8f8f2;
-    font-size: .75rem;
-    border: none;
-    box-shadow: .0625rem .0938px .1875rem rgba( 0, 0, 0, .1 );
-
-    text {
-      align: center;
-      decoration: none;
-    }
   }
 
-  &__watchThrough {
-    color: #262e3e;
-    font-size: .65625rem;
-    text-align: right;
-    border: .015625rem 0 0 solid #000000;
+  .buttons {
+    &__button {
+      padding: .625rem .9375rem;
+      background-color: #6982c0;
+      border-radius: 3px;
+      box-shadow: 0 2px 2px 0 rgba( 244, 67, 54, .14 );
+      margin: .5rem;
+    }
   }
 }
 

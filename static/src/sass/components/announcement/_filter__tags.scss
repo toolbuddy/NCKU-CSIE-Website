@@ -1,7 +1,8 @@
 .tags {
+  $iphone5: 340px;
+  $iphone5Rotate: 560px;
   $mobile: 768px;
   $tablet: 992px;
-  $iphone5: 340px;
   display: grid;
   color: #ffffff;
   font-size: .25rem;
@@ -28,6 +29,16 @@
         'tags__tag--international .                      .'
         'tags__tag--internship    .                      .';
       columns: 3rem 3rem 3rem;
+    }
+  }
+  @media screen and ( min-width: $iphone5Rotate ) {
+    grid-template: {
+      areas:
+        'tags__tag--all           tags__tag--college tags__tag--speech     tags__tag--competition   tags__tag--law'
+        'tags__tag--teacher       tags__tag--master  tags__tag--conference tags__tag--scholarship   tags__tag--recruitment'
+        'tags__tag--administrator tags__tag--phd     tags__tag--exhibition tags__tag--international .'
+        '.                        .                  .                     tags__tag--internship    .';
+      columns: 3rem 3rem 3rem 3rem 3rem;
     }
   }
   @media screen and ( min-width: $mobile ) {
