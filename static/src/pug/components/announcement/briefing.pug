@@ -1,9 +1,20 @@
 mixin briefings__briefing( briefing )
-  article.briefings__briefing.briefing( href=briefing.articleUrl )
-    aside.tags.tags--briefing.briefing__tags.scrollbox
+  a.briefings__briefing.briefing( href=briefing.articleUrl )
+    aside.briefing__tags.tags
       each tag in briefing.tags
-        button.tags__tag( class=`tags__tag--${ tag }` )
-          a= tag
+        button.tags__tag( class=`tags__tag--${ tag }` )= tag
     h1.briefing__title= briefing.title
     p.briefing__article= briefing.excerpt
     time.briefing__time= briefing.time
+
+mixin briefings__briefing--hot-news( briefings )
+  each val, index in briefings
+    - 
+      let number = index + 1;
+      if( number < 10 )
+        number = '0' + number;
+    a.briefings__briefing.briefing( href=val.articleUrl )
+      aside.briefing__number= number
+      h1.briefing__title= val.title
+      p.briefing__article= val.excerpt
+      time.briefing__time= val.time

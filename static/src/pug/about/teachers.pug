@@ -7,7 +7,7 @@ block append content
   include /components/common/topic.pug
   include /components/about/teachers/card.pug
   main.main
-    +topic( 'Faculty of Computer Science', '師資陣容' )
+    +topic( '師資陣容' )
     section.cards
       - teachers.sort( ( teacherA, teacherB ) => teacherA.position - teacherB.position )
       each teacher in teachers

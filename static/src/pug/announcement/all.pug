@@ -7,16 +7,16 @@ block append content
   include /components/announcement/briefing.pug
   include /components/common/topic.pug
   include /components/announcement/filter.pug
+  include /components/announcement/title.pug
   main.content
-    +topic( 'Undergraduate', '大學部' )
+    +topic( '大學部' )
     +filter(
       'all','teacher','administrator','college', 'master','phd','speech','conference','recruitment',
       'exhibition','competition','scholarship','international','internship','law'
     )
     section.announcement
-      section.announcement__title.announcement__title--flag.title
-        h1.title__text 置頂貼文
-      section.announcement__briefings.briefings
+      +announcement__title( '置頂貼文' )
+      nav.announcement__briefings.briefings
         +briefings__briefing(
           {
             title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
@@ -27,9 +27,8 @@ block append content
           }
         )
     section.announcement
-      section.announcement__title--flag.announcement__title.title
-        h1.title__text 一般公告
-      section.announcement__briefings.briefings
+      +announcement__title( '一般公告' )
+      nav.announcement__briefings.briefings
         +briefings__briefing(
           {
             title: '標題二',

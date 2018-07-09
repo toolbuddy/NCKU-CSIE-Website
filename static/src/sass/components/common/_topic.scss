@@ -1,30 +1,32 @@
-@mixin topic--template () {
-  .topic {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    @content;
+// block
+// `.topic`
 
-    &__text {
-      &--small {
-        font-size: .625rem;
-      }
-    
-      &--large {
-        font-size: 1.25rem;
-      }  
+.topic {
+  $tablet: 992px;
+
+  // block [position]
+  display: flex;
+  justify-content: center;
+
+  // block [skin]
+  height: 1.35rem;
+  color: #000000;
+  @media screen and ( min-width: $tablet ) {
+    justify-content: flex-start;
+    border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+  }
+
+  // element
+  // `.topic .topic__text`
+
+  &__text {
+    // element [skin]
+    height: inherit;
+    width: auto;
+    border-bottom: solid .0156rem #213262;
+    font: {
+      weight: bold;
+      size: .75rem;
     }
   }
-}
-@mixin topic--color-template ( $color ) {
-  @include topic--template() {
-    border-bottom: .0312rem solid $color;
-    color: $color;
-  }
-}
-@mixin topic--black () {
-  @include topic--color-template( #000000 );
-}
-@mixin topic--white () {
-  @include topic--color-template( #ffffff );
 }

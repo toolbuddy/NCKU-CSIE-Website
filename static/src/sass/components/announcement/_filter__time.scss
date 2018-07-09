@@ -1,14 +1,26 @@
+// block
+// `.time`
+
 .time {
   $mobile: 768px;
+
+  // block [layout]
   display: flex;
-  font-size: .4375rem;
-  margin-bottom: 1rem;
   flex-direction: column;
   @media screen and ( min-width: $mobile ) {
     flex-direction: row;
   }
 
+  // block [skin]
+  font-size: .4375rem;
+  margin-bottom: 1rem;
+  
+
+  // element
+  // `.time .time__date`
+
   &__date {
+    // element [skin]
     background: none;
     border: .0312rem solid #757575;
     border-radius: 1rem;

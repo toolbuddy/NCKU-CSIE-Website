@@ -1,28 +1,40 @@
 @import 'components/common/reset';
 @import 'components/announcement/announcement';
-@import 'components/announcement/filter__tags';
+@import 'components/announcement/tags';
 
-.detail {
+// block
+// `.content`
+
+.content {
+  $iphoneRotate: 560px;
   $mobile: 768px;
   $tablet: 992px;
-  $iphoneRotate: 560px;
-  margin: 2rem .5rem;
+  
+  // block [layout]
+  display: grid;
+  grid: {
+    template: {
+      areas:
+        '.   announcement   .';
+      columns: 5% 1fr 5%;
+    }
+  };
   @media screen and ( min-width: $iphoneRotate ) {
-    margin: 2rem;
+    grid-template-columns: 10% 1fr 10%;
   }
   @media screen and ( min-width: $mobile ) {
-    margin: 3rem 4rem;
+    grid-template-columns: 15% 1fr 15%;
   }
   @media screen and ( min-width: $tablet ) {
-    margin: 4.6875rem 6.4688rem;
+    grid-template-columns: 23% 1fr 23%;
   }
 
-  &__title {
-    display: flex;
-    margin: 1rem 0 0 .2rem;
+  // block
+  // `.content .announcement`
+
+  .announcement {
+    // element [position]
+    grid-area: announcement;
   }
 
-  &__article {
-    margin-bottom: 1rem;
-  }
 }

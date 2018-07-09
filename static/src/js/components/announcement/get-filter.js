@@ -7,13 +7,13 @@
     filterButton.onclick = () => {
         flip = ( flip + 1 ) % 2;
         if ( flip ) {
-            filterTags.classList.remove( 'filter__tags--hidden' );
-            filterTime.classList.remove( 'filter__time--hidden' );
+            filterTags.classList.remove( 'tags--hidden' );
+            filterTime.classList.remove( 'time--hidden' );
             buttonIcon.classList.add( 'button__icon--active' );
         }
         else {
-            filterTags.classList.add( 'filter__tags--hidden' );
-            filterTime.classList.add( 'filter__time--hidden' );
+            filterTags.classList.add( 'tags--hidden' );
+            filterTime.classList.add( 'time--hidden' );
             buttonIcon.classList.remove( 'button__icon--active' );
         }
     };
