@@ -35,11 +35,6 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(2083),
 			allowNull: true,
 			field: 'photo'
-		},
-		position: {
-			type: DataTypes.INTEGER(11),
-			allowNull: true,
-			field: 'position'
 		}
 	}, {
 		tableName: 'profile',

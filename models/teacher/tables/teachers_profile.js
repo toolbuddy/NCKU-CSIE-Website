@@ -1,47 +1,50 @@
+/* jshint indent: 1 */
+
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('teachers_profile', {
-      profile_id: {
-        type: DataTypes.INTEGER(10).UNSIGNED,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: false
-        },
-      name: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-      },
-      department: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-      },
-      title: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-      },
-      tel: {
-        type: DataTypes.STRING(30),
-        allowNull: true,
-        defaultValue: '06-2757575 ext 62500'
-      },
-      address: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-      },  
-      email: {
-        type: DataTypes.STRING(2083),
-        allowNull: true
-      },
-      personal_web: {
-        type: DataTypes.STRING(2083),
-        allowNull: true
-      },
-      photo: {
-        type: DataTypes.STRING(2083),
-        allowNull: true
-      }
-    }, {
-      tableName: 'teachers_profile',
-      timestamps: false,
-    });
-  };
-  
+	return sequelize.define('teachersProfile', {
+		name: {
+			type: DataTypes.STRING(100),
+			allowNull: true,
+			field: 'name'
+		},
+		title: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+			field: 'title'
+		},
+		department: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+			field: 'department'
+		},
+		address: {
+			type: DataTypes.STRING(100),
+			allowNull: false,
+			field: 'address'
+		},
+		personalWeb: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'personal_web'
+		},
+		email: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'email'
+		},
+		tel: {
+			type: DataTypes.STRING(30),
+			allowNull: true,
+			defaultValue: '06-2757575 ext 62500',
+			field: 'tel'
+		},
+		photo: {
+			type: DataTypes.STRING(2083),
+			allowNull: true,
+			field: 'photo'
+		}
+	}, {
+		tableName: 'teachers_profile',
+		timestamps: false
+	});
+};
