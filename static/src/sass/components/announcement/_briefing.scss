@@ -76,6 +76,9 @@
       .tags {
         // element [skin]
         display: block;
+        @media screen and (min-width: $mobile) {
+          font-size: .4375rem;
+        }
       }
 
       // element
