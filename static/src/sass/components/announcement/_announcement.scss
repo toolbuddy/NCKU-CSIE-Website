@@ -8,22 +8,20 @@
   $landscape: 560px;
   $mobile: 768px;
   $tablet: 992px;
-  
+
   // block [layout]
   display: grid;
   grid: {
-    template: {
-      areas:
-        '. .                         .'
-        '. announcement__headline    .'
-        '. announcement__title       .'
-        '. announcement__article     .'
-        '. announcement__attachments .'
-        '. .                         .';
-    }
+    template-areas:
+      '. .                         .'
+      '. announcement__headline    .'
+      '. announcement__title       .'
+      '. announcement__article     .'
+      '. announcement__attachments .'
+      '. .                         .';
     row-gap: .5rem;
   };
-  
+
   // block [skin]
   font-size: .5rem;
 
@@ -73,6 +71,16 @@
       // element [position]
       grid-area: headline__tags;
       display: block;
+    }
+
+    // block
+    // `.announcement .headline .tags`
+
+    .tags {
+      // block [skin]
+      @media screen and ( min-width: $mobile ) {
+        font-size: .4375rem;
+      }
     }
 
     // element

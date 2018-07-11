@@ -9,7 +9,7 @@ mixin filter( ...tags )
 mixin filter__tags( ...tags )
   article#filter__tags.filter__tags.tags.tags--hidden
     each tag in tags
-      button( id=`tags__tag--${ tag }` class=`tags__tag--${ tag } tags__tag` )= tag
+      button( id=`tags__tag--${ tag }`, class=`tags__tag--${ tag } tags__tag` )= tag
 
 mixin filter__time()
   article#filter__time.filter__time.time.time--hidden

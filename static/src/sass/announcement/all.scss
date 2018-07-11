@@ -19,7 +19,7 @@
   @media screen and ( min-width: $tablet ) {
     padding: 2rem 4.5rem;
   }
-  
+
   // block [layout]
   display: grid;
   grid: {
@@ -30,8 +30,6 @@
   // block
   // `.content .topic`
   .topic {
-    $tablet: 992px;
-
     // element [position]
     grid-column: {
       start: 1;
@@ -44,12 +42,10 @@
       }
     }
   }
-  
+
   // block
   // `.content .filter`
   .filter {
-    $tablet: 992px;
-
     // element [position]
     grid-column: {
       start: 1;
@@ -62,12 +58,10 @@
       }
     }
   }
-  
+
   // block
   // `.content .announcement`
   .announcement {
-    $tablet: 992px;
-
     // element [position]
     grid-column: {
       start: 1;
@@ -81,5 +75,3 @@
     }
   }
 }
-
-

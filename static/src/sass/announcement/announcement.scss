@@ -9,15 +9,13 @@
   $iphoneRotate: 560px;
   $mobile: 768px;
   $tablet: 992px;
-  
+
   // block [layout]
   display: grid;
-  grid: {
-    template: {
-      areas:
+  grid-template: {
+    areas:
         '.   announcement   .';
-      columns: 5% 1fr 5%;
-    }
+    columns: 5% 1fr 5%;
   };
   @media screen and ( min-width: $iphoneRotate ) {
     grid-template-columns: 10% 1fr 10%;
@@ -36,5 +34,4 @@
     // element [position]
     grid-area: announcement;
   }
-
 }

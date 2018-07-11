@@ -66,14 +66,16 @@
     position: absolute;
     overflow: hidden;
     display: inline-block;
-    font-size: 2px; /*set the size for arrow*/
-    width: 2em;
-    height: 2em;
-    margin-top: -2em;
+    font-size: 2px; /* set the size for arrow */
+    width: 2rem;
+    height: 2rem;
+    margin-top: -2rem;
     top: 50%;
-    border-top: 1px solid #a9a9a9;
-    border-right: 1px solid #a9a9a9;
-    transform: rotate(136deg) skew(3deg);
+    border: {
+      top: 1px solid #a9a9a9;
+      right: 1px solid #a9a9a9;
+    }
+    transform: rotate( 136deg ) skew( 3deg );
     right: 500px;
     @content;
   }

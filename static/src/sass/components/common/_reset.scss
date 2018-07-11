@@ -28,14 +28,13 @@
       // Screen size.
       width: 100%;
       height: 100%;
-      
+
       // Default font.
       font: {
         family: var( --font__family--default );
         size: 32px;
       }
     }
-    
   }
 }
 @include reset();
