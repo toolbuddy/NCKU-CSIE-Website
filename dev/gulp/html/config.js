@@ -1,6 +1,6 @@
 const path = require( 'path' );
+const deepFreeze = require( 'deep-freeze' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 
 const [
     about,

@@ -1,6 +1,6 @@
 const path = require( 'path' );
+const deepFreeze = require( 'deep-freeze' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const deepFreeze = require( `${ projectRoot }/lib/deep-freeze` );
 const { url, port, } = require( `${ projectRoot }/settings/server/config` );
 const js = require( `${ projectRoot }/dev/gulp/js/config` );
 const css = require( `${ projectRoot }/dev/gulp/css/config` );
