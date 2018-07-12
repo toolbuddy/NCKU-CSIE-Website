@@ -11,7 +11,6 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                 model:      table.announcementI18n,
                 as:         'announcementI18n',
                 attributes: [
-                    'announcementId',
                     'title',
                     'content',
                 ],
@@ -56,6 +55,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
             },
         ],
         attributes: [
+            'announcementId',
             'author',
             'publishTime',
             'updateTime',
