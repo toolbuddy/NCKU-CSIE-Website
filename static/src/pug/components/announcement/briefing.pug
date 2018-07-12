@@ -1,5 +1,5 @@
 mixin briefings__briefing( briefing )
-  a.briefings__briefing.briefing( href=briefing.articleUrl )
+  a.briefings__briefing.briefing( href=`/announcement/announcement/${ briefing.id }` )
     aside.briefing__tags.tags
       each tag in briefing.tags
         button.tags__tag( class=`tags__tag--${ tag }` )= tag
