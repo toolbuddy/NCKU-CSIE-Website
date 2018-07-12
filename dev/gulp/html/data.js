@@ -34,6 +34,9 @@ const data = {
         async all ( language ) {
             return { language, staticUrl, };
         },
+        async announcement ( language ) {
+            return { language, staticUrl, };
+        },
         async recruitment ( language ) {
             return { language, staticUrl, };
         },
