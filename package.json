@@ -3,9 +3,6 @@
   "version": "1.1.1",
   "description": "NCKU CSIE Website",
   "main": "server.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "build": "gulp --cwd . --gulpfile dev/gulp/develop/gulpfile.js build",
     "build:css": "gulp --cwd . --gulpfile dev/gulp/css/gulpfile.js build:css",

@@ -12,7 +12,7 @@ router.get( '/teachers', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/about/teachers.${ req.query.language }.html` );
 } );
 
-// Deal with URLs to teachers pages
+// Resolve URL about/teacher/[id]
 router.get( '/teacher/:id', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/about/teacher.${ req.query.language }.html` );
 } );

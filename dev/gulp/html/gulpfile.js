@@ -93,6 +93,11 @@ gulp.task(
     'build:html:announcement',
     gulp.parallel(
         buildHTML(
+            config.build.src.announcement.announcement,
+            config.build.dest.announcement,
+            data.announcement.announcement
+        ),
+        buildHTML(
             config.build.src.announcement.activity,
             config.build.dest.announcement,
             data.announcement.activity
