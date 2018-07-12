@@ -4,7 +4,7 @@ const tables = {
 };
 
 module.exports = {
-  getTeacherProfile: function(){
-    return tables.teachers_profile.findAll();
-  },
+    getTeacherProfile () {
+        return tables.teachers_profile.findAll();
+    },
 };
