@@ -39,6 +39,7 @@ const config = {
                 teachers: `${ about.src }/teachers.pug`,
             },
             announcement: {
+                announcement:           `${ announcement.src }/announcement.pug`,
                 activity:      `${ announcement.src }/activity.pug`,
                 administrator: `${ announcement.src }/administrator.pug`,
                 all:           `${ announcement.src }/all.pug`,
