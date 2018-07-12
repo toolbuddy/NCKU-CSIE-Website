@@ -36,7 +36,7 @@ function getAnnouncementByTags ( tags = [] ) {
     tags.forEach( tag => queryString.append( 'tags', tag ) );
     queryString.append( 'tags', getMainTag() );
     const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement?${ queryString.toString() }`;
-    fetch( reqURL ).then( res => res.json() ).then( data => console.log(data) );
+    fetch( reqURL ).then( res => res.json() ).then( data => console.log( data ) );
 }
 
 function updateURL ( queryString ) {

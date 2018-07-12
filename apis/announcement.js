@@ -48,13 +48,13 @@ const data = [
 
 apis.get( '/', async ( req, res ) => {
     const responseData = [];
-    data.forEach(x => {
-        for(let tag of req.query.tags){
-            if(x.tag.indexOf(tag) >= 0)
-                responseData.push(x);
+    data.forEach( ( x ) => {
+        for ( const tag of req.query.tags ) {
+            if ( x.tag.indexOf( tag ) >= 0 )
+                responseData.push( x );
         }
-    });
-    res.json(responseData);
+    } );
+    res.json( responseData );
 } );
 
 module.exports = apis;
