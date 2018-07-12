@@ -8,9 +8,10 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
     const data = await table.announcement.findOne( {
         include: [
             {
-                model: table.announcementI18n,
-                as:    'announcementI18n',
+                model:      table.announcementI18n,
+                as:         'announcementI18n',
                 attributes: [
+                    'announcementId',
                     'title',
                     'content',
                 ],
@@ -19,33 +20,33 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                 },
             },
             {
-                model: table.announcementTag,
-                as:    'announcementTag',
+                model:   table.announcementTag,
+                as:      'announcementTag',
                 include: [
                     {
-                        model: table.tagI18n,
-                        as:    'tagI18n',
+                        model:      table.tagI18n,
+                        as:         'tagI18n',
                         attributes: [
                             'name',
                         ],
                         where: {
-                            language
+                            language,
                         },
                     },
                 ],
             },
             {
-                model: table.announcementFile,
-                as:    'announcementFile',
+                model:   table.announcementFile,
+                as:      'announcementFile',
                 include: [
                     {
-                        model: table.announcementFileI18n,
-                        as:    'announcementFileI18n',
+                        model:      table.announcementFileI18n,
+                        as:         'announcementFileI18n',
                         attributes: [
                             'url',
                         ],
                         where: {
-                            language
+                            language,
                         },
                     },
                 ],
@@ -67,6 +68,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
     } )
     .then(
         announcement => ( {
+            id:          announcement.announcementId,
             title:       announcement.announcementI18n[ 0 ].title,
             content:     announcement.announcementI18n[ 0 ].content,
             autohr:      announcement.author,
