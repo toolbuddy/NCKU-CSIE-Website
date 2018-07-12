@@ -4,7 +4,8 @@ const router = express.Router();
 
 // Resolve URL /announcement/all
 router.get( '/all', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/all.${ req.query.language }.html` );
+    // Res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/all.${ req.query.language }.html` );
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/test.html` );
 } );
 
 // Resolve URL /announcement/administrator

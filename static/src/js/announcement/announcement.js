@@ -1,8 +1,7 @@
 function getMainTag () {
-    let mainTag = location.pathname.split( '/' ).pop();
+    const mainTag = location.pathname.split( '/' ).pop();
     if ( mainTag === 'all' )
-        mainTag = '';
-
+        return false;
     return mainTag;
 }
 
@@ -27,15 +26,29 @@ function tagButtonOnClick ( tagName ) {
     }
     updateURL( queryString );
     getAnnouncementByTags( usedTags );
-    console.log( usedTags );
+}
+
+function announcementButtonOnClick ( id ) {
+    // ?
+    getAnnouncementById( id );
 }
 
 function getAnnouncementByTags ( tags = [] ) {
     // Need injection protection
     const queryString = new URLSearchParams();
     tags.forEach( tag => queryString.append( 'tags', tag ) );
-    queryString.append( 'tags', getMainTag() );
-    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement?${ queryString.toString() }`;
+    if ( getMainTag() )
+        queryString.append( 'tags', getMainTag() );
+
+    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/tags?${ queryString.toString() }`;
+    fetch( reqURL ).then( res => res.json() ).then( data => console.log( data ) );
+}
+
+function getAnnouncementById ( id ) {
+    // Url = ?
+    const queryString = new URLSearchParams();
+    queryString.append( 'id', id );
+    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/id?${ queryString.toString() }`;
     fetch( reqURL ).then( res => res.json() ).then( data => console.log( data ) );
 }
 
