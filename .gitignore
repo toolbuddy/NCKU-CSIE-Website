@@ -2,30 +2,33 @@
 # Project generated files
 #############################
 
-## editor files
+## Editor files
 *.swp
 .vscode
 
-## git extension files
+## Git extension files
 .git-credentials
 
-## npm files
+## Npm files
 node_modules
 npm-debug.log
 package-lock.json
 .npmrc
 .lock-wscript
 
-## sass files
+## Sass files
 .sass-cache
 .stylelintcache*
 
 ## Sequelize generated schema
 models/*/tables
 
-## Settings file
+## Settings files
 settings/database/config.js
 settings/server/config.js
+
+## Static files
+static/dist/**/*.*
 
 #############################
 # OS generated files
