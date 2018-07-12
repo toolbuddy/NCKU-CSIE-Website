@@ -1,0 +1,194 @@
+// block
+// `.tags`
+
+.tags {
+  $mobile: 768px;
+
+  // block [skin]
+  color: #ffffff;
+  font-size: .25rem;
+
+  // element
+  // `.tags .tags__tag`
+
+  &__tag {
+    // element [skin]
+    border-radius: 1rem;
+    padding: .1rem .2rem .2rem;
+    width: 3rem;
+    margin: 0 .1rem .5rem 0;
+    @media screen and ( min-width: $mobile ) {
+      width: 3.6rem;
+      margin: 0 .2rem .6rem 0;
+    }
+
+    // element [interaction]
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__tag.tags__tag-- {
+    // modifier
+    // `.tags__tag.tags__tag--active`
+    @mixin tags__tag--active( $bgcolor ) {
+      &.tags__tag--active {
+        // template [skin]
+        color: #ffffff;
+        background-color: $bgcolor;
+      }
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--college`
+
+    &college {
+      // modifier [skin]
+      color: #399dff;
+      background-color: #dfeffe;
+      @include tags__tag--active( #399dff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--master`
+
+    &master {
+      // modifier [skin]
+      color: #399dff;
+      background-color: #dfeffe;
+      @include tags__tag--active( #399dff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--phd`
+
+    &phd {
+      // modifier [skin]
+      color: #399dff;
+      background-color: #dfeffe;
+      @include tags__tag--active( #399dff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--all`
+
+    &all {
+      // modifier [skin]
+      color: #faad06;
+      background-color: #fff8e6;
+      @include tags__tag--active( #faad06 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--teacher`
+
+    &teacher {
+      // modifier [skin]
+      color: #faad06;
+      background-color: #fff8e6;
+      @include tags__tag--active( #faad06 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--administrator`
+
+    &administrator {
+      // modifier [skin]
+      color: #faad06;
+      background-color: #fff8e6;
+      @include tags__tag--active( #faad06 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--international`
+
+    &international {
+      // modifier [skin]
+      color: #f67057;
+      background-color: #ffe3df;
+      @include tags__tag--active( #f67057 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--exhibition`
+
+    &exhibition {
+      // modifier [skin]
+      background-color: #e8dafe;
+      color: #9053ff;
+      @include tags__tag--active( #9053ff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--speech`
+
+    &speech {
+      // element [skin]
+      background-color: #e8dafe;
+      color: #9053ff;
+      @include tags__tag--active( #9053ff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--competition`
+
+    &competition {
+      // modifier [skin]
+      color: #f67057;
+      background-color: #ffe3df;
+      @include tags__tag--active( #f67057 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--conference`
+
+    &conference {
+      // modifier [skin]
+      background-color: #e8dafe;
+      color: #9053ff;
+      @include tags__tag--active( #9053ff );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--internship`
+
+    &internship {
+      // modifier [skin]
+      color: #f67057;
+      background-color: #ffe3df;
+      @include tags__tag--active( #f67057 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--law`
+
+    &law {
+      // modifier [skin]
+      color: #0dc589;
+      background-color: #c6ffec;
+      @include tags__tag--active( #0dc589 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--recruitment`
+
+    &recruitment {
+      // modifier [skin]
+      color: #0dc589;
+      background-color: #c6ffec;
+      @include tags__tag--active( #0dc589 );
+    }
+
+    // modifier
+    // `.tags__tag.tags__tag--scholarship`
+
+    &scholarship {
+      // modifier [skin]
+      color: #f67057;
+      background-color: #ffe3df;
+      @include tags__tag--active( #f67057 );
+    }
+  }
+}
+

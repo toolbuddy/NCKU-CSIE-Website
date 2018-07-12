@@ -17,9 +17,6 @@ module.exports = {
     // No html texts
     disallowHtmlText: true,
 
-    // No global id literal
-    disallowIdLiterals: true,
-
     // No old mixin usage
     disallowLegacyMixinCall: true,
 

@@ -1,6 +1,6 @@
 @import 'components/common/reset';
-@import 'components/common/topic';
 @import 'components/about/teachers/card';
+@import 'components/common/topic';
 
 // block
 // `.main`
@@ -8,7 +8,7 @@
 .main {
   // block [skin]
   width: 100%;
-  background-color: rgb( 51, 60, 78 );
+  background-color: #ffffff;
 
   // block [layout]
   display: grid;

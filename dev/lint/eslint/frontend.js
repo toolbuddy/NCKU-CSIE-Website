@@ -325,11 +325,16 @@ module.exports = {
             {
 
                 // An array of numbers to ignore.
-                ignore: [ 0,
-                    1, ],
+                'ignore': [
+                    0,
+                    1,
+                    2,
+                    -1,
+                    -2,
+                ],
 
                 // Array indexes are considered okay.
-                ignoreArrayIndexes: true,
+                'ignoreArrayIndexes': true,
             },
         ],
 

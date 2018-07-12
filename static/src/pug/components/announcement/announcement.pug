@@ -1,0 +1,16 @@
+include /components/announcement/title.pug
+mixin announcement( content )
+  section.announcement
+    header.announcement__headline.headline
+      aside.headline__tags.tags
+        each tag in content.tags
+          button.tags__tag( class=`tags__tag--${ tag }` )= tag
+      h1.headline__title= content.title
+      a.headline__announcer= `公告人員 : ${ content.announcer }`
+      time.headline__time= content.time
+    +announcement__title( '公告內容' )
+    article.announcement__article.article= content.article
+    nav.announcement__attachments.attachments
+      - content.attachments.sort( ( attachmentA, attachmentB ) => attachmentB.length - attachmentA.length )
+      each attachment in content.attachments
+        a.attachments__attachment= attachment
