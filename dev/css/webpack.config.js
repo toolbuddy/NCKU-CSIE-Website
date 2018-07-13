@@ -60,7 +60,7 @@ module.exports = {
     output: {
         path: cssRoot,
     },
-    context: projectRoot,
+    context: sassRoot,
     target: 'web',
     module: {
         rules: [
