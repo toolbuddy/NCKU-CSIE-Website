@@ -17,51 +17,49 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( sassRoot, 'about/honor.scss' ),
-        'about/intro':    path.resolve( sassRoot, 'about/intro.scss' ),
-        'about/location': path.resolve( sassRoot, 'about/location.scss' ),
-        'about/members':  path.resolve( sassRoot, 'about/members.scss' ),
-        'about/teacher':  path.resolve( sassRoot, 'about/teacher.scss' ),
-        'about/teachers': path.resolve( sassRoot, 'about/teachers.scss' ),
+        'about/honor':    path.resolve( sassRoot, 'about/honor.js' ),
+        'about/intro':    path.resolve( sassRoot, 'about/intro.js' ),
+        'about/location': path.resolve( sassRoot, 'about/location.js' ),
+        'about/members':  path.resolve( sassRoot, 'about/members.js' ),
+        'about/teacher':  path.resolve( sassRoot, 'about/teacher.js' ),
+        'about/teachers': path.resolve( sassRoot, 'about/teachers.js' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.scss' ),
-        'announcement/administrator': path.resolve( sassRoot, 'announcement/administrator.scss' ),
-        'announcement/all':           path.resolve( sassRoot, 'announcement/all.scss' ),
-        'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.scss' ),
-        'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.scss' ),
-        'announcement/speech':        path.resolve( sassRoot, 'announcement/speech.scss' ),
+        'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.js' ),
+        'announcement/administrator': path.resolve( sassRoot, 'announcement/administrator.js' ),
+        'announcement/all':           path.resolve( sassRoot, 'announcement/all.js' ),
+        'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.js' ),
+        'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.js' ),
+        'announcement/speech':        path.resolve( sassRoot, 'announcement/speech.js' ),
 
         // Route `home`
-        'home/index': path.resolve( sassRoot, 'home/index.scss' ),
+        'home/index': path.resolve( sassRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/awards':       path.resolve( sassRoot, 'research/awards.scss' ),
-        'research/conferences':  path.resolve( sassRoot, 'research/conferences.scss' ),
-        'research/groups':       path.resolve( sassRoot, 'research/groups.scss' ),
-        'research/labs':         path.resolve( sassRoot, 'research/labs.scss' ),
-        'research/publications': path.resolve( sassRoot, 'research/publications.scss' ),
+        'research/awards':       path.resolve( sassRoot, 'research/awards.js' ),
+        'research/conferences':  path.resolve( sassRoot, 'research/conferences.js' ),
+        'research/groups':       path.resolve( sassRoot, 'research/groups.js' ),
+        'research/labs':         path.resolve( sassRoot, 'research/labs.js' ),
+        'research/publications': path.resolve( sassRoot, 'research/publications.js' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( sassRoot, 'resource/fix.scss' ),
-        'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.scss' ),
-        'resource/law':       path.resolve( sassRoot, 'resource/law.scss' ),
-        'resource/rent':      path.resolve( sassRoot, 'resource/rent.scss' ),
-        'resource/resources': path.resolve( sassRoot, 'resource/resources.scss' ),
+        'resource/fix':       path.resolve( sassRoot, 'resource/fix.js' ),
+        'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.js' ),
+        'resource/law':       path.resolve( sassRoot, 'resource/law.js' ),
+        'resource/rent':      path.resolve( sassRoot, 'resource/rent.js' ),
+        'resource/resources': path.resolve( sassRoot, 'resource/resources.js' ),
 
         // Route `student`
-        'student/college':       path.resolve( sassRoot, 'student/college.scss' ),
-        'student/course':        path.resolve( sassRoot, 'student/course.scss' ),
-        'student/international': path.resolve( sassRoot, 'student/international.scss' ),
-        'student/master':        path.resolve( sassRoot, 'student/master.scss' ),
-        'student/phd':           path.resolve( sassRoot, 'student/phd.scss' ),
-        'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),
+        'student/college':       path.resolve( sassRoot, 'student/college.js' ),
+        'student/course':        path.resolve( sassRoot, 'student/course.js' ),
+        'student/international': path.resolve( sassRoot, 'student/international.js' ),
+        'student/master':        path.resolve( sassRoot, 'student/master.js' ),
+        'student/phd':           path.resolve( sassRoot, 'student/phd.js' ),
+        'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.js' ),
     },
     output: {
         path: cssRoot,
     },
-    context: projectRoot,
-    target: 'web',
     module: {
         rules: [
             {
@@ -69,7 +67,7 @@ module.exports = {
                 use:  [
                     // Extract CSS file.
                     {
-                        loader:  MiniCssExtractPlugin.loader,
+                        loader:  'style-loader',
                         options: {
                             filename: '[name].min.css',
                         },
@@ -113,11 +111,6 @@ module.exports = {
         ],
     },
     plugins: [
-        // Extract CSS file.
-        new MiniCssExtractPlugin( {
-            filename: '[name].min.css',
-        } ),
-
         // `stylelint` plugin for webpack.
         new StyleLintPlugin( {
             // The path to ECMAScript file that contains `stylelint` configuration object.
