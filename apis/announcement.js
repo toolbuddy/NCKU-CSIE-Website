@@ -3,8 +3,8 @@ const path = require( 'path' );
 
 const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
+const getAnnouncements = require( `${ projectRoot }/models/announcement/operation/get-announcements` );
 const getAnnouncement = require( `${ projectRoot }/models/announcement/operation/get-announcement` );
-const getAnnouncementByTags = require( `${ projectRoot }/models/announcement/operation/get-announcements` );
 
 apis.get( '/filter', async ( req, res ) => {
     let tag = [];
@@ -17,14 +17,18 @@ apis.get( '/filter', async ( req, res ) => {
         // If req.query.tags is an array
         tag = [ ...req.query.tags, ];
     }
-    console.log( req.query );
-    res.json( await getAnnouncementByTags(
-        tag,
-        req.query.startTime,
-        req.query.endTime,
-        req.query.page,
-        req.query.language,
-    ) );
+    try {
+        res.json( await getAnnouncements( {
+            tags:      tag,
+            startTime: req.query.startTime,
+            endTime:   req.query.endTime,
+            page:      req.query.page,
+            language:  req.query.language,
+        } ) );
+    }
+    catch ( e ) {
+        res.status( 404 ).send( { error: 'Not found!', } );
+    }
 } );
 
 apis.get( '/:id', async ( req, res ) => {

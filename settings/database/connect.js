@@ -11,7 +11,7 @@ module.exports = async ( databaseName, debug = false ) => {
             dialect:          config.protocol,
             operatorsAliases: false,
             pool:             config.pool,
-            logging:          true, // Debug,
+            logging:          debug,
             dialectOptions:   {
                 useUTC:   false,
             },

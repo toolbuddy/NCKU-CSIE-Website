@@ -4,7 +4,7 @@ const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( tags = [], startTime = new Date( '2018-07-01' ), endTime = new Date( '2018-07-18' ), page = 1, language = 'zh-TW' ) => {
+module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ), endTime = new Date( '2018-07-18' ), page = 1, language = 'zh-TW', } = {} ) => {
     const table = await associations();
     const announcementsPerPage = 3;
     let data = [];
@@ -65,7 +65,10 @@ module.exports = async ( tags = [], startTime = new Date( '2018-07-01' ), endTim
             title:      announcement.announcementI18n[ 0 ].title,
             content:    announcement.announcementI18n[ 0 ].content,
             updateTime: announcement.updateTime,
-            tags:       announcement.announcementTag.map( tag => tag.tagI18n[ 0 ].name ),
+            tags:       announcement.announcementTag.map( tag => ( {
+                id:   tag.tagId,
+                name: tag.tagI18n[ 0 ].name,
+            } ) ),
             isPinned:   announcement.isPinned,
         } ) ) );
     }
@@ -151,7 +154,10 @@ module.exports = async ( tags = [], startTime = new Date( '2018-07-01' ), endTim
             title:      announcement.announcementI18n[ 0 ].title,
             content:    announcement.announcementI18n[ 0 ].content,
             updateTime: announcement.updateTime,
-            tags:       announcement.announcementTag.map( tag => tag.tagI18n[ 0 ].name ),
+            tags:       announcement.announcementTag.map( tag => ( {
+                id:   tag.tagId,
+                name: tag.tagI18n[ 0 ].name,
+            } ) ),
             isPinned:   announcement.isPinned,
         } ) ) ) );
     }

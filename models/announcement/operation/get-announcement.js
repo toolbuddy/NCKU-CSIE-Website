@@ -26,6 +26,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                         model:      table.tagI18n,
                         as:         'tagI18n',
                         attributes: [
+                            'tagId',
                             'name',
                         ],
                         where: {
@@ -60,7 +61,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
             'publishTime',
             'updateTime',
             'views',
-            'is_pinned',
+            'isPinned',
         ],
         where: {
             announcementId,
@@ -75,15 +76,16 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
             publishTime: announcement.publishTime,
             updateTime:  announcement.updateTime,
             views:       announcement.views,
-            is_pinned:   announcement.pinned,
+            isPinned:    announcement.isPinned,
             files:       announcement.announcementFile.map(
                 announcementFile => ( {
-                    type: announcementfile.type,
-                    url:  announcementfile.announcementFileI18n[ 0 ].url,
+                    type: announcementFile.type,
+                    url:  announcementFile.announcementFileI18n[ 0 ].url,
                 } ),
             ),
             tags:        announcement.announcementTag.map(
                 announcementTag => ( {
+                    id:   announcementTag.tagI18n[ 0 ].tagId,
                     name: announcementTag.tagI18n[ 0 ].name,
                 } )
             ),
