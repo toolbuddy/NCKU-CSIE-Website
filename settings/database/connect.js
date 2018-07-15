@@ -11,7 +11,11 @@ module.exports = async ( databaseName, debug = false ) => {
             dialect:          config.protocol,
             operatorsAliases: false,
             pool:             config.pool,
-            logging:          debug,
+            logging:          true, // Debug,
+            dialectOptions:   {
+                useUTC:   false,
+            },
+            timezone: '+08:00',
         }
     );
 

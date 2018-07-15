@@ -4,11 +4,10 @@ const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( tags = [], startTime = new Date( 2018, 6, 1, 0, 0, 0, 0 ), endTime = new Date( 2018, 7, 18, 0, 0, 0, 0 ), page = 1, language = 'zh-TW' ) => {
+module.exports = async ( tags = [], startTime = new Date( '2018-07-01' ), endTime = new Date( '2018-07-18' ), page = 1, language = 'zh-TW' ) => {
     const table = await associations();
-    const announcementsPerPage = 10;
+    const announcementsPerPage = 3;
     let data = [];
-
     if ( tags.length === 0 ) {
         data = await table.announcement.findAll( {
             attributes: [
@@ -17,15 +16,13 @@ module.exports = async ( tags = [], startTime = new Date( 2018, 6, 1, 0, 0, 0, 0
                 'updateTime',
             ],
             where: {
-                'updateTime':                       {
-                    [ Op.between ]: [ startTime,
-                        endTime, ],
+                updateTime: {
+                    [ Op.between ]: [ new Date( startTime ),
+                        new Date( endTime ), ],
                 },
-                'isPublished': 1,
-                'isApproved':  1,
+                isPublished: 1,
+                isApproved:  1,
             },
-            offset:  ( page - 1 ) * announcementsPerPage,
-            limit:   announcementsPerPage,
             include: [
                 {
                     model:      table.announcementI18n,
@@ -59,6 +56,9 @@ module.exports = async ( tags = [], startTime = new Date( 2018, 6, 1, 0, 0, 0, 0
                     ],
                 },
             ],
+
+            offset:  ( page - 1 ) * announcementsPerPage,
+            limit:   announcementsPerPage,
         } )
         .then( announcements => announcements.map( announcement => ( {
             id:         announcement.announcementId,
@@ -77,8 +77,8 @@ module.exports = async ( tags = [], startTime = new Date( 2018, 6, 1, 0, 0, 0, 0
             where: {
                 '$announcementTag.tagI18n.name$': tags,
                 'updateTime':                       {
-                    [ Op.between ]: [ startTime,
-                        endTime, ],
+                    [ Op.between ]: [ new Date( startTime ),
+                        new Date( endTime ), ],
                 },
                 'isPublished': 1,
                 'isApproved':  1,
