@@ -1,11 +1,10 @@
 const path = require( 'path' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const StyleLintPlugin = require( 'stylelint-webpack-plugin' );
 const autoprefixer = require( 'autoprefixer' );
 const cssnano = require( 'cssnano' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const sassRoot = path.resolve( projectRoot, 'static/src/sass' );
+const jsRoot = path.resolve( projectRoot, 'static/src/js' );
 const cssRoot = path.resolve( projectRoot, 'static/dist/css' );
 const browsers = require( path.resolve( projectRoot, 'settings/browserlist/config.js' ) );
 const devMode = true;
@@ -17,45 +16,45 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( sassRoot, 'about/honor.js' ),
-        'about/intro':    path.resolve( sassRoot, 'about/intro.js' ),
-        'about/location': path.resolve( sassRoot, 'about/location.js' ),
-        'about/members':  path.resolve( sassRoot, 'about/members.js' ),
-        'about/teacher':  path.resolve( sassRoot, 'about/teacher.js' ),
-        'about/teachers': path.resolve( sassRoot, 'about/teachers.js' ),
+        'about/honor':    path.resolve( jsRoot, 'about/honor.js' ),
+        'about/intro':    path.resolve( jsRoot, 'about/intro.js' ),
+        'about/location': path.resolve( jsRoot, 'about/location.js' ),
+        'about/members':  path.resolve( jsRoot, 'about/members.js' ),
+        'about/teacher':  path.resolve( jsRoot, 'about/teacher.js' ),
+        'about/teachers': path.resolve( jsRoot, 'about/teachers.js' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.js' ),
-        'announcement/administrator': path.resolve( sassRoot, 'announcement/administrator.js' ),
-        'announcement/all':           path.resolve( sassRoot, 'announcement/all.js' ),
-        'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.js' ),
-        'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.js' ),
-        'announcement/speech':        path.resolve( sassRoot, 'announcement/speech.js' ),
+        'announcement/activity':      path.resolve( jsRoot, 'announcement/activity.js' ),
+        'announcement/administrator': path.resolve( jsRoot, 'announcement/administrator.js' ),
+        'announcement/all':           path.resolve( jsRoot, 'announcement/all.js' ),
+        'announcement/announcement':  path.resolve( jsRoot, 'announcement/announcement.js' ),
+        'announcement/recruitment':   path.resolve( jsRoot, 'announcement/recruitment.js' ),
+        'announcement/speech':        path.resolve( jsRoot, 'announcement/speech.js' ),
 
         // Route `home`
-        'home/index': path.resolve( sassRoot, 'home/index.js' ),
+        'home/index': path.resolve( jsRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/awards':       path.resolve( sassRoot, 'research/awards.js' ),
-        'research/conferences':  path.resolve( sassRoot, 'research/conferences.js' ),
-        'research/groups':       path.resolve( sassRoot, 'research/groups.js' ),
-        'research/labs':         path.resolve( sassRoot, 'research/labs.js' ),
-        'research/publications': path.resolve( sassRoot, 'research/publications.js' ),
+        'research/awards':       path.resolve( jsRoot, 'research/awards.js' ),
+        'research/conferences':  path.resolve( jsRoot, 'research/conferences.js' ),
+        'research/groups':       path.resolve( jsRoot, 'research/groups.js' ),
+        'research/labs':         path.resolve( jsRoot, 'research/labs.js' ),
+        'research/publications': path.resolve( jsRoot, 'research/publications.js' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( sassRoot, 'resource/fix.js' ),
-        'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.js' ),
-        'resource/law':       path.resolve( sassRoot, 'resource/law.js' ),
-        'resource/rent':      path.resolve( sassRoot, 'resource/rent.js' ),
-        'resource/resources': path.resolve( sassRoot, 'resource/resources.js' ),
+        'resource/fix':       path.resolve( jsRoot, 'resource/fix.js' ),
+        'resource/ieet':      path.resolve( jsRoot, 'resource/ieet.js' ),
+        'resource/law':       path.resolve( jsRoot, 'resource/law.js' ),
+        'resource/rent':      path.resolve( jsRoot, 'resource/rent.js' ),
+        'resource/resources': path.resolve( jsRoot, 'resource/resources.js' ),
 
         // Route `student`
-        'student/college':       path.resolve( sassRoot, 'student/college.js' ),
-        'student/course':        path.resolve( sassRoot, 'student/course.js' ),
-        'student/international': path.resolve( sassRoot, 'student/international.js' ),
-        'student/master':        path.resolve( sassRoot, 'student/master.js' ),
-        'student/phd':           path.resolve( sassRoot, 'student/phd.js' ),
-        'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.js' ),
+        'student/college':       path.resolve( jsRoot, 'student/college.js' ),
+        'student/course':        path.resolve( jsRoot, 'student/course.js' ),
+        'student/international': path.resolve( jsRoot, 'student/international.js' ),
+        'student/master':        path.resolve( jsRoot, 'student/master.js' ),
+        'student/phd':           path.resolve( jsRoot, 'student/phd.js' ),
+        'student/scholarship':   path.resolve( jsRoot, 'student/scholarship.js' ),
     },
     output: {
         path: cssRoot,
@@ -72,32 +71,36 @@ module.exports = {
                             filename: '[name].min.css',
                         },
                     },
+
                     // The `css-loader` interprets `@import` and `url()` like `import/require()` and will resolve them.
                     {
-                        loader: 'css-loader',
+                        loader:  'css-loader',
                         options: {
                             sourceMap: true,
-                        }
+                        },
                     },
+
                     // Do some trick to CSS.
                     {
-                        loader: 'postcss-loader',
+                        loader:  'postcss-loader',
                         options: {
                             sourceMap: true,
-                            plugins: [
-                                // parse CSS and add vendor prefixed to CSS rules.
-                                autoprefixer( { browsers } ),
+                            plugins:   [
+                                // Parse CSS and add vendor prefixed to CSS rules.
+                                autoprefixer( { browsers, } ),
+
                                 // CSS optimizations.
                                 cssnano(),
-                            ]
-                        }
+                            ],
+                        },
                     },
+
                     // Compile `.scss` files to CSS files.
                     {
                         loader:  'sass-loader',
                         options: {
                             includePaths: [ sassRoot, ],
-                            sourceMap: true,
+                            sourceMap:    true,
                         },
                     },
                 ],

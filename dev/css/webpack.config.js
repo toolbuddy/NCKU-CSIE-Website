@@ -7,6 +7,7 @@ const cssnano = require( 'cssnano' );
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const sassRoot = path.resolve( projectRoot, 'static/src/sass' );
 const cssRoot = path.resolve( projectRoot, 'static/dist/css' );
+const staticRoot = path.resolve( projectRoot, 'static/src' );
 const browsers = require( path.resolve( projectRoot, 'settings/browserlist/config.js' ) );
 const devMode = true;
 
@@ -59,10 +60,11 @@ module.exports = {
     },
     output: {
         path: cssRoot,
+        filename: '[name].js'
     },
-    context: sassRoot,
-    target: 'web',
-    module: {
+    context: staticRoot,
+    target:  'web',
+    module:  {
         rules: [
             {
                 test: /\.scss$/,
@@ -74,32 +76,36 @@ module.exports = {
                             filename: '[name].min.css',
                         },
                     },
+
                     // The `css-loader` interprets `@import` and `url()` like `import/require()` and will resolve them.
                     {
-                        loader: 'css-loader',
+                        loader:  'css-loader',
                         options: {
                             sourceMap: true,
-                        }
+                        },
                     },
+
                     // Do some trick to CSS.
                     {
-                        loader: 'postcss-loader',
+                        loader:  'postcss-loader',
                         options: {
                             sourceMap: true,
-                            plugins: [
-                                // parse CSS and add vendor prefixed to CSS rules.
-                                autoprefixer( { browsers } ),
+                            plugins:   [
+                                // Parse CSS and add vendor prefixed to CSS rules.
+                                autoprefixer( { browsers, } ),
+
                                 // CSS optimizations.
                                 cssnano(),
-                            ]
-                        }
+                            ],
+                        },
                     },
+
                     // Compile `.scss` files to CSS files.
                     {
                         loader:  'sass-loader',
                         options: {
                             includePaths: [ sassRoot, ],
-                            sourceMap: true,
+                            sourceMap:    true,
                         },
                     },
                 ],
@@ -129,7 +135,7 @@ module.exports = {
             cache:         true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: projectRoot,
+            cacheLocation: path.resolve( projectRoot, '.stylelintcache' ),
 
             // Specify the formatter that you would like to use to format your results.
             formatter:      'string',

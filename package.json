@@ -4,13 +4,34 @@
   "description": "NCKU CSIE Website",
   "main": "server.js",
   "scripts": {
-    "build": "gulp --cwd . --gulpfile dev/gulp/develop/gulpfile.js build",
-    "bc": "npm run build:css",
+    "build": "npm run build:css && npm run build:html && npm run build:js",
     "build:css": "webpack --config dev/css/webpack.config.js",
+    "build:html": "webpack --config dev/html/webpack.config.js",
+    "build:js": "webpack --config dev/js/webpack.config.js",
+    "clear": "npm run clear:css && npm run clear:html && npm run clear:js && npm run clear:server",
+    "clear:css": "rimraf static/dist/css .stylelintcache",
+    "clear:html": "rimraf static/dist/html",
+    "clear:js": "rimraf static/dist/js .eslintcache-js",
+    "clear:server": "rimraf .eslintcache-server",
+    "lint": "npm run lint:css && npm run lint:html && npm run lint:js && npm run lint:server",
+    "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location .stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
+    "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
+    "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location .eslintcache-js --fix \"static/src/js/**/*.js\"",
+    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location .eslintcache-server --ignore-path dev/server/.eslintignore --fix .",
+    "b": "npm run build",
+    "bc": "npm run build:css",
+    "bh": "npm run build:html",
+    "bl": "npm run build:js",
+    "c": "npm run clear",
     "cc": "npm run clear:css",
-    "clear:css": "rimraf static/dist/css .stylelintcache*",
+    "ch": "npm run clear:html",
+    "cj": "npm run clear:js",
+    "cs": "npm run clear:server",
+    "l": "npm run lint",
     "lc": "npm run lint:css",
-    "lint:css": "stylelint --config dev/css/.stylelintrc.js --syntax scss --fix \"static/src/sass/**/*.scss\""
+    "lh": "npm run lint:html",
+    "lj": "npm run lint:js",
+    "ls": "npm run lint:server"
   },
   "repository": {
     "type": "git",
@@ -39,12 +60,14 @@
     "css-loader": "^1.0.0",
     "cssnano": "^4.0.1",
     "eslint": "^5.1.0",
+    "extract-loader": "^2.0.1",
     "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
     "mini-css-extract-plugin": "^0.4.1",
     "nodemon": "^1.18.0",
     "postcss-loader": "^2.1.6",
+    "pug-html-loader": "^1.1.5",
     "pug-lint": "^2.5.0",
-    "pug-loader": "^2.4.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
@@ -54,11 +77,5 @@
     "url-loader": "^1.0.1",
     "webpack": "^4.16.0",
     "webpack-cli": "^3.0.8"
-  },
-  "eslintConfig": {
-    "root": true
-  },
-  "pugLintConfig": {
-    "extends": "./dev/lint/puglint/puglint.js"
   }
 }

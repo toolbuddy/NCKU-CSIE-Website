@@ -1,14 +1,16 @@
 const path = require( 'path' );
-const StyleLintPlugin = require( 'stylelint-webpack-plugin' );
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
+const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
+const staticRoot = path.resolve( projectRoot, 'static/src' );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
 
-module.exports = {
+module.exports = language.support.map( language => ( {
     devtool: devMode ? 'inline-sourcemap' : null,
     mode:    devMode ? 'development' : 'production',
     entry:   {
@@ -55,24 +57,31 @@ module.exports = {
     },
     output: {
         path: htmlRoot,
+        filename: '[name].js',
     },
+    context: staticRoot,
+    target:  'web',
     module: {
         rules: [
             {
                 test: /\.pug$/,
                 use:  [
-                    // Extract CSS file.
                     {
-                        loader:  MiniCssExtractPlugin.loader,
+                        loader: 'file-loader',
                         options: {
-                            filename: '[name].min.css',
-                        },
+                            regExp: /pug\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+).pug/,
+                            name: `[1]/[2].${ language }.html`,
+                        }
                     },
-                    // The `css-loader` interprets `@import` and `url()` like `import/require()` and will resolve them.
+                    'extract-loader',
+                    'html-loader',
                     {
-                        loader: 'pug-loader',
+                        loader:  'pug-html-loader',
                         options: {
-                            root: pugRoot
+                            basedir: pugRoot,
+                            data: {
+                                staticUrl: ''
+                            }
                         }
                     },
                 ],
@@ -84,32 +93,5 @@ module.exports = {
                 ],
             },
         ],
-    },
-    plugins: [
-        // Extract CSS file.
-        new MiniCssExtractPlugin( {
-            filename: '[name].min.css',
-        } ),
-
-        // `stylelint` plugin for webpack.
-        new StyleLintPlugin( {
-            // The path to ECMAScript file that contains `stylelint` configuration object.
-            configFile:    path.resolve( projectRoot, 'dev/css/.stylelintrc.js' ),
-
-            // Store the info about processed files in order to
-            // only operate on the changed ones the next time you run `stylelint`.
-            // By default, the cache is stored in `.stylelintcache` in `process.cwd()`.
-            cache:         true,
-
-            // A path to a file or directory to be used for cache.
-            cacheLocation: projectRoot,
-
-            // Specify the formatter that you would like to use to format your results.
-            formatter:      'string',
-
-            // Specify a non-standard syntax that should be used to parse source stylesheets.
-            syntax:         'scss',
-            fix:           true,
-        } ),
-    ],
-};
+    }
+} ) );

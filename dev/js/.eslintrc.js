@@ -47,29 +47,32 @@ const max = {
 
 module.exports = {
 
-    // Setting ECMAScript running environment
+    // Setting ECMAScript running environment.
     env: {
         browser: true,
         es6:     true,
         worker:  true,
     },
 
-    // ECMAScript parser option
+    // ECMAScript parser option.
     parserOptions: {
 
-        // ECMAScript syntax version
+        // ECMAScript syntax version.
         ecmaVersion,
 
-        // Code will run as ECMAScript module
+        // Code will run as ECMAScript module.
         sourceType: 'module',
 
-        // Additional language feature
+        // Additional language feature.
         ecmaFeatures: {
 
-            // Enable global strict mode
+            // Enable global strict mode.
             impliedStrict: true,
         },
     },
+
+    // Stop looking another .eslintrc.
+    root:  true,
     rules: {
 
         /** Possible Errors */
