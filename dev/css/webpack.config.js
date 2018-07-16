@@ -59,8 +59,8 @@ module.exports = {
         'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),
     },
     output: {
-        path: cssRoot,
-        filename: '[name].js'
+        path:     cssRoot,
+        filename: '[name].js',
     },
     context: staticRoot,
     target:  'web',

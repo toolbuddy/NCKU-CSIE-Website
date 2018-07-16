@@ -1,7 +1,6 @@
 extends /layouts/about.pug
 
 block stylesheets
-  +css( 'about/location' )
 
 block header
 
@@ -35,5 +34,4 @@ block content
 block footer
 
 block scripts
-  +js( 'components/about/location/location' )
-  script( async, defer, src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAyuT9wKJUcG2xLBz8aacPi6JMgDWHZZ0A&callback=initMap' )
+  +js( 'about/location' )

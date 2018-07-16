@@ -1,12 +1,9 @@
 const path = require( 'path' );
-const StyleLintPlugin = require( 'stylelint-webpack-plugin' );
-const autoprefixer = require( 'autoprefixer' );
-const cssnano = require( 'cssnano' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const jsRoot = path.resolve( projectRoot, 'static/src/js' );
-const cssRoot = path.resolve( projectRoot, 'static/dist/css' );
-const browsers = require( path.resolve( projectRoot, 'settings/browserlist/config.js' ) );
+const jsSrcRoot = path.resolve( projectRoot, 'static/src/js' );
+const jsDistRoot = path.resolve( projectRoot, 'static/dist/js' );
+const staticRoot = path.resolve( projectRoot, 'static' );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -16,59 +13,70 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( jsRoot, 'about/honor.js' ),
-        'about/intro':    path.resolve( jsRoot, 'about/intro.js' ),
-        'about/location': path.resolve( jsRoot, 'about/location.js' ),
-        'about/members':  path.resolve( jsRoot, 'about/members.js' ),
-        'about/teacher':  path.resolve( jsRoot, 'about/teacher.js' ),
-        'about/teachers': path.resolve( jsRoot, 'about/teachers.js' ),
+        'about/honor':    path.resolve( jsSrcRoot, 'about/honor.js' ),
+        'about/intro':    path.resolve( jsSrcRoot, 'about/intro.js' ),
+        'about/location': path.resolve( jsSrcRoot, 'about/location.js' ),
+        'about/members':  path.resolve( jsSrcRoot, 'about/members.js' ),
+        'about/teacher':  path.resolve( jsSrcRoot, 'about/teacher.js' ),
+        'about/teachers': path.resolve( jsSrcRoot, 'about/teachers.js' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( jsRoot, 'announcement/activity.js' ),
-        'announcement/administrator': path.resolve( jsRoot, 'announcement/administrator.js' ),
-        'announcement/all':           path.resolve( jsRoot, 'announcement/all.js' ),
-        'announcement/announcement':  path.resolve( jsRoot, 'announcement/announcement.js' ),
-        'announcement/recruitment':   path.resolve( jsRoot, 'announcement/recruitment.js' ),
-        'announcement/speech':        path.resolve( jsRoot, 'announcement/speech.js' ),
+        'announcement/activity':      path.resolve( jsSrcRoot, 'announcement/activity.js' ),
+        'announcement/administrator': path.resolve( jsSrcRoot, 'announcement/administrator.js' ),
+        'announcement/all':           path.resolve( jsSrcRoot, 'announcement/all.js' ),
+        'announcement/announcement':  path.resolve( jsSrcRoot, 'announcement/announcement.js' ),
+        'announcement/recruitment':   path.resolve( jsSrcRoot, 'announcement/recruitment.js' ),
+        'announcement/speech':        path.resolve( jsSrcRoot, 'announcement/speech.js' ),
 
         // Route `home`
-        'home/index': path.resolve( jsRoot, 'home/index.js' ),
+        'home/index': path.resolve( jsSrcRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/awards':       path.resolve( jsRoot, 'research/awards.js' ),
-        'research/conferences':  path.resolve( jsRoot, 'research/conferences.js' ),
-        'research/groups':       path.resolve( jsRoot, 'research/groups.js' ),
-        'research/labs':         path.resolve( jsRoot, 'research/labs.js' ),
-        'research/publications': path.resolve( jsRoot, 'research/publications.js' ),
+        'research/awards':       path.resolve( jsSrcRoot, 'research/awards.js' ),
+        'research/conferences':  path.resolve( jsSrcRoot, 'research/conferences.js' ),
+        'research/groups':       path.resolve( jsSrcRoot, 'research/groups.js' ),
+        'research/labs':         path.resolve( jsSrcRoot, 'research/labs.js' ),
+        'research/publications': path.resolve( jsSrcRoot, 'research/publications.js' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( jsRoot, 'resource/fix.js' ),
-        'resource/ieet':      path.resolve( jsRoot, 'resource/ieet.js' ),
-        'resource/law':       path.resolve( jsRoot, 'resource/law.js' ),
-        'resource/rent':      path.resolve( jsRoot, 'resource/rent.js' ),
-        'resource/resources': path.resolve( jsRoot, 'resource/resources.js' ),
+        'resource/fix':       path.resolve( jsSrcRoot, 'resource/fix.js' ),
+        'resource/ieet':      path.resolve( jsSrcRoot, 'resource/ieet.js' ),
+        'resource/law':       path.resolve( jsSrcRoot, 'resource/law.js' ),
+        'resource/rent':      path.resolve( jsSrcRoot, 'resource/rent.js' ),
+        'resource/resources': path.resolve( jsSrcRoot, 'resource/resources.js' ),
 
         // Route `student`
-        'student/college':       path.resolve( jsRoot, 'student/college.js' ),
-        'student/course':        path.resolve( jsRoot, 'student/course.js' ),
-        'student/international': path.resolve( jsRoot, 'student/international.js' ),
-        'student/master':        path.resolve( jsRoot, 'student/master.js' ),
-        'student/phd':           path.resolve( jsRoot, 'student/phd.js' ),
-        'student/scholarship':   path.resolve( jsRoot, 'student/scholarship.js' ),
+        'student/college':       path.resolve( jsSrcRoot, 'student/college.js' ),
+        'student/course':        path.resolve( jsSrcRoot, 'student/course.js' ),
+        'student/international': path.resolve( jsSrcRoot, 'student/international.js' ),
+        'student/master':        path.resolve( jsSrcRoot, 'student/master.js' ),
+        'student/phd':           path.resolve( jsSrcRoot, 'student/phd.js' ),
+        'student/scholarship':   path.resolve( jsSrcRoot, 'student/scholarship.js' ),
     },
     output: {
-        path: cssRoot,
+        path:     jsDistRoot,
+        filename: '[name].min.js',
     },
-    module: {
+    context: staticRoot,
+    target:  'web',
+    resolve: {
+        alias: {
+            pugComponent:   path.resolve( staticRoot, 'src/pug/components' ),
+            cssComponent:   path.resolve( staticRoot, 'dist/css' ),
+            jsComponent:    path.resolve( staticRoot, 'src/js/components' ),
+            imageComponent: path.resolve( staticRoot, 'src/image' ),
+        },
+    },
+    module:  {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.css$/,
                 use:  [
                     // Extract CSS file.
                     {
-                        loader:  'style-loader',
+                        loader:    'style-loader',
                         options: {
-                            filename: '[name].min.css',
+                            sourceMap: true,
                         },
                     },
 
@@ -79,29 +87,14 @@ module.exports = {
                             sourceMap: true,
                         },
                     },
-
-                    // Do some trick to CSS.
+                ],
+            },
+            {
+                test: /\.pug$/,
+                use:  [
+                    // Extract CSS file.
                     {
-                        loader:  'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            plugins:   [
-                                // Parse CSS and add vendor prefixed to CSS rules.
-                                autoprefixer( { browsers, } ),
-
-                                // CSS optimizations.
-                                cssnano(),
-                            ],
-                        },
-                    },
-
-                    // Compile `.scss` files to CSS files.
-                    {
-                        loader:  'sass-loader',
-                        options: {
-                            includePaths: [ sassRoot, ],
-                            sourceMap:    true,
-                        },
+                        loader:  'pug-loader',
                     },
                 ],
             },
@@ -113,26 +106,4 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        // `stylelint` plugin for webpack.
-        new StyleLintPlugin( {
-            // The path to ECMAScript file that contains `stylelint` configuration object.
-            configFile:    path.resolve( projectRoot, 'dev/css/.stylelintrc.js' ),
-
-            // Store the info about processed files in order to
-            // only operate on the changed ones the next time you run `stylelint`.
-            // By default, the cache is stored in `.stylelintcache` in `process.cwd()`.
-            cache:         true,
-
-            // A path to a file or directory to be used for cache.
-            cacheLocation: projectRoot,
-
-            // Specify the formatter that you would like to use to format your results.
-            formatter:      'string',
-
-            // Specify a non-standard syntax that should be used to parse source stylesheets.
-            syntax:         'scss',
-            fix:           true,
-        } ),
-    ],
 };

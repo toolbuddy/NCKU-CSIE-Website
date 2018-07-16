@@ -1,11 +1,12 @@
 extends /layouts/about.pug
 
 block append stylesheets
-  +css( 'about/teachers' )
 
 block append content
   include /components/common/topic.pug
   main.main
     +topic( '師資陣容' )
+    section#cards.cards
 
 block scripts
+  +js( 'about/teachers' )

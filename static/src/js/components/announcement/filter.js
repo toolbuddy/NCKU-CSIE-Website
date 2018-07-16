@@ -1,3 +1,4 @@
+// Construct filter's UI
 ( () => {
     let flip  = 0;
     const filterButton = document.getElementById( 'filter__button' );
@@ -18,3 +19,18 @@
         }
     };
 } )();
+
+// Construct filter tags' UI
+export default function filterTags ( defaultTag = null ) {
+    document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
+        tag.onclick = () => {
+            if ( tag.classList.contains( 'tags__tag--active' ) )
+                tag.classList.remove( 'tags__tag--active' );
+            else
+                tag.classList.add( 'tags__tag--active' );
+        };
+    } );
+
+    if ( defaultTag )
+        document.getElementById( `tags__tag--${ defaultTag }` ).classList.add( 'tags__tag--active' );
+}

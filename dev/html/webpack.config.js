@@ -1,5 +1,4 @@
 const path = require( 'path' );
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
@@ -56,22 +55,22 @@ module.exports = language.support.map( language => ( {
         'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),
     },
     output: {
-        path: htmlRoot,
+        path:     htmlRoot,
         filename: '[name].js',
     },
     context: staticRoot,
     target:  'web',
-    module: {
+    module:  {
         rules: [
             {
                 test: /\.pug$/,
                 use:  [
                     {
-                        loader: 'file-loader',
+                        loader:  'file-loader',
                         options: {
                             regExp: /pug\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+).pug/,
-                            name: `[1]/[2].${ language }.html`,
-                        }
+                            name:   `[1]/[2].${ language }.html`,
+                        },
                     },
                     'extract-loader',
                     'html-loader',
@@ -79,10 +78,10 @@ module.exports = language.support.map( language => ( {
                         loader:  'pug-html-loader',
                         options: {
                             basedir: pugRoot,
-                            data: {
-                                staticUrl: ''
-                            }
-                        }
+                            data:    {
+                                staticUrl: '',
+                            },
+                        },
                     },
                 ],
             },
@@ -93,5 +92,5 @@ module.exports = language.support.map( language => ( {
                 ],
             },
         ],
-    }
+    },
 } ) );

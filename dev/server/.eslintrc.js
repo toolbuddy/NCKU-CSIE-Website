@@ -1641,35 +1641,6 @@ module.exports = {
             'never',
         ],
 
-        // `import` sorting.
-        'sort-imports': [
-            'error',
-            {
-            // Do not ignore the case-sensitivity of the imports local name.
-                'ignoreCase':            false,
-
-                // Do not ignore the member sorting within a multiple member import declaration.
-                'ignoreMemberSort':      false,
-
-                // Member syntax sort order,
-                // all four options must be specified in the array,
-                // but you can customize their order.
-                'memberSyntaxSortOrder': [
-                    // Import module without exported bindings.
-                    'none',
-
-                    // Import all members provided by exported bindings.
-                    'all',
-
-                    // Import multiple members.
-                    'multiple',
-
-                    // Import single member.
-                    'single',
-                ],
-            },
-        ],
-
         // Require `Symbol` description.
         'symbol-description': 'error',
 
