@@ -6,12 +6,10 @@ const cssnano = require( 'cssnano' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const sassRoot = path.resolve( projectRoot, 'static/src/sass' );
+const imageRoot = path.resolve( projectRoot, 'static/src/image' );
 const cssRoot = path.resolve( projectRoot, 'static/dist/css' );
-const staticRoot = path.resolve( projectRoot, 'static/src' );
 const browsers = require( path.resolve( projectRoot, 'settings/browserlist/config.js' ) );
 const devMode = true;
-
-/* Process.env.NODE_ENV !== 'production'*/
 
 module.exports = {
     devtool: devMode ? 'inline-sourcemap' : null,
@@ -62,7 +60,6 @@ module.exports = {
         path:     cssRoot,
         filename: '[name].js',
     },
-    context: staticRoot,
     target:  'web',
     module:  {
         rules: [
@@ -104,7 +101,8 @@ module.exports = {
                     {
                         loader:  'sass-loader',
                         options: {
-                            includePaths: [ sassRoot, ],
+                            includePaths: [ sassRoot,
+                                imageRoot, ],
                             sourceMap:    true,
                         },
                     },
@@ -135,10 +133,7 @@ module.exports = {
             cache:         true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: path.resolve( projectRoot, '.stylelintcache' ),
-
-            // Specify the formatter that you would like to use to format your results.
-            formatter:      'string',
+            cacheLocation: path.resolve( projectRoot, 'node_modules/.cache/.stylelintcache' ),
 
             // Specify a non-standard syntax that should be used to parse source stylesheets.
             syntax:         'scss',

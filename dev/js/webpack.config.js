@@ -6,8 +6,6 @@ const jsDistRoot = path.resolve( projectRoot, 'static/dist/js' );
 const staticRoot = path.resolve( projectRoot, 'static' );
 const devMode = true;
 
-/* Process.env.NODE_ENV !== 'production'*/
-
 module.exports = {
     devtool: devMode ? 'inline-sourcemap' : null,
     mode:    devMode ? 'development' : 'production',
@@ -57,7 +55,6 @@ module.exports = {
         path:     jsDistRoot,
         filename: '[name].min.js',
     },
-    context: staticRoot,
     target:  'web',
     resolve: {
         alias: {
@@ -69,18 +66,16 @@ module.exports = {
     },
     module:  {
         rules: [
+            // CSS components.
             {
                 test: /\.css$/,
                 use:  [
-                    // Extract CSS file.
                     {
                         loader:    'style-loader',
                         options: {
                             sourceMap: true,
                         },
                     },
-
-                    // The `css-loader` interprets `@import` and `url()` like `import/require()` and will resolve them.
                     {
                         loader:  'css-loader',
                         options: {
@@ -89,15 +84,34 @@ module.exports = {
                     },
                 ],
             },
+
+            // ECMAScript components.
+            {
+                test:    /\.js$/,
+                use:     {
+                    loader:  'eslint-loader',
+                    options: {
+                        fix:           true,
+                        cache:         path.resolve( projectRoot, 'node_modules/.cache/.eslintcache-js' ),
+                        configFile:    path.resolve( projectRoot, 'dev/js/.eslintrc.js' ),
+                    },
+                },
+            },
+
+            // HTML components.
             {
                 test: /\.pug$/,
                 use:  [
-                    // Extract CSS file.
                     {
                         loader:  'pug-loader',
+                        options: {
+                            root: path.resolve( staticRoot, 'src/pug' ),
+                        },
                     },
                 ],
             },
+
+            // Image components
             {
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [

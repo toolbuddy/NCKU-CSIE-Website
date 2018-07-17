@@ -16,12 +16,6 @@ package-lock.json
 .npmrc
 .lock-wscript
 
-## Cache files
-.sass-cache
-.stylelintcache*
-.eslintcache*
-.cache*
-
 ## Sequelize generated schema
 models/*/tables
 

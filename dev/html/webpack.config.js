@@ -4,7 +4,6 @@ const projectRoot = path.dirname( path.dirname( __dirname ) );
 const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
-const staticRoot = path.resolve( projectRoot, 'static/src' );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -58,7 +57,6 @@ module.exports = language.support.map( language => ( {
         path:     htmlRoot,
         filename: '[name].js',
     },
-    context: staticRoot,
     target:  'web',
     module:  {
         rules: [

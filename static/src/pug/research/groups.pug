@@ -1,6 +1,8 @@
-doctype html
-html
-  head
-    title research_group
-  body
-    h1 this is page 'research/groups'
+extends /layouts/research.pug
+
+block append stylesheets
+
+block append content
+
+block append scripts
+  +js( 'research/groups' )
