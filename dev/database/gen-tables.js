@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const SequelizeAuto = require( 'sequelize-auto' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+const projectRoot = path.dirname( path.dirname( __dirname ) );
 
 module.exports = ( database, config ) => new SequelizeAuto(
     database,
@@ -10,7 +10,7 @@ module.exports = ( database, config ) => new SequelizeAuto(
         host:       config.host,
         camelCase:  true,
         dialect:    config.protocol,
-        directory:  `${ projectRoot }/models/${ database }/tables`,
+        directory:  path.resolve( projectRoot, `models/${ database }/tables` ),
         port:       config.port,
         additional: {
             timestamps: false,

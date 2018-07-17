@@ -92,7 +92,6 @@ module.exports = {
                     loader:  'eslint-loader',
                     options: {
                         fix:           true,
-                        cache:         path.resolve( projectRoot, 'node_modules/.cache/.eslintcache-js' ),
                         configFile:    path.resolve( projectRoot, 'dev/js/.eslintrc.js' ),
                     },
                 },
