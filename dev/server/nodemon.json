@@ -1,4 +1,5 @@
 {
+    "signal": "SIGTERM",
     "watch": [ "**/*.js", "package.json" ],
     "ignore": [ ".git/", "node_modules/", "static/" ],
     "ext": "js,json",

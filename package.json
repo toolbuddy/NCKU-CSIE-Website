@@ -4,7 +4,7 @@
   "description": "NCKU CSIE Website",
   "private": true,
   "scripts": {
-    "develop": "npm-run-all --parallel nodemon browser-sync watch",
+    "develop": "npm-run-all --parallel nodemon watch browser-sync",
     "nodemon": "nodemon --config dev/server/nodemon.json server.js",
     "browser-sync": "browser-sync --config dev/server/bs-config.js start",
     "pre-build": "npm-run-all pre-build:*",
