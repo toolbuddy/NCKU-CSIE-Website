@@ -1,7 +1,8 @@
-doctype html
-html
-  head
-    title intro
-  body
-    h1 intro
-    p intro content
+extends /layouts/about.pug
+
+block append stylesheets
+
+block append content
+
+block append scripts
+  +js( 'about/intro' )
