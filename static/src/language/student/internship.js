@@ -5,13 +5,13 @@ const filter = require( path.resolve( languageRoot, 'components/announcement/fil
 
 const i18n = Object.freeze( {
     'en-US': {
-        'topic':  'Course',
+        'topic':  'Internship',
         'top':    'Top Announcement',
         'normal': 'Announcement',
         'filter': filter[ 'en-US' ],
     },
     'zh-TW': {
-        'topic':  '課程資訊',
+        'topic':  '實習',
         'top':    '置頂貼文',
         'normal': '一般公告',
         'filter': filter[ 'zh-TW' ],
