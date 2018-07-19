@@ -1,6 +1,8 @@
-doctype html
-html
-  head
-    title master
-  body
-    h1 master
+extends /layouts/student.pug
+
+block append stylesheets
+
+block append content
+
+block append scripts
+  +js( 'resource/master' )

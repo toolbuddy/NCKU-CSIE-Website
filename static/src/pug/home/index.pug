@@ -1,7 +1,6 @@
 extends /layouts/home.pug
 
 block append stylesheets
-  +css( 'home/index' )
 
 block append header
   h1 welcome to ncku csie
@@ -75,63 +74,18 @@ block append header
             a( href='/resource/resources' ) | resources
 
 block append content
-  include /components/announcement/briefing.pug
   include /components/common/topic.pug
   main.content
     +topic( '最新消息' )
     section.announcement
-      nav.announcement__briefings.briefings
-        +briefings__briefing(
-          {
-            title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
-            time: '2018-2-2 | 15:02',
-            excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
-            articleUrl: '',
-            tags: [ 'college', 'administrator', 'international', 'teacher' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-            articleUrl: '',
-            tags: [ 'master', 'teacher' ]
-          }
-        )
+      nav#announcement__briefings.announcement__briefings.briefings
+
       button.announcement__button
         a( href='/announcement/all' ) 更多資訊...
     section.announcement.announcement--hot-news
       header.announcement__title.title
         h1.title__text 最近熱門
-      nav.announcement__briefings.briefings
-        +briefings__briefing--hot-news(
-          [
-            {
-              title: '標題二',
-              time: '2018-2-2 | 15:02',
-              excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
-              articleUrl: ''
-            },
-            {
-              title: '標題四標題四標題四標題四標題四標題四標題四標題四yyyyyyyyyyyyyyyyyysyfyydfysafaufajsfll',
-              time: '2018-2-2 | 15:02',
-              excerpt: '兩小段內文兩小段內文兩小段內文兩小段內文兩小段內文兩小段內文',
-              articleUrl: ''
-            },
-            {
-              title: '標題四',
-              time: '2018-2-2 | 15:02',
-              excerpt: '3小段內文',
-              articleUrl: ''
-            },
-            {
-              title: '標題四',
-              time: '2018-2-2 | 15:02',
-              excerpt: '4小段內文',
-              articleUrl: ''
-            }
-          ]
-        )
+      nav#announcement__briefings--hot-news.announcement__briefings.briefings
 
 block append scripts
+  +js( 'home/index' )
