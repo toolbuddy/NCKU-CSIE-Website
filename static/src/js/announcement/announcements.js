@@ -15,7 +15,7 @@ function getTags () {
 function getStartTime () {
     const startTime = new URLSearchParams( window.location.search ).get( 'startTime' );
     if ( startTime === null )
-        return new Date( '2018/6/1' );
+        return new Date( '2018/7/1' );
     return new Date( startTime );
 }
 
@@ -33,11 +33,19 @@ function getPage () {
     return page;
 }
 
+function dateFormating( date ){
+    return date.toISOString().substring(0, date.toISOString().indexOf('T'));
+}
+
 function updateURL ( queryString ) {
     if ( history.pushState ) {
         const newUrl = `${ window.location.protocol }//${ window.location.host }${ window.location.pathname }?${ queryString }`;
         window.history.pushState( { path: newUrl, }, '', newUrl );
     }
+}
+
+function generatePageButton( pageNumber ){
+    //?
 }
 
 function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), page = getPage(), language = 'zh-TW', } = { } ) {
@@ -50,8 +58,8 @@ function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime
         queryString.append( 'tags', getMainTag() );
 
     // Append time, which format to use?
-    queryString.append( 'startTime', startTime );
-    queryString.append( 'endTime', endTime );
+    queryString.append( 'startTime', dateFormating( startTime ));
+    queryString.append( 'endTime', dateFormating( endTime ) );
 
     // Append page
     queryString.append( 'page', page );
@@ -60,9 +68,14 @@ function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime
     queryString.append( 'language', language );
 
     const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/filter?${ queryString.toString() }`;
-    fetch( reqURL ).then( res => res.json() ).then( data => console.log( data ) );
+    let announcements;
+    fetch( reqURL ).then( res => res.json() ).then( data => announcements = data );
+    console.log( announcements );
+    // generatePageButton( announcements.length );
 }
+
 function tagButtonOnClick ( event ) {
+    // should use id
     const tagName = event.target.innerHTML;
     const queryString = new URLSearchParams( window.location.search );
     let usedTags = queryString.getAll( 'tags' );
@@ -89,7 +102,7 @@ function tagButtonOnClick ( event ) {
 function pageButtonOnClick ( event ) {
     const page = event.target.innerHTML;
     const queryString = new URLSearchParams( window.location.search );
-    if ( queryString.get( 'page' ) == page ) {
+    if ( queryString.get( 'page' ) === page ) {
         // If already at this page
         return;
     }
@@ -108,13 +121,13 @@ function dateOnChange ( event ) {
         return;
     }
 
-    queryString.set( event.target.id, newTime );
+    queryString.set( event.target.id, dateFormating( new Date(newTime) ) );
 
     updateURL( queryString );
     if ( event.target.id === 'startTime' )
-        getAnnouncementByFilters( { startTime: newTime, } );
+        getAnnouncementByFilters( { startTime: new Date(newTime), } );
     if ( event.target.id === 'endTime' )
-        getAnnouncementByFilters( { endTime: newTime, } );
+        getAnnouncementByFilters( { endTime: new Date(newTime), } );
 }
 
 getAnnouncementByFilters();

@@ -8,6 +8,7 @@ const getAnnouncement = require( `${ projectRoot }/models/announcement/operation
 
 apis.get( '/filter', async ( req, res ) => {
     let tag = [];
+
     if ( !Array.isArray( req.query.tags ) ) {
         // If req.query.tags is not an array
         if ( req.query.tags !== undefined )

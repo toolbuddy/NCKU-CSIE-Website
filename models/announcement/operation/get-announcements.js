@@ -6,7 +6,7 @@ const associations = require( `${ projectRoot }/models/announcement/operation/as
 
 module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ), endTime = new Date( '2018-07-18' ), page = 1, language = 'zh-TW', } = {} ) => {
     const table = await associations();
-    const announcementsPerPage = 3;
+    const announcementsPerPage = 6;
     let data = [];
     if ( tags.length === 0 ) {
         data = await table.announcement.findAll( {
