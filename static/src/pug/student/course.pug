@@ -3,6 +3,7 @@ extends /layouts/student.pug
 block append stylesheets
 
 block append content
+  - const i18n = require( path.resolve( languageRoot, 'student/course' ) );
 
 block append scripts
   +js( 'resource/course' )

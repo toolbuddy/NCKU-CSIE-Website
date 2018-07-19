@@ -5,6 +5,8 @@ block append stylesheets
 
 block append content
   include /components/announcement/announcement.pug
+  - const i18n = require( path.resolve( languageRoot, 'announcement/announcement' ) );
+
   main.content
     +announcement(
       {

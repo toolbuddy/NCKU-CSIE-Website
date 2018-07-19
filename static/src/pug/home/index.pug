@@ -75,16 +75,18 @@ block append header
 
 block append content
   include /components/common/topic.pug
+  - const i18n = require( path.resolve( languageRoot, 'home/index' ) );
+
   main.content
-    +topic( '最新消息' )
+    +topic( i18n[ language ].topic )
     section.announcement
       nav#announcement__briefings.announcement__briefings.briefings
 
       button.announcement__button
-        a( href='/announcement/all' ) 更多資訊...
+        a( href='/announcement/all' )= `${ i18n[ language ].more }...`
     section.announcement.announcement--hot-news
       header.announcement__title.title
-        h1.title__text 最近熱門
+        h1.title__text= i18n[ language ].hot
       nav#announcement__briefings--hot-news.announcement__briefings.briefings
 
 block append scripts

@@ -4,8 +4,10 @@ block append stylesheets
 
 block append content
   include /components/common/topic.pug
-  main.main
-    +topic( '師資陣容' )
+  - const i18n = require( path.resolve( languageRoot, 'about/teachers' ) );
+
+  main.content
+    +topic( i18n[ language ].topic )
     section#cards.cards
 
 block scripts

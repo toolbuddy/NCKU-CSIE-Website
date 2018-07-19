@@ -2,9 +2,11 @@ extends /layouts/about.pug
 
 block append stylesheets
 
-block content
+block append content
   include /components/about/teacher/profile.pug
-  main.main
+  - const i18n = require( path.resolve( languageRoot, 'about/teacher' ) );
+
+  main.content
 
 block append scripts
   +js( 'about/teacher' )

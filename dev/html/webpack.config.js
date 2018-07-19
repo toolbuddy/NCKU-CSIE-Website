@@ -3,7 +3,9 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
+const languageRoot = path.resolve( projectRoot, 'static/src/language' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
+const { staticUrl } = require( path.resolve( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -77,7 +79,11 @@ module.exports = language.support.map( language => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
-                                staticUrl: '',
+                                staticUrl,
+                                language,
+                                languageRoot,
+                                require,
+                                path,
                             },
                         },
                     },
