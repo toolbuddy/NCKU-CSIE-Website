@@ -23,7 +23,7 @@
     "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
     "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
     "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-js --fix \"static/src/js/**/*.js\"",
-    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix .",
+    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" \"static/src/language/**/*.js\" server.js",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "webpack --watch --config dev/css/webpack.config.js",
     "watch:html": "webpack --watch --config dev/html/webpack.config.js",

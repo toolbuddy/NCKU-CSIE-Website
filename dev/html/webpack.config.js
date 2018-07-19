@@ -3,7 +3,9 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
+const languageRoot = path.resolve( projectRoot, 'static/src/language' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
+const { staticUrl } = require( path.resolve( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -22,11 +24,9 @@ module.exports = language.support.map( language => ( {
 
         // Route `announcement`
         'announcement/activity':      path.resolve( pugRoot, 'announcement/activity.pug' ),
-        'announcement/administrator': path.resolve( pugRoot, 'announcement/administrator.pug' ),
         'announcement/all':           path.resolve( pugRoot, 'announcement/all.pug' ),
         'announcement/announcement':  path.resolve( pugRoot, 'announcement/announcement.pug' ),
         'announcement/recruitment':   path.resolve( pugRoot, 'announcement/recruitment.pug' ),
-        'announcement/speech':        path.resolve( pugRoot, 'announcement/speech.pug' ),
 
         // Route `home`
         'home/index': path.resolve( pugRoot, 'home/index.pug' ),
@@ -49,6 +49,7 @@ module.exports = language.support.map( language => ( {
         'student/college':       path.resolve( pugRoot, 'student/college.pug' ),
         'student/course':        path.resolve( pugRoot, 'student/course.pug' ),
         'student/international': path.resolve( pugRoot, 'student/international.pug' ),
+        'student/internship': path.resolve( pugRoot, 'student/internship.pug' ),
         'student/master':        path.resolve( pugRoot, 'student/master.pug' ),
         'student/phd':           path.resolve( pugRoot, 'student/phd.pug' ),
         'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),
@@ -77,7 +78,11 @@ module.exports = language.support.map( language => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
-                                staticUrl: '',
+                                staticUrl,
+                                language,
+                                languageRoot,
+                                require,
+                                path,
                             },
                         },
                     },

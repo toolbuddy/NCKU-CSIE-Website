@@ -20,11 +20,9 @@ module.exports = {
 
         // Route `announcement`
         'announcement/activity':      path.resolve( jsSrcRoot, 'announcement/activity.js' ),
-        'announcement/administrator': path.resolve( jsSrcRoot, 'announcement/administrator.js' ),
         'announcement/all':           path.resolve( jsSrcRoot, 'announcement/all.js' ),
         'announcement/announcement':  path.resolve( jsSrcRoot, 'announcement/announcement.js' ),
         'announcement/recruitment':   path.resolve( jsSrcRoot, 'announcement/recruitment.js' ),
-        'announcement/speech':        path.resolve( jsSrcRoot, 'announcement/speech.js' ),
 
         // Route `home`
         'home/index': path.resolve( jsSrcRoot, 'home/index.js' ),
@@ -47,6 +45,7 @@ module.exports = {
         'student/college':       path.resolve( jsSrcRoot, 'student/college.js' ),
         'student/course':        path.resolve( jsSrcRoot, 'student/course.js' ),
         'student/international': path.resolve( jsSrcRoot, 'student/international.js' ),
+        'student/internship': path.resolve( jsSrcRoot, 'student/internship.js' ),
         'student/master':        path.resolve( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.resolve( jsSrcRoot, 'student/phd.js' ),
         'student/scholarship':   path.resolve( jsSrcRoot, 'student/scholarship.js' ),

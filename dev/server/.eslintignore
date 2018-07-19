@@ -3,7 +3,7 @@
 #############################
 
 # Frontend ECMAScripts
-../../static/**/*.js
+../../static/js/**/*.js
 
 # NodeJS modules
 ../../node_modules
