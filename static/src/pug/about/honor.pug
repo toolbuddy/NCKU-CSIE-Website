@@ -1,7 +1,8 @@
-doctype html
-html
-  head
-    title honor
-  body
-    h1 honor
-    p honor content
+extends /layouts/about.pug
+
+block append stylesheets
+
+block append content
+
+block append scripts
+  +js( 'about/honor' )

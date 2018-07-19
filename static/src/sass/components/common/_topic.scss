@@ -1,17 +1,32 @@
+// block
+// `.topic`
+
 .topic {
+  $tablet: 992px;
+
+  // block [position]
   display: flex;
-  flex-direction: column;
-  color: #ffffff;
-  justify-content: space-between;
-  border-bottom: 1px solid #ffffff;
+  justify-content: center;
+
+  // block [skin]
+  height: 1.35rem;
+  color: #000000;
+  @media screen and ( min-width: $tablet ) {
+    justify-content: flex-start;
+    border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+  }
+
+  // element
+  // `.topic .topic__text`
 
   &__text {
-    &--small {
-      font-size: .625rem;
-    }
-
-    &--large {
-      font-size: 1.25rem;
+    // element [skin]
+    height: inherit;
+    width: auto;
+    border-bottom: solid .0156rem #213262;
+    font: {
+      weight: bold;
+      size: .75rem;
     }
   }
 }

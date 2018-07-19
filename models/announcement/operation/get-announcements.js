@@ -4,7 +4,7 @@ const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ), endTime = new Date( '2018-07-18' ), page = 1, language = 'zh-TW', } = {} ) => {
+module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISOString(), endTime = new Date().toISOString(), page = 1, language = 'zh-TW', } = {} ) => {
     const table = await associations();
     const announcementsPerPage = 6;
     let data = [];

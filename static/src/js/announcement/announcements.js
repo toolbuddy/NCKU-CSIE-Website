@@ -33,8 +33,8 @@ function getPage () {
     return page;
 }
 
-function dateFormating( date ){
-    return date.toISOString().substring(0, date.toISOString().indexOf('T'));
+function dateFormating ( date ) {
+    return date.toISOString().substring( 0, date.toISOString().indexOf( 'T' ) );
 }
 
 function updateURL ( queryString ) {
@@ -44,8 +44,28 @@ function updateURL ( queryString ) {
     }
 }
 
-function generatePageButton( pageNumber ){
-    //?
+function getPageNumber ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), } = { } ) {
+    /* eslint no-console: 'off' */
+    console.log('get page number enter');
+    // Need injection protection
+    const queryString = new URLSearchParams();
+
+    // Append tags
+    tags.forEach( tag => queryString.append( 'tags', tag ) );
+    if ( getMainTag() )
+        queryString.append( 'tags', getMainTag() );
+
+    // Append time, which format to use?
+    queryString.append( 'startTime', dateFormating( startTime ) );
+    queryString.append( 'endTime', dateFormating( endTime ) );
+
+    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/pagenumber?${ queryString.toString() }`;
+    let pageNumber = 0;
+    fetch( reqURL ).then( res => res.json() ).then( ( data ) => {
+        pageNumber = data.pageNumber;
+    } );
+    /* eslint no-console: 'off' */
+    console.log( pageNumber );
 }
 
 function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), page = getPage(), language = 'zh-TW', } = { } ) {
@@ -57,8 +77,8 @@ function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime
     if ( getMainTag() )
         queryString.append( 'tags', getMainTag() );
 
-    // Append time, which format to use?
-    queryString.append( 'startTime', dateFormating( startTime ));
+    // Append time
+    queryString.append( 'startTime', dateFormating( startTime ) );
     queryString.append( 'endTime', dateFormating( endTime ) );
 
     // Append page
@@ -69,13 +89,16 @@ function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime
 
     const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/filter?${ queryString.toString() }`;
     let announcements;
-    fetch( reqURL ).then( res => res.json() ).then( data => announcements = data );
+    fetch( reqURL ).then( res => res.json() ).then( ( data ) => {
+        announcements = data;
+    } );
+    /* eslint no-console: 'off' */
     console.log( announcements );
-    // generatePageButton( announcements.length );
 }
 
+/* eslint no-unused-vars: 'off' */
 function tagButtonOnClick ( event ) {
-    // should use id
+    // Should use id
     const tagName = event.target.innerHTML;
     const queryString = new URLSearchParams( window.location.search );
     let usedTags = queryString.getAll( 'tags' );
@@ -96,9 +119,12 @@ function tagButtonOnClick ( event ) {
         usedTags.forEach( tag => queryString.append( 'tags', tag ) );
     }
     updateURL( queryString );
+    console.log('get page number');
+    getPageNumber( { tags: usedTags, } );
     getAnnouncementByFilters( { tags: usedTags, } );
 }
 
+/* eslint no-unused-vars: 'off' */
 function pageButtonOnClick ( event ) {
     const page = event.target.innerHTML;
     const queryString = new URLSearchParams( window.location.search );
@@ -113,21 +139,29 @@ function pageButtonOnClick ( event ) {
     getAnnouncementByFilters( { page, } );
 }
 
+/* eslint no-unused-vars: 'off' */
 function dateOnChange ( event ) {
     const queryString = new URLSearchParams( window.location.search );
+
+    // Element.value will get 2018-07-18 format
     const newTime = document.getElementById( event.target.id ).value;
     if ( queryString.get( event.target.id ) === newTime ) {
         // If already at this day
         return;
     }
 
-    queryString.set( event.target.id, dateFormating( new Date(newTime) ) );
+    queryString.set( event.target.id, dateFormating( new Date( newTime ) ) );
 
     updateURL( queryString );
-    if ( event.target.id === 'startTime' )
-        getAnnouncementByFilters( { startTime: new Date(newTime), } );
-    if ( event.target.id === 'endTime' )
-        getAnnouncementByFilters( { endTime: new Date(newTime), } );
+    if ( event.target.id === 'startTime' ) {
+        getPageNumber( { startTime: new Date( newTime ), } );
+        getAnnouncementByFilters( { startTime: new Date( newTime ), } );
+    }
+    if ( event.target.id === 'endTime' ) {
+        getPageNumber( { endTime: new Date( newTime ), } );
+        getAnnouncementByFilters( { endTime: new Date( newTime ), } );
+    }
 }
 
+getPageNumber();
 getAnnouncementByFilters();

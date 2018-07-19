@@ -1,6 +1,25 @@
-doctype html
-html
-  head
-    title 所有公告
-  body
-    h1 所有公告
+extends /layouts/announcement/briefing.pug
+
+block append stylesheets
+  +css( 'announcement/all' )
+
+block append content
+  include /components/common/topic.pug
+  include /components/announcement/filter.pug
+  include /components/announcement/title.pug
+  main.content
+    +topic( '全部公告' )
+    +filter(
+      'all','teacher','administrator','college', 'master','phd','speech','conference','recruitment',
+      'exhibition','competition','scholarship','international','internship','law'
+    )
+    section.announcement
+      +announcement__title( '置頂貼文' )
+      nav#announcement__brefings--top.announcement__briefings.briefings
+
+    section.announcement
+      +announcement__title( '一般公告' )
+      nav#announcement__brefings.announcement__briefings.briefings
+
+block append scripts
+  +js( 'announcement/all' )

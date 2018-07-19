@@ -1,6 +1,8 @@
-doctype html
-html
-  head
-    title conference
-  body
-    h1 this is page 'research/conferences'
+extends /layouts/research.pug
+
+block append stylesheets
+
+block append content
+
+block append scripts
+  +js( 'research/conferences' )

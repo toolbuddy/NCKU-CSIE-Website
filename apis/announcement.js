@@ -5,6 +5,31 @@ const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
 const getAnnouncements = require( `${ projectRoot }/models/announcement/operation/get-announcements` );
 const getAnnouncement = require( `${ projectRoot }/models/announcement/operation/get-announcement` );
+const getPageNumber = require( `${ projectRoot }/models/announcement/operation/get-page-number` );
+
+apis.get( '/pages', async ( req, res ) => {
+    let tag = [];
+    if ( !Array.isArray( req.query.tags ) ) {
+        // If req.query.tags is not an array
+        if ( req.query.tags !== undefined )
+            tag = Array.of( req.query.tags );
+    }
+    else {
+        // If req.query.tags is an array
+        tag = [ ...req.query.tags, ];
+    }
+    try {
+        res.json( await getPageNumber( {
+            tags:      tag,
+            startTime: req.query.startTime,
+            endTime:   req.query.endTime,
+        } ) );
+    }
+    catch ( e ) {
+        console.log(e);
+        res.status( 404 ).send( { error: 'Not found!', } );
+    }
+} );
 
 apis.get( '/filter', async ( req, res ) => {
     let tag = [];
