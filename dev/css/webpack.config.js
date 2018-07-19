@@ -25,11 +25,9 @@ module.exports = {
 
         // Route `announcement`
         'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.scss' ),
-        'announcement/administrator': path.resolve( sassRoot, 'announcement/administrator.scss' ),
         'announcement/all':           path.resolve( sassRoot, 'announcement/all.scss' ),
         'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.scss' ),
         'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.scss' ),
-        'announcement/speech':        path.resolve( sassRoot, 'announcement/speech.scss' ),
 
         // Route `home`
         'home/index': path.resolve( sassRoot, 'home/index.scss' ),
@@ -52,6 +50,7 @@ module.exports = {
         'student/college':       path.resolve( sassRoot, 'student/college.scss' ),
         'student/course':        path.resolve( sassRoot, 'student/course.scss' ),
         'student/international': path.resolve( sassRoot, 'student/international.scss' ),
+        'student/internship': path.resolve( sassRoot, 'student/internship.scss' ),
         'student/master':        path.resolve( sassRoot, 'student/master.scss' ),
         'student/phd':           path.resolve( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),

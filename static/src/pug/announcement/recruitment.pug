@@ -6,16 +6,15 @@ block append content
   include /components/common/topic.pug
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
+  - const i18n = require( path.resolve( languageRoot, 'announcement/recruitment' ) );
+
   main.content
-    +topic( '企業徵才' )
-    +filter(
-      'all','teacher','administrator','college', 'master','phd','speech','conference','recruitment',
-      'exhibition','competition','scholarship','international','internship','law'
-    )
+    +topic( i18n[ language ].topic )
+    +filter( 'recruitment' )
     section.announcement
-      +announcement__title( '置頂貼文' )
+      +announcement__title( i18n[ language ].top )
     section.announcement
-      +announcement__title( '一般公告' )
+      +announcement__title( i18n[ language ].normal )
       nav.announcement__briefings.briefings
 block append scripts
   +js( 'announcement/recruitment' )

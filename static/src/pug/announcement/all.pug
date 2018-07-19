@@ -1,24 +1,38 @@
 extends /layouts/announcement/briefing.pug
 
 block append stylesheets
-  +css( 'announcement/all' )
 
 block append content
   include /components/common/topic.pug
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
+  - const i18n = require( path.resolve( languageRoot, 'announcement/all' ) );
+
   main.content
-    +topic( '全部公告' )
+    +topic( i18n[ language ].topic )
     +filter(
-      'all','teacher','administrator','college', 'master','phd','speech','conference','recruitment',
-      'exhibition','competition','scholarship','international','internship','law'
+      'all',
+      'college',
+      'competition',
+      'conference',
+      'course',
+      'exhibition',
+      'international',
+      'internship',
+      'master',
+      'phd',
+      'recruitment',
+      'rule',
+      'scholarship',
+      'speech',
+      'teacher'
     )
     section.announcement
-      +announcement__title( '置頂貼文' )
+      +announcement__title( i18n[ language ].top )
       nav#announcement__brefings--top.announcement__briefings.briefings
 
     section.announcement
-      +announcement__title( '一般公告' )
+      +announcement__title( i18n[ language ].normal )
       nav#announcement__brefings.announcement__briefings.briefings
 
 block append scripts
