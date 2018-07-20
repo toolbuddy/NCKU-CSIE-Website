@@ -30,7 +30,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                             'name',
                         ],
                         where: {
-                            language,
+                            language: 'en-US',
                         },
                     },
                 ],
@@ -44,6 +44,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                         as:         'announcementFileI18n',
                         attributes: [
                             'url',
+                            'name',
                         ],
                         where: {
                             language,
@@ -52,6 +53,7 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
                 ],
                 attributes: [
                     'type',
+                    'uploadTime',
                 ],
             },
         ],
@@ -72,15 +74,17 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
             id:          announcement.announcementId,
             title:       announcement.announcementI18n[ 0 ].title,
             content:     announcement.announcementI18n[ 0 ].content,
-            autohr:      announcement.author,
+            author:      announcement.author,
             publishTime: announcement.publishTime,
             updateTime:  announcement.updateTime,
             views:       announcement.views,
             isPinned:    announcement.isPinned,
             files:       announcement.announcementFile.map(
                 announcementFile => ( {
+                    uploadTime: announcementFile.uploadTime,
                     type: announcementFile.type,
                     url:  announcementFile.announcementFileI18n[ 0 ].url,
+                    name:  announcementFile.announcementFileI18n[ 0 ].name,
                 } ),
             ),
             tags:        announcement.announcementTag.map(

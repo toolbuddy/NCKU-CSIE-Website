@@ -1,3 +1,5 @@
+import briefing from 'pugComponent/announcement/briefing.pug';
+
 function getMainTag () {
     const mainTag = location.pathname.split( '/' ).pop();
     if ( mainTag === 'all' )
@@ -33,8 +35,14 @@ function getPage () {
     return page;
 }
 
+// This format for database
 function dateFormating ( date ) {
     return date.toISOString().substring( 0, date.toISOString().indexOf( 'T' ) );
+}
+
+// This format for style
+function timeFormating ( time ) {
+    return `${ time.substring( 0, time.indexOf( 'T' ) ) } | ${ time.substring( time.indexOf( 'T' ) + 1, time.indexOf( '.' ) ) }`;
 }
 
 function updateURL ( queryString ) {
@@ -44,9 +52,7 @@ function updateURL ( queryString ) {
     }
 }
 
-function getPageNumber ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), } = { } ) {
-    /* eslint no-console: 'off' */
-    console.log('get page number enter');
+async function getPageNumber ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), } = { } ) {
     // Need injection protection
     const queryString = new URLSearchParams();
 
@@ -55,20 +61,23 @@ function getPageNumber ( { tags = getTags(), startTime = getStartTime(), endTime
     if ( getMainTag() )
         queryString.append( 'tags', getMainTag() );
 
-    // Append time, which format to use?
+    // Append time
     queryString.append( 'startTime', dateFormating( startTime ) );
     queryString.append( 'endTime', dateFormating( endTime ) );
 
-    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/pagenumber?${ queryString.toString() }`;
-    let pageNumber = 0;
-    fetch( reqURL ).then( res => res.json() ).then( ( data ) => {
-        pageNumber = data.pageNumber;
-    } );
+    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/pages?${ queryString.toString() }`;
+    const pageNumber = await fetch( reqURL ).then( res => res.json() ).then( data => data.pageNumber );
     /* eslint no-console: 'off' */
     console.log( pageNumber );
 }
 
-function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime(), endTime = getEndTime(), page = getPage(), language = 'zh-TW', } = { } ) {
+async function getAnnouncementByFilters ( {
+    tags = getTags(),
+    startTime = getStartTime(),
+    endTime = getEndTime(),
+    page = getPage(),
+    language = 'zh-TW',
+} = { } ) {
     // Need injection protection
     const queryString = new URLSearchParams();
 
@@ -88,21 +97,37 @@ function getAnnouncementByFilters ( { tags = getTags(), startTime = getStartTime
     queryString.append( 'language', language );
 
     const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/filter?${ queryString.toString() }`;
-    let announcements;
-    fetch( reqURL ).then( res => res.json() ).then( ( data ) => {
-        announcements = data;
+    const announcements = await fetch( reqURL ).then( res => res.json() );
+    const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
+    const announcementBriefing = document.getElementById( 'announcement__brefings' );
+    announcementBriefingTop.innerHTML = '';
+    announcementBriefing.innerHTML = '';
+    announcements.forEach( ( announcement ) => {
+        if ( announcement.isPinned ) {
+            announcementBriefingTop.innerHTML += briefing( {
+                id:      announcement.id,
+                title:   announcement.title,
+                time:    timeFormating( announcement.updateTime ),
+                content: announcement.content,
+                tags:    announcement.tags.map( tag => tag.name ),
+            } );
+        }
+        announcementBriefing.innerHTML += briefing( {
+            id:      announcement.id,
+            title:   announcement.title,
+            time:    timeFormating( announcement.updateTime ),
+            content: announcement.content,
+            tags:    announcement.tags.map( tag => tag.name ),
+        } );
     } );
-    /* eslint no-console: 'off' */
-    console.log( announcements );
 }
 
-/* eslint no-unused-vars: 'off' */
-function tagButtonOnClick ( event ) {
+export function tagButtonOnClick ( event ) {
     // Should use id
-    const tagName = event.target.innerHTML;
+    const tagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
     const queryString = new URLSearchParams( window.location.search );
     let usedTags = queryString.getAll( 'tags' );
-    if ( tagName === '全部' || tagName === 'All' ) {
+    if ( tagName === '全部' || tagName === 'all' ) {
         // If clicked all, which means no filter been used, need to remove all filter
         usedTags = [];
         queryString.delete( 'tags' );
@@ -119,13 +144,11 @@ function tagButtonOnClick ( event ) {
         usedTags.forEach( tag => queryString.append( 'tags', tag ) );
     }
     updateURL( queryString );
-    console.log('get page number');
     getPageNumber( { tags: usedTags, } );
     getAnnouncementByFilters( { tags: usedTags, } );
 }
 
-/* eslint no-unused-vars: 'off' */
-function pageButtonOnClick ( event ) {
+export function pageButtonOnClick ( event ) {
     const page = event.target.innerHTML;
     const queryString = new URLSearchParams( window.location.search );
     if ( queryString.get( 'page' ) === page ) {
@@ -139,8 +162,7 @@ function pageButtonOnClick ( event ) {
     getAnnouncementByFilters( { page, } );
 }
 
-/* eslint no-unused-vars: 'off' */
-function dateOnChange ( event ) {
+export function dateOnChange ( event ) {
     const queryString = new URLSearchParams( window.location.search );
 
     // Element.value will get 2018-07-18 format
@@ -149,19 +171,28 @@ function dateOnChange ( event ) {
         // If already at this day
         return;
     }
-
-    queryString.set( event.target.id, dateFormating( new Date( newTime ) ) );
-
-    updateURL( queryString );
-    if ( event.target.id === 'startTime' ) {
-        getPageNumber( { startTime: new Date( newTime ), } );
-        getAnnouncementByFilters( { startTime: new Date( newTime ), } );
+    else if ( newTime === '' ) {
+        queryString.delete( event.target.id );
+        updateURL( queryString );
+        getPageNumber();
+        getAnnouncementByFilters();
     }
-    if ( event.target.id === 'endTime' ) {
-        getPageNumber( { endTime: new Date( newTime ), } );
-        getAnnouncementByFilters( { endTime: new Date( newTime ), } );
+    else {
+        queryString.set( event.target.id, dateFormating( new Date( newTime ) ) );
+
+        updateURL( queryString );
+        if ( event.target.id === 'startTime' ) {
+            getPageNumber( { startTime: new Date( newTime ), } );
+            getAnnouncementByFilters( { startTime: new Date( newTime ), } );
+        }
+        if ( event.target.id === 'endTime' ) {
+            getPageNumber( { endTime: new Date( newTime ), } );
+            getAnnouncementByFilters( { endTime: new Date( newTime ), } );
+        }
     }
 }
 
-getPageNumber();
-getAnnouncementByFilters();
+export function getAnnouncements () {
+    getPageNumber();
+    getAnnouncementByFilters();
+}

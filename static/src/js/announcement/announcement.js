@@ -3,6 +3,7 @@
  */
 /* eslint no-unused-vars: 'off' */
 import style from 'cssComponent/announcement/announcement.min.css';
+import announcement from 'pugComponent/announcement/announcement.pug';
 
 let id = /announcement\/(\d+)/.exec( window.location.pathname );
 
@@ -11,7 +12,23 @@ if ( id === null )
 else
     id = id[ 1 ];
 
-const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/${ id }${ location.search }`;
+function timeFormating ( time ) {
+    return `${ time.substring( 0, time.indexOf( 'T' ) ) } | ${ time.substring( time.indexOf( 'T' ) + 1, time.indexOf( '.' ) ) }`;
+}
 
-/* eslint no-console: 'off' */
-fetch( reqURL ).then( res => res.json() ).then( data => console.log( data ) );
+const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/${ id }${ location.search }`;
+( async () => {
+    const data = await fetch( reqURL ).then( res => res.json() );
+    const content = document.getElementById( 'content' );
+    console.log( data );
+    content.innerHTML = announcement(
+        {
+            title:       data.title,
+            tags:        data.tags.map( tag => tag.name ),
+            author:      data.author,
+            time:        timeFormating( data.updateTime ),
+            content:     data.content,
+            attachments: data.files,
+        }
+    );
+} )();

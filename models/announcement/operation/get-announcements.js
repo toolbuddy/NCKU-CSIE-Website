@@ -49,7 +49,7 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
                                 'name',
                             ],
                             where: {
-                                language,
+                                language: 'en-US',
                             },
                         },
 
@@ -141,7 +141,7 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
                                 'name',
                             ],
                             where: {
-                                language,
+                                language: 'en-US',
                             },
                         },
 

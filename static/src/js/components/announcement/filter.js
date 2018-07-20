@@ -1,6 +1,19 @@
+import { tagButtonOnClick, dateOnChange, pageButtonOnClick, getAnnouncements, } from 'jsComponent/announcement/announcements.js';
+
+// Get announcements by default filter
+getAnnouncements();
+
+// Event handlers
+Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
+    tagButton.addEventListener( 'click', tagButtonOnClick );
+} );
+Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
+    dateInput.addEventListener( 'change', dateOnChange );
+} );
+
 // Construct filter's UI
 ( () => {
-    let flip  = 0;
+    let flip = 0;
     const filterButton = document.getElementById( 'filter__button' );
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
