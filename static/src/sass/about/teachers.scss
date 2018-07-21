@@ -1,14 +1,14 @@
 @import 'components/common/reset';
-@import 'components/common/topic';
 @import 'components/about/teachers/card';
+@import 'components/common/topic';
 
 // block
-// `.main`
+// `.content`
 
-.main {
+.content {
   // block [skin]
   width: 100%;
-  background-color: rgb( 51, 60, 78 );
+  background-color: #ffffff;
 
   // block [layout]
   display: grid;
@@ -25,7 +25,7 @@
   };
 
   // block
-  // `.main .topic`
+  // `.content .topic`
 
   .topic {
     // element [position]
@@ -33,7 +33,7 @@
   }
 
   // block
-  // `.main .cards`
+  // `.content .cards`
 
   .cards {
     // element [position]

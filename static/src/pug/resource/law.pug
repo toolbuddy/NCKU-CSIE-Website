@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title 法規編彙
-  body
-    h1 法規編彙
+extends /layouts/resource.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'resource/law' ) );
+
+block append scripts
+  +js( 'resource/law' )

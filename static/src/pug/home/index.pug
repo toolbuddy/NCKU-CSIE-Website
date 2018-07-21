@@ -1,9 +1,9 @@
-doctype html
-html
-  head
-    title ncku csie
-  body
-    h1 welcome to ncku csie
+extends /layouts/home.pug
+
+block append stylesheets
+
+block append header
+  h1 welcome to ncku csie
     ul
       li.dropdown
         a( href='#student' ) | student
@@ -72,3 +72,22 @@ html
             a( href='/resource/ieet' ) | IEET
           li
             a( href='/resource/resources' ) | resources
+
+block append content
+  include /components/common/topic.pug
+  - const i18n = require( path.resolve( languageRoot, 'home/index' ) );
+
+  main.content
+    +topic( i18n[ language ].topic )
+    section.announcement
+      nav#announcement__briefings.announcement__briefings.briefings
+
+      button.announcement__button
+        a( href='/announcement/all' )= `${ i18n[ language ].more }...`
+    section.announcement.announcement--hot-news
+      header.announcement__title.title
+        h1.title__text= i18n[ language ].hot
+      nav#announcement__briefings--hot-news.announcement__briefings.briefings
+
+block append scripts
+  +js( 'home/index' )

@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title lab
-  body
-    h1 this is page 'research/labs'
+extends /layouts/research.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'research/labs' ) );
+
+block append scripts
+  +js( 'research/labs' )

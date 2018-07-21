@@ -1,7 +1,9 @@
-doctype html
-html
-  head
-    title members
-  body
-    h1 members
-    p members content
+extends /layouts/about.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'about/members' ) );
+
+block append scripts
+  +js( 'about/members' )
