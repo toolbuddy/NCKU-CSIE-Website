@@ -9,15 +9,21 @@
 
 .content {
   $mobile: 768px;
-  $tablet: 992px;
+  $tablet: 920px;
 
   // block [skin]
   padding: 2.2rem 1rem;
   @media screen and ( min-width: $mobile ) {
-    padding: 4.6rem 3.6rem;
+    padding: 3rem 3.6rem;
   }
-  @media screen and ( min-width: $tablet ) {
-    padding: 2rem 4.5rem;
+  @media screen and ( min-width: 870px ) {
+    padding: 3rem 5.6rem;
+  }
+  @media screen and ( min-width: 1000px ) {
+    padding: 3rem 8rem;
+  }
+  @media screen and ( min-width: 1200px ) {
+    padding: 3rem 10rem;
   }
 
   // block [layout]
@@ -35,12 +41,6 @@
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $tablet ) {
-      grid-column: {
-        start: 2;
-        end: 10;
-      }
-    }
   }
 
   // block
@@ -51,12 +51,6 @@
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $tablet ) {
-      grid-column: {
-        start: 2;
-        end: 10;
-      }
-    }
   }
 
   // block
@@ -66,12 +60,6 @@
     grid-column: {
       start: 1;
       end: 11;
-    }
-    @media screen and ( min-width: $tablet ) {
-      grid-column: {
-        start: 2;
-        end: 10;
-      }
     }
   }
 }

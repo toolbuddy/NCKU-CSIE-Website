@@ -1,7 +1,9 @@
-doctype html
-html
-  head
-    title honor
-  body
-    h1 honor
-    p honor content
+extends /layouts/about.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'about/honor' ) );
+
+block append scripts
+  +js( 'about/honor' )

@@ -1,89 +1,39 @@
 extends /layouts/announcement/briefing.pug
 
 block append stylesheets
-  +css( 'announcement/all' )
 
 block append content
-  include /components/announcement/briefing.pug
   include /components/common/topic.pug
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
+  - const i18n = require( path.resolve( languageRoot, 'announcement/all' ) );
+
   main.content
-    +topic( '全部公告' )
+    +topic( i18n[ language ].topic )
     +filter(
-      'all','teacher','administrator','college', 'master','phd','speech','conference','recruitment',
-      'exhibition','competition','scholarship','international','internship','law'
+      'all',
+      'college',
+      'competition',
+      'conference',
+      'course',
+      'exhibition',
+      'international',
+      'internship',
+      'master',
+      'phd',
+      'recruitment',
+      'rule',
+      'scholarship',
+      'speech',
+      'teacher'
     )
     section.announcement
-      +announcement__title( '置頂貼文' )
-      nav.announcement__briefings.briefings
-        +briefings__briefing(
-          {
-            title: '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
-            time: '2018-2-2 | 15:02',
-            excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
-            articleUrl: '',
-            tags: [ 'college', 'speech', 'phd' ]
-          }
-        )
+      +announcement__title( i18n[ language ].top )
+      nav#announcement__brefings--top.announcement__briefings.briefings
+
     section.announcement
-      +announcement__title( '一般公告' )
-      nav.announcement__briefings.briefings
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-            articleUrl: '/about/teachers',
-            tags: [ 'college', 'speech', 'phd' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-            articleUrl: '',
-            tags: [ 'recruitment', 'teacher', 'exhibition' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-            articleUrl: '/about/teachers',
-            tags: [ 'college', 'speech', 'phd' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-            articleUrl: '',
-            tags: [ 'recruitment', 'teacher', 'exhibition' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-            articleUrl: '/about/teachers',
-            tags: [ 'college', 'speech', 'phd' ]
-          }
-        )
-        +briefings__briefing(
-          {
-            title: '標題二',
-            time: '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-            articleUrl: '',
-            tags: [ 'recruitment', 'teacher', 'exhibition' ]
-          }
-        )
+      +announcement__title( i18n[ language ].normal )
+      nav#announcement__brefings.announcement__briefings.briefings
+
 block append scripts
-  +js( 'components/announcement/get-filter' )
-  +js( 'components/announcement/filter-tag-active' )
   +js( 'announcement/all' )

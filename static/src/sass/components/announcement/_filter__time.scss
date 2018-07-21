@@ -2,12 +2,13 @@
 // `.time`
 
 .time {
+  $small: 500px;
   $mobile: 768px;
 
   // block [layout]
   display: flex;
   flex-direction: column;
-  @media screen and ( min-width: $mobile ) {
+  @media screen and ( min-width: $small ) {
     flex-direction: row;
   }
 
