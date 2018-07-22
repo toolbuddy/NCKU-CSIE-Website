@@ -82,9 +82,9 @@ module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
             files:       announcement.announcementFile.map(
                 announcementFile => ( {
                     uploadTime: announcementFile.uploadTime,
-                    type: announcementFile.type,
-                    url:  announcementFile.announcementFileI18n[ 0 ].url,
-                    name:  announcementFile.announcementFileI18n[ 0 ].name,
+                    type:       announcementFile.type,
+                    url:        announcementFile.announcementFileI18n[ 0 ].url,
+                    name:       announcementFile.announcementFileI18n[ 0 ].name,
                 } ),
             ),
             tags:        announcement.announcementTag.map(

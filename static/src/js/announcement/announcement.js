@@ -20,7 +20,6 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/ann
 ( async () => {
     const data = await fetch( reqURL ).then( res => res.json() );
     const content = document.getElementById( 'content' );
-    console.log( data );
     content.innerHTML = announcement(
         {
             title:       data.title,

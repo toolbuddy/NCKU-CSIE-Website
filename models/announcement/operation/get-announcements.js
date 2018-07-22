@@ -4,7 +4,13 @@ const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISOString(), endTime = new Date().toISOString(), page = 1, language = 'zh-TW', } = {} ) => {
+module.exports = async ( {
+    tags = [],
+    startTime = new Date( '2018-07-01' ).toISOString(),
+    endTime = new Date().toISOString(),
+    page = 1,
+    language = 'zh-TW',
+} = {} ) => {
     const table = await associations();
     const announcementsPerPage = 6;
     let data = [];
@@ -12,7 +18,6 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
         data = await table.announcement.findAll( {
             attributes: [
                 'announcementId',
-                'isPinned',
                 'updateTime',
             ],
             where: {
@@ -69,7 +74,6 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
                 id:   tag.tagId,
                 name: tag.tagI18n[ 0 ].name,
             } ) ),
-            isPinned:   announcement.isPinned,
         } ) ) );
     }
     else {
@@ -107,7 +111,6 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
         .then( requiredId => table.announcement.findAll( {
             attributes: [
                 'announcementId',
-                'isPinned',
                 'updateTime',
             ],
             where: {
@@ -158,7 +161,6 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
                 id:   tag.tagId,
                 name: tag.tagI18n[ 0 ].name,
             } ) ),
-            isPinned:   announcement.isPinned,
         } ) ) ) );
     }
     table.database.close();

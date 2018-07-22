@@ -67,8 +67,15 @@ async function getPageNumber ( { tags = getTags(), startTime = getStartTime(), e
 
     const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/pages?${ queryString.toString() }`;
     const pageNumber = await fetch( reqURL ).then( res => res.json() ).then( data => data.pageNumber );
-    /* eslint no-console: 'off' */
-    console.log( pageNumber );
+
+    const pageButtonsContainer = document.getElementById( 'pageButtons' );
+    pageButtonsContainer.innerHTML = '';
+    for ( let i = 1; i <= pageNumber; ++i )
+        pageButtonsContainer.innerHTML += `<button type="button" class="pageButton">${ i }</button>`;
+    Array.from( document.getElementsByClassName( 'pageButton' ) ).forEach( ( pageButton ) => {
+        /* eslint no-use-before-define: 'off' */
+        pageButton.addEventListener( 'click', pageButtonOnClick );
+    } );
 }
 
 async function getAnnouncementByFilters ( {
@@ -96,22 +103,25 @@ async function getAnnouncementByFilters ( {
     // Append language
     queryString.append( 'language', language );
 
-    const reqURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/filter?${ queryString.toString() }`;
-    const announcements = await fetch( reqURL ).then( res => res.json() );
+    const pinnedURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/pinned?${ queryString.toString() }`;
+    const announcementURL = `${ window.location.protocol }//${ window.location.host }/api/announcement/filter?${ queryString.toString() }`;
+    const pinnedAnnouncements = await fetch( pinnedURL ).then( res => res.json() );
+    const announcements = await fetch( announcementURL ).then( res => res.json() );
+
     const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
     const announcementBriefing = document.getElementById( 'announcement__brefings' );
     announcementBriefingTop.innerHTML = '';
     announcementBriefing.innerHTML = '';
+    pinnedAnnouncements.forEach( ( announcement ) => {
+        announcementBriefingTop.innerHTML += briefing( {
+            id:      announcement.id,
+            title:   announcement.title,
+            time:    timeFormating( announcement.updateTime ),
+            content: announcement.content,
+            tags:    announcement.tags.map( tag => tag.name ),
+        } );
+    } );
     announcements.forEach( ( announcement ) => {
-        if ( announcement.isPinned ) {
-            announcementBriefingTop.innerHTML += briefing( {
-                id:      announcement.id,
-                title:   announcement.title,
-                time:    timeFormating( announcement.updateTime ),
-                content: announcement.content,
-                tags:    announcement.tags.map( tag => tag.name ),
-            } );
-        }
         announcementBriefing.innerHTML += briefing( {
             id:      announcement.id,
             title:   announcement.title,
@@ -127,7 +137,7 @@ export function tagButtonOnClick ( event ) {
     const tagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
     const queryString = new URLSearchParams( window.location.search );
     let usedTags = queryString.getAll( 'tags' );
-    if ( tagName === '全部' || tagName === 'all' ) {
+    if ( tagName === 'all' ) {
         // If clicked all, which means no filter been used, need to remove all filter
         usedTags = [];
         queryString.delete( 'tags' );
@@ -143,9 +153,11 @@ export function tagButtonOnClick ( event ) {
         queryString.delete( 'tags' );
         usedTags.forEach( tag => queryString.append( 'tags', tag ) );
     }
+
+    queryString.delete( 'page' );
     updateURL( queryString );
+    getAnnouncementByFilters( { tags: usedTags, page: 1, } );
     getPageNumber( { tags: usedTags, } );
-    getAnnouncementByFilters( { tags: usedTags, } );
 }
 
 export function pageButtonOnClick ( event ) {
@@ -173,26 +185,28 @@ export function dateOnChange ( event ) {
     }
     else if ( newTime === '' ) {
         queryString.delete( event.target.id );
+        queryString.delete( 'page' );
         updateURL( queryString );
-        getPageNumber();
         getAnnouncementByFilters();
+        getPageNumber();
     }
     else {
         queryString.set( event.target.id, dateFormating( new Date( newTime ) ) );
+        queryString.delete( 'page' );
 
         updateURL( queryString );
         if ( event.target.id === 'startTime' ) {
-            getPageNumber( { startTime: new Date( newTime ), } );
             getAnnouncementByFilters( { startTime: new Date( newTime ), } );
+            getPageNumber( { startTime: new Date( newTime ), } );
         }
         if ( event.target.id === 'endTime' ) {
-            getPageNumber( { endTime: new Date( newTime ), } );
             getAnnouncementByFilters( { endTime: new Date( newTime ), } );
+            getPageNumber( { endTime: new Date( newTime ), } );
         }
     }
 }
 
 export function getAnnouncements () {
-    getPageNumber();
     getAnnouncementByFilters();
+    getPageNumber();
 }

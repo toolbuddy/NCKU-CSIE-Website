@@ -1,4 +1,4 @@
-import { tagButtonOnClick, dateOnChange, pageButtonOnClick, getAnnouncements, } from 'jsComponent/announcement/announcements.js';
+import { tagButtonOnClick, dateOnChange, getAnnouncements, } from 'jsComponent/announcement/announcements.js';
 
 // Get announcements by default filter
 getAnnouncements();

@@ -3,9 +3,9 @@
 @import 'components/common/topic';
 
 // block
-// `.main`
+// `.content`
 
-.main {
+.content {
   // block [skin]
   width: 100%;
   background-color: #ffffff;
@@ -25,7 +25,7 @@
   };
 
   // block
-  // `.main .topic`
+  // `.content .topic`
 
   .topic {
     // element [position]
@@ -33,7 +33,7 @@
   }
 
   // block
-  // `.main .cards`
+  // `.content .cards`
 
   .cards {
     // element [position]

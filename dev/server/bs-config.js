@@ -8,7 +8,9 @@ module.exports = {
         port: port + 2,
     },
     files: [
-        path.resolve( projectRoot, 'static/dist/**/*.*' ),
+        path.resolve( projectRoot, 'static/dist/css/**/*.css' ),
+        path.resolve( projectRoot, 'static/dist/html/**/*.html' ),
+        path.resolve( projectRoot, 'static/dist/js/**/*.js' ),
     ],
     watchEvents: [
         'add',
