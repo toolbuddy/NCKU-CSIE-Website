@@ -8,21 +8,23 @@
 // `.content`
 
 .content {
-  $mobile: 768px;
-  $tablet: 920px;
+  $x-small: 768px;
+  $small: 870px;
+  $large: 1000px;
+  $x-large: 1200px;
 
   // block [skin]
   padding: 2.2rem 1rem;
-  @media screen and ( min-width: $mobile ) {
+  @media screen and ( min-width: $x-small ) {
     padding: 3rem 3.6rem;
   }
-  @media screen and ( min-width: 870px ) {
+  @media screen and ( min-width: $small ) {
     padding: 3rem 5.6rem;
   }
-  @media screen and ( min-width: 1000px ) {
+  @media screen and ( min-width: $large ) {
     padding: 3rem 8rem;
   }
-  @media screen and ( min-width: 1200px ) {
+  @media screen and ( min-width: $x-large ) {
     padding: 3rem 10rem;
   }
 

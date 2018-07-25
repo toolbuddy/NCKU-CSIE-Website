@@ -5,9 +5,8 @@
 // `.announcement`
 
 .announcement {
-  $landscape: 560px;
-  $mobile: 768px;
-  $tablet: 992px;
+  $small: 768px;
+  $large: 992px;
 
   // block [layout]
   display: grid;
@@ -55,7 +54,7 @@
         'headline__time';
       columns: auto;
     }
-    @media screen and ( min-width: $tablet ) {
+    @media screen and ( min-width: $large ) {
       grid-template: {
         areas:
           'headline__tags   headline__announcer'
@@ -78,7 +77,7 @@
 
     .tags {
       // block [skin]
-      @media screen and ( min-width: $mobile ) {
+      @media screen and ( min-width: $small ) {
         font-size: .4375rem;
       }
     }
@@ -104,7 +103,7 @@
       grid-area: headline__announcer;
 
       // element [skin]
-      @media screen and ( min-width: $tablet ) {
+      @media screen and ( min-width: $large ) {
         align-self: end;
         justify-self: end;
       }
@@ -118,7 +117,7 @@
       grid-area: headline__time;
 
       // element [skin]
-      @media screen and ( min-width: $tablet ) {
+      @media screen and ( min-width: $large ) {
         justify-self: end;
         margin-top: .3rem;
       }

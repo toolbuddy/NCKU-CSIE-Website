@@ -57,8 +57,9 @@
         end: 10;
       }
     }
-    @media screen and (min-width: 992px) {
-      grid-template-areas: '.            filter__button'
+    @media screen and ( min-width: $tablet ) {
+      grid-template-areas:
+        '.            filter__button'
         'filter__tags filter__time';
     }
 
@@ -69,13 +70,13 @@
           'tags__tag--recruitment';
         columns: 3.3rem;
       }
-      @media screen and (min-width: 580px){
+      @media screen and ( min-width: 580px ) {
         grid-template-columns: 4rem;
       }
     }
 
     .time {
-      @media screen and (min-width: 992px) {
+      @media screen and ( min-width: 992px ) {
         justify-content: flex-end;
       }
     }

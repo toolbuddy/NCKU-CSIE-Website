@@ -5,8 +5,8 @@
 // `.content .announcement`
 
 .announcement {
-  $mobile: 768px;
-  $tablet: 992px;
+  $small: 768px;
+  $large: 992px;
 
   // element
   // `.content .announcement .announcement__briefing`
@@ -48,7 +48,7 @@
         rows: auto;
         columns: 6.5fr 1fr 2.5fr;
       }
-      @media screen and ( min-width: $mobile ) {
+      @media screen and ( min-width: $small ) {
         grid-template: {
           areas:
             'briefing__tags    briefing__tags  briefing__tags'
@@ -97,7 +97,7 @@
       &__article {
         // element [skin]
         display: none;
-        @media screen and ( min-width: $mobile ) {
+        @media screen and ( min-width: $small ) {
           // element [position]
           grid-area: briefing__article;
 
@@ -118,7 +118,7 @@
 
         // element [skin]
         color: #b5babf;
-        @media screen and ( min-width: $mobile ) {
+        @media screen and ( min-width: $small ) {
           // element [skin]
           justify-self: end;
           align-self: end;
@@ -157,7 +157,7 @@
     background-color: #ffffff;
     box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .3125rem 0 rgba( 0, 0, 0, .2 );
     padding: 2rem 0;
-    @media screen and ( min-width: $tablet ) {
+    @media screen and ( min-width: $large ) {
       padding: 1.7rem 0 ;
     }
 

@@ -8,15 +8,18 @@
 // `.content`
 
 .content {
-  $mobile: 768px;
-  $tablet: 992px;
+  $x-small: 390px;
+  $small: 580px;
+  $medium: 768px;
+  $large: 992px;
+  $x-large: 1200px;
 
   // block [skin]
   padding: 2.2rem 1rem;
-  @media screen and ( min-width: $mobile ) {
+  @media screen and ( min-width: $medium ) {
     padding: 4.6rem 3.6rem;
   }
-  @media screen and ( min-width: $tablet ) {
+  @media screen and ( min-width: $large ) {
     padding: 2rem 4.5rem;
   }
 
@@ -35,7 +38,7 @@
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $tablet ) {
+    @media screen and ( min-width: $large ) {
       grid-column: {
         start: 2;
         end: 10;
@@ -51,13 +54,13 @@
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $tablet ) {
+    @media screen and ( min-width: $large ) {
       grid-column: {
         start: 2;
         end: 10;
       }
     }
-    @media screen and (min-width: 1200px) {
+    @media screen and ( min-width: $x-large ) {
       grid-template-areas: 'filter__tags filter__time';
     }
 
@@ -70,13 +73,13 @@
           '.              tags__tag--phd';
         columns: 3.3rem 3.3rem;
       }
-      @media screen and (min-width: 580px){
+      @media screen and ( min-width: $small ) {
         grid-template-columns: 4rem 4rem;
       }
     }
 
     .time {
-      @media screen and (min-width: 1200px) {
+      @media screen and ( min-width: $x-large ) {
         justify-content: flex-end;
       }
     }
@@ -90,7 +93,7 @@
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $tablet ) {
+    @media screen and ( min-width: $large ) {
       grid-column: {
         start: 2;
         end: 10;
