@@ -26,9 +26,4 @@ router.use( '/announcement', announcement );
 // Resolve URL /resource
 router.use( '/resource', resource );
 
-// test component
-router.get( '/test', ( req, res )=>{
-    res.render( 'announcement/pagination' );
-} );
-
 module.exports = router;
