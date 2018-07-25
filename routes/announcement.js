@@ -1,30 +1,25 @@
-// router for /announcement
+// Router for /announcement
 const express = require( 'express' );
-const router = new express.Router();
+const router = express.Router();
 
-// resolve URL /announcement/all
-router.get( '/all', function ( req, res ) {
-    res.render( 'announcement/all' );
+// Resolve URL /announcement/all
+router.get( '/all', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/all.${ req.query.language }.html` );
 } );
 
-// resolve URL /announcement/administrator
-router.get( '/administrator', function ( req, res ) {
-    res.render( 'announcement/administrator' );
+// Resolve URL /announcement/activity
+router.get( '/activity', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/activity.${ req.query.language }.html` );
 } );
 
-// resolve URL /announcement/activity
-router.get( '/activity', function ( req, res ) {
-    res.render( 'announcement/activity' );
+// Resolve URL /announcement/recruitment
+router.get( '/recruitment', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/recruitment.${ req.query.language }.html` );
 } );
 
-// resolve URL /announcement/speech
-router.get( '/speech', function ( req, res ) {
-    res.render( 'announcement/speech' );
-} );
-
-// resolve URL /announcement/recruitment
-router.get( '/recruitment', function ( req, res ) {
-    res.render( 'announcement/recruitment' );
+// Resolve URL /announcement/announcement/[id]
+router.get( '/announcement/:id', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/announcement.${ req.query.language }.html` );
 } );
 
 module.exports = router;

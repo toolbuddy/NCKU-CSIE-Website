@@ -1,0 +1,9 @@
+extends /layouts/resource.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'resource/rent' ) );
+
+block append scripts
+  +js( 'resource/rent' )

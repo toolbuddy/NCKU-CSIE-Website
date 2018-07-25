@@ -1,22 +1,25 @@
-global.rootdir = __dirname;
+global.projectRoot = __dirname;
 
-// including public module
 const express = require( 'express' );
 
-const config = require( `${ global.rootdir }/settings/server/config` );
-const routes = require( `${ global.rootdir }/routes/urls` );
+const config = require( `${ global.projectRoot }/settings/server/config` );
+const language = require( `${ global.projectRoot }/settings/language/middleware` );
+const apis = require( `${ global.projectRoot }/apis/urls` );
+const routes = require( `${ global.projectRoot }/routes/urls` );
 
-// start server
+// Start server.
 const server = express();
 server.listen( config.port );
 
-// set render engine
-server.set( 'views', `${ global.rootdir }/views` );
-server.set( 'view engine', 'pug' );
-server.locals.basedir = global.rootdir;
+// Set static files routes.
+server.use( '/css', express.static( `${ global.projectRoot }/static/dist/css` ) );
+server.use( '/js', express.static( `${ global.projectRoot }/static/dist/js` ) );
 
-// set static route
-server.use( express.static( `${ global.rootdir }/static/dist` ) );
+// Set language option.
+server.use( language );
 
-// set dynamic route
+// Set web server routes.
 server.use( '/', routes );
+
+// Set web server api routes.
+server.use( '/api', apis );

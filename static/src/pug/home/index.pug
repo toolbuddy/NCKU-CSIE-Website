@@ -1,0 +1,93 @@
+extends /layouts/home.pug
+
+block append stylesheets
+
+block append header
+  h1 welcome to ncku csie
+    ul
+      li.dropdown
+        a( href='#student' ) | student
+        ul.dropdown__content
+          li
+            a( href='/student/course' ) | course
+          li
+            a( href='/student/college' ) | college
+          li
+            a( href='/student/master' ) | master
+          li
+            a( href='/student/phd' ) | phd
+          li
+            a( href='/student/scholarship' ) | scholarship
+          li
+            a( href='/student/international' ) | international
+      li.dropdown
+        a( href='#about' ) | about
+        ul.dropdown__content
+          li
+            a( href='/about/intro' ) | introduction
+          li
+            a( href='/about/teachers' ) | teachers
+          li
+            a( href='/about/members' ) | members
+          li
+            a( href='/about/honor' ) | honor
+          li
+            a( href='/about/location' ) | location
+      li.dropdown
+        a( href='#research' ) | research
+        ul.dropdown__content
+          li
+            a( href='/research/labs' ) | labs
+          li
+            a( href='/research/groups' ) | groups
+          li
+            a( href='/research/publications' ) | publications
+          li
+            a( href='/research/awards' ) | awards
+          li
+            a( href='/research/conferences' ) | conferences
+      li.dropdown
+        a( href='#announcement' ) | announcement
+        ul.dropdown__content
+          li
+            a( href='/announcement/all' ) | all announcement
+          li
+            a( href='/announcement/administrator' ) | administrator
+          li
+            a( href='/announcement/activity' ) | activity
+          li
+            a( href='/announcement/speech' ) | speech
+          li
+            a( href='/announcement/recruitment' ) | recruitment
+      li.dropdown
+        a( href='#resource' ) | resource
+        ul.dropdown__content
+          li
+            a( href='/resource/law' ) | law
+          li
+            a( href='/resource/rent' ) | rent
+          li
+            a( href='/resource/fix' ) | fix
+          li
+            a( href='/resource/ieet' ) | IEET
+          li
+            a( href='/resource/resources' ) | resources
+
+block append content
+  include /components/common/topic.pug
+  - const i18n = require( path.resolve( languageRoot, 'home/index' ) );
+
+  main.content
+    +topic( i18n[ language ].topic )
+    section.announcement
+      nav#announcement__briefings.announcement__briefings.briefings
+
+      button.announcement__button
+        a( href='/announcement/all' )= `${ i18n[ language ].more }...`
+    section.announcement.announcement--hot-news
+      header.announcement__title.title
+        h1.title__text= i18n[ language ].hot
+      nav#announcement__briefings--hot-news.announcement__briefings.briefings
+
+block append scripts
+  +js( 'home/index' )

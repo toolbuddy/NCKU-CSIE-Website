@@ -1,0 +1,7 @@
+mixin css( href )
+  link(
+    rel='stylesheet',
+    type='text/css',
+    media='screen',
+    href=`${ staticUrl }/css/${ href }.min.css`
+  )

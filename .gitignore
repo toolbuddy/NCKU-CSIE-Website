@@ -1,28 +1,40 @@
-# editor files
+#############################
+# Project generated files
+#############################
+
+## Editor files
 *.swp
 .vscode
 
-# git extension files
+## Git extension files
 .git-credentials
 
-# npm files
+## Npm files
+node_modules
 npm-debug.log
 package-lock.json
 .npmrc
 .lock-wscript
 
-# sass files
-.sass-cache
-static/src/sass/components/common/_static.scss
+## Sequelize generated schema
+models/*/tables
 
+## Settings files
+settings/database/config.js
+settings/server/config.js
+
+## Static files
+static/dist/**/*.*
+
+#############################
 # OS generated files
+#############################
+
 ## Mac OS
 .DS_Store
 .DS_Store?
+
 ## Windows
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# other files
-._*
