@@ -7,6 +7,7 @@
 
 .content {
   $small: 768px;
+  $large: 992px;
 
   // block [skin]
   padding: 2.2rem 1rem;
@@ -22,31 +23,32 @@
   // `.content .announcement`
   // `.content .topic`
   .announcement, .topic {
-    $large: 992px;
-
+    
     // element [position]
     grid-column: {
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $large ) {
-      grid-column: {
-        start: 1;
-        end: 7;
-      }
-    }
+    
   }
 
   .announcement--hot-news {
-    $large: 992px;
-
     // element [position]
     margin-top: 4rem;
     grid-column: {
       start: 1;
       end: 11;
     }
-    @media screen and ( min-width: $large ) {
+  }
+  @media screen and ( min-width: $large ) {
+    .announcement, .topic {
+      grid-column: {
+        start: 1;
+        end: 7;
+      }
+    }
+
+    .announcement--hot-news {
       margin-top: 0;
       grid-column: {
         start: 8;

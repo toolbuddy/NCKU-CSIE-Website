@@ -71,10 +71,7 @@
       &__tags {
         // element [position]
         grid-area: briefing__tags;
-        font-size: .25rem;
-        @media screen and ( min-width: $medium ) {
-          font-size: .4375rem;
-        }
+        font-size: .4375rem;
       }
 
       .tags {
