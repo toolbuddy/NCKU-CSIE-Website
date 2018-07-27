@@ -23,13 +23,11 @@
   // `.content .announcement`
   // `.content .topic`
   .announcement, .topic {
-    
     // element [position]
     grid-column: {
       start: 1;
       end: 11;
     }
-    
   }
 
   .announcement--hot-news {
