@@ -10,6 +10,7 @@ filter( 'all' );
 
 // Top briefings
 const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
+
 announcementBriefingTop.innerHTML += briefing( {
     id:      0,
     title:   '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
@@ -38,7 +39,7 @@ announcementBriefing.innerHTML += briefing( {
     excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
     tags:    [ 'college',
         'speech',
-        'internatinal', ],
+        'international', ],
 } );
 announcementBriefing.innerHTML += briefing( {
     id:      1,

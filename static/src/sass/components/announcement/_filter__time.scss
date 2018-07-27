@@ -3,6 +3,7 @@
 
 .time {
   $small: 500px;
+  $medium: 580px;
   $large: 768px;
 
   // block [layout]
@@ -13,7 +14,6 @@
   }
 
   // block [skin]
-  font-size: .4375rem;
   margin-bottom: 1rem;
 
   // element
@@ -25,7 +25,11 @@
     border: .0312rem solid #757575;
     border-radius: 1rem;
     align-self: center;
-    padding: .2rem 0;
+    padding: .05rem 0;
+    width: auto;
+    @media screen and ( min-width: $medium ) {
+      padding: .1rem 0;
+    }
     margin: .3rem .6rem .2rem .2rem;
     text-align: center;
   }

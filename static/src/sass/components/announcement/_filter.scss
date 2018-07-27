@@ -20,6 +20,10 @@
   @media screen and ( min-width: 1700px ) {
     grid-template-areas: 'filter__tags filter__time';
   }
+  font-size: .25rem;
+  @media screen and ( min-width: $medium ) {
+    font-size: .4375rem;
+  }
 
   // element
   // `.filter .filter__button`
@@ -68,6 +72,9 @@
   &__time {
     // element [position]
     grid-area: filter__time;
+    @media screen and ( min-width: 1700px ) {
+      justify-self: end;
+    }
   }
 
   // block

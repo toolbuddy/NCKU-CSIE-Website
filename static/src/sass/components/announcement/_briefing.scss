@@ -6,6 +6,7 @@
 
 .announcement {
   $small: 768px;
+  $medium: 580px;
   $large: 992px;
 
   // element
@@ -70,6 +71,10 @@
       &__tags {
         // element [position]
         grid-area: briefing__tags;
+        font-size: .25rem;
+        @media screen and ( min-width: $medium ) {
+          font-size: .4375rem;
+        }
       }
 
       .tags {
