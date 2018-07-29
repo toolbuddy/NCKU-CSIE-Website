@@ -7,7 +7,7 @@ function updateURL ( queryString ) {
     }
 }
 
-export function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber ) {
+function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber ) {
     return function () {
         // Should use id
         const queryString = new URLSearchParams( window.location.search );
@@ -19,7 +19,7 @@ export function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber 
     };
 }
 
-export function tagButtonOnClick ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+function tagButtonOnClick ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
     return function ( event ) {
         // Should use id
         const tagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
@@ -50,26 +50,7 @@ export function tagButtonOnClick ( getAllAnnouncements, getAllPageNumber, getAnn
     };
 }
 
-export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags ) {
-    return function ( event ) {
-        const page = event.target.innerHTML;
-        const queryString = new URLSearchParams( window.location.search );
-        if ( queryString.get( 'page' ) === page ) {
-            // If already at this page
-            return;
-        }
-
-        queryString.set( 'page', page );
-
-        updateURL( queryString );
-        if ( queryString.getAll( 'tags' ).length === 0 )
-            getAllAnnouncements( { page, } );
-        else
-            getAnnouncementsByTags( { page, } );
-    };
-}
-
-export function dateOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+function dateOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
     return function ( event ) {
         const queryString = new URLSearchParams( window.location.search );
 
@@ -119,4 +100,36 @@ export function dateOnChange ( getAllAnnouncements, getAllPageNumber, getAnnounc
             }
         }
     };
+}
+
+export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags ) {
+    return function ( event ) {
+        const page = event.target.innerHTML;
+        const queryString = new URLSearchParams( window.location.search );
+        if ( queryString.get( 'page' ) === page ) {
+            // If already at this page
+            return;
+        }
+
+        queryString.set( 'page', page );
+
+        updateURL( queryString );
+        if ( queryString.getAll( 'tags' ).length === 0 )
+            getAllAnnouncements( { page, } );
+        else
+            getAnnouncementsByTags( { page, } );
+    };
+}
+
+export function registEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
+    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
+        if ( tagButton.id === `tags__tag--${ defaultTag }` )
+            return;
+        tagButton.addEventListener( 'click', tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+    } );
+    document.getElementById( `tags__tag--${ defaultTag }` )
+    .addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
+    Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
+        dateInput.addEventListener( 'change', dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+    } );
 }

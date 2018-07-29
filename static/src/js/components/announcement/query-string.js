@@ -1,11 +1,11 @@
 import config from 'jsComponent/announcement/config.js';
 import { isValidDate, isValidPage, isValidTags, }  from 'jsUtil/validate.js';
 
-export default class queryString {
-    static getTags () {
+export default class QueryString {
+    static getTags ( defaultTags ) {
         const tags = [ ...new Set( new URLSearchParams( window.location.search ).getAll( 'tags' ) ), ];
         if ( !isValidTags( tags ) )
-            return queryString.defaultTags;
+            return defaultTags;
         return tags;
     }
 
