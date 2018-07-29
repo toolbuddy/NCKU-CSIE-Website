@@ -41,7 +41,7 @@ module.exports = language.support.map( language => ( {
         // Route `resource`
         'resource/fix':       path.resolve( pugRoot, 'resource/fix.pug' ),
         'resource/ieet':      path.resolve( pugRoot, 'resource/ieet.pug' ),
-        'resource/law':       path.resolve( pugRoot, 'resource/law.pug' ),
+        'resource/rule':       path.resolve( pugRoot, 'resource/rule.pug' ),
         'resource/rent':      path.resolve( pugRoot, 'resource/rent.pug' ),
         'resource/resources': path.resolve( pugRoot, 'resource/resources.pug' ),
 

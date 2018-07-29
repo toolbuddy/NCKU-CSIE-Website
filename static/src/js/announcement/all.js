@@ -3,7 +3,12 @@
  */
 /* eslint no-unused-vars: off */
 import style from 'cssComponent/announcement/all.min.css';
-import filter from 'jsComponent/announcement/filter.js';
-import briefing from 'pugComponent/announcement/briefing.pug';
+import { filterTags, buildEventListener, } from 'jsComponent/announcement/filter.js';
+import queryString from 'jsComponent/announcement/query-string.js';
+import { getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, } from 'jsComponent/announcement/multiple-default-tags.js';
 
-filter( 'all' );
+queryString.defaultTags = [];
+getAllPageNumber();
+getAllAnnouncements();
+buildEventListener( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags );
+filterTags( 'all' );
