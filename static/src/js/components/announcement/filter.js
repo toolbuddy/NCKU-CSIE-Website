@@ -1,15 +1,18 @@
-import { tagButtonOnClick, dateOnChange, getAnnouncements, } from 'jsComponent/announcement/announcements.js';
-
-// Get announcements by default filter
-getAnnouncements();
+import { defaultTagButtonOnClick, tagButtonOnClick, dateOnChange, } from 'jsComponent/announcement/event-listener.js';
 
 // Event handlers
-Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
-    tagButton.addEventListener( 'click', tagButtonOnClick );
-} );
-Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
-    dateInput.addEventListener( 'change', dateOnChange );
-} );
+export function buildEventListener ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
+    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
+        if ( tagButton.id === `tags__tag--${ defaultTag }` )
+            return;
+        tagButton.addEventListener( 'click', tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+    } );
+    document.getElementById( `tags__tag--${ defaultTag }` )
+    .addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
+    Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
+        dateInput.addEventListener( 'change', dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+    } );
+}
 
 // Construct filter's UI
 ( () => {
@@ -34,7 +37,7 @@ Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInp
 } )();
 
 // Construct filter tags' UI
-export default function filterTags ( defaultTag = null ) {
+export function filterTags ( defaultTag = null ) {
     document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
         tag.onclick = () => {
             if ( tag.classList.contains( 'tags__tag--active' ) )

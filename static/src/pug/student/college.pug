@@ -12,6 +12,7 @@ block append content
     +topic( i18n[ language ].topic )
     +filter(
       'all',
+      'college',
       'competition',
       'conference',
       'course',
@@ -29,6 +30,8 @@ block append content
     section.announcement
       +announcement__title( i18n[ language ].normal )
       nav#announcement__brefings.announcement__briefings.briefings
+
+    section#pageButtons
 
 block append scripts
   +js( 'student/college' )

@@ -1,6 +1,5 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
@@ -44,9 +43,8 @@ module.exports = async ( { tags = [], startTime = new Date( '2018-07-01' ).toISO
                 },
             ],
             group:  '`announcement`.`announcement_id`',
-            having: sequelize.literal( `count(*) = ${ tags.length }` ),
-        } );
-        count = count.length;
+        } )
+        .then( count => count.length );
     }
     table.database.close();
 

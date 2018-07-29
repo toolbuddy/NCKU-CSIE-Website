@@ -1,6 +1,5 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
@@ -83,7 +82,7 @@ module.exports = async ( {
                     [ Op.between ]: [ new Date( startTime ),
                         new Date( endTime ), ],
                 },
-                'isPinned':    1,
+                'isPinned':      1,
                 'isPublished': 1,
                 'isApproved':  1,
             },
@@ -101,8 +100,6 @@ module.exports = async ( {
                     ],
                 },
             ],
-            group:  'announcementId',
-            having: sequelize.literal( `count(*) = ${ tags.length }` ),
         } )
         .then( ids => ids.map( id => id.announcementId ) )
         .then( requiredId => table.announcement.findAll( {
@@ -146,7 +143,7 @@ module.exports = async ( {
                     ],
                 },
             ],
-        } )
+        } ) )
         .then( announcements => announcements.map( announcement => ( {
             id:         announcement.announcementId,
             title:      announcement.announcementI18n[ 0 ].title,
@@ -156,8 +153,9 @@ module.exports = async ( {
                 id:   tag.tagId,
                 name: tag.tagI18n[ 0 ].name,
             } ) ),
-        } ) ) ) );
+        } ) ) );
     }
+
     table.database.close();
 
     return data;
