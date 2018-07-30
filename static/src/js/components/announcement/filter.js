@@ -1,19 +1,3 @@
-import { defaultTagButtonOnClick, tagButtonOnClick, dateOnChange, } from 'jsComponent/announcement/event-listener.js';
-
-// Event handlers
-export function buildEventListener ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
-    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
-        if ( tagButton.id === `tags__tag--${ defaultTag }` )
-            return;
-        tagButton.addEventListener( 'click', tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
-    } );
-    document.getElementById( `tags__tag--${ defaultTag }` )
-    .addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
-    Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
-        dateInput.addEventListener( 'change', dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
-    } );
-}
-
 // Construct filter's UI
 ( () => {
     let flip = 0;
