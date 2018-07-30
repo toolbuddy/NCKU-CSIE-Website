@@ -121,7 +121,7 @@ export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags 
     };
 }
 
-export function registEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
+export function filterRegistEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
     Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
         if ( tagButton.id === `tags__tag--${ defaultTag }` )
             return;
