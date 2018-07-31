@@ -7,9 +7,16 @@ function updateURL ( queryString ) {
     }
 }
 
+
+// When defaultTagButton been clicked, it should do the following things:
+// 1. Clear all tags and page filters in the querystring.
+// 2. Update URL.
+// 3. Get total page numbers and render page buttons.
+// 4. Get and render announcements.
 function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber ) {
+    // It should be a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
+    // use different `getAllAnnouncements` and `getAllPageNumber` functions.
     return function () {
-        // Should use id
         const queryString = new URLSearchParams( window.location.search );
         queryString.delete( 'tags' );
         queryString.delete( 'page' );
@@ -21,7 +28,6 @@ function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber ) {
 
 function tagButtonOnClick ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
     return function ( event ) {
-        // Should use id
         const tagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
         const queryString = new URLSearchParams( window.location.search );
         const usedTags = queryString.getAll( 'tags' );
@@ -121,15 +127,18 @@ export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags 
     };
 }
 
-export function filterRegistEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
+export function filterEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
+    const onclick = tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags );
     Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
-        if ( tagButton.id === `tags__tag--${ defaultTag }` )
-            return;
-        tagButton.addEventListener( 'click', tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+        tagButton.addEventListener( 'click', onclick );
     } );
-    document.getElementById( `tags__tag--${ defaultTag }` )
-    .addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
+
+    const defaultTagButton = document.getElementById( `tags__tag--${ defaultTag }` );
+    defaultTagButton.removeEventListener( 'click', onclick );
+    defaultTagButton.addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
+
+    const onchange = dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags );
     Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
-        dateInput.addEventListener( 'change', dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) );
+        dateInput.addEventListener( 'change', onchange );
     } );
 }

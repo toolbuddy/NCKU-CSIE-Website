@@ -5,7 +5,7 @@ Object.defineProperties( config, {
         value: '2018/07/01',
     },
     'defaultEndTime': {
-        value: Date.now(),
+        get () { return Date.now(); },
     },
     'defaultPage': {
         value: 1,
