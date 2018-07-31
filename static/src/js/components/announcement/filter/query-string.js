@@ -1,4 +1,4 @@
-import config from 'jsComponent/announcement/config.js';
+import config from 'jsComponent/announcement/filter/config.js';
 import { isValidDate, isValidPage, isValidTags, }  from 'jsUtil/validate.js';
 
 export default class QueryString {
@@ -28,5 +28,17 @@ export default class QueryString {
         if ( !isValidPage( page ) )
             return config.defaultPage;
         return page;
+    }
+
+    static generate ( obj = null ) {
+        const query = new URLSearchParams();
+        const keys = Reflect.ownKeys( obj );
+        keys.forEach( ( key ) => {
+            if ( obj[ key ] instanceof Array )
+                obj[ key ].forEach( value => query.append( key, value ) );
+            else
+                query.append( key, obj[ key ] );
+        } );
+        return query.toString();
     }
 }

@@ -39,20 +39,22 @@ export function filterTags ( defaultTag = null ) {
         document.getElementById( `tags__tag--${ defaultTag }` ).classList.add( 'tags__tag--active' );
 }
 
+const pageButtonsContainer = document.getElementById( 'pageButtons' );
+
 export function renderPageButtons ( getAllAnnouncements, getAnnouncementsByTags, totalPages = 1 ) {
-    const pageButtonsContainer = document.getElementById( 'pageButtons' );
+    const onclick = pageButtonOnClick( getAllAnnouncements, getAnnouncementsByTags );
     pageButtonsContainer.innerHTML = '';
     for ( let i = 1; i <= totalPages; ++i )
         pageButtonsContainer.innerHTML += `<button type="button" class="pageButton">${ i }</button>`;
     Array.from( document.getElementsByClassName( 'pageButton' ) ).forEach( ( pageButton ) => {
-        pageButton.addEventListener( 'click', pageButtonOnClick( getAllAnnouncements, getAnnouncementsByTags ) );
+        pageButton.addEventListener( 'click', onclick );
     } );
 }
 
-export function renderBriefings ( pinnedAnnouncements, announcements ) {
-    const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
-    const announcementBriefing = document.getElementById( 'announcement__brefings' );
+const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
+const announcementBriefing = document.getElementById( 'announcement__brefings' );
 
+export function renderBriefings ( pinnedAnnouncements, announcements ) {
     announcementBriefingTop.innerHTML = '';
     announcementBriefing.innerHTML = '';
     pinnedAnnouncements.forEach( ( announcement ) => {
