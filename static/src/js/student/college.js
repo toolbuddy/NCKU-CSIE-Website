@@ -3,8 +3,6 @@
  */
 /* eslint no-unused-vars: off */
 import style from 'cssComponent/student/college.min.css';
-import { filterTags, } from 'jsComponent/announcement/filter.js';
-import { init, } from 'jsComponent/announcement/single-default-tag.js';
+import { singleDefaultTagFilter, } from 'jsComponent/announcement/filter/index.js';
 
-init( [ 'college', ] );
-filterTags( 'college' );
+singleDefaultTagFilter( [ 'college', ] );
