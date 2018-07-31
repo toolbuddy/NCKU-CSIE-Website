@@ -5,4 +5,5 @@
 import style from 'cssComponent/announcement/all.min.css';
 import { multipleDefaultTagsFilter, } from 'jsComponent/announcement/filter/index.js';
 
+// Construct filter with no default tags.
 multipleDefaultTagsFilter( [] );
