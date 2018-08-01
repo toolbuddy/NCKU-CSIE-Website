@@ -29,6 +29,15 @@ announcementBriefingTop.innerHTML += briefing( {
         'speech',
         'course', ],
 } );
+announcementBriefingTop.innerHTML += briefing( {
+    id:      0,
+    title:   '107學年度碩士班 備取生報到注意事項及名單(資工所/醫資所)',
+    time:    '2018-2-2 | 15:02',
+    excerpt: '利用一個輕鬆有趣的方式，幫助您遠離網路成癮困擾，美幫您希望有....',
+    tags:    [ 'master',
+        'speech',
+        'course', ],
+} );
 
 // Normal briefings
 const announcementBriefing = document.getElementById( 'announcement__brefings' );

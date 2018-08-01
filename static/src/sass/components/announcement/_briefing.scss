@@ -6,15 +6,17 @@
 
 .announcement {
   $small: 768px;
-  $medium: 580px;
   $large: 992px;
+  @media screen and ( min-width: $small ) {
+    max-width: 26rem;
+    justify-self: center;
+  }
 
   // element
   // `.content .announcement .announcement__briefing`
 
   &__briefings {
     // element [skin]
-    font-size: .625rem;
     margin-top: .7rem;
   }
 
@@ -27,12 +29,15 @@
 
     &__briefing {
       // element [skin]
-      font-size: .4375rem;
-      padding: .8rem 1.2rem;
+      padding: .5rem .4rem;
       border-radius: .188rem;
       background-color: #ffffff;
       margin-bottom: .4rem;
       box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .312rem 0 rgba( 0, 0, 0, .2 );
+      @media screen and ( min-width: $small ) {
+        // element [skin]
+        padding: .8rem 1rem;
+      }
     }
 
     // block
@@ -71,7 +76,7 @@
       &__tags {
         // element [position]
         grid-area: briefing__tags;
-        font-size: .4375rem;
+        font-size: .375rem;
       }
 
       .tags {
@@ -88,9 +93,18 @@
 
         // element [skin]
         color: #000000;
-        font-size: .5rem;
+        font: {
+          size: .5rem;
+          weight: normal;
+        }
         min-width: 3rem;
         word-wrap: break-word;
+        margin-bottom: .9rem;
+        @media screen and ( min-width: $small ) {
+          // element [skin]
+          margin-bottom: 0;
+          font-weight: bold;
+        }
       }
 
       // element
@@ -108,6 +122,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          font-size: .4375rem;
         }
       }
 
@@ -119,6 +134,7 @@
         grid-area: briefing__time;
 
         // element [skin]
+        font-size: .4375rem;
         color: #b5babf;
         @media screen and ( min-width: $small ) {
           // element [skin]
@@ -137,17 +153,22 @@
     // element [position]
     position: absolute;
 
-    // element [skin]
-    width: 4rem;
-    height: 1.5rem;
+    // element [skin] 
+    text-align: center;
     border-radius: .094rem;
     background-color: #f94970;
     box-shadow: 0 .0625rem .0625rem 0 rgba( 244, 67, 54, .14 );
-    margin: .5rem -2.2rem 0 0;
+    margin: .5rem -1.7rem 0 0;
     color: white;
     right: 50%;
-    cursor: pointer;
     font-size: .4375rem;
+    width: 4rem;
+    padding: 12px 30px;
+    @media screen and ( min-width: $large ) {
+      width: 5rem;
+      padding: 17px 30px;
+      margin: .5rem -2.5rem 0 0;
+    }
   }
 
   // block

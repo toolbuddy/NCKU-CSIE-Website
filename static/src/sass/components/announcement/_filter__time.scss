@@ -2,9 +2,7 @@
 // `.time`
 
 .time {
-  $small: 500px;
-  $medium: 580px;
-  $large: 768px;
+  $small: 435px;
 
   // block [layout]
   display: flex;
@@ -22,14 +20,11 @@
   &__date {
     // element [skin]
     background: none;
-    border: .0312rem solid #757575;
+    border: .016rem solid #757575;
     border-radius: 1rem;
     align-self: center;
-    padding: .05rem 0;
+    padding: .15rem 0;
     width: auto;
-    @media screen and ( min-width: $medium ) {
-      padding: .1rem 0;
-    }
     margin: .3rem .6rem .2rem .2rem;
     text-align: center;
   }

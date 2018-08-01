@@ -8,36 +8,37 @@
 // `.content`
 
 .content {
-  $x-small: 768px;
-  $small: 870px;
-  $large: 1000px;
-  $x-large: 1200px;
+  $small: 850px;
+  $large: 992px;
 
   // block [skin]
-  padding: 2.2rem 1rem;
-  @media screen and ( min-width: $x-small ) {
-    padding: 3rem 3.6rem;
-  }
-  @media screen and ( min-width: $small ) {
-    padding: 3rem 5.6rem;
-  }
+  padding: 2.2rem .5rem;
   @media screen and ( min-width: $large ) {
-    padding: 3rem 8rem;
-  }
-  @media screen and ( min-width: $x-large ) {
-    padding: 3rem 10rem;
+    padding: 2.2rem 2.9rem;
   }
 
   // block [layout]
   display: grid;
   grid: {
-    gap: 1.5rem 0;
-    template-columns: repeat( 10, 1fr );
+    gap: 1.2rem 0;
+    template: {
+      columns: repeat( 10, 1fr );
+      areas:
+        'filter'
+        'topic';
+    }
+  }
+  @media screen and ( min-width: $small ) {
+    grid-template-areas:
+      'topic'
+      'filter';
   }
 
   // block
   // `.content .topic`
   .topic {
+    grid-area: topic;
+
     // element [position]
     grid-column: {
       start: 1;
@@ -48,6 +49,8 @@
   // block
   // `.content .filter`
   .filter {
+    grid-area: filter;
+
     // element [position]
     grid-column: {
       start: 1;

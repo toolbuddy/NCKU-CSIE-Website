@@ -10,11 +10,16 @@ block append content
 
   main.content
     +topic( i18n[ language ].topic )
-    +filter(
-      'all',
+    +filter( {
+      modifier: 'scholarship',
+      tags: ['all',
       'college',
       'master',
-      'phd'
+      'phd',
+      ]
+    }
+      
+      
     )
     section.announcement
       +announcement__title( i18n[ language ].top )

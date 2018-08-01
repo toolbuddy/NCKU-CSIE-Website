@@ -119,7 +119,8 @@
       // element [skin]
       @media screen and ( min-width: $large ) {
         justify-self: end;
-        margin-top: .3rem;
+        align-self: end;
+        margin-bottom: .3rem;
       }
     }
   }

@@ -10,18 +10,19 @@ block append content
 
   main.content
     +topic( i18n[ language ].topic )
-    +filter(
-      'all',
+    +filter( {
+      modifier: 'master',
+      tags: ['all',
       'competition',
       'conference',
-      'course',
       'exhibition',
       'international',
       'internship',
       'rule',
       'scholarship',
-      'speech'
-    )
+      'speech',
+      ]
+    } )
     section.announcement
       +announcement__title( i18n[ language ].top )
       nav#announcement__brefings--top.announcement__briefings.briefings
