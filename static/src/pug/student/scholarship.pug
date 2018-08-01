@@ -12,15 +12,13 @@ block append content
     +topic( i18n[ language ].topic )
     +filter( {
       modifier: 'scholarship',
-      tags: ['all',
-      'college',
-      'master',
-      'phd',
+      tags: [
+        'all',
+        'college',
+        'master',
+        'phd',
       ]
-    }
-      
-      
-    )
+    } )
     section.announcement
       +announcement__title( i18n[ language ].top )
       nav#announcement__brefings--top.announcement__briefings.briefings
