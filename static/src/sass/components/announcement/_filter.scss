@@ -17,8 +17,6 @@
     'filter__tags';
   @media screen and ( min-width: $large ) {
     grid-template-areas: 'filter__tags filter__time';
-    max-width: 26rem;
-    margin: 0 auto;
   }
   justify-items: center;
 
@@ -108,7 +106,7 @@
             'tags__tag--college tags__tag--honor         tags__tag--internship'
             'tags__tag--master  tags__tag--recruitment   tags__tag--rule '
             'tags__tag--phd     .                        .';
-          columns: 3rem 3rem 3rem;
+          columns: repeat( 3, 3rem );
         }
         @media screen and ( min-width: $small ) {
           grid-template: {
@@ -117,7 +115,7 @@
               'tags__tag--course      tags__tag--master  tags__tag--scholarship   tags__tag--conference'
               'tags__tag--teacher     tags__tag--phd     tags__tag--international tags__tag--exhibition'
               'tags__tag--recruitment tags__tag--rule    tags__tag--honor         tags__tag--internship';
-            columns: 3rem 3rem 3rem 3rem;
+            columns: repeat( 4, 3rem );
           }
         }
         @media screen and ( min-width: $medium ) {
@@ -127,7 +125,7 @@
               'tags__tag--course      tags__tag--master  tags__tag--scholarship   tags__tag--conference tags__tag--recruitment'
               'tags__tag--teacher     tags__tag--phd     tags__tag--international tags__tag--exhibition .'
               '.                      .                  tags__tag--honor         tags__tag--internship .';
-            columns: 3rem 3rem 3rem 3rem 3rem;
+            columns: repeat( 5, 3rem );
           }
         }
       }

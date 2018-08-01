@@ -7,10 +7,6 @@
 .announcement {
   $small: 768px;
   $large: 992px;
-  @media screen and ( min-width: $small ) {
-    max-width: 26rem;
-    justify-self: center;
-  }
 
   // element
   // `.content .announcement .announcement__briefing`
