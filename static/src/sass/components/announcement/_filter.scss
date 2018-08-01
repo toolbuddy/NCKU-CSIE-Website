@@ -16,9 +16,6 @@
     'filter__button'
     'filter__time'
     'filter__tags';
-  @media screen and ( min-width: 1400px ) {
-    grid-template-areas: 'filter__tags filter__time';
-  }
   justify-items: center;
 
   // element
