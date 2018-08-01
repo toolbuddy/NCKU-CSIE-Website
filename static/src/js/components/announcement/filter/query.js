@@ -26,8 +26,8 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {string} startTime
-     * @param {string} endTime
+     * @param {Date}   startTime
+     * @param {Date}   endTime
      * @param {string} page
      * @param {string} language
      *
@@ -63,8 +63,8 @@ export const singleDefaultTag = {
      *     * `time__date` is clicked and tag(s) other than `defaultTag` is in query string.
      *
      * @param {string[]} tags
-     * @param {string}   startTime
-     * @param {string}   endTime
+     * @param {Date}     startTime
+     * @param {Date}     endTime
      * @param {string}   page
      * @param {string}   language
      *
@@ -103,8 +103,8 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {string} startTime
-     * @param {string} endTime
+     * @param {Date} startTime
+     * @param {Date} endTime
      *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
@@ -132,8 +132,8 @@ export const singleDefaultTag = {
      *     * `time__date` is clicked and tag(s) other than `defaultTag` is in query string.
      *
      * @param {string[]} tags
-     * @param {string}   startTime
-     * @param {string}   endTime
+     * @param {Date}     startTime
+     * @param {Date}     endTime
      *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.
@@ -182,8 +182,8 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {string} startTime
-     * @param {string} endTime
+     * @param {Date}   startTime
+     * @param {Date}   endTime
      * @param {string} page
      * @param {string} language
      *
@@ -219,8 +219,8 @@ export const multipleDefaultTags = {
      *     * `time__date` is clicked and tag(s) other than `defaultTags` is in query string.
      *
      * @param {string[]} tags
-     * @param {string}   startTime
-     * @param {string}   endTime
+     * @param {Date}     startTime
+     * @param {Date}     endTime
      * @param {string}   page
      * @param {string}   language
      *
@@ -258,8 +258,8 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {string} startTime
-     * @param {string} endTime
+     * @param {Date} startTime
+     * @param {Date} endTime
      *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
@@ -287,8 +287,8 @@ export const multipleDefaultTags = {
      *     * `time__date` is clicked and tag(s) other than `defaultTags` is in query string.
      *
      * @param {string[]} tags
-     * @param {string}   startTime
-     * @param {string}   endTime
+     * @param {Date}     startTime
+     * @param {Date}     endTime
      *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.

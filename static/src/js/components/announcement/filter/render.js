@@ -45,8 +45,8 @@ export function renderPages ( getAllAnnouncements, getAnnouncementsByTags, total
     const onclick = pageOnClick( getAllAnnouncements, getAnnouncementsByTags );
     pages.innerHTML = '';
     for ( let i = 1; i <= totalPages; ++i )
-        pages.innerHTML += `<button class="page">${ i }</button>`;
-    Array.from( document.getElementsByClassName( 'page' ) ).forEach( ( page ) => {
+        pages.innerHTML += `<button class="pages__page" id="pages__page--${ i }">${ i }</button>`;
+    Array.from( document.getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
         page.addEventListener( 'click', onclick );
     } );
 }
