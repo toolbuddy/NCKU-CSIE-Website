@@ -190,7 +190,7 @@
             'tags__tag--competition   tags__tag--conference'
             'tags__tag--scholarship   tags__tag--exhibition'
             'tags__tag--international tags__tag--internship'
-            'tags__tag--rule         .';
+            'tags__tag--honor          tags__tag--rule';
           columns: repeat( 2, 4rem );
         }
         @media screen and ( min-width: $small ) {
@@ -198,24 +198,25 @@
             areas:
               'tags__tag--all        tags__tag--rule       tags__tag--international'
               'tags__tag--exhibition tags__tag--internship tags__tag--competition'
-              ' tags__tag--speech    tags__tag--conference tags__tag--scholarship';
+              'tags__tag--speech     tags__tag--conference tags__tag--scholarship'
+              '.                     .                     tags__tag--honor';
             columns: repeat( 3, 4rem );
           }
         }
         @media screen and ( min-width: $medium ) {
           grid-template: {
             areas:
-              'tags__tag--all        tags__tag--speech      tags__tag--conference    tags__tag--exhibition'
-              'tags__tag--internship tags__tag--competition tags__tag--international tags__tag--scholarship'
-              'tags__tag--rule       .                      .                        .';
+              'tags__tag--all         tags__tag--rule          tags__tag--speech     tags__tag--conference'
+              'tags__tag--competition tags__tag--international tags__tag--internship tags__tag--exhibition'
+              'tags__tag--scholarship tags__tag--honor         .                     .';
             columns: repeat( 4, 4rem );
           }
         }
         @media screen and ( min-width: $a ) {
           grid-template: {
             areas:
-              'tags__tag--all         tags__tag--speech        tags__tag--conference  tags__tag--exhibition tags__tag--internship '
-              'tags__tag--competition tags__tag--international tags__tag--scholarship tags__tag--rule       .';
+              'tags__tag--all   tags__tag--speech      tags__tag--conference    tags__tag--exhibition  tags__tag--internship '
+              'tags__tag--honor tags__tag--competition tags__tag--international tags__tag--scholarship tags__tag--rule';
             columns: repeat( 5, 4rem );
           }
         }
