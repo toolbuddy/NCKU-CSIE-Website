@@ -1,5 +1,5 @@
 import briefing from 'pugComponent/announcement/briefing.pug';
-import { pageButtonOnClick, } from 'jsComponent/announcement/filter/event.js';
+import { pageOnClick, } from 'jsComponent/announcement/filter/event.js';
 import { timeFormating, }  from 'jsUtil/format.js';
 
 // Construct filter's UI
@@ -25,7 +25,7 @@ import { timeFormating, }  from 'jsUtil/format.js';
 } )();
 
 // Construct filter tags' UI
-export function filterTags ( defaultTag = null ) {
+export function filterTags ( defaultTagName = null ) {
     document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
         tag.onclick = () => {
             if ( tag.classList.contains( 'tags__tag--active' ) )
@@ -35,19 +35,19 @@ export function filterTags ( defaultTag = null ) {
         };
     } );
 
-    if ( defaultTag )
-        document.getElementById( `tags__tag--${ defaultTag }` ).classList.add( 'tags__tag--active' );
+    if ( defaultTagName )
+        document.getElementById( `tags__tag--${ defaultTagName }` ).classList.add( 'tags__tag--active' );
 }
 
-const pageButtonsContainer = document.getElementById( 'pageButtons' );
+const pages = document.getElementById( 'pages' );
 
-export function renderPageButtons ( getAllAnnouncements, getAnnouncementsByTags, totalPages = 1 ) {
-    const onclick = pageButtonOnClick( getAllAnnouncements, getAnnouncementsByTags );
-    pageButtonsContainer.innerHTML = '';
+export function renderPages ( getAllAnnouncements, getAnnouncementsByTags, totalPages = 1 ) {
+    const onclick = pageOnClick( getAllAnnouncements, getAnnouncementsByTags );
+    pages.innerHTML = '';
     for ( let i = 1; i <= totalPages; ++i )
-        pageButtonsContainer.innerHTML += `<button type="button" class="pageButton">${ i }</button>`;
-    Array.from( document.getElementsByClassName( 'pageButton' ) ).forEach( ( pageButton ) => {
-        pageButton.addEventListener( 'click', onclick );
+        pages.innerHTML += `<button class="pages__page" id="pages__page--${ i }">${ i }</button>`;
+    Array.from( document.getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
+        page.addEventListener( 'click', onclick );
     } );
 }
 
