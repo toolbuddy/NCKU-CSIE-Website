@@ -1,62 +1,96 @@
 import { dateFormating, }  from 'jsUtil/format.js';
 
-function updateURL ( queryString ) {
-    if ( history.pushState ) {
-        const newUrl = `${ window.location.protocol }//${ window.location.host }${ window.location.pathname }?${ queryString }`;
-        window.history.pushState( { path: newUrl, }, '', newUrl );
-    }
+/**
+ * Update URL with new query string.
+ *
+ * @param {string} queryString
+ */
+
+function updateURL ( query ) {
+    const newUrl = `${ window.location.protocol }//${ window.location.host }${ window.location.pathname }?${ query.toString() }`;
+    window.history.pushState( { path: newUrl, }, '', newUrl );
 }
 
+/**
+ * When `tags__tag--all` is clicked, do the following things:
+ *     1. Clear all tags and page in `window.location.search`.
+ *     2. Update URL.
+ *     3. Count total pages number and render pages.
+ *     4. Get and render announcements.
+ *
+ * @param {function} getAllAnnouncements
+ * @param {function} getAllPageNumber
+ */
 
-// When defaultTagButton been clicked, it should do the following things:
-// 1. Clear all tags and page filters in the querystring.
-// 2. Update URL.
-// 3. Get total page numbers and render page buttons.
-// 4. Get and render announcements.
-function defaultTagButtonOnClick ( getAllAnnouncements, getAllPageNumber ) {
-    // It should be a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
-    // use different `getAllAnnouncements` and `getAllPageNumber` functions.
+function defaultTagOnClick ( getAllAnnouncements, getAllPageNumber ) {
+    // It is a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
+    // use different `getAllAnnouncements` and `getAllPageNumber`.
     return function () {
-        const queryString = new URLSearchParams( window.location.search );
-        queryString.delete( 'tags' );
-        queryString.delete( 'page' );
-        updateURL( queryString );
+        const query = new URLSearchParams( window.location.search );
+        query.delete( 'tags' );
+        query.delete( 'page' );
+        updateURL( query );
         getAllPageNumber();
         getAllAnnouncements();
     };
 }
 
-function tagButtonOnClick ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+/**
+ * When `tags__tag--*` is clicked, do the following things:
+ *     1. Append or clear tag in `window.loaction.search`.
+ *     2. Clear page in `window.loaction.search`.
+ *     2. Update URL.
+ *     3. Count total pages number and render pages.
+ *     4. Get and render announcements.
+ *
+ * @param {function} getAllAnnouncements
+ * @param {function} getAllPageNumber
+ */
+
+function tagOnClick ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+    // It is a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
+    // use different `getAllAnnouncements` and `getAllPageNumber`.
     return function ( event ) {
-        const tagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
-        const queryString = new URLSearchParams( window.location.search );
-        const usedTags = queryString.getAll( 'tags' );
-        if ( usedTags.indexOf( tagName ) === -1 ) {
-            // If this filter hasn't been used, need to append it to query string
-            queryString.append( 'tags', tagName );
-            usedTags.push( tagName );
-        }
-        else {
-            // If this filter has been used, need to remove it from query string
-            usedTags.splice( usedTags.indexOf( tagName ), 1 );
-            queryString.delete( 'tags' );
-            usedTags.forEach( tag => queryString.append( 'tags', tag ) );
+        // Get event triggered tag's name.
+        const targetTag = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
+        const query = new URLSearchParams( window.location.search );
+        const currentTags = query.getAll( 'tags' );
+
+        // If `tags__tag--${ targetTag }` has not been selected,
+        // append current tags with `tags__tag--${ targetTag }` to make a new query.
+        if ( currentTags.indexOf( targetTag ) === -1 ) {
+            query.append( 'tags', targetTag );
+            currentTags.push( targetTag );
         }
 
-        queryString.delete( 'page' );
-        updateURL( queryString );
-        if ( queryString.getAll( 'tags' ).length === 0 ) {
+        // If `tags__tag--${ targetTag }` has not been selected,
+        // remove all tags from query and recreate without `tags__tag--${ targetTag }`.
+        else {
+            query.delete( 'tags' );
+            currentTags.filter( tag => tag !== targetTag )
+            .forEach( tag => query.append( 'tags', tag ) );
+        }
+
+        query.delete( 'page' );
+        updateURL( query );
+
+        // If no tags in query, use default tag(s) to count page number and get announcements.
+        if ( query.getAll( 'tags' ).length === 0 ) {
             getAllPageNumber();
             getAllAnnouncements();
         }
+
+        // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
         else {
-            getPageNumberByTags( { tags: usedTags, } );
-            getAnnouncementsByTags( { tags: usedTags, } );
+            getPageNumberByTags( { tags: currentTags, } );
+            getAnnouncementsByTags( { tags: currentTags, } );
         }
     };
 }
 
 function dateOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+    // It is a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
+    // use different `getAllAnnouncements` and `getAllPageNumber`.
     return function ( event ) {
         const queryString = new URLSearchParams( window.location.search );
 
@@ -108,7 +142,9 @@ function dateOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsB
     };
 }
 
-export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags ) {
+export function pageOnClick ( getAllAnnouncements, getAnnouncementsByTags ) {
+    // It is a closure because `singleDefaultTagFilter` and `multipleDefaultTagsFilter`
+    // use different `getAllAnnouncements` and `getAllPageNumber`.
     return function ( event ) {
         const page = event.target.innerHTML;
         const queryString = new URLSearchParams( window.location.search );
@@ -127,15 +163,15 @@ export function pageButtonOnClick ( getAllAnnouncements, getAnnouncementsByTags 
     };
 }
 
-export function filterEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaultTag = 'all' ) {
-    const onclick = tagButtonOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags );
-    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tagButton ) => {
-        tagButton.addEventListener( 'click', onclick );
+export function filterEvent ( getAllAnnouncements, getAnnouncementsByTags, getAllPageNumber, getPageNumberByTags, defaulttargetTag = 'all' ) {
+    const onclick = tagOnClick( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags );
+    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tag ) => {
+        tag.addEventListener( 'click', onclick );
     } );
 
-    const defaultTagButton = document.getElementById( `tags__tag--${ defaultTag }` );
-    defaultTagButton.removeEventListener( 'click', onclick );
-    defaultTagButton.addEventListener( 'click', defaultTagButtonOnClick( getAllAnnouncements, getAllPageNumber ) );
+    const defaultTag = document.getElementById( `tags__tag--${ defaulttargetTag }` );
+    defaultTag.removeEventListener( 'click', onclick );
+    defaultTag.addEventListener( 'click', defaultTagOnClick( getAllAnnouncements, getAllPageNumber ) );
 
     const onchange = dateOnChange( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags );
     Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
