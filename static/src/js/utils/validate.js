@@ -3,7 +3,7 @@ export function isValidDate ( date ) {
 }
 
 export function isValidPage ( page ) {
-    return !Number.isNaN( Number( page ) ) && Number.isInteger( page ) && page > 0;
+    return !Number.isNaN( Number( page ) ) && Number.isInteger( Number( page ) ) && Number( page ) > 0;
 }
 
 const validTags = Object.freeze( [
@@ -24,5 +24,5 @@ const validTags = Object.freeze( [
 ] );
 
 export function isValidTags ( tags ) {
-    return tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0;
+    return ( tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0 ) && tags.length;
 }

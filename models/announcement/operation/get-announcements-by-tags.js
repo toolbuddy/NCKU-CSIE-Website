@@ -3,16 +3,18 @@ const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+const defaultValue = require( `${ projectRoot }/models/announcement/operation/default-value` );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( '2018-07-01' ).toISOString(),
-    endTime = new Date().toISOString(),
-    page = 1,
-    language = 'zh-TW',
+    startTime = new Date( defaultValue.defaultStartTime ).toISOString(),
+    endTime = new Date( defaultValue.defaultEndTime ).toISOString(),
+    page = defaultValue.defaultPage,
+    language = defaultValue.defaultLanguage,
 } = {} ) => {
     const table = await associations();
-    const announcementsPerPage = 6;
+    if ( page <= 0 )
+        return [];
     const data = await table.announcement.findAll( {
         attributes: [
             'announcementId',
@@ -52,8 +54,8 @@ module.exports = async ( {
         where: {
             announcementId: requiredId,
         },
-        offset:  ( page - 1 ) * announcementsPerPage,
-        limit:   announcementsPerPage,
+        offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
+        limit:   defaultValue.announcementsPerPage,
         include: [
             {
                 model:      table.announcementI18n,

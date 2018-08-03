@@ -2,17 +2,19 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const Op = require( 'sequelize' ).Op;
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+const defaultValue = require( `${ projectRoot }/models/announcement/operation/default-value` );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( '2018-07-01' ).toISOString(),
-    endTime = new Date().toISOString(),
-    page = 1,
-    language = 'zh-TW',
+    startTime = new Date( defaultValue.defaultStartTime ).toISOString(),
+    endTime = new Date( defaultValue.defaultEndTime ).toISOString(),
+    page = defaultValue.defaultPage,
+    language = defaultValue.defaultLanguage,
 } = {} ) => {
     const table = await associations();
-    const announcementsPerPage = 6;
     let data = [];
+    if ( page <= 0 )
+        return [];
     if ( tags.length === 0 ) {
         data = await table.announcement.findAll( {
             attributes: [
@@ -60,8 +62,8 @@ module.exports = async ( {
                     ],
                 },
             ],
-            offset:  ( page - 1 ) * announcementsPerPage,
-            limit:   announcementsPerPage,
+            offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
+            limit:   defaultValue.announcementsPerPage,
         } )
         .then( announcements => announcements.map( announcement => ( {
             id:         announcement.announcementId,
@@ -112,8 +114,8 @@ module.exports = async ( {
             where: {
                 announcementId: requiredId,
             },
-            offset:  ( page - 1 ) * announcementsPerPage,
-            limit:   announcementsPerPage,
+            offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
+            limit:   defaultValue.announcementsPerPage,
             include: [
                 {
                     model:      table.announcementI18n,

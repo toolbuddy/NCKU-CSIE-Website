@@ -1,148 +1,135 @@
-const express = require( 'express' );
 const path = require( 'path' );
+const express = require( 'express' );
 
 const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
-const getAllAnnouncements = require( `${ projectRoot }/models/announcement/operation/get-all-announcements` );
-const getAnnouncementsByTags = require( `${ projectRoot }/models/announcement/operation/get-announcements-by-tags` );
-const getAllPinnedAnnouncements = require( `${ projectRoot }/models/announcement/operation/get-all-pinned-announcements` );
-const getPinnedAnnouncementsByTags = require( `${ projectRoot }/models/announcement/operation/get-pinned-announcements-by-tags` );
-const getAllPages = require( `${ projectRoot }/models/announcement/operation/get-all-pages` );
-const getPagesByTags = require( `${ projectRoot }/models/announcement/operation/get-pages-by-tags` );
-const getAnnouncement = require( `${ projectRoot }/models/announcement/operation/get-announcement` );
+const opRoot = path.resolve( projectRoot, 'models/announcement/operation/' );
+const getAllAnnouncements = require( path.resolve( opRoot, 'get-all-announcements' ) );
+const getAnnouncementsByTags = require( path.resolve( opRoot, 'get-announcements-by-tags' ) );
+const getAllPinnedAnnouncements = require( path.resolve( opRoot, 'get-all-pinned-announcements' ) );
+const getPinnedAnnouncementsByTags = require( path.resolve( opRoot, 'get-pinned-announcements-by-tags' ) );
+const getAllPages = require( path.resolve( opRoot, 'get-all-pages' ) );
+const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
+const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
 
 apis.get( '/all-pinned', async ( req, res ) => {
-    let tag = [];
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
+    const result = await getAllPinnedAnnouncements( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+        language:  req.query.language,
+    } );
 
-    try {
-        res.json( await getAllPinnedAnnouncements( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-            language:  req.query.language,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/tags-pinned', async ( req, res ) => {
-    let tag = [];
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
+    const result = await getPinnedAnnouncementsByTags( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+        language:  req.query.language,
+    } );
 
-    try {
-        res.json( await getPinnedAnnouncementsByTags( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-            language:  req.query.language,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/all-pages', async ( req, res ) => {
-    let tag = [];
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
+    const result = await getAllPages( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+    } );
 
-    try {
-        res.json( await getAllPages( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.pageNumber )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/tags-pages', async ( req, res ) => {
-    let tag = [];
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
+    const result = await getPagesByTags( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+    } );
 
-    try {
-        res.json( await getPagesByTags( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.pageNumber )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/all-announcement', async ( req, res ) => {
-    let tag = [];
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    const result = await getAllAnnouncements( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+        page:      req.query.page,
+        language:  req.query.language,
+    } );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
-
-    try {
-        res.json( await getAllAnnouncements( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-            page:      req.query.page,
-            language:  req.query.language,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/tags-announcement', async ( req, res ) => {
-    let tag = [];
+    let tags = req.query.tags;
+    if ( typeof tags === 'string' )
+        tags = Array.of( tags );
 
-    if ( typeof ( req.query.tags ) === 'string' )
-        tag = Array.of( req.query.tags );
+    const result = await getAnnouncementsByTags( {
+        tags,
+        startTime: req.query.startTime,
+        endTime:   req.query.endTime,
+        page:      req.query.page,
+        language:  req.query.language,
+    } );
 
-    else if ( req.query.tags instanceof Array )
-        tag = [ ...req.query.tags, ];
-
-    try {
-        res.json( await getAnnouncementsByTags( {
-            tags:      tag,
-            startTime: req.query.startTime,
-            endTime:   req.query.endTime,
-            page:      req.query.page,
-            language:  req.query.language,
-        } ) );
-    }
-    catch ( e ) {
+    if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
-    }
+        res.status( 404 ).end();
+    else
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 200 ).json( result );
 } );
 
 apis.get( '/:id', async ( req, res ) => {
@@ -151,7 +138,7 @@ apis.get( '/:id', async ( req, res ) => {
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
-        res.status( 404 ).send( { error: 'Not found!', } );
+        res.status( 404 ).end();
     }
 } );
 
