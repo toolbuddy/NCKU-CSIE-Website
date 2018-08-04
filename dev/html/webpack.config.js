@@ -5,7 +5,7 @@ const language = require( path.resolve( projectRoot, 'settings/language/config' 
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
 const languageRoot = path.resolve( projectRoot, 'static/src/language' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
-const { staticUrl } = require( path.resolve( projectRoot, 'settings/server/config' ) );
+const { staticUrl, } = require( path.resolve( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -49,7 +49,7 @@ module.exports = language.support.map( language => ( {
         'student/college':       path.resolve( pugRoot, 'student/college.pug' ),
         'student/course':        path.resolve( pugRoot, 'student/course.pug' ),
         'student/international': path.resolve( pugRoot, 'student/international.pug' ),
-        'student/internship': path.resolve( pugRoot, 'student/internship.pug' ),
+        'student/internship':    path.resolve( pugRoot, 'student/internship.pug' ),
         'student/master':        path.resolve( pugRoot, 'student/master.pug' ),
         'student/phd':           path.resolve( pugRoot, 'student/phd.pug' ),
         'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),

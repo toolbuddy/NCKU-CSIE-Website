@@ -45,7 +45,7 @@ module.exports = {
         'student/college':       path.resolve( jsSrcRoot, 'student/college.js' ),
         'student/course':        path.resolve( jsSrcRoot, 'student/course.js' ),
         'student/international': path.resolve( jsSrcRoot, 'student/international.js' ),
-        'student/internship': path.resolve( jsSrcRoot, 'student/internship.js' ),
+        'student/internship':    path.resolve( jsSrcRoot, 'student/internship.js' ),
         'student/master':        path.resolve( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.resolve( jsSrcRoot, 'student/phd.js' ),
         'student/scholarship':   path.resolve( jsSrcRoot, 'student/scholarship.js' ),

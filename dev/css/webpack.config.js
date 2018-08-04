@@ -50,7 +50,7 @@ module.exports = {
         'student/college':       path.resolve( sassRoot, 'student/college.scss' ),
         'student/course':        path.resolve( sassRoot, 'student/course.scss' ),
         'student/international': path.resolve( sassRoot, 'student/international.scss' ),
-        'student/internship': path.resolve( sassRoot, 'student/internship.scss' ),
+        'student/internship':    path.resolve( sassRoot, 'student/internship.scss' ),
         'student/master':        path.resolve( sassRoot, 'student/master.scss' ),
         'student/phd':           path.resolve( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),
