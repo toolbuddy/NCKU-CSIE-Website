@@ -2,14 +2,14 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( { language = 'zh-TW', announcementId = 75, } = {} ) => {
+module.exports = async ( { language = 'zh-TW', announcementId = 75, fileId = 3, } = {} ) => {
     const table = await associations();
 
-    const data = await table.announcement.findOne( {
+    const data = await table.announcementFile.findOne( {
         include: [
             {
-                model:      table.announcementI18n,
-                as:         'announcementI18n',
+                model:      table.announcementFileI18n,
+                as:         'announcementFileI18n',
                 where: {
                     language,
                 },
@@ -17,21 +17,18 @@ module.exports = async ( { language = 'zh-TW', announcementId = 75, } = {} ) => 
         ],
         where: {
             announcementId,
+            fileId,
         },
     } )
     .then(
-        announcement => {
+        announcementFile => {
             return Promise.all( [
-                announcement.update( {
-                    publishTime: new Date(),
-                    author: 'Chen',
-                    isPinned: true,
-                    isPublished: true,
-                    isApproved: true,
+                announcementFile.update( {
+                    type: 'jpg',
                 } ),
-                announcement.announcementI18n[ 0 ].update( {
-                    title: '測2',
-                    content: '內1',
+                announcementFile.announcementFileI18n[ 0 ].update( {
+                    name: 'big file',
+                    url: '/yo/yo/check',
                 } ),
             ] )
         }
