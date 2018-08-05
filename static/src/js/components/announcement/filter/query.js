@@ -1,6 +1,5 @@
 import QueryString from 'jsComponent/announcement/filter/query-string.js';
-import { renderBriefings, renderPages, } from 'jsComponent/announcement/filter/render.js';
-import { dateFormating, }  from 'jsUtil/format.js';
+import { renderBriefingsTop, renderBriefings, renderPages, } from 'jsComponent/announcement/filter/render.js';
 
 // Announcement api URL prefix.
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
@@ -26,35 +25,45 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {Date}   startTime
-     * @param {Date}   endTime
-     * @param {string} page
-     * @param {string} language
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
      */
 
-    getAllAnnouncements ( {
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-        page = QueryString.getPage(),
-        language = 'zh-TW',
-    } = { } ) {
+    getAllAnnouncements () {
+        const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [ singleDefaultTag.defaultTag, ],
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            tags,
+            startTime,
+            endTime,
             page,
-            language,
+            'language':    'zh-TW',
         } );
 
-        Promise.all( [
-            fetch( `${ apiURL }/all-pinned?${ query }` ),
-            fetch( `${ apiURL }/all-announcement?${ query }` ),
-        ] )
-        .then( headers => Promise.all( headers.map( bodies => bodies.json() ) ) )
-        .then( data => renderBriefings( ...data ) );
+        fetch( `${ apiURL }/all-pinned?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefingsTop( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
+        } );
+
+        fetch( `${ apiURL }/all-announcement?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefings( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings' ).innerHTML = err;
+        } );
     },
 
     /**
@@ -62,38 +71,46 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and tag is appended to query string.
      *     * `time__date` is clicked and tag(s) other than `defaultTag` is in query string.
      *
-     * @param {string[]} tags
-     * @param {Date}     startTime
-     * @param {Date}     endTime
-     * @param {string}   page
-     * @param {string}   language
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.
      */
 
-    getAnnouncementsByTags ( {
-        tags = QueryString.getTags( singleDefaultTag.defaultTag ),
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-        page = QueryString.getPage(),
-        language = 'zh-TW',
-    } = { } ) {
+    getAnnouncementsByTags () {
+        const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
             'tags':      [ singleDefaultTag.defaultTag,
                 ...tags, ],
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            startTime,
+            endTime,
             page,
-            language,
+            'language':    'zh-TW',
         } );
 
-        Promise.all( [
-            fetch( `${ apiURL }/tags-pinned?${ query }` ),
-            fetch( `${ apiURL }/tags-announcement?${ query }` ),
-        ] )
-        .then( headers => Promise.all( headers.map( bodies => bodies.json() ) ) )
-        .then( data => renderBriefings( ...data ) );
+        fetch( `${ apiURL }/tags-pinned?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefingsTop( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
+        } );
+
+        fetch( `${ apiURL }/tags-announcement?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefings( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings' ).innerHTML = err;
+        } );
     },
 
     /**
@@ -103,27 +120,21 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {Date} startTime
-     * @param {Date} endTime
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
      */
 
-    getAllPageNumber ( { startTime = QueryString.getStartTime(), endTime = QueryString.getEndTime(), } = { } ) {
+    getAllPageNumber () {
+        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [ singleDefaultTag.defaultTag, ],
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            tags,
+            startTime,
+            endTime,
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
         .then( res => res.json() )
-        .then( data => renderPages(
-            singleDefaultTag.getAllAnnouncements,
-            singleDefaultTag.getAnnouncementsByTags,
-            data.pageNumber
-        ) );
+        .then( data => renderPages( data.pageNumber ) );
     },
 
     /**
@@ -131,33 +142,22 @@ export const singleDefaultTag = {
      *     * `tags__tag--*` is clicked and tag is appended to query string.
      *     * `time__date` is clicked and tag(s) other than `defaultTag` is in query string.
      *
-     * @param {string[]} tags
-     * @param {Date}     startTime
-     * @param {Date}     endTime
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.
      */
 
-    getPageNumberByTags ( {
-        tags = QueryString.getTags( singleDefaultTag.defaultTag ),
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-    } = { } ) {
+    getPageNumberByTags () {
+        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
             'tags':      [ singleDefaultTag.defaultTag,
                 ...tags, ],
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            startTime,
+            endTime,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
         .then( res => res.json() )
-        .then( data => renderPages(
-            singleDefaultTag.getAllAnnouncements,
-            singleDefaultTag.getAnnouncementsByTags,
-            data.pageNumber
-        ) );
+        .then( data => renderPages( data.pageNumber ) );
     },
 };
 
@@ -182,35 +182,45 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {Date}   startTime
-     * @param {Date}   endTime
-     * @param {string} page
-     * @param {string} language
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
      */
 
-    getAllAnnouncements ( {
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-        page = QueryString.getPage(),
-        language = 'zh-TW',
-    } = { } ) {
+    getAllAnnouncements () {
+        const { tags, startTime, endTime, page, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
-            'tags':      multipleDefaultTags.defaultTags,
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            tags,
+            startTime,
+            endTime,
             page,
-            language,
+            'language':    'zh-TW',
         } );
 
-        Promise.all( [
-            fetch( `${ apiURL }/all-pinned?${ query }` ),
-            fetch( `${ apiURL }/all-announcement?${ query }` ),
-        ] )
-        .then( headers => Promise.all( headers.map( bodies => bodies.json() ) ) )
-        .then( data => renderBriefings( ...data ) );
+        fetch( `${ apiURL }/all-pinned?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefingsTop( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
+        } );
+
+        fetch( `${ apiURL }/all-announcement?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefings( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings' ).innerHTML = err;
+        } );
     },
 
     /**
@@ -218,37 +228,44 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and tag is appended to query string.
      *     * `time__date` is clicked and tag(s) other than `defaultTags` is in query string.
      *
-     * @param {string[]} tags
-     * @param {Date}     startTime
-     * @param {Date}     endTime
-     * @param {string}   page
-     * @param {string}   language
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.
      */
 
-    getAnnouncementsByTags ( {
-        tags = QueryString.getTags( multipleDefaultTags.defaultTags ),
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-        page = QueryString.getPage(),
-        language = 'zh-TW',
-    } = { } ) {
+    getAnnouncementsByTags () {
+        const { tags, startTime, endTime, page, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            startTime,
+            endTime,
             page,
-            language,
+            'language':    'zh-TW',
         } );
 
-        Promise.all( [
-            fetch( `${ apiURL }/tags-pinned?${ query }` ),
-            fetch( `${ apiURL }/tags-announcement?${ query }` ),
-        ] )
-        .then( headers => Promise.all( headers.map( bodies => bodies.json() ) ) )
-        .then( data => renderBriefings( ...data ) );
+        fetch( `${ apiURL }/tags-pinned?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            return res.json();
+        } )
+        .then( data => renderBriefingsTop( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
+        } );
+
+        fetch( `${ apiURL }/tags-announcement?${ query }` )
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderBriefings( data ) )
+        .catch( ( err ) => {
+            document.getElementById( 'announcement__brefings' ).innerHTML = err;
+        } );
     },
 
     /**
@@ -258,27 +275,21 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *     * `time__date` is clicked and no tag in query string ( which is equivalent to click on `tags__tag--all` ).
      *
-     * @param {Date} startTime
-     * @param {Date} endTime
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in files [ ./index.js ] and [ ./event.js ] for more information.
      */
 
-    getAllPageNumber ( { startTime = QueryString.getStartTime(), endTime = QueryString.getEndTime(), } = { } ) {
+    getAllPageNumber () {
+        const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
-            'tags':      multipleDefaultTags.defaultTags,
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            tags,
+            startTime,
+            endTime,
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
         .then( res => res.json() )
-        .then( data => renderPages(
-            multipleDefaultTags.getAllAnnouncements,
-            multipleDefaultTags.getAnnouncementsByTags,
-            data.pageNumber
-        ) );
+        .then( data => renderPages( data.pageNumber ) );
     },
 
     /**
@@ -286,30 +297,20 @@ export const multipleDefaultTags = {
      *     * `tags__tag--*` is clicked and tag is appended to query string.
      *     * `time__date` is clicked and tag(s) other than `defaultTags` is in query string.
      *
-     * @param {string[]} tags
-     * @param {Date}     startTime
-     * @param {Date}     endTime
-     *
      * See `defaultTagOnClick`, `tagOnClick`, `dateOnChange`, `pageOnClick` and `filterEvent`
      * in file [ ./event.js ] for more information.
      */
 
-    getPageNumberByTags ( {
-        tags = QueryString.getTags( multipleDefaultTags.defaultTags ),
-        startTime = QueryString.getStartTime(),
-        endTime = QueryString.getEndTime(),
-    } = { } ) {
+    getPageNumberByTags () {
+        const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
-            'startTime': dateFormating( startTime ),
-            'endTime':   dateFormating( endTime ),
+            startTime,
+            endTime,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
-        .then( res => res.json() ).then( data => renderPages(
-            multipleDefaultTags.getAllAnnouncements,
-            multipleDefaultTags.getAnnouncementsByTags,
-            data.pageNumber
-        ) );
+        .then( res => res.json() )
+        .then( data => renderPages( data.pageNumber ) );
     },
 };

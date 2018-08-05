@@ -1,5 +1,5 @@
 import { filterTags, } from 'jsComponent/announcement/filter/render.js';
-import { filterEvent, } from 'jsComponent/announcement/filter/event.js';
+import { filterEvent, setURLOnChange, } from 'jsComponent/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'jsComponent/announcement/filter/query.js';
 
 // Single default tag filter constructor.
@@ -10,13 +10,15 @@ export function singleDefaultTagFilter ( tag = null ) {
     // Construct filter UI.
     filterTags( tag );
 
-    // Construct page buttons.
-    // Using default tag to count how many pages required to contain all announcement.
-    singleDefaultTag.getAllPageNumber();
+    const urlOnChange = setURLOnChange(
+        singleDefaultTag.getAllAnnouncements,
+        singleDefaultTag.getAllPageNumber,
+        singleDefaultTag.getAnnouncementsByTags,
+        singleDefaultTag.getPageNumberByTags
+    );
 
-    // Construct announcements.
-    // Using default tag to get announcements on first page.
-    singleDefaultTag.getAllAnnouncements();
+    window.addEventListener( 'popstate', urlOnChange );
+    urlOnChange();
 
     // Constructor filter event.
     // * When `tags__tag--all` is clicked, using default tag to:
@@ -30,13 +32,7 @@ export function singleDefaultTagFilter ( tag = null ) {
     // * When `page__button` is clicked, using previous events queried result to:
     //     * Construct announcements on requested page.
     //     * Change page number.
-    filterEvent(
-        singleDefaultTag.getAllAnnouncements,
-        singleDefaultTag.getAnnouncementsByTags,
-        singleDefaultTag.getAllPageNumber,
-        singleDefaultTag.getPageNumberByTags,
-        tag
-    );
+    filterEvent( tag );
 }
 
 
@@ -48,13 +44,15 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     // Construct filter UI, must be `tags__tag--all`.
     filterTags( 'all' );
 
-    // Construct page buttons.
-    // Using default tags to count how many pages required to contain all announcement.
-    multipleDefaultTags.getAllPageNumber();
+    const urlOnChange = setURLOnChange(
+        multipleDefaultTags.getAllAnnouncements,
+        multipleDefaultTags.getAllPageNumber,
+        multipleDefaultTags.getAnnouncementsByTags,
+        multipleDefaultTags.getPageNumberByTags
+    );
 
-    // Construct announcements.
-    // Using default tags to get announcements on first page.
-    multipleDefaultTags.getAllAnnouncements();
+    window.addEventListener( 'popstate', urlOnChange );
+    urlOnChange();
 
     // Constructor filter event.
     // * When `tags__tag--all` is clicked, using default tags to:
@@ -68,10 +66,5 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     // * When `page__button` is clicked, using previous events queried result to:
     //     * Construct announcements on requested page.
     //     * Change page number.
-    filterEvent(
-        multipleDefaultTags.getAllAnnouncements,
-        multipleDefaultTags.getAnnouncementsByTags,
-        multipleDefaultTags.getAllPageNumber,
-        multipleDefaultTags.getPageNumberByTags
-    );
+    filterEvent();
 }
