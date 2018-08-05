@@ -11,8 +11,10 @@ export function singleDefaultTagFilter ( tag = null ) {
     filterTags( tag );
 
     const urlOnChange = setURLOnChange(
+        singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
+        singleDefaultTag.getPinnedAnnouncementsByTags,
         singleDefaultTag.getAnnouncementsByTags,
         singleDefaultTag.getPageNumberByTags
     );
@@ -45,8 +47,10 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     filterTags( 'all' );
 
     const urlOnChange = setURLOnChange(
+        multipleDefaultTags.getAllPinnedAnnouncements,
         multipleDefaultTags.getAllAnnouncements,
         multipleDefaultTags.getAllPageNumber,
+        multipleDefaultTags.getPinnedAnnouncementsByTags,
         multipleDefaultTags.getAnnouncementsByTags,
         multipleDefaultTags.getPageNumberByTags
     );

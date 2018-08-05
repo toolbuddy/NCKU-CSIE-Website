@@ -3,6 +3,7 @@ const Op = require( 'sequelize' ).Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
 const associations = require( path.resolve( opRoot, 'associations' ) );
+const validate = require( path.resolve( opRoot, 'validate' ) );
 const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
 
 module.exports = async ( {
@@ -14,8 +15,6 @@ module.exports = async ( {
 } = {} ) => {
     const table = await associations();
     let data = [];
-    if ( page <= 0 )
-        return [];
     if ( tags.length === 0 ) {
         data = await table.announcement.findAll( {
             attributes: [

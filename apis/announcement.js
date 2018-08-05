@@ -24,7 +24,9 @@ apis.get( '/all-pinned', async ( req, res ) => {
         language:  req.query.language,
     } );
 
-    if ( !result.length )
+    if ( result.error )
+        res.status( 400 ).json( result );
+    else if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
