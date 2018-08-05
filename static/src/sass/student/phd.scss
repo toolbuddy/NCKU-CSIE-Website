@@ -11,14 +11,6 @@
   $small: 850px;
   $large: 992px;
 
-  // block [skin]
-  padding: 2.2rem .5rem;
-  @media screen and ( min-width: $large ) {
-    padding: 2.2rem 0;
-  }
-  max-width: 26rem;
-  margin: 0 auto;
-
   // block [layout]
   display: grid;
   grid: {
@@ -36,12 +28,19 @@
       'filter';
   }
 
+  // block [skin]
+  padding: 2.2rem .5rem;
+  @media screen and ( min-width: $large ) {
+    padding: 2.2rem 0;
+  }
+  max-width: 26rem;
+  margin: 0 auto;
+
   // block
   // `.content .topic`
   .topic {
-    grid-area: topic;
-
     // element [position]
+    grid-area: topic;
     grid-column: {
       start: 1;
       end: 11;
@@ -51,9 +50,8 @@
   // block
   // `.content .filter`
   .filter {
-    grid-area: filter;
-
     // element [position]
+    grid-area: filter;
     grid-column: {
       start: 1;
       end: 11;
