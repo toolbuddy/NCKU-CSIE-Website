@@ -1,29 +1,31 @@
 const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
-const defaultValue = require( `${ projectRoot }/models/announcement/operation/default-value` );
+const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
+const associations = require( path.resolve( opRoot, 'associations' ) );
+const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( defaultValue.defaultStartTime ).toISOString(),
-    endTime = new Date( defaultValue.defaultEndTime ).toISOString(),
-    page = defaultValue.defaultPage,
-    language = defaultValue.defaultLanguage,
+    startTime = new Date( defaultValue.startTime ).toISOString(),
+    endTime = new Date( defaultValue.endTime ).toISOString(),
+    page = defaultValue.page,
+    language = defaultValue.language,
 } = {} ) => {
     const table = await associations();
     if ( page <= 0 )
         return [];
     const data = await table.announcement.findAll( {
-        attributes: [
-            'announcementId',
-        ],
+        attributes: [ 'announcementId', ],
         where: {
-            '$announcementTag.tagI18n.name$': tags,
+            '$announcementTag.tagI18n.name$': {
+                [Op.in] : tags,
+            },
             'updateTime':                       {
-                [ Op.between ]: [ new Date( startTime ),
-                    new Date( endTime ), ],
+                [ Op.between ]: [
+                    new Date( startTime ),
+                    new Date( endTime ),
+                ],
             },
             'isPublished': 1,
             'isApproved':  1,
@@ -45,14 +47,15 @@ module.exports = async ( {
         group:  'announcementId',
         having: sequelize.literal( `count(*) = ${ tags.length }` ),
     } )
-    .then( ids => ids.map( id => id.announcementId ) )
-    .then( requiredId => table.announcement.findAll( {
+    .then( ids => table.announcement.findAll( {
         attributes: [
             'announcementId',
             'updateTime',
         ],
         where: {
-            announcementId: requiredId,
+            announcementId: {
+                [Op.in] : ids.map( id => id.announcementId ),
+            },
         },
         offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
         limit:   defaultValue.announcementsPerPage,
@@ -71,16 +74,12 @@ module.exports = async ( {
             {
                 model:      table.announcementTag,
                 as:         'announcementTag',
-                attributes: [
-                    'tagId',
-                ],
+                attributes: [ 'tagId', ],
                 include: [
                     {
                         model:      table.tagI18n,
                         as:         'tagI18n',
-                        attributes: [
-                            'name',
-                        ],
+                        attributes: [ 'name', ],
                         where: {
                             language: 'en-US',
                         },

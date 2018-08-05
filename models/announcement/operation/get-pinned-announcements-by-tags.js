@@ -1,25 +1,28 @@
 const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const sequelize = require( 'sequelize' );
 const Op = require( 'sequelize' ).Op;
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
+const associations = require( path.resolve( opRoot, 'associations' ) );
+const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( '2018-07-01' ).toISOString(),
-    endTime = new Date().toISOString(),
-    language = 'zh-TW',
+    startTime = new Date( defaultValue.startTime ).toISOString(),
+    endTime = new Date( defaultValue.endTime ).toISOString(),
+    language = defaultValue.language,
 } = {} ) => {
     const table = await associations();
     const data = await table.announcement.findAll( {
-        attributes: [
-            'announcementId',
-        ],
+        attributes: [ 'announcementId', ],
         where: {
-            '$announcementTag.tagI18n.name$': tags,
+            '$announcementTag.tagI18n.name$': {
+                [Op.in] : tags,
+            },
             'updateTime':                       {
-                [ Op.between ]: [ new Date( startTime ),
-                    new Date( endTime ), ],
+                [ Op.between ]: [
+                    new Date( startTime ),
+                    new Date( endTime ),
+                ],
             },
             'isPinned':    1,
             'isPublished': 1,
@@ -42,14 +45,15 @@ module.exports = async ( {
         group:  'announcementId',
         having: sequelize.literal( `count(*) = ${ tags.length }` ),
     } )
-    .then( ids => ids.map( id => id.announcementId ) )
-    .then( requiredId => table.announcement.findAll( {
+    .then( ids => table.announcement.findAll( {
         attributes: [
             'announcementId',
             'updateTime',
         ],
         where: {
-            announcementId: requiredId,
+            announcementId: {
+                [Op.in] : ids.map( id => id.announcementId ),
+            },
         },
         include: [
             {
@@ -66,21 +70,16 @@ module.exports = async ( {
             {
                 model:      table.announcementTag,
                 as:         'announcementTag',
-                attributes: [
-                    'tagId',
-                ],
+                attributes: [ 'tagId', ],
                 include: [
                     {
                         model:      table.tagI18n,
                         as:         'tagI18n',
-                        attributes: [
-                            'name',
-                        ],
+                        attributes: [ 'name', ],
                         where: {
                             language: 'en-US',
                         },
                     },
-
                 ],
             },
         ],
