@@ -1,5 +1,4 @@
 @import 'components/announcement/tags';
-@import 'components/announcement/filter__time';
 
 // block
 // `.filter`
@@ -21,8 +20,9 @@
   // element
   // `.filter .filter__button`
 
-  &__button {
+  &__button.button {
     // element [position]
+    grid-area: filter__button;
     display: flex;
     justify-self: end;
     @media screen and ( min-width: $large ) {
@@ -41,13 +41,10 @@
   // `.filter .button`
 
   .button {
-    // element [position]
-    grid-area: filter__button;
-
     // element
     // `.filter .button .button__icon`
 
-    &__icon {
+    & > .button__icon {
       // element [skin]
       position: relative;
       background: none;
@@ -62,7 +59,17 @@
   // element
   // `.filter .filter__time`
 
-  &__time {
+  &__time.time {
+    // block [layout]
+    display: flex;
+    flex-direction: column;
+    @media screen and ( min-width: $small ) {
+      flex-direction: row;
+    }
+
+    // block [skin]
+    margin-bottom: 1rem;
+
     // element [position]
     grid-area: filter__time;
     font-size: .4375rem;
@@ -72,6 +79,21 @@
   // `.filter .time`
 
   .time {
+    // element
+    // `.time .time__date`
+
+    & .time__date {
+      // element [skin]
+      background: none;
+      border: .016rem solid #757575;
+      border-radius: 1rem;
+      align-self: center;
+      padding: .15rem 0;
+      width: auto;
+      margin: .3rem .6rem .2rem .2rem;
+      text-align: center;
+    }
+
     // modifier
     // `.time .time--hidden`
 
@@ -87,7 +109,11 @@
   // element
   // `.filter .filter__tags`
 
-  &__tags {
+  &__tags.tags {
+    // block [layout]
+    display: grid;
+    align-self: center;
+
     // element [position]
     grid-area: filter__tags;
     font-size: .4375rem;
@@ -95,7 +121,7 @@
 
   &.filter-- {
     &all {
-      .tags {
+      & > .tags {
         grid-template: {
           areas:
             'tags__tag--all           tags__tag--college'
@@ -144,7 +170,7 @@
     }
 
     &course , &international, &scholarship, &internship {
-      .tags {
+      & > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -171,7 +197,7 @@
     }
 
     &recruitment {
-      .tags {
+      & > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -182,7 +208,7 @@
     }
 
     &college, &master, &phd {
-      .tags {
+      & > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -224,7 +250,7 @@
     }
 
     &honor, &rule {
-      .tags {
+      & > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -253,7 +279,7 @@
     }
 
     &activity {
-      .tags {
+      & > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -286,10 +312,6 @@
   // `.filter .tags`
 
   .tags {
-    // block [layout]
-    display: grid;
-    align-self: center;
-
     // modifier
     // `.tags.tags--hidden`
 
@@ -301,7 +323,7 @@
       }
     }
 
-    &__tag.tags__tag-- {
+    & > .tags__tag.tags__tag-- {
       // element
       // `.tags.tags__tag--all`
 

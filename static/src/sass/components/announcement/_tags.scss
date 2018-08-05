@@ -8,7 +8,7 @@
   // element
   // `.tags .tags__tag`
 
-  &__tag {
+  & > .tags__tag {
     // element [skin]
     border-radius: 1rem;
     padding: .1rem .2rem;
@@ -20,177 +20,177 @@
     &:hover {
       cursor: pointer;
     }
-  }
 
-  &__tag.tags__tag-- {
-    // modifier
-    // `.tags__tag.tags__tag--active`
-    @mixin tags__tag--active( $bgcolor ) {
-      &.tags__tag--active {
-        // template [skin]
-        color: #ffffff;
-        background-color: $bgcolor;
+    &.tags__tag-- {
+      // modifier
+      // `.tags__tag.tags__tag--active`
+      @mixin tags__tag--active( $bgcolor ) {
+        &.tags__tag--active {
+          // template [skin]
+          color: #ffffff;
+          background-color: $bgcolor;
+        }
       }
-    }
 
-    // modifier
-    // `.tags__tag.tags__tag--all`
+      // modifier
+      // `.tags__tag.tags__tag--all`
 
-    &all {
-      // modifier [skin]
-      color: #faad06;
-      background-color: #fff8e6;
-      @include tags__tag--active( #faad06 );
-    }
+      &all {
+        // modifier [skin]
+        color: #faad06;
+        background-color: #fff8e6;
+        @include tags__tag--active( #faad06 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--college`
+      // modifier
+      // `.tags__tag.tags__tag--college`
 
-    &college {
-      // modifier [skin]
-      color: #399dff;
-      background-color: #dfeffe;
-      @include tags__tag--active( #399dff );
-    }
+      &college {
+        // modifier [skin]
+        color: #399dff;
+        background-color: #dfeffe;
+        @include tags__tag--active( #399dff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--competition`
+      // modifier
+      // `.tags__tag.tags__tag--competition`
 
-    &competition {
-      // modifier [skin]
-      color: #f67057;
-      background-color: #ffe3df;
-      @include tags__tag--active( #f67057 );
-    }
+      &competition {
+        // modifier [skin]
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--conference`
+      // modifier
+      // `.tags__tag.tags__tag--conference`
 
-    &conference {
-      // modifier [skin]
-      color: #9053ff;
-      background-color: #e8dafe;
-      @include tags__tag--active( #9053ff );
-    }
+      &conference {
+        // modifier [skin]
+        color: #9053ff;
+        background-color: #e8dafe;
+        @include tags__tag--active( #9053ff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--course`
+      // modifier
+      // `.tags__tag.tags__tag--course`
 
-    &course {
-      // modifier [skin]
-      color: #faad06;
-      background-color: #fff8e6;
-      @include tags__tag--active( #faad06 );
-    }
+      &course {
+        // modifier [skin]
+        color: #faad06;
+        background-color: #fff8e6;
+        @include tags__tag--active( #faad06 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--exhibition`
+      // modifier
+      // `.tags__tag.tags__tag--exhibition`
 
-    &exhibition {
-      // modifier [skin]
-      color: #9053ff;
-      background-color: #e8dafe;
-      @include tags__tag--active( #9053ff );
-    }
+      &exhibition {
+        // modifier [skin]
+        color: #9053ff;
+        background-color: #e8dafe;
+        @include tags__tag--active( #9053ff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--international`
+      // modifier
+      // `.tags__tag.tags__tag--international`
 
-    &international {
-      // modifier [skin]
-      color: #f67057;
-      background-color: #ffe3df;
-      @include tags__tag--active( #f67057 );
-    }
+      &international {
+        // modifier [skin]
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--honor
+      // modifier
+      // `.tags__tag.tags__tag--honor
 
-    &honor {
-      // modifier [skin]
-      color: #f67057;
-      background-color: #ffe3df;
-      @include tags__tag--active( #f67057 );
-    }
+      &honor {
+        // modifier [skin]
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--internship`
+      // modifier
+      // `.tags__tag.tags__tag--internship`
 
-    &internship {
-      // modifier [skin]
-      color: #9053ff;
-      background-color: #e8dafe;
-      @include tags__tag--active( #9053ff );
-    }
+      &internship {
+        // modifier [skin]
+        color: #9053ff;
+        background-color: #e8dafe;
+        @include tags__tag--active( #9053ff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--master`
+      // modifier
+      // `.tags__tag.tags__tag--master`
 
-    &master {
-      // modifier [skin]
-      color: #399dff;
-      background-color: #dfeffe;
-      @include tags__tag--active( #399dff );
-    }
+      &master {
+        // modifier [skin]
+        color: #399dff;
+        background-color: #dfeffe;
+        @include tags__tag--active( #399dff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--phd`
+      // modifier
+      // `.tags__tag.tags__tag--phd`
 
-    &phd {
-      // modifier [skin]
-      color: #399dff;
-      background-color: #dfeffe;
-      @include tags__tag--active( #399dff );
-    }
+      &phd {
+        // modifier [skin]
+        color: #399dff;
+        background-color: #dfeffe;
+        @include tags__tag--active( #399dff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--rule`
+      // modifier
+      // `.tags__tag.tags__tag--rule`
 
-    &rule {
-      // modifier [skin]
-      color: #0dc589;
-      background-color: #c6ffec;
-      @include tags__tag--active( #0dc589 );
-    }
+      &rule {
+        // modifier [skin]
+        color: #0dc589;
+        background-color: #c6ffec;
+        @include tags__tag--active( #0dc589 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--recruitment`
+      // modifier
+      // `.tags__tag.tags__tag--recruitment`
 
-    &recruitment {
-      // modifier [skin]
-      color: #0dc589;
-      background-color: #c6ffec;
-      @include tags__tag--active( #0dc589 );
-    }
+      &recruitment {
+        // modifier [skin]
+        color: #0dc589;
+        background-color: #c6ffec;
+        @include tags__tag--active( #0dc589 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--scholarship`
+      // modifier
+      // `.tags__tag.tags__tag--scholarship`
 
-    &scholarship {
-      // modifier [skin]
-      color: #f67057;
-      background-color: #ffe3df;
-      @include tags__tag--active( #f67057 );
-    }
+      &scholarship {
+        // modifier [skin]
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--speech`
+      // modifier
+      // `.tags__tag.tags__tag--speech`
 
-    &speech {
-      // element [skin]
-      background-color: #e8dafe;
-      color: #9053ff;
-      @include tags__tag--active( #9053ff );
-    }
+      &speech {
+        // element [skin]
+        background-color: #e8dafe;
+        color: #9053ff;
+        @include tags__tag--active( #9053ff );
+      }
 
-    // modifier
-    // `.tags__tag.tags__tag--teacher`
+      // modifier
+      // `.tags__tag.tags__tag--teacher`
 
-    &teacher {
-      // modifier [skin]
-      color: #faad06;
-      background-color: #fff8e6;
-      @include tags__tag--active( #faad06 );
+      &teacher {
+        // modifier [skin]
+        color: #faad06;
+        background-color: #fff8e6;
+        @include tags__tag--active( #faad06 );
+      }
     }
   }
 }

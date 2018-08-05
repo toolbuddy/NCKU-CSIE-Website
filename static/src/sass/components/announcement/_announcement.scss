@@ -27,23 +27,7 @@
   // element
   // `.announcement .announcement__headline`
 
-  &__headline {
-    // element [position]
-    grid-area: announcement__headline;
-
-    // element [skin]
-    border-radius: .2rem;
-    background-color: #ffffff;
-    box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
-    font-size: .4375rem;
-    padding: .4rem;
-    color: #b5babf;
-  }
-
-  // block
-  // `.announcement .headline`
-
-  .headline {
+  &__headline.headline {
     // block [layout]
     display: grid;
     grid-template: {
@@ -63,29 +47,44 @@
       }
     }
 
+    // element [position]
+    grid-area: announcement__headline;
+
+    // element [skin]
+    border-radius: .2rem;
+    background-color: #ffffff;
+    box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
+    font-size: .4375rem;
+    padding: .4rem;
+    color: #b5babf;
+  }
+
+  // block
+  // `.announcement .headline`
+
+  .headline {
     // element
     // `.announcement .headline .headline__tags`
 
-    &__tags {
+    // block
+    // `.announcement .headline .tags`
+
+    & > .headline__tags.tags {
+      // block [skin]
+      @media screen and ( min-width: $small ) {
+        font-size: .4375rem;
+      }
+
       // element [position]
       grid-area: headline__tags;
       display: block;
     }
 
-    // block
-    // `.announcement .headline .tags`
-
-    .tags {
-      // block [skin]
-      @media screen and ( min-width: $small ) {
-        font-size: .4375rem;
-      }
-    }
 
     // element
     // `.announcement .headline .headline__title`
 
-    &__title {
+    & > .headline__title {
       // element [position]
       grid-area: headline__title;
 
@@ -98,7 +97,7 @@
     // element
     // `.announcement .headline .headline__announcer`
 
-    &__announcer {
+    & > .headline__announcer {
       // element [position]
       grid-area: headline__announcer;
 
@@ -112,7 +111,7 @@
     // element
     // `.announcement .headline .headline__time`
 
-    &__time {
+    & > .headline__time {
       // element [position]
       grid-area: headline__time;
 
@@ -152,7 +151,14 @@
   // element
   // `.announcement .announcement__attachments`
 
-  &__attachments {
+  &__attachments.attachments {
+    // block [layout]
+    display: grid;
+    grid: {
+      template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
+      gap: .625rem;
+    }
+
     // element [position]
     grid-area: announcement__attachments;
 
@@ -164,17 +170,10 @@
   // `.announcement .attachments`
 
   .attachments {
-    // block [layout]
-    display: grid;
-    grid: {
-      template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
-      gap: .625rem;
-    }
-
     // element
     // `.attachments .attachments__attachment`
 
-    &__attachment {
+    & > .attachments__attachment {
       // element [position]
       align-self: start;
 

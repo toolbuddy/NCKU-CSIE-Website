@@ -11,7 +11,7 @@
   // element
   // `.content .announcement .announcement__briefing`
 
-  &__briefings {
+  &__briefings.briefings {
     // element [skin]
     margin-top: .7rem;
   }
@@ -23,23 +23,7 @@
     // element
     // `.content .announcement .briefings__briefing`
 
-    &__briefing {
-      // element [skin]
-      padding: .5rem .4rem;
-      border-radius: .188rem;
-      background-color: #ffffff;
-      margin-bottom: .4rem;
-      box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .312rem 0 rgba( 0, 0, 0, .2 );
-      @media screen and ( min-width: $small ) {
-        // element [skin]
-        padding: .8rem 1rem;
-      }
-    }
-
-    // block
-    // `.content .announcement .briefings.briefing`
-
-    .briefing {
+    & > .briefings__briefing.briefing {
       // block [layout]
       display: grid;
       grid-template: {
@@ -60,6 +44,22 @@
         }
       }
 
+      // element [skin]
+      padding: .5rem .4rem;
+      border-radius: .188rem;
+      background-color: #ffffff;
+      margin-bottom: .4rem;
+      box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .312rem 0 rgba( 0, 0, 0, .2 );
+      @media screen and ( min-width: $small ) {
+        // element [skin]
+        padding: .8rem 1rem;
+      }
+    }
+
+    // block
+    // `.content .announcement .briefings.briefing`
+
+    .briefing {
       // block [interaction]
 
       &:hover {
@@ -69,13 +69,11 @@
       // element
       // `.content .announcement .briefings.briefing__tags`
 
-      &__tags {
+      & > .briefing__tags.tags {
         // element [position]
         grid-area: briefing__tags;
         font-size: .4375rem;
-      }
 
-      .tags {
         // element [skin]
         display: block;
       }
@@ -83,7 +81,7 @@
       // element
       // `.content .announcement .briefings.briefing__title`
 
-      &__title {
+      & > .briefing__title {
         // element [position]
         grid-area: briefing__title;
 
@@ -106,7 +104,7 @@
       // element
       // `.content .announcement .briefings.briefing__article`
 
-      &__article {
+      & > .briefing__article {
         // element [skin]
         display: none;
         @media screen and ( min-width: $small ) {
@@ -125,7 +123,7 @@
       // element
       // `.content .announcement .briefings.briefing__time`
 
-      &__time {
+      & > .briefing__time {
         // element [position]
         grid-area: briefing__time;
 
@@ -183,7 +181,7 @@
     // block
     // `.content .announcement.announcement--hot-news .title`
 
-    .title {
+    & > .announcement__title.title {
       // block [skin]
       display: flex;
       justify-content: center;
@@ -191,7 +189,7 @@
       // element
       // `.content .announcement.announcement--hot-news .title__text`
 
-      &__text {
+      & > .title__text {
         // element [skin]
         font: {
           weight: normal;
@@ -203,11 +201,21 @@
     // block
     // `.content .announcement.announcement--hot-news .briefings`
 
-    .briefings {
+    & > .announcement__briefings.briefings {
       // element
       // `.content .announcement.announcement--hot-news .briefings__briefing`
 
-      &__briefing {
+      & > .briefings__briefing.briefing {
+        // block [layout]
+        display: grid;
+        grid-template: {
+          areas:
+            'briefing__number briefing__title'
+            'briefing__number briefing__article'
+            'briefing__number briefing__time';
+          columns: 1fr 10fr;
+        }
+
         // element [skin]
         box-shadow: 0 0;
         border-radius: 0;
@@ -226,20 +234,10 @@
       // `.content .announcement.announcement--hot-news .briefings.briefing`
 
       .briefing {
-        // block [layout]
-        display: grid;
-        grid-template: {
-          areas:
-            'briefing__number briefing__title'
-            'briefing__number briefing__article'
-            'briefing__number briefing__time';
-          columns: 1fr 10fr;
-        }
-
         // element
         // `.content .announcement.announcement--hot-news .briefings.briefing__number`
 
-        &__number {
+        & > .briefing__number {
           // element [position]
           grid-area: briefing__number;
 
@@ -253,12 +251,15 @@
         // element
         // `.content .announcement.announcement--hot-news .briefings.briefing__article`
 
-        &__article {
+        & > .briefing__article {
           // element [skin]
           margin-bottom: .3rem;
         }
 
-        &__time {
+        // element
+        // `.content .announcement.announcement--hot-news .briefings.briefing__time`
+
+        & > .briefing__time {
           // element [skin]
           justify-self: start;
         }
