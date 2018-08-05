@@ -1,4 +1,4 @@
-import { dateFormating, }  from 'jsUtil/format.js';
+import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 let filterOnChange = null;
 let pageOnChange = null;

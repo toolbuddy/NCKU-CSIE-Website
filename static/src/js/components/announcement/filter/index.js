@@ -1,6 +1,6 @@
-import { filterTags, } from 'jsComponent/announcement/filter/render.js';
-import { filterEvent, setURLOnChange, } from 'jsComponent/announcement/filter/event.js';
-import { singleDefaultTag, multipleDefaultTags, } from 'jsComponent/announcement/filter/query.js';
+import { filterTags, } from 'static/src/js/components/announcement/filter/render.js';
+import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
+import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 
 // Single default tag filter constructor.
 export function singleDefaultTagFilter ( tag = null ) {

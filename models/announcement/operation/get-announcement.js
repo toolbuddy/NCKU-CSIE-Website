@@ -1,8 +1,9 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+const associations = require( path.resolve( projectRoot, 'models/announcement/operation/associations' ) );
+const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
 
-module.exports = async ( { language = 'zh-TW', announcementId = 1, } = {} ) => {
+module.exports = async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
     const table = await associations();
 
     const data = await table.announcement.findOne( {

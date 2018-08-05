@@ -1,4 +1,4 @@
-import card from 'pugComponent/about/teachers/card.pug';
+import card from 'static/src/pug/components/about/teachers/card.pug';
 
 const reqURL = `${ window.location.protocol }//${ window.location.host }/api/teachers${ location.search }`;
 

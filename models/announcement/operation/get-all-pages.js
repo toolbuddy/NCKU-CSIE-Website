@@ -3,7 +3,7 @@ const Op = require( 'sequelize' ).Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
 const associations = require( path.resolve( opRoot, 'associations' ) );
-const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
+const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
 
 module.exports = async ( {
     tags = [],

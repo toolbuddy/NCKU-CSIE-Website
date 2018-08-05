@@ -2,4 +2,4 @@
  * CSS of the file
  */
 /* eslint no-unused-vars: off */
-import style from 'cssComponent/about/members.min.css';
+import style from 'static/dist/css/about/members.min.css';
