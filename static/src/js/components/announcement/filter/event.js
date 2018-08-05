@@ -3,12 +3,10 @@ import { dateFormating, }  from 'jsUtil/format.js';
 let filterOnChange = null;
 let pageOnChange = null;
 
-
 export function setURLOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
     pageOnChange = () => {
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
             getAllAnnouncements();
-
         else
             getAnnouncementsByTags();
     };
@@ -62,7 +60,7 @@ function defaultTagOnClick () {
  *     2. Clear page in `window.loaction.search`.
  *     3. Update URL.
  *
- * @param {Event} event
+ * @param {MouseEvent} event
  */
 
 function tagOnClick ( event ) {
@@ -75,7 +73,6 @@ function tagOnClick ( event ) {
     // append current tags with `tags__tag--${ targetTag }` to make a new query.
     if ( currentTags.indexOf( targetTag ) === -1 )
         query.append( 'tags', targetTag );
-
 
     // If `tags__tag--${ targetTag }` has not been selected,
     // remove all tags from query and recreate without `tags__tag--${ targetTag }`.
@@ -112,11 +109,8 @@ function dateOnChange ( event ) {
         return;
 
     // If input value is cleaned, query with default date value.
-    else if ( newDate === '' ) {
+    if ( newDate === '' )
         query.delete( targetDate );
-        query.delete( 'page' );
-        updateURL( query );
-    }
 
     // Query with new input date value.
     else {
@@ -124,10 +118,10 @@ function dateOnChange ( event ) {
             [ targetDate ]: new Date( newDate ),
         };
         query.set( targetDate, dateFormating( argument[ targetDate ] ) );
-        query.delete( 'page' );
-
-        updateURL( query );
     }
+
+    query.delete( 'page' );
+    updateURL( query );
 }
 
 /**
@@ -135,7 +129,7 @@ function dateOnChange ( event ) {
  *     1. set new page number if necessary
  *     2. Update URL.
  *
- * @param {Event} event
+ * @param {MouseEvent} event
  */
 
 export function pageOnClick ( event ) {
@@ -161,15 +155,16 @@ export function pageOnClick ( event ) {
  */
 
 export function filterEvent ( defaultTagName = 'all' ) {
-    Array.from( document.getElementsByClassName( 'tags__tag' ) ).forEach( ( tag ) => {
+    const filterTags = document.getElementById( 'filter__tags' );
+    Array.from( filterTags.getElementsByClassName( 'tags__tag' ) ).forEach( ( tag ) => {
         tag.addEventListener( 'click', tagOnClick );
     } );
 
-    const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
+    const defaultTag = filterTags.querySelector( `#tags__tag--${ defaultTagName }` );
     defaultTag.removeEventListener( 'click', tagOnClick );
     defaultTag.addEventListener( 'click', defaultTagOnClick );
 
-    Array.from( document.getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
+    Array.from( document.getElementById( 'filter__time' ).getElementsByClassName( 'time__date' ) ).forEach( ( dateInput ) => {
         dateInput.addEventListener( 'change', dateOnChange );
     } );
 }

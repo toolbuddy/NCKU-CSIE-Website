@@ -1,8 +1,10 @@
 import QueryString from 'jsComponent/announcement/filter/query-string.js';
-import { renderBriefingsTop, renderBriefings, renderPages, } from 'jsComponent/announcement/filter/render.js';
+import { renderBriefings, renderBriefingsError, renderPages, renderPagesError, } from 'jsComponent/announcement/filter/render.js';
 
 // Announcement api URL prefix.
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
+const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
+const announcementBriefing = document.getElementById( 'announcement__brefings' );
 
 /**
  * Construct single default tag.
@@ -47,10 +49,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefingsTop( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
@@ -60,10 +60,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefing, data ) )
+        .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     /**
@@ -78,8 +76,10 @@ export const singleDefaultTag = {
     getAnnouncementsByTags () {
         const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [ singleDefaultTag.defaultTag,
-                ...tags, ],
+            'tags':      [
+                singleDefaultTag.defaultTag,
+                ...tags,
+            ],
             startTime,
             endTime,
             page,
@@ -94,10 +94,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefingsTop( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
@@ -107,10 +105,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefing, data ) )
+        .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     /**
@@ -133,8 +129,15 @@ export const singleDefaultTag = {
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
-        .then( res => res.json() )
-        .then( data => renderPages( data.pageNumber ) );
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderPages( data.pageNumber ) )
+        .catch( err => renderPagesError( err ) );
     },
 
     /**
@@ -149,15 +152,24 @@ export const singleDefaultTag = {
     getPageNumberByTags () {
         const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [ singleDefaultTag.defaultTag,
-                ...tags, ],
+            'tags':      [
+                singleDefaultTag.defaultTag,
+                ...tags,
+            ],
             startTime,
             endTime,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
-        .then( res => res.json() )
-        .then( data => renderPages( data.pageNumber ) );
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderPages( data.pageNumber ) )
+        .catch( err => renderPagesError( err ) );
     },
 };
 
@@ -204,10 +216,8 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefingsTop( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
@@ -217,10 +227,8 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefing, data ) )
+        .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     /**
@@ -249,10 +257,8 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefingsTop( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings--top' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
@@ -262,10 +268,8 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( data ) )
-        .catch( ( err ) => {
-            document.getElementById( 'announcement__brefings' ).innerHTML = err;
-        } );
+        .then( data => renderBriefings( announcementBriefing, data ) )
+        .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     /**
@@ -288,8 +292,15 @@ export const multipleDefaultTags = {
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
-        .then( res => res.json() )
-        .then( data => renderPages( data.pageNumber ) );
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderPages( data.pageNumber ) )
+        .catch( err => renderPagesError( err ) );
     },
 
     /**
@@ -310,7 +321,14 @@ export const multipleDefaultTags = {
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
-        .then( res => res.json() )
-        .then( data => renderPages( data.pageNumber ) );
+        .then( ( res ) => {
+            /* eslint no-magic-numbers: 'off' */
+            if ( res.status === 404 )
+                throw res.status;
+            else
+                return res.json();
+        } )
+        .then( data => renderPages( data.pageNumber ) )
+        .catch( err => renderPagesError( err ) );
     },
 };

@@ -4,21 +4,22 @@ import { dateFormating, }  from 'jsUtil/format.js';
 
 export default class QueryString {
     static getFilters ( defaultTags ) {
-        let tags = [ ...new Set( new URLSearchParams( window.location.search ).getAll( 'tags' ) ), ];
+        const query = new URLSearchParams( window.location.search );
+        let tags = [ ...new Set( query.getAll( 'tags' ) ), ];
         if ( !isValidTags( tags ) )
             tags = defaultTags;
 
-        let startTime = new Date( new URLSearchParams( window.location.search ).get( 'startTime' ) || config.defaultStartTime );
+        let startTime = new Date( query.get( 'startTime' ) || config.defaultStartTime );
         if ( !isValidDate( startTime ) )
             startTime = new Date( config.defaultStartTime );
         startTime = dateFormating( startTime );
 
-        let endTime = new Date( new URLSearchParams( window.location.search ).get( 'endTime' ) || config.defaultEndTime );
+        let endTime = new Date( query.get( 'endTime' ) || config.defaultEndTime );
         if ( !isValidDate( endTime ) )
             endTime = new Date( config.defaultEndTime );
         endTime = dateFormating( endTime );
 
-        let page = new URLSearchParams( window.location.search ).get( 'page' ) || config.defaultPage;
+        let page = query.get( 'page' ) || config.defaultPage;
         if ( !isValidPage( page ) )
             page = config.defaultPage;
 
@@ -27,8 +28,7 @@ export default class QueryString {
 
     static generate ( obj = null ) {
         const query = new URLSearchParams();
-        const keys = Reflect.ownKeys( obj );
-        keys.forEach( ( key ) => {
+        Reflect.ownKeys( obj ).forEach( ( key ) => {
             if ( obj[ key ] instanceof Array )
                 obj[ key ].forEach( value => query.append( key, value ) );
             else
