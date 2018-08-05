@@ -2,14 +2,15 @@ import briefing from 'pugComponent/announcement/briefing.pug';
 import { pageOnClick, } from 'jsComponent/announcement/filter/event.js';
 import { timeFormating, }  from 'jsUtil/format.js';
 
-// Construct filter's UI
-( () => {
+// Construct filter tags' UI
+export function renderFilter ( defaultTagName = null ) {
     let flip = 0;
-    const filterButton = document.getElementById( 'filter__button' );
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
     const filterTime = document.getElementById( 'filter__time' );
-    filterButton.onclick = () => {
+    const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
+
+    document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
         flip = ( flip + 1 ) % 2;
         if ( flip ) {
             filterTags.classList.remove( 'tags--hidden' );
@@ -21,14 +22,10 @@ import { timeFormating, }  from 'jsUtil/format.js';
             filterTime.classList.add( 'time--hidden' );
             buttonIcon.classList.remove( 'button__icon--active' );
         }
-    };
-} )();
-
-// Construct filter tags' UI
-export function filterTags ( defaultTagName = null ) {
-    const filterTags = document.getElementById( 'filter__tags' ).childNodes;
-    const tagsTagAll = document.getElementById( `tags__tag--${ defaultTagName }` );
-    document.getElementById( `tags__tag--${ defaultTagName }` ).classList.add( 'tags__tag--active' );
+    } );
+    const query = new URLSearchParams( window.history.location );
+    if( !query.getAll( 'tags' ).length )
+        defaultTag.classList.add( 'tags__tag--active' );
     if ( defaultTagName === 'all' || defaultTagName === 'activity' ) {
         filterTags.forEach( ( tag ) => {
             tag.onclick = () => {
@@ -43,7 +40,7 @@ export function filterTags ( defaultTagName = null ) {
                     } );
                 }
                 else {
-                    tagsTagAll.classList.remove( 'tags__tag--active' );
+                    defaultTag.classList.remove( 'tags__tag--active' );
                     tag.classList.add( 'tags__tag--active' );
                 }
             };
