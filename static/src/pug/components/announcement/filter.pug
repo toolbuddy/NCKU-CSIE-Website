@@ -10,10 +10,10 @@ mixin filter__time()
   article#filter__time.filter__time.time.time--hidden
     aside
       label= i18n[ language ].filter.time.start
-      input.time__date( type='date' )
+      input#startTime.time__date( type='date' )
     aside
       label= i18n[ language ].filter.time.end
-      input.time__date( type='date' )
+      input#endTime.time__date( type='date' )
 
 mixin filter__tags( tags )
   article#filter__tags.filter__tags.tags.tags--hidden

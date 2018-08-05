@@ -37,7 +37,7 @@ module.exports = {
         // Route `resource`
         'resource/fix':       path.resolve( jsSrcRoot, 'resource/fix.js' ),
         'resource/ieet':      path.resolve( jsSrcRoot, 'resource/ieet.js' ),
-        'resource/law':       path.resolve( jsSrcRoot, 'resource/law.js' ),
+        'resource/rule':       path.resolve( jsSrcRoot, 'resource/rule.js' ),
         'resource/rent':      path.resolve( jsSrcRoot, 'resource/rent.js' ),
         'resource/resources': path.resolve( jsSrcRoot, 'resource/resources.js' ),
 
@@ -60,6 +60,7 @@ module.exports = {
             pugComponent:   path.resolve( staticRoot, 'src/pug/components' ),
             cssComponent:   path.resolve( staticRoot, 'dist/css' ),
             jsComponent:    path.resolve( staticRoot, 'src/js/components' ),
+            jsUtil:         path.resolve( staticRoot, 'src/js/utils' ),
             imageComponent: path.resolve( staticRoot, 'src/image' ),
         },
     },

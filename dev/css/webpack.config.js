@@ -42,7 +42,7 @@ module.exports = {
         // Route `resource`
         'resource/fix':       path.resolve( sassRoot, 'resource/fix.scss' ),
         'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.scss' ),
-        'resource/law':       path.resolve( sassRoot, 'resource/law.scss' ),
+        'resource/rule':       path.resolve( sassRoot, 'resource/rule.scss' ),
         'resource/rent':      path.resolve( sassRoot, 'resource/rent.scss' ),
         'resource/resources': path.resolve( sassRoot, 'resource/resources.scss' ),
 

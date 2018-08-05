@@ -18,7 +18,7 @@ router.get( '/recruitment', ( req, res ) => {
 } );
 
 // Resolve URL /announcement/announcement/[id]
-router.get( '/announcement/:id', ( req, res ) => {
+router.get( '/:id', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/announcement.${ req.query.language }.html` );
 } );
 

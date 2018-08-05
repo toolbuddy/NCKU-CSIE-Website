@@ -1,7 +1,7 @@
-a.briefings__briefing.briefing( href=`/announcement/announcement/${ id }` )
+a.briefings__briefing.briefing( href=`/announcement/${ id }` )
   aside.briefing__tags.tags
     each tag in tags
       button.tags__tag( class=`tags__tag--${ tag }` )= tag
   h1.briefing__title= title
-  p.briefing__article= excerpt
+  p.briefing__article= content
   time.briefing__time= time
