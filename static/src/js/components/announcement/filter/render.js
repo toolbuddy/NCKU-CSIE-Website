@@ -24,7 +24,7 @@ export function renderFilter ( defaultTagName = null ) {
         }
     } );
     const query = new URLSearchParams( window.history.location );
-    if( !query.getAll( 'tags' ).length )
+    if ( !query.getAll( 'tags' ).length )
         defaultTag.classList.add( 'tags__tag--active' );
     if ( defaultTagName === 'all' || defaultTagName === 'activity' ) {
         filterTags.forEach( ( tag ) => {
