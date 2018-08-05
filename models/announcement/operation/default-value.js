@@ -1,16 +1,16 @@
 const defaultValue = {};
 
 Object.defineProperties( defaultValue, {
-    'defaultStartTime': {
+    'startTime': {
         value: '2018/07/01',
     },
-    'defaultEndTime': {
+    'endTime': {
         get () { return Date.now(); },
     },
-    'defaultPage': {
+    'page': {
         value: 1,
     },
-    'defaultLangauge': {
+    'langauge': {
         value: 'zh-TW',
     },
     'announcementsPerPage': {

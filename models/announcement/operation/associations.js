@@ -1,17 +1,18 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const connect = require( `${ projectRoot }/settings/database/connect` );
+const connect = require( path.resolve( projectRoot, 'settings/database/connect' ) );
 
 module.exports = async () => {
     const announcementDatabase = await connect( 'announcement' );
+    const tablesRoot = path.resolve( projectRoot, 'models/announcement/tables' );
     const table = {
-        announcementFileI18n: announcementDatabase.import( `${ projectRoot }/models/announcement/tables/announcement_file_i18n` ),
-        announcementFile:     announcementDatabase.import( `${ projectRoot }/models/announcement/tables/announcement_file` ),
-        announcementI18n:     announcementDatabase.import( `${ projectRoot }/models/announcement/tables/announcement_i18n` ),
-        announcement:         announcementDatabase.import( `${ projectRoot }/models/announcement/tables/announcement` ),
-        announcementTag:      announcementDatabase.import( `${ projectRoot }/models/announcement/tables/announcement_tag` ),
-        tagI18n:              announcementDatabase.import( `${ projectRoot }/models/announcement/tables/tag_i18n` ),
-        tag:                  announcementDatabase.import( `${ projectRoot }/models/announcement/tables/tag` ),
+        announcementFileI18n: announcementDatabase.import( path.resolve( tablesRoot, 'announcement_file_i18n' ) ),
+        announcementFile:     announcementDatabase.import( path.resolve( tablesRoot, 'announcement_file' ) ),
+        announcementI18n:     announcementDatabase.import( path.resolve( tablesRoot, 'announcement_i18n' ) ),
+        announcement:         announcementDatabase.import( path.resolve( tablesRoot, 'announcement' ) ),
+        announcementTag:      announcementDatabase.import( path.resolve( tablesRoot, 'announcement_tag' ) ),
+        tagI18n:              announcementDatabase.import( path.resolve( tablesRoot, 'tag_i18n' ) ),
+        tag:                  announcementDatabase.import( path.resolve( tablesRoot, 'tag' ) ),
     };
 
     // Translation relationship.
