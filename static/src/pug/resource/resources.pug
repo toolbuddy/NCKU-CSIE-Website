@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title 線上資源
-  body
-    h1 線上資源
+extends /layouts/resource.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'resource/resources' ) );
+
+block append scripts
+  +js( 'resource/resources' )

@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title research_group
-  body
-    h1 this is page 'research/groups'
+extends /layouts/research.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'research/groups' ) );
+
+block append scripts
+  +js( 'research/groups' )

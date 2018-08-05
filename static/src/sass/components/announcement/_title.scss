@@ -1,0 +1,18 @@
+
+// block
+// `announcement__title`
+.announcement {
+  &__title {
+    // block [skin]
+    @include icon--before__flag() {
+      margin: 0 .4rem 0 0;
+      border-width: .8rem .35rem .16rem;
+    }
+    display: flex;
+    line-height: 1rem;
+    font: {
+      size: .55rem;
+      weight: bold;
+    }
+  }
+}

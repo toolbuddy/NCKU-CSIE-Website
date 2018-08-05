@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title conference
-  body
-    h1 this is page 'research/conferences'
+extends /layouts/research.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'research/conferences' ) );
+
+block append scripts
+  +js( 'research/conferences' )

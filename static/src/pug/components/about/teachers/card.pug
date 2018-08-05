@@ -39,3 +39,8 @@ mixin intro__list( attribute, array )
   ul( class=`intro__${ attribute }s` )
     each element in array
       li( class=`intro__${ attribute }` )= element[ attribute ]
+
+//- main
+- teachers.sort( ( teacherA, teacherB ) => teacherA.position - teacherB.position )
+each teacher in teachers
+  +cards__card( teacher )

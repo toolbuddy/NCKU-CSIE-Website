@@ -1,0 +1,11 @@
+extends /layouts/announcement/announcement.pug
+
+block append stylesheets
+  +css( 'announcement/announcement' )
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'announcement/announcement' ) );
+  main#content.content
+
+block append scripts
+  +js( 'announcement/announcement' )

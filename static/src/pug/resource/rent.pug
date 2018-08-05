@@ -1,6 +1,9 @@
-doctype html
-html
-  head
-    title 線上租借
-  body
-    h1 線上租借
+extends /layouts/resource.pug
+
+block append stylesheets
+
+block append content
+  - const i18n = require( path.resolve( languageRoot, 'resource/rent' ) );
+
+block append scripts
+  +js( 'resource/rent' )

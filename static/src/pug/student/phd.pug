@@ -1,6 +1,39 @@
-doctype html
-html
-  head
-    title phd
-  body
-    h1 phd
+extends /layouts/announcement/briefing.pug
+
+block append stylesheets
+
+block append content
+  include /components/common/topic.pug
+  include /components/announcement/filter.pug
+  include /components/announcement/title.pug
+  - const i18n = require( path.resolve( languageRoot, 'student/phd' ) );
+
+  main.content
+    +topic( i18n[ language ].topic )
+    +filter( {
+      modifier: 'phd',
+      tags: [
+        'phd',
+        'competition',
+        'conference',
+        'exhibition',
+        'international',
+        'internship',
+        'rule',
+        'scholarship',
+        'speech',
+        'honor',
+      ]
+    } )
+    section.announcement
+      +announcement__title( i18n[ language ].top )
+      nav#announcement__brefings--top.announcement__briefings.briefings
+
+    section.announcement
+      +announcement__title( i18n[ language ].normal )
+      nav#announcement__brefings.announcement__briefings.briefings
+
+    section#pages
+
+block append scripts
+  +js( 'student/phd' )

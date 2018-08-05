@@ -3,8 +3,8 @@ const express = require( 'express' );
 const router = express.Router();
 
 // Resolve URL resource/law
-router.get( '/law', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/resource/law.${ req.query.language }.html` );
+router.get( '/rule', ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/resource/rule.${ req.query.language }.html` );
 } );
 
 // Resolve URL resource/rent
