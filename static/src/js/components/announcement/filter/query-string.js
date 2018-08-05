@@ -1,6 +1,6 @@
-import config from 'jsComponent/announcement/filter/config.js';
-import { isValidDate, isValidPage, isValidTags, }  from 'jsUtil/validate.js';
-import { dateFormating, }  from 'jsUtil/format.js';
+import config from 'static/src/js/components/announcement/filter/config.js';
+import { isValidDate, isValidPage, isValidTags, }  from 'test/announcement/validate.js';
+import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 export default class QueryString {
     static getFilters ( defaultTags ) {

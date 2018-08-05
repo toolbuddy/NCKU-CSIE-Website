@@ -1,5 +1,10 @@
-import QueryString from 'jsComponent/announcement/filter/query-string.js';
-import { renderBriefings, renderBriefingsError, renderPages, renderPagesError, } from 'jsComponent/announcement/filter/render.js';
+import QueryString from 'static/src/js/components/announcement/filter/query-string.js';
+import {
+    renderBriefings,
+    renderBriefingsError,
+    renderPages,
+    renderPagesError,
+} from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;

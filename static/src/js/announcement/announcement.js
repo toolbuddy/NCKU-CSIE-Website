@@ -2,8 +2,8 @@
  * CSS of the file
  */
 /* eslint no-unused-vars: 'off' */
-import style from 'cssComponent/announcement/announcement.min.css';
-import announcement from 'pugComponent/announcement/announcement.pug';
+import style from 'static/dist/css/announcement/announcement.min.css';
+import announcement from 'static/src/pug/components/announcement/announcement.pug';
 
 let id = /announcement\/(\d+)/.exec( window.location.pathname );
 

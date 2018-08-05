@@ -2,9 +2,9 @@
  * CSS of the file
  */
 /* eslint no-unused-vars: off */
-import style from 'cssComponent/home/index.min.css';
-import briefing from 'pugComponent/announcement/briefing.pug';
-import briefingHot from 'pugComponent/home/briefing-hot.pug';
+import style from 'static/dist/css/home/index.min.css';
+import briefing from 'static/src/pug/components/announcement/briefing.pug';
+import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
 
 // Normal briefings
 const announcementBriefing = document.getElementById( 'announcement__briefings' );
