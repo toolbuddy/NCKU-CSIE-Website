@@ -44,7 +44,7 @@
     // element
     // `.filter .button .button__icon`
 
-    & > .button__icon {
+    > .button__icon {
       // element [skin]
       position: relative;
       background: none;
@@ -82,7 +82,7 @@
     // element
     // `.time .time__date`
 
-    & .time__date {
+    .time__date {
       // element [skin]
       background: none;
       border: .016rem solid #757575;
@@ -121,7 +121,7 @@
 
   &.filter-- {
     &all {
-      & > .tags {
+      > .tags {
         grid-template: {
           areas:
             'tags__tag--all           tags__tag--college'
@@ -170,7 +170,7 @@
     }
 
     &course , &international, &scholarship, &internship {
-      & > .tags {
+      > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -197,7 +197,7 @@
     }
 
     &recruitment {
-      & > .tags {
+      > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -208,7 +208,7 @@
     }
 
     &college, &master, &phd {
-      & > .tags {
+      > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -250,7 +250,7 @@
     }
 
     &honor, &rule {
-      & > .tags {
+      > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -279,7 +279,7 @@
     }
 
     &activity {
-      & > .tags {
+      > .tags {
         // block [layout]
         grid-template: {
           areas:
@@ -323,7 +323,7 @@
       }
     }
 
-    & > .tags__tag.tags__tag-- {
+    > .tags__tag.tags__tag-- {
       // element
       // `.tags.tags__tag--all`
 

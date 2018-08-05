@@ -69,7 +69,7 @@
     // block
     // `.announcement .headline .tags`
 
-    & > .headline__tags.tags {
+    > .headline__tags.tags {
       // block [skin]
       @media screen and ( min-width: $small ) {
         font-size: .4375rem;
@@ -80,11 +80,10 @@
       display: block;
     }
 
-
     // element
     // `.announcement .headline .headline__title`
 
-    & > .headline__title {
+    > .headline__title {
       // element [position]
       grid-area: headline__title;
 
@@ -97,7 +96,7 @@
     // element
     // `.announcement .headline .headline__announcer`
 
-    & > .headline__announcer {
+    > .headline__announcer {
       // element [position]
       grid-area: headline__announcer;
 
@@ -111,7 +110,7 @@
     // element
     // `.announcement .headline .headline__time`
 
-    & > .headline__time {
+    > .headline__time {
       // element [position]
       grid-area: headline__time;
 
@@ -157,10 +156,8 @@
     grid: {
       template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
       gap: .625rem;
+      area: announcement__attachments;
     }
-
-    // element [position]
-    grid-area: announcement__attachments;
 
     // element [skin]
     color: #f8f8f2;
@@ -173,7 +170,7 @@
     // element
     // `.attachments .attachments__attachment`
 
-    & > .attachments__attachment {
+    > .attachments__attachment {
       // element [position]
       align-self: start;
 
