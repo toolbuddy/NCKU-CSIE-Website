@@ -1,5 +1,6 @@
 const path = require( 'path' );
-const Op = require( 'sequelize' ).Op;
+const sequelize = require( 'sequelize' );
+const Op = sequelize.Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
 const associations = require( path.resolve( opRoot, 'associations' ) );
@@ -7,16 +8,16 @@ const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( defaultValue.startTime ).toISOString(),
-    endTime = new Date( defaultValue.endTime ).toISOString(),
+    startTime = defaultValue.startTime,
+    endTime = defaultValue.endTime,
     language = defaultValue.language,
 } = {} ) => {
     const table = await associations();
     const data = await table.announcement.findAll( {
         attributes: [ 'announcementId', ],
-        where: {
+        where:      {
             '$announcementTag.tagI18n.name$': {
-                [Op.in] : tags,
+                [ Op.in ]: tags,
             },
             'updateTime':                       {
                 [ Op.between ]: [
@@ -28,20 +29,16 @@ module.exports = async ( {
             'isPublished': 1,
             'isApproved':  1,
         },
-        include: [
-            {
-                model:      table.announcementTag,
+        include: [ {
+            model:      table.announcementTag,
+            attributes: [],
+            as:         'announcementTag',
+            include:    [ {
+                model:      table.tagI18n,
                 attributes: [],
-                as:         'announcementTag',
-                include:    [
-                    {
-                        model:      table.tagI18n,
-                        attributes: [],
-                        as:         'tagI18n',
-                    },
-                ],
-            },
-        ],
+                as:         'tagI18n',
+            }, ],
+        }, ],
         group:  'announcementId',
         having: sequelize.literal( `count(*) = ${ tags.length }` ),
     } )
@@ -52,7 +49,7 @@ module.exports = async ( {
         ],
         where: {
             announcementId: {
-                [Op.in] : ids.map( id => id.announcementId ),
+                [ Op.in ]: ids.map( id => id.announcementId ),
             },
         },
         include: [
@@ -71,16 +68,14 @@ module.exports = async ( {
                 model:      table.announcementTag,
                 as:         'announcementTag',
                 attributes: [ 'tagId', ],
-                include: [
-                    {
-                        model:      table.tagI18n,
-                        as:         'tagI18n',
-                        attributes: [ 'name', ],
-                        where: {
-                            language: 'en-US',
-                        },
+                include:    [ {
+                    model:      table.tagI18n,
+                    as:         'tagI18n',
+                    attributes: [ 'name', ],
+                    where:      {
+                        language: 'en-US',
                     },
-                ],
+                }, ],
             },
         ],
     } ) )

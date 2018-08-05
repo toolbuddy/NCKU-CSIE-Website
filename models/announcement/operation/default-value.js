@@ -2,10 +2,10 @@ const defaultValue = {};
 
 Object.defineProperties( defaultValue, {
     'startTime': {
-        value: '2018/07/01',
+        value: new Date( '2018/07/01' ).toISOString(),
     },
     'endTime': {
-        get () { return Date.now(); },
+        get () { return new Date( Date.now() ).toISOString(); },
     },
     'page': {
         value: 1,
