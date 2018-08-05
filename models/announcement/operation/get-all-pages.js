@@ -7,8 +7,8 @@ const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( defaultValue.startTime ).toISOString(),
-    endTime = new Date( defaultValue.endTime ).toISOString(),
+    startTime = defaultValue.startTime,
+    endTime = defaultValue.endTime,
 } = {} ) => {
     const table = await associations();
     let count = 0;
@@ -29,10 +29,10 @@ module.exports = async ( {
     else {
         count = await table.announcement.count( {
             where: {
-                '$announcementTag.tagI18n.name$':{
-                    [Op.in] : tags,
+                '$announcementTag.tagI18n.name$': {
+                    [ Op.in ]: tags,
                 },
-                'updateTime':                       {
+                'updateTime': {
                     [ Op.between ]: [
                         new Date( startTime ),
                         new Date( endTime ),
@@ -43,19 +43,18 @@ module.exports = async ( {
             },
             include: [
                 {
-                    model:      table.announcementTag,
-                    as:         'announcementTag',
-                    include:    [
+                    model:   table.announcementTag,
+                    as:      'announcementTag',
+                    include: [
                         {
-                            model:      table.tagI18n,
-                            as:         'tagI18n',
+                            model: table.tagI18n,
+                            as:    'tagI18n',
                         },
                     ],
                 },
             ],
-            group:  '`announcement`.`announcement_id`',
-        } )
-        .then( count => count.length );
+            distinct: true,
+        } );
     }
     table.database.close();
 

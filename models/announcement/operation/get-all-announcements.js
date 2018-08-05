@@ -7,8 +7,8 @@ const defaultValue = require( path.resolve( opRoot, 'default-value' ) );
 
 module.exports = async ( {
     tags = [],
-    startTime = new Date( defaultValue.startTime ).toISOString(),
-    endTime = new Date( defaultValue.endTime ).toISOString(),
+    startTime = defaultValue.startTime,
+    endTime = defaultValue.endTime,
     page = defaultValue.page,
     language = defaultValue.language,
 } = {} ) => {
@@ -48,12 +48,12 @@ module.exports = async ( {
                     model:      table.announcementTag,
                     as:         'announcementTag',
                     attributes: [ 'tagId', ],
-                    include: [
+                    include:    [
                         {
                             model:      table.tagI18n,
                             as:         'tagI18n',
                             attributes: [ 'name', ],
-                            where: {
+                            where:      {
                                 language: 'en-US',
                             },
                         },
@@ -78,9 +78,9 @@ module.exports = async ( {
     else {
         data = await table.announcement.findAll( {
             attributes: [ 'announcementId', ],
-            where: {
+            where:      {
                 '$announcementTag.tagI18n.name$': {
-                    [Op.in]: tags,
+                    [ Op.in ]: tags,
                 },
                 'updateTime':                       {
                     [ Op.between ]: [
@@ -113,7 +113,7 @@ module.exports = async ( {
             ],
             where: {
                 announcementId: {
-                    [Op.in] : ids.map( id => id.announcementId ),
+                    [ Op.in ]: ids.map( id => id.announcementId ),
                 },
             },
             offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
@@ -134,12 +134,12 @@ module.exports = async ( {
                     model:      table.announcementTag,
                     as:         'announcementTag',
                     attributes: [ 'tagId', ],
-                    include: [
+                    include:    [
                         {
                             model:      table.tagI18n,
                             as:         'tagI18n',
                             attributes: [ 'name', ],
-                            where: {
+                            where:      {
                                 language: 'en-US',
                             },
                         },
