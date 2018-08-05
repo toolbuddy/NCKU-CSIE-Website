@@ -1,6 +1,6 @@
-import { renderFilter, } from 'jsComponent/announcement/filter/render.js';
-import { filterEvent, setURLOnChange, } from 'jsComponent/announcement/filter/event.js';
-import { singleDefaultTag, multipleDefaultTags, } from 'jsComponent/announcement/filter/query.js';
+import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
+import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
+import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 
 // Single default tag filter constructor.
 export function singleDefaultTagFilter ( tag = null ) {
@@ -11,8 +11,10 @@ export function singleDefaultTagFilter ( tag = null ) {
     renderFilter( tag );
 
     const urlOnChange = setURLOnChange(
+        singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
+        singleDefaultTag.getPinnedAnnouncementsByTags,
         singleDefaultTag.getAnnouncementsByTags,
         singleDefaultTag.getPageNumberByTags
     );
@@ -45,8 +47,10 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     renderFilter( 'all' );
 
     const urlOnChange = setURLOnChange(
+        multipleDefaultTags.getAllPinnedAnnouncements,
         multipleDefaultTags.getAllAnnouncements,
         multipleDefaultTags.getAllPageNumber,
+        multipleDefaultTags.getPinnedAnnouncementsByTags,
         multipleDefaultTags.getAnnouncementsByTags,
         multipleDefaultTags.getPageNumberByTags
     );

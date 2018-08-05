@@ -1,9 +1,16 @@
-import { dateFormating, }  from 'jsUtil/format.js';
+import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 let filterOnChange = null;
 let pageOnChange = null;
 
-export function setURLOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+export function setURLOnChange (
+        getAllPinnedAnnouncements,
+        getAllAnnouncements,
+        getAllPageNumber,
+        getPinnedAnnouncementsByTags,
+        getAnnouncementsByTags,
+        getPageNumberByTags
+) {
     pageOnChange = () => {
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
             getAllAnnouncements();
@@ -13,10 +20,12 @@ export function setURLOnChange ( getAllAnnouncements, getAllPageNumber, getAnnou
     filterOnChange = () => {
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
             getAllPageNumber();
+            getAllPinnedAnnouncements();
             getAllAnnouncements();
         }
         else {
             getPageNumberByTags();
+            getPinnedAnnouncementsByTags();
             getAnnouncementsByTags();
         }
     };

@@ -57,11 +57,9 @@ module.exports = {
     target:  'web',
     resolve: {
         alias: {
-            pugComponent:   path.resolve( staticRoot, 'src/pug/components' ),
-            cssComponent:   path.resolve( staticRoot, 'dist/css' ),
-            jsComponent:    path.resolve( staticRoot, 'src/js/components' ),
-            jsUtil:         path.resolve( staticRoot, 'src/js/utils' ),
-            imageComponent: path.resolve( staticRoot, 'src/image' ),
+            settings: path.resolve( projectRoot, 'settings' ),
+            static: staticRoot,
+            test: path.resolve( projectRoot, 'test' ),
         },
     },
     module:  {

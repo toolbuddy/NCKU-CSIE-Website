@@ -1,6 +1,6 @@
-import briefing from 'pugComponent/announcement/briefing.pug';
-import { pageOnClick, } from 'jsComponent/announcement/filter/event.js';
-import { timeFormating, }  from 'jsUtil/format.js';
+import briefing from 'static/src/pug/components/announcement/briefing.pug';
+import { pageOnClick, } from 'static/src/js/components/announcement/filter/event.js';
+import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 // Construct filter tags' UI
 export function renderFilter ( defaultTagName = null ) {
