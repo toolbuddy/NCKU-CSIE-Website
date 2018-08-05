@@ -13,7 +13,7 @@ block append content
     +filter( {
       modifier: 'master',
       tags: [
-        'all',
+        'master',
         'competition',
         'conference',
         'exhibition',
@@ -32,6 +32,8 @@ block append content
     section.announcement
       +announcement__title( i18n[ language ].normal )
       nav#announcement__brefings.announcement__briefings.briefings
+
+    section#pages
 
 block append scripts
   +js( 'student/master' )

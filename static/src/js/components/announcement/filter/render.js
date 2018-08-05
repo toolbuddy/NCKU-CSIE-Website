@@ -26,17 +26,47 @@ import { timeFormating, }  from 'jsUtil/format.js';
 
 // Construct filter tags' UI
 export function filterTags ( defaultTagName = null ) {
-    document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
-        tag.onclick = () => {
-            if ( tag.classList.contains( 'tags__tag--active' ) )
-                tag.classList.remove( 'tags__tag--active' );
-            else
-                tag.classList.add( 'tags__tag--active' );
-        };
-    } );
+    const filterTags = document.getElementById( 'filter__tags' ).childNodes;
+    const tagsTagAll = document.getElementById( `tags__tag--${ defaultTagName }` );
+    document.getElementById( `tags__tag--${ defaultTagName }` ).classList.add( 'tags__tag--active' );
+    if ( defaultTagName === 'all' || defaultTagName === 'activity' ) {
+        filterTags.forEach( ( tag ) => {
+            tag.onclick = () => {
+                if ( tag.classList.contains( 'tags__tag--active' ) )
+                    tag.classList.remove( 'tags__tag--active' );
 
-    if ( defaultTagName )
-        document.getElementById( `tags__tag--${ defaultTagName }` ).classList.add( 'tags__tag--active' );
+                else if ( tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
+                    tag.classList.add( 'tags__tag--active' );
+                    filterTags.forEach( ( tag ) => {
+                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
+                            tag.classList.remove( 'tags__tag--active' );
+                    } );
+                }
+                else {
+                    tagsTagAll.classList.remove( 'tags__tag--active' );
+                    tag.classList.add( 'tags__tag--active' );
+                }
+            };
+        } );
+    }
+    else {
+        filterTags.forEach( ( tag ) => {
+            tag.onclick = () => {
+                if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
+                    if ( tag.classList.contains( 'tags__tag--active' ) )
+                        tag.classList.remove( 'tags__tag--active' );
+                    else
+                        tag.classList.add( 'tags__tag--active' );
+                }
+                else {
+                    filterTags.forEach( ( tag ) => {
+                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
+                            tag.classList.remove( 'tags__tag--active' );
+                    } );
+                }
+            };
+        } );
+    }
 }
 
 const pages = document.getElementById( 'pages' );

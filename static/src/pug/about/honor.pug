@@ -13,7 +13,7 @@ block append content
     +filter( {
       modifier: 'honor',
       tags: [
-        'all',
+        'honor',
         'teacher',
         'college',
         'master',
@@ -26,5 +26,7 @@ block append content
     section.announcement
       +announcement__title( i18n[ language ].normal )
       nav#announcement__brefings.announcement__briefings.briefings
+
+    section#pages
 block append scripts
   +js( 'about/honor' )
