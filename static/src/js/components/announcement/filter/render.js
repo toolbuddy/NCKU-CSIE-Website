@@ -50,12 +50,14 @@ export function renderPages ( totalPages = 1 ) {
     } );
 }
 
-const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
+export function renderPagesError () {
+    pages.innerHTML = '';
+}
 
-export function renderBriefingsTop ( pinnedAnnouncements ) {
-    announcementBriefingTop.innerHTML = '';
-    pinnedAnnouncements.forEach( ( announcement ) => {
-        announcementBriefingTop.innerHTML += briefing( {
+export function renderBriefings ( container, announcements ) {
+    container.innerHTML = '';
+    announcements.forEach( ( announcement ) => {
+        container.innerHTML += briefing( {
             id:      announcement.id,
             title:   announcement.title,
             time:    timeFormating( announcement.updateTime ),
@@ -65,17 +67,6 @@ export function renderBriefingsTop ( pinnedAnnouncements ) {
     } );
 }
 
-const announcementBriefing = document.getElementById( 'announcement__brefings' );
-
-export function renderBriefings ( announcements ) {
-    announcementBriefing.innerHTML = '';
-    announcements.forEach( ( announcement ) => {
-        announcementBriefing.innerHTML += briefing( {
-            id:      announcement.id,
-            title:   announcement.title,
-            time:    timeFormating( announcement.updateTime ),
-            content: announcement.content,
-            tags:    announcement.tags.map( tag => tag.name ),
-        } );
-    } );
+export function renderBriefingsError ( container, errorMessage ) {
+    container.innerHTML = errorMessage;
 }
