@@ -2,14 +2,15 @@ import briefing from 'static/src/pug/components/announcement/briefing.pug';
 import { pageOnClick, } from 'static/src/js/components/announcement/filter/event.js';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
-// Construct filter's UI
-( () => {
+// Construct filter tags' UI
+export function renderFilter ( defaultTagName = null ) {
     let flip = 0;
-    const filterButton = document.getElementById( 'filter__button' );
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
     const filterTime = document.getElementById( 'filter__time' );
-    filterButton.onclick = () => {
+    const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
+
+    document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
         flip = ( flip + 1 ) % 2;
         if ( flip ) {
             filterTags.classList.remove( 'tags--hidden' );
@@ -21,22 +22,48 @@ import { timeFormating, }  from 'static/src/js/components/announcement/filter/fo
             filterTime.classList.add( 'time--hidden' );
             buttonIcon.classList.remove( 'button__icon--active' );
         }
-    };
-} )();
-
-// Construct filter tags' UI
-export function filterTags ( defaultTagName = null ) {
-    document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
-        tag.onclick = () => {
-            if ( tag.classList.contains( 'tags__tag--active' ) )
-                tag.classList.remove( 'tags__tag--active' );
-            else
-                tag.classList.add( 'tags__tag--active' );
-        };
     } );
+    const query = new URLSearchParams( window.history.location );
+    if ( !query.getAll( 'tags' ).length )
+        defaultTag.classList.add( 'tags__tag--active' );
+    if ( defaultTagName === 'all' || defaultTagName === 'activity' ) {
+        filterTags.childNodes.forEach( ( tag ) => {
+            tag.onclick = () => {
+                if ( tag.classList.contains( 'tags__tag--active' ) )
+                    tag.classList.remove( 'tags__tag--active' );
 
-    if ( defaultTagName )
-        document.getElementById( `tags__tag--${ defaultTagName }` ).classList.add( 'tags__tag--active' );
+                else if ( tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
+                    tag.classList.add( 'tags__tag--active' );
+                    filterTags.forEach( ( tag ) => {
+                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
+                            tag.classList.remove( 'tags__tag--active' );
+                    } );
+                }
+                else {
+                    defaultTag.classList.remove( 'tags__tag--active' );
+                    tag.classList.add( 'tags__tag--active' );
+                }
+            };
+        } );
+    }
+    else {
+        filterTags.forEach( ( tag ) => {
+            tag.onclick = () => {
+                if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
+                    if ( tag.classList.contains( 'tags__tag--active' ) )
+                        tag.classList.remove( 'tags__tag--active' );
+                    else
+                        tag.classList.add( 'tags__tag--active' );
+                }
+                else {
+                    filterTags.forEach( ( tag ) => {
+                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
+                            tag.classList.remove( 'tags__tag--active' );
+                    } );
+                }
+            };
+        } );
+    }
 }
 
 const pages = document.getElementById( 'pages' );

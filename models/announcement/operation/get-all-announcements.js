@@ -13,6 +13,21 @@ module.exports = async ( {
     page = defaultValue.page,
     language = defaultValue.language,
 } = {} ) => {
+    startTime = new Date( startTime );
+    endTime = new Date( endTime );
+
+    if ( !validate.isValidTags( tags ) )
+        return { error: 'invalid tag name', };
+
+    if ( !validate.isValidDate( startTime ) )
+        return { error: 'invalid start time', };
+
+    if ( !validate.isValidDate( endTime ) )
+        return { error: 'invalid end time', };
+
+    if ( !validate.isValidPage( page ) )
+        return { error: 'invalid page', };
+
     const table = await associations();
     let data = [];
     if ( tags.length === 0 ) {
@@ -24,8 +39,8 @@ module.exports = async ( {
             where: {
                 updateTime: {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 isPublished: 1,
@@ -83,8 +98,8 @@ module.exports = async ( {
                 },
                 'updateTime':                       {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 'isPublished': 1,

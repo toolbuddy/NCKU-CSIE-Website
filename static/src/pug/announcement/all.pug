@@ -10,23 +10,27 @@ block append content
 
   main.content
     +topic( i18n[ language ].topic )
-    +filter(
-      'all',
-      'college',
-      'competition',
-      'conference',
-      'course',
-      'exhibition',
-      'international',
-      'internship',
-      'master',
-      'phd',
-      'recruitment',
-      'rule',
-      'scholarship',
-      'speech',
-      'teacher'
-    )
+    +filter( {
+      modifier: 'all',
+      tags: [
+        'all',
+        'college',
+        'competition',
+        'conference',
+        'course',
+        'exhibition',
+        'international',
+        'internship',
+        'master',
+        'phd',
+        'recruitment',
+        'rule',
+        'scholarship',
+        'speech',
+        'teacher',
+        'honor',
+      ]
+    } )
     section.announcement
       +announcement__title( i18n[ language ].top )
       nav#announcement__brefings--top.announcement__briefings.briefings

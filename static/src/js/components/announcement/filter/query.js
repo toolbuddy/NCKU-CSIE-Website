@@ -33,13 +33,16 @@ export const singleDefaultTag = {
             tags,
             startTime,
             endTime,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -66,13 +69,16 @@ export const singleDefaultTag = {
             startTime,
             endTime,
             page,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -84,19 +90,22 @@ export const singleDefaultTag = {
     getPinnedAnnouncementsByTags () {
         const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [
+            'tags': [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],
             startTime,
             endTime,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -117,20 +126,23 @@ export const singleDefaultTag = {
     getAnnouncementsByTags () {
         const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [
+            'tags': [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],
             startTime,
             endTime,
             page,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -161,7 +173,10 @@ export const singleDefaultTag = {
         fetch( `${ apiURL }/all-pages?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -182,7 +197,7 @@ export const singleDefaultTag = {
     getPageNumberByTags () {
         const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
         const query = QueryString.generate( {
-            'tags':      [
+            'tags': [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],
@@ -193,7 +208,10 @@ export const singleDefaultTag = {
         fetch( `${ apiURL }/tags-pages?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -217,20 +235,24 @@ export const singleDefaultTag = {
 export const multipleDefaultTags = {
     // If default tags is empty array, then it is used by route `announcement/all`.
     // Otherwise it is used as multiple default tags to get announcement ( OR operation ).
-    defaultTags:         [],
+    defaultTags: [],
+
     getAllPinnedAnnouncements () {
         const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             startTime,
             endTime,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -257,13 +279,16 @@ export const multipleDefaultTags = {
             startTime,
             endTime,
             page,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -278,13 +303,16 @@ export const multipleDefaultTags = {
             tags,
             startTime,
             endTime,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             return res.json();
         } )
@@ -308,23 +336,16 @@ export const multipleDefaultTags = {
             startTime,
             endTime,
             page,
-            'language':    'zh-TW',
+            'language': 'zh-TW',
         } );
-
-        fetch( `${ apiURL }/tags-pinned?${ query }` )
-        .then( ( res ) => {
-            /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
-                throw res.status;
-            return res.json();
-        } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
-        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -355,7 +376,10 @@ export const multipleDefaultTags = {
         fetch( `${ apiURL }/all-pages?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();
@@ -384,7 +408,10 @@ export const multipleDefaultTags = {
         fetch( `${ apiURL }/tags-pages?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
-            if ( res.status === 404 )
+            if ( res.status === 400 )
+                throw res.status;
+            /* eslint no-magic-numbers: 'off' */
+            else if ( res.status === 404 )
                 throw res.status;
             else
                 return res.json();

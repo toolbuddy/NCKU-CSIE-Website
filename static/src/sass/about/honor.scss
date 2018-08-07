@@ -1,1 +1,70 @@
 @import 'components/common/reset';
+@import 'components/announcement/briefing';
+@import 'components/announcement/filter';
+@import 'components/announcement/title';
+@import 'components/common/topic';
+
+// block
+// `.content`
+
+.content {
+  $small: 850px;
+  $large: 992px;
+
+  // block [layout]
+  display: grid;
+  grid: {
+    gap: 1.2rem 0;
+    template: {
+      columns: repeat( 10, 1fr );
+      areas:
+        'filter'
+        'topic';
+    }
+  }
+  @media screen and ( min-width: $small ) {
+    grid-template-areas:
+      'topic'
+      'filter';
+  }
+
+  // block [skin]
+  padding: 2.2rem .5rem;
+  @media screen and ( min-width: $large ) {
+    padding: 2.2rem 0;
+  }
+  max-width: 26rem;
+  margin: 0 auto;
+
+  // block
+  // `.content .topic`
+  .topic {
+    // element [position]
+    grid-area: topic;
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
+
+  // block
+  // `.content .filter`
+  .filter {
+    // element [position]
+    grid-area: filter;
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
+
+  // block
+  // `.content .announcement`
+  .announcement {
+    // element [position]
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
+}

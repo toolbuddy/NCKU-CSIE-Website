@@ -1,13 +1,13 @@
 @import 'components/announcement/tags';
-@import 'components/announcement/filter__time';
 
 // block
 // `.filter`
 
 .filter {
-  $small: 360px;
-  $medium: 560px;
-  $large: 992px;
+  $small: 425px;
+  $medium: 550px;
+  $a: 675px;
+  $large: 850px;
 
   // block [layout]
   display: grid;
@@ -15,12 +15,14 @@
     'filter__button'
     'filter__time'
     'filter__tags';
+  justify-items: center;
 
   // element
   // `.filter .filter__button`
 
-  &__button {
+  &__button.button {
     // element [position]
+    grid-area: filter__button;
     display: flex;
     justify-self: end;
     @media screen and ( min-width: $large ) {
@@ -39,13 +41,10 @@
   // `.filter .button`
 
   .button {
-    // element [position]
-    grid-area: filter__button;
-
     // element
     // `.filter .button .button__icon`
 
-    &__icon {
+    > .button__icon {
       // element [skin]
       position: relative;
       background: none;
@@ -60,15 +59,41 @@
   // element
   // `.filter .filter__time`
 
-  &__time {
+  &__time.time {
+    // block [layout]
+    display: flex;
+    flex-direction: column;
+    @media screen and ( min-width: $small ) {
+      flex-direction: row;
+    }
+
+    // block [skin]
+    margin-bottom: 1rem;
+
     // element [position]
     grid-area: filter__time;
+    font-size: .4375rem;
   }
 
   // block
   // `.filter .time`
 
   .time {
+    // element
+    // `.time .time__date`
+
+    .time__date {
+      // element [skin]
+      background: none;
+      border: .016rem solid #757575;
+      border-radius: 1rem;
+      align-self: center;
+      padding: .15rem 0;
+      width: auto;
+      margin: .3rem .6rem .2rem .2rem;
+      text-align: center;
+    }
+
     // modifier
     // `.time .time--hidden`
 
@@ -84,62 +109,403 @@
   // element
   // `.filter .filter__tags`
 
-  &__tags {
+  &__tags.tags {
+    // block [layout]
+    display: grid;
+    align-self: center;
+
     // element [position]
     grid-area: filter__tags;
+    font-size: .4375rem;
+  }
+
+  &.filter-- {
+    &all {
+      > .tags {
+        grid-template: {
+          areas:
+            'tags__tag--all           tags__tag--college'
+            'tags__tag--course        tags__tag--master'
+            'tags__tag--teacher       tags__tag--phd'
+            'tags__tag--competition   tags__tag--speech'
+            'tags__tag--scholarship   tags__tag--conference'
+            'tags__tag--international tags__tag--exhibition'
+            'tags__tag--honor         tags__tag--internship'
+            'tags__tag--recruitment   tags__tag--rule';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--all     tags__tag--competition   tags__tag--speech'
+              'tags__tag--course  tags__tag--scholarship   tags__tag--conference'
+              'tags__tag--teacher tags__tag--international tags__tag--exhibition'
+              'tags__tag--college tags__tag--honor         tags__tag--internship'
+              'tags__tag--master  tags__tag--recruitment   tags__tag--rule '
+              'tags__tag--phd     .                        .';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--all         tags__tag--college tags__tag--competition   tags__tag--speech'
+              'tags__tag--course      tags__tag--master  tags__tag--scholarship   tags__tag--conference'
+              'tags__tag--teacher     tags__tag--phd     tags__tag--international tags__tag--exhibition'
+              'tags__tag--recruitment tags__tag--rule    tags__tag--honor         tags__tag--internship';
+            columns: repeat( 4, 4rem );
+          }
+        }
+        @media screen and ( min-width: $a ) {
+          grid-template: {
+            areas:
+              'tags__tag--all         tags__tag--college tags__tag--competition   tags__tag--speech     tags__tag--rule'
+              'tags__tag--course      tags__tag--master  tags__tag--scholarship   tags__tag--conference tags__tag--recruitment'
+              'tags__tag--teacher     tags__tag--phd     tags__tag--international tags__tag--exhibition .'
+              '.                      .                  tags__tag--honor         tags__tag--internship .';
+            columns: repeat( 5, 4rem );
+          }
+        }
+      }
+    }
+
+    &course {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--course    tags__tag--college'
+            'tags__tag--master tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--course     .                 .'
+              'tags__tag--college tags__tag--master tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--course tags__tag--college tags__tag--master tags__tag--phd';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &international {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--international tags__tag--college'
+            'tags__tag--master        tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--international .                 .'
+              'tags__tag--college       tags__tag--master tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--international tags__tag--college tags__tag--master tags__tag--phd';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &scholarship {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--scholarship tags__tag--college'
+            'tags__tag--master      tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--scholarship .                 .'
+              'tags__tag--college     tags__tag--master tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--scholarship tags__tag--college tags__tag--master tags__tag--phd';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &internship {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--internship tags__tag--college'
+            'tags__tag--master     tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--internship .                 .'
+              'tags__tag--college    tags__tag--master tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--internship tags__tag--college tags__tag--master tags__tag--phd';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &recruitment {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--recruitment';
+          columns: 3rem;
+        }
+      }
+    }
+
+    &college {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--college       tags__tag--speech'
+            'tags__tag--competition   tags__tag--conference'
+            'tags__tag--scholarship   tags__tag--exhibition'
+            'tags__tag--international tags__tag--internship'
+            'tags__tag--honor          tags__tag--rule';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--college    tags__tag--rule       tags__tag--international'
+              'tags__tag--exhibition tags__tag--internship tags__tag--competition'
+              'tags__tag--speech     tags__tag--conference tags__tag--scholarship'
+              '.                     .                     tags__tag--honor';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--college     tags__tag--rule          tags__tag--speech     tags__tag--conference'
+              'tags__tag--competition tags__tag--international tags__tag--internship tags__tag--exhibition'
+              'tags__tag--scholarship tags__tag--honor         .                     .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+        @media screen and ( min-width: $a ) {
+          grid-template: {
+            areas:
+              'tags__tag--college tags__tag--speech      tags__tag--conference    tags__tag--exhibition  tags__tag--internship '
+              'tags__tag--honor   tags__tag--competition tags__tag--international tags__tag--scholarship tags__tag--rule';
+            columns: repeat( 5, 4rem );
+          }
+        }
+      }
+    }
+
+    &master {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--master        tags__tag--speech'
+            'tags__tag--competition   tags__tag--conference'
+            'tags__tag--scholarship   tags__tag--exhibition'
+            'tags__tag--international tags__tag--internship'
+            'tags__tag--honor         tags__tag--rule';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--master     tags__tag--rule       tags__tag--international'
+              'tags__tag--exhibition tags__tag--internship tags__tag--competition'
+              'tags__tag--speech     tags__tag--conference tags__tag--scholarship'
+              '.                     .                     tags__tag--honor';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--master      tags__tag--rule          tags__tag--speech     tags__tag--conference'
+              'tags__tag--competition tags__tag--international tags__tag--internship tags__tag--exhibition'
+              'tags__tag--scholarship tags__tag--honor         .                     .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+        @media screen and ( min-width: $a ) {
+          grid-template: {
+            areas:
+              'tags__tag--master  tags__tag--speech      tags__tag--conference    tags__tag--exhibition  tags__tag--internship '
+              'tags__tag--honor   tags__tag--competition tags__tag--international tags__tag--scholarship tags__tag--rule';
+            columns: repeat( 5, 4rem );
+          }
+        }
+      }
+    }
+
+    &phd {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--phd       tags__tag--speech'
+            'tags__tag--competition   tags__tag--conference'
+            'tags__tag--scholarship   tags__tag--exhibition'
+            'tags__tag--international tags__tag--internship'
+            'tags__tag--honor          tags__tag--rule';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--phd        tags__tag--rule       tags__tag--international'
+              'tags__tag--exhibition tags__tag--internship tags__tag--competition'
+              'tags__tag--speech     tags__tag--conference tags__tag--scholarship'
+              '.                     .                     tags__tag--honor';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--phd         tags__tag--rule          tags__tag--speech     tags__tag--conference'
+              'tags__tag--competition tags__tag--international tags__tag--internship tags__tag--exhibition'
+              'tags__tag--scholarship tags__tag--honor         .                     .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+        @media screen and ( min-width: $a ) {
+          grid-template: {
+            areas:
+              'tags__tag--phd   tags__tag--speech      tags__tag--conference    tags__tag--exhibition  tags__tag--internship '
+              'tags__tag--honor tags__tag--competition tags__tag--international tags__tag--scholarship tags__tag--rule';
+            columns: repeat( 5, 4rem );
+          }
+        }
+      }
+    }
+
+    &honor {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--honor   tags__tag--college'
+            'tags__tag--teacher tags__tag--master'
+            '.                  tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--honor   tags__tag--teacher .'
+              'tags__tag--college tags__tag--master  tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--honor   tags__tag--college tags__tag--master  tags__tag--phd'
+              'tags__tag--teacher .                  .                  .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &rule {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--rule    tags__tag--college'
+            'tags__tag--teacher tags__tag--master'
+            '.                  tags__tag--phd';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--rule    tags__tag--teacher .'
+              'tags__tag--college tags__tag--master  tags__tag--phd';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--rule    tags__tag--college tags__tag--master  tags__tag--phd'
+              'tags__tag--teacher .                  .                  .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
+
+    &activity {
+      > .tags {
+        // block [layout]
+        grid-template: {
+          areas:
+            'tags__tag--all         tags__tag--speech'
+            'tags__tag--competition tags__tag--conference'
+            '.                      tags__tag--exhibition';
+          columns: repeat( 2, 4rem );
+        }
+        @media screen and ( min-width: $small ) {
+          grid-template: {
+            areas:
+              'tags__tag--all    tags__tag--competition .'
+              'tags__tag--speech tags__tag--conference  tags__tag--exhibition';
+            columns: repeat( 3, 4rem );
+          }
+        }
+        @media screen and ( min-width: $medium ) {
+          grid-template: {
+            areas:
+              'tags__tag--all         tags__tag--speech tags__tag--conference  tags__tag--exhibition'
+              'tags__tag--competition .                 .                      .';
+            columns: repeat( 4, 4rem );
+          }
+        }
+      }
+    }
   }
 
   // block
   // `.filter .tags`
 
   .tags {
-    // block [layout]
-    display: grid;
-    grid-template: {
-      areas:
-        'tags__tag--all         tags__tag--competition'
-        'tags__tag--teacher     tags__tag--exhibition'
-        'tags__tag--college     tags__tag--speech'
-        'tags__tag--master      tags__tag--conference'
-        'tags__tag--phd         tags__tag--international'
-        'tags__tag--rule        tags__tag--scholarship'
-        'tags__tag--recruitment tags__tag--internship'
-        '.                      tags__tag--course';
-      columns: 3.3rem 3.3rem;
-    }
-    @media screen and ( min-width: $small ) {
-      grid-template: {
-        areas:
-          'tags__tag--all         tags__tag--competition tags__tag--international'
-          'tags__tag--teacher     tags__tag--exhibition  tags__tag--scholarship'
-          'tags__tag--college     tags__tag--speech      tags__tag--internship'
-          'tags__tag--master      tags__tag--conference  tags__tag--course'
-          'tags__tag--phd         tags__tag--rule        tags__tag--recruitment';
-        columns: 3.3rem 3.3rem 3.3rem;
-      }
-    }
-    @media screen and ( min-width: $medium ) {
-      grid-template: {
-        areas:
-          'tags__tag--all         tags__tag--college tags__tag--competition tags__tag--international'
-          'tags__tag--teacher     tags__tag--master  tags__tag--exhibition  tags__tag--scholarship'
-          'tags__tag--rule        tags__tag--phd     tags__tag--speech      tags__tag--internship'
-          'tags__tag--recruitment .                  tags__tag--conference  tags__tag--course';
-        columns: 4rem 4rem 4rem 4rem;
-      }
-      font-size: .4375rem;
-    }
-    @media screen and ( min-width: $large ) {
-      grid-template: {
-        areas:
-          'tags__tag--all     tags__tag--college tags__tag--speech      tags__tag--course        tags__tag--rule'
-          'tags__tag--teacher tags__tag--master  tags__tag--conference  tags__tag--scholarship   tags__tag--recruitment'
-          '.                  tags__tag--phd     tags__tag--exhibition  tags__tag--international .'
-          '.                  .                  tags__tag--competition tags__tag--internship    .';
-        columns: 4rem 4rem 4rem 4rem 4rem;
-      }
-    }
-
     // modifier
     // `.tags.tags--hidden`
 
@@ -151,7 +517,7 @@
       }
     }
 
-    &__tag.tags__tag-- {
+    > .tags__tag.tags__tag-- {
       // element
       // `.tags.tags__tag--all`
 
@@ -190,6 +556,14 @@
       &course {
         // element [position]
         grid-area: tags__tag--course;
+      }
+
+      // element
+      // `.tags.tags__tag--honor`
+
+      &honor {
+        // element [position]
+        grid-area: tags__tag--honor;
       }
 
       // element
