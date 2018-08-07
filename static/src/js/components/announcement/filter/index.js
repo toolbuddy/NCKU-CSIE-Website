@@ -7,10 +7,11 @@ export function singleDefaultTagFilter ( tag = null ) {
     // Set default tag for query functions.
     singleDefaultTag.defaultTag = tag;
 
-    // Construct filter UI.
+    // Render filter.
     renderFilter( tag );
 
     const urlOnChange = setURLOnChange(
+        singleDefaultTag.defaultTag,
         singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
@@ -43,10 +44,11 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     // Set default tags for query functions.
     multipleDefaultTags.defaultTags = tags;
 
-    // Construct filter UI, must be `tags__tag--all`.
+    // Render filter, must be `tags__tag--all`.
     renderFilter( 'all' );
 
     const urlOnChange = setURLOnChange(
+        'all',
         multipleDefaultTags.getAllPinnedAnnouncements,
         multipleDefaultTags.getAllAnnouncements,
         multipleDefaultTags.getAllPageNumber,
