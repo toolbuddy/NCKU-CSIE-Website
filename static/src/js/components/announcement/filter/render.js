@@ -3,7 +3,7 @@ import { pageOnClick, } from 'static/src/js/components/announcement/filter/event
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 // Construct filter's UI
-export function renderFilter ( defaultTagName = null ) {
+export function renderFilter ( defaultTagName = 'all' ) {
     let toggle = true;
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
@@ -18,6 +18,7 @@ export function renderFilter ( defaultTagName = null ) {
 
     document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
         if ( toggle ) {
+            // TODO: change `tags--hidden` and `time--hidden` to `filter__tags--hidden` and `filter__time--hidden`
             filterTags.classList.remove( 'tags--hidden' );
             filterTime.classList.remove( 'time--hidden' );
             buttonIcon.classList.add( 'button__icon--active' );
@@ -32,64 +33,71 @@ export function renderFilter ( defaultTagName = null ) {
 
     /**
      * Activate `tags__tag--{ defaultTagName }` if:
+     *     * it is in a single default tag filter
      *     * there is no tags in URL.
      *     * there is no valid tags in URL.
+     *
+     * Tags can be validated through `document.getElementById()` if:
+     *     * tag is exist, it will return DOM object
+     *     * tag is not exist, it will return `undefined`
      */
 
     defaultTag.classList.add( 'tags__tag--active' );
 
     const query = new URLSearchParams( window.location.search );
     const currentTags = query.getAll( 'tags' );
+    let validTagCount = 0;
     if ( currentTags.length ) {
-        let validTagCount = 0;
         currentTags.forEach( ( tag ) => {
             const tagObj = document.getElementById( `tags__tag--${ tag }` );
+
+            // Tag validation
             if ( tagObj ) {
                 tagObj.classList.add( 'tags__tag--active' );
                 validTagCount += 1;
             }
         } );
-        if ( validTagCount )
-            defaultTag.classList.remove( 'tags__tag--active' );
     }
-    if ( defaultTagName === 'all' ) {
-        filterTags.childNodes.forEach( ( tag ) => {
-            tag.onclick = () => {
+    if ( validTagCount && defaultTagName === 'all' )
+        defaultTag.classList.remove( 'tags__tag--active' );
+
+    const tagOnClick = defaultTagName === 'all' ?
+        ( event ) => {
+            if ( event.target.classList.contains( 'tags__tag--active' ) )
+                event.target.classList.remove( 'tags__tag--active' );
+            else
+                event.target.classList.add( 'tags__tag--active' );
+
+            if ( defaultTag.classList.contains( 'tags__tag--active' ) )
+                defaultTag.classList.remove( 'tags__tag--active' );
+        } :
+        ( event ) => {
+            if ( event.target.classList.contains( 'tags__tag--active' ) )
+                event.target.classList.remove( 'tags__tag--active' );
+            else
+                event.target.classList.add( 'tags__tag--active' );
+        };
+
+    const defaultTagOnClick = defaultTagName === 'all' ?
+        () => {
+            filterTags.childNodes.forEach( ( tag ) => {
                 if ( tag.classList.contains( 'tags__tag--active' ) )
                     tag.classList.remove( 'tags__tag--active' );
+            } );
 
-                else if ( tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
-                    tag.classList.add( 'tags__tag--active' );
-                    filterTags.childNodes.forEach( ( tag ) => {
-                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
-                            tag.classList.remove( 'tags__tag--active' );
-                    } );
-                }
-                else {
-                    defaultTag.classList.remove( 'tags__tag--active' );
-                    tag.classList.add( 'tags__tag--active' );
-                }
-            };
-        } );
-    }
-    else {
-        filterTags.childNodes.forEach( ( tag ) => {
-            tag.onclick = () => {
-                if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
-                    if ( tag.classList.contains( 'tags__tag--active' ) )
-                        tag.classList.remove( 'tags__tag--active' );
-                    else
-                        tag.classList.add( 'tags__tag--active' );
-                }
-                else {
-                    filterTags.forEach( ( tag ) => {
-                        if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
-                            tag.classList.remove( 'tags__tag--active' );
-                    } );
-                }
-            };
-        } );
-    }
+            if ( !defaultTag.classList.contains( 'tags__tag--active' ) )
+                defaultTag.classList.add( 'tags__tag--active' );
+        } :
+        () => {
+            filterTags.childNodes.forEach( ( tag ) => {
+                if ( tag.classList.contains( 'tags__tag--active' ) )
+                    tag.classList.remove( 'tags__tag--active' );
+            } );
+        };
+
+    filterTags.childNodes.forEach( tag => tag.addEventListener( 'click', tagOnClick ) );
+    defaultTag.removeEventListener( 'click', tagOnClick );
+    defaultTag.addEventListener( 'click', defaultTagOnClick );
 }
 
 const pages = document.getElementById( 'pages' );
