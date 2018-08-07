@@ -78,22 +78,15 @@ export function renderFilter ( defaultTagName = 'all' ) {
                 event.target.classList.add( 'tags__tag--active' );
         };
 
-    const defaultTagOnClick = defaultTagName === 'all' ?
-        () => {
-            filterTags.childNodes.forEach( ( tag ) => {
-                if ( tag.classList.contains( 'tags__tag--active' ) )
-                    tag.classList.remove( 'tags__tag--active' );
-            } );
+    const defaultTagOnClick = () => {
+        filterTags.childNodes.forEach( ( tag ) => {
+            if ( tag.classList.contains( 'tags__tag--active' ) )
+                tag.classList.remove( 'tags__tag--active' );
+        } );
 
-            if ( !defaultTag.classList.contains( 'tags__tag--active' ) )
-                defaultTag.classList.add( 'tags__tag--active' );
-        } :
-        () => {
-            filterTags.childNodes.forEach( ( tag ) => {
-                if ( tag.classList.contains( 'tags__tag--active' ) )
-                    tag.classList.remove( 'tags__tag--active' );
-            } );
-        };
+        if ( !defaultTag.classList.contains( 'tags__tag--active' ) )
+            defaultTag.classList.add( 'tags__tag--active' );
+    };
 
     filterTags.childNodes.forEach( tag => tag.addEventListener( 'click', tagOnClick ) );
     defaultTag.removeEventListener( 'click', tagOnClick );
