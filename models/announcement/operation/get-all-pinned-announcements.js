@@ -12,10 +12,16 @@ module.exports = async ( {
     endTime = defaultValue.endTime,
     language = defaultValue.language,
 } = {} ) => {
+    tags = [ ...new Set( tags ), ];
+    startTime = new Date( startTime );
+    endTime = new Date( endTime );
+
     if ( !validate.isValidTags( tags ) )
         return { error: 'invalid tag name', };
+
     if ( !validate.isValidDate( startTime ) )
         return { error: 'invalid start time', };
+
     if ( !validate.isValidDate( endTime ) )
         return { error: 'invalid end time', };
 
@@ -30,8 +36,8 @@ module.exports = async ( {
             where: {
                 updateTime: {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 isPinned:    1,
@@ -87,8 +93,8 @@ module.exports = async ( {
                 },
                 'updateTime':                       {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 'isPinned':      1,

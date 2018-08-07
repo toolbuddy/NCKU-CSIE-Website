@@ -17,7 +17,7 @@ const validTags = Object.freeze( [
 
 module.exports = {
     isValidTags ( tags ) {
-        return ( tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0 ) && tags.length;
+        return tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0;
     },
 
     isValidDate ( date ) {
