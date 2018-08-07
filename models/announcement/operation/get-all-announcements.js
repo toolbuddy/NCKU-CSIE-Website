@@ -3,7 +3,8 @@ const Op = require( 'sequelize' ).Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
 const associations = require( path.resolve( opRoot, 'associations' ) );
-const validate = require( path.resolve( opRoot, 'validate' ) );
+
+// Const validate = require( path.resolve( opRoot, 'validate' ) );
 const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
 
 module.exports = async ( {
