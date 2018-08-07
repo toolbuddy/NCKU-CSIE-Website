@@ -12,20 +12,20 @@ export function renderFilter ( defaultTagName = 'all' ) {
 
     /**
      * When `filter__button` is clicked, `filter__tags` and `filter__time` will be in either state:
-     *     * hidden, add class `tags--hidden` and `time--hidden` on `filter__tags` and `filter__time` respectively.
-     *     * show, remove class `tags--hidden` and `time--hidden` on `filter__tags` and `filter__time` respectively.
+     *     * hidden, add class `filter__tags--hidden` and `filter__time--hidden` on `filter__tags` and `filter__time` respectively.
+     *     * show, remove class `filter__tags--hidden` and `filter__time--hidden` on `filter__tags` and `filter__time` respectively.
      */
 
     document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
         if ( toggle ) {
-            // TODO: change `tags--hidden` and `time--hidden` to `filter__tags--hidden` and `filter__time--hidden`
-            filterTags.classList.remove( 'tags--hidden' );
-            filterTime.classList.remove( 'time--hidden' );
+            // TODO: change `filter__tags--hidden` and `filter__time--hidden` to `filter__tags--hidden` and `filter__time--hidden`
+            filterTags.classList.remove( 'filter__tags--hidden' );
+            filterTime.classList.remove( 'filter__time--hidden' );
             buttonIcon.classList.add( 'button__icon--active' );
         }
         else {
-            filterTags.classList.add( 'tags--hidden' );
-            filterTime.classList.add( 'time--hidden' );
+            filterTags.classList.add( 'filter__tags--hidden' );
+            filterTime.classList.add( 'filter__time--hidden' );
             buttonIcon.classList.remove( 'button__icon--active' );
         }
         toggle = !toggle;

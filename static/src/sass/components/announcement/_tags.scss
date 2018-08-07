@@ -57,9 +57,9 @@
 
       &competition {
         // modifier [skin]
-        color: #f67057;
-        background-color: #ffe3df;
-        @include tags__tag--active( #f67057 );
+        color: #9053ff;
+        background-color: #e8dafe;
+        @include tags__tag--active( #9053ff );
       }
 
       // modifier
@@ -117,9 +117,9 @@
 
       &internship {
         // modifier [skin]
-        color: #9053ff;
-        background-color: #e8dafe;
-        @include tags__tag--active( #9053ff );
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
       }
 
       // modifier
