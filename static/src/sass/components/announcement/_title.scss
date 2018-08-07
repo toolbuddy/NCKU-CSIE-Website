@@ -1,20 +1,18 @@
-.announcement__title {
-  height: 1.35rem;
-  margin-bottom: .7rem;
-  @include icon--before__flag() {
-    margin: .1rem .5rem .3rem 0;
-    border-width: .8rem .35rem .16rem;
-  }
-  display: flex;
 
-  .title {
-    &__text {
-      // element [skin]
-      height: inherit;
-      font: {
-        weight: bold;
-        size: .75rem;
-      }
+// block
+// `announcement__title`
+.announcement {
+  &__title {
+    // block [skin]
+    @include icon--before__flag() {
+      margin: 0 .4rem 0 0;
+      border-width: .8rem .35rem .16rem;
+    }
+    display: flex;
+    line-height: 1rem;
+    font: {
+      size: .55rem;
+      weight: bold;
     }
   }
 }

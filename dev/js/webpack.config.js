@@ -57,7 +57,7 @@ module.exports = {
     target:  'web',
     resolve: {
         alias: {
-            setting: path.resolve( projectRoot, 'settings' ),
+            settings: path.resolve( projectRoot, 'settings' ),
             static: staticRoot,
             test: path.resolve( projectRoot, 'test' ),
         },

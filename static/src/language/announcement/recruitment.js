@@ -8,7 +8,7 @@ const i18n = Object.freeze( {
         'topic':  'Recruitments',
         'top':    'Top Announcement',
         'normal': 'Announcement',
-        'filter': filter[ 'zh-TW' ],
+        'filter': filter[ 'en-US' ],
     },
     'zh-TW': {
         'topic':  '企業徵才',

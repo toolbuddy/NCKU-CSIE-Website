@@ -3,6 +3,7 @@ const Op = require( 'sequelize' ).Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
 const associations = require( path.resolve( opRoot, 'associations' ) );
+const validate = require( path.resolve( opRoot, 'validate' ) );
 const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
 
 module.exports = async ( {
@@ -10,6 +11,18 @@ module.exports = async ( {
     startTime = defaultValue.startTime,
     endTime = defaultValue.endTime,
 } = {} ) => {
+    startTime = new Date( startTime );
+    endTime = new Date( endTime );
+
+    if ( !validate.isValidTags( tags ) )
+        return { error: 'invalid tag name', };
+
+    if ( !validate.isValidDate( startTime ) )
+        return { error: 'invalid start time', };
+
+    if ( !validate.isValidDate( endTime ) )
+        return { error: 'invalid end time', };
+
     const table = await associations();
     let count = 0;
     if ( tags.length === 0 ) {
@@ -17,8 +30,8 @@ module.exports = async ( {
             where: {
                 updateTime: {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 isPublished: 1,
@@ -34,8 +47,8 @@ module.exports = async ( {
                 },
                 'updateTime': {
                     [ Op.between ]: [
-                        new Date( startTime ),
-                        new Date( endTime ),
+                        startTime,
+                        endTime,
                     ],
                 },
                 'isPublished': 1,

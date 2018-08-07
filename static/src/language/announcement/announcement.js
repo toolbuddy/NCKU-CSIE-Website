@@ -1,6 +1,6 @@
 const i18n = Object.freeze( {
     'en-US': {
-        'topic':  'Recruitments',
+        'topic':  'uitments',
         'top':    'Top Announcement',
         'normal': 'Announcement',
         'filter': {

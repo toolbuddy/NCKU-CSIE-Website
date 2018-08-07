@@ -3,7 +3,14 @@ import { dateFormating, }  from 'static/src/js/components/announcement/filter/fo
 let filterOnChange = null;
 let pageOnChange = null;
 
-export function setURLOnChange ( getAllAnnouncements, getAllPageNumber, getAnnouncementsByTags, getPageNumberByTags ) {
+export function setURLOnChange (
+        getAllPinnedAnnouncements,
+        getAllAnnouncements,
+        getAllPageNumber,
+        getPinnedAnnouncementsByTags,
+        getAnnouncementsByTags,
+        getPageNumberByTags
+) {
     pageOnChange = () => {
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
             getAllAnnouncements();
@@ -13,12 +20,14 @@ export function setURLOnChange ( getAllAnnouncements, getAllPageNumber, getAnnou
     filterOnChange = () => {
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
             getAllPageNumber();
+            getAllPinnedAnnouncements();
             getAllAnnouncements();
         }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
         else {
             getPageNumberByTags();
+            getPinnedAnnouncementsByTags();
             getAnnouncementsByTags();
         }
     };

@@ -1,4 +1,4 @@
-import { filterTags, } from 'static/src/js/components/announcement/filter/render.js';
+import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 
@@ -8,11 +8,13 @@ export function singleDefaultTagFilter ( tag = null ) {
     singleDefaultTag.defaultTag = tag;
 
     // Construct filter UI.
-    filterTags( tag );
+    renderFilter( tag );
 
     const urlOnChange = setURLOnChange(
+        singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
+        singleDefaultTag.getPinnedAnnouncementsByTags,
         singleDefaultTag.getAnnouncementsByTags,
         singleDefaultTag.getPageNumberByTags
     );
@@ -42,11 +44,13 @@ export function multipleDefaultTagsFilter ( tags = [] ) {
     multipleDefaultTags.defaultTags = tags;
 
     // Construct filter UI, must be `tags__tag--all`.
-    filterTags( 'all' );
+    renderFilter( 'all' );
 
     const urlOnChange = setURLOnChange(
+        multipleDefaultTags.getAllPinnedAnnouncements,
         multipleDefaultTags.getAllAnnouncements,
         multipleDefaultTags.getAllPageNumber,
+        multipleDefaultTags.getPinnedAnnouncementsByTags,
         multipleDefaultTags.getAnnouncementsByTags,
         multipleDefaultTags.getPageNumberByTags
     );

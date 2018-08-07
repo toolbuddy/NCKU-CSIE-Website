@@ -24,7 +24,10 @@ apis.get( '/all-pinned', async ( req, res ) => {
         language:  req.query.language,
     } );
 
-    if ( !result.length )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
@@ -44,7 +47,10 @@ apis.get( '/tags-pinned', async ( req, res ) => {
         language:  req.query.language,
     } );
 
-    if ( !result.length )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
@@ -63,7 +69,10 @@ apis.get( '/all-pages', async ( req, res ) => {
         endTime:   req.query.endTime,
     } );
 
-    if ( !result.pageNumber )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.pageNumber )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
@@ -82,7 +91,10 @@ apis.get( '/tags-pages', async ( req, res ) => {
         endTime:   req.query.endTime,
     } );
 
-    if ( !result.pageNumber )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.pageNumber )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
@@ -103,7 +115,10 @@ apis.get( '/all-announcement', async ( req, res ) => {
         language:  req.query.language,
     } );
 
-    if ( !result.length )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
@@ -124,7 +139,10 @@ apis.get( '/tags-announcement', async ( req, res ) => {
         language:  req.query.language,
     } );
 
-    if ( !result.length )
+    if ( result.error )
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 400 ).json( result );
+    else if ( !result.length )
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else

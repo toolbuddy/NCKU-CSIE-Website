@@ -21,6 +21,7 @@ const i18n = Object.freeze( {
             'scholarship':   'scholarship',
             'speech':        'speech',
             'teacher':       'teacher',
+            'honor':         'honor',
         },
     },
     'zh-TW': {
@@ -45,6 +46,7 @@ const i18n = Object.freeze( {
             'scholarship':   '獎學金',
             'speech':        '演講',
             'teacher':       '教職人員',
+            'honor':         '榮譽',
         },
     },
 } );
