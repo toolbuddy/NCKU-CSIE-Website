@@ -43,6 +43,16 @@
       }
 
       // modifier
+      // `.tags__tag.tags__tag--award
+
+      &award {
+        // modifier [skin]
+        color: #f67057;
+        background-color: #ffe3df;
+        @include tags__tag--active( #f67057 );
+      }
+
+      // modifier
       // `.tags__tag.tags__tag--college`
 
       &college {
@@ -93,19 +103,19 @@
       }
 
       // modifier
-      // `.tags__tag.tags__tag--international`
+      // `.tags__tag.tags__tag--faculty`
 
-      &international {
+      &faculty {
         // modifier [skin]
-        color: #f67057;
-        background-color: #ffe3df;
-        @include tags__tag--active( #f67057 );
+        color: #faad06;
+        background-color: #fff8e6;
+        @include tags__tag--active( #faad06 );
       }
 
       // modifier
-      // `.tags__tag.tags__tag--honor
+      // `.tags__tag.tags__tag--international`
 
-      &honor {
+      &international {
         // modifier [skin]
         color: #f67057;
         background-color: #ffe3df;
@@ -180,16 +190,6 @@
         background-color: #e8dafe;
         color: #9053ff;
         @include tags__tag--active( #9053ff );
-      }
-
-      // modifier
-      // `.tags__tag.tags__tag--teacher`
-
-      &teacher {
-        // modifier [skin]
-        color: #faad06;
-        background-color: #fff8e6;
-        @include tags__tag--active( #faad06 );
       }
     }
   }

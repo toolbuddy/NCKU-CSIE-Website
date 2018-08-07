@@ -16,41 +16,45 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( sassRoot, 'about/honor.scss' ),
-        'about/intro':    path.resolve( sassRoot, 'about/intro.scss' ),
-        'about/location': path.resolve( sassRoot, 'about/location.scss' ),
-        'about/members':  path.resolve( sassRoot, 'about/members.scss' ),
-        'about/teacher':  path.resolve( sassRoot, 'about/teacher.scss' ),
-        'about/teachers': path.resolve( sassRoot, 'about/teachers.scss' ),
+        'about/award':          path.resolve( sassRoot, 'about/award.scss' ),
+        'about/contact':        path.resolve( sassRoot, 'about/contact.scss' ),
+        'about/faculty-detail': path.resolve( sassRoot, 'about/faculty-detail.scss' ),
+        'about/faculty':        path.resolve( sassRoot, 'about/faculty.scss' ),
+        'about/index':          path.resolve( sassRoot, 'about/index.scss' ),
+        'about/intro':          path.resolve( sassRoot, 'about/intro.scss' ),
+        'about/staff':          path.resolve( sassRoot, 'about/staff.scss' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.scss' ),
-        'announcement/all':           path.resolve( sassRoot, 'announcement/all.scss' ),
-        'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.scss' ),
-        'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.scss' ),
+        'announcement/activity':     path.resolve( sassRoot, 'announcement/activity.scss' ),
+        'announcement/all':          path.resolve( sassRoot, 'announcement/all.scss' ),
+        'announcement/index':        path.resolve( sassRoot, 'announcement/index.scss' ),
+        'announcement/announcement': path.resolve( sassRoot, 'announcement/announcement.scss' ),
+        'announcement/recruitment':  path.resolve( sassRoot, 'announcement/recruitment.scss' ),
 
         // Route `home`
         'home/index': path.resolve( sassRoot, 'home/index.scss' ),
 
         // Route `research`
-        'research/awards':       path.resolve( sassRoot, 'research/awards.scss' ),
-        'research/conferences':  path.resolve( sassRoot, 'research/conferences.scss' ),
         'research/groups':       path.resolve( sassRoot, 'research/groups.scss' ),
+        'research/index':        path.resolve( sassRoot, 'research/index.scss' ),
         'research/labs':         path.resolve( sassRoot, 'research/labs.scss' ),
         'research/publications': path.resolve( sassRoot, 'research/publications.scss' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( sassRoot, 'resource/fix.scss' ),
-        'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.scss' ),
-        'resource/rule':       path.resolve( sassRoot, 'resource/rule.scss' ),
-        'resource/rent':      path.resolve( sassRoot, 'resource/rent.scss' ),
-        'resource/resources': path.resolve( sassRoot, 'resource/resources.scss' ),
+        'resource/alumni':  path.resolve( sassRoot, 'resource/alumni.scss' ),
+        'resource/fix':     path.resolve( sassRoot, 'resource/fix.scss' ),
+        'resource/ieet':    path.resolve( sassRoot, 'resource/ieet.scss' ),
+        'resource/index':   path.resolve( sassRoot, 'resource/index.scss' ),
+        'resource/rent':    path.resolve( sassRoot, 'resource/rent.scss' ),
+        'resource/rule':    path.resolve( sassRoot, 'resource/rule.scss' ),
+        'resource/sitemap': path.resolve( sassRoot, 'resource/sitemap.scss' ),
 
         // Route `student`
         'student/college':       path.resolve( sassRoot, 'student/college.scss' ),
         'student/course':        path.resolve( sassRoot, 'student/course.scss' ),
+        'student/index':         path.resolve( sassRoot, 'student/index.scss' ),
         'student/international': path.resolve( sassRoot, 'student/international.scss' ),
-        'student/internship': path.resolve( sassRoot, 'student/internship.scss' ),
+        'student/internship':    path.resolve( sassRoot, 'student/internship.scss' ),
         'student/master':        path.resolve( sassRoot, 'student/master.scss' ),
         'student/phd':           path.resolve( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),

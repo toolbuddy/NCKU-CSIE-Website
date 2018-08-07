@@ -14,7 +14,7 @@
   display: grid;
   grid-template: {
     areas:
-        '.   announcement   .';
+        '. announcement .';
     columns: 5% 1fr 5%;
   };
   @media screen and ( min-width: $small ) {

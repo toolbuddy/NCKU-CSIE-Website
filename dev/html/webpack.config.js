@@ -3,9 +3,8 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( __dirname ) );
 const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
-const languageRoot = path.resolve( projectRoot, 'static/src/language' );
 const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
-const { staticUrl } = require( path.resolve( projectRoot, 'settings/server/config' ) );
+const { staticUrl, } = require( path.resolve( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -15,41 +14,45 @@ module.exports = language.support.map( language => ( {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( pugRoot, 'about/honor.pug' ),
-        'about/intro':    path.resolve( pugRoot, 'about/intro.pug' ),
-        'about/location': path.resolve( pugRoot, 'about/location.pug' ),
-        'about/members':  path.resolve( pugRoot, 'about/members.pug' ),
-        'about/teacher':  path.resolve( pugRoot, 'about/teacher.pug' ),
-        'about/teachers': path.resolve( pugRoot, 'about/teachers.pug' ),
+        'about/award':          path.resolve( pugRoot, 'about/award.pug' ),
+        'about/contact':        path.resolve( pugRoot, 'about/contact.pug' ),
+        'about/faculty-detail': path.resolve( pugRoot, 'about/faculty-detail.pug' ),
+        'about/faculty':        path.resolve( pugRoot, 'about/faculty.pug' ),
+        'about/index':          path.resolve( pugRoot, 'about/index.pug' ),
+        'about/intro':          path.resolve( pugRoot, 'about/intro.pug' ),
+        'about/staff':          path.resolve( pugRoot, 'about/staff.pug' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( pugRoot, 'announcement/activity.pug' ),
-        'announcement/all':           path.resolve( pugRoot, 'announcement/all.pug' ),
-        'announcement/announcement':  path.resolve( pugRoot, 'announcement/announcement.pug' ),
-        'announcement/recruitment':   path.resolve( pugRoot, 'announcement/recruitment.pug' ),
+        'announcement/activity':     path.resolve( pugRoot, 'announcement/activity.pug' ),
+        'announcement/all':          path.resolve( pugRoot, 'announcement/all.pug' ),
+        'announcement/index':        path.resolve( pugRoot, 'announcement/index.pug' ),
+        'announcement/announcement': path.resolve( pugRoot, 'announcement/announcement.pug' ),
+        'announcement/recruitment':  path.resolve( pugRoot, 'announcement/recruitment.pug' ),
 
         // Route `home`
         'home/index': path.resolve( pugRoot, 'home/index.pug' ),
 
         // Route `research`
-        'research/awards':       path.resolve( pugRoot, 'research/awards.pug' ),
-        'research/conferences':  path.resolve( pugRoot, 'research/conferences.pug' ),
         'research/groups':       path.resolve( pugRoot, 'research/groups.pug' ),
+        'research/index':        path.resolve( pugRoot, 'research/index.pug' ),
         'research/labs':         path.resolve( pugRoot, 'research/labs.pug' ),
         'research/publications': path.resolve( pugRoot, 'research/publications.pug' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( pugRoot, 'resource/fix.pug' ),
-        'resource/ieet':      path.resolve( pugRoot, 'resource/ieet.pug' ),
-        'resource/rule':       path.resolve( pugRoot, 'resource/rule.pug' ),
-        'resource/rent':      path.resolve( pugRoot, 'resource/rent.pug' ),
-        'resource/resources': path.resolve( pugRoot, 'resource/resources.pug' ),
+        'resource/alumni':  path.resolve( pugRoot, 'resource/alumni.pug' ),
+        'resource/fix':     path.resolve( pugRoot, 'resource/fix.pug' ),
+        'resource/ieet':    path.resolve( pugRoot, 'resource/ieet.pug' ),
+        'resource/index':   path.resolve( pugRoot, 'resource/index.pug' ),
+        'resource/rent':    path.resolve( pugRoot, 'resource/rent.pug' ),
+        'resource/rule':    path.resolve( pugRoot, 'resource/rule.pug' ),
+        'resource/sitemap': path.resolve( pugRoot, 'resource/sitemap.pug' ),
 
         // Route `student`
         'student/college':       path.resolve( pugRoot, 'student/college.pug' ),
         'student/course':        path.resolve( pugRoot, 'student/course.pug' ),
+        'student/index':         path.resolve( pugRoot, 'student/index.pug' ),
         'student/international': path.resolve( pugRoot, 'student/international.pug' ),
-        'student/internship': path.resolve( pugRoot, 'student/internship.pug' ),
+        'student/internship':    path.resolve( pugRoot, 'student/internship.pug' ),
         'student/master':        path.resolve( pugRoot, 'student/master.pug' ),
         'student/phd':           path.resolve( pugRoot, 'student/phd.pug' ),
         'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),
@@ -80,9 +83,6 @@ module.exports = language.support.map( language => ( {
                             data:    {
                                 staticUrl,
                                 language,
-                                languageRoot,
-                                require,
-                                path,
                             },
                         },
                     },

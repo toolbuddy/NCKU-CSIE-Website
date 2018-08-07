@@ -13,27 +13,33 @@ announcementBriefing.innerHTML += briefing( {
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [ 'college',
+    tags:    [
+        'college',
         'speech',
-        'phd', ],
+        'phd',
+    ],
 } );
 announcementBriefing.innerHTML += briefing( {
     id:      1,
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '兩小段內文',
-    tags:    [ 'recruitment',
-        'teacher',
-        'exhibition', ],
+    tags:    [
+        'recruitment',
+        'faculty',
+        'exhibition',
+    ],
 } );
 announcementBriefing.innerHTML += briefing( {
     id:      2,
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [ 'college',
+    tags:    [
+        'college',
         'speech',
-        'phd', ],
+        'phd',
+    ],
 } );
 
 // Hot news briefings

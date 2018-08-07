@@ -1,0 +1,24 @@
+extends /layouts/about.pug
+
+append stylesheets
+
+append header
+
+append content
+  include /components/common/topic.pug
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic': 'Faculty',
+      },
+      'zh-TW': {
+        'topic': '師資陣容',
+      },
+    } );
+
+  main.content
+    +topic( i18n[ language ].topic )
+    section#cards.cards
+
+append scripts
+  +js( 'about/faculty' )

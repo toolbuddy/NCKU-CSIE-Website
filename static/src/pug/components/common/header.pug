@@ -1,62 +1,232 @@
-ul
-  li
-    a( href = '/student' ) student
-    ul.dropdown__content
-      li
-        a( href='/student/course' ) course
-      li
-        a( href='/student/college' ) college
-      li
-        a( href='/student/master' ) master
-      li
-        a( href='/student/phd' ) phd
-      li
-        a( href='/student/scholarship' ) scholarship
-      li
-        a( href='/student/international' ) international
-      li
-        a( href='/student/international' ) internship
-  li
-    a( href = '/about' ) about
-    ul
-      li
-        a( href='/about/intro' ) introduction
-      li
-        a( href='/about/teachers' ) teachers
-      li
-        a( href='/about/members' ) members
-      li
-        a( href='/about/honor' ) honor
-      li
-        a( href='/about/location' ) location
-  li
-    a( href = '/research' ) research
-    ul
-      li
-        a( href='/research/labs' ) labs
-      li
-        a( href='/research/groups' ) groups
-      li
-        a( href='/research/publications' ) publications
-  li
-    a( href = '/announcement' ) announcement
-    ul
-      li
-        a( href='/announcement/all' ) all announcement
-      li
-        a( href='/announcement/activity' ) activity
-      li
-        a( href='/announcement/recruitment' ) recruitment
-  li
-    a( href = '/resource' ) resource
-    ul
-      li
-        a( href='/resource/rule' ) rule
-      li
-        a( href='/resource/rent' ) rent
-      li
-        a( href='/resource/fix' ) fix
-      li
-        a( href='/resource/ieet' ) IEET
-      li
-        a( href='/resource/resources' ) resources
+mixin header
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        util: {
+          calendar: 'Calendar',
+          login:    'Login',
+          search:   'Search',
+        },
+        route: {
+          about: {
+            award:   'Awards',
+            contact: 'Contact Us',
+            faculty: 'Faculties',
+            index:   'About',
+            intro:   'Introduction',
+            staff:   'Staff',
+          },
+          announcement: {
+            activity:    'Activities',
+            all:         'All',
+            index:       'Announcement',
+            recruitment: 'Recruitment',
+          },
+          home: {
+            index: 'Home',
+          },
+          research: {
+            groups:       'Groups',
+            index:        'Research',
+            labs:         'Laboratories',
+            publications: 'Publications',
+          },
+          resource: {
+            alumni:  'Alumni',
+            fix:     'Fix',
+            ieet:    'IEET',
+            index:   'Resource',
+            rent:    'Rent',
+            rule:    'Rule',
+            sitemap: 'Site Map',
+          },
+          student: {
+            college:       'College',
+            course:        'Course',
+            index:         'Student',
+            international: 'International',
+            internship:    'Internship',
+            master:        'Master',
+            phd:           'Ph.D',
+            scholarship:   'Scholarship',
+          },
+        },
+      },
+      'zh-TW': {
+        util: {
+          calendar: '行事曆',
+          login:    '登入',
+          search:   '搜尋',
+        },
+        route: {
+          about: {
+            award:   '榮譽事蹟',
+            contact: '聯絡我們',
+            faculty: '師資陣容',
+            index:   '關於本系',
+            intro:   '系所介紹',
+            staff:   '行政人員',
+          },
+          announcement: {
+            activity:    '活動公告',
+            all:         '全部公告',
+            index:       '系所公告',
+            recruitment: '徵才資訊',
+          },
+          home: {
+            index: '首頁',
+          },
+          research: {
+            groups:       '研究群',
+            index:        '學術研究',
+            labs:         '實驗室',
+            publications: '發表論文',
+          },
+          resource: {
+            alumni:  '系友專區',
+            fix:     '修繕登記',
+            ieet:    'IEET工程認證',
+            index:   '資源連結',
+            rent:    '線上租借',
+            rule:    '法規彙編',
+            sitemap: '網站地圖',
+          },
+          student: {
+            college:       '大學部',
+            course:        '課程資訊',
+            index:         '學生事務',
+            international: '國際交流',
+            internship:    '實習',
+            master:        '碩士',
+            phd:           '博士',
+            scholarship:   '獎學金',
+          },
+        },
+      }
+    } );
+
+  header.header
+    //- Logo
+    figure.header__logo.logo
+      +image( {
+        alt: 'csie',
+        className: 'logo__image',
+        src: 'logo/csie.png',
+      } )
+      figcaption.logo__caption.caption
+        h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+        h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+
+    //- Calendar, currently not available
+    a.header__calendar.calendar( href = '#' )
+      +image( {
+        alt: i18n[ language ].util.calendar,
+        className: 'calendar__image',
+        src: 'icon/calendar.png',
+      } )
+
+    //- Login, currently not available
+    a.header__login.login( href = '/login' )
+      +image( {
+        alt: i18n[ language ].util.login,
+        className: 'login__image',
+        src: 'icon/user.png',
+      } )
+      span.login__text= i18n[ language ].util.login
+
+    //- Search Column, currently not available
+    form.header__search.search( action = '/search', method = 'POST' )
+      +image( {
+        alt: i18n[ language ].util.search,
+        className: 'search__image',
+        src: 'icon/search.png',
+      } )
+      input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
+
+    //- Language Choice
+    ul.header__language.language
+      li.language__options.options
+        figure.options__option.option
+          +image( {
+            alt: '臺灣',
+            className: 'option__image option__image--zh-TW',
+            src: 'icon/flag-en-US.png',
+          } )
+          span.option__text.option__text--zh-TW 臺灣
+      li.language__options.options
+        figure.options__option
+          +image( {
+            alt: 'USA',
+            className: 'option__image option__image--en-US',
+            src: 'icon/flag-en-US.png',
+          } )
+          span.option__text.option__text--en-US USA
+
+    //- Navigation Bar
+    nav.header__navigation.navigation
+      ul.navigation__primary-list.primary-list
+        li.primary-list__item
+          a.primary-list__link( href = '/' )= i18n[ language ].route.home.index
+        li.primary-list__item
+          a.primary-list__link( href = '/about' )= i18n[ language ].route.about.index
+          ul.primary-list__secondary-list.secondary-list
+            li.secondary-list__item
+              a.secondary-list__link( href='/about/intro' )= i18n[ language ].route.about.intro
+            li.secondary-list__item
+              a.secondary-list__link( href='/about/faculty' )= i18n[ language ].route.about.faculty
+            li.secondary-list__item
+              a.secondary-list__link( href='/about/staff' )= i18n[ language ].route.about.staff
+            li.secondary-list__item
+              a.secondary-list__link( href='/about/award' )= i18n[ language ].route.about.award
+            li.secondary-list__item
+              a.secondary-list__link( href='/about/contact' )= i18n[ language ].route.about.contact
+        li.primary-list__item
+          a.primary-list__link( href = '/research' )= i18n[ language ].route.research.index
+          ul.primary-list__secondary-list.secondary-list
+            li.secondary-list__item
+              a.secondary-list__link( href='/research/labs' )= i18n[ language ].route.research.labs
+            li.secondary-list__item
+              a.secondary-list__link( href='/research/groups' )= i18n[ language ].route.research.groups
+            li.secondary-list__item
+              a.secondary-list__link( href='/research/publications' )= i18n[ language ].route.research.publications
+        li.primary-list__item
+          a.primary-list__link( href = '/student' )= i18n[ language ].route.student.index
+          ul.primary-list__secondary-list.secondary-list
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/course' )= i18n[ language ].route.student.course
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/college' )= i18n[ language ].route.student.college
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/master' )= i18n[ language ].route.student.master
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/phd' )= i18n[ language ].route.student.phd
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/scholarship' )= i18n[ language ].route.student.scholarship
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/international' )= i18n[ language ].route.student.international
+            li.secondary-list__item
+              a.secondary-list__link( href='/student/internship' )= i18n[ language ].route.student.internship
+        li.primary-list__item
+          a.primary-list__link( href = '/announcement' )= i18n[ language ].route.announcement.index
+          ul.primary-list__secondary-list.secondary-list
+            li.secondary-list__item
+              a.secondary-list__link( href='/announcement/all' )= i18n[ language ].route.announcement.all
+            li.secondary-list__item
+              a.secondary-list__link( href='/announcement/activity' )= i18n[ language ].route.announcement.activity
+            li.secondary-list__item
+              a.secondary-list__link( href='/announcement/recruitment' )= i18n[ language ].route.announcement.recruitment
+        li.primary-list__item
+          a.primary-list__link( href = '/resource' )= i18n[ language ].route.resource.index
+          ul.primary-list__secondary-list.secondary-list
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/rule' )= i18n[ language ].route.resource.rule
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/rent' )= i18n[ language ].route.resource.rent
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/fix' )= i18n[ language ].route.resource.fix
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/ieet' )= i18n[ language ].route.resource.IEET
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/sitemap' )= i18n[ language ].route.resource.sitemap
+            li.secondary-list__item
+              a.secondary-list__link( href='/resource/alumni' )= i18n[ language ].route.resource.alumni
