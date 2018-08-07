@@ -28,12 +28,12 @@ export const singleDefaultTag = {
     defaultTag: null,
 
     getAllPinnedAnnouncements () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { startTime, endTime, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags:     singleDefaultTag.defaultTag,
             startTime,
             endTime,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
@@ -63,13 +63,13 @@ export const singleDefaultTag = {
      */
 
     getAllAnnouncements () {
-        const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { startTime, endTime, page, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags:     singleDefaultTag.defaultTag,
             startTime,
             endTime,
             page,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -88,15 +88,15 @@ export const singleDefaultTag = {
     },
 
     getPinnedAnnouncementsByTags () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { tags, startTime, endTime, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
-            'tags': [
+            tags: [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],
             startTime,
             endTime,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
@@ -124,16 +124,16 @@ export const singleDefaultTag = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, startTime, endTime, page, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { tags, startTime, endTime, page, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
-            'tags': [
+            tags: [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],
             startTime,
             endTime,
             page,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -163,9 +163,9 @@ export const singleDefaultTag = {
      */
 
     getAllPageNumber () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { startTime, endTime, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags: singleDefaultTag.defaultTag,
             startTime,
             endTime,
         } );
@@ -195,9 +195,9 @@ export const singleDefaultTag = {
      */
 
     getPageNumberByTags () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( singleDefaultTag.defaultTag );
+        const { tags, startTime, endTime, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
-            'tags': [
+            tags: [
                 singleDefaultTag.defaultTag,
                 ...tags,
             ],

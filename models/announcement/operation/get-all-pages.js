@@ -11,6 +11,7 @@ module.exports = async ( {
     startTime = defaultValue.startTime,
     endTime = defaultValue.endTime,
 } = {} ) => {
+    tags = [ ...new Set( tags ), ];
     startTime = new Date( startTime );
     endTime = new Date( endTime );
 
