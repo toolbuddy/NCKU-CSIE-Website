@@ -2,13 +2,19 @@ import briefing from 'static/src/pug/components/announcement/briefing.pug';
 import { pageOnClick, } from 'static/src/js/components/announcement/filter/event.js';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
-// Construct filter tags' UI
+// Construct filter's UI
 export function renderFilter ( defaultTagName = null ) {
     let toggle = true;
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
     const filterTime = document.getElementById( 'filter__time' );
     const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
+
+    /**
+     * When `filter__button` is clicked, `filter__tags` and `filter__time` will be in either state:
+     *     * hidden, add class `tags--hidden` and `time--hidden` on `filter__tags` and `filter__time` respectively.
+     *     * show, remove class `tags--hidden` and `time--hidden` on `filter__tags` and `filter__time` respectively.
+     */
 
     document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
         if ( toggle ) {
@@ -24,13 +30,27 @@ export function renderFilter ( defaultTagName = null ) {
         toggle = !toggle;
     } );
 
+    /**
+     * Activate `tags__tag--{ defaultTagName }` if:
+     *     * there is no tags in URL.
+     *     * there is no valid tags in URL.
+     */
+
     defaultTag.classList.add( 'tags__tag--active' );
 
     const query = new URLSearchParams( window.location.search );
     const currentTags = query.getAll( 'tags' );
     if ( currentTags.length ) {
-        currentTags.forEach( tag => document.getElementById( `tags__tag--${ tag }` ).classList.add( 'tags__tag--active' ) );
-        defaultTag.classList.remove( 'tags__tag--active' );
+        let validTagCount = 0;
+        currentTags.forEach( ( tag ) => {
+            const tagObj = document.getElementById( `tags__tag--${ tag }` );
+            if ( tagObj ) {
+                tagObj.classList.add( 'tags__tag--active' );
+                validTagCount += 1;
+            }
+        } );
+        if ( validTagCount )
+            defaultTag.classList.remove( 'tags__tag--active' );
     }
     if ( defaultTagName === 'all' ) {
         filterTags.childNodes.forEach( ( tag ) => {
