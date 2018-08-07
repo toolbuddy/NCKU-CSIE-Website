@@ -4,15 +4,14 @@ import { timeFormating, }  from 'static/src/js/components/announcement/filter/fo
 
 // Construct filter tags' UI
 export function renderFilter ( defaultTagName = null ) {
-    let flip = 0;
+    let toggle = true;
     const buttonIcon = document.getElementById( 'button__icon' );
     const filterTags = document.getElementById( 'filter__tags' );
     const filterTime = document.getElementById( 'filter__time' );
     const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
 
     document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
-        flip = ( flip + 1 ) % 2;
-        if ( flip ) {
+        if ( toggle ) {
             filterTags.classList.remove( 'tags--hidden' );
             filterTime.classList.remove( 'time--hidden' );
             buttonIcon.classList.add( 'button__icon--active' );
@@ -22,11 +21,18 @@ export function renderFilter ( defaultTagName = null ) {
             filterTime.classList.add( 'time--hidden' );
             buttonIcon.classList.remove( 'button__icon--active' );
         }
+        toggle = !toggle;
     } );
-    const query = new URLSearchParams( window.history.location );
-    if ( !query.getAll( 'tags' ).length )
-        defaultTag.classList.add( 'tags__tag--active' );
-    if ( defaultTagName === 'all' || defaultTagName === 'activity' ) {
+
+    defaultTag.classList.add( 'tags__tag--active' );
+
+    const query = new URLSearchParams( window.location.search );
+    const currentTags = query.getAll( 'tags' );
+    if ( currentTags.length ) {
+        currentTags.forEach( tag => document.getElementById( `tags__tag--${ tag }` ).classList.add( 'tags__tag--active' ) );
+        defaultTag.classList.remove( 'tags__tag--active' );
+    }
+    if ( defaultTagName === 'all' ) {
         filterTags.childNodes.forEach( ( tag ) => {
             tag.onclick = () => {
                 if ( tag.classList.contains( 'tags__tag--active' ) )
@@ -34,7 +40,7 @@ export function renderFilter ( defaultTagName = null ) {
 
                 else if ( tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
                     tag.classList.add( 'tags__tag--active' );
-                    filterTags.forEach( ( tag ) => {
+                    filterTags.childNodes.forEach( ( tag ) => {
                         if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) )
                             tag.classList.remove( 'tags__tag--active' );
                     } );
@@ -47,7 +53,7 @@ export function renderFilter ( defaultTagName = null ) {
         } );
     }
     else {
-        filterTags.forEach( ( tag ) => {
+        filterTags.childNodes.forEach( ( tag ) => {
             tag.onclick = () => {
                 if ( !tag.classList.contains( `tags__tag--${ defaultTagName }` ) ) {
                     if ( tag.classList.contains( 'tags__tag--active' ) )
