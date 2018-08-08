@@ -1,8 +1,10 @@
 const express = require( 'express' );
+const path = require( 'path' );
 
-const announcement = require( './announcement' );
-const teacher = require( './teacher' );
-const teachers = require( './teachers' );
+const projectRoot = path.dirname( __dirname );
+const announcement = require( path.join( projectRoot, 'apis/announcement') );
+const teacher = require( path.join( projectRoot, 'apis/teacher') );
+const teachers = require( path.join( projectRoot, 'apis/teachers' ) );
 
 const apis = express.Router();
 

@@ -1,11 +1,11 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
-const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
-const languageRoot = path.resolve( projectRoot, 'static/src/language' );
-const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
-const { staticUrl } = require( path.resolve( projectRoot, 'settings/server/config' ) );
+const language = require( path.join( projectRoot, 'settings/language/config' ) );
+const pugRoot = path.join( projectRoot, 'static/src/pug' );
+const languageRoot = path.join( projectRoot, 'static/src/language' );
+const htmlRoot = path.join( projectRoot, 'static/dist/html' );
+const { staticUrl } = require( path.join( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -15,44 +15,44 @@ module.exports = language.support.map( language => ( {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( pugRoot, 'about/honor.pug' ),
-        'about/intro':    path.resolve( pugRoot, 'about/intro.pug' ),
-        'about/location': path.resolve( pugRoot, 'about/location.pug' ),
-        'about/members':  path.resolve( pugRoot, 'about/members.pug' ),
-        'about/teacher':  path.resolve( pugRoot, 'about/teacher.pug' ),
-        'about/teachers': path.resolve( pugRoot, 'about/teachers.pug' ),
+        'about/honor':    path.join( pugRoot, 'about/honor.pug' ),
+        'about/intro':    path.join( pugRoot, 'about/intro.pug' ),
+        'about/location': path.join( pugRoot, 'about/location.pug' ),
+        'about/members':  path.join( pugRoot, 'about/members.pug' ),
+        'about/teacher':  path.join( pugRoot, 'about/teacher.pug' ),
+        'about/teachers': path.join( pugRoot, 'about/teachers.pug' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( pugRoot, 'announcement/activity.pug' ),
-        'announcement/all':           path.resolve( pugRoot, 'announcement/all.pug' ),
-        'announcement/announcement':  path.resolve( pugRoot, 'announcement/announcement.pug' ),
-        'announcement/recruitment':   path.resolve( pugRoot, 'announcement/recruitment.pug' ),
+        'announcement/activity':      path.join( pugRoot, 'announcement/activity.pug' ),
+        'announcement/all':           path.join( pugRoot, 'announcement/all.pug' ),
+        'announcement/announcement':  path.join( pugRoot, 'announcement/announcement.pug' ),
+        'announcement/recruitment':   path.join( pugRoot, 'announcement/recruitment.pug' ),
 
         // Route `home`
-        'home/index': path.resolve( pugRoot, 'home/index.pug' ),
+        'home/index': path.join( pugRoot, 'home/index.pug' ),
 
         // Route `research`
-        'research/awards':       path.resolve( pugRoot, 'research/awards.pug' ),
-        'research/conferences':  path.resolve( pugRoot, 'research/conferences.pug' ),
-        'research/groups':       path.resolve( pugRoot, 'research/groups.pug' ),
-        'research/labs':         path.resolve( pugRoot, 'research/labs.pug' ),
-        'research/publications': path.resolve( pugRoot, 'research/publications.pug' ),
+        'research/awards':       path.join( pugRoot, 'research/awards.pug' ),
+        'research/conferences':  path.join( pugRoot, 'research/conferences.pug' ),
+        'research/groups':       path.join( pugRoot, 'research/groups.pug' ),
+        'research/labs':         path.join( pugRoot, 'research/labs.pug' ),
+        'research/publications': path.join( pugRoot, 'research/publications.pug' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( pugRoot, 'resource/fix.pug' ),
-        'resource/ieet':      path.resolve( pugRoot, 'resource/ieet.pug' ),
-        'resource/rule':       path.resolve( pugRoot, 'resource/rule.pug' ),
-        'resource/rent':      path.resolve( pugRoot, 'resource/rent.pug' ),
-        'resource/resources': path.resolve( pugRoot, 'resource/resources.pug' ),
+        'resource/fix':       path.join( pugRoot, 'resource/fix.pug' ),
+        'resource/ieet':      path.join( pugRoot, 'resource/ieet.pug' ),
+        'resource/rule':       path.join( pugRoot, 'resource/rule.pug' ),
+        'resource/rent':      path.join( pugRoot, 'resource/rent.pug' ),
+        'resource/resources': path.join( pugRoot, 'resource/resources.pug' ),
 
         // Route `student`
-        'student/college':       path.resolve( pugRoot, 'student/college.pug' ),
-        'student/course':        path.resolve( pugRoot, 'student/course.pug' ),
-        'student/international': path.resolve( pugRoot, 'student/international.pug' ),
-        'student/internship': path.resolve( pugRoot, 'student/internship.pug' ),
-        'student/master':        path.resolve( pugRoot, 'student/master.pug' ),
-        'student/phd':           path.resolve( pugRoot, 'student/phd.pug' ),
-        'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),
+        'student/college':       path.join( pugRoot, 'student/college.pug' ),
+        'student/course':        path.join( pugRoot, 'student/course.pug' ),
+        'student/international': path.join( pugRoot, 'student/international.pug' ),
+        'student/internship': path.join( pugRoot, 'student/internship.pug' ),
+        'student/master':        path.join( pugRoot, 'student/master.pug' ),
+        'student/phd':           path.join( pugRoot, 'student/phd.pug' ),
+        'student/scholarship':   path.join( pugRoot, 'student/scholarship.pug' ),
     },
     output: {
         path:     htmlRoot,

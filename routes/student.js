@@ -2,7 +2,6 @@
 const express = require( 'express' );
 const router = express.Router();
 
-
 // Resolve URL /student/college
 router.get( '/college', ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/student/college.${ req.query.language }.html` );
