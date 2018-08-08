@@ -6,7 +6,7 @@ block append content
   include /components/common/topic.pug
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'announcement/recruitment' ) );
+  - const i18n = require( path.join( languageRoot, 'announcement/recruitment' ) );
 
   main.content
     +topic( i18n[ language ].topic )

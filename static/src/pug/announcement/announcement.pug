@@ -4,7 +4,7 @@ block append stylesheets
   +css( 'announcement/announcement' )
 
 block append content
-  - const i18n = require( path.resolve( languageRoot, 'announcement/announcement' ) );
+  - const i18n = require( path.join( languageRoot, 'announcement/announcement' ) );
   main#content.content
 
 block append scripts

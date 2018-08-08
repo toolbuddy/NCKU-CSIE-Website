@@ -3,7 +3,7 @@ extends /layouts/resource.pug
 block append stylesheets
 
 block append content
-  - const i18n = require( path.resolve( languageRoot, 'resource/ieet' ) );
+  - const i18n = require( path.join( languageRoot, 'resource/ieet' ) );
 
 block append scripts
   +js( 'resource/ieet' )

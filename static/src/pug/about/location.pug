@@ -7,7 +7,7 @@ block header
 block append content
   include /components/common/topic.pug
   include /components/about/location/traffic.pug
-  - const i18n = require( path.resolve( languageRoot, 'about/location' ) );
+  - const i18n = require( path.join( languageRoot, 'about/location' ) );
 
   main.main
     +topic( i18n[ language ].topic )

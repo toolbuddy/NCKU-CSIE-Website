@@ -71,7 +71,7 @@ block append header
 
 block append content
   include /components/common/topic.pug
-  - const i18n = require( path.resolve( languageRoot, 'home/index' ) );
+  - const i18n = require( path.join( languageRoot, 'home/index' ) );
 
   main.content
     +topic( i18n[ language ].topic )

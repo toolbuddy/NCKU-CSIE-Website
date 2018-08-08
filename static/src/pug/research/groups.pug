@@ -3,7 +3,7 @@ extends /layouts/research.pug
 block append stylesheets
 
 block append content
-  - const i18n = require( path.resolve( languageRoot, 'research/groups' ) );
+  - const i18n = require( path.join( languageRoot, 'research/groups' ) );
 
 block append scripts
   +js( 'research/groups' )

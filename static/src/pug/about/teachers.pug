@@ -4,7 +4,7 @@ block append stylesheets
 
 block append content
   include /components/common/topic.pug
-  - const i18n = require( path.resolve( languageRoot, 'about/teachers' ) );
+  - const i18n = require( path.join( languageRoot, 'about/teachers' ) );
 
   main.content
     +topic( i18n[ language ].topic )
