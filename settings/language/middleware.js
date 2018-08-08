@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const language = require( `${ projectRoot }/settings/language/config` );
+const language = require( path.join( projectRoot, 'settings/language/config' ) );
 
 module.exports = ( req, res, next ) => {
     // No language option provided, using default option.

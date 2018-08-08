@@ -1,10 +1,10 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const language = require( path.resolve( projectRoot, 'settings/language/config' ) );
-const pugRoot = path.resolve( projectRoot, 'static/src/pug' );
-const htmlRoot = path.resolve( projectRoot, 'static/dist/html' );
-const { staticUrl, } = require( path.resolve( projectRoot, 'settings/server/config' ) );
+const language = require( path.join( projectRoot, 'settings/language/config' ) );
+const pugRoot = path.join( projectRoot, 'static/src/pug' );
+const htmlRoot = path.join( projectRoot, 'static/dist/html' );
+const { staticUrl, } = require( path.join( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
 /* Process.env.NODE_ENV !== 'production'*/
@@ -14,48 +14,48 @@ module.exports = language.support.map( language => ( {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/award':          path.resolve( pugRoot, 'about/award.pug' ),
-        'about/contact':        path.resolve( pugRoot, 'about/contact.pug' ),
-        'about/faculty-detail': path.resolve( pugRoot, 'about/faculty-detail.pug' ),
-        'about/faculty':        path.resolve( pugRoot, 'about/faculty.pug' ),
-        'about/index':          path.resolve( pugRoot, 'about/index.pug' ),
-        'about/intro':          path.resolve( pugRoot, 'about/intro.pug' ),
-        'about/staff':          path.resolve( pugRoot, 'about/staff.pug' ),
+        'about/award':          path.join( pugRoot, 'about/award.pug' ),
+        'about/contact':        path.join( pugRoot, 'about/contact.pug' ),
+        'about/faculty-detail': path.join( pugRoot, 'about/faculty-detail.pug' ),
+        'about/faculty':        path.join( pugRoot, 'about/faculty.pug' ),
+        'about/index':          path.join( pugRoot, 'about/index.pug' ),
+        'about/intro':          path.join( pugRoot, 'about/intro.pug' ),
+        'about/staff':          path.join( pugRoot, 'about/staff.pug' ),
 
         // Route `announcement`
-        'announcement/activity':     path.resolve( pugRoot, 'announcement/activity.pug' ),
-        'announcement/all':          path.resolve( pugRoot, 'announcement/all.pug' ),
-        'announcement/index':        path.resolve( pugRoot, 'announcement/index.pug' ),
-        'announcement/announcement': path.resolve( pugRoot, 'announcement/announcement.pug' ),
-        'announcement/recruitment':  path.resolve( pugRoot, 'announcement/recruitment.pug' ),
+        'announcement/activity':     path.join( pugRoot, 'announcement/activity.pug' ),
+        'announcement/all':          path.join( pugRoot, 'announcement/all.pug' ),
+        'announcement/index':        path.join( pugRoot, 'announcement/index.pug' ),
+        'announcement/announcement': path.join( pugRoot, 'announcement/announcement.pug' ),
+        'announcement/recruitment':  path.join( pugRoot, 'announcement/recruitment.pug' ),
 
         // Route `home`
-        'home/index': path.resolve( pugRoot, 'home/index.pug' ),
+        'home/index': path.join( pugRoot, 'home/index.pug' ),
 
         // Route `research`
-        'research/groups':       path.resolve( pugRoot, 'research/groups.pug' ),
-        'research/index':        path.resolve( pugRoot, 'research/index.pug' ),
-        'research/labs':         path.resolve( pugRoot, 'research/labs.pug' ),
-        'research/publications': path.resolve( pugRoot, 'research/publications.pug' ),
+        'research/groups':       path.join( pugRoot, 'research/groups.pug' ),
+        'research/index':        path.join( pugRoot, 'research/index.pug' ),
+        'research/labs':         path.join( pugRoot, 'research/labs.pug' ),
+        'research/publications': path.join( pugRoot, 'research/publications.pug' ),
 
         // Route `resource`
-        'resource/alumni':  path.resolve( pugRoot, 'resource/alumni.pug' ),
-        'resource/fix':     path.resolve( pugRoot, 'resource/fix.pug' ),
-        'resource/ieet':    path.resolve( pugRoot, 'resource/ieet.pug' ),
-        'resource/index':   path.resolve( pugRoot, 'resource/index.pug' ),
-        'resource/rent':    path.resolve( pugRoot, 'resource/rent.pug' ),
-        'resource/rule':    path.resolve( pugRoot, 'resource/rule.pug' ),
-        'resource/sitemap': path.resolve( pugRoot, 'resource/sitemap.pug' ),
+        'resource/alumni':  path.join( pugRoot, 'resource/alumni.pug' ),
+        'resource/fix':     path.join( pugRoot, 'resource/fix.pug' ),
+        'resource/ieet':    path.join( pugRoot, 'resource/ieet.pug' ),
+        'resource/index':   path.join( pugRoot, 'resource/index.pug' ),
+        'resource/rent':    path.join( pugRoot, 'resource/rent.pug' ),
+        'resource/rule':    path.join( pugRoot, 'resource/rule.pug' ),
+        'resource/sitemap': path.join( pugRoot, 'resource/sitemap.pug' ),
 
         // Route `student`
-        'student/college':       path.resolve( pugRoot, 'student/college.pug' ),
-        'student/course':        path.resolve( pugRoot, 'student/course.pug' ),
-        'student/index':         path.resolve( pugRoot, 'student/index.pug' ),
-        'student/international': path.resolve( pugRoot, 'student/international.pug' ),
-        'student/internship':    path.resolve( pugRoot, 'student/internship.pug' ),
-        'student/master':        path.resolve( pugRoot, 'student/master.pug' ),
-        'student/phd':           path.resolve( pugRoot, 'student/phd.pug' ),
-        'student/scholarship':   path.resolve( pugRoot, 'student/scholarship.pug' ),
+        'student/college':       path.join( pugRoot, 'student/college.pug' ),
+        'student/course':        path.join( pugRoot, 'student/course.pug' ),
+        'student/index':         path.join( pugRoot, 'student/index.pug' ),
+        'student/international': path.join( pugRoot, 'student/international.pug' ),
+        'student/internship':    path.join( pugRoot, 'student/internship.pug' ),
+        'student/master':        path.join( pugRoot, 'student/master.pug' ),
+        'student/phd':           path.join( pugRoot, 'student/phd.pug' ),
+        'student/scholarship':   path.join( pugRoot, 'student/scholarship.pug' ),
     },
     output: {
         path:     htmlRoot,
