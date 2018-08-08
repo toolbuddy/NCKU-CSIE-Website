@@ -117,53 +117,57 @@ mixin header
         h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
 
-    //- Calendar, currently not available
-    a.header__calendar.calendar( href = '#' )
-      +image( {
-        alt: i18n[ language ].util.calendar,
-        className: 'calendar__image',
-        src: 'icon/calendar.png',
-      } )
-
-    //- Login, currently not available
-    a.header__login.login( href = '/login' )
-      +image( {
-        alt: i18n[ language ].util.login,
-        className: 'login__image',
-        src: 'icon/user.png',
-      } )
-      span.login__text= i18n[ language ].util.login
-
-    //- Search Column, currently not available
-    form.header__search.search( action = '/search', method = 'POST' )
-      +image( {
-        alt: i18n[ language ].util.search,
-        className: 'search__image',
-        src: 'icon/search.png',
-      } )
-      input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
-
-    //- Language Choice
-    ul.header__language.language
-      li.language__options.options
-        figure.options__option.option
-          +image( {
-            alt: '臺灣',
-            className: 'option__image option__image--zh-TW',
-            src: 'icon/flag-en-US.png',
-          } )
-          span.option__text.option__text--zh-TW 臺灣
-      li.language__options.options
-        figure.options__option
-          +image( {
-            alt: 'USA',
-            className: 'option__image option__image--en-US',
-            src: 'icon/flag-en-US.png',
-          } )
-          span.option__text.option__text--en-US USA
-
     //- Navigation Bar
     nav.header__navigation.navigation
+      //- Menu Icon
+      button.navigation__button.navigation__button--inactive ☰
+      button.navigation__button.navigation__button--active ✕
+
+      //- Calendar, currently not available
+      a.navigation__calendar.calendar( href = '#' )
+        +image( {
+          alt: i18n[ language ].util.calendar,
+          className: 'calendar__image',
+          src: 'icon/calendar.png',
+        } )
+
+      //- Login, currently not available
+      a.navigation__login.login( href = '/login' )
+        +image( {
+          alt: i18n[ language ].util.login,
+          className: 'login__image',
+          src: 'icon/user.png',
+        } )
+        span.login__text= i18n[ language ].util.login
+
+      //- Search Column, currently not available
+      form.navigation__search.search( action = '/search', method = 'POST' )
+        +image( {
+          alt: i18n[ language ].util.search,
+          className: 'search__image',
+          src: 'icon/search.png',
+        } )
+        input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
+
+      //- Language Choice
+      ul.navigation__language.language
+        li.language__options.options
+          figure.options__option.option
+            +image( {
+              alt: '臺灣',
+              className: 'option__image option__image--zh-TW',
+              src: 'icon/flag-en-US.png',
+            } )
+            span.option__text.option__text--zh-TW 臺灣
+        li.language__options.options
+          figure.options__option
+            +image( {
+              alt: 'USA',
+              className: 'option__image option__image--en-US',
+              src: 'icon/flag-en-US.png',
+            } )
+            span.option__text.option__text--en-US USA
+
       ul.navigation__primary-list.primary-list
         li.primary-list__item
           a.primary-list__link( href = '/' )= i18n[ language ].route.home.index
