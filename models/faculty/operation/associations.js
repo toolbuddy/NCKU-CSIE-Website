@@ -3,7 +3,7 @@ const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const connect = require( `${ projectRoot }/settings/database/connect` );
 
 module.exports = async () => {
-    const teacherDatabase = await connect( 'teacher' );
+    const teacherDatabase = await connect( 'faculty' );
     const table = {
         conferenceI18n:         teacherDatabase.import( `${ projectRoot }/models/faculty/tables/conference_i18n` ),
         conference:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/conference` ),

@@ -11,19 +11,19 @@ const router = express.Router();
 
 router.use( '/', home );
 
-// Resolve URL /student
-router.use( '/student', student );
-
 // Resolve URL /about
 router.use( '/about', about );
-
-// Resolve URL /research
-router.use( '/research', research );
 
 // Resolve URL /announcement
 router.use( '/announcement', announcement );
 
+// Resolve URL /research
+router.use( '/research', research );
+
 // Resolve URL /resource
 router.use( '/resource', resource );
+
+// Resolve URL /student
+router.use( '/student', student );
 
 module.exports = router;

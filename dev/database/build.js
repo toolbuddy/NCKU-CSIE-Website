@@ -9,5 +9,5 @@ const generateTables = require( path.resolve( projectRoot, 'dev/database/gen-tab
  *     Auto generate database table files.
  */
 
-generateTables( 'teacher', dbConfig );
+generateTables( 'faculty', dbConfig );
 generateTables( 'announcement', dbConfig );

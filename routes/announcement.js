@@ -23,7 +23,7 @@ router.get( /^\/recruitment$/, ( req, res ) => {
 } );
 
 // Resolve URL /announcement/[id]
-router.get( /^\d+$/, ( req, res ) => {
+router.get( /^\/\d+$/, ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/announcement/announcement.${ req.query.language }.html` );
 } );
 
