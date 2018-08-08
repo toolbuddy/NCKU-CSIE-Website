@@ -238,12 +238,12 @@ export const multipleDefaultTags = {
     defaultTags: [],
 
     getAllPinnedAnnouncements () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { startTime, endTime, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags:     multipleDefaultTags.defaultTags,
             startTime,
             endTime,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
@@ -273,13 +273,13 @@ export const multipleDefaultTags = {
      */
 
     getAllAnnouncements () {
-        const { tags, startTime, endTime, page, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { startTime, endTime, page, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags:     multipleDefaultTags.defaultTags,
             startTime,
             endTime,
             page,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -303,7 +303,7 @@ export const multipleDefaultTags = {
             tags,
             startTime,
             endTime,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
@@ -336,7 +336,7 @@ export const multipleDefaultTags = {
             startTime,
             endTime,
             page,
-            'language': 'zh-TW',
+            language: 'zh-TW',
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -366,9 +366,9 @@ export const multipleDefaultTags = {
      */
 
     getAllPageNumber () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { startTime, endTime, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            tags,
+            tags: multipleDefaultTags.defaultTags,
             startTime,
             endTime,
         } );

@@ -2,7 +2,15 @@ extends /layouts/announcement/briefing.pug
 
 append stylesheets
 
+<<<<<<< HEAD
 append header
+=======
+block append content
+  include /components/common/topic.pug
+  include /components/announcement/filter.pug
+  include /components/announcement/title.pug
+  - const i18n = require( path.join( languageRoot, 'student/college' ) );
+>>>>>>> 980fbc8e469093b93a7aa6b8cea669e8d426d2e4
 
 prepend content
   -

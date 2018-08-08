@@ -3,14 +3,14 @@ const express = require( 'express' );
 
 const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
-const opRoot = path.resolve( projectRoot, 'models/announcement/operation/' );
-const getAllAnnouncements = require( path.resolve( opRoot, 'get-all-announcements' ) );
-const getAnnouncementsByTags = require( path.resolve( opRoot, 'get-announcements-by-tags' ) );
-const getAllPinnedAnnouncements = require( path.resolve( opRoot, 'get-all-pinned-announcements' ) );
-const getPinnedAnnouncementsByTags = require( path.resolve( opRoot, 'get-pinned-announcements-by-tags' ) );
-const getAllPages = require( path.resolve( opRoot, 'get-all-pages' ) );
-const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
-const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
+const opRoot = path.join( projectRoot, 'models/announcement/operation/' );
+const getAllAnnouncements = require( path.join( opRoot, 'get-all-announcements' ) );
+const getAnnouncementsByTags = require( path.join( opRoot, 'get-announcements-by-tags' ) );
+const getAllPinnedAnnouncements = require( path.join( opRoot, 'get-all-pinned-announcements' ) );
+const getPinnedAnnouncementsByTags = require( path.join( opRoot, 'get-pinned-announcements-by-tags' ) );
+const getAllPages = require( path.join( opRoot, 'get-all-pages' ) );
+const getPagesByTags = require( path.join( opRoot, 'get-pages-by-tags' ) );
+const getAnnouncement = require( path.join( opRoot, 'get-announcement' ) );
 
 apis.get( /^\/all-announcement$/, async ( req, res ) => {
     let tags = req.query.tags;

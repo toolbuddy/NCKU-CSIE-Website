@@ -2,10 +2,10 @@ const path = require( 'path' );
 const sequelize = require( 'sequelize' );
 const Op = sequelize.Op;
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const opRoot = path.resolve( projectRoot, 'models/announcement/operation' );
-const associations = require( path.resolve( opRoot, 'associations' ) );
-const validate = require( path.resolve( opRoot, 'validate' ) );
-const defaultValue = require( path.resolve( projectRoot, 'settings/default-value/announcement/config' ) );
+const opRoot = path.join( projectRoot, 'models/announcement/operation' );
+const associations = require( path.join( opRoot, 'associations' ) );
+const validate = require( path.join( projectRoot, 'test/models/announcement/operation/validate' ) );
+const defaultValue = require( path.join( projectRoot, 'settings/default-value/announcement/config' ) );
 
 module.exports = async ( {
     tags = [],
