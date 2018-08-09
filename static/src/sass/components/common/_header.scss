@@ -61,23 +61,81 @@ body > .header {
   > .header__menu {
     grid-area: header__menu;
     background: rgba( 0, 0, 0, 0 );
-
-    &::after {
-      content: '☰';
-    }
-
-    &--active {
-      &::after {
-        content: '✕';
-      }
-    }
   }
 
   > .header__navigation.navigation {
-    display: none;
-    position: fix;
+    display: grid;
+    grid-template: {
+      areas:
+        '. navigation__search       navigation__cancel'
+        '. navigation__primary-list navigation__primary-list'
+        '. navigation__login        navigation__login'
+        '. navigation__calendar     navigation__calendar'
+        '. navigation__language     navigation__language';
+      columns: 1fr 16fr 3fr;
+      rows: 2.125rem 9.375rem repeat( 3, 1.56rem );
+    }
+    position: fixed;
     top: 0;
-    right: 0;
-    height: $header-height;
+    left: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: left .5s;
+    overflow-y: scroll;
+    background: #213262;
+
+    &.header__navigation--active {
+      left: 20%;
+    }
+
+    > .navigation__search.search {
+      grid: {
+        area: navigation__search;
+        template: {
+          areas: '. search__input search__image .';
+          columns: 5fr 84fr 6fr 5fr;
+        }
+      }
+      background: #1d2d56;
+
+      > .search__input {
+        grid-area: search__input;
+        background: inherit;
+        font-size: 16px;
+        color: #ffffff;
+
+        &::placeholder {
+          color: rgba( 255, 255, 255, .5 );
+        }
+      }
+
+      > .search__image {
+        grid-area: search__image;
+        width: .4rem;
+        background: inherit;
+      }
+    }
+
+    > .navigation__cancel {
+      grid-area: navigation__cancel;
+      background: inherit;
+      color: #ffffff;
+    }
+
+    > .navigation__primary-list.primary-list {
+      grid-area: navigation__primary-list;
+    }
+
+    > .navigation__login.login {
+      grid-area: navigation__login;
+    }
+
+    > .navigation__calendar.calendar {
+      grid-area: navigation__calendar;
+    }
+
+    > .navigation__language.language {
+      grid-area: navigation__language;
+    }
   }
 }

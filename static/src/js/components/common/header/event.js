@@ -1,11 +1,12 @@
-let toggle = false;
 const headerMenu = document.getElementById( 'header__menu' );
+const headerNavigation = document.getElementById( 'header__navigation' );
+const navigationCancel = document.getElementById( 'navigation__cancel' );
+
 headerMenu.addEventListener( 'click', () => {
-    if ( toggle )
-        headerMenu.classList.add( 'header__menu--active' );
-    else
-        headerMenu.classList.remove( 'header__menu--active' );
-    toggle = !toggle;
+    headerNavigation.classList.add( 'header__navigation--active' );
 } );
 
+navigationCancel.addEventListener( 'click', () => {
+    headerNavigation.classList.remove( 'header__navigation--active' );
+} );
 export default headerMenu;
