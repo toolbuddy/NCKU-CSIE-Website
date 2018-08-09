@@ -1,18 +1,16 @@
 const express = require( 'express' );
+const path = require( 'path' );
 
-const announcement = require( './announcement' );
-const teacher = require( './teacher' );
-const teachers = require( './teachers' );
+const projectRoot = path.dirname( __dirname );
+const announcement = require( path.join( projectRoot, 'apis/announcement') );
+const faculty = require( path.join( projectRoot, 'apis/faculty') );
 
 const apis = express.Router();
 
 // Resolve URL /api/announcement
 apis.use( '/announcement', announcement );
 
-// Resolve URL /api/teacher
-apis.use( '/teacher', teacher );
-
-// Resolve URL /api/teachers
-apis.use( '/teachers', teachers );
+// Resolve URL /api/faculty
+apis.use( '/faculty', faculty );
 
 module.exports = apis;

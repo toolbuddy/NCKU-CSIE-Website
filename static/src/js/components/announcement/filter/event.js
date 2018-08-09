@@ -1,9 +1,11 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
+import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 
 let filterOnChange = null;
 let pageOnChange = null;
 
 export function setURLOnChange (
+        defaultTagName,
         getAllPinnedAnnouncements,
         getAllAnnouncements,
         getAllPageNumber,
@@ -18,6 +20,7 @@ export function setURLOnChange (
             getAnnouncementsByTags();
     };
     filterOnChange = () => {
+        renderFilter( defaultTagName );
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
             getAllPageNumber();
             getAllPinnedAnnouncements();
@@ -166,12 +169,36 @@ export function pageOnClick ( event ) {
  */
 
 export function filterEvent ( defaultTagName = 'all' ) {
+    let toggle = true;
+    const buttonIcon = document.getElementById( 'button__icon' );
+    const filterTime = document.getElementById( 'filter__time' );
     const filterTags = document.getElementById( 'filter__tags' );
+    const defaultTag = filterTags.querySelector( `#tags__tag--${ defaultTagName }` );
+
+    /**
+     * When `filter__button` is clicked, `filter__tags` and `filter__time` will be in either state:
+     *     * hidden, add class `filter__tags--hidden` and `filter__time--hidden` on `filter__tags` and `filter__time` respectively.
+     *     * show, remove class `filter__tags--hidden` and `filter__time--hidden` on `filter__tags` and `filter__time` respectively.
+     */
+
+    document.getElementById( 'filter__button' ).addEventListener( 'click', () => {
+        if ( toggle ) {
+            filterTags.classList.remove( 'filter__tags--hidden' );
+            filterTime.classList.remove( 'filter__time--hidden' );
+            buttonIcon.classList.add( 'button__icon--active' );
+        }
+        else {
+            filterTags.classList.add( 'filter__tags--hidden' );
+            filterTime.classList.add( 'filter__time--hidden' );
+            buttonIcon.classList.remove( 'button__icon--active' );
+        }
+        toggle = !toggle;
+    } );
+
     Array.from( filterTags.getElementsByClassName( 'tags__tag' ) ).forEach( ( tag ) => {
         tag.addEventListener( 'click', tagOnClick );
     } );
 
-    const defaultTag = filterTags.querySelector( `#tags__tag--${ defaultTagName }` );
     defaultTag.removeEventListener( 'click', tagOnClick );
     defaultTag.addEventListener( 'click', defaultTagOnClick );
 
