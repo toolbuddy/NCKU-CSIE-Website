@@ -1,7 +1,5 @@
 body > .header {
   $header-height: 3.2rem;
-
-  // end tmp
   display: grid;
   grid-template: {
     areas: 'header__logo header__menu';
@@ -64,10 +62,8 @@ body > .header {
     grid-area: header__menu;
     background: rgba( 0, 0, 0, 0 );
 
-    &--inactive {
-      &::after {
-        content: '☰';
-      }
+    &::after {
+      content: '☰';
     }
 
     &--active {
@@ -79,10 +75,9 @@ body > .header {
 
   > .header__navigation.navigation {
     display: none;
-    grid: {
-      area: header__navigation;
-      template-areas: 'navigation__button';
-    }
+    position: fix;
+    top: 0;
+    right: 0;
     height: $header-height;
   }
 }
