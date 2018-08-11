@@ -1,1 +1,136 @@
 @import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/topic';
+
+.main {
+  width: 100%;
+  background-color: #ffffff;
+  display: grid;
+  grid-template: {
+    areas:
+      '. profile__photo .'
+      '. profile__info .'
+      '. education .'
+      '. experience .'
+      '. honor .'
+      '. patent .'
+      '. conference-paper .'
+      '. student .';
+    columns: 1fr 6fr 1fr;
+  };
+  @media screen and ( min-width: 768px ) {
+    grid-template: {
+      areas:
+        '. profile__info profile__photo .'
+        '. education education .'
+        '. experience experience .'
+        '. honor honor .'
+        '. patent patent .'
+        '. conference-paper conference-paper .'
+        '. student student .';
+      columns: 1fr 5fr 3fr 1fr;
+    };
+  }
+  @media screen and ( min-width: 1024px ) {
+    grid-template: {
+      areas:
+        '. profile__info profile__photo .'
+        '. education education .'
+        '. experience experience .'
+        '. honor honor .'
+        '. patent patent.'
+        '. conference-paper conference-paper .'
+        '. student student .';
+      columns: 2fr 5fr 3fr 2fr;
+    };
+  }
+}
+
+.profile__info {
+  grid-area: profile__info;
+  text-align: left;
+  color: #000000;
+  font: {
+    family: var( --font__family--default );
+    size: .5rem;
+  }
+}
+
+.profile__photo {
+  grid-area: profile__photo;
+}
+
+.honor {
+  grid-area: honor;
+  background-color: rgba(196, 196, 196, .2);
+  margin: 2rem;
+  
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, .87);
+  }
+
+  &__content{
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+    }
+    background-color: rgba( 0, 0, 0, .14 );
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .14), 0 8px 10px 0 rgba(0, 0, 0, .2);
+  }
+}
+  
+.patent {
+  grid-area: patent;
+  background-color: rgba(196, 196, 196, .2);
+  margin: 2rem;
+  font: {
+    family: var( --font__family--default );
+    size: .5rem;
+  }
+
+  &__table{
+    border-collapse: collapse;
+    text-align: center;
+
+    table, td, th{
+      width: 1016px;
+      height: 120px;
+      border: solid 1px #757575;
+    }
+
+    &__rec {
+      width: 133px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: #ffffff;
+      border: solid .5px #757575;
+    }
+
+  }
+}
+
+.education {
+  grid-area: education;
+}
+
+.experience {
+  grid-area: experience;
+}
+
+.conference-paper {
+  grid-area: conference-paper;
+}
+
+.student {
+  grid-area: student;
+}
