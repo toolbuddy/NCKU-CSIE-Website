@@ -1,34 +1,43 @@
 extends /layouts/announcement/briefing.pug
 
-block append stylesheets
+append stylesheets
 
-block append content
-  include /components/common/topic.pug
-  include /components/announcement/filter.pug
-  include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'student/master' ) );
+append header
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filter(
-      'all',
+prepend content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic':  'Master',
+        'top':    'Top Announcement',
+        'normal': 'Announcement',
+      },
+      'zh-TW': {
+        'topic':  '碩士',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
+      },
+    } );
+
+append topic
+  +topic( i18n[ language ].topic )
+
+append filter
+  +filter( {
+    modifier: 'master',
+    tags: [
+      'award',
       'competition',
       'conference',
-      'course',
       'exhibition',
       'international',
       'internship',
+      'master',
       'rule',
       'scholarship',
-      'speech'
-    )
-    section.announcement
-      +announcement__title( i18n[ language ].top )
-      nav#announcement__brefings--top.announcement__briefings.briefings
+      'speech',
+    ]
+  } )
 
-    section.announcement
-      +announcement__title( i18n[ language ].normal )
-      nav#announcement__brefings.announcement__briefings.briefings
-
-block append scripts
+append scripts
   +js( 'student/master' )

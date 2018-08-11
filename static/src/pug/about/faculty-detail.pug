@@ -1,0 +1,47 @@
+extends /layouts/about.pug
+
+append stylesheets
+
+append header
+
+append content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+      },
+      'zh-TW': {
+      },
+    } );
+
+  main.content
+    section.profile__photo
+    section.profile__info
+    section.education
+    section.experience
+    section.honor
+      section.honor__headline 榮譽及獲獎
+      section.honor__content 國立成功大學電資學院
+    section.patent
+      table.patent__table
+        tr
+          th 類別
+          th 專利名稱
+          th 專利權人
+          th 國別
+          th 發明人
+          th 專利號碼
+          th 專利期間
+        tr
+          td A
+          td 機台維修系統與方法
+          td 國立成功大學
+          td
+          td 鄭方田
+          td 審查中
+          td
+            section.patent__table__rec 2016.09.11
+    section.conference-paper
+    section.student
+
+append scripts
+  +js( 'about/faculty-detail' )

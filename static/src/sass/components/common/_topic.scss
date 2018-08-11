@@ -1,15 +1,13 @@
 // block
 // `.topic`
-
 .topic {
-  $tablet: 992px;
+  $tablet: 850px;
 
   // block [position]
   display: flex;
   justify-content: center;
 
   // block [skin]
-  height: 1.35rem;
   color: #000000;
   @media screen and ( min-width: $tablet ) {
     justify-content: flex-start;
@@ -21,9 +19,9 @@
 
   &__text {
     // element [skin]
-    height: inherit;
     width: auto;
     border-bottom: solid .0156rem #213262;
+    line-height: 1.4rem;
     font: {
       weight: bold;
       size: .75rem;
