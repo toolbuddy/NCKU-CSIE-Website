@@ -1,2 +1,2 @@
-mixin image( src )
-  img( src=`../../image/${ src }` )
+mixin image( { alt = '', className = '', src = '' } = {} )
+  img( alt = alt, class = className, src=`../../image/${ src }` )

@@ -1,0 +1,139 @@
+body > .header {
+  $header-height: 3.2rem;
+  display: grid;
+  grid-template: {
+    areas: 'header__logo header__menu';
+    columns: 4fr 1fr;
+  }
+  width: 100%;
+  height: $header-height;
+  background: rgba( 255, 255, 255, .95 );
+
+  > .header__logo.logo {
+    display: grid;
+    grid: {
+      area: header__logo;
+      template-areas: '. logo__image logo__caption';
+      column-gap: .4rem;
+    }
+    align-items: center;
+    height: $header-height;
+
+    > .logo__image {
+      grid-area: logo__image;
+      justify-self: end;
+      width: 1.6rem;
+      height: auto;
+    }
+
+    > .logo__caption.caption {
+      display: grid;
+      grid: {
+        area: logo__caption;
+        template: {
+          areas:
+            'caption__text--large'
+            'caption__text--small';
+          rows: 1fr 1fr;
+        }
+      }
+      align-items: center;
+      justify-self: start;
+
+      > .caption__text {
+        display: inline-block;
+
+        &.caption__text--large {
+          grid-area: caption__text--large;
+          font-size: .5rem;
+        }
+
+        &.caption__text--small {
+          grid-area: caption__text--small;
+          font-size: .4rem;
+        }
+      }
+    }
+  }
+
+  > .header__menu {
+    grid-area: header__menu;
+    background: rgba( 0, 0, 0, 0 );
+  }
+
+  > .header__navigation.navigation {
+    display: grid;
+    grid-template: {
+      areas:
+        '. navigation__search       navigation__cancel'
+        '. navigation__primary-list navigation__primary-list'
+        '. navigation__login        navigation__login'
+        '. navigation__calendar     navigation__calendar'
+        '. navigation__language     navigation__language';
+      columns: 1fr 16fr 3fr;
+      rows: 2.125rem 9.375rem repeat( 3, 1.56rem );
+    }
+    position: fixed;
+    top: 0;
+    left: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: left .5s;
+    overflow-y: scroll;
+    background: #213262;
+
+    &.header__navigation--active {
+      left: 20%;
+    }
+
+    > .navigation__search.search {
+      grid: {
+        area: navigation__search;
+        template: {
+          areas: '. search__input search__image .';
+          columns: 5fr 84fr 6fr 5fr;
+        }
+      }
+      background: #1d2d56;
+
+      > .search__input {
+        grid-area: search__input;
+        background: inherit;
+        font-size: 16px;
+        color: #ffffff;
+
+        &::placeholder {
+          color: rgba( 255, 255, 255, .5 );
+        }
+      }
+
+      > .search__image {
+        grid-area: search__image;
+        width: .4rem;
+        background: inherit;
+      }
+    }
+
+    > .navigation__cancel {
+      grid-area: navigation__cancel;
+      background: inherit;
+      color: #ffffff;
+    }
+
+    > .navigation__primary-list.primary-list {
+      grid-area: navigation__primary-list;
+    }
+
+    > .navigation__login.login {
+      grid-area: navigation__login;
+    }
+
+    > .navigation__calendar.calendar {
+      grid-area: navigation__calendar;
+    }
+
+    > .navigation__language.language {
+      grid-area: navigation__language;
+    }
+  }
+}

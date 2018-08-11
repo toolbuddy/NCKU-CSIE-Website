@@ -7,8 +7,13 @@ html
 
     include /components/common/css.pug
     block stylesheets
+
   body
+    include /components/common/image.pug
+    include /components/common/header.pug
     block header
+      +header
+
     block content
     block footer
 

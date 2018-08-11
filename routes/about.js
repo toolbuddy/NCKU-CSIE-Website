@@ -1,35 +1,40 @@
-// Router for /about
+// Router for `/about`
 const express = require( 'express' );
 const router = express.Router();
 
-// Resolve URL about/intro
-router.get( '/intro', ( req, res ) => {
+// Resolve URL `/about`
+router.get( /^\/$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/index.${ req.query.language }.html` );
+} );
+
+// Resolve URL `/about/award`
+router.get( /^\/award$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/award.${ req.query.language }.html` );
+} );
+
+// Resolve URL `/about/contact`
+router.get( /^\/contact$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/contact.${ req.query.language }.html` );
+} );
+
+// Resolve URL `/about/intro`
+router.get( /^\/intro$/, ( req, res ) => {
     res.sendFile( `${ global.projectRoot }/static/dist/html/about/intro.${ req.query.language }.html` );
 } );
 
-// Resolve URL about/teachers
-router.get( '/teachers', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teachers.${ req.query.language }.html` );
+// Resolve URL `/about/faculty`
+router.get( /^\/faculty$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/faculty.${ req.query.language }.html` );
 } );
 
-// Resolve URL about/teacher/[id]
-router.get( '/teacher/:id', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/teacher.${ req.query.language }.html` );
+// Resolve URL `/about/faculty/[id]`
+router.get( /^\/faculty\/[0-9]+$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/faculty-detail.${ req.query.language }.html` );
 } );
 
-// Resolve URL about/members
-router.get( '/members', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/members.${ req.query.language }.html` );
-} );
-
-// Resolve URL about/honor
-router.get( '/honor', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/honor.${ req.query.language }.html` );
-} );
-
-// Resolve URL about/location
-router.get( '/location', ( req, res ) => {
-    res.sendFile( `${ global.projectRoot }/static/dist/html/about/location.${ req.query.language }.html` );
+// Resolve URL `/about/staff`
+router.get( /^\/staff$/, ( req, res ) => {
+    res.sendFile( `${ global.projectRoot }/static/dist/html/about/staff.${ req.query.language }.html` );
 } );
 
 module.exports = router;
