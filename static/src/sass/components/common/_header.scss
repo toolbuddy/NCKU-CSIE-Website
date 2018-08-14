@@ -1,3 +1,5 @@
+@import 'components/common/icon';
+
 body > .header {
   $header-height: 3.2rem;
   display: grid;
@@ -65,18 +67,19 @@ body > .header {
     display: grid;
     grid-template: {
       areas:
-        '. navigation__search       navigation__cancel'
-        '. navigation__primary-list navigation__primary-list'
-        '. navigation__login        navigation__login'
-        '. navigation__calendar     navigation__calendar'
-        '. navigation__language     navigation__language';
-      columns: 1fr 16fr 3fr;
-      rows: 2.125rem 9.375rem repeat( 3, 1.56rem );
+        'navigation__search   navigation__cancel'
+        'navigation__list     navigation__list'
+        'navigation__login    navigation__login'
+        'navigation__calendar navigation__calendar'
+        'navigation__language navigation__language';
+      columns: 16fr 3fr;
+      rows: 2.05rem 9.36rem repeat( 3, 1.56rem );
     }
     position: fixed;
     top: 0;
     left: 100%;
     height: 100%;
+    width: 80%;
     z-index: 1;
     transition: left .5s;
     overflow-y: scroll;
@@ -90,16 +93,23 @@ body > .header {
       grid: {
         area: navigation__search;
         template: {
-          areas: '. search__input search__image .';
-          columns: 5fr 84fr 6fr 5fr;
+          areas: '. search__input . search__submit .';
+          columns: .37rem auto .37rem .4rem .37rem;
+          rows: 1.31rem;
         }
       }
       background: #1d2d56;
+      display: grid;
+      margin: {
+        top: .37rem;
+        left: .56rem;
+        bottom: .37rem;
+      }
 
       > .search__input {
         grid-area: search__input;
-        background: inherit;
-        font-size: 16px;
+        background-color: inherit;
+        font-size: .5rem;
         color: #ffffff;
 
         &::placeholder {
@@ -107,10 +117,10 @@ body > .header {
         }
       }
 
-      > .search__image {
-        grid-area: search__image;
-        width: .4rem;
-        background: inherit;
+      > .search__submit {
+        grid-area: search__submit;
+        background-color: inherit;
+        @include icon__search();
       }
     }
 
@@ -120,20 +130,78 @@ body > .header {
       color: #ffffff;
     }
 
-    > .navigation__primary-list.primary-list {
-      grid-area: navigation__primary-list;
+    > .navigation__list.list {
+      grid-area: navigation__list;
+
+      > .list__item.item {
+        $item-height: 1.56rem;
+        height: $item-height;
+        border-top: .01rem solid rgba( 255, 255, 255, .5 );
+        grid-template: {
+          areas:
+            'item__link item__switch'
+            'item__sub-list item__sub-list';
+          columns: 3fr 1fr;
+          rows: $item-height auto;
+        }
+
+        > .item__link {
+          grid-area: item__link;
+          color: rgba( 255, 255, 255, .5 );
+          font-size: .5rem;
+          height: $item-height;
+          padding: {
+            left: .93rem;
+            top: .4rem;
+          }
+          display: inline-block;
+          width: 75%;
+        }
+
+        > .item__switch {
+          grid-area: item__switch;
+
+          &::after {
+            content: '>';
+          }
+        }
+
+        > .item__sub-list.sub-list {
+          grid-area: item__sub-list;
+
+          > .sub-list__item.item {
+            display: none;
+          }
+        }
+      }
     }
 
     > .navigation__login.login {
       grid-area: navigation__login;
+
+      > .login__image {
+        width: .5rem;
+      }
     }
 
     > .navigation__calendar.calendar {
       grid-area: navigation__calendar;
+
+      > .calendar__image {
+        width: .5rem;
+      }
     }
 
     > .navigation__language.language {
       grid-area: navigation__language;
+
+      > .language__options.options {
+        > .options__option.option {
+          > .option__image {
+            width: .5rem;
+          }
+        }
+      }
     }
   }
 }

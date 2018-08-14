@@ -126,81 +126,82 @@ mixin header
       //- Search Column, currently not available
       form.navigation__search.search( action = '/search', method = 'POST' )
         input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
-        +image( {
-          alt: i18n[ language ].util.search,
-          className: 'search__image',
-          src: 'icon/search.png',
-        } )
+        input.search__submit( type = 'submit', value = '' )
 
       //- Cancel Icon
       button#navigation__cancel.navigation__cancel ✕
 
-      ul.navigation__primary-list.primary-list
-        li.primary-list__item
-          a.primary-list__link( href = '/' )= i18n[ language ].route.home.index
-        li.primary-list__item
-          a.primary-list__link( href = '/about' )= i18n[ language ].route.about.index
-          ul.primary-list__secondary-list.secondary-list
-            li.secondary-list__item
-              a.secondary-list__link( href = '/about/intro' )= i18n[ language ].route.about.intro
-            li.secondary-list__item
-              a.secondary-list__link( href = '/about/faculty' )= i18n[ language ].route.about.faculty
-            li.secondary-list__item
-              a.secondary-list__link( href = '/about/staff' )= i18n[ language ].route.about.staff
-            li.secondary-list__item
-              a.secondary-list__link( href = '/about/award' )= i18n[ language ].route.about.award
-            li.secondary-list__item
-              a.secondary-list__link( href = '/about/contact' )= i18n[ language ].route.about.contact
-        li.primary-list__item
-          a.primary-list__link( href = '/research' )= i18n[ language ].route.research.index
-          ul.primary-list__secondary-list.secondary-list
-            li.secondary-list__item
-              a.secondary-list__link( href = '/research/labs' )= i18n[ language ].route.research.labs
-            li.secondary-list__item
-              a.secondary-list__link( href = '/research/groups' )= i18n[ language ].route.research.groups
-            li.secondary-list__item
-              a.secondary-list__link( href = '/research/publications' )= i18n[ language ].route.research.publications
-        li.primary-list__item
-          a.primary-list__link( href = '/student' )= i18n[ language ].route.student.index
-          ul.primary-list__secondary-list.secondary-list
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/course' )= i18n[ language ].route.student.course
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/college' )= i18n[ language ].route.student.college
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/master' )= i18n[ language ].route.student.master
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/phd' )= i18n[ language ].route.student.phd
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/scholarship' )= i18n[ language ].route.student.scholarship
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/international' )= i18n[ language ].route.student.international
-            li.secondary-list__item
-              a.secondary-list__link( href = '/student/internship' )= i18n[ language ].route.student.internship
-        li.primary-list__item
-          a.primary-list__link( href = '/announcement' )= i18n[ language ].route.announcement.index
-          ul.primary-list__secondary-list.secondary-list
-            li.secondary-list__item
-              a.secondary-list__link( href = '/announcement/all' )= i18n[ language ].route.announcement.all
-            li.secondary-list__item
-              a.secondary-list__link( href = '/announcement/activity' )= i18n[ language ].route.announcement.activity
-            li.secondary-list__item
-              a.secondary-list__link( href = '/announcement/recruitment' )= i18n[ language ].route.announcement.recruitment
-        li.primary-list__item
-          a.primary-list__link( href = '/resource' )= i18n[ language ].route.resource.index
-          ul.primary-list__secondary-list.secondary-list
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/rule' )= i18n[ language ].route.resource.rule
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/rent' )= i18n[ language ].route.resource.rent
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/fix' )= i18n[ language ].route.resource.fix
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/ieet' )= i18n[ language ].route.resource.IEET
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/sitemap' )= i18n[ language ].route.resource.sitemap
-            li.secondary-list__item
-              a.secondary-list__link( href = '/resource/alumni' )= i18n[ language ].route.resource.alumni
+      ul.navigation__list.list
+        li.list__item.item
+          a.item__link( href = '/' )= i18n[ language ].route.home.index
+        li.list__item.item
+          a.item__link( href = '/about' )= i18n[ language ].route.about.index
+          button.item__switch
+          ul.item__sub-list.sub-list
+            li.sub-list__item.item
+              a.item__link( href = '/about/intro' )= i18n[ language ].route.about.intro
+            li.sub-list__item.item
+              a.item__link( href = '/about/faculty' )= i18n[ language ].route.about.faculty
+            li.sub-list__item.item
+              a.item__link( href = '/about/staff' )= i18n[ language ].route.about.staff
+            li.sub-list__item.item
+              a.item__link( href = '/about/award' )= i18n[ language ].route.about.award
+            li.sub-list__item.item
+              a.item__link( href = '/about/contact' )= i18n[ language ].route.about.contact
+        li.list__item.item
+          a.item__link( href = '/research' )= i18n[ language ].route.research.index
+          button.item__switch
+          ul.item__sub-list.sub-list
+            li.sub-list__item.item
+              a.item__link( href = '/research/labs' )= i18n[ language ].route.research.labs
+            li.sub-list__item.item
+              a.item__link( href = '/research/groups' )= i18n[ language ].route.research.groups
+            li.sub-list__item.item
+              a.item__link( href = '/research/publications' )= i18n[ language ].route.research.publications
+        li.list__item.item
+          a.item__link( href = '/student' )= i18n[ language ].route.student.index
+          button.item__switch
+          ul.item__sub-list.sub-list
+            li.sub-list__item.item
+              a.item__link( href = '/student/course' )= i18n[ language ].route.student.course
+            li.sub-list__item.item
+              a.item__link( href = '/student/college' )= i18n[ language ].route.student.college
+            li.sub-list__item.item
+              a.item__link( href = '/student/master' )= i18n[ language ].route.student.master
+            li.sub-list__item.item
+              a.item__link( href = '/student/phd' )= i18n[ language ].route.student.phd
+            li.sub-list__item.item
+              a.item__link( href = '/student/scholarship' )= i18n[ language ].route.student.scholarship
+            li.sub-list__item.item
+              a.item__link( href = '/student/international' )= i18n[ language ].route.student.international
+            li.sub-list__item.item
+              a.item__link( href = '/student/internship' )= i18n[ language ].route.student.internship
+        li.list__item.item
+          a.item__link( href = '/announcement' )= i18n[ language ].route.announcement.index
+          button.item__switch
+          ul.item__sub-list.sub-list
+            li.sub-list__item.item
+              a.item__link( href = '/announcement/all' )= i18n[ language ].route.announcement.all
+            li.sub-list__item.item
+              a.item__link( href = '/announcement/activity' )= i18n[ language ].route.announcement.activity
+            li.sub-list__item.item
+              a.item__link( href = '/announcement/recruitment' )= i18n[ language ].route.announcement.recruitment
+        li.list__item.item
+          a.item__link( href = '/resource' )= i18n[ language ].route.resource.index
+          button.item__switch
+          ul.item__sub-list.sub-list
+            li.sub-list__item.item
+              a.item__link( href = '/resource/rule' )= i18n[ language ].route.resource.rule
+            li.sub-list__item.item
+              a.item__link( href = '/resource/rent' )= i18n[ language ].route.resource.rent
+            li.sub-list__item.item
+              a.item__link( href = '/resource/fix' )= i18n[ language ].route.resource.fix
+            li.sub-list__item.item
+              a.item__link( href = '/resource/ieet' )= i18n[ language ].route.resource.IEET
+            li.sub-list__item.item
+              a.item__link( href = '/resource/sitemap' )= i18n[ language ].route.resource.sitemap
+            li.sub-list__item.item
+              a.item__link( href = '/resource/alumni' )= i18n[ language ].route.resource.alumni
 
       //- Login, currently not available
       a.navigation__login.login( href = '/login' )
@@ -218,6 +219,7 @@ mixin header
           className: 'calendar__image',
           src: 'icon/calendar.png',
         } )
+        span.calnedar__text= i18n[ language ].util.calendar
 
       //- Language Choice
       ul.navigation__language.language
@@ -228,12 +230,12 @@ mixin header
               className: 'option__image option__image--zh-TW',
               src: 'icon/flag-en-US.png',
             } )
-            span.option__text.option__text--zh-TW 臺灣
+            caption.option__text.option__text--zh-TW 臺灣
         li.language__options.options
-          figure.options__option
+          figure.options__option.option
             +image( {
               alt: 'USA',
               className: 'option__image option__image--en-US',
               src: 'icon/flag-en-US.png',
             } )
-            span.option__text.option__text--en-US USA
+            caption.option__text.option__text--en-US USA
