@@ -119,8 +119,14 @@ body > .header {
 
       > .search__submit {
         grid-area: search__submit;
-        background-color: inherit;
-        @include icon__search();
+        @include icon__search--white() {
+          background: {
+            position: center;
+            repeat: no-repeat;
+            size: contain;
+            color: inherit;
+          }
+        };
       }
     }
 
@@ -145,6 +151,14 @@ body > .header {
           rows: $item-height auto;
         }
 
+        &:first-of-type {
+          grid-template: {
+            areas: 'item__link';
+            columns: 1fr;
+            rows: $item-height;
+          }
+        }
+
         > .item__link {
           grid-area: item__link;
           color: rgba( 255, 255, 255, .5 );
@@ -160,20 +174,29 @@ body > .header {
 
         > .item__switch {
           grid-area: item__switch;
-          border: {
-            color: rgba( 255, 255, 255, .5 );
-            style: solid;
-            bottom-width: .1rem;
-            right-width: .1rem;
-          }
-          transform: rotate( -45deg );
-          transition: transform .5s;
           background-color: transparent;
-          width: .44rem;
-          height: .44rem;
+          display: inline-block;
+          width: 25%;
+          height: $item-height;
+
+          &::after {
+            content: '';
+            border: {
+              color: rgba( 255, 255, 255, .5 );
+              style: solid;
+              bottom-width: .1rem;
+              right-width: .1rem;
+            }
+            transform: rotate( -45deg );
+            transition: transform .5s;
+            width: .44rem;
+            height: .44rem;
+          }
 
           &.item__switch--active {
-            transform: rotate( 45deg );
+            &::after {
+              transform: rotate( 45deg );
+            }
           }
         }
 
