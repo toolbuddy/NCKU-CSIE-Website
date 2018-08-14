@@ -14,8 +14,15 @@ append content
     } );
 
   main.content
-    section.profile__photo
     section.profile__info
+      section.profile__info__title
+        section.profile__info__title__name 教師名稱
+        section.profile__info__title__subtitle 教授
+      section.profile__info__apartment 資訊系
+      p 辦公室
+      p email
+      p 聯絡電話
+    figure.profile__photo(src="/path-to-image.jpg" alt="Image Title")
     section.education
     section.experience
     section.honor
@@ -35,12 +42,27 @@ append content
           td A
           td 機台維修系統與方法
           td 國立成功大學
-          td
+          td.patent__table__country
           td 鄭方田
           td 審查中
           td
-            section.patent__table__rec 2016.09.11
+            section.patent__table__date 2016.09.11
     section.conference-paper
+      title.conference-paper__headline 研究計畫
+      table.conference-paper__table
+        title.conference-paper__table__title 科技部研究計畫
+        tr
+          th 企劃名稱
+          th 起迄日期
+          th 輔助單位
+        tr
+          td 子計畫
+          td
+            section.conference-paper__table__date
+              p.conference-paper__table__date__begin 2016.09.11
+              p.conference-paper__table__date__to -
+              p.conference-paper__table__date__end 2016.09.12
+          td 科技部
     section.student
 
 append scripts
