@@ -2,6 +2,7 @@
 @import 'components/common/header';
 @import 'components/common/font';
 @import 'components/common/topic';
+@import 'components/common/icon';
 
 .content {
   width: 100%;
@@ -16,6 +17,7 @@
       '. honor .'
       '. book .'
       '. patent .'
+      '. conference-paper .'
       '. student .';
     columns: 1fr 6fr 1fr;
   };
@@ -28,6 +30,7 @@
         '. honor honor .'
         '. book book .'
         '. patent patent .'
+        '. conference-paper conference-paper .'
         '. student student .';
       columns: 1fr 5fr 3fr 1fr;
     };
@@ -40,9 +43,10 @@
         '. experience experience .'
         '. honor honor .'
         '. book book .'
-        '. patent patent .'
+        '. patent patent.'
+        '. conference-paper conference-paper .'
         '. student student .';
-      columns: 2fr 5fr 3fr 2fr;
+      columns: 4fr 5fr 3fr 4fr;
     };
   }
 }
@@ -55,15 +59,56 @@
     family: var( --font__family--default );
     size: .5rem;
   }
+  margin: 2rem 0;
+
+  &__title {
+    &__name {
+      font: {
+        family: var( --font__family--default );
+        size: .75rem;
+        weight: bold;
+      }
+      line-height: 1.78;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    &__subtitle {
+      font: {
+        family: var( --font__family--default );
+        size: .7rem;
+      }
+      text-align: center;
+      width: 2rem;
+      color: #adacad;
+      border: solid .05rem #adacad;
+      border-radius: .15rem;
+    }
+
+  }
+
+  &__apartment {
+    padding: .1rem .25rem;
+    border-radius: .5rem;
+    width: 3rem;
+    text-align: center;
+    color: rgba( 0, 0, 0, .87 );
+    background-color: #eaeff7;
+  }
 }
 
 .profile__photo {
   grid-area: profile__photo;
+  border-radius: 3rem;
+  height: 6rem;
+  width: 6rem;
+  background-color: rgba( 196, 196, 196, .2 );
+  margin: 1rem 0;
 }
 
 .honor {
   grid-area: honor;
-  margin: 2rem;
+  background-color: rgba( 196, 196, 196, .2 );
 
   &__headline {
     font: {
@@ -73,7 +118,9 @@
     }
     line-height: 1.78;
     letter-spacing: normal;
+    color: rgba( 0, 0, 0, .87 );
     text-align: center;
+    margin: .5rem;
   }
 
   &__content {
@@ -81,15 +128,16 @@
       family: var( --font__family--default );
       size: .5rem;
     }
+    background-color: rgba( 0, 0, 0, .14 );
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    margin: .5rem;
   }
 }
 
 .book {
   grid-area: book;
-  margin: 2rem;
 
   &__headline {
     font: {
@@ -100,6 +148,7 @@
     line-height: 1.78;
     letter-spacing: normal;
     text-align: center;
+    margin: .5rem;
   }
 
   &__content {
@@ -110,12 +159,14 @@
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    margin: .5rem;
   }
 }
 
 .patent {
   grid-area: patent;
-  margin: 2rem;
+  background-color: rgba( 196, 196, 196, .2 );
+  margin: 1rem 0;
   font: {
     family: var( --font__family--default );
     size: .5rem;
@@ -131,7 +182,14 @@
       border: solid 1px #757575;
     }
 
-    &__rec {
+    &__country {
+      @include icon--before__template() {
+        margin: 0 .4rem 0 0;
+        border-width: .8rem .35rem .16rem;
+      }
+    }
+
+    &__date {
       width: 133px;
       height: 30px;
       border-radius: 15px;
@@ -151,8 +209,108 @@
 
 .conference-paper {
   grid-area: conference-paper;
+  background-color: rgba( 196, 196, 196, .2 );
+  margin: 1rem 0;
+  font: {
+    family: var( --font__family--default );
+    size: .5rem;
+  }
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: rgba( 0, 0, 0, .87 );
+  }
+
+  &__table {
+    border-collapse: collapse;
+    text-align: center;
+
+    table, td, th {
+      width: 1016px;
+      height: 120px;
+      border: solid 1px #757575;
+    }
+
+    &__title {
+      font: {
+        family: var( --font__family--default );
+        size: .25rem;
+        weight: bold;
+      }
+      line-height: 1.78;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    &__date {
+      &__begin {
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+
+      &__to {
+        float: left;
+      }
+
+      &__end {
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+    }
+  }
 }
 
 .student {
   grid-area: student;
+  width: 100%;
+  background-color: #ffffff;
+  display: grid;
+  grid-template: {
+    areas:
+      'student__block__content . student__block__content';
+    columns: 6fr 1fr 6fr;
+  };
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    text-align: center;
+    margin: .5rem;
+  }
+
+  &__block {
+    grid-area: student__block__content;
+
+    &__content {
+      font: {
+        family: var( --font__family--default );
+        size: .5rem;
+      }
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .5rem;
+    }
+  }
 }
+
+
