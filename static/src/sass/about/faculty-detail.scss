@@ -14,8 +14,8 @@
       '. education .'
       '. experience .'
       '. honor .'
+      '. book .'
       '. patent .'
-      '. conference-paper .'
       '. student .';
     columns: 1fr 6fr 1fr;
   };
@@ -26,8 +26,8 @@
         '. education education .'
         '. experience experience .'
         '. honor honor .'
+        '. book book .'
         '. patent patent .'
-        '. conference-paper conference-paper .'
         '. student student .';
       columns: 1fr 5fr 3fr 1fr;
     };
@@ -39,8 +39,8 @@
         '. education education .'
         '. experience experience .'
         '. honor honor .'
-        '. patent patent.'
-        '. conference-paper conference-paper .'
+        '. book book .'
+        '. patent patent .'
         '. student student .';
       columns: 2fr 5fr 3fr 2fr;
     };
@@ -63,7 +63,6 @@
 
 .honor {
   grid-area: honor;
-  background-color: rgba( 196, 196, 196, .2 );
   margin: 2rem;
 
   &__headline {
@@ -74,7 +73,7 @@
     }
     line-height: 1.78;
     letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
+    text-align: center;
   }
 
   &__content {
@@ -82,7 +81,32 @@
       family: var( --font__family--default );
       size: .5rem;
     }
-    background-color: rgba( 0, 0, 0, .14 );
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+  }
+}
+
+.book {
+  grid-area: book;
+  margin: 2rem;
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    text-align: center;
+  }
+
+  &__content {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+    }
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
@@ -91,7 +115,6 @@
 
 .patent {
   grid-area: patent;
-  background-color: rgba( 196, 196, 196, .2 );
   margin: 2rem;
   font: {
     family: var( --font__family--default );
