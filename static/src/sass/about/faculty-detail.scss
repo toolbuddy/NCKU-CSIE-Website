@@ -111,7 +111,7 @@
   &__headline {
     font: {
       family: var( --font__family--default );
-      size: .5rem;
+      size: .75rem;
       weight: bold;
     }
     line-height: 1.78;
@@ -138,6 +138,17 @@
   font: {
     family: var( --font__family--default );
     size: .5rem;
+  }
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .75rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: rgba( 0, 0, 0, .87 );
   }
 
   &__table {
@@ -167,8 +178,58 @@
   }
 }
 
-.education {
+.education, .experience {
   grid-area: education;
+  background-color: rgba( 196, 196, 196, .2 );
+  margin: 1rem 0;
+  font: {
+    family: var( --font__family--default );
+    size: .5rem;
+  }
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .75rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: rgba( 0, 0, 0, .87 );
+  }
+
+  &__begin {
+    float: left;
+    width: 130px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: solid .5px #757575;
+  }
+
+  &__to {
+    float: left;
+  }
+
+  &__end {
+    float: left;
+    width: 130px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: solid .5px #757575;
+  }
+
+  &__detail {
+    float: left;
+    padding: .1rem .25rem;
+    border-radius: .5rem;
+    width: 3rem;
+    text-align: center;
+    color: rgba( 0, 0, 0, .87 );
+    background-color: #eaeff7;
+  }
+  
 }
 
 .experience {
@@ -187,7 +248,7 @@
   &__headline {
     font: {
       family: var( --font__family--default );
-      size: .5rem;
+      size: .75rem;
       weight: bold;
     }
     line-height: 1.78;
@@ -208,7 +269,7 @@
     &__title {
       font: {
         family: var( --font__family--default );
-        size: .25rem;
+        size: .5rem;
         weight: bold;
       }
       line-height: 1.78;
