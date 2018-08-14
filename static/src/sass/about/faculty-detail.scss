@@ -15,6 +15,7 @@
       '. education .'
       '. experience .'
       '. honor .'
+      '. book .'
       '. patent .'
       '. conference-paper .'
       '. student .';
@@ -27,6 +28,7 @@
         '. education education .'
         '. experience experience .'
         '. honor honor .'
+        '. book book .'
         '. patent patent .'
         '. conference-paper conference-paper .'
         '. student student .';
@@ -40,6 +42,7 @@
         '. education education .'
         '. experience experience .'
         '. honor honor .'
+        '. book book .'
         '. patent patent.'
         '. conference-paper conference-paper .'
         '. student student .';
@@ -56,7 +59,7 @@
     family: var( --font__family--default );
     size: .5rem;
   }
-  margin: 1rem 0;
+  margin: 2rem 0;
 
   &__title {
     &__name {
@@ -69,7 +72,7 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
     }
-  
+
     &__subtitle {
       font: {
         family: var( --font__family--default );
@@ -80,7 +83,7 @@
       color: #adacad;
       border: solid .05rem #adacad;
       border-radius: .15rem;
-    }   
+    }
 
   }
 
@@ -106,7 +109,6 @@
 .honor {
   grid-area: honor;
   background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
 
   &__headline {
     font: {
@@ -117,6 +119,8 @@
     line-height: 1.78;
     letter-spacing: normal;
     color: rgba( 0, 0, 0, .87 );
+    text-align: center;
+    margin: .5rem;
   }
 
   &__content {
@@ -128,6 +132,34 @@
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    margin: .5rem;
+  }
+}
+
+.book {
+  grid-area: book;
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    text-align: center;
+    margin: .5rem;
+  }
+
+  &__content {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+    }
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    margin: .5rem;
   }
 }
 
@@ -244,4 +276,41 @@
 
 .student {
   grid-area: student;
+  width: 100%;
+  background-color: #ffffff;
+  display: grid;
+  grid-template: {
+    areas:
+      'student__block__content . student__block__content';
+    columns: 6fr 1fr 6fr;
+  };
+
+  &__headline {
+    font: {
+      family: var( --font__family--default );
+      size: .5rem;
+      weight: bold;
+    }
+    line-height: 1.78;
+    letter-spacing: normal;
+    text-align: center;
+    margin: .5rem;
+  }
+
+  &__block {
+    grid-area: student__block__content;
+
+    &__content {
+      font: {
+        family: var( --font__family--default );
+        size: .5rem;
+      }
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .5rem;
+    }
+  }
 }
+
+
