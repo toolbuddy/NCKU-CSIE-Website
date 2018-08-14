@@ -9,4 +9,16 @@ headerMenu.addEventListener( 'click', () => {
 navigationCancel.addEventListener( 'click', () => {
     headerNavigation.classList.remove( 'header__navigation--active' );
 } );
+
+Array.from( document.getElementsByClassName( 'item__switch' ) )
+.forEach( ( itemSwitch ) => {
+    // Const itemSubList = itemSwitch.querySelector( '+ item__sub-list' )[0];
+    itemSwitch.addEventListener( 'click', () => {
+        if ( itemSwitch.classList.contains( 'item__switch--active' ) )
+            itemSwitch.classList.remove( 'item__switch--active' );
+        else
+            itemSwitch.classList.add( 'item__switch--active' );
+    } );
+} );
+
 export default headerMenu;

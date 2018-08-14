@@ -160,9 +160,20 @@ body > .header {
 
         > .item__switch {
           grid-area: item__switch;
+          border: {
+            color: rgba( 255, 255, 255, .5 );
+            style: solid;
+            bottom-width: .1rem;
+            right-width: .1rem;
+          }
+          transform: rotate( -45deg );
+          transition: transform .5s;
+          background-color: transparent;
+          width: .44rem;
+          height: .44rem;
 
-          &::after {
-            content: '>';
+          &.item__switch--active {
+            transform: rotate( 45deg );
           }
         }
 
