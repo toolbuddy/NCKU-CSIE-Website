@@ -1,70 +1,28 @@
 const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
-const languageSettings = require( `${ projectRoot }/settings/language/config` )
+const languageSettings = require( `${ projectRoot }/settings/language/config` );
 
-function isLangExist (data, language) {
-    for ( var i=0; i<data.length; i++ ) {
-        if ( data[i].language === language )
-            return true
+function isLangExist ( data, language ) {
+    for ( let i = 0; i < data.length; i++ ) {
+        if ( data[ i ].language === language )
+            return true;
     }
-    return false
+    return false;
 }
 
 module.exports = async ( { language = languageSettings.default, announcementData, } = {} ) => {
     const table = await associations();
 
-    announcementData = {
-        author: 'Daniel',
-        announcementI18n: [
-            {
-                language: 'zh-TW',
-                title: 'Test',
-                content: 'Content',
-            },
-            {
-                language: 'en-US',
-                title: 'Test',
-                content: 'Content',
-            },
-        ],
-        announcementTag: [
-            {
-                tagId: 1,
-            },
-            {
-                tagId: 2,
-            },
-        ],
-        announcementFile: [
-            {
-                type: 'jpeg',
-                announcementFileI18n: [
-                    {
-                        language: 'zh-TW',
-                        name: 'some file',
-                        url: '/bla/yo'
-                    },
-                    {
-                        language: 'en-US',
-                        name: 'some file',
-                        url: '/bla/yo'
-                    },
-                ]
-            }
-        ]
-    }
-
     languageSettings.support.forEach( ( lang ) => {
-        if ( !isLangExist( announcementData.announcementI18n, lang ) ) {
-           throw 'Missing language for announcementI18n: '+lang
-        }
-        announcementData.announcementFile.forEach ( ( file ) => {
-            if ( !isLangExist( file.announcementFileI18n, lang ) ) {
-               throw 'Missing language for announcementFileI18n: '+lang
-            }
-        } )
-    } )
+        if ( !isLangExist( announcementData.announcementI18n, lang ) )
+            throw `Missing language for announcementI18n: ${ lang }`;
+
+        announcementData.announcementFile.forEach( ( file ) => {
+            if ( !isLangExist( file.announcementFileI18n, lang ) )
+                throw `Missing language for announcementFileI18n: ${ lang }`;
+        } );
+    } );
 
     const data = await table.announcement.create( announcementData, {
         include: [

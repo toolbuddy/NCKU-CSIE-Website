@@ -1,5 +1,6 @@
 const path = require( 'path' );
 const express = require( 'express' );
+const bodyParser = require( 'body-parser' );
 
 const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
@@ -11,6 +12,9 @@ const getPinnedAnnouncementsByTags = require( path.resolve( opRoot, 'get-pinned-
 const getAllPages = require( path.resolve( opRoot, 'get-all-pages' ) );
 const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
+const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
+
+apis.use( bodyParser.json() );
 
 apis.get( '/all-pinned', async ( req, res ) => {
     let tags = req.query.tags;
@@ -139,6 +143,16 @@ apis.get( '/:id', async ( req, res ) => {
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
+    }
+} );
+
+apis.post( '/', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncement( { announcementData: req.body, language: req.query.lange, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
     }
 } );
 
