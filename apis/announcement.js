@@ -14,6 +14,7 @@ const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
 const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
 const putAnnouncement = require( path.resolve( opRoot, 'put-announcement' ) );
+const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
 
 apis.use( bodyParser.json() );
 
@@ -160,6 +161,16 @@ apis.post( '/', async ( req, res ) => {
 apis.put( '/:id', async ( req, res ) => {
     try {
         res.json( await putAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.delete( '/', async ( req, res ) => {
+    try {
+        res.json( await deleteAnnouncement( { announcementId: req.body.id, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
