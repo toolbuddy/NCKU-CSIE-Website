@@ -154,7 +154,7 @@ apis.get( '/:id', async ( req, res ) => {
 
 apis.post( '/', async ( req, res ) => {
     try {
-        res.json( await postAnnouncement( { announcementData: req.body, language: req.query.language, } ) );
+        res.json( await postAnnouncement( { announcementData: req.body, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
@@ -178,17 +178,17 @@ apis.delete( '/', async ( req, res ) => {
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
-        console.error( e.stack );
         res.status( 500 ).end();
     }
 } );
 
 apis.post( '/file', async ( req, res ) => {
     try {
-        res.json( await postAnnouncementFile( { announcementData: req.body, language: req.query.language, } ) );
+        res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
+        console.error( e.stack );
         res.status( 500 ).end();
     }
 } );
