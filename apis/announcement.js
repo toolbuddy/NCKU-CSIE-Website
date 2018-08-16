@@ -20,6 +20,7 @@ const postAnnouncementFile = require( path.resolve( opRoot, 'post-announcementFi
 const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) );
 
 const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
+const deleteAnnouncementTags = require( path.resolve( opRoot, 'delete-announcementTags' ) );
 
 apis.use( bodyParser.json() );
 
@@ -196,6 +197,17 @@ apis.post( '/file', async ( req, res ) => {
 apis.post( '/tags', async ( req, res ) => {
     try {
         res.json( await postAnnouncementTags( { announcementTagData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.delete( '/:id/tags', async ( req, res ) => {
+    const tagId = req.query.tagId.split( ',' ).map( s => Number.parseInt( s, 10 ) );
+    try {
+        res.json( await deleteAnnouncementTags( { announcementId: req.params.id, tagId, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
