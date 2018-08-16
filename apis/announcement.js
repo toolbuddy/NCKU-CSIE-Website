@@ -14,6 +14,7 @@ const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
 
 const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
+const postAnnouncementTags = require( path.resolve( opRoot, 'post-announcementTags' ) );
 const postAnnouncementFile = require( path.resolve( opRoot, 'post-announcementFile' ) );
 
 const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) );
@@ -188,7 +189,16 @@ apis.post( '/file', async ( req, res ) => {
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
-        console.error( e.stack );
+        res.status( 500 ).end();
+    }
+} );
+
+apis.post( '/tags', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncementTags( { announcementTagData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
