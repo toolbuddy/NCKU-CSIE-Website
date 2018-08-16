@@ -11,16 +11,16 @@ function isLangExist ( data, language ) {
     return false;
 }
 
-module.exports = async ( { language = languageSettings.default, announcementData, } = {} ) => {
+module.exports = async ( { announcementData, } = {} ) => {
     const table = await associations();
 
     languageSettings.support.forEach( ( lang ) => {
         if ( !isLangExist( announcementData.announcementI18n, lang ) )
-            throw `Missing language for announcementI18n: ${ lang }`;
+            throw new Error( `Missing language for announcementI18n: ${ lang }` );
 
         announcementData.announcementFile.forEach( ( file ) => {
             if ( !isLangExist( file.announcementFileI18n, lang ) )
-                throw `Missing language for announcementFileI18n: ${ lang }`;
+                throw new Error( `Missing language for announcementFileI18n: ${ lang }` );
         } );
     } );
 
