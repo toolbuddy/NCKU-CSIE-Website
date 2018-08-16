@@ -12,8 +12,12 @@ const getPinnedAnnouncementsByTags = require( path.resolve( opRoot, 'get-pinned-
 const getAllPages = require( path.resolve( opRoot, 'get-all-pages' ) );
 const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
+
 const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
-const putAnnouncement = require( path.resolve( opRoot, 'put-announcement' ) );
+const postAnnouncementFile = require( path.resolve( opRoot, 'post-announcementFile' ) );
+
+const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) );
+
 const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
 
 apis.use( bodyParser.json() );
@@ -158,9 +162,9 @@ apis.post( '/', async ( req, res ) => {
     }
 } );
 
-apis.put( '/:id', async ( req, res ) => {
+apis.patch( '/:id', async ( req, res ) => {
     try {
-        res.json( await putAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
+        res.json( await patchAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
@@ -175,6 +179,16 @@ apis.delete( '/', async ( req, res ) => {
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
         console.error( e.stack );
+        res.status( 500 ).end();
+    }
+} );
+
+apis.post( '/file', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncementFile( { announcementData: req.body, language: req.query.language, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
