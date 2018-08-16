@@ -2,17 +2,34 @@ const path = require( 'path' );
 const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
 
-module.exports = async ( { language = 'zh-TW', announcementId = 75, } = {} ) => {
+module.exports = async ( { announcementId, announcementData, } = {} ) => {
     const table = await associations();
 
-    const data = await table.announcement.findOne( {
+    const i18n = announcementData.announcementI18n;
+    delete announcementData.announcementI18n;
+
+    // Initialize result object
+    const result = {};
+    result.i18n = {};
+    result.i18n.affactedCount = {};
+
+    for ( let i = 0; i < i18n.length; i++ ) {
+        await table.announcementI18n.update( i18n[ i ], {
+            where: {
+                language: i18n[ i ].language,
+                announcementId,
+            },
+        } )
+        .then(
+            ( count ) => { result.i18n.affactedCount[ i18n[ i ].language ] = count; }
+        );
+    }
+
+    await table.announcement.update( announcementData, {
         include: [
             {
                 model:      table.announcementI18n,
                 as:         'announcementI18n',
-                where: {
-                    language,
-                },
             },
         ],
         where: {
@@ -20,26 +37,10 @@ module.exports = async ( { language = 'zh-TW', announcementId = 75, } = {} ) => 
         },
     } )
     .then(
-        announcement => {
-            return Promise.all( [
-                announcement.update( {
-                    publishTime: new Date(),
-                    author: 'Chen',
-                    isPinned: true,
-                    isPublished: true,
-                    isApproved: true,
-                } ),
-                announcement.announcementI18n[ 0 ].update( {
-                    title: '測2',
-                    content: '內1',
-                } ),
-            ] )
-        }
-    ).then(
-        announcement => announcement
+        ( count ) => { result.affactedCount = count; }
     );
 
     table.database.close();
 
-    return data;
+    return result;
 };

@@ -13,6 +13,7 @@ const getAllPages = require( path.resolve( opRoot, 'get-all-pages' ) );
 const getPagesByTags = require( path.resolve( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.resolve( opRoot, 'get-announcement' ) );
 const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
+const putAnnouncement = require( path.resolve( opRoot, 'put-announcement' ) );
 
 apis.use( bodyParser.json() );
 
@@ -148,10 +149,21 @@ apis.get( '/:id', async ( req, res ) => {
 
 apis.post( '/', async ( req, res ) => {
     try {
-        res.json( await postAnnouncement( { announcementData: req.body, language: req.query.lange, } ) );
+        res.json( await postAnnouncement( { announcementData: req.body, language: req.query.language, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.put( '/:id', async ( req, res ) => {
+    try {
+        res.json( await putAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        console.error( e.stack );
         res.status( 500 ).end();
     }
 } );
