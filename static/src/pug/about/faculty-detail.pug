@@ -26,7 +26,7 @@ append content
       a.profile__phone(href="tel:123") 聯絡電話
     img.photo(src="/path-to-image.jpg" alt="Image Title")
     section.education
-      section.education__headline 學歷
+      section.headline 學歷
       section.education__detail.detail
         p.detail__begin 2016.09.11
         p.detail__to -
@@ -36,7 +36,7 @@ append content
         p.detail__department 電機
         p.detail__degree 博士
     section.experience
-      section.experience__headline 經歷
+      section.headline 經歷
       section.experience__detail.detail
         p.detail__begin 2016.09.11
         p.detail__to -
@@ -45,17 +45,33 @@ append content
         p.detail__department 電機
         p.detail__degree 博士
     section.honor
-      section.honor__headline 榮譽及獲獎
-      section.honor__content 國立成功大學電資學院
-      section.honor__content 國立成功大學電資學院
-      section.honor__content 國立成功大學電資學院
+      section.headline 榮譽及獲獎
+      section.headline__small 2014
+      p.honor__content 國立成功大學電資學院
+      p.honor__content 國立成功大學電資學院
+      section.headline__small 2018
+      p.honor__content 國立成功大學電資學院
+      p.honor__content 國立成功大學電資學院
     section.book
-      section.book__headline 著作
-      section.book__content PubTator
-      section.book__content PubTator
-      section.book__content PubTator
+      section.headline 著作
+      section.headline__small Accepted Papers to be Published
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.headline__small Refereed Papers
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.headline__small Conference Papers - 國際會議
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.headline__small Conference Papers - 國內會議
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
     section.patent
-      section.patent__headline 專利
+      section.headline 專利
       table.patent__table.table
         tr
           th 類別
@@ -75,9 +91,9 @@ append content
           td
             section.table__date 2016.09.11
     section.research
-      header.research__headline 研究計畫
+      header.headline 研究計畫
       table.research__table.table
-        header.table__title 科技部研究計畫
+        header.headline__small 科技部研究計畫
         tr
           th 企劃名稱
           th 起迄日期
@@ -91,7 +107,7 @@ append content
               p.date__end 2016.09.12
           td 科技部
       table.research__table.table
-        header.table__title 一般建教案
+        header.headline__small 一般建教案
         tr
           th 企劃名稱
           th 起迄日期
@@ -105,9 +121,29 @@ append content
               p.date__end 2016.09.12
           td 科技部
     section.student
-      section.student__headline 指導學生
-      section.student__content 學生
-      section.student__content 學生
+      section.headline 指導學生
+      section.headline__small 博士班
+      section.student__members
+        p.student__content 學生1
+        p.student__content 學生2
+        p.student__content 學生3
+        p.student__content 學生4
+      section.headline__small 碩士班
+      section.student__members
+        p.student__content 學生1
+        p.student__content 學生2
+        p.student__content 學生3
+        p.student__content 學生4
+      section.headline__small 指導學生之特殊榮譽
+      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
+      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
+      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
+      section.headline__small 主辦及參與國際會議
+      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
+      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
+      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
+
+append footer
 
 append scripts
   +js( 'about/faculty-detail' )
