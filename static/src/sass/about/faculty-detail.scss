@@ -109,10 +109,17 @@
   > .honor__content {
     font-size: .5rem;
     background-color: #ffffff;
-    padding: .5rem 1rem;
+    padding: .5rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
+    @include icon--before--trophy() {
+      margin: .1rem;
+      margin-right: .5rem;
+      height: .7rem;
+      width: .7rem;
+      float: left;
+    }
   }
 }
 
@@ -121,10 +128,17 @@
 
   > .book__content {
     font-size: .5rem;
-    padding: .5rem 1rem;
+    padding: .5rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .25rem;
+    @include icon--before--book() {
+      margin: .1rem;
+      margin-right: .5rem;
+      height: .7rem;
+      width: .7rem;
+      float: left;
+    }
   }
 }
 
@@ -143,10 +157,15 @@
       border: solid 1px #757575;
     }
 
-    // > .table__country {
-    //  @include icon--before__download() {
-    //  }
-    // }
+    > .table__country {
+      @include icon--before--taiwan() {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        float: left;
+      }
+    }
 
     > .table__date {
       width: 133px;
@@ -158,14 +177,16 @@
   }
 }
 
-.education, .experience {
+.education {
   grid-area: education;
   background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
+  margin: 1rem;
   font-size: .5rem;
 
   > .education__detail.detail {
-    float: left;
+    content: '';
+    clear: both;
+    display: table;
     padding: .1rem .25rem;
     border-radius: .5rem;
     width: 3rem;
@@ -174,6 +195,7 @@
     background-color: #eaeff7;
 
     > .detail__begin {
+      display: block;
       float: left;
       width: 130px;
       height: 30px;
@@ -183,16 +205,28 @@
     }
 
     > .detail__to {
+      display: block;
       float: left;
     }
 
     > .detail__end {
+      display: block;
       float: left;
       width: 130px;
       height: 30px;
       border-radius: 15px;
       background-color: #ffffff;
       border: solid .5px #757575;
+    }
+
+    > .detail__country {
+      @include icon--before--taiwan() {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        float: left;
+      }
     }
   }
 }
@@ -291,11 +325,17 @@
       float: left;
       background-color: #ffffff;
       font-size: .5rem;
-      padding: .5rem 1rem;
+      padding: .5rem;
       border-radius: 6px;
       box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
       margin: .25rem;
-      width: 4rem;
+      width: 4.5rem;
+      @include icon--before--study() {
+        margin-right: .5rem;
+        height: .7rem;
+        width: .7rem;
+        float: left;
+      }
     }
   }
 
@@ -306,6 +346,12 @@
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
+    @include icon--before--trophy() {
+      margin-right: .5rem;
+      height: .7rem;
+      width: .7rem;
+      float: left;
+    }
   }
 
   > .student__meeting {
@@ -315,5 +361,12 @@
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
+    @include icon--before--book() {
+      margin: .1rem;
+      margin-right: .5rem;
+      height: .7rem;
+      width: .7rem;
+      float: left;
+    }
   }
 }
