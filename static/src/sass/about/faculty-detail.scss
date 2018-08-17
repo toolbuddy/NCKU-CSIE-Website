@@ -3,8 +3,11 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/icon';
+@import 'components/about/faculty-detail/headline';
 
 .content {
+  $small: 768px;
+  $large: 992px;
   width: 100%;
   background-color: #ffffff;
   display: grid;
@@ -19,9 +22,9 @@
       '. patent .'
       '. conference-paper .'
       '. student .';
-    columns: 1fr 6fr 1fr;
+    columns: 1fr 9fr 1fr;
   };
-  @media screen and ( min-width: 768px ) {
+  @media screen and ( min-width: $small ) {
     grid-template: {
       areas:
         '. profile__info profile__photo .'
@@ -35,7 +38,7 @@
       columns: 1fr 5fr 3fr 1fr;
     };
   }
-  @media screen and ( min-width: 1024px ) {
+  @media screen and ( min-width: $large ) {
     grid-template: {
       areas:
         '. profile__info profile__photo .'
@@ -46,7 +49,7 @@
         '. patent patent.'
         '. conference-paper conference-paper .'
         '. student student .';
-      columns: 4fr 5fr 3fr 4fr;
+      columns: 4fr 6fr 4fr 4fr;
     };
   }
 }
@@ -55,14 +58,12 @@
   grid-area: profile__info;
   text-align: left;
   color: #000000;
-  font: {
-    size: .5rem;
-  }
+  font-size: .5rem;
   margin: 2rem 0;
 
   > .profile__name {
     font: {
-      size: .75rem;
+      size: .6rem;
       weight: bold;
     }
     line-height: 1.78;
@@ -72,9 +73,7 @@
 
   > .profile__titles.titles {
     > .titles__title {
-      font: {
-        size: .7rem;
-      }
+      font-size: .7rem;
       text-align: center;
       width: 2rem;
       color: #adacad;
@@ -107,23 +106,9 @@
 .honor {
   grid-area: honor;
 
-  > .honor__headline {
-    font: {
-      size: .75rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-    text-align: center;
-    margin: .5rem;
-  }
-
   > .honor__content {
-    font: {
-      size: .5rem;
-    }
-    background-color: rgba( 0, 0, 0, .14 );
+    font-size: .5rem;
+    background-color: #ffffff;
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
@@ -134,44 +119,19 @@
 .book {
   grid-area: book;
 
-  > .book__headline {
-    font: {
-      size: .5rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    text-align: center;
-    margin: .5rem;
-  }
-
   > .book__content {
-    font: {
-      size: .5rem;
-    }
+    font-size: .5rem;
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .5rem;
+    margin: .25rem;
   }
 }
 
 .patent {
   grid-area: patent;
   margin: 1rem 0;
-  font: {
-    size: .5rem;
-  }
-
-  > .patent__headline {
-    font: {
-      size: .75rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-  }
+  font-size: .5rem;
 
   > .patent__table.table {
     border-collapse: collapse;
@@ -183,10 +143,10 @@
       border: solid 1px #757575;
     }
 
-    > .table__country {
-      @include icon--before__download() {
-      }
-    }
+    // > .table__country {
+    //  @include icon--before__download() {
+    //  }
+    // }
 
     > .table__date {
       width: 133px;
@@ -202,19 +162,7 @@
   grid-area: education;
   background-color: rgba( 196, 196, 196, .2 );
   margin: 1rem 0;
-  font: {
-    size: .5rem;
-  }
-
-  > .education__headline {
-    font: {
-      size: .75rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-  }
+  font-size: .5rem;
 
   > .education__detail.detail {
     float: left;
@@ -237,7 +185,7 @@
     > .detail__to {
       float: left;
     }
-  
+
     > .detail__end {
       float: left;
       width: 130px;
@@ -247,26 +195,13 @@
       border: solid .5px #757575;
     }
   }
-  
 }
 
 .experience {
   grid-area: experience;
   background-color: rgba( 196, 196, 196, .2 );
   margin: 1rem 0;
-  font: {
-    size: .5rem;
-  }
-
-  > .experience__headline {
-    font: {
-      size: .75rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-  }
+  font-size: .5rem;
 
   > .experience__detail.detail {
     padding: .1rem .25rem;
@@ -288,7 +223,7 @@
     > .detail__to {
       float: left;
     }
-  
+
     > .detail__end {
       float: left;
       width: 130px;
@@ -298,27 +233,13 @@
       border: solid .5px #757575;
     }
   }
-  
 }
-
 
 .research {
   grid-area: conference-paper;
   background-color: rgba( 196, 196, 196, .2 );
   margin: 1rem 0;
-  font: {
-    size: .5rem;
-  }
-
-  > .research__headline {
-    font: {
-      size: .75rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-  }
+  font-size: .5rem;
 
   > .research__table.table {
     border-collapse: collapse;
@@ -328,16 +249,6 @@
       width: 1016px;
       height: 120px;
       border: solid 1px #757575;
-    }
-
-    > .table__title {
-      font: {
-        size: .5rem;
-        weight: bold;
-      }
-      line-height: 1.78;
-      letter-spacing: normal;
-      color: rgba( 0, 0, 0, .87 );
     }
 
     > .table__date.date {
@@ -369,37 +280,40 @@
 .student {
   grid-area: student;
   width: 100%;
-  background-color: #ffffff;
-  display: grid;
-  grid-template: {
-    areas:
-      'student__block__content . student__block__content';
-    columns: 6fr 1fr 6fr;
-  };
 
-  > .student__headline {
-    font: {
-      size: .5rem;
-      weight: bold;
+  > .student__members {
+    content: '';
+    clear: both;
+    display: table;
+
+    > .student__content {
+      display: block;
+      float: left;
+      background-color: #ffffff;
+      font-size: .5rem;
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .25rem;
+      width: 4rem;
     }
-    line-height: 1.78;
-    letter-spacing: normal;
-    text-align: center;
+  }
+
+  > .student__honor {
+    font-size: .5rem;
+    background-color: #ffffff;
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
   }
 
-  > .student__content {
-    grid-area: student__block__content;
-
-    font: {
-      family: var( --font__family--default );
-      size: .5rem;
-    }
+  > .student__meeting {
+    font-size: .5rem;
+    background-color: #ffffff;
     padding: .5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
   }
 }
-
-

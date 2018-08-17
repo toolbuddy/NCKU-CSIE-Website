@@ -1,0 +1,21 @@
+.headline {
+  font: {
+    size: .7rem;
+    weight: bold;
+  }
+  line-height: 1.78;
+  letter-spacing: normal;
+  color: rgba( 0, 0, 0, .87 );
+  text-align: center;
+  margin: 1rem;
+}
+
+.headline__small {
+  font: {
+    size: .5rem;
+    weight: bold;
+  }
+  line-height: 1.78;
+  letter-spacing: normal;
+  margin: .75rem;
+}
