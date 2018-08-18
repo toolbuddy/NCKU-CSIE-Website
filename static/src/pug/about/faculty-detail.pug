@@ -22,15 +22,15 @@ append content
       aside.profile__departments
         span.departments__department 資訊系
       address.profile__office 辦公室
-      a.profile__email(href="mailto:123") email
-      a.profile__phone(href="tel:123") 聯絡電話
-    img.photo(src="/path-to-image.jpg" alt="Image Title")
+      a.profile__email( href = "mailto:123" ) email
+      a.profile__phone( href = "tel:123" ) 聯絡電話
+    img.photo( src = "/path-to-image.jpg" alt = "Image Title" )
     section.education
       section.headline 學歷
       section.education__detail.detail
-        p.detail__begin 2016.09.11
+        time.detail__begin 2016.09.11
         p.detail__to -
-        p.detail__end 2016.09.12
+        time.detail__end 2016.09.12
         img.detail__country
         p.detail__school 成功大學
         p.detail__department 電機
@@ -38,9 +38,9 @@ append content
     section.experience
       section.headline 經歷
       section.experience__detail.detail
-        p.detail__begin 2016.09.11
+        time.detail__begin 2016.09.11
         p.detail__to -
-        p.detail__end 2016.09.12
+        time.detail__end 2016.09.12
         p.detail__school 成功大學
         p.detail__department 電機
         p.detail__degree 博士
@@ -73,53 +73,51 @@ append content
     section.patent
       section.headline 專利
       table.patent__table.table
-        tr
-          th 類別
-          th 專利名稱
-          th 專利權人
-          th 國別
-          th 發明人
-          th 專利號碼
-          th 專利期間
-        tr
-          td A
-          td 機台維修系統與方法
-          td 國立成功大學
-          td.table__country taiwan
-          td 鄭方田
-          td 審查中
-          td
-            section.table__date 2016.09.11
+        tr.table__titles.titles
+          th.titles__title 類別
+          th.titles__title 專利名稱
+          th.titles__title 專利權人
+          th.titles__title 國別
+          th.titles__title 發明人
+          th.titles__title 專利號碼
+          th.titles__title 專利期間
+        tr.table__contents.contents
+          td.contents__content A
+          td.contents__content 機台維修系統與方法
+          td.contents__content 國立成功大學
+          td.contents__country taiwan
+          td.contents__content 鄭方田
+          td.contents__content 審查中
+          td.contents__content
+            time.content__date 2016.09.11
     section.research
       header.headline 研究計畫
       table.research__table.table
-        header.headline__small 科技部研究計畫
-        tr
-          th 企劃名稱
-          th 起迄日期
-          th 輔助單位
-        tr
-          td 子計畫
-          td
-            section.table__date.date
-              p.date__begin 2016.09.11
-              p.date__to -
-              p.date__end 2016.09.12
-          td 科技部
+        caption.headline__small 科技部研究計畫
+        tr.table__titles.titles
+          th.titles__title 企劃名稱
+          th.titles__title 起迄日期
+          th.titles__title 輔助單位
+        tr.table__contents.contents
+          td.contents__content 子計畫
+          td.contents__content
+            section.content__date
+              time.date__begin 2016.09.11
+              time.date__end 2016.09.12
+          td.contents__content 科技部
       table.research__table.table
-        header.headline__small 一般建教案
-        tr
-          th 企劃名稱
-          th 起迄日期
-          th 輔助單位
-        tr
-          td 子計畫
-          td
-            section.table__date.date
-              p.date__begin 2016.09.11
-              p.date__to -
-              p.date__end 2016.09.12
-          td 科技部
+        caption.headline__small 一般建教案
+        tr.table__titles.titles
+          th.titles__title 企劃名稱
+          th.titles__title 起迄日期
+          th.titles__title 輔助單位
+        tr.table__contents.contents
+          td.contents__content 子計畫
+          td.contents__content
+            section.content__date
+              time.date__begin 2016.09.11
+              time.date__end 2016.09.12
+          td.contents__content 科技部
     section.student
       section.headline 指導學生
       section.headline__small 博士班

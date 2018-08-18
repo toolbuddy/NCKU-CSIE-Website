@@ -287,16 +287,15 @@
 
     > .table__date.date {
       > .date__begin {
+        &::after {
+          content: '-';
+        }
         float: left;
         width: 130px;
         height: 30px;
         border-radius: 15px;
         background-color: #ffffff;
         border: solid .5px #757575;
-      }
-
-      > .date__to {
-        float: left;
       }
 
       > .date__end {
