@@ -145,8 +145,6 @@ $icon-path: '../../';
   }
 }
 @mixin icon__search--white () {
-  background: {
-    image: url( '../../image/icon/search-white.png' );
-  }
+  background-image: url( '../../image/icon/search-white.png' );
   @content;
 }
