@@ -6,6 +6,7 @@ mixin header
           calendar: 'Calendar',
           login:    'Login',
           search:   'Search',
+          language: 'Language',
         },
         route: {
           about: {
@@ -57,6 +58,7 @@ mixin header
           calendar: '行事曆',
           login:    '登入',
           search:   '搜尋',
+          language: '語言',
         },
         route: {
           about: {
@@ -138,7 +140,7 @@ mixin header
           a.item__link( href = '/about' )= i18n[ language ].route.about.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown.item__dropdown--open
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = '/about/intro' )= i18n[ language ].route.about.intro
             li.dropdown__item.item
@@ -227,20 +229,28 @@ mixin header
         span.calnedar__text= i18n[ language ].util.calendar
 
       //- Language Choice
-      ul.navigation__language.language
-        li.language__options.options
-          figure.options__option.option
-            +image( {
-              alt: '臺灣',
-              className: 'option__image option__image--zh-TW',
-              src: 'icon/flag-en-US.png',
-            } )
-            caption.option__text.option__text--zh-TW 臺灣
-        li.language__options.options
-          figure.options__option.option
-            +image( {
-              alt: 'USA',
-              className: 'option__image option__image--en-US',
-              src: 'icon/flag-en-US.png',
-            } )
-            caption.option__text.option__text--en-US USA
+      button.navigation__language.language
+        +image( {
+          alt: '臺灣',
+          className: 'language__image',
+          src: 'icon/flag-zh-TW.png',
+        } )
+        span.language__text
+        span.language__switch
+        ul.language__dropdown.dropdown
+          li.dropdown__item.item
+            a.item__link.link
+              +image( {
+                alt: '臺灣',
+                className: 'link__image',
+                src: 'icon/flag-zh-TW.png',
+              } )
+              span.link__text 臺灣
+          li.dropdown__item.item
+            a.item__link.link
+              +image( {
+                alt: 'USA',
+                className: 'link__image',
+                src: 'icon/flag-en-US.png',
+              } )
+              span.link__text USA

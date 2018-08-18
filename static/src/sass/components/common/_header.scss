@@ -60,7 +60,7 @@ body > .header {
 
   > .header__menu {
     grid-area: header__menu;
-    background: rgba( 0, 0, 0, 0 );
+    background-color: rgba( 0, 0, 0, 0 );
   }
 
   > .header__navigation.navigation {
@@ -126,13 +126,13 @@ body > .header {
             size: contain;
             color: inherit;
           }
-        };
+        }
       }
     }
 
     > .navigation__cancel {
       grid-area: navigation__cancel;
-      background: inherit;
+      background-color: inherit;
       color: #ffffff;
     }
 
@@ -144,7 +144,7 @@ body > .header {
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
         grid-template: {
           areas:
-            'item__link item__switch'
+            'item__link     item__switch'
             'item__dropdown item__dropdown';
           columns: 3fr 1fr;
           rows: $item-height auto;
@@ -237,27 +237,78 @@ body > .header {
 
     > .navigation__login.login {
       grid-area: navigation__login;
+      height: 1.56rem;
+      color: rgba( 255, 255, 255, .5 );
+      font-size: .5rem;
+      padding: {
+        left: .93rem;
+        top: .4rem;
+      }
+      border-top: .01rem solid rgba( 255, 255, 255, .5 );
 
       > .login__image {
-        width: .5rem;
+        width: .625rem;
+        filter:
+          invert( 100% )
+          opacity( 50% );
+        margin-right: .625rem;
       }
     }
 
     > .navigation__calendar.calendar {
       grid-area: navigation__calendar;
+      height: 1.56rem;
+      color: rgba( 255, 255, 255, .5 );
+      font-size: .5rem;
+      padding: {
+        left: .93rem;
+        top: .4rem;
+      }
+      border-top: .01rem solid rgba( 255, 255, 255, .5 );
 
       > .calendar__image {
-        width: .5rem;
+        width: .625rem;
+        filter:
+          invert( 100% )
+          opacity( 50% );
+        margin-right: .625rem;
       }
     }
 
     > .navigation__language.language {
-      grid-area: navigation__language;
+      grid: {
+        area: navigation__language;
+        template: {
+          areas:
+            'language__image    language__text      language__switch'
+            'language__dropdown languages__dropdown language__dropdown';
+          columns: 1fr 3fr 1fr;
+          rows: 1.56rem auto;
+        }
+      }
 
-      > .language__options.options {
-        > .options__option.option {
-          > .option__image {
-            width: .5rem;
+      > .language__image {
+        grid-area: language__image;
+        width: .5rem;
+      }
+
+      > .language__text {
+        grid-area: language__text;
+      }
+
+      > .language__switch {
+        grid-area: language__switch;
+      }
+
+
+      > .languages__dropdown.dropdown {
+        grid-area: language__dropdown;
+
+        > .dropdown__item.item {
+          > .item__link.link {
+            > .link__image {
+              width: .5rem;
+            }
           }
         }
       }
