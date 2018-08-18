@@ -13,42 +13,42 @@
   display: grid;
   grid-template: {
     areas:
-      '. profile__photo .'
-      '. profile__info .'
-      '. education .'
-      '. experience .'
-      '. honor .'
-      '. book .'
-      '. patent .'
+      '. profile__photo   .'
+      '. profile__info    .'
+      '. education        .'
+      '. experience       .'
+      '. award            .'
+      '. publication      .'
+      '. patent           .'
       '. conference-paper .'
-      '. student .';
+      '. student          .';
     columns: 1fr 9fr 1fr;
   };
   @media screen and ( min-width: $small ) {
     grid-template: {
       areas:
-        '. profile__info profile__photo .'
-        '. education education .'
-        '. experience experience .'
-        '. honor honor .'
-        '. book book .'
-        '. patent patent .'
+        '. profile__info    profile__photo   .'
+        '. education        education        .'
+        '. experience       experience       .'
+        '. award            award            .'
+        '. publication      publication      .'
+        '. patent           patent           .'
         '. conference-paper conference-paper .'
-        '. student student .';
+        '. student          student          .';
       columns: 1fr 5fr 3fr 1fr;
     };
   }
   @media screen and ( min-width: $large ) {
     grid-template: {
       areas:
-        '. profile__info profile__photo .'
-        '. education education .'
-        '. experience experience .'
-        '. honor honor .'
-        '. book book .'
-        '. patent patent.'
+        '. profile__info    profile__photo   .'
+        '. education        education        .'
+        '. experience       experience       .'
+        '. award            award            .'
+        '. publication      publication      .'
+        '. patent           patent           .'
         '. conference-paper conference-paper .'
-        '. student student .';
+        '. student          student          .';
       columns: 4fr 6fr 4fr 4fr;
     };
   }
@@ -59,7 +59,6 @@
   text-align: left;
   color: #000000;
   font-size: .5rem;
-  margin: 2rem 0;
 
   > .profile__name {
     font: {
@@ -103,15 +102,15 @@
   margin: 1rem 0;
 }
 
-.honor {
-  grid-area: honor;
+.award {
+  grid-area: award;
 
-  > .honor__content {
+  > .award__content {
     font-size: .5rem;
     background-color: #ffffff;
     padding: .5rem;
     border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    box-shadow: 0 2px 24px 0 rgba( 0 , 0 , 0 , .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
     @include icon--before--trophy() {
       margin: .1rem;
@@ -119,14 +118,15 @@
       height: .7rem;
       width: .7rem;
       float: left;
+      vertical-align: baseline;
     }
   }
 }
 
-.book {
-  grid-area: book;
+.publication {
+  grid-area: publication;
 
-  > .book__content {
+  > .publication__content {
     font-size: .5rem;
     padding: .5rem;
     border-radius: 6px;
@@ -138,6 +138,7 @@
       height: .7rem;
       width: .7rem;
       float: left;
+      vertical-align: baseline;
     }
   }
 }
@@ -164,6 +165,7 @@
         height: .5rem;
         width: .5rem;
         float: left;
+        vertical-align: baseline;
       }
     }
 
@@ -180,7 +182,6 @@
 .education {
   grid-area: education;
   background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem;
   font-size: .5rem;
 
   > .education__detail.detail {
@@ -226,6 +227,7 @@
         height: .5rem;
         width: .5rem;
         float: left;
+        vertical-align: baseline;
       }
     }
   }
@@ -334,6 +336,7 @@
         height: .7rem;
         width: .7rem;
         float: left;
+        vertical-align: baseline;
       }
     }
   }
@@ -350,6 +353,7 @@
       height: .7rem;
       width: .7rem;
       float: left;
+      vertical-align: baseline;
     }
   }
 
@@ -366,6 +370,7 @@
       height: .7rem;
       width: .7rem;
       float: left;
+      vertical-align: baseline;
     }
   }
 }
