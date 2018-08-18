@@ -5,11 +5,26 @@ append stylesheets
 append header
 
 append content
+  include /components/common/topic.pug
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'education':   'Education',
+        'experience':  'Experience',
+        'award':       'Award',
+        'publication': 'Publication',
+        'patent':      'Patent',
+        'research':    'Research',
+        'student':     'Student',
       },
       'zh-TW': {
+        'education':   '學歷',
+        'experience':  '經歷',
+        'award':       '榮譽及獲獎',
+        'publication': '著作',
+        'patent':      '專利',
+        'research':    '研究計劃',
+        'student':     '指導學生',
       },
     } );
 
@@ -26,7 +41,7 @@ append content
       a.profile__phone(href="tel:123") 聯絡電話
     img.photo(src="/path-to-image.jpg" alt="Image Title")
     section.education
-      section.headline 學歷
+      +topic( i18n[ language ].education )
       section.education__detail.detail
         p.detail__begin 2016.09.11
         p.detail__to -
@@ -36,7 +51,7 @@ append content
         p.detail__department 電機
         p.detail__degree 博士
     section.experience
-      section.headline 經歷
+      +topic( i18n[ language ].experience )
       section.experience__detail.detail
         p.detail__begin 2016.09.11
         p.detail__to -
@@ -44,34 +59,34 @@ append content
         p.detail__school 成功大學
         p.detail__department 電機
         p.detail__degree 博士
-    section.honor
-      section.headline 榮譽及獲獎
+    section.award
+      +topic( i18n[ language ].award )
       section.headline__small 2014
-      p.honor__content 國立成功大學電資學院
-      p.honor__content 國立成功大學電資學院
+      p.award__content 國立成功大學電資學院
+      p.award__content 國立成功大學電資學院
       section.headline__small 2018
-      p.honor__content 國立成功大學電資學院
-      p.honor__content 國立成功大學電資學院
-    section.book
-      section.headline 著作
+      p.award__content 國立成功大學電資學院
+      p.award__content 國立成功大學電資學院
+    section.publication
+      +topic( i18n[ language ].publication )
       section.headline__small Accepted Papers to be Published
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
       section.headline__small Refereed Papers
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
       section.headline__small Conference Papers - 國際會議
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
       section.headline__small Conference Papers - 國內會議
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.book__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
     section.patent
-      section.headline 專利
+      +topic( i18n[ language ].patent )
       table.patent__table.table
         tr
           th 類別
@@ -91,7 +106,7 @@ append content
           td
             section.table__date 2016.09.11
     section.research
-      header.headline 研究計畫
+      +topic( i18n[ language ].research )
       table.research__table.table
         header.headline__small 科技部研究計畫
         tr
@@ -121,7 +136,7 @@ append content
               p.date__end 2016.09.12
           td 科技部
     section.student
-      section.headline 指導學生
+      +topic( i18n[ language ].student )
       section.headline__small 博士班
       section.student__members
         p.student__content 學生1
