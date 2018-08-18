@@ -82,7 +82,7 @@ body > .header {
     width: 80%;
     z-index: 1;
     transition: left .5s;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: #213262;
 
     &.header__navigation--active {
@@ -361,6 +361,7 @@ body > .header {
           > .item__link.link {
             > .link__image {
               width: .75rem;
+              vertical-align: middle;
             }
 
             > .link__text {
