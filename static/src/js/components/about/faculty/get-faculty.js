@@ -5,5 +5,10 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/fac
 export default () => fetch( reqURL )
 .then( res => res.json() )
 .then( ( faculty ) => {
-    document.getElementById( 'cards' ).innerHTML = card( { faculty, } );
+    const query = new URLSearchParams( window.location.search );
+    const language = query.get( 'language' );
+    if ( language )
+        document.getElementById( 'cards' ).innerHTML = card( { faculty, language, } );
+    else
+        document.getElementById( 'cards' ).innerHTML = card( { faculty, language: 'zh-TW', } );
 } );

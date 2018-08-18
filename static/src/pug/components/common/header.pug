@@ -107,7 +107,7 @@ mixin header
       }
     } );
 
-  header.header
+  header#header.header
     //- Logo
     figure.header__logo.logo
       +image( {
@@ -120,10 +120,10 @@ mixin header
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
 
     //- Menu Icon
-    button#header__menu.header__menu ☰
+    button.header__menu ☰
 
     //- Navigation Bar
-    nav#header__navigation.header__navigation.navigation.header__navigation--active
+    nav.header__navigation.navigation
 
       //- Search Column, currently not available
       form.navigation__search.search( action = '/search', method = 'POST' )
@@ -131,7 +131,7 @@ mixin header
         input.search__submit( type = 'submit', value = '' )
 
       //- Cancel Icon
-      button#navigation__cancel.navigation__cancel ✕
+      button.navigation__cancel ✕
 
       ul.navigation__list.list
         li.list__item.item
@@ -229,28 +229,42 @@ mixin header
         span.calnedar__text= i18n[ language ].util.calendar
 
       //- Language Choice
-      button.navigation__language.language
-        +image( {
-          alt: '臺灣',
-          className: 'language__image',
-          src: 'icon/flag-zh-TW.png',
-        } )
-        span.language__text
-        span.language__switch
+      section.navigation__language.language
+        if language === 'zh-TW'
+          +image( {
+            alt: i18n[ language ].util.language,
+            className: 'language__image',
+            src: 'icon/flag-zh-TW.png',
+          } )
+        else if language === 'en-US'
+          +image( {
+            alt: i18n[ language ].util.language,
+            className: 'language__image',
+            src: 'icon/flag-en-US.png',
+          } )
+        h3.language__text= i18n[ language ].util.language
+        button.language__switch.switch
+          span.switch__icon
         ul.language__dropdown.dropdown
-          li.dropdown__item.item
-            a.item__link.link
+          li.dropdown__item.item.item--zh-TW
+            a.item__link.link( href = '?language=zh-TW' )
               +image( {
                 alt: '臺灣',
                 className: 'link__image',
                 src: 'icon/flag-zh-TW.png',
               } )
-              span.link__text 臺灣
-          li.dropdown__item.item
-            a.item__link.link
+              if language === 'zh-TW'
+                span.link__text.link__text--active 臺灣
+              else
+                span.link__text 臺灣
+          li.dropdown__item.item.item--en-US
+            a.item__link.link( href = '?language=en-US' )
               +image( {
                 alt: 'USA',
                 className: 'link__image',
                 src: 'icon/flag-en-US.png',
               } )
-              span.link__text USA
+              if language === 'en-US'
+                span.link__text.link__text--active USA
+              else
+                span.link__text USA
