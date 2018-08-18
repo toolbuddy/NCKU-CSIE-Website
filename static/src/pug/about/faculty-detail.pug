@@ -6,6 +6,7 @@ append header
 
 append content
   include /components/common/topic.pug
+  include /components/about/faculty/test.pug
   -
     const i18n = Object.freeze( {
       'en-US': {
@@ -62,29 +63,19 @@ append content
     section.award
       +topic( i18n[ language ].award )
       section.headline__small 2014
-      p.award__content 國立成功大學電資學院
-      p.award__content 國立成功大學電資學院
+      +award__list( [ '1','2','3' ] )
       section.headline__small 2018
-      p.award__content 國立成功大學電資學院
-      p.award__content 國立成功大學電資學院
+      +award__list( [ '1','2','3' ] )
     section.publication
       +topic( i18n[ language ].publication )
       section.headline__small Accepted Papers to be Published
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      +publication__list( [ '1','2','3' ] )
       section.headline__small Refereed Papers
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      +publication__list( [ '1','2','3' ] )
       section.headline__small Conference Papers - 國際會議
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      +publication__list( [ '1','2','3' ] )
       section.headline__small Conference Papers - 國內會議
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
-      section.publication__content PubTator: a Web-based text mining tool for assisting Biocuration
+      +publication__list( [ '1','2','3' ] )
     section.patent
       +topic( i18n[ language ].patent )
       table.patent__table.table
@@ -139,24 +130,14 @@ append content
       +topic( i18n[ language ].student )
       section.headline__small 博士班
       section.student__members
-        p.student__content 學生1
-        p.student__content 學生2
-        p.student__content 學生3
-        p.student__content 學生4
+        +student__list--member( [ '1','2','3' ] )
       section.headline__small 碩士班
       section.student__members
-        p.student__content 學生1
-        p.student__content 學生2
-        p.student__content 學生3
-        p.student__content 學生4
+        +student__list--member( [ '1','2','3' ] )
       section.headline__small 指導學生之特殊榮譽
-      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
-      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
-      p.student__honor 國立成功大學電資學院輔導優良導師, 2014
+      +student__list--honor( [ '1','2','3' ] )
       section.headline__small 主辦及參與國際會議
-      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
-      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
-      p.student__meeting Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)
+      +student__list--meeting( [ '1','2','3' ] )
 
 append footer
 
