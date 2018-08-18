@@ -12,12 +12,16 @@ navigationCancel.addEventListener( 'click', () => {
 
 Array.from( document.getElementsByClassName( 'item__switch' ) )
 .forEach( ( itemSwitch ) => {
-    // Const itemSubList = itemSwitch.querySelector( '+ item__sub-list' )[0];
+    const itemDropdown = itemSwitch.parentElement.querySelector( '.item__dropdown' );
     itemSwitch.addEventListener( 'click', () => {
-        if ( itemSwitch.classList.contains( 'item__switch--active' ) )
+        if ( itemSwitch.classList.contains( 'item__switch--active' ) ) {
             itemSwitch.classList.remove( 'item__switch--active' );
-        else
+            itemDropdown.classList.remove( 'item__dropdown--open' );
+        }
+        else {
             itemSwitch.classList.add( 'item__switch--active' );
+            itemDropdown.classList.add( 'item__dropdown--open' );
+        }
     } );
 } );
 

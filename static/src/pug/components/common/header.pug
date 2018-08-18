@@ -136,71 +136,76 @@ mixin header
           a.item__link( href = '/' )= i18n[ language ].route.home.index
         li.list__item.item
           a.item__link( href = '/about' )= i18n[ language ].route.about.index
-          button.item__switch
-          ul.item__sub-list.sub-list
-            li.sub-list__item.item
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown.item__dropdown--open
+            li.dropdown__item.item
               a.item__link( href = '/about/intro' )= i18n[ language ].route.about.intro
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/about/faculty' )= i18n[ language ].route.about.faculty
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/about/staff' )= i18n[ language ].route.about.staff
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/about/award' )= i18n[ language ].route.about.award
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/about/contact' )= i18n[ language ].route.about.contact
         li.list__item.item
           a.item__link( href = '/research' )= i18n[ language ].route.research.index
-          button.item__switch
-          ul.item__sub-list.sub-list
-            li.sub-list__item.item
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
               a.item__link( href = '/research/labs' )= i18n[ language ].route.research.labs
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/research/groups' )= i18n[ language ].route.research.groups
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/research/publications' )= i18n[ language ].route.research.publications
         li.list__item.item
           a.item__link( href = '/student' )= i18n[ language ].route.student.index
-          button.item__switch
-          ul.item__sub-list.sub-list
-            li.sub-list__item.item
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
               a.item__link( href = '/student/course' )= i18n[ language ].route.student.course
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/college' )= i18n[ language ].route.student.college
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/master' )= i18n[ language ].route.student.master
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/phd' )= i18n[ language ].route.student.phd
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/scholarship' )= i18n[ language ].route.student.scholarship
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/international' )= i18n[ language ].route.student.international
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/student/internship' )= i18n[ language ].route.student.internship
         li.list__item.item
           a.item__link( href = '/announcement' )= i18n[ language ].route.announcement.index
-          button.item__switch
-          ul.item__sub-list.sub-list
-            li.sub-list__item.item
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
               a.item__link( href = '/announcement/all' )= i18n[ language ].route.announcement.all
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/announcement/activity' )= i18n[ language ].route.announcement.activity
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/announcement/recruitment' )= i18n[ language ].route.announcement.recruitment
         li.list__item.item
           a.item__link( href = '/resource' )= i18n[ language ].route.resource.index
-          button.item__switch
-          ul.item__sub-list.sub-list
-            li.sub-list__item.item
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
               a.item__link( href = '/resource/rule' )= i18n[ language ].route.resource.rule
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/resource/rent' )= i18n[ language ].route.resource.rent
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/resource/fix' )= i18n[ language ].route.resource.fix
-            li.sub-list__item.item
-              a.item__link( href = '/resource/ieet' )= i18n[ language ].route.resource.IEET
-            li.sub-list__item.item
+            li.dropdown__item.item
+              a.item__link( href = '/resource/ieet' )= i18n[ language ].route.resource.ieet
+            li.dropdown__item.item
               a.item__link( href = '/resource/sitemap' )= i18n[ language ].route.resource.sitemap
-            li.sub-list__item.item
+            li.dropdown__item.item
               a.item__link( href = '/resource/alumni' )= i18n[ language ].route.resource.alumni
 
       //- Login, currently not available

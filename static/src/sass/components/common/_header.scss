@@ -73,7 +73,7 @@ body > .header {
         'navigation__calendar navigation__calendar'
         'navigation__language navigation__language';
       columns: 16fr 3fr;
-      rows: 2.05rem 9.36rem repeat( 3, 1.56rem );
+      rows: 2.05rem min-content repeat( 3, 1.56rem );
     }
     position: fixed;
     top: 0;
@@ -83,7 +83,7 @@ body > .header {
     z-index: 1;
     transition: left .5s;
     overflow-y: scroll;
-    background: #213262;
+    background-color: #213262;
 
     &.header__navigation--active {
       left: 20%;
@@ -98,7 +98,7 @@ body > .header {
           rows: 1.31rem;
         }
       }
-      background: #1d2d56;
+      background-color: #1d2d56;
       display: grid;
       margin: {
         top: .37rem;
@@ -141,12 +141,11 @@ body > .header {
 
       > .list__item.item {
         $item-height: 1.56rem;
-        height: $item-height;
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
         grid-template: {
           areas:
             'item__link item__switch'
-            'item__sub-list item__sub-list';
+            'item__dropdown item__dropdown';
           columns: 3fr 1fr;
           rows: $item-height auto;
         }
@@ -172,15 +171,14 @@ body > .header {
           width: 75%;
         }
 
-        > .item__switch {
+        > .item__switch.switch {
           grid-area: item__switch;
           background-color: transparent;
           display: inline-block;
           width: 25%;
           height: $item-height;
 
-          &::after {
-            content: '';
+          > .switch__icon {
             border: {
               color: rgba( 255, 255, 255, .5 );
               style: solid;
@@ -191,20 +189,47 @@ body > .header {
             transition: transform .5s;
             width: .44rem;
             height: .44rem;
+            display: inline-block;
           }
 
           &.item__switch--active {
-            &::after {
+            > .switch__icon {
               transform: rotate( 45deg );
             }
           }
         }
 
-        > .item__sub-list.sub-list {
-          grid-area: item__sub-list;
+        > .item__dropdown.dropdown {
+          grid-area: item__dropdown;
+          background-color: #1d2d56;
+          color: rgba( 255, 255, 255, .5 );
+          font-size: .5rem;
+          display: block;
+          opacity: 0;
+          max-height: 0;
+          overflow: hidden;
+          transition: all .5s;
 
-          > .sub-list__item.item {
-            display: none;
+          > .dropdown__item.item {
+            border-left: .01rem solid rgba( 255, 255, 255, .5 );
+            margin-left: 33%;
+            padding: {
+              top: .78rem;
+              left: .93rem;
+            }
+
+            &:first-of-type {
+              padding-top: 0;
+            }
+          }
+
+          &.item__dropdown--open {
+            opacity: 1;
+            max-height: min-content;
+            padding: {
+              top: .56rem;
+              bottom: .56rem;
+            }
           }
         }
       }
