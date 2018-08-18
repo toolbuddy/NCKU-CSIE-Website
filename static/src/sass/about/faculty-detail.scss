@@ -20,7 +20,7 @@
       '. award            .'
       '. publication      .'
       '. patent           .'
-      '. conference-paper .'
+      '. research .'
       '. student          .';
     columns: 1fr 9fr 1fr;
   };
@@ -33,7 +33,7 @@
         '. award            award            .'
         '. publication      publication      .'
         '. patent           patent           .'
-        '. conference-paper conference-paper .'
+        '. research         research .'
         '. student          student          .';
       columns: 1fr 5fr 3fr 1fr;
     };
@@ -47,291 +47,72 @@
         '. award            award            .'
         '. publication      publication      .'
         '. patent           patent           .'
-        '. conference-paper conference-paper .'
+        '. research         research .'
         '. student          student          .';
       columns: 4fr 6fr 4fr 4fr;
     };
   }
-}
 
-.profile {
-  grid-area: profile__info;
-  text-align: left;
-  color: #000000;
-  font-size: .5rem;
+  .profile {
+    grid-area: profile__info;
+    text-align: left;
+    color: #000000;
+    font-size: .5rem;
 
-  > .profile__name {
-    font: {
-      size: .6rem;
-      weight: bold;
-    }
-    line-height: 1.78;
-    letter-spacing: normal;
-    color: rgba( 0, 0, 0, .87 );
-  }
-
-  > .profile__titles.titles {
-    > .titles__title {
-      font-size: .7rem;
-      text-align: center;
-      width: 2rem;
-      color: #adacad;
-      border: solid .05rem #adacad;
-      border-radius: .15rem;
-    }
-  }
-
-  > .profile__departments.departments {
-    > .departments__department {
-      padding: .1rem .25rem;
-      border-radius: .5rem;
-      width: 3rem;
-      text-align: center;
+    > .profile__name {
+      font: {
+        size: .6rem;
+        weight: bold;
+      }
+      line-height: 1.78;
+      letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
-      background-color: #eaeff7;
-    }
-  }
-}
-
-.photo {
-  grid-area: profile__photo;
-  border-radius: 3rem;
-  height: 6rem;
-  width: 6rem;
-  background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
-}
-
-.award {
-  grid-area: award;
-
-  > .award__content {
-    font-size: .5rem;
-    background-color: #ffffff;
-    padding: .5rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0 , 0 , 0 , .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .5rem;
-    @include icon--before--trophy() {
-      margin: .1rem;
-      margin-right: .5rem;
-      height: .7rem;
-      width: .7rem;
-      float: left;
-      vertical-align: baseline;
-    }
-  }
-}
-
-.publication {
-  grid-area: publication;
-
-  > .publication__content {
-    font-size: .5rem;
-    padding: .5rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .25rem;
-    @include icon--before--book() {
-      margin: .1rem;
-      margin-right: .5rem;
-      height: .7rem;
-      width: .7rem;
-      float: left;
-      vertical-align: baseline;
-    }
-  }
-}
-
-.patent {
-  grid-area: patent;
-  margin: 1rem 0;
-  font-size: .5rem;
-
-  > .patent__table.table {
-    border-collapse: collapse;
-    text-align: center;
-
-    table, td, th {
-      width: 1016px;
-      height: 120px;
-      border: solid 1px #757575;
     }
 
-    > .table__country {
-      @include icon--before--taiwan() {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        float: left;
-        vertical-align: baseline;
+    > .profile__titles.titles {
+      > .titles__title {
+        font-size: .7rem;
+        text-align: center;
+        width: 2rem;
+        color: #adacad;
+        border: solid .05rem #adacad;
+        border-radius: .15rem;
       }
     }
 
-    > .table__date {
-      width: 133px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: solid .5px #757575;
-    }
-  }
-}
-
-.education {
-  grid-area: education;
-  background-color: rgba( 196, 196, 196, .2 );
-  font-size: .5rem;
-
-  > .education__detail.detail {
-    content: '';
-    clear: both;
-    display: table;
-    padding: .1rem .25rem;
-    border-radius: .5rem;
-    width: 3rem;
-    text-align: center;
-    color: rgba( 0, 0, 0, .87 );
-    background-color: #eaeff7;
-
-    > .detail__begin {
-      display: block;
-      float: left;
-      width: 130px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: solid .5px #757575;
-    }
-
-    > .detail__to {
-      display: block;
-      float: left;
-    }
-
-    > .detail__end {
-      display: block;
-      float: left;
-      width: 130px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: solid .5px #757575;
-    }
-
-    > .detail__country {
-      @include icon--before--taiwan() {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        float: left;
-        vertical-align: baseline;
+    > .profile__departments.departments {
+      > .departments__department {
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        width: 3rem;
+        text-align: center;
+        color: rgba( 0, 0, 0, .87 );
+        background-color: #eaeff7;
       }
     }
   }
-}
 
-.experience {
-  grid-area: experience;
-  background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
-  font-size: .5rem;
-
-  > .experience__detail.detail {
-    padding: .1rem .25rem;
-    border-radius: .5rem;
-    width: 3rem;
-    text-align: center;
-    color: rgba( 0, 0, 0, .87 );
-    background-color: #eaeff7;
-
-    > .detail__begin {
-      float: left;
-      width: 130px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: solid .5px #757575;
-    }
-
-    > .detail__to {
-      float: left;
-    }
-
-    > .detail__end {
-      float: left;
-      width: 130px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #ffffff;
-      border: solid .5px #757575;
-    }
+  .photo {
+    grid-area: profile__photo;
+    border-radius: 3rem;
+    height: 6rem;
+    width: 6rem;
+    background-color: rgba( 196, 196, 196, .2 );
+    margin: 1rem 0;
   }
-}
 
-.research {
-  grid-area: conference-paper;
-  background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
-  font-size: .5rem;
+  .award {
+    grid-area: award;
 
-  > .research__table.table {
-    border-collapse: collapse;
-    text-align: center;
-
-    > table, td, th {
-      width: 1016px;
-      height: 120px;
-      border: solid 1px #757575;
-    }
-
-    > .table__date.date {
-      > .date__begin {
-        &::after {
-          content: '-';
-        }
-        float: left;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
-        background-color: #ffffff;
-        border: solid .5px #757575;
-      }
-
-      > .date__end {
-        float: left;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
-        background-color: #ffffff;
-        border: solid .5px #757575;
-      }
-    }
-  }
-}
-
-.student {
-  grid-area: student;
-  width: 100%;
-
-  > .student__members {
-    content: '';
-    clear: both;
-    display: table;
-
-    > .student__content {
-      display: block;
-      float: left;
-      background-color: #ffffff;
+    > .award__content {
       font-size: .5rem;
+      background-color: #ffffff;
       padding: .5rem;
       border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-      margin: .25rem;
-      width: 4.5rem;
-      @include icon--before--study() {
+      box-shadow: 0 2px 24px 0 rgba( 0 , 0 , 0 , .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .5rem;
+      @include icon--before--trophy() {
+        margin: .1rem;
         margin-right: .5rem;
         height: .7rem;
         width: .7rem;
@@ -341,36 +122,255 @@
     }
   }
 
-  > .student__honor {
-    font-size: .5rem;
-    background-color: #ffffff;
-    padding: .5rem 1rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .5rem;
-    @include icon--before--trophy() {
-      margin-right: .5rem;
-      height: .7rem;
-      width: .7rem;
-      float: left;
-      vertical-align: baseline;
+  .publication {
+    grid-area: publication;
+
+    > .publication__content {
+      font-size: .5rem;
+      padding: .5rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .25rem;
+      @include icon--before--book() {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .7rem;
+        width: .7rem;
+        float: left;
+        vertical-align: baseline;
+      }
     }
   }
 
-  > .student__meeting {
+  .patent {
+    grid-area: patent;
+    margin: 1rem 0;
     font-size: .5rem;
-    background-color: #ffffff;
-    padding: .5rem 1rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .5rem;
-    @include icon--before--book() {
-      margin: .1rem;
-      margin-right: .5rem;
-      height: .7rem;
-      width: .7rem;
-      float: left;
-      vertical-align: baseline;
+
+    > .patent__table.table {
+      border-collapse: collapse;
+      text-align: center;
+
+      table, td, th {
+        width: 1016px;
+        height: 120px;
+        border: solid 1px #757575;
+      }
+
+      > .table__country {
+        @include icon--before--taiwan() {
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          float: left;
+          vertical-align: baseline;
+        }
+      }
+
+      > .table__date {
+        width: 133px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+    }
+  }
+
+  .education {
+    grid-area: education;
+    background-color: rgba( 196, 196, 196, .2 );
+    font-size: .5rem;
+
+    > .education__detail.detail {
+      content: '';
+      clear: both;
+      display: table;
+      padding: .1rem .25rem;
+      border-radius: .5rem;
+      width: 3rem;
+      text-align: center;
+      color: rgba( 0, 0, 0, .87 );
+      background-color: #eaeff7;
+
+      > .detail__begin {
+        display: block;
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+
+      > .detail__to {
+        display: block;
+        float: left;
+      }
+
+      > .detail__end {
+        display: block;
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+
+      > .detail__country {
+        @include icon--before--taiwan() {
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          float: left;
+          vertical-align: baseline;
+        }
+      }
+    }
+  }
+
+  .experience {
+    grid-area: experience;
+    background-color: rgba( 196, 196, 196, .2 );
+    margin: 1rem 0;
+    font-size: .5rem;
+
+    > .experience__detail.detail {
+      padding: .1rem .25rem;
+      border-radius: .5rem;
+      width: 3rem;
+      text-align: center;
+      color: rgba( 0, 0, 0, .87 );
+      background-color: #eaeff7;
+
+      > .detail__begin {
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+
+      > .detail__to {
+        float: left;
+      }
+
+      > .detail__end {
+        float: left;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        border: solid .5px #757575;
+      }
+    }
+  }
+
+  .research {
+    grid-area: research;
+    background-color: rgba( 196, 196, 196, .2 );
+    margin: 1rem 0;
+    font-size: .5rem;
+
+    > .research__table.table {
+      border-collapse: collapse;
+      text-align: center;
+      border: solid 1px #757575;
+      width: 100%;
+      height: 3rem;
+
+      > .table__body.body {
+        > .body__titles.titles {
+          > .titles__title {
+            border: solid 1px #757575;
+          }
+        }
+
+        > .body__details.details {
+          > .details__detail {
+            border: solid 1px #757575;
+
+            > .detail__date.date {
+              > .date__begin {
+                border-radius: 15px;
+                border: solid .5px #757575;
+              }
+
+              > .date__end {
+                border-radius: 15px;
+                border: solid .5px #757575;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .student {
+    grid-area: student;
+    width: 100%;
+
+    > .student__members {
+      content: '';
+      clear: both;
+      display: table;
+
+      > .student__content {
+        display: block;
+        float: left;
+        background-color: #ffffff;
+        font-size: .5rem;
+        padding: .5rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+        margin: .25rem;
+        width: 4.5rem;
+        @include icon--before--study() {
+          margin-right: .5rem;
+          height: .7rem;
+          width: .7rem;
+          float: left;
+          vertical-align: baseline;
+        }
+      }
+    }
+
+    > .student__honor {
+      font-size: .5rem;
+      background-color: #ffffff;
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .5rem;
+      @include icon--before--trophy() {
+        margin-right: .5rem;
+        height: .7rem;
+        width: .7rem;
+        float: left;
+        vertical-align: baseline;
+      }
+    }
+
+    > .student__meeting {
+      font-size: .5rem;
+      background-color: #ffffff;
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      margin: .5rem;
+      @include icon--before--book() {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .7rem;
+        width: .7rem;
+        float: left;
+        vertical-align: baseline;
+      }
     }
   }
 }
