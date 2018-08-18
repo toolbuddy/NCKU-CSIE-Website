@@ -1,6 +1,15 @@
 @import 'components/common/icon';
 
 body > .header {
+  $xxx-small: 480px;
+  $xx-small: 560px;
+  $x-small: 640px;
+  $small: 720px;
+  $medium: 800px;
+  $large: 880px;
+  $x-large: 960px;
+  $xx-large: 1040px;
+  $xxx-large: 1120px;
   $header-height: 3.2rem;
   display: grid;
   grid-template: {
@@ -79,14 +88,14 @@ body > .header {
     top: 0;
     left: 100%;
     height: 100%;
-    width: 80%;
+    width: 100%;
     z-index: 1;
     transition: left .5s;
     overflow-y: auto;
     background-color: #213262;
 
     &.header__navigation--active {
-      left: 20%;
+      left: 0;
     }
 
     > .navigation__search.search {
@@ -378,6 +387,87 @@ body > .header {
           opacity: 1;
           max-height: min-content;
         }
+      }
+    }
+  }
+  @media screen and ( min-width: $xxx-small ) {
+    > .header__navigation.navigation {
+      width: 80%;
+
+      &.header__navigation--active {
+        left: 20%;
+      }
+    }
+  }
+  @media screen and ( min-width: $xx-small ) {
+    > .header__navigation.navigation {
+      width: 75%;
+
+      &.header__navigation--active {
+        left: 25%;
+      }
+    }
+  }
+  @media screen and ( min-width: $x-small ) {
+    > .header__navigation.navigation {
+      width: 70%;
+
+      &.header__navigation--active {
+        left: 30%;
+      }
+    }
+  }
+  @media screen and ( min-width: $small ) {
+    > .header__navigation.navigation {
+      width: 65%;
+
+      &.header__navigation--active {
+        left: 35%;
+      }
+    }
+  }
+  @media screen and ( min-width: $medium ) {
+    > .header__navigation.navigation {
+      width: 60%;
+
+      &.header__navigation--active {
+        left: 40%;
+      }
+    }
+  }
+  @media screen and ( min-width: $large ) {
+    > .header__navigation.navigation {
+      width: 55%;
+
+      &.header__navigation--active {
+        left: 45%;
+      }
+    }
+  }
+  @media screen and ( min-width: $x-large ) {
+    > .header__navigation.navigation {
+      width: 50%;
+
+      &.header__navigation--active {
+        left: 50%;
+      }
+    }
+  }
+  @media screen and ( min-width: $xx-large ) {
+    > .header__navigation.navigation {
+      width: 45%;
+
+      &.header__navigation--active {
+        left: 55%;
+      }
+    }
+  }
+  @media screen and ( min-width: $xxx-large ) {
+    > .header__navigation.navigation {
+      width: 40%;
+
+      &.header__navigation--active {
+        left: 60%;
       }
     }
   }
