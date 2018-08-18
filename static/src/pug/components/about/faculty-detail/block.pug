@@ -1,4 +1,63 @@
-mixin cards__card( faculty = {} )
+mixin details__detail( faculty = {} )
+  if profile !== null
+    section.profile
+    img.photo(src="/path-to-image.jpg", alt="Image Title")
+  if education !== null
+    section.education
+  if experience !== null
+    section.experience
+  if award !== null
+    section.award
+      +topic( i18n[ language ].award )
+      h2.headline__small 2014
+      +award__list( [ '1','2','3' ] )
+      h2.headline__small 2018
+      +award__list( [ '1','2','3' ] )
+  if publication !== null
+    section.publication
+      +topic( i18n[ language ].publication )
+      h2.headline__small Accepted Papers to be Published
+      +publication__list( [ '1','2','3' ] )
+      h2.headline__small Refereed Papers
+      +publication__list( [ '1','2','3' ] )
+      h2.headline__small Conference Papers - 國際會議
+      +publication__list( [ '1','2','3' ] )
+      h2.headline__small Conference Papers - 國內會議
+      +publication__list( [ '1','2','3' ] )
+  if patent !== null
+    section.patent
+  if research !== null
+    section.research
+  if student !== null
+    section.student
+      +topic( i18n[ language ].student )
+      section.headline__small 博士班
+      section.student__members
+        +student__list--member( [ '1','2','3' ] )
+      section.headline__small 碩士班
+      section.student__members
+        +student__list--member( [ '1','2','3' ] )
+      section.headline__small 指導學生之特殊榮譽
+      +student__list--honor( [ '1','2','3' ] )
+      section.headline__small 主辦及參與國際會議
+      +student__list--meeting( [ '1','2','3' ] )
+
+mixin student__list--member( array )
+    each element in array
+      p( class=`student__content` )= '學生'
+mixin student__list--honor( array )
+    each element in array
+      p( class=`student__honor` )= '學生'
+mixin student__list--meeting( array )
+    each element in array
+      p( class=`student__meeting` )= '學生'
+mixin award__list( array )
+    each element in array
+      p( class=`award__content` )= '國立成功大學電資學院'
+mixin publication__list( array )
+    each element in array
+      p( class=`publication__content` )= 'PubTator: a Web-based text mining tool for assisting Biocuration'
+
   figure.cards__card.card
     //- photo of faculty
     img.card__photo( src=faculty.photo, alt=faculty.name )
