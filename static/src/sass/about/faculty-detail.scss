@@ -68,7 +68,7 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
     }
-    
+
     > .profile__titles.titles {
       > .titles__title {
         font-size: .7rem;
@@ -141,7 +141,7 @@
       }
     }
   }
-  
+
   .patent {
     grid-area: patent;
     margin: 1rem 0;
@@ -321,7 +321,7 @@
       clear: both;
       display: table;
 
-      > .student__content {
+      > .student__member {
         display: block;
         float: left;
         background-color: #ffffff;
@@ -341,7 +341,7 @@
       }
     }
 
-    > .student__honor {
+    > .student__award {
       font-size: .5rem;
       background-color: #ffffff;
       padding: .5rem 1rem;
