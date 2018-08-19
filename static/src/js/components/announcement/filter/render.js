@@ -1,5 +1,8 @@
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
-import { pageOnClick, } from 'static/src/js/components/announcement/filter/event.js';
+import page from 'static/src/pug/components/announcement/page.pug';
+import {
+    pageOnClick,
+} from 'static/src/js/components/announcement/filter/event.js';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 /**
@@ -37,11 +40,20 @@ export function renderFilter ( defaultTagName = 'all' ) {
 }
 
 const pages = document.getElementById( 'pages' );
-
 export function renderPages ( totalPages = 1 ) {
     pages.innerHTML = '';
-    for ( let i = 1; i <= totalPages; ++i )
-        pages.innerHTML += `<button class="pages__page" id="pages__page--${ i }">${ i }</button>`;
+    const currentPage = new URLSearchParams( window.location.search ).get( 'page' );
+
+    pages.innerHTML += page( {
+        totalPages,
+        currentPage,
+    } );
+
+    if ( !currentPage )
+        document.getElementById( 'pages__page--1' ).classList.add( 'pages__page--active' );
+    else
+        document.getElementById( `pages__page--${ currentPage }` ).classList.add( 'pages__page--active' );
+
     Array.from( document.getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
         page.addEventListener( 'click', pageOnClick );
     } );

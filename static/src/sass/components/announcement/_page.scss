@@ -1,0 +1,42 @@
+.pages {
+  display: inline-block;
+  justify-self: center;
+
+  > .pages__page {
+    font-size: 20px;
+    text-decoration: none;
+    transition: background-color .3s;
+    color: #999999;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 45px;
+
+    &:hover:not( .pages__page--active ) {
+      cursor: pointer;
+    }
+
+    &:first-child, &:last-child {
+      color: #32477d;
+      border: 1px solid #32477d;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      font-size: 30px;
+    }
+
+    &:first-child {
+      margin-right: 3rem;
+    }
+
+    &:last-child {
+      margin-left: 3rem;
+    }
+
+    &--active {
+      color: #ffffff;
+      background-color: #213262;
+      box-shadow: 0 3px 4px 0 rgba( 33, 50, 98, .25 );
+    }
+  }
+}

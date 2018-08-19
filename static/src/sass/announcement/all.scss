@@ -3,7 +3,7 @@
 @import 'components/announcement/filter';
 @import 'components/announcement/title';
 @import 'components/common/topic';
-@import 'components/announcement/pagination';
+@import 'components/announcement/page';
 
 .content {
   $small: 850px;
@@ -59,6 +59,16 @@
   // block
   // `.content .announcement`
   .announcement {
+    // element [position]
+    grid-column: {
+      start: 1;
+      end: 11;
+    }
+  }
+
+  // block
+  // `.content .pages`
+  .pages {
     // element [position]
     grid-column: {
       start: 1;
