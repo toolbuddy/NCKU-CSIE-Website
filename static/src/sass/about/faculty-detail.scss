@@ -3,7 +3,7 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/icon';
-@import 'components/about/faculty-detail/headline';
+@import 'components/about/faculty/subtitle';
 
 .content {
   $small: 768px;
@@ -49,7 +49,7 @@
         '. patent           patent           .'
         '. research         research .'
         '. student          student          .';
-      columns: 4fr 6fr 4fr 4fr;
+      columns: 3fr 6fr 4fr 3fr;
     };
   }
 
@@ -68,7 +68,7 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
     }
-
+    
     > .profile__titles.titles {
       > .titles__title {
         font-size: .7rem;
@@ -137,11 +137,11 @@
         height: .7rem;
         width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
   }
-
+  
   .patent {
     grid-area: patent;
     margin: 1rem 0;
@@ -276,6 +276,7 @@
     margin: 1rem 0;
     font-size: .5rem;
 
+
     > .research__table.table {
       border-collapse: collapse;
       text-align: center;
@@ -352,7 +353,7 @@
         height: .7rem;
         width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
 

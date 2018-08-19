@@ -7,16 +7,25 @@ append header
 append content
   include /components/common/topic.pug
   include /components/about/faculty/test.pug
+  include /components/about/faculty/subtitle.pug
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'education':   'Education',
-        'experience':  'Experience',
-        'award':       'Award',
-        'publication': 'Publication',
-        'patent':      'Patent',
-        'research':    'Research',
-        'student':     'Student',
+        'education':          'Education',
+        'experience':         'Experience',
+        'award':              'Award',
+        'publication':        'Publication',
+        'patent':             'Patent',
+        'research':           'Research',
+        'student':            'Student',
+        'student__doctoral':  '博士生',
+        'student__master':    '碩士生',
+        'student__award':     '指導學生之特殊榮譽',
+        'student__meeting':   '主辦及參與國際會議',
+        'publication__accepted':        'Accepted Papers to be Published',
+        'publication__refereed':        'Refereed Papers',
+        'publication__international':   'Conference Papers - 國際會議',
+        'publication__domestic':         'Conference Papers - 國內會議',
       },
       'zh-TW': {
         'education':   '學歷',
@@ -26,6 +35,14 @@ append content
         'patent':      '專利',
         'research':    '研究計劃',
         'student':     '指導學生',
+        'student__doctoral':  '博士生',
+        'student__master':    '碩士生',
+        'student__award':     '指導學生之特殊榮譽',
+        'student__meeting':   '主辦及參與國際會議',
+        'publication__accepted':        'Accepted Papers to be Published',
+        'publication__refereed':        'Refereed Papers',
+        'publication__international':   'Conference Papers - 國際會議',
+        'publication__domestic':         'Conference Papers - 國內會議',
       },
     } );
 
@@ -62,19 +79,19 @@ append content
         p.detail__degree 博士
     section.award
       +topic( i18n[ language ].award )
-      section.headline__small 2014
+      section.subtitle 2014
       +award__list( [ '1','2','3' ] )
-      section.headline__small 2018
+      section.subtitle 2018
       +award__list( [ '1','2','3' ] )
     section.publication
       +topic( i18n[ language ].publication )
-      section.headline__small Accepted Papers to be Published
+      +subtitle( i18n[ language ].publication__accepted )
       +publication__list( [ '1','2','3' ] )
-      section.headline__small Refereed Papers
+      +subtitle( i18n[ language ].publication__refereed )
       +publication__list( [ '1','2','3' ] )
-      section.headline__small Conference Papers - 國際會議
+      +subtitle( i18n[ language ].publication__international )
       +publication__list( [ '1','2','3' ] )
-      section.headline__small Conference Papers - 國內會議
+      +subtitle( i18n[ language ].publication__domestic )
       +publication__list( [ '1','2','3' ] )
     section.patent
       +topic( i18n[ language ].patent )
@@ -130,15 +147,15 @@ append content
             td.details__detail 科技部
     section.student
       +topic( i18n[ language ].student )
-      section.headline__small 博士班
+      +subtitle( i18n[ language ].student__doctoral )
       section.student__members
         +student__list--member( [ '1','2','3' ] )
-      section.headline__small 碩士班
+      +subtitle( i18n[ language ].student__master )
       section.student__members
         +student__list--member( [ '1','2','3' ] )
-      section.headline__small 指導學生之特殊榮譽
-      +student__list--honor( [ '1','2','3' ] )
-      section.headline__small 主辦及參與國際會議
+      +subtitle( i18n[ language ].student__award )
+      +student__list--award( [ '1','2','3' ] )
+      +subtitle( i18n[ language ].student__meeting )
       +student__list--meeting( [ '1','2','3' ] )
 
 append footer

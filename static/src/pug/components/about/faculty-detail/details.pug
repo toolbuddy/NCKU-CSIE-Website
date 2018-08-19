@@ -16,13 +16,13 @@ mixin details__detail( faculty = {} )
   if publication !== null
     section.publication
       +topic( i18n[ language ].publication )
-      h2.headline__small Accepted Papers to be Published
+      +subtitle( i18n[ language ].publication__accepted )
       +publication__list( [ '1','2','3' ] )
-      h2.headline__small Refereed Papers
+      +subtitle( i18n[ language ].publication__refereed )
       +publication__list( [ '1','2','3' ] )
-      h2.headline__small Conference Papers - 國際會議
+      +subtitle( i18n[ language ].publication__international )
       +publication__list( [ '1','2','3' ] )
-      h2.headline__small Conference Papers - 國內會議
+      +subtitle( i18n[ language ].publication__domestic )
       +publication__list( [ '1','2','3' ] )
   if patent !== null
     section.patent
@@ -31,15 +31,15 @@ mixin details__detail( faculty = {} )
   if student !== null
     section.student
       +topic( i18n[ language ].student )
-      section.headline__small 博士班
+      +subtitle( i18n[ language ].student__doctoral )
       section.student__members
         +student__list--member( [ '1','2','3' ] )
-      section.headline__small 碩士班
+      +subtitle( i18n[ language ].student__master )
       section.student__members
         +student__list--member( [ '1','2','3' ] )
-      section.headline__small 指導學生之特殊榮譽
+      +subtitle( i18n[ language ].student__award )
       +student__list--honor( [ '1','2','3' ] )
-      section.headline__small 主辦及參與國際會議
+      +subtitle( i18n[ language ].student__meeting )
       +student__list--meeting( [ '1','2','3' ] )
 
 mixin student__list--member( array )
