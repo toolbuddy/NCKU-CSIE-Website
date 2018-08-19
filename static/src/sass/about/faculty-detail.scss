@@ -3,7 +3,7 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/icon';
-@import 'components/about/faculty-detail/headline';
+@import 'components/about/faculty/subtitle';
 
 .content {
   $small: 768px;
@@ -49,7 +49,7 @@
         '. patent           patent           .'
         '. conference-paper conference-paper .'
         '. student          student          .';
-      columns: 4fr 6fr 4fr 4fr;
+      columns: 3fr 6fr 4fr 3fr;
     };
   }
 }
@@ -59,6 +59,7 @@
   text-align: left;
   color: #000000;
   font-size: .5rem;
+
 
   > .profile__name {
     font: {
@@ -108,17 +109,17 @@
   > .award__content {
     font-size: .5rem;
     background-color: #ffffff;
-    padding: .5rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0 , 0 , 0 , .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    padding: .6rem;
+    border-radius: .2rem;
+    box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
     @include icon--before--trophy() {
-      margin: .1rem;
+      margin: .05rem;
       margin-right: .5rem;
       height: .7rem;
       width: .7rem;
       float: left;
-      vertical-align: baseline;
+      vertical-align: middle;
     }
   }
 }
@@ -128,17 +129,18 @@
 
   > .publication__content {
     font-size: .5rem;
-    padding: .5rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .25rem;
+    background-color: #ffffff;
+    padding: .6rem;
+    border-radius: .2rem;
+    box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+    margin: .5rem;
     @include icon--before--book() {
-      margin: .1rem;
+      margin: .05rem;
       margin-right: .5rem;
       height: .7rem;
       width: .7rem;
       float: left;
-      vertical-align: baseline;
+      vertical-align: middle;
     }
   }
 }
@@ -161,9 +163,8 @@
     > .table__country {
       @include icon--before--taiwan() {
         margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
+        height: .7rem;
+        width: .7rem;
         float: left;
         vertical-align: baseline;
       }
@@ -181,7 +182,7 @@
 
 .education {
   grid-area: education;
-  background-color: rgba( 196, 196, 196, .2 );
+  background-color: #ffffff;
   font-size: .5rem;
 
   > .education__detail.detail {
@@ -223,11 +224,10 @@
     > .detail__country {
       @include icon--before--taiwan() {
         margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
+        height: .7rem;
+        width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
   }
@@ -235,7 +235,7 @@
 
 .experience {
   grid-area: experience;
-  background-color: rgba( 196, 196, 196, .2 );
+  background-color: #ffffff;
   margin: 1rem 0;
   font-size: .5rem;
 
@@ -273,8 +273,7 @@
 
 .research {
   grid-area: conference-paper;
-  background-color: rgba( 196, 196, 196, .2 );
-  margin: 1rem 0;
+  background-color: #ffffff;
   font-size: .5rem;
 
   > .research__table.table {
@@ -318,60 +317,61 @@
   width: 100%;
 
   > .student__members {
-    content: '';
-    clear: both;
-    display: table;
+    display: flex;
+    flex-wrap: wrap;
 
     > .student__member {
       display: block;
       float: left;
-      background-color: #ffffff;
       font-size: .5rem;
+      background-color: #ffffff;
       padding: .5rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
       margin: .25rem;
-      width: 4.5rem;
+      width: 4rem;
       @include icon--before--study() {
+        margin: .05rem;
         margin-right: .5rem;
         height: .7rem;
         width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
   }
 
-  > .student__honor {
+  > .student__award {
     font-size: .5rem;
     background-color: #ffffff;
-    padding: .5rem 1rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
-    margin: .5rem;
+    padding: .5rem;
+    border-radius: .2rem;
+    box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+    margin: .6rem;
     @include icon--before--trophy() {
+      margin: .05rem;
       margin-right: .5rem;
       height: .7rem;
       width: .7rem;
       float: left;
-      vertical-align: baseline;
+      vertical-align: middle;
     }
   }
 
   > .student__meeting {
     font-size: .5rem;
     background-color: #ffffff;
-    padding: .5rem 1rem;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    padding: .6rem;
+    border-radius: .2rem;
+    box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
     margin: .5rem;
     @include icon--before--book() {
-      margin: .1rem;
+      margin: .05rem;
       margin-right: .5rem;
       height: .7rem;
       width: .7rem;
       float: left;
-      vertical-align: baseline;
+      vertical-align: middle;
     }
   }
 }
