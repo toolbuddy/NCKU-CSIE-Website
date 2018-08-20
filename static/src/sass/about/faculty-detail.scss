@@ -200,14 +200,14 @@
       display: table;
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 3rem;
+      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
       background-color: #eaeff7;
+      display: inline-flex;
 
       > .detail__begin {
-        display: block;
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -215,14 +215,8 @@
         border: solid .5px #757575;
       }
 
-      > .detail__to {
-        display: block;
-        float: left;
-      }
-
       > .detail__end {
-        display: block;
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -233,7 +227,8 @@
       > .detail__country {
         @include icon--before--taiwan() {
           margin: .1rem;
-          margin-right: .5rem;
+          margin-left: .2rem;
+          margin-top: .2rem;
           height: .5rem;
           width: .5rem;
           float: left;
@@ -252,12 +247,14 @@
     > .experience__detail.detail {
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 3rem;
+      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
       background-color: #eaeff7;
+      display: inline-flex;
 
       > .detail__begin {
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -266,6 +263,7 @@
       }
 
       > .detail__end {
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
