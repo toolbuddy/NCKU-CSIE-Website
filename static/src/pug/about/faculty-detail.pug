@@ -62,7 +62,7 @@ append content
       +topic( i18n[ language ].education )
       section.education__detail.detail
         time.detail__begin 2016.09.11
-        p.detail__to -
+        | -
         time.detail__end 2016.09.12
         img.detail__country
         p.detail__school 成功大學
@@ -72,7 +72,7 @@ append content
       +topic( i18n[ language ].experience )
       section.experience__detail.detail
         time.detail__begin 2016.09.11
-        p.detail__to -
+        | -
         time.detail__end 2016.09.12
         p.detail__school 成功大學
         p.detail__department 電機
@@ -96,23 +96,25 @@ append content
     section.patent
       +topic( i18n[ language ].patent )
       table.patent__table.table
-        tr.table__titles.titles
-          th.titles__title 類別
-          th.titles__title 專利名稱
-          th.titles__title 專利權人
-          th.titles__title 國別
-          th.titles__title 發明人
-          th.titles__title 專利號碼
-          th.titles__title 專利期間
-        tr.table__details.details
-          td.details__detail A
-          td.details__detail  機台維修系統與方法
-          td.details__detail  國立成功大學
-          td.details__detail  taiwan
-          td.details__detail  鄭方田
-          td.details__detail  審查中
-          td.details__detail
-            time.detail__date 2016.09.11
+        tbody.table__body.body
+          tr.body__titles.titles
+            th.titles__title 類別
+            th.titles__title 專利名稱
+            th.titles__title 專利權人
+            th.titles__title 國別
+            th.titles__title 發明人
+            th.titles__title 專利號碼
+            th.titles__title 專利期間
+          tr.body__details.details
+            td.details__detail A
+            td.details__detail  機台維修系統與方法
+            td.details__detail  國立成功大學
+            td.details__detail
+              p.detail__country
+            td.details__detail  鄭方田
+            td.details__detail  審查中
+            td.details__detail
+              time.detail__date 2016.09.11
     section.research
       +topic( i18n[ language ].research )
       table.research__table.table
