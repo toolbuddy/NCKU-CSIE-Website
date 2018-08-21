@@ -1,4 +1,5 @@
 include /components/common/topic.pug
+include /components/about/faculty/subtitle.pug
 -
   const i18n = Object.freeze( {
     'en-US': {
@@ -16,7 +17,9 @@ include /components/common/topic.pug
       'publication__accepted':        'Accepted Papers to be Published',
       'publication__refereed':        'Refereed Papers',
       'publication__international':   'Conference Papers - 國際會議',
-      'publication__domestic':         'Conference Papers - 國內會議',
+      'publication__domestic':        'Conference Papers - 國內會議',
+      'research__tech':               'Tech-Research',
+      'research__normal':          'Normal-Research',
     },
     'zh-TW': {
       'education':   '學歷',
@@ -34,27 +37,11 @@ include /components/common/topic.pug
       'publication__refereed':        'Refereed Papers',
       'publication__international':   'Conference Papers - 國際會議',
       'publication__domestic':         'Conference Papers - 國內會議',
+      'research__tech':         '科技部研究計畫',
+      'research__normal':         '一般建教案',
     },
   } );
 
-mixin student__list--memberdoc( array )
-  each element in array
-    p( class=`student__member--doctoral` )= '博士生'
-mixin student__list--membermas( array )
-  each element in array
-    p( class=`student__member--master` )= '碩士生'
-mixin student__list--honor( array )
-  each element in array
-    p( class=`student__award` )= '國立成功大學電資學院輔導優良導師, 2014'
-mixin student__list--meeting( array )
-  each element in array
-    p( class=`student__meeting` )= 'Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)'
-mixin award__list( array )
-  each element in array
-    p( class=`award__content` )= '國立成功大學電資學院'
-mixin publication__list( array )
-  each element in array
-    p( class=`publication__content` )= 'PubTator: a Web-based text mining tool for assisting Biocuration'
 mixin titles__title( array )
   each element in array
     span( class=`titles__title` )= element
@@ -83,8 +70,27 @@ mixin experience__detail( array )
       p.detail__school= element.school
       p.detail__department= element.department
       p.detail__degree= element.degree
+mixin award__list( array )
+  - array.sort( (e1, e2) => e1.time > e2.time )
+  each element in array
+    p( class=`award__content` )= element.award + element.time
+mixin student__list--memberdoc( array )
+  each element in array
+    p( class=`student__member--doctoral` )= element
+mixin student__list--membermas( array )
+  each element in array
+    p( class=`student__member--master` )= element
+mixin student__list--honor( array )
+  each element in array
+    p( class=`student__award` )= element
+mixin student__list--meeting( array )
+  each element in array
+    p( class=`student__meeting` )= element
+mixin publication__list( array )
+  each element in array
+    p( class=`publication__content` )= element
 
-if profile !== undefined
+if profile
   section.profile
     section.profile__headline.headline
       header.headline__name= profile.name
@@ -100,6 +106,7 @@ if profile !== undefined
     aside.profile__domains.domains 專長領域：
       +domains__domain(profile.domain)
     img.photo( src = "https://via.placeholder.com/150x150" alt = "Image Title" )
+
 if education
   section.education
     +topic( i18n[ language ].education )
@@ -115,25 +122,30 @@ if experience
       p.detail__school 成功大學
       p.detail__department 電機
       p.detail__degree 博士
-//- if award !== null
+
+if award
   section.award
     +topic( i18n[ language ].award )
     section.subtitle 2014
-    +award__list( [ '1','2','3' ] )
+    +award__list( award )
     section.subtitle 2018
-    +award__list( [ '1','2','3' ] )
-//- if publication !== null
+    +award__list( award )
+if publicationAccepted || publicationRefereed || publicationInternational || publicationDomestic
   section.publication
     +topic( i18n[ language ].publication )
-    +subtitle( i18n[ language ].publication__accepted )
-    +publication__list( [ '1','2','3' ] )
-    +subtitle( i18n[ language ].publication__refereed )
-    +publication__list( [ '1','2','3' ] )
-    +subtitle( i18n[ language ].publication__international )
-    +publication__list( [ '1','2','3' ] )
-    +subtitle( i18n[ language ].publication__domestic )
-    +publication__list( [ '1','2','3' ] )
-//- if patent !== null
+    if publicationAccepted
+      +subtitle( i18n[ language ].publication__accepted )
+      +publication__list( publicationAccepted )
+    if publicationRefereed
+      +subtitle( i18n[ language ].publication__refereed )
+      +publication__list( publicationRefereed )
+    if publicationInternational
+      +subtitle( i18n[ language ].publication__international )
+      +publication__list( publicationInternational )
+    if publicationDomestic
+      +subtitle( i18n[ language ].publication__domestic )
+      +publication__list( publicationDomestic )
+//- if patent
   section.patent
     +topic( i18n[ language ].patent )
     table.patent__table.table
@@ -156,11 +168,11 @@ if experience
           td.details__detail  審查中
           td.details__detail
             time.detail__date 2016.09.11
-//- if research !== null
+if research
   section.research
     +topic( i18n[ language ].research )
     table.research__table.table
-      caption.headline__small 科技部研究計畫
+      +subtitle( i18n[ language ].research__tech )
       tbody.table__body.body
         tr.body__titles.titles
           th.titles__title 企劃名稱
@@ -175,7 +187,7 @@ if experience
               time.date__end 2016.09.12
           td.details__detail 科技部
     table.research__table.table
-      caption.headline__small 一般建教案
+      +subtitle( i18n[ language ].research__normal )
       tbody.table__body.body
         tr.body__titles.titles
           th.titles__title 企劃名稱
@@ -189,16 +201,20 @@ if experience
               | -
               time.date__end 2016.09.12
           td.details__detail 科技部
-//- if student !== null
+if studentdoc || studentmas || studentAward || studentMeeting
   section.student
     +topic( i18n[ language ].student )
-    +subtitle( i18n[ language ].student__doctoral )
-    section.student__members
-      +student__list--memberdoc( [ '1','2','3','4' ] )
-    +subtitle( i18n[ language ].student__master )
-    section.student__members
-      +student__list--membermas( [ '1','2','3','4' ] )
-    +subtitle( i18n[ language ].student__award )
-    +student__list--honor( [ '1','2','3' ] )
-    +subtitle( i18n[ language ].student__meeting )
-    +student__list--meeting( [ '1','2','3' ] )
+    if studentdoc
+      +subtitle( i18n[ language ].student__doctoral )
+      section.student__members
+        +student__list--memberdoc( studentdoc )
+    if studentmas
+      +subtitle( i18n[ language ].student__master )
+      section.student__members
+        +student__list--membermas( studentmas )
+    if studentAward
+      +subtitle( i18n[ language ].student__award )
+      +student__list--honor( studentAward )
+    if studentMeeting
+      +subtitle( i18n[ language ].student__meeting )
+      +student__list--meeting( studentMeeting )
