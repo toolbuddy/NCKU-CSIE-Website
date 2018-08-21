@@ -7,8 +7,8 @@ import header from 'static/src/js/components/common/header/index.js';
 import detail from 'static/src/pug/components/about/faculty/details.pug';
 
 document.getElementById( 'content' ).innerHTML = detail( {
-    profile: {
-        language: 'zh-TW',
+    language: 'zh-TW',
+    profile:  {
         name:     '教師名稱',
         title:    [
             '教授',
@@ -25,6 +25,24 @@ document.getElementById( 'content' ).innerHTML = detail( {
         ],
     },
     education: {
+        detail: [
+            {
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                school:     '成功大學',
+                department: '電機',
+                degree:     '博士',
+            },
+            {
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                school:     '成功大學',
+                department: '電機',
+                degree:     '博士',
+            },
+        ],
+    },
+    experience: {
         detail: [
             {
                 timeBegin:  '2016.09.11',

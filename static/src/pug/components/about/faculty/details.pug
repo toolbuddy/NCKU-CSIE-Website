@@ -1,3 +1,4 @@
+include /components/common/topic.pug
 -
   const i18n = Object.freeze( {
     'en-US': {
@@ -65,13 +66,23 @@ mixin domains__domain( array )
     span( class=`domains__domain` )= element
 mixin education__detail( array )
   each element in array
-    time.detail__begin= element.timeBegin
-    | -
-    time.detail__end= element.timeEnd
-    p.detail__country
-    p.detail__school= element.school
-    p.detail__department= element.department
-    p.detail__degree= element.degree
+    section.education__detail.detail
+      time.detail__begin= element.timeBegin
+      | -
+      time.detail__end= element.timeEnd
+      p.detail__country
+      p.detail__school= element.school
+      p.detail__department= element.department
+      p.detail__degree= element.degree
+mixin experience__detail( array )
+  each element in array
+    section.experience__detail.detail
+      time.detail__begin= element.timeBegin
+      | -
+      time.detail__end= element.timeEnd
+      p.detail__school= element.school
+      p.detail__department= element.department
+      p.detail__degree= element.degree
 
 if profile !== undefined
   section.profile
@@ -93,26 +104,11 @@ if education
   section.education
     +topic( i18n[ language ].education )
     +education__detail(education.detail)
-    //- section.education__detail.detail
-      time.detail__begin 2016.09.11
-      | -
-      time.detail__end 2016.09.12
-      p.detail__country
-      p.detail__school 成功大學
-      p.detail__department 電機
-      p.detail__degree 博士
-    //- section.education__detail.detail
-      time.detail__begin 2016.09.11
-      | -
-      time.detail__end 2016.09.12
-      p.detail__country
-      p.detail__school 成功大學
-      p.detail__department 電機
-      p.detail__degree 博士
-//- if experience !== null
+if experience
   section.experience
     +topic( i18n[ language ].experience )
-    section.experience__detail.detail
+    +experience__detail(experience.detail)
+    //- section.experience__detail.detail
       time.detail__begin 2016.09.11
       | -
       time.detail__end 2016.09.12
