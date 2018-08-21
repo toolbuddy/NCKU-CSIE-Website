@@ -258,7 +258,6 @@
 
   .education {
     grid-area: education;
-    background-color: rgba( 196, 196, 196, .2 );
     font-size: .5rem;
 
     > .education__detail.detail {
@@ -270,7 +269,6 @@
       width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
-      background-color: #eaeff7;
       display: inline-flex;
 
       > .detail__begin {
@@ -280,6 +278,7 @@
         border-radius: 15px;
         background-color: #ffffff;
         border: solid .5px #757575;
+        margin: 0 .1rem;
       }
 
       > .detail__end {
@@ -289,9 +288,12 @@
         border-radius: 15px;
         background-color: #ffffff;
         border: solid .5px #757575;
+        margin: 0 .1rem;
+        margin-right: 1rem;
       }
 
       > .detail__country {
+        margin: 0 .1rem;
         @include icon--before--taiwan() {
           margin: .1rem;
           margin-left: .2rem;
@@ -302,12 +304,29 @@
           vertical-align: baseline;
         }
       }
+
+      > .detail__school, .detail__department {
+        margin: 0 .1rem;
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: #adacad;
+        background-color: #ededed;
+      }
+
+      > .detail__degree {
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: #8caae2;
+        background-color: #eaeff7;
+        margin-right: .2rem;
+      }
     }
   }
 
   .experience {
     grid-area: experience;
-    background-color: rgba( 196, 196, 196, .2 );
     margin: 1rem 0;
     font-size: .5rem;
 
@@ -317,7 +336,6 @@
       width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
-      background-color: #eaeff7;
       display: inline-flex;
 
       > .detail__begin {
@@ -327,6 +345,7 @@
         border-radius: 15px;
         background-color: #ffffff;
         border: solid .5px #757575;
+        margin: 0 .1rem;
       }
 
       > .detail__end {
@@ -336,6 +355,26 @@
         border-radius: 15px;
         background-color: #ffffff;
         border: solid .5px #757575;
+        margin: 0 .1rem;
+        margin-right: 2rem;
+      }
+
+      > .detail__school, .detail__department {
+        margin: 0 .1rem;
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: #adacad;
+        background-color: #ededed;
+      }
+
+      > .detail__degree {
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: #8caae2;
+        background-color: #eaeff7;
+        margin-right: .2rem;
       }
     }
   }
