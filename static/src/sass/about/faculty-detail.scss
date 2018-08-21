@@ -239,7 +239,7 @@
                 height: .5rem;
                 width: .5rem;
                 float: left;
-                vertical-align: baseline;
+                vertical-align: middle;
               }
             }
 
@@ -263,7 +263,6 @@
     > .education__detail.detail {
       content: '';
       clear: both;
-      display: table;
       padding: .1rem .25rem;
       border-radius: .5rem;
       width: 20rem;
@@ -295,13 +294,14 @@
       > .detail__country {
         margin: 0 .1rem;
         @include icon--before--taiwan() {
-          margin: .1rem;
-          margin-left: .2rem;
-          margin-top: .2rem;
+          margin: {
+            left: .2rem;
+            top: .2rem;
+          }
           height: .5rem;
           width: .5rem;
           float: left;
-          vertical-align: baseline;
+          vertical-align: middle;
         }
       }
 
@@ -381,7 +381,6 @@
 
   .research {
     grid-area: research;
-    background-color: rgba( 196, 196, 196, .2 );
     margin: 1rem 0;
     font-size: .5rem;
 
@@ -425,13 +424,10 @@
     width: 100%;
 
     > .student__members {
-      content: '';
-      clear: both;
-      display: table;
+      display: flex;
+      flex-wrap: wrap;
 
       > .student__member--master {
-        display: block;
-        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
@@ -450,8 +446,6 @@
       }
 
       > .student__member--doctoral {
-        display: block;
-        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
