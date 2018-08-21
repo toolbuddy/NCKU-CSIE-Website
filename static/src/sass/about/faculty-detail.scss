@@ -239,7 +239,7 @@
                 height: .5rem;
                 width: .5rem;
                 float: left;
-                vertical-align: baseline;
+                vertical-align: middle;
               }
             }
 
@@ -301,7 +301,7 @@
           height: .5rem;
           width: .5rem;
           float: left;
-          vertical-align: baseline;
+          vertical-align: middle;
         }
       }
 
@@ -381,7 +381,6 @@
 
   .research {
     grid-area: research;
-    background-color: rgba( 196, 196, 196, .2 );
     margin: 1rem 0;
     font-size: .5rem;
 
