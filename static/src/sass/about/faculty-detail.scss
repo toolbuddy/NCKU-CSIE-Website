@@ -109,6 +109,7 @@
     }
 
     > .profile__email {
+      display: block;
       @include icon--before--envelope () {
         margin: .1rem;
         margin-right: .5rem;
@@ -119,6 +120,7 @@
     }
 
     > .profile__phone {
+      display: block;
       @include icon--before--phone () {
         margin: .1rem;
         margin-right: .5rem;
@@ -237,7 +239,7 @@
                 height: .5rem;
                 width: .5rem;
                 float: left;
-                vertical-align: middle;
+                vertical-align: baseline;
               }
             }
 
@@ -293,13 +295,15 @@
         margin: 0 .1rem;
         @include icon--before--taiwan() {
           margin: {
+            right: .1rem;
+            bottom: .1rem;
             left: .2rem;
             top: .2rem;
           }
           height: .5rem;
           width: .5rem;
           float: left;
-          vertical-align: middle;
+          vertical-align: baseline;
         }
       }
 
@@ -379,6 +383,7 @@
 
   .research {
     grid-area: research;
+    background-color: rgba( 196, 196, 196, .2 );
     margin: 1rem 0;
     font-size: .5rem;
 
@@ -422,10 +427,13 @@
     width: 100%;
 
     > .student__members {
-      display: flex;
-      flex-wrap: wrap;
+      content: '';
+      clear: both;
+      display: table;
 
       > .student__member--master {
+        display: block;
+        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
@@ -443,6 +451,8 @@
       }
 
       > .student__member--doctoral {
+        display: block;
+        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
