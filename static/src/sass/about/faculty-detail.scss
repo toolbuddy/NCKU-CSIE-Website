@@ -109,6 +109,7 @@
     }
 
     > .profile__email {
+      display: block;
       @include icon--before--envelope () {
         margin: .1rem;
         margin-right: .5rem;
@@ -119,6 +120,7 @@
     }
 
     > .profile__phone {
+      display: block;
       @include icon--before--phone () {
         margin: .1rem;
         margin-right: .5rem;
