@@ -59,24 +59,30 @@
     color: #000000;
     font-size: .5rem;
 
-    > .profile__name {
-      font: {
-        size: .6rem;
-        weight: bold;
-      }
-      line-height: 1.78;
-      letter-spacing: normal;
-      color: rgba( 0, 0, 0, .87 );
-    }
+    > .profile__headline.headline {
+      display: inline-flex;
 
-    > .profile__titles.titles {
-      > .titles__title {
-        font-size: .7rem;
-        text-align: center;
-        width: 2rem;
-        color: #adacad;
-        border: solid .05rem #adacad;
-        border-radius: .15rem;
+      > .headline__name {
+        font: {
+          size: .6rem;
+          weight: bold;
+        }
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
+      }
+
+      > .headline__titles.titles {
+        margin-left: .5rem;
+
+        > .titles__title {
+          margin-left: .1rem;
+          font-size: .6rem;
+          text-align: center;
+          padding: .1rem;
+          color: #adacad;
+          border: solid .05rem #adacad;
+          border-radius: .15rem;
+        }
       }
     }
 
@@ -323,7 +329,7 @@
       clear: both;
       display: table;
 
-      > .student__member {
+      > .student__member--master {
         display: block;
         float: left;
         font-size: .5rem;
