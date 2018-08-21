@@ -150,30 +150,41 @@
     > .patent__table.table {
       border-collapse: collapse;
       text-align: center;
+      border: solid 1px #757575;
+      width: 100%;
+      height: 3rem;
 
-      table, td, th {
-        width: 1016px;
-        height: 120px;
-        border: solid 1px #757575;
-      }
-
-      > .table__country {
-        @include icon--before--taiwan() {
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          float: left;
-          vertical-align: baseline;
+      > .table__body.body {
+        > .body__titles.titles {
+          > .titles__title {
+            border: solid 1px #757575;
+          }
         }
-      }
 
-      > .table__date {
-        width: 133px;
-        height: 30px;
-        border-radius: 15px;
-        background-color: #ffffff;
-        border: solid .5px #757575;
+        > .body__details.details {
+          > .details__detail {
+            border: solid 1px #757575;
+
+            > .detail__country {
+              @include icon--before--taiwan() {
+                margin: .1rem;
+                margin-left: .2rem;
+                height: .5rem;
+                width: .5rem;
+                float: left;
+                vertical-align: baseline;
+              }
+            }
+
+            > .detail__date {
+              width: 133px;
+              height: 30px;
+              border-radius: 15px;
+              background-color: #ffffff;
+              border: solid .5px #757575;
+            }
+          }
+        }
       }
     }
   }
@@ -186,17 +197,16 @@
     > .education__detail.detail {
       content: '';
       clear: both;
-      display: table;
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 3rem;
+      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
       background-color: #eaeff7;
+      display: inline-flex;
 
       > .detail__begin {
-        display: block;
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -204,14 +214,8 @@
         border: solid .5px #757575;
       }
 
-      > .detail__to {
-        display: block;
-        float: left;
-      }
-
       > .detail__end {
-        display: block;
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -221,8 +225,10 @@
 
       > .detail__country {
         @include icon--before--taiwan() {
-          margin: .1rem;
-          margin-right: .5rem;
+          margin: {
+            left: .2rem;
+            top: .2rem;
+          }
           height: .5rem;
           width: .5rem;
           float: left;
@@ -241,13 +247,14 @@
     > .experience__detail.detail {
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 3rem;
+      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
       background-color: #eaeff7;
+      display: inline-flex;
 
       > .detail__begin {
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
@@ -255,12 +262,8 @@
         border: solid .5px #757575;
       }
 
-      > .detail__to {
-        float: left;
-      }
-
       > .detail__end {
-        float: left;
+        padding-top: .2rem;
         width: 130px;
         height: 30px;
         border-radius: 15px;
