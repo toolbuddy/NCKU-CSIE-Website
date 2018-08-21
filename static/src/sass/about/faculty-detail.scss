@@ -108,8 +108,8 @@
       font-size: .5rem;
       background-color: #ffffff;
       padding: .5rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0 , 0 , 0 , .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
       margin: .5rem;
       @include icon--before--trophy() {
         margin: .1rem;
@@ -117,7 +117,7 @@
         height: .7rem;
         width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
   }
@@ -128,8 +128,8 @@
     > .publication__content {
       font-size: .5rem;
       padding: .5rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
       margin: .25rem;
       @include icon--before--book() {
         margin: .1rem;
@@ -326,19 +326,40 @@
       > .student__member {
         display: block;
         float: left;
-        background-color: #ffffff;
         font-size: .5rem;
+        background-color: #ffffff;
         padding: .5rem;
-        border-radius: 6px;
-        box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+        border-radius: .2rem;
+        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem;
-        width: 4.5rem;
+        width: 4rem;
         @include icon--before--study() {
+          margin: .05rem;
           margin-right: .5rem;
-          height: .7rem;
-          width: .7rem;
+          height: .8rem;
+          width: .8rem;
           float: left;
-          vertical-align: baseline;
+          vertical-align: middle;
+        }
+      }
+
+      > .student__member--doctoral {
+        display: block;
+        float: left;
+        font-size: .5rem;
+        background-color: #ffffff;
+        padding: .5rem;
+        border-radius: .2rem;
+        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+        margin: .25rem;
+        width: 4rem;
+        @include icon--before--studentcap() {
+          margin: .05rem;
+          margin-right: .5rem;
+          height: .8rem;
+          width: .8rem;
+          float: left;
+          vertical-align: middle;
         }
       }
     }
@@ -346,11 +367,12 @@
     > .student__award {
       font-size: .5rem;
       background-color: #ffffff;
-      padding: .5rem 1rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      padding: .5rem;
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
       margin: .5rem;
       @include icon--before--trophy() {
+        margin: .1rem;
         margin-right: .5rem;
         height: .7rem;
         width: .7rem;
@@ -362,9 +384,9 @@
     > .student__meeting {
       font-size: .5rem;
       background-color: #ffffff;
-      padding: .5rem 1rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      padding: .5rem;
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
       margin: .5rem;
       @include icon--before--book() {
         margin: .1rem;
@@ -372,7 +394,7 @@
         height: .7rem;
         width: .7rem;
         float: left;
-        vertical-align: baseline;
+        vertical-align: middle;
       }
     }
   }

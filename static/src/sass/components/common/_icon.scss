@@ -264,4 +264,15 @@ $icon-path: '../../';
     @content;
   }
 }
+@mixin icon--before--studentcap () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/students-cap.png' );
+    }
 
+    // template [extend]
+    @content;
+  }
+}
