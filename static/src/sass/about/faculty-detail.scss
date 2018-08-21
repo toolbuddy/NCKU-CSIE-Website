@@ -92,8 +92,69 @@
         border-radius: .5rem;
         width: 3rem;
         text-align: center;
-        color: rgba( 0, 0, 0, .87 );
+        color: #8caae2;
         background-color: #eaeff7;
+        margin-right: .2rem;
+      }
+    }
+
+    > .profile__office {
+      @include icon--before__location--small () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+    }
+
+    > .profile__email {
+      @include icon--before--envelope () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+    }
+
+    > .profile__phone {
+      @include icon--before--phone () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+    }
+
+    > .profile__lab {
+      @include icon--before--laboratory () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+    }
+
+    > .profile__domains {
+      @include icon--before--search () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+
+      > .domains__domain {
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        width: 3rem;
+        text-align: center;
+        color: #adacad;
+        background-color: #ededed;
+        margin-right: .2rem;
       }
     }
   }

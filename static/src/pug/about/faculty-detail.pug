@@ -53,11 +53,19 @@ append content
         aside.headline__titles.titles
           span.titles__title 教授
           span.titles__title 系主任
-      aside.profile__departments
+      aside.profile__departments.departments
         span.departments__department 資訊系
+        span.departments__department 資訊所
+        span.departments__department 醫資所
       address.profile__office 辦公室
       a.profile__email( href = "mailto:123" ) email
-      a.profile__phone( href = "tel:123" ) 聯絡電話
+      a.profile__phone( href = "tel:456" ) 聯絡電話
+      address.profile__lab 實驗室
+      a.profile__website( href = "https://www.google.com.tw/" ) 個人網頁
+      aside.profile__domains.domains 專長領域：
+        span.domains__domain 資訊系
+        span.domains__domain 資訊所
+        span.domains__domain 醫資所
     img.photo( src = "/path-to-image.jpg" alt = "Image Title" )
     section.education
       +topic( i18n[ language ].education )
