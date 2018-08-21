@@ -263,7 +263,6 @@
     > .education__detail.detail {
       content: '';
       clear: both;
-      display: table;
       padding: .1rem .25rem;
       border-radius: .5rem;
       width: 20rem;
@@ -295,9 +294,12 @@
       > .detail__country {
         margin: 0 .1rem;
         @include icon--before--taiwan() {
-          margin: .1rem;
-          margin-left: .2rem;
-          margin-top: .2rem;
+          margin: {
+            right: .1rem;
+            bottom: .1rem;
+            left: .2rem;
+            top: .2rem;
+          }
           height: .5rem;
           width: .5rem;
           float: left;

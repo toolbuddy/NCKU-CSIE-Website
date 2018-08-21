@@ -197,7 +197,7 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/search.png' );
+      image: url( '../../image/icon/search-black.png' );
     }
 
     // template [extend]
@@ -275,4 +275,8 @@ $icon-path: '../../';
     // template [extend]
     @content;
   }
+}
+@mixin icon__search--white () {
+  background-image: url( '../../image/icon/search-white.png' );
+  @content;
 }

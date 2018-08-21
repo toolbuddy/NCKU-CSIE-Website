@@ -3,6 +3,7 @@
  */
 /* eslint no-unused-vars: 'off' */
 import style from 'static/dist/css/announcement/announcement.min.css';
+import header from 'static/src/js/components/common/header/index.js';
 import announcement from 'static/src/pug/components/announcement/announcement.pug';
 
 let id = /announcement\/(\d+)/.exec( window.location.pathname );
