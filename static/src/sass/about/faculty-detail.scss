@@ -60,7 +60,6 @@
   color: #000000;
   font-size: .5rem;
 
-
   > .profile__name {
     font: {
       size: .6rem;
@@ -320,7 +319,7 @@
     display: flex;
     flex-wrap: wrap;
 
-    > .student__member {
+    > .student__member--master {
       display: block;
       float: left;
       font-size: .5rem;
@@ -335,6 +334,26 @@
         margin-right: .5rem;
         height: .7rem;
         width: .7rem;
+        float: left;
+        vertical-align: middle;
+      }
+    }
+
+    > .student__member--doctoral {
+      display: block;
+      float: left;
+      font-size: .5rem;
+      background-color: #ffffff;
+      padding: .5rem;
+      border-radius: .2rem;
+      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+      margin: .25rem;
+      width: 4rem;
+      @include icon--before--studentcap() {
+        margin: .05rem;
+        margin-right: .5rem;
+        height: .8rem;
+        width: .8rem;
         float: left;
         vertical-align: middle;
       }

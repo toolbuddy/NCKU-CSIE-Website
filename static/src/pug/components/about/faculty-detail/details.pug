@@ -42,15 +42,18 @@ mixin details__detail( faculty = {} )
       +subtitle( i18n[ language ].student__meeting )
       +student__list--meeting( [ '1','2','3' ] )
 
-mixin student__list--member( array )
+mixin student__list--memberdoc( array )
     each element in array
-      p( class=`student__content` )= '學生'
+      p( class=`student__member--doctoral` )= '博士生'
+mixin student__list--membermas( array )
+    each element in array
+      p( class=`student__member--master` )= '碩士生'
 mixin student__list--honor( array )
     each element in array
-      p( class=`student__honor` )= '學生'
+      p( class=`student__award` )= '國立成功大學電資學院輔導優良導師, 2014'
 mixin student__list--meeting( array )
     each element in array
-      p( class=`student__meeting` )= '學生'
+      p( class=`student__meeting` )= 'Award Chair of 2017 IEEE Conference on Robotics and Automation (ICRA 2017)'
 mixin award__list( array )
     each element in array
       p( class=`award__content` )= '國立成功大學電資學院'
