@@ -316,13 +316,10 @@
     width: 100%;
 
     > .student__members {
-      content: '';
-      clear: both;
-      display: table;
+      display: flex;
+      flex-wrap: wrap;
 
       > .student__member--master {
-        display: block;
-        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
@@ -341,8 +338,6 @@
       }
 
       > .student__member--doctoral {
-        display: block;
-        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
