@@ -280,3 +280,15 @@ $icon-path: '../../';
   background-image: url( '../../image/icon/search-white.png' );
   @content;
 }
+@mixin icon--before--user () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/user.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}

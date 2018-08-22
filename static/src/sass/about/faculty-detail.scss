@@ -54,6 +54,7 @@
   }
 
   .profile {
+    margin: 1.5rem 0;
     grid-area: profile__info;
     text-align: left;
     color: #000000;
@@ -63,8 +64,9 @@
       display: inline-flex;
 
       > .headline__name {
+        padding-right: .5rem;
         font: {
-          size: .6rem;
+          size: .8rem;
           weight: bold;
         }
         letter-spacing: normal;
@@ -72,13 +74,16 @@
       }
 
       > .headline__titles.titles {
-        margin-left: .5rem;
+        display: flex;
+        flex-wrap: wrap;
+        padding: .1rem;
 
         > .titles__title {
-          margin-left: .1rem;
-          font-size: .6rem;
+          margin: 0 .05rem;
+          vertical-align: middle;
+          font-size: .5rem;
           text-align: center;
-          padding: .1rem;
+          padding: 0 .2rem;
           color: #adacad;
           border: solid .05rem #adacad;
           border-radius: .15rem;
@@ -87,18 +92,22 @@
     }
 
     > .profile__departments.departments {
+      padding: .5rem .3rem .8rem 0;
+
       > .departments__department {
-        padding: .1rem .25rem;
+        padding: .2rem .8rem;
         border-radius: .5rem;
         width: 3rem;
+        font-size: .4rem;
         text-align: center;
         color: #8caae2;
         background-color: #eaeff7;
-        margin-right: .2rem;
+        margin: .2rem;
       }
     }
 
     > .profile__office {
+      padding: .3rem 0;
       @include icon--before__location--small () {
         margin: .1rem;
         margin-right: .5rem;
@@ -110,6 +119,7 @@
 
     > .profile__email {
       display: block;
+      padding: .3rem 0;
       @include icon--before--envelope () {
         margin: .1rem;
         margin-right: .5rem;
@@ -121,6 +131,7 @@
 
     > .profile__phone {
       display: block;
+      padding: .5rem 0;
       @include icon--before--phone () {
         margin: .1rem;
         margin-right: .5rem;
@@ -131,7 +142,24 @@
     }
 
     > .profile__lab {
+      padding: .3rem 0;
       @include icon--before--laboratory () {
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        vertical-align: middle;
+      }
+
+      > .profile__lab--location {
+        padding: 0 1rem;
+        color: #868686;
+      }
+    }
+
+    > .profile__website {
+      padding: .5rem 0;
+      @include icon--before--user () {
         margin: .1rem;
         margin-right: .5rem;
         height: .5rem;
@@ -141,6 +169,10 @@
     }
 
     > .profile__domains {
+      display: flex;
+      flex-wrap: wrap;
+      padding: .3rem 0;
+      padding-right: 1rem;
       @include icon--before--search () {
         margin: .1rem;
         margin-right: .5rem;
@@ -150,13 +182,13 @@
       }
 
       > .domains__domain {
-        padding: .1rem .25rem;
+        padding: .15rem .6rem;
         border-radius: .5rem;
-        width: 3rem;
         text-align: center;
         color: #adacad;
         background-color: #ededed;
-        margin-right: .2rem;
+        margin: 0 .2rem;
+        vertical-align: baseline;
       }
     }
   }
@@ -172,6 +204,7 @@
 
   .award {
     grid-area: award;
+    margin: 1.5rem 0;
 
     > .award__content {
       font-size: .5rem;
@@ -179,7 +212,7 @@
       padding: .5rem;
       border-radius: .2rem;
       box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .5rem;
+      margin: .25rem 0;
       @include icon--before--trophy() {
         margin-right: .5rem;
         height: .7rem;
@@ -192,13 +225,14 @@
 
   .publication {
     grid-area: publication;
+    margin: 1rem 0;
 
     > .publication__content {
       font-size: .5rem;
       padding: .5rem;
       border-radius: .2rem;
       box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .25rem;
+      margin: .25rem 0;
       @include icon--before--book() {
         margin-right: .5rem;
         height: .7rem;
@@ -211,7 +245,7 @@
 
   .patent {
     grid-area: patent;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     font-size: .5rem;
 
     > .patent__table.table {
@@ -258,6 +292,7 @@
 
   .education {
     grid-area: education;
+    margin: 1.5rem 0;
     font-size: .5rem;
 
     > .education__detail.detail {
@@ -309,7 +344,7 @@
 
       > .detail__school, .detail__department {
         margin: 0 .1rem;
-        padding: .1rem .25rem;
+        padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
         color: #adacad;
@@ -317,7 +352,7 @@
       }
 
       > .detail__degree {
-        padding: .1rem .25rem;
+        padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
         color: #8caae2;
@@ -329,7 +364,7 @@
 
   .experience {
     grid-area: experience;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     font-size: .5rem;
 
     > .experience__detail.detail {
@@ -363,7 +398,7 @@
 
       > .detail__school, .detail__department {
         margin: 0 .1rem;
-        padding: .1rem .25rem;
+        padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
         color: #adacad;
@@ -371,7 +406,7 @@
       }
 
       > .detail__degree {
-        padding: .1rem .25rem;
+        padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
         color: #8caae2;
@@ -384,7 +419,7 @@
   .research {
     grid-area: research;
     background-color: rgba( 196, 196, 196, .2 );
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     font-size: .5rem;
 
     > .research__table.table {
@@ -424,16 +459,13 @@
 
   .student {
     grid-area: student;
-    width: 100%;
+    margin: 1.5rem 0;
 
     > .student__members {
-      content: '';
-      clear: both;
-      display: table;
+      display: flex;
+      flex-wrap: wrap;
 
       > .student__member--master {
-        display: block;
-        float: left;
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
@@ -476,7 +508,7 @@
       padding: .5rem;
       border-radius: .2rem;
       box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .5rem;
+      margin: .5rem 0;
       @include icon--before--trophy() {
         margin-right: .5rem;
         height: .7rem;
@@ -492,7 +524,7 @@
       padding: .5rem;
       border-radius: .2rem;
       box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .5rem;
+      margin: .5rem 0;
       @include icon--before--book() {
         margin-right: .5rem;
         height: .7rem;
