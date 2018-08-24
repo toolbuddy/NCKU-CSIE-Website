@@ -1,9 +1,11 @@
 const validTags = Object.freeze( [
+    'award',
     'college',
     'competition',
     'conference',
     'course',
     'exhibition',
+    'faculty',
     'international',
     'internship',
     'master',
@@ -12,7 +14,6 @@ const validTags = Object.freeze( [
     'rule',
     'scholarship',
     'speech',
-    'teacher',
 ] );
 
 module.exports = {

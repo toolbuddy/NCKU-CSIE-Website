@@ -3,6 +3,7 @@
  */
 /* eslint no-unused-vars: off */
 import style from 'static/dist/css/home/index.min.css';
+import header from 'static/src/js/components/common/header/index.js';
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
 import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
 
@@ -13,27 +14,33 @@ announcementBriefing.innerHTML += briefing( {
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [ 'college',
+    tags:    [
+        'college',
         'speech',
-        'phd', ],
+        'phd',
+    ],
 } );
 announcementBriefing.innerHTML += briefing( {
     id:      1,
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '兩小段內文',
-    tags:    [ 'recruitment',
-        'teacher',
-        'exhibition', ],
+    tags:    [
+        'recruitment',
+        'faculty',
+        'exhibition',
+    ],
 } );
 announcementBriefing.innerHTML += briefing( {
     id:      2,
     title:   '標題二',
     time:    '2018-2-2 | 15:02',
     excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [ 'college',
+    tags:    [
+        'college',
         'speech',
-        'phd', ],
+        'phd',
+    ],
 } );
 
 // Hot news briefings

@@ -1,9 +1,0 @@
-extends /layouts/about.pug
-
-block append stylesheets
-
-block append content
-  - const i18n = require( path.join( languageRoot, 'about/members' ) );
-
-block append scripts
-  +js( 'about/members' )

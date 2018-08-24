@@ -11,41 +11,45 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.join( jsSrcRoot, 'about/honor.js' ),
-        'about/intro':    path.join( jsSrcRoot, 'about/intro.js' ),
-        'about/location': path.join( jsSrcRoot, 'about/location.js' ),
-        'about/members':  path.join( jsSrcRoot, 'about/members.js' ),
-        'about/teacher':  path.join( jsSrcRoot, 'about/teacher.js' ),
-        'about/teachers': path.join( jsSrcRoot, 'about/teachers.js' ),
+        'about/award':          path.join( jsSrcRoot, 'about/award.js' ),
+        'about/contact':        path.join( jsSrcRoot, 'about/contact.js' ),
+        'about/faculty-detail': path.join( jsSrcRoot, 'about/faculty-detail.js' ),
+        'about/faculty':        path.join( jsSrcRoot, 'about/faculty.js' ),
+        'about/index':          path.join( jsSrcRoot, 'about/index.js' ),
+        'about/intro':          path.join( jsSrcRoot, 'about/intro.js' ),
+        'about/staff':          path.join( jsSrcRoot, 'about/staff.js' ),
 
         // Route `announcement`
-        'announcement/activity':      path.join( jsSrcRoot, 'announcement/activity.js' ),
-        'announcement/all':           path.join( jsSrcRoot, 'announcement/all.js' ),
-        'announcement/announcement':  path.join( jsSrcRoot, 'announcement/announcement.js' ),
-        'announcement/recruitment':   path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+        'announcement/activity':     path.join( jsSrcRoot, 'announcement/activity.js' ),
+        'announcement/all':          path.join( jsSrcRoot, 'announcement/all.js' ),
+        'announcement/index':        path.join( jsSrcRoot, 'announcement/index.js' ),
+        'announcement/announcement': path.join( jsSrcRoot, 'announcement/announcement.js' ),
+        'announcement/recruitment':  path.join( jsSrcRoot, 'announcement/recruitment.js' ),
 
         // Route `home`
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/awards':       path.join( jsSrcRoot, 'research/awards.js' ),
-        'research/conferences':  path.join( jsSrcRoot, 'research/conferences.js' ),
         'research/groups':       path.join( jsSrcRoot, 'research/groups.js' ),
+        'research/index':        path.join( jsSrcRoot, 'research/index.js' ),
         'research/labs':         path.join( jsSrcRoot, 'research/labs.js' ),
         'research/publications': path.join( jsSrcRoot, 'research/publications.js' ),
 
         // Route `resource`
-        'resource/fix':       path.join( jsSrcRoot, 'resource/fix.js' ),
-        'resource/ieet':      path.join( jsSrcRoot, 'resource/ieet.js' ),
-        'resource/rule':       path.join( jsSrcRoot, 'resource/rule.js' ),
-        'resource/rent':      path.join( jsSrcRoot, 'resource/rent.js' ),
-        'resource/resources': path.join( jsSrcRoot, 'resource/resources.js' ),
+        'resource/alumni':  path.join( jsSrcRoot, 'resource/alumni.js' ),
+        'resource/fix':     path.join( jsSrcRoot, 'resource/fix.js' ),
+        'resource/ieet':    path.join( jsSrcRoot, 'resource/ieet.js' ),
+        'resource/index':   path.join( jsSrcRoot, 'resource/index.js' ),
+        'resource/rent':    path.join( jsSrcRoot, 'resource/rent.js' ),
+        'resource/rule':    path.join( jsSrcRoot, 'resource/rule.js' ),
+        'resource/sitemap': path.join( jsSrcRoot, 'resource/sitemap.js' ),
 
         // Route `student`
         'student/college':       path.join( jsSrcRoot, 'student/college.js' ),
         'student/course':        path.join( jsSrcRoot, 'student/course.js' ),
+        'student/index':         path.join( jsSrcRoot, 'student/index.js' ),
         'student/international': path.join( jsSrcRoot, 'student/international.js' ),
-        'student/internship': path.join( jsSrcRoot, 'student/internship.js' ),
+        'student/internship':    path.join( jsSrcRoot, 'student/internship.js' ),
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.join( jsSrcRoot, 'student/phd.js' ),
         'student/scholarship':   path.join( jsSrcRoot, 'student/scholarship.js' ),
@@ -58,8 +62,8 @@ module.exports = {
     resolve: {
         alias: {
             settings: path.join( projectRoot, 'settings' ),
-            static: staticRoot,
-            test: path.join( projectRoot, 'test' ),
+            static:   staticRoot,
+            test:     path.join( projectRoot, 'test' ),
         },
     },
     module:  {

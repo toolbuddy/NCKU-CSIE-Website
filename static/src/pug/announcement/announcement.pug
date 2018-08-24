@@ -1,11 +1,19 @@
 extends /layouts/announcement/announcement.pug
 
-block append stylesheets
-  +css( 'announcement/announcement' )
+append stylesheets
 
-block append content
-  - const i18n = require( path.join( languageRoot, 'announcement/announcement' ) );
+append header
+
+append content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+      },
+      'zh-TW': {
+      },
+    } );
+
   main#content.content
 
-block append scripts
+append scripts
   +js( 'announcement/announcement' )

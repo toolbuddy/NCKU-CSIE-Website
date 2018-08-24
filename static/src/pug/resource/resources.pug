@@ -1,9 +1,0 @@
-extends /layouts/resource.pug
-
-block append stylesheets
-
-block append content
-  - const i18n = require( path.join( languageRoot, 'resource/resources' ) );
-
-block append scripts
-  +js( 'resource/resources' )

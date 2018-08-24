@@ -9,5 +9,5 @@ const generateTables = require( path.join( projectRoot, 'dev/database/gen-tables
  *     Auto generate database table files.
  */
 
-generateTables( 'teacher', dbConfig );
+generateTables( 'faculty', dbConfig );
 generateTables( 'announcement', dbConfig );
