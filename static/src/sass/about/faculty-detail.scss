@@ -220,21 +220,21 @@
     > .patent__table.table {
       border-collapse: collapse;
       text-align: center;
-      border: solid 1px #757575;
+      border: solid .01rem #757575;
       width: 100%;
       height: 3rem;
 
       > .table__body.body {
         > .body__titles.titles {
           > .titles__title {
-            border: solid 1px #757575;
+            border: solid .01rem #757575;
             padding: .5rem;
           }
         }
 
         > .body__details.details {
           > .details__detail {
-            border: solid 1px #757575;
+            border: solid .01rem #757575;
 
             > .detail__country {
               @include icon--before--taiwan() {
@@ -248,8 +248,8 @@
 
             > .detail__date.date {
               > .date__begin {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 display: block;
                 margin: {
                   top: .5rem;
@@ -260,8 +260,8 @@
               }
 
               > .date__end {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 display: block;
                 margin: {
                   bottom: .5rem;
@@ -285,26 +285,26 @@
     > .transfer__table.table {
       border-collapse: collapse;
       text-align: center;
-      border: solid 1px #757575;
+      border: solid .02rem #757575;
       width: 100%;
       height: 3rem;
 
       > .table__body.body {
         > .body__titles.titles {
           > .titles__title {
-            border: solid 1px #757575;
+            border: solid .02rem #757575;
             padding: .5rem;
           }
         }
 
         > .body__details.details {
           > .details__detail {
-            border: solid 1px #757575;
+            border: solid .02rem #757575;
 
             > .detail__date.date {
               > .date__begin {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 display: block;
                 margin: {
                   top: .5rem;
@@ -315,8 +315,8 @@
               }
 
               > .date__end {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 display: block;
                 margin: {
                   bottom: .5rem;
@@ -348,21 +348,21 @@
 
       > .detail__begin {
         padding-top: .2rem;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
+        width: 4rem;
+        height: 1rem;
+        border-radius: .5rem;
+        border: solid .02rem #757575;
         background-color: #ffffff;
-        border: solid .5px #757575;
         margin: 0 .1rem;
       }
 
       > .detail__end {
         padding-top: .2rem;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
+        width: 4rem;
+        height: 1rem;
+        border-radius: .5rem;
+        border: solid .02rem #757575;
         background-color: #ffffff;
-        border: solid .5px #757575;
         margin: 0 .1rem;
         margin-right: 1rem;
       }
@@ -418,21 +418,21 @@
 
       > .detail__begin {
         padding-top: .2rem;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
+        width: 4rem;
+        height: 1rem;
+        border-radius: .5rem;
+        border: solid .02rem #757575;
         background-color: #ffffff;
-        border: solid .5px #757575;
         margin: 0 .1rem;
       }
 
       > .detail__end {
         padding-top: .2rem;
-        width: 130px;
-        height: 30px;
-        border-radius: 15px;
+        width: 4rem;
+        height: 1rem;
+        border-radius: .5rem;
+        border: solid .02rem #757575;
         background-color: #ffffff;
-        border: solid .5px #757575;
         margin: 0 .1rem;
         margin-right: 2rem;
       }
@@ -466,7 +466,7 @@
     > .research__table.table {
       border-collapse: collapse;
       text-align: center;
-      border: solid 1px #757575;
+      border: solid .02rem #757575;
       width: 100%;
       height: 3rem;
 
@@ -474,26 +474,26 @@
         > .body__titles.titles {
           > .titles__title {
             padding: .5rem;
-            border: solid 1px #757575;
+            border: solid .02rem #757575;
           }
         }
 
         > .body__details.details {
           > .details__detail {
             padding: .5rem;
-            border: solid 1px #757575;
+            border: solid .02rem #757575;
 
             > .detail__date.date {
               > .date__begin {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 margin: .5rem .3rem;
                 padding: .1rem .5rem;
               }
 
               > .date__end {
-                border-radius: 15px;
-                border: solid .5px #757575;
+                border-radius: .5rem;
+                border: solid .02rem #757575;
                 margin: .5rem .3rem;
                 padding: .1rem .5rem;
               }
