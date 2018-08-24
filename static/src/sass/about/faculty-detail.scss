@@ -6,8 +6,8 @@
 @import 'components/about/faculty/subtitle';
 
 .content {
-  $small: 768px;
-  $large: 992px;
+  $small: 650px;
+  $large: 860px;
   width: 100%;
   background-color: #ffffff;
   display: grid;
@@ -23,7 +23,7 @@
       '. transfer         .'
       '. research         .'
       '. student          .';
-    columns: 1fr 9fr 1fr;
+    columns: 2fr 9fr 2fr;
   };
   @media screen and ( min-width: $small ) {
     grid-template: {
@@ -52,7 +52,7 @@
         '. transfer         transfer         .'
         '. research         research         .'
         '. student          student          .';
-      columns: 3fr 6fr 4fr 3fr;
+      columns: 5fr 8fr 6fr 5fr;
     };
   }
 
@@ -101,7 +101,7 @@
         padding: .2rem .8rem;
         border-radius: .5rem;
         width: 3rem;
-        font-size: .4rem;
+        font-size: .45rem;
         text-align: center;
         color: #8caae2;
         background-color: #eaeff7;
@@ -172,6 +172,7 @@
     }
 
     > .profile__domains {
+      font-size: .45rem;
       display: flex;
       flex-wrap: wrap;
       padding: .3rem 0;
@@ -198,11 +199,10 @@
 
   .photo {
     grid-area: profile__photo;
-    border-radius: 3rem;
-    height: 6rem;
-    width: 6rem;
-    background-color: rgba( 196, 196, 196, .2 );
-    margin: 1rem 0;
+    border-radius: 4rem;
+    height: 8rem;
+    width: 8rem;
+    margin: auto;
   }
 
   .award {
@@ -274,8 +274,8 @@
               @include icon--before--taiwan() {
                 margin: .1rem;
                 margin-left: .2rem;
-                height: .5rem;
-                width: .5rem;
+                height: .8rem;
+                width: .8rem;
                 vertical-align: baseline;
               }
             }
@@ -369,17 +369,16 @@
   .education {
     grid-area: education;
     margin: 1.5rem 0;
-    font-size: .5rem;
+    font-size: .45rem;
 
     > .education__detail.detail {
-      content: '';
-      clear: both;
+      display: flex;
+      flex-wrap: wrap;
+      margin: .6rem  0;
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
-      display: inline-flex;
 
       > .detail__begin {
         padding-top: .2rem;
@@ -389,6 +388,13 @@
         border: solid .02rem #757575;
         background-color: #ffffff;
         margin: 0 .1rem;
+      }
+
+      > .detail__untill {
+        font-size: .8rem;
+        color:#757575;
+        vertical-align: middle;
+        margin: 0 .5rem;
       }
 
       > .detail__end {
@@ -411,8 +417,8 @@
             left: .2rem;
             top: .2rem;
           }
-          height: .5rem;
-          width: .5rem;
+          height: .8rem;
+          width: .8rem;
           float: left;
           vertical-align: baseline;
         }
@@ -428,6 +434,7 @@
       }
 
       > .detail__degree {
+        margin: 0 .1rem;
         padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
@@ -441,15 +448,16 @@
   .experience {
     grid-area: experience;
     margin: 1.5rem 0;
-    font-size: .5rem;
+    font-size: .45rem;
 
     > .experience__detail.detail {
+      margin: .6rem  0;
       padding: .1rem .25rem;
       border-radius: .5rem;
-      width: 20rem;
       text-align: center;
       color: rgba( 0, 0, 0, .87 );
-      display: inline-flex;
+      display: flex;
+      flex-wrap: wrap;
 
       > .detail__begin {
         padding-top: .2rem;
@@ -459,6 +467,13 @@
         border: solid .02rem #757575;
         background-color: #ffffff;
         margin: 0 .1rem;
+      }
+
+      > .detail__untill {
+        font-size: .8rem;
+        color:#757575;
+        vertical-align: middle;
+        margin: 0 .5rem;
       }
 
       > .detail__end {
@@ -482,6 +497,7 @@
       }
 
       > .detail__degree {
+        margin: 0 .1rem;
         padding: .15rem .6rem;
         border-radius: .5rem;
         text-align: center;
@@ -494,7 +510,6 @@
 
   .research {
     grid-area: research;
-    background-color: rgba( 196, 196, 196, .2 );
     margin: 1.5rem 0;
     font-size: .5rem;
 
@@ -546,6 +561,13 @@
     > .student__members {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      @media screen and ( min-width: $small ) {
+        justify-content: flex-start;
+      }
+      @media screen and ( min-width: $large ) {
+        justify-content: flex-start;
+      }
 
       > .student__member--master {
         font-size: .5rem;
@@ -554,7 +576,7 @@
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem;
-        width: 4rem;
+        width: 4.5rem;
         @include icon--before--study() {
           margin-right: .5rem;
           height: .8rem;
@@ -573,7 +595,7 @@
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem;
-        width: 4rem;
+        width: 4.5rem;
         @include icon--before--studentcap() {
           margin-right: .5rem;
           height: .8rem;
