@@ -1,7 +1,5 @@
-meta(name='viewport', content='width=device-width, initial-scale=1')
 include /components/common/topic.pug
 include /components/common/image.pug
-include /components/about/faculty/subtitle.pug
 -
   const i18n = Object.freeze( {
     'en-US': {
@@ -10,42 +8,56 @@ include /components/about/faculty/subtitle.pug
       'award':              'Award',
       'publication':        'Publication',
       'patent':             'Patent',
-      'technology__transfer':      'Technology Transfer',
+      'technologyTransfer': 'Technology Transfer',
       'research':           'Research',
-      'student':            'Student',
-      'student__doctoral':  '博士生',
-      'student__master':    '碩士生',
-      'student__award':     '指導學生之特殊榮譽',
-      'student__meeting':   '主辦及參與國際會議',
-      'publication__accepted':        'Accepted Papers to be Published',
-      'publication__refereed':        'Refereed Papers',
-      'publication__international':   'Conference Papers - 國際會議',
-      'publication__domestic':        'Conference Papers - 國內會議',
-      'research__tech':               'Tech-Research',
-      'research__normal':          'Normal-Research',
+      'student': {
+        'student':          'Student',
+        'doctoral':         '博士生',
+        'master':           '碩士生',
+        'award':            '指導學生之特殊榮譽',
+        'meeting':          '主辦及參與國際會議',
+      },
+      'publication': {
+        'accepted':         'Accepted Papers to be Published',
+        'refereed':         'Refereed Papers',
+        'international':    'Conference Papers - 國際會議',
+        'domestic':         'Conference Papers - 國內會議',
+      },
+      'research':{
+        'tech':             'Tech-Research',
+        'normal':           'Normal-Research',
+      },
     },
     'zh-TW': {
-      'education':   '學歷',
-      'experience':  '經歷',
-      'award':       '榮譽及獲獎',
-      'publication': '著作',
-      'patent':      '專利',
-      'technology__transfer':      '技術轉移',
-      'research':    '研究計劃',
-      'student':     '指導學生',
-      'student__doctoral':  '博士生',
-      'student__master':    '碩士生',
-      'student__award':     '指導學生之特殊榮譽',
-      'student__meeting':   '主辦及參與國際會議',
-      'publication__accepted':        'Accepted Papers to be Published',
-      'publication__refereed':        'Refereed Papers',
-      'publication__international':   'Conference Papers - 國際會議',
-      'publication__domestic':         'Conference Papers - 國內會議',
-      'research__tech':         '科技部研究計畫',
-      'research__normal':         '一般建教案',
+      'education':          '學歷',
+      'experience':         '經歷',
+      'award':              '榮譽及獲獎',
+      'publication':        '著作',
+      'patent':             '專利',
+      'technologyTransfer': '技術轉移',
+      'research':           '研究計劃',
+      'student': {
+        'student':          '指導學生',
+        'doctoral':         '博士生',
+        'master':           '碩士生',
+        'award':            '指導學生之特殊榮譽',
+        'meeting':          '主辦及參與國際會議',
+      },
+      'publication': {
+        'accepted':         'Accepted Papers to be Published',
+        'refereed':         'Refereed Papers',
+        'international':    'Conference Papers - 國際會議',
+        'domestic':         'Conference Papers - 國內會議',
+      },
+      'research':{
+        'tech':             '科技部研究計畫',
+        'normal':           '一般建教案',
+      },
     },
   } );
 
+mixin subtitle( text )
+  h2.subtitle= text
 mixin titles__title( array )
   each element in array
     span( class=`titles__title` )= element
@@ -123,7 +135,7 @@ mixin transfer__table( array )
               time.date__end= element.timeEnd
 mixin research__tableTech( array )
   table.research__table.table
-    +subtitle( i18n[ language ].research__tech )
+    +subtitle( i18n[ language ].research.tech )
     tbody.table__body.body
       tr.body__titles.titles
         th.titles__title 企劃名稱
@@ -140,7 +152,7 @@ mixin research__tableTech( array )
           td.details__detail= element.authority
 mixin research__tableNormal( array )
   table.research__table.table
-    +subtitle( i18n[ language ].research__normal )
+    +subtitle( i18n[ language ].research.normal )
     tbody.table__body.body
       tr.body__titles.titles
         th.titles__title 企劃名稱
@@ -213,16 +225,16 @@ if publicationAccepted || publicationRefereed || publicationInternational || pub
   section.publication
     +topic( i18n[ language ].publication )
     if publicationAccepted
-      +subtitle( i18n[ language ].publication__accepted )
+      +subtitle( i18n[ language ].publication.accepted )
       +publication__list( publicationAccepted )
     if publicationRefereed
-      +subtitle( i18n[ language ].publication__refereed )
+      +subtitle( i18n[ language ].publication.refereed )
       +publication__list( publicationRefereed )
     if publicationInternational
-      +subtitle( i18n[ language ].publication__international )
+      +subtitle( i18n[ language ].publication.international )
       +publication__list( publicationInternational )
     if publicationDomestic
-      +subtitle( i18n[ language ].publication__domestic )
+      +subtitle( i18n[ language ].publication.domestic )
       +publication__list( publicationDomestic )
 if patent
   section.patent
@@ -251,7 +263,7 @@ if patent
             time.detail__date 2016.09.11
 if transfer
   section.transfer
-    +topic( i18n[ language ].technology__transfer )
+    +topic( i18n[ language ].technologyTransfer )
     +transfer__table(transfer.tables)
 if research
   section.research
@@ -260,18 +272,18 @@ if research
     +research__tableNormal(research.tableNormal)
 if studentdoc || studentmas || studentAward || studentMeeting
   section.student
-    +topic( i18n[ language ].student )
+    +topic( i18n[ language ].student.student )
     if studentdoc
-      +subtitle( i18n[ language ].student__doctoral )
+      +subtitle( i18n[ language ].student.doctoral )
       section.student__members
         +student__list--memberdoc( studentdoc )
     if studentmas
-      +subtitle( i18n[ language ].student__master )
+      +subtitle( i18n[ language ].student.master )
       section.student__members
         +student__list--membermas( studentmas )
     if studentAward
-      +subtitle( i18n[ language ].student__award )
+      +subtitle( i18n[ language ].student.award )
       +student__list--honor( studentAward )
     if studentMeeting
-      +subtitle( i18n[ language ].student__meeting )
+      +subtitle( i18n[ language ].student.meeting )
       +student__list--meeting( studentMeeting )
