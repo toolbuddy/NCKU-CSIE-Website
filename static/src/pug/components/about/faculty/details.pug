@@ -181,14 +181,15 @@ if profile
         +titles__title(profile.title)
     aside.profile__departments.departments
       +departments__department(profile.department)
-    address.profile__office 辦公室
-    a.profile__email( href = "mailto:123" ) email
-    a.profile__phone( href = "tel:456" ) 聯絡電話
-    address.profile__lab 實驗室
-    a.profile__website( href = "https://www.google.com.tw/" ) 個人網頁
-    aside.profile__domains.domains 專長領域：
+    address.profile__office= '辦公室：' + profile.office
+    a.profile__email( href = "mailto:123" )= 'Email：' + profile.email
+    a.profile__phone( href = "tel:456" )= '聯絡電話：' + profile.phone
+    address.profile__lab= '實驗室 : ' + profile.lab.name
+      address.profile__lab--location= profile.lab.location
+    a.profile__website( href = "https://www.google.com.tw/" )= '個人網頁：' + profile.website
+    aside.profile__domains.domains= '專長領域：'
       +domains__domain(profile.domain)
-    img.photo( src = "https://via.placeholder.com/150x150" alt = "Image Title" )
+img.photo( src = "https://via.placeholder.com/150x150" alt = "Image Title" )
 
 if education
   section.education
