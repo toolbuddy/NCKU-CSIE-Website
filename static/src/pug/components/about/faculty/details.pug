@@ -1,4 +1,5 @@
 include /components/common/topic.pug
+include /components/common/image.pug
 include /components/about/faculty/subtitle.pug
 -
   const i18n = Object.freeze( {
@@ -106,7 +107,7 @@ if profile
     a.profile__website( href = "https://www.google.com.tw/" )= '個人網頁：' + profile.website
     aside.profile__domains.domains= '專長領域：'
       +domains__domain(profile.domain)
-img.photo( src = "https://via.placeholder.com/150x150" alt = "Image Title" )
+img.photo( src = "https://via.placeholder.com/300x300" alt = "Image Title" )
 
 if education
   section.education
