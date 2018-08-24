@@ -1,4 +1,6 @@
+meta(name='viewport', content='width=device-width, initial-scale=1')
 include /components/common/topic.pug
+include /components/common/image.pug
 include /components/about/faculty/subtitle.pug
 -
   const i18n = Object.freeze( {
@@ -28,7 +30,7 @@ include /components/about/faculty/subtitle.pug
       'award':       '榮譽及獲獎',
       'publication': '著作',
       'patent':      '專利',
-      'technology__transfer':      '研究轉移',
+      'technology__transfer':      '技術轉移',
       'research':    '研究計劃',
       'student':     '指導學生',
       'student__doctoral':  '博士生',
@@ -57,7 +59,7 @@ mixin education__detail( array )
   each element in array
     section.education__detail.detail
       time.detail__begin= element.timeBegin
-      | -
+      p.detail__untill= '-'
       time.detail__end= element.timeEnd
       p.detail__country
       p.detail__school= element.school
@@ -67,7 +69,7 @@ mixin experience__detail( array )
   each element in array
     section.experience__detail.detail
       time.detail__begin= element.timeBegin
-      | -
+      p.detail__untill= '-'
       time.detail__end= element.timeEnd
       p.detail__school= element.school
       p.detail__department= element.department
@@ -189,7 +191,7 @@ if profile
     a.profile__website( href = "https://www.google.com.tw/" )= '個人網頁：' + profile.website
     aside.profile__domains.domains= '專長領域：'
       +domains__domain(profile.domain)
-img.photo( src = "https://via.placeholder.com/150x150" alt = "Image Title" )
+img.photo( src = "https://via.placeholder.com/200x200" alt = "Image Title" )
 
 if education
   section.education
