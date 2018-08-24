@@ -9,6 +9,7 @@ include /components/about/faculty/subtitle.pug
       'award':              'Award',
       'publication':        'Publication',
       'patent':             'Patent',
+      'technology__transfer':      'Technology Transfer',
       'research':           'Research',
       'student':            'Student',
       'student__doctoral':  '博士生',
@@ -28,6 +29,7 @@ include /components/about/faculty/subtitle.pug
       'award':       '榮譽及獲獎',
       'publication': '著作',
       'patent':      '專利',
+      'technology__transfer':      '研究轉移',
       'research':    '研究計劃',
       'student':     '指導學生',
       'student__doctoral':  '博士生',
@@ -71,6 +73,87 @@ mixin experience__detail( array )
       p.detail__school= element.school
       p.detail__department= element.department
       p.detail__degree= element.degree
+mixin patent__table( array )
+  table.patent__table.table
+    tbody.table__body.body
+      tr.body__titles.titles
+        th.titles__title 類別
+        th.titles__title 專利名稱
+        th.titles__title 專利權人
+        th.titles__title 國別
+        th.titles__title 發明人
+        th.titles__title 專利號碼
+        th.titles__title 專利期間
+      each element in array
+        tr.body__details.details
+          td.details__detail= element.type
+          td.details__detail= element.name
+          td.details__detail= element.belong
+          td.details__detail
+            p.detail__country
+          td.details__detail= element.inventor
+          td.details__detail= element.id
+          td.details__detail
+            section.detail__date.date
+              time.date__begin= element.timeBegin
+              | |
+              time.date__end= element.timeEnd
+mixin transfer__table( array )
+  table.transfer__table.table
+    tbody.table__body.body
+      tr.body__titles.titles
+        th.titles__title 項次
+        th.titles__title 技術名稱
+        th.titles__title 專利名稱
+        th.titles__title 授權單位
+        th.titles__title 接受單位
+        th.titles__title 合約期間
+      each element in array
+        tr.body__details.details
+          td.details__detail= element.id
+          td.details__detail= element.techName
+          td.details__detail= element.patentName
+          td.details__detail= element.authority
+          td.details__detail= element.accept
+          td.details__detail
+            section.detail__date.date
+              time.date__begin= element.timeBegin
+              | |
+              time.date__end= element.timeEnd
+mixin research__tableTech( array )
+  table.research__table.table
+    +subtitle( i18n[ language ].research__tech )
+    tbody.table__body.body
+      tr.body__titles.titles
+        th.titles__title 企劃名稱
+        th.titles__title 起迄日期
+        th.titles__title 輔助單位
+      each element in array
+        tr.body__details.details
+          td.details__detail= element.name
+          td.details__detail.detail
+            section.detail__date.date
+              time.date__begin= element.timeBegin
+              | -
+              time.date__end= element.timeEnd
+          td.details__detail= element.authority
+mixin research__tableNormal( array )
+  table.research__table.table
+    +subtitle( i18n[ language ].research__normal )
+    tbody.table__body.body
+      tr.body__titles.titles
+        th.titles__title 企劃名稱
+        th.titles__title 起迄日期
+        th.titles__title 輔助單位
+      each element in array
+        tr.body__details.details
+          td.details__detail= element.name
+          td.details__detail.detail
+            section.detail__date.date
+              time.date__begin= element.timeBegin
+              | -
+              time.date__end= element.timeEnd
+          td.details__detail= element.authority
 mixin award__list( array )
   - array.sort( (e1, e2) => e1.time > e2.time )
   each element in array
@@ -117,13 +200,6 @@ if experience
   section.experience
     +topic( i18n[ language ].experience )
     +experience__detail(experience.detail)
-    //- section.experience__detail.detail
-      time.detail__begin 2016.09.11
-      | -
-      time.detail__end 2016.09.12
-      p.detail__school 成功大學
-      p.detail__department 電機
-      p.detail__degree 博士
 
 if award
   section.award
@@ -147,10 +223,12 @@ if publicationAccepted || publicationRefereed || publicationInternational || pub
     if publicationDomestic
       +subtitle( i18n[ language ].publication__domestic )
       +publication__list( publicationDomestic )
-//- if patent
+if patent
   section.patent
     +topic( i18n[ language ].patent )
-    table.patent__table.table
+    +patent__table(patent.tables)
+
+    //- table.patent__table.table
       tbody.table__body.body
         tr.body__titles.titles
           th.titles__title 類別
@@ -170,39 +248,15 @@ if publicationAccepted || publicationRefereed || publicationInternational || pub
           td.details__detail  審查中
           td.details__detail
             time.detail__date 2016.09.11
+if transfer
+  section.transfer
+    +topic( i18n[ language ].technology__transfer )
+    +transfer__table(transfer.tables)
 if research
   section.research
     +topic( i18n[ language ].research )
-    table.research__table.table
-      +subtitle( i18n[ language ].research__tech )
-      tbody.table__body.body
-        tr.body__titles.titles
-          th.titles__title 企劃名稱
-          th.titles__title 起迄日期
-          th.titles__title 輔助單位
-        tr.body__details.details
-          td.details__detail 子計畫
-          td.details__detail.detail
-            section.detail__date.date
-              time.date__begin 2016.09.11
-              | -
-              time.date__end 2016.09.12
-          td.details__detail 科技部
-    table.research__table.table
-      +subtitle( i18n[ language ].research__normal )
-      tbody.table__body.body
-        tr.body__titles.titles
-          th.titles__title 企劃名稱
-          th.titles__title 起迄日期
-          th.titles__title 輔助單位
-        tr.body__details.details
-          td.details__detail 子計畫
-          td.details__detail.detail
-            section.detail__date.date
-              time.date__begin 2016.09.11
-              | -
-              time.date__end 2016.09.12
-          td.details__detail 科技部
+    +research__tableTech(research.tableTech)
+    +research__tableNormal(research.tableNormal)
 if studentdoc || studentmas || studentAward || studentMeeting
   section.student
     +topic( i18n[ language ].student )

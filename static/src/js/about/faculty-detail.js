@@ -68,6 +68,82 @@ document.getElementById( 'content' ).innerHTML = detail( {
             },
         ],
     },
+    patent: {
+        tables: [
+            {
+                type:       'A',
+                name:       '機台維修系統與方法',
+                belong:     '國立成功大學',
+                school:     '成功大學',
+                inventor:   '鄭方田',
+                id:         '審查中',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+            },
+            {
+                type:       'A',
+                name:       '機台維修系統與方法',
+                belong:     '國立成功大學',
+                school:     '成功大學',
+                inventor:   '鄭方田',
+                id:         '審查中',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+            },
+        ],
+    },
+    transfer: {
+        tables: [
+            {
+                id:         '1',
+                techName:   '全自動虛擬測量',
+                patentName: '專利名稱',
+                authority:  '成功大學',
+                accept:     '群創',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+            },
+            {
+                id:         '1',
+                techName:   '全自動虛擬測量',
+                patentName: '專利名稱',
+                authority:  '成功大學',
+                accept:     '群創',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+            },
+        ],
+    },
+    research: {
+        tableTech: [
+            {
+                name:      '子計畫',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                authority:  '科技部',
+            },
+            {
+                name:      '子計畫',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                authority:  '科技部',
+            },
+        ],
+        tableNormal: [
+            {
+                name:      '子計畫',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                authority:  '科技部',
+            },
+            {
+                name:      '子計畫',
+                timeBegin:  '2016.09.11',
+                timeEnd:    '2016.09.12',
+                authority:  '科技部',
+            },
+        ],
+    },
     award:                       [
         { time: '2014', award: 'award', },
         { time: '2016', award: 'award', },
