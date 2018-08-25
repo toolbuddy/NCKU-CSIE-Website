@@ -1,5 +1,6 @@
 const path = require( 'path' );
 const express = require( 'express' );
+const bodyParser = require( 'body-parser' );
 
 const apis = express.Router();
 const projectRoot = path.dirname( __dirname );
@@ -11,6 +12,18 @@ const getPinnedAnnouncementsByTags = require( path.join( opRoot, 'get-pinned-ann
 const getAllPages = require( path.join( opRoot, 'get-all-pages' ) );
 const getPagesByTags = require( path.join( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.join( opRoot, 'get-announcement' ) );
+
+const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
+const postAnnouncementTags = require( path.resolve( opRoot, 'post-announcementTags' ) );
+const postAnnouncementFile = require( path.resolve( opRoot, 'post-announcementFile' ) );
+
+const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) );
+
+const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
+const deleteAnnouncementTags = require( path.resolve( opRoot, 'delete-announcementTags' ) );
+const deleteAnnouncementFiles = require( path.resolve( opRoot, 'delete-announcementFiles' ) );
+
+apis.use( bodyParser.json() );
 
 apis.get( /^\/all-announcement$/, async ( req, res ) => {
     let tags = req.query.tags;
@@ -157,6 +170,79 @@ apis.get( /^\/(\d+)$/, async ( req, res ) => {
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
+    }
+} );
+
+apis.post( '/', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncement( { announcementData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.patch( '/:id', async ( req, res ) => {
+    try {
+        res.json( await patchAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.delete( '/:id', async ( req, res ) => {
+    try {
+        res.json( await deleteAnnouncement( { announcementId: req.params.id, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+// TODO: Not yet finished
+apis.post( '/:id/file', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+// TODO: Not yet finished
+apis.delete( '/:id/file/:id', async ( req, res ) => {
+    try {
+        res.json( await deleteAnnouncementFiles( { announcementFileData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.post( '/:id/tags', async ( req, res ) => {
+    try {
+        res.json( await postAnnouncementTags( { announcementId: req.params.id, tagId: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+apis.delete( '/:id/tags', async ( req, res ) => {
+    const tagId = req.query.tagId.split( ',' ).map( s => Number.parseInt( s, 10 ) );
+    try {
+        res.json( await deleteAnnouncementTags( { announcementId: req.params.id, tagId, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
     }
 } );
 
