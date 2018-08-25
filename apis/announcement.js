@@ -213,7 +213,6 @@ apis.post( '/:id/tags', async ( req, res ) => {
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
-        console.error( e );
         res.status( 500 ).end();
     }
 } );
