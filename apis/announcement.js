@@ -21,6 +21,7 @@ const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) 
 
 const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
 const deleteAnnouncementTags = require( path.resolve( opRoot, 'delete-announcementTags' ) );
+const deleteAnnouncementFiles = require( path.resolve( opRoot, 'delete-announcementFiles' ) );
 
 apis.use( bodyParser.json() );
 
@@ -174,9 +175,9 @@ apis.patch( '/:id', async ( req, res ) => {
     }
 } );
 
-apis.delete( '/', async ( req, res ) => {
+apis.delete( '/:id', async ( req, res ) => {
     try {
-        res.json( await deleteAnnouncement( { announcementId: req.body.id, } ) );
+        res.json( await deleteAnnouncement( { announcementId: req.params.id, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
@@ -184,9 +185,21 @@ apis.delete( '/', async ( req, res ) => {
     }
 } );
 
+// TODO: Not yet finished
 apis.post( '/file', async ( req, res ) => {
     try {
         res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 500 ).end();
+    }
+} );
+
+// TODO: Not yet finished
+apis.delete( '/file/:id', async ( req, res ) => {
+    try {
+        res.json( await deleteAnnouncementFiles( { announcementFileData: req.body, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
