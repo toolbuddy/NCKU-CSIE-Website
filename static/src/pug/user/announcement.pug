@@ -1,0 +1,23 @@
+extends /layouts/base.pug
+
+append stylesheets
+
+append header
+
+append content
+  main.content
+    form(action="", method="get")
+    p 標題
+    input(type="text", name="title")
+    br
+    p 內文
+    textarea(name="content", cols="30", rows="10")
+    br
+    p 附件
+    input(type="file", name="file" data-multiple-caption="{count} files selected" multiple)
+    br
+    input(type="submit")
+
+append scripts
+  +js( 'user/announcement' )
+

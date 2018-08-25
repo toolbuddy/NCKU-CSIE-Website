@@ -58,6 +58,9 @@ module.exports = {
         'student/master':        path.join( sassRoot, 'student/master.scss' ),
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
+
+        // Route `user`
+        'user/announcement': path.join( sassRoot, 'user/announcement.scss' ),
     },
     output: {
         path:     cssRoot,

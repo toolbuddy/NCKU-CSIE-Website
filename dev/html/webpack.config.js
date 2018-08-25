@@ -56,6 +56,9 @@ module.exports = language.support.map( language => ( {
         'student/master':        path.join( pugRoot, 'student/master.pug' ),
         'student/phd':           path.join( pugRoot, 'student/phd.pug' ),
         'student/scholarship':   path.join( pugRoot, 'student/scholarship.pug' ),
+
+        // Route `user`
+        'user/announcement': path.join( pugRoot, 'user/announcement.pug' ),
     },
     output: {
         path:     htmlRoot,
