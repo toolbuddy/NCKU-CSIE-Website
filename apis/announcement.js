@@ -186,7 +186,7 @@ apis.delete( '/:id', async ( req, res ) => {
 } );
 
 // TODO: Not yet finished
-apis.post( '/file', async ( req, res ) => {
+apis.post( '/:id/file', async ( req, res ) => {
     try {
         res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
     }
@@ -197,7 +197,7 @@ apis.post( '/file', async ( req, res ) => {
 } );
 
 // TODO: Not yet finished
-apis.delete( '/file/:id', async ( req, res ) => {
+apis.delete( '/:id/file/:id', async ( req, res ) => {
     try {
         res.json( await deleteAnnouncementFiles( { announcementFileData: req.body, } ) );
     }
@@ -207,12 +207,13 @@ apis.delete( '/file/:id', async ( req, res ) => {
     }
 } );
 
-apis.post( '/tags', async ( req, res ) => {
+apis.post( '/:id/tags', async ( req, res ) => {
     try {
-        res.json( await postAnnouncementTags( { announcementTagData: req.body, } ) );
+        res.json( await postAnnouncementTags( { announcementId: req.params.id, tagId: req.body, } ) );
     }
     catch ( e ) {
         /* eslint no-magic-numbers: 'off' */
+        console.error( e );
         res.status( 500 ).end();
     }
 } );
