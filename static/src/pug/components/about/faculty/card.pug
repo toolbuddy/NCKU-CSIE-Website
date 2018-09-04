@@ -1,44 +1,59 @@
+-
+  const i18n = Object.freeze( {
+    'en-US': {
+      'more': 'Read more',
+    },
+    'zh-TW': {
+      'more': '更多資訊',
+    },
+  } );
 mixin cards__card( faculty = {} )
-  figure.cards__card.card
+  a.cards__card.card( href=`/about/faculty/${ faculty.profileId }?language=${ language }` )
+    //- figure.cards__card.card
     //- photo of faculty
-    img.card__photo( src=faculty.photo, alt=faculty.name )
-
+    img.card__photo( src=`http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ faculty.profileId }.jpg`, alt=faculty.name )
     article.card__intro.intro
+
+      //- departments belong to faculty
+      if faculty.departments
+        +intro__list( 'department', faculty.departments )
+        //- aside.intro__departments
+          each element in faculty.departments
+            p( class='departments__department' )= element.department
+
+
       //- name of faculty
       h1.intro__name= faculty.name
 
       //- titles belong to faculty
       if faculty.titles !== null
         +intro__list( 'title', faculty.titles )
-
-      //- departments belong to faculty
-      if faculty.departments !== null
-        +intro__list( 'department', faculty.departments )
+        //- aside.intro__titles
+          //- +titles__title(faculty.titles)
+          each element in faculty.titles
+            p( class='titles__title' )= element.title
 
       //- email of faculty
       p.intro__email= faculty.email
 
       //- offices belong to faculty
-      if faculty.offices !== null
+      if faculty.offices
         each office in faculty.offices
           address.intro__address= office.address
-          a.intro__phone( href=`tel:${ office.tel }` )= office.tel
-
-    //- [interaction]
-    //- hover effect
-    article.card__intro--hover.intro
-
-      //- personal web of faculty
-      if faculty.personalWeb !== null
-        a.intro__personal-website( href=faculty.personalWeb )
-
-      //- detail link of faculty
-      a.intro__more( href=`/about/faculty/${ faculty.profileId }?language=${ language }` ) see more
+          //- a.intro__phone( href=`tel:${ office.tel }` )= office.tel
+          p.intro__phone= office.tel
+      p.intro__more= i18n[ language ].more
 
 mixin intro__list( attribute, array )
-  ul( class=`intro__${ attribute }s` )
+  aside( class=`intro__${ attribute }s ${ attribute }s` )
     each element in array
-      li( class=`intro__${ attribute }` )= element[ attribute ]
+      span( class=`${ attribute }s__${ attribute }` )= element[ attribute ]
+//- mixin titles__title( array )
+  each element in array
+    span( class='titles__title' )= element.title
+//- mixin departments__department( array )
+  each element in array
+    p( class='departments__department' )= element.department
 
 //- main
 - faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
