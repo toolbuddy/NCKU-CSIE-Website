@@ -42,6 +42,7 @@ mixin cards__card( faculty = {} )
           address.intro__address= office.address
           //- a.intro__phone( href=`tel:${ office.tel }` )= office.tel
           p.intro__phone= office.tel
+      address.intro__lab 地址
       p.intro__more= i18n[ language ].more
 
 mixin intro__list( attribute, array )
