@@ -49,6 +49,9 @@
       // element [position]
       grid-area: card__photo;
 
+      // element [layout]
+      justify-self: center;
+      
       // element [skin]
       margin-top: .5rem;
       width: 8.5rem;
@@ -57,7 +60,6 @@
       border-radius: 4.25rem;
       background-color: #c4c4c4;
       display: flex;
-      justify-self: center;
     }
 
     // element
@@ -71,7 +73,7 @@
       font-size: .4rem;
       padding: .3rem 0;
 
-      // block [layout]
+      // element [layout]
       display: grid;
       grid-template: {
         areas:
@@ -116,6 +118,8 @@
             break: keep-all;
           }
           white-space: nowrap;
+
+          // element [layout]
           display: inline-block;
         }
       }
@@ -127,9 +131,11 @@
         // element [position]
         grid-area: titles;
 
+        // element [layout]
+        display: inline-block;
+
         // element [skin]
         font-size: .45rem;
-        display: inline-block;
         align-self: center;
 
         // element
@@ -150,6 +156,8 @@
             break: keep-all;
           }
           white-space: nowrap;
+
+          // element [layout]
           display: inline-block;
         }
       }
@@ -163,6 +171,8 @@
 
         // element [skin]
         font-size: .63rem;
+
+        // element [layout]
         display: flex;
         align-self: center;
       }
@@ -195,9 +205,11 @@
         // element [position]
         grid-area: address;
 
+        // element [layout]
+        display: flex;
+
         // element [skin]
         font-size: .44rem;
-        display: flex;
         align-self: center;
         word-break: break-all;
         @include icon--before__location--small() {
@@ -236,10 +248,12 @@
         // element [position]
         grid-area: lab;
 
+        // element [layout]
+        display: flex;
+        
         // element [skin]
         font-size: .44rem;
         align-self: center;
-        display: flex;
         word-break: break-all;
         @include icon--before__laboratory() {
           margin-right: .2rem;
