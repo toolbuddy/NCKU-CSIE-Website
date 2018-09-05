@@ -41,13 +41,14 @@ mixin cards__card( faculty = {} )
             p( class='titles__title' )= element.title
 
       //- email of faculty
+      //- a.intro__email( href = `mailto:${ faculty.email }` )= `${ i18n[ language ].email } : ${ faculty.email }`
       p.intro__email= `${ i18n[ language ].email } : ${ faculty.email }`
 
       //- offices belong to faculty
       if faculty.offices
         each office in faculty.offices
           address.intro__address= `${ i18n[ language ].office } : ${ office.address }`
-          //- a.intro__phone( href=`tel:${ office.tel }` )= office.tel
+          //- a.intro__phone( href = `tel:${ faculty.email }` )= `${ i18n[ language ].tel } : ${ office.tel }`
           p.intro__phone= `${ i18n[ language ].tel } : ${ office.tel }`
       address.intro__lab= `${ i18n[ language ].lab } : 地址`
       p.intro__more= i18n[ language ].more

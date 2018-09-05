@@ -71,7 +71,7 @@
 
       // element [skin]
       font-size: .4rem;
-      padding: .3rem 1.57rem;
+      padding: .3rem;
 
       // element [layout]
       display: block;
@@ -98,8 +98,7 @@
 
         // element [skin]
         font-size: .44rem;
-        margin: .1rem .25rem;
-        padding: .1rem;
+        margin-bottom: .2rem;
         text-align: center;
 
         // element
@@ -110,7 +109,8 @@
           min-width: 3.03rem;
           height: .94rem;
           margin: .12rem;
-          padding-top: .1rem;
+          padding: 0 .6rem;
+          line-height: 1rem;
           border-radius: .47rem;
           text-align: center;
           color: #8caae2;
@@ -139,7 +139,7 @@
         // element [skin]
         font-size: .45rem;
         align-self: center;
-        margin: .3rem 0;
+        margin: 0 .83rem;
 
         // element
         // `.main .cards .cards__card .card__intro .intro__titles .titles__title`
@@ -174,7 +174,7 @@
 
         // element [skin]
         font-size: .63rem;
-        margin: .3rem 0;
+        margin: .2rem .83rem;
 
         // element [layout]
         display: flex;
@@ -193,7 +193,8 @@
 
         // element [skin]
         font-size: .44rem;
-        margin: .3rem 0;
+        line-height: .8rem;
+        margin: .3rem .83rem;
         align-self: center;
         text-decoration: underline;
         word-break: break-all;
@@ -218,9 +219,10 @@
 
         // element [skin]
         font-size: .44rem;
+        line-height: .8rem;
         align-self: center;
         word-break: break-all;
-        margin: .3rem 0;
+        margin: .3rem .83rem;
         @include icon--before__location--small() {
           margin-right: .2rem;
           height: .75rem;
@@ -242,9 +244,10 @@
 
         // element [skin]
         font-size: .44rem;
+        line-height: .8rem;
         align-self: center;
         word-break: break-all;
-        margin: .3rem 0;
+        margin: .3rem .83rem;
         @include icon--before__phone--small() {
           margin-right: .2rem;
           height: .75rem;
@@ -266,9 +269,10 @@
 
         // element [skin]
         font-size: .44rem;
+        line-height: .8rem;
         align-self: center;
         word-break: break-all;
-        margin: .3rem 0;
+        margin: .3rem .83rem;
         @include icon--before__laboratory() {
           margin-right: .2rem;
           height: .75rem;
