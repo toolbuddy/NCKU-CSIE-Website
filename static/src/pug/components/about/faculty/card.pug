@@ -2,9 +2,17 @@
   const i18n = Object.freeze( {
     'en-US': {
       'more': 'Read more',
+      'email': 'Email',
+      'office': 'office',
+      'tel': 'Tel',
+      'lab': 'Lab',
     },
     'zh-TW': {
       'more': '更多資訊',
+      'email': '信箱',
+      'office': '辦公室',
+      'tel': '電話',
+      'lab': '實驗室',
     },
   } );
 mixin cards__card( faculty = {} )
@@ -33,15 +41,15 @@ mixin cards__card( faculty = {} )
             p( class='titles__title' )= element.title
 
       //- email of faculty
-      p.intro__email= faculty.email
+      p.intro__email= `${ i18n[ language ].email } : ${ faculty.email }`
 
       //- offices belong to faculty
       if faculty.offices
         each office in faculty.offices
-          address.intro__address= office.address
+          address.intro__address= `${ i18n[ language ].office } : ${ office.address }`
           //- a.intro__phone( href=`tel:${ office.tel }` )= office.tel
-          p.intro__phone= office.tel
-      address.intro__lab 地址
+          p.intro__phone= `${ i18n[ language ].tel } : ${ office.tel }`
+      address.intro__lab= `${ i18n[ language ].lab } : 地址`
       p.intro__more= i18n[ language ].more
 
 mixin intro__list( attribute, array )

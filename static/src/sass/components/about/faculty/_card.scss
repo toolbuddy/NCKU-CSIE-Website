@@ -51,7 +51,7 @@
 
       // element [layout]
       justify-self: center;
-      
+
       // element [skin]
       margin-top: .5rem;
       width: 8.5rem;
@@ -71,21 +71,23 @@
 
       // element [skin]
       font-size: .4rem;
-      padding: .3rem 0;
+      padding: .3rem 1.57rem;
 
       // element [layout]
-      display: grid;
-      grid-template: {
-        areas:
-          'departments departments departments departments'
-          '.           facultyName titles      .          '
-          '.           email       email       .          '
-          '.           address     address     .          '
-          '.           phone       phone       .          '
-          '.           lab         lab         .          '
-          'more        more        more        more       ';
-        columns: 13fr 53fr 114fr 13fr;
-      }
+      display: block;
+
+      // display: grid;
+      // grid-template: {
+      //   areas:
+      //     'departments departments departments departments'
+      //     '.           facultyName titles      .          '
+      //     '.           email       email       .          '
+      //     '.           address     address     .          '
+      //     '.           phone       phone       .          '
+      //     '.           lab         lab         .          '
+      //     'more        more        more        more       ';
+      //   columns: 13fr 53fr 114fr 13fr;
+      // }
 
       // element
       // `.main .cards .cards__card .card__intro .intro__departments`
@@ -137,6 +139,7 @@
         // element [skin]
         font-size: .45rem;
         align-self: center;
+        margin: .3rem 0;
 
         // element
         // `.main .cards .cards__card .card__intro .intro__titles .titles__title`
@@ -171,6 +174,7 @@
 
         // element [skin]
         font-size: .63rem;
+        margin: .3rem 0;
 
         // element [layout]
         display: flex;
@@ -184,8 +188,12 @@
         // element [position]
         grid-area: email;
 
+        // element [layout]
+        display: flex;
+
         // element [skin]
         font-size: .44rem;
+        margin: .3rem 0;
         align-self: center;
         text-decoration: underline;
         word-break: break-all;
@@ -212,6 +220,7 @@
         font-size: .44rem;
         align-self: center;
         word-break: break-all;
+        margin: .3rem 0;
         @include icon--before__location--small() {
           margin-right: .2rem;
           height: .75rem;
@@ -228,10 +237,14 @@
         // element [position]
         grid-area: phone;
 
+        // element [layout]
+        display: flex;
+
         // element [skin]
         font-size: .44rem;
         align-self: center;
         word-break: break-all;
+        margin: .3rem 0;
         @include icon--before__phone--small() {
           margin-right: .2rem;
           height: .75rem;
@@ -250,11 +263,12 @@
 
         // element [layout]
         display: flex;
-        
+
         // element [skin]
         font-size: .44rem;
         align-self: center;
         word-break: break-all;
+        margin: .3rem 0;
         @include icon--before__laboratory() {
           margin-right: .2rem;
           height: .75rem;
@@ -275,7 +289,7 @@
         text-align: right;
         color: #8caae2;
         font-size: .35rem;
-        margin-right: .5rem;
+        margin: .3rem 0;
 
         &::after {
           margin-left: .3rem;
