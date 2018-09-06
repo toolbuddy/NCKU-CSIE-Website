@@ -21,19 +21,19 @@
 
   > .cards__card.card {
     // block [layout]
-    display: grid;
-    grid-template: {
-      areas: 'card__photo' 'card__intro';
-      rows: 1fr 1fr;
-    }
+    // display: grid;
+    // grid-template: {
+    //   areas: 'card__photo' 'card__intro';
+    //   rows: 1fr 1fr;
+    // }
+    display: block;
     justify-content: stretch;
 
     // element [skin]
     background-color: #eff3f9;
-    height: 23.38rem;
+    min-height: 23.38rem;
     border: .22rem solid #ffffff;
     @media screen and ( min-width: $oneCard ) {
-      height: 23.38rem;
       width: 15.97rem;
       border: {
         width: 1.72rem 2.72rem 1.44rem;
@@ -53,7 +53,8 @@
       justify-self: center;
 
       // element [skin]
-      margin-top: .5rem;
+      // margin-top: .5rem;
+      margin: 1.72rem auto 1.7rem;
       width: 8.5rem;
       height: 8.5rem;
       object-fit: cover;
@@ -174,7 +175,7 @@
 
         // element [skin]
         font-size: .63rem;
-        margin: .2rem .83rem;
+        margin: .3rem .83rem;
 
         // element [layout]
         display: flex;
@@ -197,7 +198,7 @@
         margin: .3rem .83rem;
         align-self: center;
         text-decoration: underline;
-        word-break: break-all;
+        word-break: break-word;
         @include icon--before__email--small() {
           margin-right: .2rem;
           height: .75rem;
@@ -221,7 +222,7 @@
         font-size: .44rem;
         line-height: .8rem;
         align-self: center;
-        word-break: break-all;
+        word-break: break-word;
         margin: .3rem .83rem;
         @include icon--before__location--small() {
           margin-right: .2rem;
@@ -246,7 +247,7 @@
         font-size: .44rem;
         line-height: .8rem;
         align-self: center;
-        word-break: break-all;
+        word-break: break-word;
         margin: .3rem .83rem;
         @include icon--before__phone--small() {
           margin-right: .2rem;
@@ -271,7 +272,7 @@
         font-size: .44rem;
         line-height: .8rem;
         align-self: center;
-        word-break: break-all;
+        word-break: break-word;
         margin: .3rem .83rem;
         @include icon--before__laboratory() {
           margin-right: .2rem;
