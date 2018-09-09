@@ -111,42 +111,84 @@
 
     > .profile__office {
       padding: .3rem 0;
-      @include icon--before__location--small () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
+
+      &::before {
+        @include icon__location() {
+          // [layout]
+          vertical-align: middle;
+          background: {
+            position: center;
+            size: cover;
+          }
+          display: inline-block;
+          background-repeat: no-repeat;
+
+          // [skin]
+          content: '';
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        }
       }
     }
 
     > .profile__email {
       display: block;
       padding: .3rem 0;
-      @include icon--before--envelope () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
+
+      &::before {
+        @include icon__envelope() {
+          // [layout]
+          vertical-align: middle;
+          background: {
+            position: center;
+            size: cover;
+          }
+          display: inline-block;
+          background-repeat: no-repeat;
+
+          // [skin]
+          content: '';
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        }
       }
     }
 
     > .profile__phone {
       display: block;
       padding: .5rem 0;
-      @include icon--before--phone () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
+
+      &::before {
+        @include icon__phone() {
+          // [layout]
+          vertical-align: middle;
+          background: {
+            position: center;
+            size: cover;
+          }
+          display: inline-block;
+          background-repeat: no-repeat;
+
+          // [skin]
+          content: '';
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        }
       }
     }
 
     > .profile__lab {
       padding: .3rem 0;
-      @include icon--before--laboratory () {
+      @include icon__laboratory () {
         margin: .1rem;
         margin-right: .5rem;
         height: .5rem;

@@ -4,70 +4,55 @@
 @import 'components/common/topic';
 
 // block
-// `.content`
+// `body > .content`
 
-.content {
-  // block [skin]
-  // $small: 1024px;
-  // $large: 1536px;
-  $small: 640px;
-  width: 100%;
-  background-color: #eff3f9;
+body > .content {
+  // [variable]
+  $large: 475px;
 
-  // block [layout]
+  // [layout]
   display: grid;
   grid: {
     template: {
       areas:
-        '.   .   .'
-        '. topic .'
-        '. cards .'
-        '.   .   .';
-      columns: 1fr minmax( 10rem, 15.97rem ) 1fr;
+        '.'
+        'topic'
+        'cards';
+      columns: 100%;
     }
     row-gap: 2rem;
   };
 
-  // @media screen and ( min-width: $small ) {
-  //   grid: {
-  //     template: {
-  //       areas:
-  //         '.   .   .'
-  //         '. topic .'
-  //         '. cards .'
-  //         '.   .   .';
-  //       columns: 1fr 32rem 1fr;
-  //     }
-  //     row-gap: 2rem;
-  //   };
-  // }
-  @media screen and ( min-width: $small ) {
+  // [skin]
+  width: 100%;
+  background-color: #eff3f9;
+
+  // [RWD: $large]
+  @media screen and ( min-width: $large ) {
     grid: {
       template: {
         areas:
-          '.   .   .'
+          '. .     .'
           '. topic .'
-          '. cards .'
-          '.   .   .';
-        columns: 1fr 90% 1fr;
+          '. cards .';
+        columns: 1fr 95% 1fr;
       }
       row-gap: 2rem;
     };
   }
 
   // block
-  // `.content .topic`
+  // `body > .content > .topic`
 
-  .topic {
-    // element [position]
+  > .topic {
+    // [position]
     grid-area: topic;
   }
 
   // block
-  // `.content .cards`
-
-  .cards {
-    // element [position]
+  // `body > .content > .cards`
+  @include cards() {
+    // [position]
     grid-area: cards;
   }
 }

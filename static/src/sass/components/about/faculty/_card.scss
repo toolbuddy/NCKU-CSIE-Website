@@ -1,304 +1,371 @@
 @import 'components/common/icon.scss';
 
-// block
-// `.main .cards`
+// template
+// `> .cards > .card > .intro > .intro__*::before
+@mixin intro__icon--before-template () {
+  $intro__icon--margin-right: .2rem;
+  $intro__icon--height: .75rem;
+  $intro__icon--min-width: .75rem;
 
-.cards {
-  // block [layout]
-  $oneCard: 640px;
-  display: block;
-  justify-content: center;
-  @media screen and ( min-width: $oneCard ) {
-    display: grid;
-    grid: {
-      template-columns: repeat( auto-fit, 15.97rem );
-      gap: .22rem;
-    };
+  &::before {
+    // [layout]
+    display: inline-block;
+    vertical-align: middle;
+    background: {
+      position: center;
+      size: contain;
+      repeat: no-repeat;
+    }
+
+    // [skin]
+    content: '';
+    margin-right: $intro__icon--margin-right;
+    height: $intro__icon--height;
+    min-width: $intro__icon--min-width;
+    filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+    // [customization]
+    @content;
   }
+}
 
+// component
+// `> .cards`
+@mixin cards () {
   // block
-  // `.main .cards .cards__card`
+  // `> .cards`
+  > .cards {
+    // [variable]
+    $large: 545px;
+    $cards__card--width: 15.97rem;
+    $cards__card--height: 23.38rem;
 
-  > .cards__card.card {
-    // block [layout]
-    // display: grid;
-    // grid-template: {
-    //   areas: 'card__photo' 'card__intro';
-    //   rows: 1fr 1fr;
-    // }
+    // [layout]
     display: block;
-    justify-content: stretch;
 
-    // element [skin]
-    background-color: #eff3f9;
-    min-height: 23.38rem;
-    border: .22rem solid #ffffff;
-    @media screen and ( min-width: $oneCard ) {
-      width: 15.97rem;
+    // [RWD: $large]
+    @media screen and ( min-width: $large ) {
+      // [layout]
+      display: grid;
+      grid: {
+        template-columns: repeat( auto-fit, $cards__card--width );
+        gap: .22rem;
+      };
+      justify-content: center;
+    }
+
+    // [customization]
+    @content;
+
+    // element
+    // `> .cards > .cards__card`
+    // block
+    // `> .cards > .card`
+    > .cards__card.card {
+      // [layout]
+      display: block;
+
+      // [skin]
+      margin: {
+        top: .5rem;
+        bottom: .5rem;
+      }
       border: {
-        width: 1.72rem 2.72rem 1.44rem;
+        top-width: 1.5rem;
+        bottom-width: 1.44rem;
         color: #ffffff;
         style: solid;
       }
-    }
+      width: 100%;
+      min-height: $cards__card--height;
+      background-color: #ffffff;
 
-    // element
-    // `.main .cards .cards__card .card__photo`
-
-    > .card__photo {
-      // element [position]
-      grid-area: card__photo;
-
-      // element [layout]
-      justify-self: center;
-
-      // element [skin]
-      // margin-top: .5rem;
-      margin: 1.72rem auto 1.7rem;
-      width: 8.5rem;
-      height: 8.5rem;
-      object-fit: cover;
-      border-radius: 4.25rem;
-      background-color: #c4c4c4;
-      display: flex;
-    }
-
-    // element
-    // `.main .cards .cards__card .card__intro`
-
-    > .card__intro.intro {
-      // element [position]
-      grid-area: card__intro;
-
-      // element [skin]
-      font-size: .4rem;
-      padding: .3rem;
-
-      // element [layout]
-      display: block;
-
-      // display: grid;
-      // grid-template: {
-      //   areas:
-      //     'departments departments departments departments'
-      //     '.           facultyName titles      .          '
-      //     '.           email       email       .          '
-      //     '.           address     address     .          '
-      //     '.           phone       phone       .          '
-      //     '.           lab         lab         .          '
-      //     'more        more        more        more       ';
-      //   columns: 13fr 53fr 114fr 13fr;
-      // }
-
-      // element
-      // `.main .cards .cards__card .card__intro .intro__departments`
-
-      > .intro__departments.departments {
-        // element [position]
-        grid-area: departments;
-
-        // element [skin]
-        font-size: .44rem;
-        margin-bottom: .2rem;
-        text-align: center;
-
-        // element
-        // `.main .cards .cards__card .card__intro .intro__departments .departments__department`
-
-        > .departments__department {
-          // element [skin]
-          min-width: 3.03rem;
-          height: .94rem;
-          margin: .12rem;
-          padding: 0 .6rem;
-          line-height: 1rem;
-          border-radius: .47rem;
-          text-align: center;
-          color: #8caae2;
-          background-color: #eaeff7;
-          word: {
-            wrap: normal;
-            break: keep-all;
-          }
-          white-space: nowrap;
-
-          // element [layout]
-          display: inline-block;
+      // [RWD: $large]
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        margin: {
+          top: 0;
+          bottom: 0;
         }
+        border: {
+          width: 1.72rem 2.72rem 1.44rem;
+          color: #ffffff;
+          style: solid;
+        }
+        width: $cards__card--width;
       }
 
       // element
-      // `.main .cards .cards__card .card__intro .intro__titles`
+      // `> .cards > .card > .card__photo`
 
-      > .intro__titles.titles {
-        // element [position]
-        grid-area: titles;
+      > .card__photo {
+        // [position]
+        object-fit: cover;
 
-        // element [layout]
-        display: inline-block;
+        // [layout]
+        display: flex;
+        justify-self: center;
 
-        // element [skin]
-        font-size: .45rem;
-        align-self: center;
-        margin: 0 .83rem;
+        // [skin]
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: 1.7rem;
+        }
+        border-radius: 50%;
+        width: 8.5rem;
+        height: 8.5rem;
+        background-color: #c4c4c4;
+      }
+
+      // element
+      // `> .cards > .card > .card__intro`
+      // block
+      // `> .cards > .card > .intro`
+
+      > .card__intro.intro {
+        // [variable]
+        $intro--margin-left-right: .83rem;
+        $intro--margin-up-down: .3rem;
+
+        // [layout]
+        display: block;
+
+        // [skin]
+        padding: .3rem;
 
         // element
-        // `.main .cards .cards__card .card__intro .intro__titles .titles__title`
+        // `> .cards > .card > .intro > .intro__departments`
+        // block
+        // `> .cards > .card > .intro > .departments`
 
-        > .titles__title {
-          // element [skin]
-          margin: .05rem;
-          vertical-align: middle;
+        > .intro__departments.departments {
+          // [layout]
+          text-align: center;
+
+          // [skin]
           font-size: .44rem;
-          text-align: center;
-          padding: .08rem .16rem;
-          color: #adacad;
-          border: solid .05rem #adacad;
-          border-radius: .09rem;
-          word: {
-            wrap: normal;
-            break: keep-all;
+          margin-bottom: 1.15rem;
+
+          // element
+          // `> .cards > .card > .intro > .departments > .departments__department`
+
+          > .departments__department {
+            // [layout]
+            display: inline-block;
+            text-align: center;
+            word: {
+              wrap: break-word;
+              break: break-all;
+            }
+            white-space: normal;
+
+            // [skin]
+            margin: .14rem;
+            border-radius: .47rem;
+            padding: {
+              left: .5rem;
+              right: .5rem;
+            }
+            min-width: 3.03rem;
+            min-height: .94rem;
+            line-height: 1rem;
+            color: #8caae2;
+            background-color: #eaeff7;
           }
-          white-space: nowrap;
+        }
 
-          // element [layout]
+        // element
+        // `> .cards > .card > .intro > .intro__titles`
+        // block
+        // `> .cards > .card > .intro > .titles`
+
+        > .intro__titles.titles {
+          // [layout]
           display: inline-block;
+
+          // [skin]
+          margin: {
+            left: $intro--margin-left-right;
+            right: $intro--margin-left-right;
+          }
+
+          // element
+          // `> .cards > .card > .intro > .titles > .titles__title`
+
+          > .titles__title {
+            // [layout]
+            display: inline-block;
+
+            // [skin]
+            margin: .05rem;
+            border: .05rem solid #adacad;
+            border-radius: .09rem;
+            padding: .08rem .16rem;
+            min-height: .92rem;
+            line-height: .8rem;
+            font-size: .44rem;
+            color: #adacad;
+          }
         }
-      }
 
-      // element
-      // `.main .cards .cards__card .card__intro .intro__name`
+        // element
+        // `> .cards > .card > .intro > .intro__name`
 
-      > .intro__name {
-        // element [position]
-        grid-area: facultyName;
-
-        // element [skin]
-        font-size: .63rem;
-        margin: .3rem .83rem;
-
-        // element [layout]
-        display: flex;
-        align-self: center;
-      }
-
-      // element
-      // `.main .cards .cards__card .card__intro .intro__email`
-
-      > .intro__email {
-        // element [position]
-        grid-area: email;
-
-        // element [layout]
-        display: flex;
-
-        // element [skin]
-        font-size: .44rem;
-        line-height: .8rem;
-        margin: .3rem .83rem;
-        align-self: center;
-        text-decoration: underline;
-        word-break: break-word;
-        @include icon--before__email--small() {
-          margin-right: .2rem;
-          height: .75rem;
-          width: .75rem;
-          vertical-align: middle;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        > .intro__name {
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          font-size: .63rem;
         }
-      }
 
-      // element
-      // `.main .cards .cards__card .card__intro .intro__address`
+        // element
+        // `> .cards > .card > .intro > .intro__email`
+        // block
+        // `> .cards > .card > .intro > .email`
 
-      > .intro__address {
-        // element [position]
-        grid-area: address;
+        > .intro__email.email {
+          // [layout]
+          display: flex;
 
-        // element [layout]
-        display: flex;
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
 
-        // element [skin]
-        font-size: .44rem;
-        line-height: .8rem;
-        align-self: center;
-        word-break: break-word;
-        margin: .3rem .83rem;
-        @include icon--before__location--small() {
-          margin-right: .2rem;
-          height: .75rem;
-          width: .75rem;
-          vertical-align: middle;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+          // element
+          // `> .cards > .card > .intro > .intro__email::before`
+          @include intro__icon--before-template() {
+            @include icon__envelope();
+          }
+
+          // element
+          // `> .cards > .card > .intro > .email > .email__text`
+          // block
+          // `> .cards > .card > .intro > .email > .text`
+          > .email__text.text {
+            // [layout]
+            display: inline;
+            word-break: keep-all;
+
+            // [skin]
+            line-height: .8rem;
+            font-size: .44rem;
+
+            // element
+            // `> .cards > .card > .intro > .email > .text > .text__link`
+            > .text__link {
+              // [layout]
+              word-break: break-all;
+
+              // [skin]
+              text-decoration: underline;
+            }
+          }
         }
-      }
 
-      // element
-      // `.main .cards .cards__card .card__intro .intro__phone`
+        // element
+        // `> .cards > .card > .intro > .intro__address`
 
-      > .intro__phone {
-        // element [position]
-        grid-area: phone;
+        > .intro__address {
+          // [layout]
+          display: flex;
+          word-break: break-word;
 
-        // element [layout]
-        display: flex;
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          line-height: .8rem;
+          font: {
+            size: .44rem;
+            style: normal;
+          }
 
-        // element [skin]
-        font-size: .44rem;
-        line-height: .8rem;
-        align-self: center;
-        word-break: break-word;
-        margin: .3rem .83rem;
-        @include icon--before__phone--small() {
-          margin-right: .2rem;
-          height: .75rem;
-          width: .75rem;
-          vertical-align: middle;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+          // element
+          // `> .cards > .card > .intro > .intro__address::before`
+          @include intro__icon--before-template() {
+            @include icon__location();
+          }
         }
-      }
 
-      // element
-      // `.main .cards .cards__card .card__intro .intro__lab`
+        // element
+        // `> .cards > .card > .intro > .intro__phone`
 
-      > .intro__lab {
-        // element [position]
-        grid-area: lab;
+        > .intro__phone {
+          // [layout]
+          display: flex;
+          word-break: break-word;
 
-        // element [layout]
-        display: flex;
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          line-height: .8rem;
+          font-size: .44rem;
 
-        // element [skin]
-        font-size: .44rem;
-        line-height: .8rem;
-        align-self: center;
-        word-break: break-word;
-        margin: .3rem .83rem;
-        @include icon--before__laboratory() {
-          margin-right: .2rem;
-          height: .75rem;
-          width: .75rem;
-          vertical-align: middle;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+          // element
+          // `> .cards > .card > .intro > .intro__phone::before`
+          @include intro__icon--before-template() {
+            @include icon__phone();
+          }
         }
-      }
 
-      // element
-      // `.main .cards .cards__card .card__intro .intro__more`
+        // element
+        // `> .cards > .card > .intro > .intro__lab`
+        // block
+        // `> .cards > .card > .intro > .lab`
 
-      > .intro__more {
-        // element [position]
-        grid-area: more;
+        > .intro__lab.lab {
+          // [layout]
+          display: flex;
 
-        // element [skin]
-        text-align: right;
-        color: #8caae2;
-        font-size: .35rem;
-        margin: .3rem 0;
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
 
-        &::after {
-          margin-left: .3rem;
-          content: '>';
+          // element
+          // `> .cards > .card > .intro > .intro__lab::before`
+          @include intro__icon--before-template() {
+            @include icon__laboratory();
+          }
+
+          // element
+          // `> .cards > .card > .intro > .lab > .lab__text`
+          // block
+          // `> .cards > .card > .intro > .lab > .text`
+          > .lab__text.text {
+            // [layout]
+            display: inline;
+            word-break: keep-all;
+
+            // [skin]
+            line-height: .8rem;
+            font-size: .44rem;
+
+            // element
+            // `> .cards > .card > .intro > .lab > .text > .text__link`
+            > .text__link {
+              // [layout]
+              word-break: break-word;
+
+              // [skin]
+              text-decoration: underline;
+            }
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__more`
+
+        > .intro__more {
+          // [layout]
+          text-align: right;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          font-size: .44rem;
+          color: #8caae2;
+
+          // element
+          // `> .cards > .card > .intro > .intro__more::after`
+          &::after {
+            // [skin]
+            margin-left: .3rem;
+            content: '>';
+          }
         }
       }
     }

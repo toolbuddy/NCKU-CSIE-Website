@@ -1,68 +1,69 @@
--
-  const i18n = Object.freeze( {
-    'en-US': {
-      'more': 'Read more',
-      'email': 'Email',
-      'office': 'Office',
-      'tel': 'Tel',
-      'lab': 'Lab',
-    },
-    'zh-TW': {
-      'more': '更多資訊',
-      'email': '信箱',
-      'office': '辦公室',
-      'tel': '電話',
-      'lab': '實驗室',
-    },
-  } );
-mixin cards__card( faculty = {} )
-  a.cards__card.card( href=`/about/faculty/${ faculty.profileId }?language=${ language }` )
-    //- figure.cards__card.card
-    //- photo of faculty
-    img.card__photo( src=`http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ faculty.profileId }.jpg`, alt=faculty.name )
+mixin cards__card( profile = {} )
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'more':   'Read more',
+        'email':  'Email',
+        'office': 'Office',
+        'tel':    'Tel',
+        'lab':    'Lab',
+      },
+      'zh-TW': {
+        'more':   '更多資訊',
+        'email':  '信箱',
+        'office': '辦公室',
+        'tel':    '電話',
+        'lab':    '實驗室',
+      },
+    } );
+  section.cards__card.card
+    //- photo
+    img.card__photo(
+      src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
+      alt = profile.name
+    )
     article.card__intro.intro
 
-      //- departments belong to faculty
-      if faculty.departments
-        +intro__list( 'department', faculty.departments )
-        //- aside.intro__departments
-          each element in faculty.departments
-            p( class='departments__department' )= element.department
+      //- departments
+      if profile.departments
+        aside.intro__departments.departments
+          each department in profile.departments
+            span( class = 'departments__department' )= department.department
 
-      //- name of faculty
-      h1.intro__name= faculty.name
+      //- name
+      if profile.name
+        h1.intro__name= profile.name
 
-      //- titles belong to faculty
-      if faculty.titles !== null
-        +intro__list( 'title', faculty.titles )
-        //- aside.intro__titles
-          //- +titles__title(faculty.titles)
-          each element in faculty.titles
-            p( class='titles__title' )= element.title
+      //- titles
+      if profile.titles
+        aside.intro__titles.titles
+          each title in profile.titles
+            span( class = 'titles__title' )= title.title
 
-      //- email of faculty
-      //- a.intro__email( href = `mailto:${ faculty.email }` )= `${ i18n[ language ].email } : ${ faculty.email }`
-      p.intro__email= `${ i18n[ language ].email }:${ faculty.email }`
+      //- email
+      if profile.email
+        aside.intro__email.email
+          span.email__text.text= `${ i18n[ language ].email }: `
+            a.text__link( href = `mailto:${ profile.email }` )= profile.email
 
-      //- offices belong to faculty
-      if faculty.offices
-        each office in faculty.offices
-          address.intro__address= `${ i18n[ language ].office }:${ office.address }`
-          //- a.intro__phone( href = `tel:${ faculty.email }` )= `${ i18n[ language ].tel } : ${ office.tel }`
-          p.intro__phone= `${ i18n[ language ].tel }:${ office.tel }`
-      address.intro__lab= `${ i18n[ language ].lab }:地址`
-      p.intro__more= i18n[ language ].more
+      //- offices, including address and phone
+      if profile.offices
+        each office in profile.offices
+          if office.address
+            address.intro__address= `${ i18n[ language ].office }: ${ office.address }`
+          if office.tel
+            a.intro__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel }`
 
-mixin intro__list( attribute, array )
-  aside( class=`intro__${ attribute }s ${ attribute }s` )
-    each element in array
-      span( class=`${ attribute }s__${ attribute }` )= element[ attribute ]
-//- mixin titles__title( array )
-  each element in array
-    span( class='titles__title' )= element.title
-//- mixin departments__department( array )
-  each element in array
-    p( class='departments__department' )= element.department
+      //- labs
+      if profile.labs
+        each lab in profile.labs
+          aside.intro__lab.lab
+            span.lab__text.text= `${ i18n[ language ].lab }: `
+              a.text__link( href = lab.labWeb )= `${ lab.name }`
+
+      //- link to profile detail
+      p.intro__more
+        a( href = `/about/faculty/${ profile.profileId }?language=${ language }` )= i18n[ language ].more
 
 //- main
 - faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
