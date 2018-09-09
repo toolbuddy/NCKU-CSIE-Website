@@ -1,42 +1,59 @@
 .pages {
+  $small: 620px;
+  $large: 850px;
   display: inline-block;
   justify-self: center;
 
-  > .pages__page {
-    font-size: 20px;
-    text-decoration: none;
-    transition: background-color .3s;
-    color: #999999;
-    width: 45px;
-    height: 45px;
-    line-height: 45px;
-    border-radius: 45px;
-
-    &:hover:not( .pages__page--active ) {
-      cursor: pointer;
-    }
-
-    &:first-child, &:last-child {
-      color: #32477d;
-      border: 1px solid #32477d;
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      font-size: 30px;
-    }
+  > .pages__control {
+    color: #32477d;
+    border: .0312rem solid #32477d;
+    width: 1.5625rem;
+    height: 1.5625rem;
+    border-radius: 1.5625rem;
+    font-size: .9375rem;
+    cursor: pointer;
 
     &:first-child {
-      margin-right: 3rem;
+      margin-right: 0;
+      @media screen and ( min-width: $small ) {
+        margin-right: 1rem;
+      }
+      @media screen and ( min-width: $large ) {
+        margin-right: 3rem;
+      }
     }
 
     &:last-child {
-      margin-left: 3rem;
+      margin-left: 0;
+      @media screen and ( min-width: $small ) {
+        margin-right: 1rem;
+      }
+      @media screen and ( min-width: $large ) {
+        margin-left: 3rem;
+      }
+    }
+  }
+
+  > .pages__page, .pages__extra {
+    font-size: .625rem;
+    text-decoration: none;
+    transition: background-color .3s;
+    color: #999999;
+    width: 1.41rem;
+    height: 1.41rem;
+    line-height: 1.41rem;
+    border-radius: 1.41rem;
+  }
+
+  > .pages__page {
+    &:hover:not( .pages__page--active ) {
+      cursor: pointer;
     }
 
     &--active {
       color: #ffffff;
       background-color: #213262;
-      box-shadow: 0 3px 4px 0 rgba( 33, 50, 98, .25 );
+      box-shadow: 0 .0937rem .125rem 0 rgba( 33, 50, 98, .25 );
     }
   }
 }

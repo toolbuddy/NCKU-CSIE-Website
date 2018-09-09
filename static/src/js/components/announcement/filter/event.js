@@ -1,6 +1,5 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
-import { renderPages, } from './render';
 
 let filterOnChange = null;
 let pageOnChange = null;
@@ -148,27 +147,36 @@ function dateOnChange ( event ) {
  */
 
 export function pageOnClick ( event ) {
-    let page = /pages__page--([1-9][0-9]*)/.exec( event.target.id )[ 1 ];
     const query = new URLSearchParams( window.location.search );
-
-    // Const currentPage  = query.get( 'page' );
-
-    if ( event.target.id === 'pages__page--14' )
-        page = query.get( 'page' ) - 1;
-    else if ( event.target.id === 'pages__page--15' )
-        page = ( Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1 ) + 1;
-
-    document.getElementById( 'pages' ).childNodes.forEach( ( page ) => {
-        page.classList.remove( 'pages__page--active' );
-    } );
-    document.getElementById( `pages__page--${ page }` ).classList.add( 'pages__page--active' );
+    const page = event.target.innerHTML;
 
     // If page is same, do nothing
     if ( query.get( 'page' ) === page )
         return;
+
     query.set( 'page', page );
     updateURL( query );
-    renderPages( '13' );
+}
+
+/**
+ * When `pages__control` is clicked, do the following things:
+ *     1. set new page number if necessary
+ *     2. Update URL.
+ *
+ * @param {MouseEvent} event
+ */
+
+export function controlOnClick ( event ) {
+    const query = new URLSearchParams( window.location.search );
+    let page = event.target.innerHTML;
+
+    if ( event.target.innerHTML === '‹' )
+        page = query.get( 'page' ) - 1;
+    else if ( event.target.innerHTML === '›' )
+        page = ( Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1 ) + 1;
+
+    query.set( 'page', page );
+    updateURL( query );
 }
 
 /**

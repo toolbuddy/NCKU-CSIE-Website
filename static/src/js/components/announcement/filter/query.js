@@ -4,6 +4,7 @@ import {
     renderBriefingsError,
     renderPages,
     renderPagesError,
+    renderPage,
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
@@ -63,6 +64,8 @@ export const singleDefaultTag = {
      */
 
     getAllAnnouncements () {
+        /* eslint no-console: 'off' */
+        console.log( 'get all announcements' );
         const { startTime, endTime, page, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     singleDefaultTag.defaultTag,
@@ -83,7 +86,10 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -147,7 +153,10 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -293,7 +302,10 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -316,7 +328,7 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .then( data => renderBriefings( announcementBriefing, data ) )
         .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
     },
 
@@ -350,7 +362,10 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
