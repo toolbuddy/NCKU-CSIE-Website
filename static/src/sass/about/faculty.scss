@@ -15,9 +15,10 @@ body > .content {
   grid: {
     template: {
       areas:
-        '.'
-        'topic'
-        'cards';
+        '.      '
+        'topic  '
+        'filters'
+        'cards  ';
       columns: 100%;
     }
     row-gap: 2rem;
@@ -32,9 +33,10 @@ body > .content {
     grid: {
       template: {
         areas:
-          '. .     .'
-          '. topic .'
-          '. cards .';
+          '. .       .'
+          '. topic   .'
+          '. filters .'
+          '. cards   .';
         columns: 1fr 95% 1fr;
       }
       row-gap: 2rem;
@@ -54,5 +56,52 @@ body > .content {
   @include cards() {
     // [position]
     grid-area: cards;
+  }
+
+  // block
+  // `body > .content > .filter`
+  > .filters {
+    // [position]
+    grid-area: filters;
+
+    // [layout]
+    text-align: center;
+
+    // [skin]
+    font-size: .44rem;
+
+    // element
+    // `> .cards > .card > .intro > .departments > .departments__department`
+
+    > .filters__filter {
+      // [layout]
+      display: inline-block;
+      text-align: center;
+      word: {
+        wrap: break-word;
+        break: break-all;
+      }
+      white-space: normal;
+
+      // [skin]
+      margin: .14rem;
+      border: solid .03rem #8caae2;
+      border-radius: .47rem;
+      padding: {
+        left: .5rem;
+        right: .5rem;
+      }
+      min: {
+        width: 3.03rem;
+        height: .94rem;
+      }
+      color: #8caae2;
+      background-color: #eff3f9;
+
+      &:hover, &--active {
+        color: #ffffff;
+        background-color: #8caae2;
+      }
+    }
   }
 }

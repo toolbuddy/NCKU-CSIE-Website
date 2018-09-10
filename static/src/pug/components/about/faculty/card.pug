@@ -16,6 +16,16 @@ mixin cards__card( profile = {} )
         'lab':    '實驗室',
       },
     } );
+    const filter = Object.freeze( {
+      '資訊系': '0',
+      'dept. CSIE': '0',
+      '資訊所': '1',
+      'inst. CSIE': '1',
+      '醫資所': '2',
+      'IMI': '2',
+      '製造所': '3',
+      'IMIS': '3',
+    } );
   section.cards__card.card
     //- photo
     img.card__photo(
@@ -28,7 +38,7 @@ mixin cards__card( profile = {} )
       if profile.departments
         aside.intro__departments.departments
           each department in profile.departments
-            span( class = 'departments__department' )= department.department
+            span( class = 'departments__department', data = filter[department.department])= department.department
 
       //- name
       if profile.name

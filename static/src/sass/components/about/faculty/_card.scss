@@ -167,8 +167,10 @@
               left: .5rem;
               right: .5rem;
             }
-            min-width: 3.03rem;
-            min-height: .94rem;
+            min: {
+              width: 3.03rem;
+              height: .94rem;
+            }
             line-height: 1rem;
             color: #8caae2;
             background-color: #eaeff7;
