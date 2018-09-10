@@ -95,6 +95,10 @@
         width: $cards__card--width;
       }
 
+      &--hide {
+        display: none;
+      }
+
       // element
       // `> .cards > .card > .card__photo`
 
