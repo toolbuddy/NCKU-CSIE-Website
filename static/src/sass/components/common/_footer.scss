@@ -1,4 +1,4 @@
-$image__path: '../../image';
+$image__path: '../image';
 
 %address {
   display: flex;
@@ -117,11 +117,19 @@ body > .footer {
     > .contact__address.address {
       @extend %address;
       grid-area: contact__address;
-      background-image: url( #{$image__path}/icon/location.png );
-      background-size: 20px;
-      background-repeat: no-repeat;
-      filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
-      background-position-x: 41.8%;
+
+      &::before {
+        content: '';
+        background: {
+          image: url( ../../image/icon/location.png );
+          size: 20px;
+          repeat: no-repeat;
+        }
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
+      }
 
       > .address__text {
         @extend %caption;
