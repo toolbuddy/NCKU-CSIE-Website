@@ -31,33 +31,23 @@ mixin footer
     section.footer__contact.contact
       h1.contact__title= i18n[ language ].contact.title
       aside.contact__address.address
-        address.address__text= `${i18n[ language ].contact.address} | `
+        address.address__text= `${i18n[ language ].contact.address}｜`
         //改掉class background-image
-        a.address__text.address__caption--map( href = "/about" )= i18n[ language ].contact.position
-      figure.contact__mail.mail
-        +image( {
-          alt: 'mail',
-          className: 'mail__image',
-          src: 'icon/envelope.png'
-        } )
-        figcaption.mail__caption em62500@mail.csie.ncku.edu.tw 
+        a.address__text.address__text--map( href = "/about" )= i18n[ language ].contact.position
+      aside.contact__mail.mail
+        a.mail__text( href = "mailto:em62500@mail.csie.ncku.edu.tw" ) em62500@mail.csie.ncku.edu.tw 
         //a href mailto
-      figure.contact__phone.phone
-        +image( {
-          alt: 'phone',
-          className: 'phone__image',
-          src: 'icon/phone.png'
-        } )
+      aside.contact__phone.phone
         //a href tel
-        figcaption.phone__caption 06-2757575 ext 62500
+        a.phone__caption( href = "tel:062757575" ) 06-2757575 ext 62500
     section.footer__copyright.copyright
       h1.copyright__title Copyright © 2018 國立成功大學資訊工程系
       //左右兩邊的線
-      figure.copyright__facebook.facebook
-        figcaption.facebook__caption= i18n[ language ].follow
-        a( href = "#" ).facebook__image.image
+      figure.copyright__icon.icon
+        figcaption.icon__caption= i18n[ language ].follow
+        a( href = "https://www.facebook.com/ncku.csie" ).icon__image.image
           +image( {
             alt: 'facebook',
-            className: 'image__icon',
+            className: 'image__facebook',
             src: 'icon/facebook.png'
           } )

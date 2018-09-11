@@ -1,3 +1,5 @@
+$image__path: '../../image';
+
 %address {
   display: flex;
   justify-content: center;
@@ -14,7 +16,10 @@
 %caption {
   height: .75rem;
   color: #6982c0;
-  font-size: .5rem;
+  font: {
+    style: normal;
+    size: .5rem;
+  }
   line-height: 1.5;
 }
 
@@ -32,7 +37,6 @@ body > .footer {
   background: #213262;
   width: 100%;
   height: $footer-height;
-  
 
   > .footer__logo.logo {
     display: grid;
@@ -48,11 +52,11 @@ body > .footer {
     }
 
     > .logo__image {
-      width: 1.6rem;
-      height: auto;
       grid-area: logo__image;
       align-self: end;
       justify-self: center;
+      width: 1.6rem;
+      height: auto;
     }
 
     > .logo__caption.caption {
@@ -69,13 +73,13 @@ body > .footer {
       justify-self: center;
 
       > .caption__text {
-        color: rgba( 255, 255, 255, .87 );
         display: grid;
+        color: rgba( 255, 255, 255, .87 );
 
         &.caption__text--large {
           grid-area: caption__text--large;
-          font-size: .75rem;
           justify-self: center;
+          font-size: .75rem;
         }
 
         &.caption__text--small {
@@ -88,8 +92,6 @@ body > .footer {
 
   > .footer__contact.contact {
     display: grid;
-    font-style: normal;
-    align-self: center;
     grid: {
       area: footer__contact;
       template: {
@@ -101,26 +103,30 @@ body > .footer {
         rows: 1.16rem 1.16rem 1.16rem 2.31rem;
       }
     }
+    font-style: normal;
+    align-self: center;
+    
 
     > .contact__title {
-      color: #ffffff;
       justify-self: center;
       grid-area: contact__title;
       font-size: .625rem;
+      color: #ffffff;
     }
 
     > .contact__address.address {
       @extend %address;
       grid-area: contact__address;
+      background-image: url( #{$image__path}/icon/location.png );
+      background-size: 20px;
+      background-repeat: no-repeat;
+      filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
+      background-position-x: 41.8%;
 
-      > .address__image {
-        @extend %image;
-      }
-
-      > .address__caption {
+      > .address__text {
         @extend %caption;
 
-        &.address__caption--map {
+        &.address__text--map {
           text-decoration: underline;
         }
       }
@@ -130,12 +136,9 @@ body > .footer {
       @extend %address;
       grid-area: contact__mail;
 
-      > .mail__image {
-        @extend %image;
-      }
-
-      > .mail__caption {
+      > .mail__text {
         @extend %caption;
+        text-decoration: underline;
       }
     }
 
@@ -155,7 +158,6 @@ body > .footer {
 
   > .footer__copyright.copyright {
     display: grid;
-    font-style: normal;
     grid: {
       area: footer__copyright;
       template: {
@@ -165,6 +167,7 @@ body > .footer {
         rows: 2.09rem;
       }
     }
+    font-style: normal;
 
     > .copyright__title {
       grid-area: copyright__title;
@@ -173,26 +176,27 @@ body > .footer {
       color: #ffffff;
     }
 
-    > .copyright__facebook.facebook {
+    > .copyright__icon.icon {
       display: flex;
-      font-style: normal;
       grid-area: copyright__facebook;
       justify-content: center;
+      font-style: normal;
 
-      > .facebook__caption {
-        font-size: .625rem;
+      > .icon__caption {
         height: 1rem;
-        color: #ffffff;
+        font-size: .625rem;
         line-height: 1.9;
         font-weight: bolder;
+        color: #ffffff;
       }
 
-      > .facebook__image.image {
-        > .image__icon {
+      > .icon__image.image {
+        > .image__facebook {
+          margin-left: 1.09rem;
           width: 1rem;
           height: 1rem;
           filter: invert(51%) sepia(59%) saturate(350%) hue-rotate(185deg) brightness(88%) contrast(92%);
-          margin-left: 1.09rem;
+          
         }
       }
     }
