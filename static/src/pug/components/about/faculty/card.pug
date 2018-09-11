@@ -1,19 +1,28 @@
+-
+  const i18n = Object.freeze( {
+    'en-US': {
+      'noResult': 'No Result',
+    },
+    'zh-TW': {
+      'noResult': '無結果',
+    },
+  } );
 mixin cards__card( profile = {} )
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'more':   'Read more',
-        'email':  'Email',
-        'office': 'Office',
-        'tel':    'Tel',
-        'lab':    'Lab',
+        'more':     'Read more',
+        'email':    'Email',
+        'office':   'Office',
+        'tel':      'Tel',
+        'lab':      'Lab',
       },
       'zh-TW': {
-        'more':   '更多資訊',
-        'email':  '信箱',
-        'office': '辦公室',
-        'tel':    '電話',
-        'lab':    '實驗室',
+        'more':     '更多資訊',
+        'email':    '信箱',
+        'office':   '辦公室',
+        'tel':      '電話',
+        'lab':      '實驗室',
       },
     } );
     const filter = Object.freeze( {
@@ -79,3 +88,5 @@ mixin cards__card( profile = {} )
 - faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
 each profile in faculty
   +cards__card( profile )
+section.cards__no-result.no-result
+  p.no-result__text.no-result__text--hide= i18n[ language ].noResult
