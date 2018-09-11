@@ -1,0 +1,66 @@
+mixin footer
+  -
+    const i18n = Object.freeze({
+      'en-US': {
+        'contact': {
+          'title': 'Contact Us',
+          'address': 'No.1, Daxue Rd., East Dist., Tainan City 701, Taiwan (R.O.C.)',
+          'gap': ' | ',
+          'position': 'Department Location'
+        },
+        'follow': 'Follow us'
+      },
+      'zh-TW': {
+        'contact': {
+          'title': '聯絡我們',
+          'address': '70101 台南市東區大學路一號',
+          'gap': '｜',
+          'position': '系館位置圖'
+        },
+        'follow': '關注我們'
+      }
+    });
+  footer.footer
+    figure.footer__logo.logo
+      +image({
+        alt: 'csie',
+        className: 'logo__image',
+        src: 'logo/csie-white.png',
+      })
+      figcaption.logo__caption.caption
+        h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+        h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+    address.footer__contact.contact
+      h1.contact__title= i18n[ language ].contact.title
+      figure.contact__address.address
+        +image({
+          alt: 'address',
+          className: 'address__image',
+          src: 'icon/maps-flags.png'
+        })
+        figcaption.address__caption= i18n[ language ].contact.address+i18n[ language ].contact.gap
+        a(href="/about").address__caption.address__caption--map= i18n[ language ].contact.position
+      figure.contact__mail.mail
+        +image({
+          alt: 'mail',
+          className: 'mail__image',
+          src: 'icon/envelope.png'
+        })
+        figcaption.mail__caption www-team@cs.ncku.edu
+      figure.contact__phone.phone
+        +image({
+          alt: 'phone',
+          className: 'phone__image',
+          src: 'icon/phone.png'
+        })
+        figcaption.phone__caption 06-2757575 ext 62500
+    section.footer__copyright.copyright
+      h1.copyright__title Copyright © 2018 國立成功大學資訊工程系
+      figure.copyright__facebook.facebook
+        figcaption.facebook__caption= i18n[ language ].follow
+        a(href="#").facebook__image.image
+          +image({
+            alt: 'facebook',
+            className: 'image__icon',
+            src: 'icon/facebook.png'
+          })
