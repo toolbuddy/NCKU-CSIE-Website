@@ -5,40 +5,104 @@
 @import 'components/common/footer';
 
 // block
-// `.content`
+// `body > .content`
 
-.content {
-  // block [skin]
-  width: 100%;
-  background-color: #ffffff;
+body > .content {
+  // [variable]
+  $large: 475px;
 
-  // block [layout]
+  // [layout]
   display: grid;
   grid: {
     template: {
       areas:
-        '.   .   .'
-        '. topic .'
-        '. cards .'
-        '.   .   .';
-      columns: 10% 1fr 10%;
+        '.      '
+        'topic  '
+        'filters'
+        'cards  ';
+      columns: 100%;
     }
     row-gap: 2rem;
   };
 
-  // block
-  // `.content .topic`
+  // [skin]
+  width: 100%;
+  background-color: #eff3f9;
 
-  .topic {
-    // element [position]
+  // [RWD: $large]
+  @media screen and ( min-width: $large ) {
+    grid: {
+      template: {
+        areas:
+          '. .       .'
+          '. topic   .'
+          '. filters .'
+          '. cards   .';
+        columns: 1fr 95% 1fr;
+      }
+      row-gap: 2rem;
+    };
+  }
+
+  // block
+  // `body > .content > .topic`
+
+  > .topic {
+    // [position]
     grid-area: topic;
   }
 
   // block
-  // `.content .cards`
-
-  .cards {
-    // element [position]
+  // `body > .content > .cards`
+  @include cards() {
+    // [position]
     grid-area: cards;
+  }
+
+  // block
+  // `body > .content > .filter`
+  > .filters {
+    // [position]
+    grid-area: filters;
+
+    // [layout]
+    text-align: center;
+
+    // [skin]
+    font-size: .44rem;
+
+    // element
+    // `> .cards > .card > .intro > .departments > .departments__department`
+
+    > .filters__filter {
+      // [layout]
+      display: inline-block;
+      text-align: center;
+      word: {
+        wrap: break-word;
+        break: break-all;
+      }
+      white-space: normal;
+
+      // [skin]
+      margin: .14rem;
+      border: solid .03rem #8caae2;
+      border-radius: .47rem;
+      padding: {
+        left: .5rem;
+        right: .5rem;
+      }
+      min: {
+        width: 3.03rem;
+        height: .94rem;
+      }
+      color: #8caae2;
+      background-color: #eff3f9;
+
+      &:hover, &--active {
+        color: #ffffff;
+        background-color: #8caae2;
+      }
+    }
   }
 }

@@ -19,10 +19,6 @@
 }
 
 body > .footer {
-  $footer-height: 18.25rem;
-  background: #213262;
-  width: 100%;
-  height: $footer-height;
   display: grid;
   grid-template: {
     areas:
@@ -31,6 +27,12 @@ body > .footer {
       'footer__copyright';
     rows: 1.407fr 1.089fr 1fr;
   }
+
+  $footer-height: 18.25rem;
+  background: #213262;
+  width: 100%;
+  height: $footer-height;
+  
 
   > .footer__logo.logo {
     display: grid;
