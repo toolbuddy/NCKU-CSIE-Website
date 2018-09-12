@@ -44,10 +44,10 @@ const pages = document.getElementById( 'pages' );
 export function renderPages ( totalPages = 1 ) {
     pages.innerHTML = page( { totalPages, } );
 
-    Array.from( document.getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
+    Array.from( document.getElementById( 'pages' ).getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
         page.addEventListener( 'click', pageOnClick );
     } );
-    Array.from( document.getElementsByClassName( 'pages__control' ) ).forEach( ( control ) => {
+    Array.from( document.getElementById( 'pages' ).getElementsByClassName( 'pages__control' ) ).forEach( ( control ) => {
         control.addEventListener( 'click', controlOnClick );
     } );
 }
@@ -60,37 +60,48 @@ export function renderPage () {
     const query = new URLSearchParams( window.location.search );
     let currentPage = query.get( 'page' );
     if ( !currentPage )
-        currentPage = '1';
+        currentPage = 1;
+    currentPage = Number.parseInt( currentPage, 10 );
 
-    Array.from( document.getElementsByClassName( 'pages__page' ) ).forEach( ( page, index, array ) => {
-        page.classList.remove( 'pages__page--active' );
-        page.removeAttribute( 'style', 'display: none;' );
+    Array.from( document.getElementById( 'pages' ).getElementsByClassName( 'pages__page' ) ).forEach( ( page, index, array ) => {
+        /* Active the page clicked */
 
-        if ( page.innerHTML === currentPage )
+        if ( Number.parseInt( page.innerHTML, 10 ) === currentPage )
             page.classList.add( 'pages__page--active' );
-        else if ( page.innerHTML < currentPage - 2 || page.innerHTML > Number.parseInt( currentPage, 10 ) + 2 )
-            page.setAttribute( 'style', 'display: none;' );
+
+        /* Hidden the page which is |currentPage - page|  > 2  */
+
+        else if ( Number.parseInt( page.innerHTML, 10 ) < currentPage - 2 || Number.parseInt( page.innerHTML, 10 ) > currentPage + 2 ) {
+            page.classList.add( 'pages__page--hidden' );
+            page.classList.remove( 'pages__page--active' );
+        }
+
+        /* Let the page show without 'pages__page--active' tag */
+
+        else {
+            page.classList.remove( 'pages__page--active' );
+            page.classList.remove( 'pages__page--hidden' );
+        }
+
+        /* Let the first and the last page show up */
 
         if ( index === 0 || index === array.length - 1 )
-            page.removeAttribute( 'style', 'display: none;' );
+            page.classList.remove( 'pages__page--hidden' );
 
-        if ( index === array.length - 1 ) {
-            const extraItem1 = document.createElement( 'button' );
-            extraItem1.className = 'pages__extra';
-            extraItem1.id = 'pages__extra1';
-            extraItem1.innerHTML = '...';
-            const extraItem2 = document.createElement( 'button' );
-            extraItem2.className = 'pages__extra';
-            extraItem2.id = 'pages__extra2';
-            extraItem2.innerHTML = '...';
-            if ( document.getElementById( 'pages__extra1' ) )
-                document.getElementById( 'pages__extra1' ).parentNode.removeChild( document.getElementById( 'pages__extra1' ) );
-            if ( document.getElementById( 'pages__extra2' ) )
-                document.getElementById( 'pages__extra2' ).parentNode.removeChild( document.getElementById( 'pages__extra2' ) );
-            if ( Array.from( document.getElementsByClassName( 'pages__page' ) )[ 1 ].hasAttribute( 'style' ) )
-                pages.insertBefore( extraItem1, pages.childNodes[ 2 ] );
-            if ( Array.from( document.getElementsByClassName( 'pages__page' ) )[ index - 1 ].hasAttribute( 'style' ) )
-                pages.insertBefore( extraItem2, pages.childNodes[ index + 1 ] );
+        /* If total page larger than 1, determining whether text `...` showing up or not. */
+
+        if ( index === array.length - 1 && array.length > 1 ) {
+            const pagesExtraBefore = document.getElementById( 'pages__extra--before' );
+            const pagesExtraAfter = document.getElementById( 'pages__extra--after' );
+            if ( array[ 1 ].classList.contains( 'pages__page--hidden' ) )
+                pagesExtraBefore.classList.remove( 'pages__extra--hidden' );
+            else
+                pagesExtraBefore.classList.add( 'pages__extra--hidden' );
+
+            if ( array[ index - 1 ].classList.contains( 'pages__page--hidden' ) )
+                pagesExtraAfter.classList.remove( 'pages__extra--hidden' );
+            else
+                pagesExtraAfter.classList.add( 'pages__extra--hidden' );
         }
     } );
 }

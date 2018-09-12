@@ -168,12 +168,16 @@ export function pageOnClick ( event ) {
 
 export function controlOnClick ( event ) {
     const query = new URLSearchParams( window.location.search );
+    const currentPage = Number( query.get( 'page' ) );
     let page = event.target.innerHTML;
+    const pageNumber = document.getElementsByClassName( 'pages__page' ).length;
 
-    if ( event.target.innerHTML === '‹' )
+    if ( event.target.innerHTML === '‹' && currentPage > 1 )
         page = query.get( 'page' ) - 1;
-    else if ( event.target.innerHTML === '›' )
-        page = ( Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1 ) + 1;
+    else if ( event.target.innerHTML === '›' && currentPage < pageNumber )
+        page = ( currentPage ? currentPage : 1 ) + 1;
+    else
+        page = currentPage;
 
     query.set( 'page', page );
     updateURL( query );

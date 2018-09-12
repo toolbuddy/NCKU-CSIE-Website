@@ -1,35 +1,16 @@
 mixin pages__page( totalPages )
-  - for( let pageNo = 1; pageNo <= totalPages; ++pageNo )
+  - for( let pageNo = 2; pageNo < totalPages; ++pageNo )
   button.pages__page= pageNo
-
-button.pages__control.pages__control--foward= `‹`
-+pages__page( totalPages )
-button.pages__control.pages__control--backward= `›`
-
-//-
-  let page = 1;
-  let pageArray = null;
-  currentPage = currentPage? parseInt( currentPage ) : 1;
-  totalPages = totalPages? parseInt( totalPages ) : 0;
-  if( currentPage === 1 || currentPage === NaN )
-    pageArray = [ 1, 2, 3,'...' , totalPages ]
-  else if( currentPage === totalPages )
-    pageArray = [ 1, '...', totalPages-2, totalPages-1, totalPages ]
-  else if( currentPage === 2 )
-    pageArray = [ 1, 2, 3, 4, '...', totalPages ]
-  else if( currentPage === totalPages-1 )
-    pageArray = [ 1, '...', totalPages-3, totalPages-2, totalPages-1, totalPages ]
-  else if( currentPage === 3 )
-    pageArray = [ 1, 2, 3, 4, 5, '...', totalPages ]
-  else if( currentPage === 4 )
-    pageArray = [ 1, 2, 3, 4, 5, 6,  '...', totalPages ]
-  else if( currentPage === totalPages-2 )
-    pageArray = [ 1, '...', totalPages-4, totalPages-3, totalPages-2, totalPages-1, totalPages ]
-  else if( currentPage === totalPages-3 )
-    pageArray = [ 1, '...', totalPages-5,  totalPages-4, totalPages-3, totalPages-2, totalPages-1, totalPages ]
-  else
-    pageArray = [ 1, '...', currentPage-2, currentPage-1, currentPage, parseInt(currentPage)+1, parseInt(currentPage)+2, '...', totalPages ];
-//-button.pages__page( id=`pages__page--14` )= `‹`
-  each val in pageArray
-  button.pages__page( id=`pages__page--${ val }` )= val
-  button.pages__page( id=`pages__page--15` )= `›`
+  
+<!--if existing only one page, generating one button-->
+<!--else generating 'forward button', 'backward button', and the other page button-->
+if totalPages === 1
+  button.pages__page 1
+else
+  button.pages__control.pages__control--foward= `‹`
+  button.pages__page 1
+  button#pages__extra--before.pages__extra.pages__extra--hidden ...
+  +pages__page( totalPages )
+  button#pages__extra--after.pages__extra.pages__extra--hidden ...
+  button.pages__page= totalPages
+  button.pages__control.pages__control--backward= `›`
