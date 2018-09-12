@@ -18,6 +18,7 @@ mixin footer
         'follow':     '關注我們'
       }
     } );
+
   footer.footer
     figure.footer__logo.logo
       +image( {
@@ -30,24 +31,20 @@ mixin footer
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
     section.footer__contact.contact
       h1.contact__title= i18n[ language ].contact.title
-      aside.contact__address.address
-        address.address__text= `${i18n[ language ].contact.address}｜`
-        a.address__text.address__text--map( href = "/about" )= i18n[ language ].contact.position
-      aside.contact__mail.mail
-        a.mail__text( href = "mailto:em62500@mail.csie.ncku.edu.tw" ) em62500@mail.csie.ncku.edu.tw 
-      aside.contact__phone.phone
-        a.phone__text( href = "tel:062757575" ) 06-2757575 ext 62500
+      address.contact__address.address= `${ i18n[ language ].contact.address }｜`
+        a.address__map( href = '/about' )= i18n[ language ].contact.position
+      a.contact__mail( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
+      a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
     section.footer__copyright.copyright
-      section.copyright__title.title
-        aside.title__line
+      aside.copyright__title.title
+        hr.title__line
         h1.title__text Copyright © 2018 國立成功大學資訊工程系
-        aside.title__line
-      //左右兩邊的線
+        hr.title__line
       figure.copyright__icon.icon
         figcaption.icon__caption= i18n[ language ].follow
-        a( href = "https://www.facebook.com/ncku.csie" ).icon__image.image
+        a( href = 'https://www.facebook.com/ncku.csie' target = '_blank' rel = 'noopener noreferrer' ).icon__image.image
           +image( {
-            alt: 'facebook',
+            alt:       'facebook',
             className: 'image__facebook',
-            src: 'icon/facebook.png'
+            src:       'icon/facebook.png'
           } )
