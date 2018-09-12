@@ -1,0 +1,46 @@
+mixin cards__card( faculty = {} )
+  figure.cards__card.card
+    //- photo of faculty
+    img.card__photo( src=faculty.photo, alt=faculty.name )
+
+    article.card__intro.intro
+      //- name of faculty
+      h1.intro__name= faculty.name
+
+      //- titles belong to faculty
+      if faculty.titles !== null
+        +intro__list( 'title', faculty.titles )
+
+      //- departments belong to faculty
+      if faculty.departments !== null
+        +intro__list( 'department', faculty.departments )
+
+      //- email of faculty
+      p.intro__email= faculty.email
+
+      //- offices belong to faculty
+      if faculty.offices !== null
+        each office in faculty.offices
+          address.intro__address= office.address
+          a.intro__phone( href=`tel:${ office.tel }` )= office.tel
+
+    //- [interaction]
+    //- hover effect
+    article.card__intro--hover.intro
+
+      //- personal web of faculty
+      if faculty.personalWeb !== null
+        a.intro__personal-website( href=faculty.personalWeb )
+
+      //- detail link of faculty
+      a.intro__more( href=`/about/faculty/${ faculty.profileId }?language=${ language }` ) see more
+
+mixin intro__list( attribute, array )
+  ul( class=`intro__${ attribute }s` )
+    each element in array
+      li( class=`intro__${ attribute }` )= element[ attribute ]
+
+//- main
+- faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
+each profile in faculty
+  +cards__card( profile )

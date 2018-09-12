@@ -10,14 +10,19 @@ append content
     const i18n = Object.freeze( {
       'en-US': {
         'topic': 'Faculty',
+        'filters': [ 'dept. CSIE', 'inst. CSIE', 'IMI', 'IMIS' ]
       },
       'zh-TW': {
         'topic': '師資陣容',
+        'filters': [ '資訊系', '資訊所', '醫資所', '製造所' ]
       },
     } );
 
   main.content
     +topic( i18n[ language ].topic )
+    section.filters
+      each value, index in i18n[ language ].filters
+        button.filters__filter( data = index )= value
     section#cards.cards
 
 append scripts

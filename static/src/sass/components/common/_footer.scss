@@ -1,3 +1,13 @@
+$xxx-small: 320px;
+$xx-small: 480px;
+$x-small: 640px;
+$small: 720px;
+$medium: 800px;
+$large: 880px;
+$x-large: 960px;
+$xx-large: 1040px;
+$xxx-large: 1120px;
+
 %address {
   display: flex;
   justify-content: center;
@@ -5,24 +15,36 @@
 }
 
 %image {
-  width: .625rem;
-  height: auto;
-  margin-right: .3125rem;
+  content: '';
+  background: {
+    size: 20px;
+    repeat: no-repeat;
+  }
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
   filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
+  @media screen and ( max-width: $xx-small ) {
+    width: 12px;
+    height: 12px;
+    background-size: 12px;
+  }
 }
 
 %caption {
   height: .75rem;
   color: #6982c0;
-  font-size: .5rem;
+  font: {
+    style: normal;
+    size: .5rem;
+  }
   line-height: 1.5;
+  @media screen and ( max-width: $xx-small ) {
+    font-size: 12px;
+  }
 }
 
 body > .footer {
-  $footer-height: 18.25rem;
-  background: #213262;
-  width: 100%;
-  height: $footer-height;
   display: grid;
   grid-template: {
     areas:
@@ -31,6 +53,11 @@ body > .footer {
       'footer__copyright';
     rows: 1.407fr 1.089fr 1fr;
   }
+
+  $footer-height: 18.25rem;
+  background: #213262;
+  width: 100%;
+  height: $footer-height;
 
   > .footer__logo.logo {
     display: grid;
@@ -46,11 +73,11 @@ body > .footer {
     }
 
     > .logo__image {
-      width: 1.6rem;
-      height: auto;
       grid-area: logo__image;
       align-self: end;
       justify-self: center;
+      width: 1.6rem;
+      height: auto;
     }
 
     > .logo__caption.caption {
@@ -67,13 +94,13 @@ body > .footer {
       justify-self: center;
 
       > .caption__text {
-        color: rgba( 255, 255, 255, .87 );
         display: grid;
+        color: rgba( 255, 255, 255, .87 );
 
         &.caption__text--large {
           grid-area: caption__text--large;
-          font-size: .75rem;
           justify-self: center;
+          font-size: .75rem;
         }
 
         &.caption__text--small {
@@ -86,8 +113,6 @@ body > .footer {
 
   > .footer__contact.contact {
     display: grid;
-    font-style: normal;
-    align-self: center;
     grid: {
       area: footer__contact;
       template: {
@@ -99,26 +124,30 @@ body > .footer {
         rows: 1.16rem 1.16rem 1.16rem 2.31rem;
       }
     }
+    font-style: normal;
+    align-self: center;
+    
 
     > .contact__title {
-      color: #ffffff;
       justify-self: center;
       grid-area: contact__title;
       font-size: .625rem;
+      color: #ffffff;
     }
 
     > .contact__address.address {
       @extend %address;
       grid-area: contact__address;
 
-      > .address__image {
+      &::before {
         @extend %image;
+        background-image: url( ../../image/icon/location.png );
       }
 
-      > .address__caption {
+      > .address__text {
         @extend %caption;
 
-        &.address__caption--map {
+        &.address__text--map {
           text-decoration: underline;
         }
       }
@@ -128,12 +157,14 @@ body > .footer {
       @extend %address;
       grid-area: contact__mail;
 
-      > .mail__image {
+      &::before {
         @extend %image;
+        background-image: url( ../../image/icon/envelope.png );
       }
 
-      > .mail__caption {
+      > .mail__text {
         @extend %caption;
+        text-decoration: underline;
       }
     }
 
@@ -141,19 +172,20 @@ body > .footer {
       @extend %address;
       grid-area: contact__phone;
 
-      > .phone__image {
+      &::before {
         @extend %image;
+        background-image: url( ../../image/icon/phone.png );
       }
 
-      > .phone__caption {
+      > .phone__text {
         @extend %caption;
+        text-decoration: underline;
       }
     }
   }
 
   > .footer__copyright.copyright {
     display: grid;
-    font-style: normal;
     grid: {
       area: footer__copyright;
       template: {
@@ -163,34 +195,101 @@ body > .footer {
         rows: 2.09rem;
       }
     }
+    font-style: normal;
 
-    > .copyright__title {
-      grid-area: copyright__title;
-      font-size: .5rem;
-      text-align: center;
-      color: #ffffff;
+    > .copyright__title.title {
+      grid: {
+        area: copyright__title;
+        template: {
+          areas:
+          'title__line--left title__text title__line--right';
+          columns: 2fr 1.2fr 2fr;
+        }
+      }
+      display: grid;
+
+      > .title__text {
+        grid-area: title__text;
+        font-size: .5rem;
+        text-align: center;
+        color: #ffffff;
+      }
+      
+      > .title__line {
+        height: .375rem;
+        border-bottom-style: solid;
+        border-width: 1px;
+        border-color: #6982c0;
+      }
+      
     }
 
-    > .copyright__facebook.facebook {
+    > .copyright__icon.icon {
       display: flex;
-      font-style: normal;
       grid-area: copyright__facebook;
       justify-content: center;
+      font-style: normal;
 
-      > .facebook__caption {
-        font-size: .625rem;
+      > .icon__caption {
         height: 1rem;
-        color: #ffffff;
+        font-size: .625rem;
         line-height: 1.9;
         font-weight: bolder;
+        color: #ffffff;
       }
 
-      > .facebook__image.image {
-        > .image__icon {
+      > .icon__image.image {
+        > .image__facebook {
+          margin-left: 1.09rem;
           width: 1rem;
           height: 1rem;
           filter: invert(51%) sepia(59%) saturate(350%) hue-rotate(185deg) brightness(88%) contrast(92%);
-          margin-left: 1.09rem;
+          
+        }
+      }
+    }
+  }
+  @media screen and ( max-width: $xx-small ) {
+    > .footer__logo.logo {
+      > .logo__caption.caption {
+        > .caption__text {
+          &.caption__text--large {
+            font-size: 14px;
+          }
+  
+          &.caption__text--small {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+
+    > .footer__contact.contact {
+      > .contact__title {
+        font-size: 14px;
+      }
+    }
+
+    > .footer__copyright.copyright {
+      > .copyright__title.title {
+        > .title__text {
+          font-size: 9px;
+        }
+      }
+
+      > .copyright__icon.icon {
+        > .icon__caption {
+          font-size: 14px;
+          line-height: 2.5;
+        }
+      }
+    }
+  }
+  @media screen and ( min-width: $xx-small ) and ( max-width: $small ) {
+    > .footer__copyright.copyright {
+      > .copyright__title.title {
+        > .title__text {
+          font-size: 14px;
         }
       }
     }

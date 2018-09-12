@@ -100,12 +100,60 @@ $icon-path: '../../';
     @content;
   }
 }
-@mixin icon--before__email--small () {
-  @include icon--before__template--small() {
+@mixin icon--before--trophy () {
+  @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRkPOQB3cU3LAAAAnUlEQVQoz6XRrQoCARDE8d9d0mryFcwGwWQxWHwOsdjM+iCC72AQq1WwWm2CWEW8E9ZyiIdfwd02f2ZYZvl3EkzUP9CDKXSdxJs96pBauWjavrg3mm5WhNxY1bzknqkYy4VCWKgZyoRwNVCzKMjDs9fStrbW1rJ/6E+xmREYFUkhRCJKp+3QKPcQvk76q8nU+Ss/J/p6kg84LP9+pjta2ExLRTITNgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNS0yNVQxNTo1NzowMCswMjowMOp3lHEAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDUtMjVUMTU6NTc6MDArMDI6MDCbKizNAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==' );
+      image: url( '../../image/icon/trophy.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon--before--book () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/open-book.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon--before--study () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/study.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon--before--students () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/students.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon--before--search () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/search-black.png' );
     }
 
     // template [extend]
@@ -115,29 +163,49 @@ $icon-path: '../../';
 
 // template
 // `icon--before__location--small`
-@mixin icon--before__location--small () {
+@mixin icon__location () {
   // template [skin]
-  @include icon--before__template--small() {
+  background-image: url( '../../image/icon/location.png' );
+
+  // template [extend]
+  @content;
+}
+@mixin icon__envelope () {
+  background-image: url( '../../image/icon/envelope.png' );
+
+  // template [extend]
+  @content;
+}
+@mixin icon__phone () {
+  background-image: url( '../../image/icon/phone.png' );
+
+  // template [extend]
+  @content;
+}
+@mixin icon__laboratory () {
+  background-image: url( '../../image/icon/laboratory.png' );
+
+  // template [extend]
+  @content;
+}
+@mixin icon--before--taiwan () {
+  @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRkQBBuAhijUAAAAyElEQVQoz3XRIU6DQRCG4aeEIioqEJQLILgKIanBFUMQuBocISEowgEQHADTCxRVgsCiMHW/IIGEGkwFbRjMtt2l7btq53s3s7PLjJpjz0aG7hxaYstAZOtBvRTuiziEizzeNhXCu0vXPoUwtrMQOunUEThIu1PYAHtJfAQvfsHuQnhLwgk4S9VBPsOXECb6XlODSi2/5u3SFFflmE0fRVxp/H+qTiG0reBpHvesZN+PEL61rOFGCOfW0lAZlt+0WQhjXVOTvPQHa6xb/LMJhJkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDUtMjVUMTY6MDQ6MjcrMDI6MDBKX9YNAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA1LTI1VDE2OjA0OjI3KzAyOjAwOwJusQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=' );
+      image: url( '../../image/icon/taiwan.png' );
     }
 
     // template [extend]
     @content;
   }
 }
-
-// template
-// `icon--before__phone--small`
-@mixin icon--before__phone--small () {
-  // template [skin]
-  @include icon--before__template--small() {
+@mixin icon--before--studentcap () {
+  @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRURIjHT97epAAAArklEQVQoz3XRvQ4BQRDA8b/T0BEV8RRKHkOlFr1CXCPiQUShkci9gwodteIoRHOJTnLF5bKaybg9u7vNJPPb+cgChNyZ4T1DDAbDygeOAgxLN3gryGn/pwNyjW8krgpneR/TdaUDdhJV+bhnaPCQGnvfHj1SIRMfGQtIlVRo2WSty0Y06XAlIyyCmm5jeBJLtCiSOlslvzu3G03JSuBVHrfPwQLOLxyw4UTChRF8AVVhWCBptaGIAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA1LTIxVDE3OjM0OjQ5KzAyOjAwTEpX1AAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wNS0yMVQxNzozNDo0OSswMjowMD0X72gAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC' );
+      image: url( '../../image/icon/students-cap.png' );
     }
 
     // template [extend]
@@ -147,4 +215,16 @@ $icon-path: '../../';
 @mixin icon__search--white () {
   background-image: url( '../../image/icon/search-white.png' );
   @content;
+}
+@mixin icon--before--user () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '../../image/icon/user.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
 }
