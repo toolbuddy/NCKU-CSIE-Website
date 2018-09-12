@@ -32,16 +32,16 @@ mixin footer
       h1.contact__title= i18n[ language ].contact.title
       aside.contact__address.address
         address.address__text= `${i18n[ language ].contact.address}｜`
-        //改掉class background-image
         a.address__text.address__text--map( href = "/about" )= i18n[ language ].contact.position
       aside.contact__mail.mail
         a.mail__text( href = "mailto:em62500@mail.csie.ncku.edu.tw" ) em62500@mail.csie.ncku.edu.tw 
-        //a href mailto
       aside.contact__phone.phone
-        //a href tel
-        a.phone__caption( href = "tel:062757575" ) 06-2757575 ext 62500
+        a.phone__text( href = "tel:062757575" ) 06-2757575 ext 62500
     section.footer__copyright.copyright
-      h1.copyright__title Copyright © 2018 國立成功大學資訊工程系
+      section.copyright__title.title
+        aside.title__line
+        h1.title__text Copyright © 2018 國立成功大學資訊工程系
+        aside.title__line
       //左右兩邊的線
       figure.copyright__icon.icon
         figcaption.icon__caption= i18n[ language ].follow

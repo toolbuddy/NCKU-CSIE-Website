@@ -7,9 +7,14 @@ $image__path: '../image';
 }
 
 %image {
-  width: .625rem;
-  height: auto;
-  margin-right: .3125rem;
+  content: '';
+  background: {
+    size: 20px;
+    repeat: no-repeat;
+  }
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
   filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
 }
 
@@ -119,16 +124,8 @@ body > .footer {
       grid-area: contact__address;
 
       &::before {
-        content: '';
-        background: {
-          image: url( ../../image/icon/location.png );
-          size: 20px;
-          repeat: no-repeat;
-        }
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-        filter: invert(50%) sepia(19%) saturate(1012%) hue-rotate(185deg) brightness(98%) contrast(89%);
+        @extend %image;
+        background-image: url( ../../image/icon/location.png );
       }
 
       > .address__text {
@@ -144,6 +141,11 @@ body > .footer {
       @extend %address;
       grid-area: contact__mail;
 
+      &::before {
+        @extend %image;
+        background-image: url( ../../image/icon/envelope.png );
+      }
+
       > .mail__text {
         @extend %caption;
         text-decoration: underline;
@@ -154,12 +156,14 @@ body > .footer {
       @extend %address;
       grid-area: contact__phone;
 
-      > .phone__image {
+      &::before {
         @extend %image;
+        background-image: url( ../../image/icon/phone.png );
       }
 
-      > .phone__caption {
+      > .phone__text {
         @extend %caption;
+        text-decoration: underline;
       }
     }
   }
@@ -177,11 +181,31 @@ body > .footer {
     }
     font-style: normal;
 
-    > .copyright__title {
-      grid-area: copyright__title;
-      font-size: .5rem;
-      text-align: center;
-      color: #ffffff;
+    > .copyright__title.title {
+      grid: {
+        area: copyright__title;
+        template: {
+          areas:
+          'title__line--left title__text title__line--right';
+          columns: 2fr 1.2fr 2fr;
+        }
+      }
+      display: grid;
+
+      > .title__text {
+        grid-area: title__text;
+        font-size: .5rem;
+        text-align: center;
+        color: #ffffff;
+      }
+      
+      > .title__line {
+        height: .375rem;
+        border-bottom-style: solid;
+        border-width: 1px;
+        border-color: #6982c0;
+      }
+      
     }
 
     > .copyright__icon.icon {
