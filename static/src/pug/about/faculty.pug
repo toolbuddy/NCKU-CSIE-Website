@@ -6,26 +6,25 @@ append header
 
 append content
   include /components/common/topic.pug
+  include /components/about/faculty/filters.pug
   -
     const i18n = Object.freeze( {
       'en-US': {
         'topic': 'Faculty',
-        'filters': [ 'dept. CSIE', 'inst. CSIE', 'IMI', 'IMIS' ],
         'noResult': 'No Result',
       },
       'zh-TW': {
         'topic': '師資陣容',
-        'filters': [ '資訊系', '資訊所', '醫資所', '製造所' ],
         'noResult': '無結果',
       },
     } );
 
   main.content
     +topic( i18n[ language ].topic )
-    section.filters
-      each value, index in i18n[ language ].filters
-        button.filters__filter( data = index )= value
+    +filters()
     section#cards.cards
+    section#no-result.no-result.no-result--hide
+      p.no-result__text= i18n[ language ].noResult
 
 append scripts
   +js( 'about/faculty' )
