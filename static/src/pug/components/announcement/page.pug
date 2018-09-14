@@ -1,7 +1,7 @@
 mixin pages__page( totalPages )
   - for( let pageNo = 2; pageNo < totalPages; ++pageNo )
   button.pages__page= pageNo
-  
+
 <!--if existing only one page, generating one button-->
 <!--else generating 'forward button', 'backward button', and the other page button-->
 if totalPages === 1

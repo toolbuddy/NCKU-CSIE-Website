@@ -1,165 +1,403 @@
 @import 'components/common/icon.scss';
 
-// block
-// `.main .cards`
+// template
+// `> .cards > .card > .intro > .intro__*::before
+@mixin intro__icon--before-template () {
+  $intro__icon--margin-right: .2rem;
+  $intro__icon--height: .75rem;
+  $intro__icon--min-width: .75rem;
 
-.cards {
-  // block [layout]
-  display: grid;
-  grid: {
-    template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
-    gap: 2.625rem;
+  &::before {
+    // [layout]
+    display: inline-block;
+    vertical-align: middle;
+    background: {
+      position: center;
+      size: contain;
+      repeat: no-repeat;
+    }
+
+    // [skin]
+    content: '';
+    margin-right: $intro__icon--margin-right;
+    height: $intro__icon--height;
+    min-width: $intro__icon--min-width;
+    filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+    // [customization]
+    @content;
   }
+}
 
-  // element
-  // `.main .cards .cards__card`
-
-  &__card {
-    // element [skin]
-    height: 15rem;
-    font-family: var( --font__family--default );
-  }
-
+// component
+// `> .cards`
+@mixin cards () {
   // block
-  // `.main .cards .card`
+  // `> .cards`
+  > .cards {
+    // [variable]
+    $large: 545px;
+    $cards__card--width: 15.97rem;
+    $cards__card--height: 23.38rem;
 
-  .card {
-    // block [layout]
-    display: grid;
-    grid-template: {
-      areas: 'card__photo' 'card__intro';
-      rows: 2fr 1fr;
+    // [layout]
+    display: block;
+
+    // [RWD: $large]
+    @media screen and ( min-width: $large ) {
+      // [layout]
+      display: grid;
+      grid: {
+        template-columns: repeat( auto-fit, $cards__card--width );
+        gap: .22rem;
+      };
+      justify-content: center;
     }
+
+    // [customization]
+    @content;
 
     // element
-    // `.main .cards .card .card__photo`
-
-    &__photo {
-      // element [position]
-      grid-area: card__photo;
-
-      // element [skin]
-      width: 100%;
-      height: 100% ;
-      object-fit: cover;
-    }
-
-    // element
-    // `.main .cards .card .card__intro`
-
-    &__intro {
-      // element [position]
-      grid-area: card__intro;
-
-      // element [skin]
-      background-color: #ffffff;
-      font-size: .5rem;
-      padding: .3rem .88rem;
-
-      // element
-      // `.main .cards .card .card__intro--hover`
-
-      &--hover {
-        // element [position]
-        // `.card__intro--hover` will fly on top of `.card__photo`.
-        grid-area: card__photo;
-        z-index: 1;
-
-        // element [skin]
-        color: #ffffff;
-        background-color: rgb( 52, 52, 52 );
-        padding: 0 .5rem;
-
-        // element [interaction]
-        // `.card__intro--hover` will be visible when hovered
-        opacity: 0;
-        transition: opacity .3s;
-
-        &:hover {
-          opacity: .7;
-        }
-      }
-    }
-
+    // `> .cards > .cards__card`
     // block
-    // `.main .cards .card .intro`
+    // `> .cards > .card`
+    > .cards__card.card {
+      // [layout]
+      display: block;
 
-    .intro {
-      // block [layout]
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      // [skin]
+      margin: {
+        top: .5rem;
+        bottom: .5rem;
+      }
+      border: {
+        top-width: 1.5rem;
+        bottom-width: 1.44rem;
+        color: #ffffff;
+        style: solid;
+      }
+      width: 100%;
+      min-height: $cards__card--height;
+      background-color: #ffffff;
 
-      // template
-      // `.main .cards .card .intro .intro__list`
+      // [RWD: $large]
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        margin: {
+          top: 0;
+          bottom: 0;
+        }
+        border: {
+          width: 1.72rem 2.72rem 1.44rem;
+          color: #ffffff;
+          style: solid;
+        }
+        width: $cards__card--width;
+      }
 
-      %intro__list {
-        // template [skin]
-        display: inline-block;
-        margin-right: .2rem;
+      &--hide {
+        display: none;
       }
 
       // element
-      // `.main .cards .card .intro .intro__title`
-      // `.main .cards .card .intro .intro__dept`
+      // `> .cards > .card > .card__photo`
 
-      &__title, &__department {
-        // element [skin]
-        @extend %intro__list;
+      > .card__photo {
+        // [position]
+        object-fit: cover;
+
+        // [layout]
+        display: flex;
+        justify-self: center;
+
+        // [skin]
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: 1.7rem;
+        }
+        border-radius: 50%;
+        width: 8.5rem;
+        height: 8.5rem;
+        background-color: #c4c4c4;
       }
 
       // element
-      // `.main .cards .card .intro .intro__email`
+      // `> .cards > .card > .card__intro`
+      // block
+      // `> .cards > .card > .intro`
 
-      &__email {
-        // element [skin]
-        word-break: break-all;
-        @include icon--before__email--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
+      > .card__intro.intro {
+        // [variable]
+        $intro--margin-left-right: .83rem;
+        $intro--margin-up-down: .3rem;
+
+        // [layout]
+        display: block;
+
+        // [skin]
+        padding: .3rem;
+
+        // element
+        // `> .cards > .card > .intro > .intro__departments`
+        // block
+        // `> .cards > .card > .intro > .departments`
+
+        > .intro__departments.departments {
+          // [layout]
+          text-align: center;
+
+          // [skin]
+          font-size: .44rem;
+          margin-bottom: 1.15rem;
+
+          // element
+          // `> .cards > .card > .intro > .departments > .departments__department`
+
+          > .departments__department {
+            // [layout]
+            display: inline-block;
+            text-align: center;
+            word: {
+              wrap: break-word;
+              break: break-all;
+            }
+            white-space: normal;
+
+            // [skin]
+            margin: .14rem;
+            border-radius: .47rem;
+            padding: {
+              left: .5rem;
+              right: .5rem;
+            }
+            min: {
+              width: 3.03rem;
+              height: .94rem;
+            }
+            line-height: 1rem;
+            color: #8caae2;
+            background-color: #eaeff7;
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__titles`
+        // block
+        // `> .cards > .card > .intro > .titles`
+
+        > .intro__titles.titles {
+          // [layout]
+          display: inline-block;
+
+          // [skin]
+          margin: {
+            left: $intro--margin-left-right;
+            right: $intro--margin-left-right;
+          }
+
+          // element
+          // `> .cards > .card > .intro > .titles > .titles__title`
+
+          > .titles__title {
+            // [layout]
+            display: inline-block;
+
+            // [skin]
+            margin: .05rem;
+            border: .05rem solid #adacad;
+            border-radius: .09rem;
+            padding: .08rem .16rem;
+            min-height: .92rem;
+            line-height: .8rem;
+            font-size: .44rem;
+            color: #adacad;
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__name`
+
+        > .intro__name {
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          font-size: .63rem;
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__email`
+        // block
+        // `> .cards > .card > .intro > .email`
+
+        > .intro__email.email {
+          // [layout]
+          display: flex;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+
+          // element
+          // `> .cards > .card > .intro > .intro__email::before`
+          @include intro__icon--before-template() {
+            @include icon__envelope();
+          }
+
+          // element
+          // `> .cards > .card > .intro > .email > .email__text`
+          // block
+          // `> .cards > .card > .intro > .email > .text`
+          > .email__text.text {
+            // [layout]
+            display: inline;
+            word-break: keep-all;
+
+            // [skin]
+            line-height: .8rem;
+            font-size: .44rem;
+
+            // element
+            // `> .cards > .card > .intro > .email > .text > .text__link`
+            > .text__link {
+              // [layout]
+              word-break: break-all;
+
+              // [skin]
+              text-decoration: underline;
+            }
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__address`
+
+        > .intro__address {
+          // [layout]
+          display: flex;
+          word-break: break-word;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          line-height: .8rem;
+          font: {
+            size: .44rem;
+            style: normal;
+          }
+
+          // element
+          // `> .cards > .card > .intro > .intro__address::before`
+          @include intro__icon--before-template() {
+            @include icon__location();
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__phone`
+
+        > .intro__phone {
+          // [layout]
+          display: flex;
+          word-break: break-word;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          line-height: .8rem;
+          font-size: .44rem;
+
+          // element
+          // `> .cards > .card > .intro > .intro__phone::before`
+          @include intro__icon--before-template() {
+            @include icon__phone();
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__lab`
+        // block
+        // `> .cards > .card > .intro > .lab`
+
+        > .intro__lab.lab {
+          // [layout]
+          display: flex;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+
+          // element
+          // `> .cards > .card > .intro > .intro__lab::before`
+          @include intro__icon--before-template() {
+            @include icon__laboratory();
+          }
+
+          // element
+          // `> .cards > .card > .intro > .lab > .lab__text`
+          // block
+          // `> .cards > .card > .intro > .lab > .text`
+          > .lab__text.text {
+            // [layout]
+            display: inline;
+            word-break: keep-all;
+
+            // [skin]
+            line-height: .8rem;
+            font-size: .44rem;
+
+            // element
+            // `> .cards > .card > .intro > .lab > .text > .text__link`
+            > .text__link {
+              // [layout]
+              word-break: break-word;
+
+              // [skin]
+              text-decoration: underline;
+            }
+          }
+        }
+
+        // element
+        // `> .cards > .card > .intro > .intro__more`
+
+        > .intro__more {
+          // [layout]
+          text-align: right;
+
+          // [skin]
+          margin: $intro--margin-up-down $intro--margin-left-right;
+          font-size: .44rem;
+          color: #8caae2;
+
+          // element
+          // `> .cards > .card > .intro > .intro__more::after`
+          &::after {
+            // [skin]
+            margin-left: .3rem;
+            content: '>';
+          }
         }
       }
+    }
 
-      // element
-      // `.main .cards .card .intro .intro__address`
+    // element
+    // `> .cards > .cards__no-result`
+    // block
+    // `> .cards > .no-result`
+    > .cards__no-result.no-result {
+      // [layout]
+      text-align: center;
 
-      &__address {
-        // element [skin]
-        font-style: normal;
-        word-break: break-all;
-        @include icon--before__location--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
-        }
+      // [skin]
+      margin: {
+        top: 1.72rem;
+        bottom: 1.44rem;
       }
 
       // element
-      // `.main .cards .card .intro .intro__phone`
-
-      &__phone {
-        // element [skin]
-        word-break: break-all;
-        @include icon--before__phone--small() {
-          margin-right: .2rem;
-          height: .5rem;
-          width: .5rem;
+      // `> .cards > .no-result > .no-result__text`
+      > .no-result__text {
+        // modifier
+        // `> .cards > .no-result > .no-result__text--hide`
+        &--hide {
+          display: none;
         }
-      }
-
-      // element
-      // `.main .cards .card .intro .intro__more`
-
-      &__more {
-        // element [skin]
-        color: white;
-        background-color: rgb( 0, 195, 208 );
-        border: .1rem solid white;
-        border-radius: 1rem;
-        padding: .5rem;
-        margin-top: .2rem;
-        font-size: .625rem;
       }
     }
   }

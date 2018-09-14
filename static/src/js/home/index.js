@@ -3,6 +3,7 @@
  */
 /* eslint no-unused-vars: off */
 import style from 'static/dist/css/home/index.min.css';
+import header from 'static/src/js/components/common/header/index.js';
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
 import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
 
