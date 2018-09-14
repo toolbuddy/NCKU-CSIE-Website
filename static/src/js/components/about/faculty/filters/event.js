@@ -1,11 +1,31 @@
 import { renderFilter, renderCards, } from 'static/src/js/components/about/faculty/filters/render.js';
 
-// Add click event to each filter.
+/**
+ * Execute `renderFilter` when click on `filter`.
+ *
+ * @param {HTMLElement} filter
+ *
+ * Add `click` event to `filter`
+ * and render filter with function `renderFilter`.
+ */
+
 export function registClick ( filter ) {
     filter.addEventListener( 'click', () => {
         renderFilter( filter );
     } );
 }
+
+/**
+ * Execute `renderFilter` when click on `filter`.
+ *
+ * @param {HTMLElement}   filter
+ * @param {HTMLElement[]} filters
+ * @param {HTMLElement}   cards
+ * @param {HTMLElement}   noResult
+ *
+ * Add `click` event to `filter`
+ * and render `cards` and `noResult` with function `renderCards`.
+ */
 
 export function registFilter ( filter, filters, cards, noResult ) {
     filter.addEventListener( 'click', () => {
