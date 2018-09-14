@@ -1,16 +1,16 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const { port, url, } = require( path.resolve( projectRoot, 'settings/server/config' ) );
+const { port, url, } = require( path.join( projectRoot, 'settings/server/config' ) );
 
 module.exports = {
     ui: {
         port: port + 2,
     },
     files: [
-        path.resolve( projectRoot, 'static/dist/css/**/*.css' ),
-        path.resolve( projectRoot, 'static/dist/html/**/*.html' ),
-        path.resolve( projectRoot, 'static/dist/js/**/*.js' ),
+        path.join( projectRoot, 'static/dist/css/**/*.css' ),
+        path.join( projectRoot, 'static/dist/html/**/*.html' ),
+        path.join( projectRoot, 'static/dist/js/**/*.js' ),
     ],
     watchEvents: [
         'add',
