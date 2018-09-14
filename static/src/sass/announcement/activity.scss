@@ -38,6 +38,14 @@
   max-width: 26rem;
   margin: 0 auto;
 
+  // block [skin]
+  padding: 2.2rem .5rem;
+  @media screen and ( min-width: $large ) {
+    padding: 2.2rem 0;
+  }
+  max-width: 26rem;
+  margin: 0 auto;
+
   // block
   // `.content .topic`
   .topic {

@@ -64,8 +64,6 @@ export const singleDefaultTag = {
      */
 
     getAllAnnouncements () {
-        /* eslint no-console: 'off' */
-        console.log( 'get all announcements' );
         const { startTime, endTime, page, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     singleDefaultTag.defaultTag,

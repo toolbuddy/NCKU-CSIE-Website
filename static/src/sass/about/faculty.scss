@@ -1,6 +1,7 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/about/faculty/card';
+@import 'components/about/faculty/cards';
+@import 'components/about/faculty/filters';
 @import 'components/common/topic';
 
 // block
@@ -15,10 +16,11 @@ body > .content {
   grid: {
     template: {
       areas:
-        '.      '
-        'topic  '
-        'filters'
-        'cards  ';
+        '.'
+        'topic   '
+        'filters '
+        'cards   '
+        'noResult';
       columns: 100%;
     }
     row-gap: 2rem;
@@ -33,10 +35,11 @@ body > .content {
     grid: {
       template: {
         areas:
-          '. .       .'
-          '. topic   .'
-          '. filters .'
-          '. cards   .';
+          '. .        .'
+          '. topic    .'
+          '. filters  .'
+          '. cards    .'
+          '. noResult .';
         columns: 1fr 95% 1fr;
       }
       row-gap: 2rem;
@@ -52,6 +55,13 @@ body > .content {
   }
 
   // block
+  // `body > .content > .filters`
+  @include filters() {
+    // [position]
+    grid-area: filters;
+  }
+
+  // block
   // `body > .content > .cards`
   @include cards() {
     // [position]
@@ -59,49 +69,22 @@ body > .content {
   }
 
   // block
-  // `body > .content > .filter`
-  > .filters {
+  // `body > .content > .no-result`
+  > .no-result {
     // [position]
-    grid-area: filters;
+    grid-area: noResult;
 
     // [layout]
     text-align: center;
 
     // [skin]
-    font-size: .44rem;
+    min-height: 100%;
 
-    // element
-    // `> .cards > .card > .intro > .departments > .departments__department`
-
-    > .filters__filter {
+    // modifier
+    // `body > .content > .no-result--hide`
+    &--hide {
       // [layout]
-      display: inline-block;
-      text-align: center;
-      word: {
-        wrap: break-word;
-        break: break-all;
-      }
-      white-space: normal;
-
-      // [skin]
-      margin: .14rem;
-      border: solid .03rem #8caae2;
-      border-radius: .47rem;
-      padding: {
-        left: .5rem;
-        right: .5rem;
-      }
-      min: {
-        width: 3.03rem;
-        height: .94rem;
-      }
-      color: #8caae2;
-      background-color: #eff3f9;
-
-      &:hover, &--active {
-        color: #ffffff;
-        background-color: #8caae2;
-      }
+      display: none;
     }
   }
 }

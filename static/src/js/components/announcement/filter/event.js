@@ -150,6 +150,7 @@ export function pageOnClick ( event ) {
     const query = new URLSearchParams( window.location.search );
     const page = event.target.innerHTML;
 
+    // Const page = /pages__page--([1-9][0-9]*)/.exec( event.target.id )[ 1 ];
     // If page is same, do nothing
     if ( query.get( 'page' ) === page )
         return;
@@ -168,7 +169,7 @@ export function pageOnClick ( event ) {
 
 export function controlOnClick ( event ) {
     const query = new URLSearchParams( window.location.search );
-    const currentPage = Number( query.get( 'page' ) );
+    const currentPage = Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1;
     let page = event.target.innerHTML;
     const pageNumber = document.getElementsByClassName( 'pages__page' ).length;
 
@@ -185,10 +186,9 @@ export function controlOnClick ( event ) {
 
 /**
  * Construct filter's event
- *     * `tags__tag--*`:                  on click event `tagOnClick`
- *     * `tags__tag--{ defaultTagName }`: on click event `defaultTagOnClick`
- *     * `time__date`:                    on cheange event `dateOnChange`
- *
+ * `tags__tag--*`:                  on click event `tagOnClick`
+ * `tags__tag--{ defaultTagName }`: on click event `defaultTagOnClick`
+ * `time__date`:                    on cheange event `dateOnChange`
  * @param {string} defaultTagName
  */
 
