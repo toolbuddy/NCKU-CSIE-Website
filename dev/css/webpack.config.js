@@ -5,10 +5,10 @@ const autoprefixer = require( 'autoprefixer' );
 const cssnano = require( 'cssnano' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const sassRoot = path.resolve( projectRoot, 'static/src/sass' );
-const imageRoot = path.resolve( projectRoot, 'static/src/image' );
-const cssRoot = path.resolve( projectRoot, 'static/dist/css' );
-const browsers = require( path.resolve( projectRoot, 'settings/browserlist/config.js' ) );
+const sassRoot = path.join( projectRoot, 'static/src/sass' );
+const imageRoot = path.join( projectRoot, 'static/src/image' );
+const cssRoot = path.join( projectRoot, 'static/dist/css' );
+const browsers = require( path.join( projectRoot, 'settings/browserlist/config.js' ) );
 const devMode = true;
 
 module.exports = {
@@ -16,44 +16,48 @@ module.exports = {
     mode:    devMode ? 'development' : 'production',
     entry:   {
         // Route `about`
-        'about/honor':    path.resolve( sassRoot, 'about/honor.scss' ),
-        'about/intro':    path.resolve( sassRoot, 'about/intro.scss' ),
-        'about/location': path.resolve( sassRoot, 'about/location.scss' ),
-        'about/members':  path.resolve( sassRoot, 'about/members.scss' ),
-        'about/teacher':  path.resolve( sassRoot, 'about/teacher.scss' ),
-        'about/teachers': path.resolve( sassRoot, 'about/teachers.scss' ),
+        'about/award':          path.join( sassRoot, 'about/award.scss' ),
+        'about/contact':        path.join( sassRoot, 'about/contact.scss' ),
+        'about/faculty-detail': path.join( sassRoot, 'about/faculty-detail.scss' ),
+        'about/faculty':        path.join( sassRoot, 'about/faculty.scss' ),
+        'about/index':          path.join( sassRoot, 'about/index.scss' ),
+        'about/intro':          path.join( sassRoot, 'about/intro.scss' ),
+        'about/staff':          path.join( sassRoot, 'about/staff.scss' ),
 
         // Route `announcement`
-        'announcement/activity':      path.resolve( sassRoot, 'announcement/activity.scss' ),
-        'announcement/all':           path.resolve( sassRoot, 'announcement/all.scss' ),
-        'announcement/announcement':  path.resolve( sassRoot, 'announcement/announcement.scss' ),
-        'announcement/recruitment':   path.resolve( sassRoot, 'announcement/recruitment.scss' ),
+        'announcement/activity':     path.join( sassRoot, 'announcement/activity.scss' ),
+        'announcement/all':          path.join( sassRoot, 'announcement/all.scss' ),
+        'announcement/index':        path.join( sassRoot, 'announcement/index.scss' ),
+        'announcement/announcement': path.join( sassRoot, 'announcement/announcement.scss' ),
+        'announcement/recruitment':  path.join( sassRoot, 'announcement/recruitment.scss' ),
 
         // Route `home`
-        'home/index': path.resolve( sassRoot, 'home/index.scss' ),
+        'home/index': path.join( sassRoot, 'home/index.scss' ),
 
         // Route `research`
-        'research/awards':       path.resolve( sassRoot, 'research/awards.scss' ),
-        'research/conferences':  path.resolve( sassRoot, 'research/conferences.scss' ),
-        'research/groups':       path.resolve( sassRoot, 'research/groups.scss' ),
-        'research/labs':         path.resolve( sassRoot, 'research/labs.scss' ),
-        'research/publications': path.resolve( sassRoot, 'research/publications.scss' ),
+        'research/groups':       path.join( sassRoot, 'research/groups.scss' ),
+        'research/index':        path.join( sassRoot, 'research/index.scss' ),
+        'research/labs':         path.join( sassRoot, 'research/labs.scss' ),
+        'research/publications': path.join( sassRoot, 'research/publications.scss' ),
 
         // Route `resource`
-        'resource/fix':       path.resolve( sassRoot, 'resource/fix.scss' ),
-        'resource/ieet':      path.resolve( sassRoot, 'resource/ieet.scss' ),
-        'resource/law':       path.resolve( sassRoot, 'resource/law.scss' ),
-        'resource/rent':      path.resolve( sassRoot, 'resource/rent.scss' ),
-        'resource/resources': path.resolve( sassRoot, 'resource/resources.scss' ),
+        'resource/alumni':  path.join( sassRoot, 'resource/alumni.scss' ),
+        'resource/fix':     path.join( sassRoot, 'resource/fix.scss' ),
+        'resource/ieet':    path.join( sassRoot, 'resource/ieet.scss' ),
+        'resource/index':   path.join( sassRoot, 'resource/index.scss' ),
+        'resource/rent':    path.join( sassRoot, 'resource/rent.scss' ),
+        'resource/rule':    path.join( sassRoot, 'resource/rule.scss' ),
+        'resource/sitemap': path.join( sassRoot, 'resource/sitemap.scss' ),
 
         // Route `student`
-        'student/college':       path.resolve( sassRoot, 'student/college.scss' ),
-        'student/course':        path.resolve( sassRoot, 'student/course.scss' ),
-        'student/international': path.resolve( sassRoot, 'student/international.scss' ),
-        'student/internship': path.resolve( sassRoot, 'student/internship.scss' ),
-        'student/master':        path.resolve( sassRoot, 'student/master.scss' ),
-        'student/phd':           path.resolve( sassRoot, 'student/phd.scss' ),
-        'student/scholarship':   path.resolve( sassRoot, 'student/scholarship.scss' ),
+        'student/college':       path.join( sassRoot, 'student/college.scss' ),
+        'student/course':        path.join( sassRoot, 'student/course.scss' ),
+        'student/index':         path.join( sassRoot, 'student/index.scss' ),
+        'student/international': path.join( sassRoot, 'student/international.scss' ),
+        'student/internship':    path.join( sassRoot, 'student/internship.scss' ),
+        'student/master':        path.join( sassRoot, 'student/master.scss' ),
+        'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
+        'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
     },
     output: {
         path:     cssRoot,
@@ -124,7 +128,7 @@ module.exports = {
         // `stylelint` plugin for webpack.
         new StyleLintPlugin( {
             // The path to ECMAScript file that contains `stylelint` configuration object.
-            configFile:    path.resolve( projectRoot, 'dev/css/.stylelintrc.js' ),
+            configFile:    path.join( projectRoot, 'dev/css/.stylelintrc.js' ),
 
             // Store the info about processed files in order to
             // only operate on the changed ones the next time you run `stylelint`.
@@ -132,7 +136,7 @@ module.exports = {
             cache:         true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: path.resolve( projectRoot, 'node_modules/.cache/.stylelintcache' ),
+            cacheLocation: path.join( projectRoot, 'node_modules/.cache/.stylelintcache' ),
 
             // Specify a non-standard syntax that should be used to parse source stylesheets.
             syntax:         'scss',

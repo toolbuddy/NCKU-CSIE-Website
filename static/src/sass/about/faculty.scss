@@ -1,0 +1,90 @@
+@import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/about/faculty/cards';
+@import 'components/about/faculty/filters';
+@import 'components/common/topic';
+
+// block
+// `body > .content`
+
+body > .content {
+  // [variable]
+  $large: 475px;
+
+  // [layout]
+  display: grid;
+  grid: {
+    template: {
+      areas:
+        '.'
+        'topic   '
+        'filters '
+        'cards   '
+        'noResult';
+      columns: 100%;
+    }
+    row-gap: 2rem;
+  };
+
+  // [skin]
+  width: 100%;
+  background-color: #eff3f9;
+
+  // [RWD: $large]
+  @media screen and ( min-width: $large ) {
+    grid: {
+      template: {
+        areas:
+          '. .        .'
+          '. topic    .'
+          '. filters  .'
+          '. cards    .'
+          '. noResult .';
+        columns: 1fr 95% 1fr;
+      }
+      row-gap: 2rem;
+    };
+  }
+
+  // block
+  // `body > .content > .topic`
+
+  > .topic {
+    // [position]
+    grid-area: topic;
+  }
+
+  // block
+  // `body > .content > .filters`
+  @include filters() {
+    // [position]
+    grid-area: filters;
+  }
+
+  // block
+  // `body > .content > .cards`
+  @include cards() {
+    // [position]
+    grid-area: cards;
+  }
+
+  // block
+  // `body > .content > .no-result`
+  > .no-result {
+    // [position]
+    grid-area: noResult;
+
+    // [layout]
+    text-align: center;
+
+    // [skin]
+    min-height: 100%;
+
+    // modifier
+    // `body > .content > .no-result--hide`
+    &--hide {
+      // [layout]
+      display: none;
+    }
+  }
+}

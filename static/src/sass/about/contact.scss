@@ -1,0 +1,65 @@
+@import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/font';
+@import 'components/common/topic';
+@import 'components/about/contact/traffic';
+
+.main {
+  width: 100%;
+  background-color: #f2f4f7;
+  display: grid;
+  grid: {
+    template: {
+      areas:
+        '. topic .'
+        '. map   .'
+        '. thsr  .'
+        '. train .'
+        '. drive .';
+      columns: 1fr 13fr 1fr;
+      rows: 2fr 3fr 2fr 2fr 4fr;
+    }
+    row-gap: 1rem;
+  };
+  @media screen and ( min-width: 768px ) {
+    grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
+  }
+  @media screen and ( min-width: 1024px ) {
+    grid: {
+      template: {
+        areas:
+          '. topic topic .'
+          '.  map  thsr  .'
+          '.  map  train .'
+          '.  map  drive .'
+          '.   .   drive .'
+          '.   .     .   .';
+        columns: 1fr 6fr 4fr 1fr;
+        rows: 4fr 4fr 4fr 3fr 7fr 2fr;
+      }
+      column-gap: 2rem;
+    };
+  }
+}
+
+.topic {
+  grid-area: topic;
+  align-self: center;
+  color: #000000;
+}
+
+#map {
+  grid-area: map;
+}
+
+.thsr {
+  grid-area: thsr;
+}
+
+.train {
+  grid-area: train;
+}
+
+.drive {
+  grid-area: drive;
+}
