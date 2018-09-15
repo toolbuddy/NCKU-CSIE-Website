@@ -19,6 +19,8 @@ $icon-path: '../../';
     @content;
   }
 }
+
+/*
 @mixin icon__arrow {
   @include icon--after__template() {
     right: -.094rem;
@@ -53,15 +55,15 @@ $icon-path: '../../';
     }
   }
 }
-@mixin icon--before__flag {
-  @include icon--before__template() {
-    border: {
-      style: solid;
-      color: #f5c150 #f5c150 transparent;
-      radius: .1rem .1rem 0 0;
-    }
-    @content;
+*/
+@mixin icon__flag ($size) {
+  border: {
+    style: solid;
+    color: #f5c150 #f5c150 transparent;
+    radius: $size * .1 $size * .1 0 0;
+    width: $size * .8 $size * .35 $size * .16;
   }
+  @content;
 }
 @mixin icon--before__arrow {
   @include icon--before__template() {

@@ -1,14 +1,21 @@
 
 // block
 // `announcement__title`
-.announcement {
-  &__title {
+@mixin announcement__title () {
+  > .announcement__title {
     // block [skin]
-    @include icon--before__flag() {
+
+    // [selector]
+    &::before {
+      content: '';
       margin: 0 .4rem 0 0;
-      border-width: .8rem .35rem .16rem;
+      @include icon__flag( 1rem );
     }
+
+    // [layout]
     display: flex;
+
+    // [skin]
     line-height: 1rem;
     font: {
       size: .55rem;

@@ -150,7 +150,6 @@ export function pageOnClick ( event ) {
     const query = new URLSearchParams( window.location.search );
     const page = event.target.innerHTML;
 
-    // Const page = /pages__page--([1-9][0-9]*)/.exec( event.target.id )[ 1 ];
     // If page is same, do nothing
     if ( query.get( 'page' ) === page )
         return;
@@ -161,24 +160,34 @@ export function pageOnClick ( event ) {
 
 /**
  * When `pages__control` is clicked, do the following things:
- *     1. set new page number if necessary
- *     2. Update URL.
+ *     1. set new page number and if necessary
+ *     2. Update URL if necessary.
  *
  * @param {MouseEvent} event
  */
 
 export function controlOnClick ( event ) {
     const query = new URLSearchParams( window.location.search );
+
+    /* If URL has no page, setting the current page to 1   */
+
     const currentPage = Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1;
     let page = event.target.innerHTML;
-    const pageNumber = document.getElementsByClassName( 'pages__page' ).length;
 
-    if ( event.target.innerHTML === '‹' && currentPage > 1 )
+    /* If the `pages__control--forward` button is clicked, changing the `page` to the previous page(= page - 1). */
+
+    if ( event.target.classList.contains( 'pages__control--forward' ) )
         page = query.get( 'page' ) - 1;
-    else if ( event.target.innerHTML === '›' && currentPage < pageNumber )
-        page = ( currentPage ? currentPage : 1 ) + 1;
+
+    /* If the `pages__control--backward` button is clicked, changing the `page` to the next page(= page + 1). */
+
+    else if ( event.target.classList.contains( 'pages__control--backward' ) )
+        page = currentPage + 1;
+
+    /* If currnet page is the first page or the last page, doing nothing */
+
     else
-        page = currentPage;
+        return;
 
     query.set( 'page', page );
     updateURL( query );
