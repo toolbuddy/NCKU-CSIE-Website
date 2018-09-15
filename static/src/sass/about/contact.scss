@@ -3,10 +3,12 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/about/contact/traffic';
+@import 'components/common/footer';
 
-.main {
-  width: 100%;
-  background-color: #f2f4f7;
+// block
+// `body > .content`
+body > .content {
+  // [ layout ]
   display: grid;
   grid: {
     template: {
@@ -21,10 +23,20 @@
     }
     row-gap: 1rem;
   };
+
+  // [ skin ]
+  width: 100%;
+  background-color: #f2f4f7;
+
+  // [ RWD: 768px ]
   @media screen and ( min-width: 768px ) {
+    // [ layout ]
     grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
   }
+
+  // [ RWD: 1024px ]
   @media screen and ( min-width: 1024px ) {
+    // [ layout ]
     grid: {
       template: {
         areas:
@@ -42,24 +54,41 @@
   }
 }
 
+// block
+// `.topic`
 .topic {
+  // [ layout ]
   grid-area: topic;
   align-self: center;
+
+  // [ skin ]
   color: #000000;
 }
 
+// block
+// `#map`
 #map {
+  // [ layout ]
   grid-area: map;
 }
 
+// block
+// `.thsr`
 .thsr {
+  // [ layout ]
   grid-area: thsr;
 }
 
+// block
+// `.train`
 .train {
+  // [ layout ]
   grid-area: train;
 }
 
+// block
+// `.drive`
 .drive {
+  // [ layout ]
   grid-area: drive;
 }

@@ -2,11 +2,11 @@
 @import 'components/common/header';
 @import 'components/announcement/briefing';
 @import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
-// `.content`
-
-.content {
+// `body > .content`
+body > .content {
   $small: 768px;
   $large: 992px;
 
