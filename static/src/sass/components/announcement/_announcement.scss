@@ -5,9 +5,8 @@
 // `.announcement`
 
 .announcement {
-  $landscape: 560px;
-  $mobile: 768px;
-  $tablet: 992px;
+  $small: 768px;
+  $large: 992px;
 
   // block [layout]
   display: grid;
@@ -28,7 +27,26 @@
   // element
   // `.announcement .announcement__headline`
 
-  &__headline {
+  &__headline.headline {
+    // block [layout]
+    display: grid;
+    grid-template: {
+      areas:
+        'headline__tags'
+        'headline__title'
+        'headline__announcer'
+        'headline__time';
+      columns: auto;
+    }
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          'headline__tags   headline__announcer'
+          'headline__title  headline__time';
+        columns: auto;
+      }
+    }
+
     // element [position]
     grid-area: announcement__headline;
 
@@ -45,48 +63,27 @@
   // `.announcement .headline`
 
   .headline {
-    // block [layout]
-    display: grid;
-    grid-template: {
-      areas:
-        'headline__tags'
-        'headline__title'
-        'headline__announcer'
-        'headline__time';
-      columns: auto;
-    }
-    @media screen and ( min-width: $tablet ) {
-      grid-template: {
-        areas:
-          'headline__tags   headline__announcer'
-          'headline__title  headline__time';
-        columns: auto;
-      }
-    }
-
     // element
     // `.announcement .headline .headline__tags`
 
-    &__tags {
+    // block
+    // `.announcement .headline .tags`
+
+    > .headline__tags.tags {
+      // block [skin]
+      @media screen and ( min-width: $small ) {
+        font-size: .4375rem;
+      }
+
       // element [position]
       grid-area: headline__tags;
       display: block;
     }
 
-    // block
-    // `.announcement .headline .tags`
-
-    .tags {
-      // block [skin]
-      @media screen and ( min-width: $mobile ) {
-        font-size: .4375rem;
-      }
-    }
-
     // element
     // `.announcement .headline .headline__title`
 
-    &__title {
+    > .headline__title {
       // element [position]
       grid-area: headline__title;
 
@@ -99,12 +96,12 @@
     // element
     // `.announcement .headline .headline__announcer`
 
-    &__announcer {
+    > .headline__announcer {
       // element [position]
       grid-area: headline__announcer;
 
       // element [skin]
-      @media screen and ( min-width: $tablet ) {
+      @media screen and ( min-width: $large ) {
         align-self: end;
         justify-self: end;
       }
@@ -113,14 +110,15 @@
     // element
     // `.announcement .headline .headline__time`
 
-    &__time {
+    > .headline__time {
       // element [position]
       grid-area: headline__time;
 
       // element [skin]
-      @media screen and ( min-width: $tablet ) {
+      @media screen and ( min-width: $large ) {
         justify-self: end;
-        margin-top: .3rem;
+        align-self: end;
+        margin-bottom: .3rem;
       }
     }
   }
@@ -152,9 +150,14 @@
   // element
   // `.announcement .announcement__attachments`
 
-  &__attachments {
-    // element [position]
-    grid-area: announcement__attachments;
+  &__attachments.attachments {
+    // block [layout]
+    display: grid;
+    grid: {
+      template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
+      gap: .625rem;
+      area: announcement__attachments;
+    }
 
     // element [skin]
     color: #f8f8f2;
@@ -164,17 +167,10 @@
   // `.announcement .attachments`
 
   .attachments {
-    // block [layout]
-    display: grid;
-    grid: {
-      template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
-      gap: .625rem;
-    }
-
     // element
     // `.attachments .attachments__attachment`
 
-    &__attachment {
+    > .attachments__attachment {
       // element [position]
       align-self: start;
 

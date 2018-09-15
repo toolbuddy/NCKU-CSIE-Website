@@ -1,9 +1,19 @@
 extends /layouts/resource.pug
 
-block append stylesheets
+append stylesheets
 
-block append content
-  - const i18n = require( path.resolve( languageRoot, 'resource/ieet' ) );
+append header
 
-block append scripts
+append content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+      },
+      'zh-TW': {
+      },
+    } );
+
+  main.content
+
+append scripts
   +js( 'resource/ieet' )

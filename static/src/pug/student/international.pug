@@ -1,28 +1,37 @@
 extends /layouts/announcement/briefing.pug
 
-block append stylesheets
+append stylesheets
 
-block append content
-  include /components/common/topic.pug
-  include /components/announcement/filter.pug
-  include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'student/international' ) );
+append header
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filter(
-      'all',
+prepend content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic':  'International Exchange',
+        'top':    'Top Announcement',
+        'normal': 'Announcement',
+      },
+      'zh-TW': {
+        'topic':  '國際交流',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
+      },
+    } );
+
+append topic
+  +topic( i18n[ language ].topic )
+
+append filter
+  +filter( {
+    modifier: 'international',
+    tags: [
       'college',
+      'international',
       'master',
-      'phd'
-    )
-    section.announcement
-      +announcement__title( i18n[ language ].top )
-      nav#announcement__brefings--top.announcement__briefings.briefings
+      'phd',
+    ]
+  } )
 
-    section.announcement
-      +announcement__title( i18n[ language ].normal )
-      nav#announcement__brefings.announcement__briefings.briefings
-
-block append scripts
+append scripts
   +js( 'student/international' )

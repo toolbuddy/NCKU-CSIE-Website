@@ -1,33 +1,19 @@
 extends /layouts/announcement/announcement.pug
 
-block append stylesheets
-  +css( 'announcement/announcement' )
+append stylesheets
 
-block append content
-  include /components/announcement/announcement.pug
-  - const i18n = require( path.resolve( languageRoot, 'announcement/announcement' ) );
+append header
 
-  main.content
-    +announcement(
-      {
-        title: '【公告】教育部108年度菁培計劃 學校推薦報名|系上初審4/16收件截止',
-        tags: [ 'college', 'master', 'all' ],
-        announcer: '系辦人員 李淳',
-        time: '2018-2-2 | 15:22:20',
-        article: '本系承辦教育部「藝術與設計菁英海外培訓計畫」，今年已邁向第14年，...',
-        attachments: [
-          '107面試通知函面試通知函面試通知函試通知函面試通知函試通知函面試通知函試通知函面試通知函.pdf',
-          '108面試通知函.pdf',
-          '108面試通知函面試通知函.pdf',
-          '107面試通知函面試通知函面試通知函試通知函面試通知函試通知函面試通知函試通知函面試通知函.pdf',
-          '107面試通知函面試通知函面試通知函試通知函面試通知函試通知函面試通知函試通知函面試通知函.pdf',
-          '108面試通知函.pdf',
-          '108面試通知函面試通知函.pdf',
-          '107面試通知函面試通知函面試通知函試通知函面試通知函試通知函面試通知函試通知函面試通知函.pdf',
-        ],
-        url: 'https://www.google.com/?hl=zh-tw'
-      }
-    )
+append content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+      },
+      'zh-TW': {
+      },
+    } );
 
-block append scripts
+  main#content.content
+
+append scripts
   +js( 'announcement/announcement' )

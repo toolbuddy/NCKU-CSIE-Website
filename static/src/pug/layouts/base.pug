@@ -7,10 +7,16 @@ html
 
     include /components/common/css.pug
     block stylesheets
+
   body
+    include /components/common/image.pug
+    include /components/common/header.pug
+    include /components/common/footer.pug
     block header
+      +header()
+
     block content
     block footer
-
+      +footer()
     include /components/common/js.pug
     block scripts

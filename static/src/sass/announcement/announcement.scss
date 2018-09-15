@@ -1,29 +1,31 @@
 @import 'components/common/reset';
+@import 'components/common/header';
 @import 'components/announcement/announcement';
 @import 'components/announcement/tags';
+@import 'components/common/footer';
 
 // block
 // `.content`
 
 .content {
-  $iphoneRotate: 560px;
-  $mobile: 768px;
-  $tablet: 992px;
+  $small: 560px;
+  $medium: 768px;
+  $large: 992px;
 
   // block [layout]
   display: grid;
   grid-template: {
     areas:
-        '.   announcement   .';
+        '. announcement .';
     columns: 5% 1fr 5%;
   };
-  @media screen and ( min-width: $iphoneRotate ) {
+  @media screen and ( min-width: $small ) {
     grid-template-columns: 10% 1fr 10%;
   }
-  @media screen and ( min-width: $mobile ) {
+  @media screen and ( min-width: $medium ) {
     grid-template-columns: 15% 1fr 15%;
   }
-  @media screen and ( min-width: $tablet ) {
+  @media screen and ( min-width: $large ) {
     grid-template-columns: 23% 1fr 23%;
   }
 
