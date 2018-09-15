@@ -27,24 +27,23 @@ mixin footer
         src:          'logo/csie-white.png',
       } )
       figcaption.logo__caption.caption
-        h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+        h1.caption__text 成功大學資訊工程學系暨研究所
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
     section.footer__contact.contact
       h1.contact__title= i18n[ language ].contact.title
       address.contact__address.address= `${ i18n[ language ].contact.address }｜`
         a.address__map( href = '/about' )= i18n[ language ].contact.position
-      a.contact__mail( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
+      a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
       a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
     section.footer__copyright.copyright
-      aside.copyright__title.title
-        hr.title__line
-        h1.title__text Copyright © 2018 國立成功大學資訊工程系
-        hr.title__line
-      figure.copyright__icon.icon
-        figcaption.icon__caption= i18n[ language ].follow
-        a( href = 'https://www.facebook.com/ncku.csie' target = '_blank' rel = 'noopener noreferrer' ).icon__image.image
-          +image( {
-            alt:       'facebook',
-            className: 'image__facebook',
-            src:       'icon/facebook.png'
-          } )
+      hr.copyright__line.copyright__line--left
+      h1.copyright__text Copyright © 2018 國立成功大學資訊工程系
+      hr.copyright__line.copyright__line--right
+    section.footer__social-media.social-media
+      h1.social-media__text= i18n[ language ].follow
+      a.social-media__link.link( href = 'https://www.facebook.com/ncku.csie', target = '_blank' )
+        +image( {
+          alt:       'facebook',
+          className: 'link__image',
+          src:       'icon/facebook.png'
+        } )
