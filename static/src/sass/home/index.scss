@@ -2,9 +2,7 @@
 @import 'components/common/header';
 @import 'components/announcement/briefing';
 @import 'components/common/topic';
-
-// block
-// `.content`
+@import 'components/common/footer';
 
 .content {
   $small: 768px;
