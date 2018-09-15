@@ -13,10 +13,10 @@ html
     include /components/common/header.pug
     include /components/common/footer.pug
     block header
-      +header
+      +header()
 
     block content
     block footer
-      +footer
+      +footer()
     include /components/common/js.pug
     block scripts
