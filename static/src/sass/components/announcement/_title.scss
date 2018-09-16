@@ -1,25 +1,25 @@
 
-// block
-// `announcement__title`
+// component
+// `> .announcement__title`
 @mixin announcement__title () {
+  // block
+  // `> .announcement__tiltle`
   > .announcement__title {
-    // block [skin]
-
-    // [selector]
-    &::before {
-      content: '';
-      margin: 0 .4rem 0 0;
-      @include icon__flag( 1rem );
-    }
-
-    // [layout]
+    // [ layout ]
     display: flex;
 
-    // [skin]
+    // [ skin ]
     line-height: 1rem;
     font: {
       size: .55rem;
       weight: bold;
+    }
+
+    // [ before ]
+    &::before {
+      content: '';
+      margin: 0 .4rem 0 0;
+      @include icon__flag( 1rem );
     }
   }
 }

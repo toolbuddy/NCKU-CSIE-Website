@@ -6,13 +6,13 @@
   // block
   // `> .filter`
   > .filter {
-    // [variable]
-    $small: 425px;
-    $medium: 550px;
-    $a: 675px;
-    $large: 850px;
+    // [ variable ]
+    $x-small: 425px;
+    $small: 550px;
+    $large: 675px;
+    $x-large: 850px;
 
-    // block [layout]
+    // [ layout ]
     display: grid;
     grid-template-areas:
       'filter__button'
@@ -20,38 +20,40 @@
       'filter__tags';
     justify-items: center;
 
-    // [customization]
+    // [ customization ]
     @content;
 
     // element
     // `> .filter > .filter__button`
 
     > .filter__button.button {
-      // element [position]
+      // [ position ]
       grid-area: filter__button;
       display: flex;
       justify-self: end;
-      @media screen and ( min-width: $large ) {
-        display: none;
-      }
 
-      // element [skin]
+      // [ skin ]
       cursor: pointer;
       background: none;
       color: #757575;
       font-size: .5rem;
       width: 3rem;
+
+      // [ RWD: $x-large ]
+      @media screen and ( min-width: $x-large ) {
+        display: none;
+      }
     }
 
     // block
-    // `.filter .button`
+    // `> .filter > .button`
 
-    .button {
+    > .button {
       // element
-      // `.filter .button > .button__icon`
+      // `> .filter > .button > .button__icon`
 
       > .button__icon {
-        // element [skin]
+        // [ skin ]
         position: relative;
         background: none;
         cursor: pointer;
@@ -59,6 +61,7 @@
         width: .375rem;
         margin: .1rem 0 0 .5rem;
 
+        // [ before ]
         &::before {
           content: '';
           display: inline-block;
@@ -72,6 +75,7 @@
           top: .1875rem;
         }
 
+        // [ after ]
         &::after {
           content: '';
           display: inline-block;
@@ -86,11 +90,15 @@
           transform: rotate( -45deg );
         }
 
+        // [ modifier ]
+        // `> .filter > .button > .button__icon--active`
         &--active {
+          // [ before ]
           &::before {
             transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
           }
 
+          // [ after ]
           &::after {
             transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
           }
@@ -100,32 +108,35 @@
 
     // element
     // `> .filter > .filter__time`
-
+    // block
+    // `> .filter > .time`
     > .filter__time.time {
-      // block [layout]
-      display: flex;
-      flex-direction: column;
-      @media screen and ( min-width: $small ) {
-        flex-direction: row;
-      }
-
-      // block [skin]
-      margin-bottom: 1rem;
-
-      // element [position]
+      // [ position ]
       grid-area: filter__time;
       font-size: .4375rem;
+
+      // [ layout ]
+      display: flex;
+      flex-direction: column;
+
+      // [ skin ]
+      margin-bottom: 1rem;
+
+      // [ RWD: $x-small ]
+      @media screen and ( min-width: $x-small ) {
+        flex-direction: row;
+      }
     }
 
     // block
-    // `.filter .time`
+    // `> .filter > .time`
 
-    .time {
+    > .time {
       // element
-      // `.time .time__date`
+      // `> .filter > .time .time__date`
 
       .time__date {
-        // element [skin]
+        // [ skin ]
         background: none;
         border: .016rem solid #757575;
         border-radius: 1rem;
@@ -137,12 +148,14 @@
       }
 
       // modifier
-      // `.time .filter__ime--hidden`
+      // `> .filter > .time.filter__time--hidden`
 
       &.filter__time--hidden {
-        // element [skin]
+        // [ layout ]
         display: none;
-        @media screen and ( min-width: $large ) {
+
+        // [ RWD: $x-large ]
+        @media screen and ( min-width: $x-large ) {
           display: flex;
         }
       }
@@ -150,13 +163,14 @@
 
     // element
     // `> .filter > .filter__tags`
-
+    // block
+    // `> .filter > .tags`
     > .filter__tags.tags {
-      // block [layout]
+      // [ layout ]
       display: grid;
       align-self: center;
 
-      // element [position]
+      // [ position ]
       grid-area: filter__tags;
       font-size: .4375rem;
     }
@@ -165,7 +179,10 @@
       // modifier
       // `> .filter.filter--all `
       &all {
+        // block
+        // `> .filter.filter--all > .tags`
         > .tags {
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--all           tags__tag--college'
@@ -178,7 +195,9 @@
               'tags__tag--recruitment   tags__tag--rule';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--all     tags__tag--internship    tags__tag--speech'
@@ -190,7 +209,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--all         tags__tag--college tags__tag--internship    tags__tag--speech'
@@ -200,7 +221,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
                 'tags__tag--all         tags__tag--college tags__tag--internship    tags__tag--speech      tags__tag--rule'
@@ -216,15 +239,19 @@
       // modifier
       // `> .filter.filter--course `
       &course {
+        // block
+        // `> .filter.filter--course > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--course tags__tag--college'
               'tags__tag--master tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--course  .                 .'
@@ -232,7 +259,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
               'tags__tag--course tags__tag--college tags__tag--master tags__tag--phd';
@@ -245,15 +274,19 @@
       // modifier
       // `> .filter.filter--international `
       &international {
+        // block
+        // `> .filter.filter--international > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--international tags__tag--college'
               'tags__tag--master        tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--international .                 .'
@@ -261,7 +294,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
               'tags__tag--international tags__tag--college tags__tag--master tags__tag--phd';
@@ -274,15 +309,19 @@
       // modifier
       // `> .filter.filter--scholarship `
       &scholarship {
+        // block
+        // `> .filter.filter--scholarship > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--scholarship tags__tag--college'
               'tags__tag--master      tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--scholarship .                 .'
@@ -290,7 +329,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
               'tags__tag--scholarship tags__tag--college tags__tag--master tags__tag--phd';
@@ -303,15 +344,19 @@
       // modifier
       // `> .filter.filter--internship `
       &internship {
+        // block
+        // `> .filter.filter--internship > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--internship tags__tag--college'
               'tags__tag--master     tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--internship .                 .'
@@ -319,7 +364,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
               'tags__tag--internship tags__tag--college tags__tag--master tags__tag--phd';
@@ -332,8 +379,10 @@
       // modifier
       // `> .filter.filter--recruitment `
       &recruitment {
+        // block
+        // `> .filter.filter--recruitment > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
             'tags__tag--recruitment';
@@ -345,8 +394,10 @@
       // modifier
       // `> .filter.filter--college `
       &college {
+        // block
+        // `> .filter.filter--college > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--college       tags__tag--speech'
@@ -356,7 +407,9 @@
               'tags__tag--award         tags__tag--rule';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--college    tags__tag--rule        tags__tag--international'
@@ -366,7 +419,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--college     tags__tag--rule          tags__tag--speech      tags__tag--conference'
@@ -375,7 +430,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
                 'tags__tag--college tags__tag--speech     tags__tag--conference    tags__tag--exhibition  tags__tag--competition'
@@ -389,8 +446,10 @@
       // modifier
       // `> .filter.filter--master `
       &master {
+        // block
+        // `> .filter.filter--master > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--master        tags__tag--speech'
@@ -400,7 +459,9 @@
               'tags__tag--award         tags__tag--rule';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--master     tags__tag--rule        tags__tag--international'
@@ -410,7 +471,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--master      tags__tag--rule          tags__tag--speech      tags__tag--conference'
@@ -419,7 +482,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
                 'tags__tag--master  tags__tag--speech     tags__tag--conference    tags__tag--exhibition  tags__tag--competition'
@@ -433,8 +498,10 @@
       // modifier
       // `> .filter.filter--phd `
       &phd {
+        // block
+        // `> .filter.filter--phd > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--phd           tags__tag--speech'
@@ -444,7 +511,9 @@
               'tags__tag--award         tags__tag--rule';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--phd        tags__tag--rule        tags__tag--international'
@@ -454,7 +523,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--phd         tags__tag--rule          tags__tag--speech      tags__tag--conference'
@@ -463,7 +534,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
                 'tags__tag--phd   tags__tag--speech      tags__tag--conference    tags__tag--exhibition  tags__tag--competition'
@@ -477,8 +550,10 @@
       // modifier
       // `> .filter.filter--award `
       &award {
+        // block
+        // `> .filter.filter--award > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--award   tags__tag--college'
@@ -486,7 +561,9 @@
               '.                  tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--award   tags__tag--faculty .'
@@ -494,7 +571,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
                 'tags__tag--award   tags__tag--college tags__tag--master tags__tag--phd'
@@ -502,7 +581,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
               'tags__tag--award tags__tag--faculty tags__tag--college tags__tag--master tags__tag--phd';
@@ -515,8 +596,10 @@
       // modifier
       // `> .filter.filter--rule `
       &rule {
+        // block
+        // `> .filter.filter--rule > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--rule    tags__tag--college'
@@ -524,7 +607,9 @@
               '.                  tags__tag--phd';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--rule    tags__tag--faculty .'
@@ -532,7 +617,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--rule    tags__tag--college tags__tag--master tags__tag--phd'
@@ -540,7 +627,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
               'tags__tag--rule tags__tag--faculty tags__tag--college tags__tag--master tags__tag--phd';
@@ -553,8 +642,10 @@
       // modifier
       // `> .filter.filter--activity `
       &activity {
+        // block
+        // `> .filter.filter--activity > .tags`
         > .tags {
-          // block [layout]
+          // [ layout ]
           grid-template: {
             areas:
               'tags__tag--all         tags__tag--speech'
@@ -562,7 +653,9 @@
               'tags__tag--exhibition  .';
             columns: repeat( 2, 4rem );
           }
-          @media screen and ( min-width: $small ) {
+
+          // [ RWD: $x-small ]
+          @media screen and ( min-width: $x-small ) {
             grid-template: {
               areas:
                 'tags__tag--all    tags__tag--competition tags__tag--exhibition'
@@ -570,7 +663,9 @@
               columns: repeat( 3, 4rem );
             }
           }
-          @media screen and ( min-width: $medium ) {
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
                 'tags__tag--all         tags__tag--speech tags__tag--conference tags__tag--exhibition'
@@ -578,7 +673,9 @@
               columns: repeat( 4, 4rem );
             }
           }
-          @media screen and ( min-width: $a ) {
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
               'tags__tag--all tags__tag--speech tags__tag--conference tags__tag--exhibition tags__tag--competition';
@@ -590,144 +687,132 @@
     }
 
     // block
-    // `.filter .tags`
+    // `> .filter > .tags`
 
-    .tags {
+    > .tags {
       // modifier
-      // `.tags.filter__tags--hidden`
+      // `> .filter > .tags.filter__tags--hidden`
 
       &.filter__tags--hidden {
-        // element [skin]
+        // [ layout ]
         display: none;
-        @media screen and ( min-width: $large ) {
+
+        // [ RWD: $x-large ]
+        @media screen and ( min-width: $x-large ) {
           display: grid;
         }
       }
 
+      // element
+      // `> .filter > .tags > tags__tag`
       > .tags__tag.tags__tag-- {
-        // element
-        // `.tags.tags__tag--all`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--all`
         &all {
           // element [position]
           grid-area: tags__tag--all;
         }
 
-        // element
-        // `.tags.tags__tag--award`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--award`
         &award {
           // element [position]
           grid-area: tags__tag--award;
         }
 
-        // element
-        // `.tags.tags__tag--college`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--college`
         &college {
           // element [position]
           grid-area: tags__tag--college;
         }
 
-        // element
-        // `.tags.tags__tag--internship`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--internship`
         &internship {
           // element [position]
           grid-area: tags__tag--internship;
         }
 
-        // element
-        // `.tags.tags__tag--conference`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--conference`
         &conference {
           // element [position]
           grid-area: tags__tag--conference;
         }
 
-        // element
-        // `.tags.tags__tag--course`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--course`
         &course {
           // element [position]
           grid-area: tags__tag--course;
         }
 
-        // element
-        // `.tags .tags__tag--exhibition`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--exhibition`
         &exhibition {
           // element [position]
           grid-area: tags__tag--exhibition;
         }
 
-        // element
-        // `.tags .tags__tag--international`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--international`
         &international {
           // element [position]
           grid-area: tags__tag--international;
         }
 
-        // element
-        // `.tags .tags__tag--competition`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--competition`
         &competition {
           // element [position]
           grid-area: tags__tag--competition;
         }
 
-        // element
-        // `.tags.tags__tag--master`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--master`
         &master {
           // element [position]
           grid-area: tags__tag--master;
         }
 
-        // element
-        // `.tags .tags__tag--phd`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--phd`
         &phd {
           // element [position]
           grid-area: tags__tag--phd;
         }
 
-        // element
-        // `.tags .tags__tag--recruitment`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--recruitment`
         &recruitment {
           // element [position]
           grid-area: tags__tag--recruitment;
         }
 
-        // element
-        // `.tags .tags__tag--rule`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--rule`
         &rule {
           // element [position]
           grid-area: tags__tag--rule;
         }
 
-        // element
-        // `.tags .tags__tag--scholarship`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--scholarship`
         &scholarship {
           // element [position]
           grid-area: tags__tag--scholarship;
         }
 
-        // element
-        // `.tags .tags__tag--speech`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--all`speech
         &speech {
           // element [position]
           grid-area: tags__tag--speech;
         }
 
-        // element
-        // `.tags .tags__tag--faculty`
-
+        // modifier
+        // `> .filter > .tags > .tags__tag.tags__tag--faculty`
         &faculty {
           // element [position]
           grid-area: tags__tag--faculty;

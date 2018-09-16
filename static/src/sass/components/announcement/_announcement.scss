@@ -1,189 +1,200 @@
 @import 'components/common/icon';
 @import 'components/announcement/title';
 
-// block
-// `.announcement`
-
-.announcement {
-  $small: 768px;
-  $large: 992px;
-
-  // block [layout]
-  display: grid;
-  grid: {
-    template-areas:
-      '. .                         .'
-      '. announcement__headline    .'
-      '. announcement__title       .'
-      '. announcement__article     .'
-      '. announcement__attachments .'
-      '. .                         .';
-    row-gap: .5rem;
-  };
-
-  // block [skin]
-  font-size: .5rem;
-
-  // element
-  // `.announcement .announcement__headline`
-
-  &__headline.headline {
-    // block [layout]
-    display: grid;
-    grid-template: {
-      areas:
-        'headline__tags'
-        'headline__title'
-        'headline__announcer'
-        'headline__time';
-      columns: auto;
-    }
-    @media screen and ( min-width: $large ) {
-      grid-template: {
-        areas:
-          'headline__tags   headline__announcer'
-          'headline__title  headline__time';
-        columns: auto;
-      }
-    }
-
-    // element [position]
-    grid-area: announcement__headline;
-
-    // element [skin]
-    border-radius: .2rem;
-    background-color: #ffffff;
-    box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
-    font-size: .4375rem;
-    padding: .4rem;
-    color: #b5babf;
-  }
-
+// component
+// `> .announcement`
+@mixin announcement () {
   // block
-  // `.announcement .headline`
+  // `> .announcement`
 
-  .headline {
-    // element
-    // `.announcement .headline .headline__tags`
+  > .announcement {
+    // [ variable ]
+    $small: 768px;
+    $large: 992px;
 
-    // block
-    // `.announcement .headline .tags`
-
-    > .headline__tags.tags {
-      // block [skin]
-      @media screen and ( min-width: $small ) {
-        font-size: .4375rem;
-      }
-
-      // element [position]
-      grid-area: headline__tags;
-      display: block;
-    }
-
-    // element
-    // `.announcement .headline .headline__title`
-
-    > .headline__title {
-      // element [position]
-      grid-area: headline__title;
-
-      // element [skin]
-      font-size: .5rem;
-      padding-bottom: .5rem;
-      color: #000000;
-    }
-
-    // element
-    // `.announcement .headline .headline__announcer`
-
-    > .headline__announcer {
-      // element [position]
-      grid-area: headline__announcer;
-
-      // element [skin]
-      @media screen and ( min-width: $large ) {
-        align-self: end;
-        justify-self: end;
-      }
-    }
-
-    // element
-    // `.announcement .headline .headline__time`
-
-    > .headline__time {
-      // element [position]
-      grid-area: headline__time;
-
-      // element [skin]
-      @media screen and ( min-width: $large ) {
-        justify-self: end;
-        align-self: end;
-        margin-bottom: .3rem;
-      }
-    }
-  }
-
-  // element
-  // `.announcement .announcement__title`
-
-  &__title {
-    // element [position]
-    grid-area: announcement__title;
-
-    // element [skin]
-    margin: .7rem 0 0;
-    font-size: .5rem;
-  }
-
-  // element
-  // `.announcement .announcement__article`
-
-  &__article {
-    // element [position]
-    grid-area: announcement__article;
-
-    // element [skin]
-    padding: 0 .3rem;
-    line-height: .75rem;
-  }
-
-  // element
-  // `.announcement .announcement__attachments`
-
-  &__attachments.attachments {
-    // block [layout]
+    // [ layout ]
     display: grid;
     grid: {
-      template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
-      gap: .625rem;
-      area: announcement__attachments;
+      template-areas:
+        '. .                         .'
+        '. announcement__headline    .'
+        '. announcement__title       .'
+        '. announcement__article     .'
+        '. announcement__attachments .'
+        '. .                         .';
+      row-gap: .5rem;
+    };
+
+    // [ skin ]
+    font-size: .5rem;
+
+    // [customization]
+    @content;
+
+    // element
+    // `> .announcement > .announcement__headline`
+    // block
+    // `> .announcement > .headline`
+    > .announcement__headline.headline {
+      // [ layout ]
+      display: grid;
+      grid-template: {
+        areas:
+          'headline__tags'
+          'headline__title'
+          'headline__announcer'
+          'headline__time';
+        columns: auto;
+      }
+      @media screen and ( min-width: $large ) {
+        grid-template: {
+          areas:
+            'headline__tags   headline__announcer'
+            'headline__title  headline__time';
+          columns: auto;
+        }
+      }
+
+      // [ position ]
+      grid-area: announcement__headline;
+
+      // [ skin ]
+      border-radius: .2rem;
+      background-color: #ffffff;
+      box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
+      font-size: .4375rem;
+      padding: .4rem;
+      color: #b5babf;
     }
 
-    // element [skin]
-    color: #f8f8f2;
-  }
+    // block
+    // `> .announcement > .headline`
 
-  // block
-  // `.announcement .attachments`
+    > .headline {
+      // element
+      // `> .announcement > .headline > .headline__tags`
+      // block
+      // `> .announcement > .headline > .tags`
 
-  .attachments {
+      > .headline__tags.tags {
+        // [ position ]
+        grid-area: headline__tags;
+        display: block;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          font-size: .4375rem;
+        }
+      }
+
+      // element
+      // `> .announcement > .headline > .headline__title`
+
+      > .headline__title {
+        // [ position ]
+        grid-area: headline__title;
+
+        // [ skin ]
+        font-size: .5rem;
+        padding-bottom: .5rem;
+        color: #000000;
+      }
+
+      // element
+      // `> .announcement > .headline > .headline__announcer`
+
+      > .headline__announcer {
+        // [ position ]
+        grid-area: headline__announcer;
+
+        // [ skin ]
+        @media screen and ( min-width: $large ) {
+          align-self: end;
+          justify-self: end;
+        }
+      }
+
+      // element
+      // `> .announcement > .headline > .headline__time`
+
+      > .headline__time {
+        // [ position ]
+        grid-area: headline__time;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          justify-self: end;
+          align-self: end;
+          margin-bottom: .3rem;
+        }
+      }
+    }
+
     // element
-    // `.attachments .attachments__attachment`
+    // `> .announcement > .announcement__title`
 
-    > .attachments__attachment {
-      // element [position]
-      align-self: start;
+    > .announcement__title {
+      // [ position ]
+      grid-area: announcement__title;
 
-      // element [skin]
-      padding: .625rem .9375rem;
-      background-color: #6982c0;
-      border-radius: .09rem;
-      box-shadow: 0 .0625rem 0625rem 0 rgba( 244, 67, 54, .14 );
-      @include icon--before__download() {
-        margin: 0 .5rem -.03rem 0;
-        background-size: .5rem .5rem;
-        height: .5rem;
-        width: .5rem;
+      // [ skin ]
+      margin: .7rem 0 0;
+      font-size: .5rem;
+    }
+
+    // element
+    // `> .announcement > .announcement__article`
+
+    > .announcement__article {
+      // [ position ]
+      grid-area: announcement__article;
+
+      // [ skin ]
+      padding: 0 .3rem;
+      line-height: .75rem;
+    }
+
+    // element
+    // `announcement .announcement__attachments`
+    // block
+    // `.announcement .attachments`
+    > .announcement__attachments.attachments {
+      // [ layout ]
+      display: grid;
+      grid: {
+        template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
+        gap: .625rem;
+        area: announcement__attachments;
+      }
+
+      // [ skin ]
+      color: #f8f8f2;
+    }
+
+    // block
+    // `> .announcement > .attachments`
+
+    > .attachments {
+      // element
+      // `> .announcement > .attachments > .attachments__attachment`
+
+      > .attachments__attachment {
+        // [ position ]
+        align-self: start;
+
+        // [ skin ]
+        padding: .625rem .9375rem;
+        background-color: #6982c0;
+        border-radius: .09rem;
+        box-shadow: 0 .0625rem 0625rem 0 rgba( 244, 67, 54, .14 );
+
+        // [ icon ]
+        @include icon--before__download() {
+          margin: 0 .5rem -.03rem 0;
+          background-size: .5rem .5rem;
+          height: .5rem;
+          width: .5rem;
+        }
       }
     }
   }
