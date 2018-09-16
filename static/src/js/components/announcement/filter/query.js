@@ -4,6 +4,7 @@ import {
     renderBriefingsError,
     renderPages,
     renderPagesError,
+    renderPage,
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
@@ -83,7 +84,12 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -147,7 +153,12 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -293,7 +304,12 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -316,7 +332,7 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .then( data => renderBriefings( announcementBriefing, data ) )
         .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
     },
 
@@ -350,7 +366,12 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 

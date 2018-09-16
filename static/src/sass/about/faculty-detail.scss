@@ -113,24 +113,23 @@
       padding: .3rem 0;
 
       &::before {
-        @include icon__location() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        @include icon__location();
       }
     }
 
@@ -139,24 +138,22 @@
       padding: .3rem 0;
 
       &::before {
-        @include icon__envelope() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
       }
     }
 
@@ -165,36 +162,34 @@
       padding: .5rem 0;
 
       &::before {
-        @include icon__phone() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        @include icon__phone();
       }
     }
 
     > .profile__lab {
       padding: .3rem 0;
-      @include icon__laboratory () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
-      }
+      margin: .1rem;
+      margin-right: .5rem;
+      height: .5rem;
+      width: .5rem;
+      vertical-align: middle;
+      @include icon__laboratory ();
 
       > .profile__lab--location {
         padding: 0 1rem;

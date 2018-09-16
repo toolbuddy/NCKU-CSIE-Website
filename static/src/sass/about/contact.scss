@@ -55,14 +55,11 @@ body > .content {
 }
 
 // block
-// `.topic`
-.topic {
-  // [ layout ]
+// `body > .content > .topic`
+@include topic() {
+  // [ position ]
   grid-area: topic;
   align-self: center;
-
-  // [ skin ]
-  color: #000000;
 }
 
 // block
