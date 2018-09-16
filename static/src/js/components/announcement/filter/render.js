@@ -83,9 +83,9 @@ export function renderPage () {
         currentPage = 1;
     currentPage = Number.parseInt( currentPage, 10 );
 
-    /* If total page number is bigger than 1,doing th followong. */
+    /* If total page number is bigger than 1, doing th followong. */
 
-    if ( totalPageNumber !== 1 ) {
+    if ( totalPageNumber > 1 ) {
         /* If current page is the first page or the last page, adding the `pages__control--hidden` tag. */
 
         const pagesControlForward = pages.getElementsByClassName( 'pages__control--forward' )[ 0 ];
@@ -99,7 +99,7 @@ export function renderPage () {
         else
             classRemove( pagesControlBackward, 'pages__control--hidden' );
     }
-    Array.from( pages.getElementsByClassName( 'pages__page' ) ).forEach( ( page ) => {
+    Array.from( pagesPage ).forEach( ( page ) => {
         /* Active the page which is clicked. */
 
         if ( Number.parseInt( page.innerHTML, 10 ) === currentPage )
@@ -123,8 +123,10 @@ export function renderPage () {
 
     /* Make the first and the last page show up. */
 
-    classRemove( pagesPage[ 0 ], 'pages__page--hidden' );
-    classRemove( pagesPage[ totalPageNumber - 1 ], 'pages__page--hidden' );
+    if ( pagesPage.length ) {
+        classRemove( pagesPage[ 0 ], 'pages__page--hidden' );
+        classRemove( pagesPage[ totalPageNumber - 1 ], 'pages__page--hidden' );
+    }
 
     /* If total page larger than 1, determining whether text `...` showing up or not. */
 

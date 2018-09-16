@@ -22,16 +22,40 @@ export function setURLOnChange (
     filterOnChange = () => {
         renderFilter( defaultTagName );
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
-            getAllPageNumber();
-            getAllPinnedAnnouncements();
-            getAllAnnouncements();
+            new Promise( ( res, rej ) => {
+                try {
+                    getAllPageNumber();
+                    res();
+                }
+                catch ( err ) {
+                    rej();
+                }
+            } )
+            .then( () => {
+                getAllPinnedAnnouncements();
+            } )
+            .then( () => {
+                getAllAnnouncements();
+            } );
         }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
         else {
-            getPageNumberByTags();
-            getPinnedAnnouncementsByTags();
-            getAnnouncementsByTags();
+            new Promise( ( res, rej ) => {
+                try {
+                    getPageNumberByTags();
+                    res();
+                }
+                catch ( err ) {
+                    rej();
+                }
+            } )
+            .then( () => {
+                getPinnedAnnouncementsByTags();
+            } )
+            .then( () => {
+                getAnnouncementsByTags();
+            } );
         }
     };
     return filterOnChange;

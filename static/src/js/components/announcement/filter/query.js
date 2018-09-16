@@ -86,6 +86,8 @@ export const singleDefaultTag = {
         } )
         .then( ( data ) => {
             renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
             renderPage();
         } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
@@ -153,6 +155,8 @@ export const singleDefaultTag = {
         } )
         .then( ( data ) => {
             renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
             renderPage();
         } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
@@ -302,6 +306,8 @@ export const multipleDefaultTags = {
         } )
         .then( ( data ) => {
             renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
             renderPage();
         } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
@@ -362,6 +368,8 @@ export const multipleDefaultTags = {
         } )
         .then( ( data ) => {
             renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
             renderPage();
         } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
