@@ -16,8 +16,10 @@ export function isValidTags ( tags ) {
     return ( tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0 ) && tags.length;
 }
 
-const validLanguages = [ 'zh-TW',
-    'en-US', ];
+const validLanguages = [
+    'zh-TW',
+    'en-US',
+];
 
 export function isValidLanguage ( language ) {
     return validLanguages.includes( language );

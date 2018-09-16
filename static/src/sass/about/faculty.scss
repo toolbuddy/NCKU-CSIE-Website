@@ -1,43 +1,91 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/about/faculty/card';
+@import 'components/about/faculty/cards';
+@import 'components/about/faculty/filters';
 @import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
-// `.content`
+// `body > .content`
 
-.content {
-  // block [skin]
-  width: 100%;
-  background-color: #ffffff;
+body > .content {
+  // [variable]
+  $large: 475px;
 
-  // block [layout]
+  // [layout]
   display: grid;
   grid: {
     template: {
       areas:
-        '.   .   .'
-        '. topic .'
-        '. cards .'
-        '.   .   .';
-      columns: 10% 1fr 10%;
+        '.'
+        'topic   '
+        'filters '
+        'cards   '
+        'noResult';
+      columns: 100%;
     }
     row-gap: 2rem;
   };
 
-  // block
-  // `.content .topic`
+  // [skin]
+  width: 100%;
+  background-color: #eff3f9;
 
-  .topic {
-    // element [position]
+  // [RWD: $large]
+  @media screen and ( min-width: $large ) {
+    grid: {
+      template: {
+        areas:
+          '. .        .'
+          '. topic    .'
+          '. filters  .'
+          '. cards    .'
+          '. noResult .';
+        columns: 1fr 95% 1fr;
+      }
+      row-gap: 2rem;
+    };
+  }
+
+  // block
+  // `body > .content > .topic`
+
+  > .topic {
+    // [position]
     grid-area: topic;
   }
 
   // block
-  // `.content .cards`
+  // `body > .content > .filters`
+  @include filters() {
+    // [position]
+    grid-area: filters;
+  }
 
-  .cards {
-    // element [position]
+  // block
+  // `body > .content > .cards`
+  @include cards() {
+    // [position]
     grid-area: cards;
+  }
+
+  // block
+  // `body > .content > .no-result`
+  > .no-result {
+    // [position]
+    grid-area: noResult;
+
+    // [layout]
+    text-align: center;
+
+    // [skin]
+    min-height: 100%;
+
+    // modifier
+    // `body > .content > .no-result--hide`
+    &--hide {
+      // [layout]
+      display: none;
+    }
   }
 }

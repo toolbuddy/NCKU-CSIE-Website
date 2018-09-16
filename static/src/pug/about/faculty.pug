@@ -6,19 +6,25 @@ append header
 
 append content
   include /components/common/topic.pug
+  include /components/about/faculty/filters.pug
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'topic': 'Faculty',
+        'topic':    'Faculty',
+        'noResult': 'No Result',
       },
       'zh-TW': {
-        'topic': '師資陣容',
+        'topic':    '師資陣容',
+        'noResult': '無結果',
       },
     } );
 
   main.content
     +topic( i18n[ language ].topic )
+    +filters()
     section#cards.cards
+    section#no-result.no-result.no-result--hide
+      p.no-result__text= i18n[ language ].noResult
 
 append scripts
   +js( 'about/faculty' )

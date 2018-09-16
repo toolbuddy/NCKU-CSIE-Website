@@ -6,30 +6,49 @@ append header
 
 append content
   main#content.content
-    a(href="/user/announcement") 返回
+    a( href = '/user/announcement' ) 返回
     br
 
     section#editor
       p 標題
-      input(id="input__title" type="text", name="title")
+      input( id = 'input__title', type = 'text', name = 'title' )
       br
       p 內文
-      textarea(id="input__content" name="content", cols="30", rows="10")
+      textarea( id = 'input__content', name = 'content', cols = '30', rows = '10' )
       br
       p 附件
-      input(type="file", name="file" multiple)
+      input( type = 'file', name = 'file', multiple )
       br
       fieldset
         legend 標籤
-        each val in ['all', 'award', 'college', 'competition', 'conference', 'course', 'exhibition', 'faculty', 'international', 'internship', 'master', 'phd', 'recruitment', 'rule', 'scholarship', 'speech' ]
-          input(type="checkbox", id=`input__tag--${ val }` name=`${ val }`, value=`${ val }`)
-          label= val
+        -
+          let tags = [
+            'all',
+            'award',
+            'college',
+            'competition',
+            'conference',
+            'course',
+            'exhibition',
+            'faculty',
+            'international',
+            'internship',
+            'master',
+            'phd',
+            'recruitment',
+            'rule',
+            'scholarship',
+            'speech'
+          ];
+        each val in tags
+          input( type = 'checkbox', id = `input__tag--${ val }`, name = `${ val }`, value = `${ val }` )
+          label=  val
           br
-    input(type="submit" value="發佈公告")
+    input( type = 'submit', value = '發佈公告' )
     br
-    input(type="submit" value="定時發佈")
+    input( type = 'submit', value = '定時發佈' )
     br
-    input(type="submit" value="儲存草稿")
+    input( type = 'submit', value = '儲存草稿' )
 
 append scripts
   +js( 'user/announcement/add' )
