@@ -7,7 +7,7 @@ const htmlRoot = path.join( projectRoot, 'static/dist/html' );
 const { staticUrl, } = require( path.join( projectRoot, 'settings/server/config' ) );
 const devMode = true;
 
-/* Process.env.NODE_ENV !== 'production'*/
+/* Process.env.NODE_ENV !== 'production' */
 
 module.exports = language.support.map( language => ( {
     devtool: devMode ? 'inline-sourcemap' : null,
@@ -58,7 +58,10 @@ module.exports = language.support.map( language => ( {
         'student/scholarship':   path.join( pugRoot, 'student/scholarship.pug' ),
 
         // Route `user`
-        'user/announcement': path.join( pugRoot, 'user/announcement.pug' ),
+        'user/index':              path.join( pugRoot, 'user/index.pug' ),
+        'user/announcement/index': path.join( pugRoot, 'user/announcement/index.pug' ),
+        'user/announcement/add':   path.join( pugRoot, 'user/announcement/add.pug' ),
+        'user/announcement/edit':  path.join( pugRoot, 'user/announcement/edit.pug' ),
     },
     output: {
         path:     htmlRoot,
@@ -73,12 +76,18 @@ module.exports = language.support.map( language => ( {
                     {
                         loader:  'file-loader',
                         options: {
-                            regExp: /pug\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+).pug/,
-                            name:   `[1]/[2].${ language }.html`,
+                            name(file){
+                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
+                            },
                         },
                     },
                     'extract-loader',
-                    'html-loader',
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            root: projectRoot,
+                        },
+                    },
                     {
                         loader:  'pug-html-loader',
                         options: {

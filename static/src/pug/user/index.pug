@@ -1,0 +1,17 @@
+extends /layouts/user.pug
+
+append stylesheets
+
+append header
+
+append content
+  nav
+    li
+      ul
+        a(href="/user/profile") 個人資料
+      ul
+        a(href="/user/announcement") 公告管理
+  main.content
+
+append scripts
+  +js( 'user/index' )

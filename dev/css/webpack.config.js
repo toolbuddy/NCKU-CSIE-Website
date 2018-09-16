@@ -60,7 +60,7 @@ module.exports = {
         'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
 
         // Route `user`
-        'user/announcement': path.join( sassRoot, 'user/announcement.scss' ),
+        'user/index': path.join( sassRoot, 'user/index.scss' ),
     },
     output: {
         path:     cssRoot,
