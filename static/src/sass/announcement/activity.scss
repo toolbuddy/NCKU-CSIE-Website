@@ -5,7 +5,7 @@
 @import 'components/announcement/briefing';
 @import 'components/announcement/filter';
 @import 'components/announcement/title';
-@import 'components/announcement/page';
+@import 'components/announcement/pages';
 
 // block
 // `body > .content`
@@ -28,12 +28,9 @@ body > .content {
   }
 
   // [ skin ]
-  padding: 2.2rem .5rem;
-  @media screen and ( min-width: $large ) {
-    padding: 2.2rem 0;
-  }
-  max-width: 26rem;
   margin: 0 auto;
+  padding: 2.2rem .5rem;
+  max-width: 26rem;
 
   // [ RWD: $small ]
   @media screen and ( min-width: $small ) {
@@ -42,9 +39,14 @@ body > .content {
       'filter';
   }
 
+  // [ RWD: $large ]
+  @media screen and ( min-width: $large ) {
+    padding: 2.2rem 0;
+  }
+
   // block
   // `body > .content > .topic`
-  .topic {
+  @include topic() {
     // [ position ]
     grid-area: topic;
     grid-column: {
@@ -54,8 +56,8 @@ body > .content {
   }
 
   // block
-  // `body > .content > .filter`
-  @include filter() {
+  // `body > .content > .filter.filter--activity`
+  @include filter--activity() {
     // [ position ]
     grid-area: filter;
     grid-column: {

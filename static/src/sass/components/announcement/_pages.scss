@@ -9,9 +9,11 @@
     $medium: 620px;
     $large: 850px;
 
+    // [ position ]
+    justify-self: center;
+
     // [ layout ]
     display: inline-block;
-    justify-self: center;
 
     // [ customization ]
     @content;
@@ -19,14 +21,16 @@
     // element
     // `> .pages > .pages__control`
     > .pages__control {
+      // [ position ]
+      vertical-align: middle;
+
       // [ skin ]
-      color: #32477d;
-      border: .0312rem solid #32477d;
+      border-radius: 1.41rem;
       width: 1.41rem;
       height: 1.41rem;
-      border-radius: 1.41rem;
+      border: .0312rem solid #32477d;
+      color: #32477d;
       font-size: .9375rem;
-      vertical-align: middle;
       cursor: pointer;
 
       // modifier
@@ -39,7 +43,10 @@
       &:first-child {
         // [ skin ]
         margin-right: 1rem;
-        padding: 0 .05rem .1rem 0;
+        padding: {
+          right: .05rem;
+          bottom: .1rem;
+        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -51,7 +58,10 @@
       &:last-child {
         // [ skin ]
         margin-left: 1rem;
-        padding: 0 0 .1rem .05rem;
+        padding: {
+          bottom: .1rem;
+          left: .05rem;
+        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -66,19 +76,22 @@
     > .pages__page, .pages__extra {
       // [ layout ]
       display: none;
+
+      // [ position ]
       vertical-align: middle;
 
       // [ skin ]
-      font-size: .625rem;
-      text-decoration: none;
-      transition: background-color .3s;
+      border-radius: 1.41rem;
       color: #999999;
       width: 1.41rem;
       height: 1.41rem;
-      border-radius: 1.41rem;
+      font-size: .625rem;
+      text-decoration: none;
+      transition: background-color .3s;
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
+        // [ layout ]
         display: inline-block;
       }
     }
@@ -86,9 +99,9 @@
     // element
     // `> .pages > .pages__page`
     > .pages__page {
-      // [interaction]
+      // [ interaction ]
       &:hover:not( .pages__page--active ) {
-        // [skin]
+        // [ skin ]
         cursor: pointer;
       }
 

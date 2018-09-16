@@ -79,7 +79,7 @@ export function renderPage () {
     const pagesPage = pages.getElementsByClassName( 'pages__page' );
     let currentPage = query.get( 'page' );
     const totalPageNumber = pagesPage.length;
-    if ( !currentPage )
+    if ( !Number.parseInt( currentPage, 10 ) )
         currentPage = 1;
     currentPage = Number.parseInt( currentPage, 10 );
 

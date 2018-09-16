@@ -1,8 +1,9 @@
+@import 'components/common/icon';
 
 // component
 // `> .announcement__title`
 @mixin announcement__title () {
-  // block
+  // element
   // `> .announcement__tiltle`
   > .announcement__title {
     // [ layout ]
@@ -17,9 +18,12 @@
 
     // [ before ]
     &::before {
+      // [ skin ]
       content: '';
-      margin: 0 .4rem 0 0;
-      @include icon__flag( 1rem );
+      margin-right: .4rem;
+
+      // [ icon ]
+      @include icon__flag( $size: 1rem );
     }
   }
 }

@@ -28,7 +28,7 @@
     // [ skin ]
     font-size: .5rem;
 
-    // [customization]
+    // [ customization ]
     @content;
 
     // element
@@ -36,6 +36,9 @@
     // block
     // `> .announcement > .headline`
     > .announcement__headline.headline {
+      // [ position ]
+      grid-area: announcement__headline;
+
       // [ layout ]
       display: grid;
       grid-template: {
@@ -46,46 +49,42 @@
           'headline__time';
         columns: auto;
       }
-      @media screen and ( min-width: $large ) {
-        grid-template: {
-          areas:
-            'headline__tags   headline__announcer'
-            'headline__title  headline__time';
-          columns: auto;
-        }
-      }
-
-      // [ position ]
-      grid-area: announcement__headline;
 
       // [ skin ]
       border-radius: .2rem;
+      padding: .4rem;
       background-color: #ffffff;
+      color: #b5babf;
       box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
       font-size: .4375rem;
-      padding: .4rem;
-      color: #b5babf;
-    }
 
-    // block
-    // `> .announcement > .headline`
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template-areas:
+          'headline__tags  headline__announcer'
+          'headline__title headline__time';
+      }
 
-    > .headline {
       // element
       // `> .announcement > .headline > .headline__tags`
-      // block
-      // `> .announcement > .headline > .tags`
-
-      > .headline__tags.tags {
+      > .headline__tags {
         // [ position ]
         grid-area: headline__tags;
+
+        // [ layout ]
         display: block;
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
+          // [ skin ]
           font-size: .4375rem;
         }
       }
+
+      // block
+      // `> .announcement > .headline > .tags`
+      @include tags();
 
       // element
       // `> .announcement > .headline > .headline__title`
@@ -95,9 +94,9 @@
         grid-area: headline__title;
 
         // [ skin ]
-        font-size: .5rem;
         padding-bottom: .5rem;
         color: #000000;
+        font-size: .5rem;
       }
 
       // element
@@ -107,8 +106,9 @@
         // [ position ]
         grid-area: headline__announcer;
 
-        // [ skin ]
+        // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ position ]
           align-self: end;
           justify-self: end;
         }
@@ -123,8 +123,11 @@
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ position ]
           justify-self: end;
           align-self: end;
+
+          // [ skin ]
           margin-bottom: .3rem;
         }
       }
@@ -138,7 +141,7 @@
       grid-area: announcement__title;
 
       // [ skin ]
-      margin: .7rem 0 0;
+      margin-top: .7rem;
       font-size: .5rem;
     }
 
@@ -150,7 +153,10 @@
       grid-area: announcement__article;
 
       // [ skin ]
-      padding: 0 .3rem;
+      padding: {
+        left: .3rem;
+        right: .3rem;
+      }
       line-height: .75rem;
     }
 
@@ -164,17 +170,14 @@
       grid: {
         template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
         gap: .625rem;
+
+        // [ position ]
         area: announcement__attachments;
       }
 
       // [ skin ]
       color: #f8f8f2;
-    }
 
-    // block
-    // `> .announcement > .attachments`
-
-    > .attachments {
       // element
       // `> .announcement > .attachments > .attachments__attachment`
 
@@ -183,17 +186,32 @@
         align-self: start;
 
         // [ skin ]
+        border-radius: .09rem;
         padding: .625rem .9375rem;
         background-color: #6982c0;
-        border-radius: .09rem;
         box-shadow: 0 .0625rem 0625rem 0 rgba( 244, 67, 54, .14 );
 
-        // [ icon ]
-        @include icon--before__download() {
-          margin: 0 .5rem -.03rem 0;
-          background-size: .5rem .5rem;
-          height: .5rem;
+        // [ before ]
+        &::before {
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          content: '';
+          margin: {
+            right: .5rem;
+            bottom: -.03rem;
+          }
           width: .5rem;
+          height: .5rem;
+          background: {
+            position: center;
+            repeat: no-repeat;
+            size: cover;
+          }
+
+          // [ icon ]
+          @include icon__download();
         }
       }
     }

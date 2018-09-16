@@ -1,4 +1,4 @@
-$icon-path: '../../';
+$icon-path: '../..';
 
 // template
 // `icon--before__template`
@@ -11,103 +11,25 @@ $icon-path: '../../';
     @content;
   }
 }
-@mixin icon--after__template {
-  // template [skin]
-  &::after {
-    content: '';
-    display: inline-block;
-    @content;
-  }
-}
-
-/*
-@mixin icon__arrow {
-  @include icon--after__template() {
-    right: -.094rem;
-    background: none repeat scroll 0 0 #757575;
-    border-radius: .312rem;
-    height: .0625rem;
-    position: absolute;
-    top: .1875rem;
-    transition: all 300ms ease 0s;
-    width: .343rem;
-    transform: rotate( -45deg );
-  }
-  @include icon--before__template() {
-    left: -.094rem;
-    background: none repeat scroll 0 0 #757575;
-    border-radius: .312rem;
-    height: .0625rem;
-    position: absolute;
-    top: .1875rem;
-    transition: all 300ms ease 0s;
-    width: .343rem;
-    transform: rotate( 45deg );
-  }
-
-  &--active {
-    &::before {
-      transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
-    }
-
-    &::after {
-      transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
-    }
-  }
-}
-*/
-@mixin icon__flag ($size) {
+@mixin icon__flag ( $size ) {
+  // [ skin ]
   border: {
     style: solid;
     color: #f5c150 #f5c150 transparent;
-    radius: $size * .1 $size * .1 0 0;
-    width: $size * .8 $size * .35 $size * .16;
-  }
-  @content;
-}
-@mixin icon--before__arrow {
-  @include icon--before__template() {
-    position: absolute;
-    overflow: hidden;
-    display: inline-block;
-    font-size: 2px; /* set the size for arrow */
-    width: 2rem;
-    height: 2rem;
-    margin-top: -2rem;
-    top: 50%;
-    border: {
-      top: 1px solid #a9a9a9;
-      right: 1px solid #a9a9a9;
-    }
-    transform: rotate( 136deg ) skew( 3deg );
-    right: 500px;
-    @content;
+    radius: ( $size * .1 ) ( $size * .1 ) 0 0;
+    width: ( $size * .8 ) ( $size * .35 ) ( $size * .16 );
   }
 }
-@mixin icon--before__download {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBwkRLAUMz9XVAAAA60lEQVRo3u3YvQ3CMBCG4TOiZwXqFMwRMQFiinRshBgHsQkTHA0/FoqTO/vu3HxfFSlW3qeMTCQcj6zZKP3uRnrQawAAAAAAAAAAAAAAALD9PfKOTpSKJwfVd4+8L75juqXn/JtJ9etdu2kBHkBYygcQ1vLOBEnekSDNOxE0eQeCNm9MqMkbEmrzRoSWvAGhNd9IsMg3EKzylQTLfAXBOq8keOQVBK+8kOCZFxC88yuEiPwCISpfIETmZwjR+T9Cj3xG6JV/E3rmMQyzWHYjwgc6B1Wv6fF5zK5oaKBLEOBOX0D3SyoAAOgOeAEU8JM7trjpNwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0wOVQxNzo0NDowNSswMjowMPUAL6AAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMDlUMTc6NDQ6MDUrMDI6MDCEXZccAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before__template--small {
-  @include icon--before__template() {
-    font-size: .5rem;
-    @content;
-  }
+@mixin icon__download () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/download.png' );
 }
 @mixin icon--before--trophy () {
   @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/trophy.png' );
+      image: url( '#{ $icon-path }/image/icon/trophy.png' );
     }
 
     // template [extend]
@@ -119,7 +41,7 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/open-book.png' );
+      image: url( '#{ $icon-path }/image/icon/open-book.png' );
     }
 
     // template [extend]
@@ -131,7 +53,7 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/study.png' );
+      image: url( '#{ $icon-path }/image/icon/study.png' );
     }
 
     // template [extend]
@@ -143,7 +65,7 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/students.png' );
+      image: url( '#{ $icon-path }/image/icon/students.png' );
     }
 
     // template [extend]
@@ -155,47 +77,35 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/search-black.png' );
+      image: url( '#{ $icon-path }/image/icon/search-black.png' );
     }
 
     // template [extend]
     @content;
   }
 }
-
-// template
-// `icon--before__location--small`
 @mixin icon__location () {
-  // template [skin]
-  background-image: url( '../../image/icon/location.png' );
-
-  // template [extend]
-  @content;
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/location.png' );
 }
 @mixin icon__envelope () {
-  background-image: url( '../../image/icon/envelope.png' );
-
-  // template [extend]
-  @content;
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/envelope.png' );
 }
 @mixin icon__phone () {
-  background-image: url( '../../image/icon/phone.png' );
-
-  // template [extend]
-  @content;
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/phone.png' );
 }
 @mixin icon__laboratory () {
-  background-image: url( '../../image/icon/laboratory.png' );
-
-  // template [extend]
-  @content;
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/laboratory.png' );
 }
 @mixin icon--before--taiwan () {
   @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/taiwan.png' );
+      image: url( '#{ $icon-path }/image/icon/taiwan.png' );
     }
 
     // template [extend]
@@ -207,7 +117,7 @@ $icon-path: '../../';
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/students-cap.png' );
+      image: url( '#{ $icon-path }/image/icon/students-cap.png' );
     }
 
     // template [extend]
@@ -215,15 +125,14 @@ $icon-path: '../../';
   }
 }
 @mixin icon__search--white () {
-  background-image: url( '../../image/icon/search-white.png' );
-  @content;
+  background-image: url( '#{ $icon-path }/image/icon/search-white.png' );
 }
 @mixin icon--before--user () {
   @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( '../../image/icon/user.png' );
+      image: url( '#{ $icon-path }/image/icon/user.png' );
     }
 
     // template [extend]
