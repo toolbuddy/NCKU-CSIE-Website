@@ -1,5 +1,5 @@
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
-import page from 'static/src/pug/components/announcement/page.pug';
+import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import {
     pageOnClick,
     controlOnClick,
@@ -55,7 +55,7 @@ export function renderFilter ( defaultTagName = 'all' ) {
 
 const pages = document.getElementById( 'pages' );
 export function renderPages ( totalPages = 1 ) {
-    pages.innerHTML = page( { totalPages, } );
+    pages.innerHTML = pagesHTML( { totalPages, } );
 
     /* Add eventListener to all the `pages__page` element,when rendering pages. */
 
