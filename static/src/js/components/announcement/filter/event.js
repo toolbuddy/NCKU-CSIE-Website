@@ -22,16 +22,40 @@ export function setURLOnChange (
     filterOnChange = () => {
         renderFilter( defaultTagName );
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
-            getAllPageNumber();
-            getAllPinnedAnnouncements();
-            getAllAnnouncements();
+            new Promise( ( res, rej ) => {
+                try {
+                    getAllPageNumber();
+                    res();
+                }
+                catch ( err ) {
+                    rej();
+                }
+            } )
+            .then( () => {
+                getAllPinnedAnnouncements();
+            } )
+            .then( () => {
+                getAllAnnouncements();
+            } );
         }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
         else {
-            getPageNumberByTags();
-            getPinnedAnnouncementsByTags();
-            getAnnouncementsByTags();
+            new Promise( ( res, rej ) => {
+                try {
+                    getPageNumberByTags();
+                    res();
+                }
+                catch ( err ) {
+                    rej();
+                }
+            } )
+            .then( () => {
+                getPinnedAnnouncementsByTags();
+            } )
+            .then( () => {
+                getAnnouncementsByTags();
+            } );
         }
     };
     return filterOnChange;
@@ -147,24 +171,57 @@ function dateOnChange ( event ) {
  */
 
 export function pageOnClick ( event ) {
-    const page = /pages__page--([1-9][0-9]*)/.exec( event.target.id )[ 1 ];
     const query = new URLSearchParams( window.location.search );
+    const page = event.target.innerHTML;
 
     // If page is same, do nothing
     if ( query.get( 'page' ) === page )
         return;
 
     query.set( 'page', page );
+    updateURL( query );
+}
 
+/**
+ * When `pages__control` is clicked, do the following things:
+ *     1. set new page number and if necessary
+ *     2. Update URL if necessary.
+ *
+ * @param {MouseEvent} event
+ */
+
+export function controlOnClick ( event ) {
+    const query = new URLSearchParams( window.location.search );
+
+    /* If URL has no page, setting the current page to 1   */
+
+    const currentPage = Number( query.get( 'page' ) ) ? Number( query.get( 'page' ) ) : 1;
+    let page = event.target.innerHTML;
+
+    /* If the `pages__control--forward` button is clicked, changing the `page` to the previous page(= page - 1). */
+
+    if ( event.target.classList.contains( 'pages__control--forward' ) )
+        page = query.get( 'page' ) - 1;
+
+    /* If the `pages__control--backward` button is clicked, changing the `page` to the next page(= page + 1). */
+
+    else if ( event.target.classList.contains( 'pages__control--backward' ) )
+        page = currentPage + 1;
+
+    /* If currnet page is the first page or the last page, doing nothing */
+
+    else
+        return;
+
+    query.set( 'page', page );
     updateURL( query );
 }
 
 /**
  * Construct filter's event
- *     * `tags__tag--*`:                  on click event `tagOnClick`
- *     * `tags__tag--{ defaultTagName }`: on click event `defaultTagOnClick`
- *     * `time__date`:                    on cheange event `dateOnChange`
- *
+ * `tags__tag--*`:                  on click event `tagOnClick`
+ * `tags__tag--{ defaultTagName }`: on click event `defaultTagOnClick`
+ * `time__date`:                    on cheange event `dateOnChange`
  * @param {string} defaultTagName
  */
 

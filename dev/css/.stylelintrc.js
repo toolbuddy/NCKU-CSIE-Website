@@ -503,8 +503,5 @@ module.exports = {
 
         // Disallow redundant nesting selectors (&).
         'scss/selector-no-redundant-nesting-selector': true,
-
-        // Disallow duplicate dollar variables within a stylesheet.
-        'scss/no-duplicate-dollar-variables': true,
     },
 };
