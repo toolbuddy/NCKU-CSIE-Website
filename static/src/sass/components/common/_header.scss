@@ -155,7 +155,7 @@ body > .header {
           areas:
             'item__link     item__switch'
             'item__dropdown item__dropdown';
-          columns: 3fr 1fr;
+          columns: 1fr 3fr;
           rows: $item-height auto;
         }
 
