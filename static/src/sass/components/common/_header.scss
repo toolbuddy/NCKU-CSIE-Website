@@ -128,14 +128,13 @@ body > .header {
 
       > .search__submit {
         grid-area: search__submit;
-        @include icon__search--white() {
-          background: {
-            position: center;
-            repeat: no-repeat;
-            size: contain;
-            color: inherit;
-          }
+        background: {
+          position: center;
+          repeat: no-repeat;
+          size: contain;
+          color: inherit;
         }
+        @include icon__search--white();
       }
     }
 
