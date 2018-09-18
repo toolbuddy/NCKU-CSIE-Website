@@ -1,6 +1,7 @@
 @import 'components/common/icon';
 
 body > .header {
+  $xxxx-small: 380px;
   $xxx-small: 480px;
   $xx-small: 560px;
   $x-small: 640px;
@@ -150,13 +151,14 @@ body > .header {
       > .list__item.item {
         $item-height: 1.56rem;
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
-        grid-template: {
+
+        /*grid-template: {
           areas:
             'item__link     item__switch'
             'item__dropdown item__dropdown';
           columns: 1fr 3fr;
           rows: $item-height auto;
-        }
+        }*/
 
         &:first-of-type {
           grid-template: {
@@ -167,24 +169,26 @@ body > .header {
         }
 
         > .item__link {
-          grid-area: item__link;
+          //grid-area: item__link;
           color: rgba( 255, 255, 255, .5 );
           font-size: .5rem;
           height: $item-height;
-          padding: {
+          margin: {
             left: .93rem;
             top: .4rem;
           }
           display: inline-block;
-          width: 75%;
         }
 
         > .item__switch.switch {
-          grid-area: item__switch;
+          //grid-area: item__switch;
           background-color: transparent;
           display: inline-block;
-          width: 25%;
           height: $item-height;
+          padding-left: 60%;
+          @media screen and ( min-width: $medium ) {
+            padding-left: 70%;
+          }
 
           > .switch__icon {
             border: {
@@ -290,7 +294,7 @@ body > .header {
           areas:
             'language__image    language__text      language__switch'
             'language__dropdown language__dropdown  language__dropdown';
-          columns: .75rem 1fr 25%;
+          columns: .75rem 2rem 75%;
           rows: 1.56rem min-content;
         }
         column-gap: .625rem;
@@ -339,6 +343,13 @@ body > .header {
           width: .44rem;
           height: .44rem;
           display: inline-block;
+          margin-left: 40%;
+          @media screen and ( min-width: $xxxx-small ) {
+            margin-left: 45%;
+          }
+          @media screen and ( min-width: $medium ) {
+            margin-left: 72%;
+          }
         }
 
         &.language__switch--active {
