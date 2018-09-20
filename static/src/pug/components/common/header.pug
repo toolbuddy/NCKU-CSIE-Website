@@ -25,6 +25,7 @@ mixin header()
           },
           home: {
             index: 'Home',
+            login: 'Login',
           },
           research: {
             groups:       'Groups',
@@ -77,7 +78,8 @@ mixin header()
           },
           home: {
             index: '首頁',
-          },
+            login: '登入',
+          }
           research: {
             groups:       '研究群',
             index:        '學術研究',
@@ -127,26 +129,25 @@ mixin header()
       button.nav__link= i18n[ language ].route.student.index
       button.nav__link= i18n[ language ].route.announcement.index
       button.nav__link= i18n[ language ].route.resource.index
-      nav.nav__right.right
-        a.nav__calendar.calender( href = "" )
-          +image( {
-            alt: i18n[ language ].util.calendar,
-            className: 'calendar__image',
-            src: 'icon/calendar.png',
-          } )
-        a.nav__language.language( href = "" )
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'language__image',
-            src: 'icon/flag-zh-TW.png',
-          } )
-        button.nav__login
-        a.nav__search.search( href = "" )
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'search__image',
-            src: 'icon/search-black.png',
-          } )
+    a.header__calendar.calender( href = "" )
+      +image( {
+        alt: i18n[ language ].util.calendar,
+        className: 'calendar__image',
+        src: 'icon/calendar.png',
+      } )
+    a.header__language.language( href = "" )
+      +image( {
+        alt: i18n[ language ].util.language,
+        className: 'language__image',
+        src: 'icon/flag-zh-TW.png',
+      } )
+    button.header__login= i18n[ language ].route.home.login
+    a.header__search.search( href = "" )
+      +image( {
+        alt: i18n[ language ].util.language,
+        className: 'search__image',
+        src: 'icon/search-black.png',
+      } )
 
 
     //- Navigation Bar

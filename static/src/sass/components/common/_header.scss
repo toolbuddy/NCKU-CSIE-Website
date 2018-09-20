@@ -21,7 +21,15 @@ body > .header {
   height: $header-height;
   background: rgba( 255, 255, 255, .95 );
   @media screen and ( min-width:$medium ) {
-    display: flex;
+    grid: {
+      template: {
+        areas: 
+          'header__logo header__menu header__calender header__language'
+          'header__logo header__menu header__login header__search';
+        columns: 6.96fr 7.57fr 2.36fr 1fr;
+        rows: 2.63rem 1.97rem;
+      }
+    }
     height: 4.59rem;
   }
 
@@ -36,9 +44,10 @@ body > .header {
     height: $header-height;
     @media screen and ( min-width:$medium ) {
       justify-content: flex-start;
-      padding-left: 2.94rem;
-      width: 28.75rem;
-      height: 4.59rem;
+      padding: {
+        left: 2.94rem;
+        top: 1.6rem;
+      }
     }
 
     > .logo__image {
@@ -89,81 +98,69 @@ body > .header {
   > .header__nav.nav {
     display: none;
     @media screen and ( min-width: $medium ) {
+      grid-area: header__menu;
       display: flex;
-      width: 31.25rem;
     }
 
     > .nav__link {
       text-align: center;
-      height: 4.59rem;
-      width: 3.31rem;
+      height: 1.69rem;
+      width: 20%;
       font-size: .5rem;
-      padding-top: 2.59rem;
+      margin-top: 2.13rem;
       line-height: 1.5;
       color: #adacad;
       letter-spacing: normal;
       font-weight: normal;
       background-color: rgba( 0, 0, 0, 0 );
     }
+  }
 
-    > .nav__right.right {
-      display: grid;
-      grid: {
-        template: {
-          areas: 
-            'calender language'
-            'login search';
-          rows: 83px 63pxr;
-          columns: 312px 132px;
-        }
-        column-gap: .75rem;
-      }
+  > .header__calendar.calender {
+    grid-area: header__calender;
+    justify-self: flex-end;
+    margin-top: .75rem;
+    height: .75rem;
+    width: .75rem;
 
-      > .nav__calendar.calender {
-        grid-area: calender;
-        justify-self: flex-end;
-        margin-top: .75rem;
-        height: .75rem;
-        width: .75rem;
+    > .calendar__image {
+      height: .75rem;
+      width: .75rem;
+    }
+  }
 
-        > .calendar__image {
-          height: .75rem;
-          width: .75rem;
-        }
-      }
+  > .header__language.language {
+    grid-area: header__language;
+    margin-top: .75rem;
+    height: .75rem;
+    width: .75rem;
+    margin-left: .75rem;
 
-      > .nav__language.language {
-        grid-area: language;
-        margin-top: .75rem;
-        height: .75rem;
-        width: .75rem;
+    > .language__image {
+      height: .75rem;
+      width: .75rem;
+    }
+  }
 
-        > .language__image {
-          height: .75rem;
-          width: .75rem;
-        }
-      }
+  > .header__login {
+    grid-area: header__login;
+    align-self: flex-start;
+    justify-self: flex-end;
+    width: 105px;
+    height: 36px;
+    background-color: #213262;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
+  }
 
-      > .nav__login {
-        grid-area: login;
-        align-self: flex-start;
-        justify-self: flex-end;
-        width: 105px;
-        height: 36px;
-        background-color: #213262;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
-      }
+  .header__search.search {
+    grid-area: header__search;
+    height: .75rem;
+    width: .75rem;
+    margin-left: .75rem;
 
-      .nav__search.search {
-        grid-area: search;
-        height: .75rem;
-        width: .75rem;
-
-        > .search__image {
-          height: .75rem;
-          width: .75rem;
-        }
-      }
+    > .search__image {
+      height: .75rem;
+      width: .75rem;
     }
   }
 
