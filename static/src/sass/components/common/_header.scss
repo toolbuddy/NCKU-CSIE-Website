@@ -20,6 +20,10 @@ body > .header {
   width: 100%;
   height: $header-height;
   background: rgba( 255, 255, 255, .95 );
+  @media screen and ( min-width:$medium ) {
+    display: flex;
+    height: 4.59rem;
+  }
 
   > .header__logo.logo {
     display: grid;
@@ -30,6 +34,12 @@ body > .header {
     }
     align-items: center;
     height: $header-height;
+    @media screen and ( min-width:$medium ) {
+      justify-content: flex-start;
+      padding-left: 2.94rem;
+      width: 28.75rem;
+      height: 4.59rem;
+    }
 
     > .logo__image {
       grid-area: logo__image;
@@ -71,6 +81,90 @@ body > .header {
   > .header__menu {
     grid-area: header__menu;
     background-color: rgba( 0, 0, 0, 0 );
+    @media screen and ( min-width:$medium ) {
+      display: none;
+    }
+  }
+
+  > .header__nav.nav {
+    display: none;
+    @media screen and ( min-width: $medium ) {
+      display: flex;
+      width: 31.25rem;
+    }
+
+    > .nav__link {
+      text-align: center;
+      height: 4.59rem;
+      width: 3.31rem;
+      font-size: .5rem;
+      padding-top: 2.59rem;
+      line-height: 1.5;
+      color: #adacad;
+      letter-spacing: normal;
+      font-weight: normal;
+      background-color: rgba( 0, 0, 0, 0 );
+    }
+
+    > .nav__right.right {
+      display: grid;
+      grid: {
+        template: {
+          areas: 
+            'calender language'
+            'login search';
+          rows: 83px 63pxr;
+          columns: 312px 132px;
+        }
+        column-gap: .75rem;
+      }
+
+      > .nav__calendar.calender {
+        grid-area: calender;
+        justify-self: flex-end;
+        margin-top: .75rem;
+        height: .75rem;
+        width: .75rem;
+
+        > .calendar__image {
+          height: .75rem;
+          width: .75rem;
+        }
+      }
+
+      > .nav__language.language {
+        grid-area: language;
+        margin-top: .75rem;
+        height: .75rem;
+        width: .75rem;
+
+        > .language__image {
+          height: .75rem;
+          width: .75rem;
+        }
+      }
+
+      > .nav__login {
+        grid-area: login;
+        align-self: flex-start;
+        justify-self: flex-end;
+        width: 105px;
+        height: 36px;
+        background-color: #213262;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
+      }
+
+      .nav__search.search {
+        grid-area: search;
+        height: .75rem;
+        width: .75rem;
+
+        > .search__image {
+          height: .75rem;
+          width: .75rem;
+        }
+      }
+    }
   }
 
   > .header__navigation.navigation {
