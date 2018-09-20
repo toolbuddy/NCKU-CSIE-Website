@@ -139,3 +139,6 @@ $icon-path: '../..';
     @content;
   }
 }
+@mixin icon__user () {
+  background-image: url( '#{ $icon-path }/image/icon/user.png' );
+}

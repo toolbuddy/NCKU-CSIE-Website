@@ -143,6 +143,7 @@ body > .header {
   }
 
   > .header__login {
+    display: flex;
     grid-area: header__login;
     align-self: flex-start;
     justify-self: flex-end;
@@ -150,6 +151,32 @@ body > .header {
     height: 36px;
     background-color: #213262;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .16rem;
+    color: #ffffff;
+
+    &::before {
+      margin: {
+        left: .61rem;
+        right: .45rem;
+      }
+      content: '';
+      background: {
+        size: .66rem;
+        repeat: no-repeat;
+      }
+      width: .66rem;
+      height: .66rem;
+      filter: 
+        invert(100%)
+        sepia(0%)
+        saturate(7490%)
+        hue-rotate(333deg)
+        brightness(103%)
+        contrast(101%);
+      @include icon__user();
+    }
   }
 
   .header__search.search {
