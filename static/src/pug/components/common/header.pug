@@ -123,12 +123,12 @@ mixin header()
 
     //- Menu Icon
     button.header__menu ☰
-    nav.header__nav.nav
-      button.nav__link= i18n[ language ].route.about.index
-      button.nav__link= i18n[ language ].route.research.index
-      button.nav__link= i18n[ language ].route.student.index
-      button.nav__link= i18n[ language ].route.announcement.index
-      button.nav__link= i18n[ language ].route.resource.index
+    nav.header__menus.menus
+      button.menus__link.menus__link--about= i18n[ language ].route.about.index
+      button.menus__link= i18n[ language ].route.research.index
+      button.menus__link= i18n[ language ].route.student.index
+      button.menus__link= i18n[ language ].route.announcement.index
+      button.menus__link= i18n[ language ].route.resource.index
     a.header__calendar.calender( href = "" )
       +image( {
         alt: i18n[ language ].util.calendar,
@@ -149,6 +149,7 @@ mixin header()
         src: 'icon/search-black.png',
       } )
 
+    nav.header__nav.nav
 
     //- Navigation Bar
     nav.header__navigation.navigation

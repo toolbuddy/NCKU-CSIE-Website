@@ -25,9 +25,10 @@ body > .header {
       template: {
         areas: 
           'header__logo header__menu header__calender header__language'
-          'header__logo header__menu header__login header__search';
+          'header__logo header__menu header__login header__search'
+          'header__nav header__nav header__nav header__nav';
         columns: 6.96fr 7.57fr 2.36fr 1fr;
-        rows: 2.63rem 1.97rem;
+        rows: 2.63rem 1.97rem 2.53rem;
       }
     }
     height: 4.59rem;
@@ -95,14 +96,14 @@ body > .header {
     }
   }
 
-  > .header__nav.nav {
+  > .header__menus.menus {
     display: none;
     @media screen and ( min-width: $medium ) {
       grid-area: header__menu;
       display: flex;
     }
 
-    > .nav__link {
+    > .menus__link {
       text-align: center;
       height: 1.69rem;
       width: 20%;
@@ -207,6 +208,17 @@ body > .header {
         height: .75rem;
         width: .75rem;
       }
+    }
+  }
+
+  > .header__nav.nav {
+    display: none;
+    background-color: #213262;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+    grid-area: header__nav;
+
+    &.header__nav--active {
+      display: flex;
     }
   }
 
