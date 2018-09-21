@@ -124,32 +124,39 @@ mixin header()
     //- Menu Icon
     button.header__menu ☰
     nav.header__menus.menus
-      button.menus__link.menus__link--about= i18n[ language ].route.about.index
-      button.menus__link= i18n[ language ].route.research.index
-      button.menus__link= i18n[ language ].route.student.index
-      button.menus__link= i18n[ language ].route.announcement.index
-      button.menus__link= i18n[ language ].route.resource.index
-    a.header__calendar.calender( href = "" )
+      ul.menus__list.list
+        li.list__item.item
+          a.item__link.link( href = '' )= i18n[ language ].route.about.index
+          ul.link__subMenus.subMenus
+            li.subMenus__item
+
+        li.list__item.item
+          a.item__link( href = '' )= i18n[ language ].route.research.index
+        li.list__item.item
+          a.item__link( href = '' )= i18n[ language ].route.student.index
+        li.list__item.item
+          a.item__link( href = '' )= i18n[ language ].route.announcement.index
+        li.list__item.item
+          a.item__link( href = '' )= i18n[ language ].route.resource.index
+    a.header__calendar.calender( href = '' )
       +image( {
         alt: i18n[ language ].util.calendar,
         className: 'calendar__image',
         src: 'icon/calendar.png',
       } )
-    a.header__language.language( href = "" )
+    a.header__language.language( href = '' )
       +image( {
         alt: i18n[ language ].util.language,
         className: 'language__image',
         src: 'icon/flag-zh-TW.png',
       } )
     button.header__login= i18n[ language ].route.home.login
-    a.header__search.search( href = "" )
+    a.header__search.search( href = '' )
       +image( {
         alt: i18n[ language ].util.language,
         className: 'search__image',
         src: 'icon/search-black.png',
       } )
-
-    nav.header__nav.nav
 
     //- Navigation Bar
     nav.header__navigation.navigation
