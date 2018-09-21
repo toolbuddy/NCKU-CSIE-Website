@@ -113,81 +113,100 @@ body > .header {
       letter-spacing: normal;
       font-weight: normal;
       background-color: rgba( 0, 0, 0, 0 );
+
+      &:hover {
+        background-color: rgba(196, 196, 196, .3);
+      }
     }
   }
 
   > .header__calendar.calender {
-    grid-area: header__calender;
-    justify-self: flex-end;
-    margin-top: .75rem;
-    height: .75rem;
-    width: .75rem;
-
-    > .calendar__image {
+    display: none;
+    @media screen and ( min-width: $medium ) {
+      display: flex;
+      grid-area: header__calender;
+      justify-self: flex-end;
+      margin-top: .75rem;
       height: .75rem;
       width: .75rem;
+
+      > .calendar__image {
+        height: .75rem;
+        width: .75rem;
+      }
     }
   }
 
   > .header__language.language {
-    grid-area: header__language;
-    margin-top: .75rem;
-    height: .75rem;
-    width: .75rem;
-    margin-left: .75rem;
-
-    > .language__image {
+    display: none;
+    @media screen and ( min-width: $medium ) {
+      display: flex;
+      grid-area: header__language;
+      margin-top: .75rem;
       height: .75rem;
       width: .75rem;
+      margin-left: .75rem;
+
+      > .language__image {
+        height: .75rem;
+        width: .75rem;
+      }
     }
   }
 
   > .header__login {
-    display: flex;
-    grid-area: header__login;
-    align-self: flex-start;
-    justify-self: flex-end;
-    width: 105px;
-    height: 36px;
-    background-color: #213262;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: .16rem;
-    color: #ffffff;
+    display: none;
+    @media screen and ( min-width: $medium ) {
+      display: flex;
+      grid-area: header__login;
+      align-self: flex-start;
+      justify-self: flex-end;
+      width: 105px;
+      height: 36px;
+      background-color: #213262;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .16rem;
+      color: #ffffff;
 
-    &::before {
-      margin: {
-        left: .61rem;
-        right: .45rem;
+      &::before {
+        margin: {
+          left: .61rem;
+          right: .45rem;
+        }
+        content: '';
+        background: {
+          size: .66rem;
+          repeat: no-repeat;
+        }
+        width: .66rem;
+        height: .66rem;
+        filter: 
+          invert(100%)
+          sepia(0%)
+          saturate(7490%)
+          hue-rotate(333deg)
+          brightness(103%)
+          contrast(101%);
+        @include icon__user();
       }
-      content: '';
-      background: {
-        size: .66rem;
-        repeat: no-repeat;
-      }
-      width: .66rem;
-      height: .66rem;
-      filter: 
-        invert(100%)
-        sepia(0%)
-        saturate(7490%)
-        hue-rotate(333deg)
-        brightness(103%)
-        contrast(101%);
-      @include icon__user();
     }
   }
 
   .header__search.search {
-    grid-area: header__search;
-    height: .75rem;
-    width: .75rem;
-    margin-left: .75rem;
-
-    > .search__image {
+    display: none;
+    @media screen and ( min-width: $medium ) {
+      display: flex;
+      grid-area: header__search;
       height: .75rem;
       width: .75rem;
+      margin-left: .75rem;
+
+      > .search__image {
+        height: .75rem;
+        width: .75rem;
+      }
     }
   }
 
