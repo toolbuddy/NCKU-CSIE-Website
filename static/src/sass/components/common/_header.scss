@@ -20,14 +20,14 @@ body > .header {
   width: 100%;
   height: $header-height;
   background: rgba( 255, 255, 255, .95 );
-  @media screen and ( min-width:$medium ) {
+  @media screen and ( min-width: $xxx-large ) {
     grid: {
       template: {
         areas: 
           'header__logo header__menu header__calender header__language'
           'header__logo header__menu header__login header__search'
           'header__nav header__nav header__nav header__nav';
-        columns: 6.96fr 7.57fr 2.36fr 1fr;
+        columns: 38.9vw 42.31vw 13.19vw 5.59vw;
         rows: 2.63rem 1.97rem 2.53rem;
       }
     }
@@ -43,7 +43,7 @@ body > .header {
     }
     align-items: center;
     height: $header-height;
-    @media screen and ( min-width:$medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       justify-content: flex-start;
       padding: {
         left: 2.94rem;
@@ -91,7 +91,7 @@ body > .header {
   > .header__menu {
     grid-area: header__menu;
     background-color: rgba( 0, 0, 0, 0 );
-    @media screen and ( min-width:$medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: none;
     }
   }
@@ -99,15 +99,29 @@ body > .header {
   > .header__menus.menus {
     display: none;
     grid-area: header__menu;
-    @media screen and ( min-width: $medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: block;
     }
 
     > .menus__list.list {
+      height: 4.6rem;
+      display: flex;
+
       > .list__item.item {
         display: inline-block;
         position: relative;
-        width: 20%;
+        width: calc( 100% / 6 );
+        height: 4.6rem;
+
+        &:hover {
+          > .link__subMenus.subMenus {
+            display: flex;
+          }
+
+          > .item__link {
+            background-color: rgba(196, 196, 196, .3);
+          }
+        }
 
         > .item__link {
           display: flex;
@@ -121,19 +135,66 @@ body > .header {
           line-height: 1.5;
           justify-content: center;
           align-items: center;
-
-          &:hover {
-            background-color: rgba(196, 196, 196, .3);
-          }
         }
 
         > .link__subMenus.subMenus {
-          display: block;
+          display: none;
+          position: relative;
           background-color: #213262;
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
-          width: 100%;
+          width: 100vw;
           height: 2.53rem;
-          grid-area: header__nav;
+          top: .78rem;
+          left: -38.9vw;
+          align-content: center;
+          justify-content: center;
+
+          &.link__subMenus--about {
+            left: calc( -38.9vw - 100% );
+          }
+
+          &.link__subMenus--research {
+            left: calc( -38.9vw - 200% );
+          }
+
+          &.link__subMenus--student {
+            left: calc( -38.9vw - 300% );
+          }
+
+          &.link__subMenus--announcement {
+            left: calc( -38.9vw - 400% );
+          }
+
+          &.link__subMenus--resource {
+            left: calc( -38.9vw - 500% );
+          }
+
+          > .subMenus__item.item {
+            display: inline-block;
+            width: 3.59rem;
+
+            &:hover {
+              > .item.link {
+                background-color: #1d2d56;
+              }
+            }
+
+            > .item.link {
+              display: flex;
+              margin-top: .44rem;
+              height: 1.69rem;
+              width: 100%;
+              font-size: .5rem;
+              font-weight: bold;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: 1.5;
+              letter-spacing: normal;
+              color: #ffffff;
+              justify-content: center;
+              align-items: center;
+            }
+          }
         }
       }
     }
@@ -141,7 +202,7 @@ body > .header {
 
   > .header__calendar.calender {
     display: none;
-    @media screen and ( min-width: $medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: flex;
       grid-area: header__calender;
       justify-self: flex-end;
@@ -158,13 +219,15 @@ body > .header {
 
   > .header__language.language {
     display: none;
-    @media screen and ( min-width: $medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: flex;
       grid-area: header__language;
       margin-top: .75rem;
       height: .75rem;
       width: .75rem;
       margin-left: .75rem;
+      background-color: #ffffff;
+      cursor: pointer;
 
       > .language__image {
         height: .75rem;
@@ -175,7 +238,7 @@ body > .header {
 
   > .header__login {
     display: none;
-    @media screen and ( min-width: $medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: flex;
       grid-area: header__login;
       align-self: flex-start;
@@ -186,7 +249,9 @@ body > .header {
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
       font-size: 14px;
       font-weight: 500;
-      letter-spacing: .16rem;
+      cursor: pointer;
+
+      //letter-spacing: .16rem;
       color: #ffffff;
 
       &::before {
@@ -215,7 +280,7 @@ body > .header {
 
   .header__search.search {
     display: none;
-    @media screen and ( min-width: $medium ) {
+    @media screen and ( min-width: $xxx-large ) {
       display: flex;
       grid-area: header__search;
       height: .75rem;

@@ -126,25 +126,77 @@ mixin header()
     nav.header__menus.menus
       ul.menus__list.list
         li.list__item.item
-          a.item__link.link( href = '' )= i18n[ language ].route.about.index
-          ul.link__subMenus.subMenus
-            li.subMenus__item
-
+          a.item__link( href = '' )= i18n[ language ].route.home.index
+        li.list__item.item
+          a.item__link( href = '' )= i18n[ language ].route.about.index
+          ul.link__subMenus.link__subMenus--about.subMenus
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.about.intro
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.about.faculty
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.about.staff
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.about.award
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.about.contact
         li.list__item.item
           a.item__link( href = '' )= i18n[ language ].route.research.index
+          ul.link__subMenus.link__subMenus--research.subMenus
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.research.labs
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.research.groups
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.research.publications
         li.list__item.item
           a.item__link( href = '' )= i18n[ language ].route.student.index
+          ul.link__subMenus.link__subMenus--student.subMenus
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.course
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.college
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.master
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.phd
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.scholarship
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.international
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.student.internship
         li.list__item.item
           a.item__link( href = '' )= i18n[ language ].route.announcement.index
+          ul.link__subMenus.link__subMenus--announcement.subMenus
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.announcement.all
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.announcement.activity
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.announcement.recruitment
         li.list__item.item
           a.item__link( href = '' )= i18n[ language ].route.resource.index
+          ul.link__subMenus.link__subMenus--resource.subMenus
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.rule
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.rent
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.fix
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.ieet
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.sitemap
+            li.subMenus__item.item
+              a.item.link( href = '' )= i18n[ language ].route.resource.alumni
     a.header__calendar.calender( href = '' )
       +image( {
         alt: i18n[ language ].util.calendar,
         className: 'calendar__image',
         src: 'icon/calendar.png',
       } )
-    a.header__language.language( href = '' )
+    button.header__language.language( href = '' )
       +image( {
         alt: i18n[ language ].util.language,
         className: 'language__image',
