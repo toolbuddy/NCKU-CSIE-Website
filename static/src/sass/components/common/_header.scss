@@ -25,10 +25,9 @@ body > .header {
       template: {
         areas: 
           'header__logo header__menu header__calender header__language'
-          'header__logo header__menu header__login header__search'
-          'header__nav header__nav header__nav header__nav';
+          'header__logo header__menu header__login header__search';
         columns: 38.9vw 42.31vw 13.19vw 5.59vw;
-        rows: 2.63rem 1.97rem 2.53rem;
+        rows: 2.63rem 1.97rem;
       }
     }
     height: 4.59rem;

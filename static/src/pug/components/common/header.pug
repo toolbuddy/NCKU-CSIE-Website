@@ -126,82 +126,89 @@ mixin header()
     nav.header__menus.menus
       ul.menus__list.list
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.home.index
+          a.item__link( href = `/?language=${ language }` )= i18n[ language ].route.home.index
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.about.index
+          a.item__link( href = `/about?language=${ language }` )= i18n[ language ].route.about.index
           ul.link__subMenus.link__subMenus--about.subMenus
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.about.intro
+              a.item.link( href = `/about/intro?language=${ language }` )= i18n[ language ].route.about.intro
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.about.faculty
+              a.item.link( href = `/about/faculty?language=${ language }` )= i18n[ language ].route.about.faculty
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.about.staff
+              a.item.link( href = `/about/staff?language=${ language }` )= i18n[ language ].route.about.staff
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.about.award
+              a.item.link( href = `/about/award?language=${ language }` )= i18n[ language ].route.about.award
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.about.contact
+              a.item.link( href = `/about/contact?language=${ language }` )= i18n[ language ].route.about.contact
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.research.index
+          a.item__link( href = `/research?language=${ language }` )= i18n[ language ].route.research.index
           ul.link__subMenus.link__subMenus--research.subMenus
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.research.labs
+              a.item.link( href = `/research/labs?language=${ language }` )= i18n[ language ].route.research.labs
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.research.groups
+              a.item.link( href = `/research/groups?language=${ language }` )= i18n[ language ].route.research.groups
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.research.publications
+              a.item.link( href = `/research/publications?language=${ language }` )= i18n[ language ].route.research.publications
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.student.index
+          a.item__link( href = `/student?language=${ language }` )= i18n[ language ].route.student.index
           ul.link__subMenus.link__subMenus--student.subMenus
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.course
+              a.item.link( href = `/student/course?language=${ language }` )= i18n[ language ].route.student.course
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.college
+              a.item.link( href = `/student/college?language=${ language }` )= i18n[ language ].route.student.college
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.master
+              a.item.link( href = `/student/master?language=${ language }` )= i18n[ language ].route.student.master
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.phd
+              a.item.link( href = `/student/phd?language=${ language }` )= i18n[ language ].route.student.phd
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.scholarship
+              a.item.link( href = `/student/scholarship?language=${ language }` )= i18n[ language ].route.student.scholarship
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.international
+              a.item.link( href = `/student/international?language=${ language }` )= i18n[ language ].route.student.international
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.student.internship
+              a.item.link( href = `/student/internship?language=${ language }` )= i18n[ language ].route.student.internship
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.announcement.index
+          a.item__link( href = `/announcement?language=${ language }` )= i18n[ language ].route.announcement.index
           ul.link__subMenus.link__subMenus--announcement.subMenus
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.announcement.all
+              a.item.link( href = `/announcement/all?language=${ language }` )= i18n[ language ].route.announcement.all
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.announcement.activity
+              a.item.link( href = `/announcement/activity?language=${ language }` )= i18n[ language ].route.announcement.activity
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.announcement.recruitment
+              a.item.link( href = `/announcement/recruitment?language=${ language }` )= i18n[ language ].route.announcement.recruitment
         li.list__item.item
-          a.item__link( href = '' )= i18n[ language ].route.resource.index
+          a.item__link( href = `/resource?language=${ language }` )= i18n[ language ].route.resource.index
           ul.link__subMenus.link__subMenus--resource.subMenus
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.rule
+              a.item.link( href = `/resource/rule?language=${ language }` )= i18n[ language ].route.resource.rule
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.rent
+              a.item.link( href = `/resource/rent?language=${ language }` )= i18n[ language ].route.resource.rent
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.fix
+              a.item.link( href = `/resource/fix?language=${ language }` )= i18n[ language ].route.resource.fix
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.ieet
+              a.item.link( href = `/resource/ieet?language=${ language }` )= i18n[ language ].route.resource.ieet
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.sitemap
+              a.item.link( href = `/resource/sitemap?language=${ language }` )= i18n[ language ].route.resource.sitemap
             li.subMenus__item.item
-              a.item.link( href = '' )= i18n[ language ].route.resource.alumni
-    a.header__calendar.calender( href = '' )
+              a.item.link( href = `/resource/alumni?language=${ language }` )= i18n[ language ].route.resource.alumni
+    a.header__calendar.calender( href = `/calendar?language=${ language }` )
       +image( {
         alt: i18n[ language ].util.calendar,
         className: 'calendar__image',
         src: 'icon/calendar.png',
       } )
     button.header__language.language( href = '' )
-      +image( {
-        alt: i18n[ language ].util.language,
-        className: 'language__image',
-        src: 'icon/flag-zh-TW.png',
-      } )
+      if language === 'zh-TW'
+        +image( {
+          alt: i18n[ language ].util.language,
+          className: 'language__image',
+          src: 'icon/flag-zh-TW.png',
+        } )
+      else if language === 'en-US'
+        +image( {
+          alt: i18n[ language ].util.language,
+          className: 'language__image',
+          src: 'icon/flag-en-US.png',
+          } )
     button.header__login= i18n[ language ].route.home.login
     a.header__search.search( href = '' )
       +image( {
