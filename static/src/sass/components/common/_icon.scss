@@ -142,3 +142,9 @@ $icon-path: '../..';
 @mixin icon__user () {
   background-image: url( '#{ $icon-path }/image/icon/user.png' );
 }
+@mixin icon__flag-zh-TW () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-zh-TW.png' );
+}
+@mixin icon__flag-en-US () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-en-US.png' );
+}

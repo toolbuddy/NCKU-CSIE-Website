@@ -2,6 +2,9 @@ const header = document.getElementById( 'header' );
 const headerMenu = header.querySelector( '.header__menu' );
 const headerNavigation = header.querySelector( '.header__navigation' );
 const navigationCancel = headerNavigation.querySelector( '.navigation__cancel' );
+const headerLanguage = header.querySelector( '.header__language' );
+const languageButton = headerLanguage.querySelector( '.language__button' );
+const headerlanguageDropdown = headerLanguage.querySelector( '.language__dropdown' );
 
 headerMenu.addEventListener( 'click', () => {
     headerNavigation.classList.add( 'header__navigation--active' );
@@ -9,6 +12,13 @@ headerMenu.addEventListener( 'click', () => {
 
 navigationCancel.addEventListener( 'click', () => {
     headerNavigation.classList.remove( 'header__navigation--active' );
+} );
+
+languageButton.addEventListener( 'click', () => {
+    if ( headerlanguageDropdown.classList.contains( 'language__dropdown--active' ) )
+        headerlanguageDropdown.classList.remove( 'language__dropdown--active' );
+    else
+        headerlanguageDropdown.classList.add( 'language__dropdown--active' );
 } );
 
 Array.from( headerNavigation.querySelectorAll( '.item__switch' ) )

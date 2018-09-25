@@ -169,7 +169,6 @@ body > .header {
           }
 
           > .subMenus__item.item {
-            display: inline-block;
             width: 3.59rem;
 
             &:hover {
@@ -219,18 +218,81 @@ body > .header {
   > .header__language.language {
     display: none;
     @media screen and ( min-width: $xxx-large ) {
-      display: flex;
+      display: inline-block;
+      flex-direction: row;
       grid-area: header__language;
+      margin-left: .75rem;
       margin-top: .75rem;
       height: .75rem;
       width: .75rem;
-      margin-left: .75rem;
-      background-color: #ffffff;
-      cursor: pointer;
 
-      > .language__image {
+      > .language__button.button {
         height: .75rem;
         width: .75rem;
+        cursor: pointer;
+        background-color: #ffffff;
+        display: flex;
+
+        > .button__image {
+          height: .75rem;
+          width: .75rem;
+        }
+      }
+
+      > .language__dropdown.dropdown {
+        display: none;
+        position: relative;
+        flex-direction: column;
+        background-color: #1a284d;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+        height: 2.56rem;
+        width: 3.88rem;
+        top: .1rem;
+        left: -3.13rem;
+        align-content: center;
+        justify-content: center;
+        z-index: 1;
+
+        &.language__dropdown--active {
+          display: flex;
+        }
+
+        > .dropdown__item.item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 1.28rem;
+          width: 100%;
+
+          &::before {
+            content: '';
+            background: {
+              size: .66rem;
+              repeat: no-repeat;
+            }
+            width: .66rem;
+            height: .66rem;
+            margin-right: .5rem;
+          }
+
+          &.dropdown__item--TW {
+            &::before {
+              @include icon__flag-zh-TW ();
+            }
+          }
+
+          &.dropdown__item--US {
+            &::before {
+              @include icon__flag-en-US ();
+            }
+          }
+
+          > .item__link {
+            font-size: .5rem;
+            color: #ffffff;
+            width: 50%;
+          }
+        }
       }
     }
   }

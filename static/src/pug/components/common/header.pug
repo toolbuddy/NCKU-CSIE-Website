@@ -196,19 +196,25 @@ mixin header()
         className: 'calendar__image',
         src: 'icon/calendar.png',
       } )
-    button.header__language.language( href = '' )
-      if language === 'zh-TW'
-        +image( {
-          alt: i18n[ language ].util.language,
-          className: 'language__image',
-          src: 'icon/flag-zh-TW.png',
-        } )
-      else if language === 'en-US'
-        +image( {
-          alt: i18n[ language ].util.language,
-          className: 'language__image',
-          src: 'icon/flag-en-US.png',
+    section.header__language.language
+      button.language__button.button( href = '' )
+        if language === 'zh-TW'
+          +image( {
+            alt: i18n[ language ].util.language,
+            className: 'button__image',
+            src: 'icon/flag-zh-TW.png',
           } )
+        else if language === 'en-US'
+          +image( {
+            alt: i18n[ language ].util.language,
+            className: 'button__image',
+            src: 'icon/flag-en-US.png',
+            } )
+      ul.language__dropdown.dropdown
+        li.dropdown__item.dropdown__item--TW.item
+          a.item__link( href = '?language=zh-TW' ) 中文
+        li.dropdown__item.dropdown__item--US.item
+          a.item__link( href = '?language=en-US' ) English
     button.header__login= i18n[ language ].route.home.login
     a.header__search.search( href = '' )
       +image( {
