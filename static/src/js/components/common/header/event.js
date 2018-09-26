@@ -5,6 +5,10 @@ const navigationCancel = headerNavigation.querySelector( '.navigation__cancel' )
 const headerLanguage = header.querySelector( '.header__language' );
 const languageButton = headerLanguage.querySelector( '.language__button' );
 const headerlanguageDropdown = headerLanguage.querySelector( '.language__dropdown' );
+const headerSearch = header.querySelector( '.header__search' );
+const searchButton = headerSearch.querySelector( '.search__button' );
+const searchDropdown = headerSearch.querySelector( '.search__dropdown' );
+const searchCancel = headerSearch.querySelector( '.dropdown__cancel' );
 
 headerMenu.addEventListener( 'click', () => {
     headerNavigation.classList.add( 'header__navigation--active' );
@@ -19,6 +23,17 @@ languageButton.addEventListener( 'click', () => {
         headerlanguageDropdown.classList.remove( 'language__dropdown--active' );
     else
         headerlanguageDropdown.classList.add( 'language__dropdown--active' );
+} );
+
+searchButton.addEventListener( 'click', () => {
+    if ( searchDropdown.classList.contains( 'search__dropdown--active' ) )
+        searchDropdown.classList.remove( 'search__dropdown--active' );
+    else
+        searchDropdown.classList.add( 'search__dropdown--active' );
+} );
+
+searchCancel.addEventListener( 'click', () => {
+    searchDropdown.classList.remove( 'search__dropdown--active' );
 } );
 
 Array.from( headerNavigation.querySelectorAll( '.item__switch' ) )
