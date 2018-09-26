@@ -197,7 +197,7 @@ mixin header()
         src: 'icon/calendar.png',
       } )
     section.header__language.language
-      button.language__button.button( href = '' )
+      button.language__button.button
         if language === 'zh-TW'
           +image( {
             alt: i18n[ language ].util.language,
@@ -215,14 +215,17 @@ mixin header()
           a.item__link( href = '?language=zh-TW' ) 中文
         li.dropdown__item.dropdown__item--US.item
           a.item__link( href = '?language=en-US' ) English
-    button.header__login= i18n[ language ].route.home.login
-    a.header__search.search( href = '' )
-      +image( {
-        alt: i18n[ language ].util.language,
-        className: 'search__image',
-        src: 'icon/search-black.png',
-      } )
-
+    a.header__login( href = `/login?language=${ language }` )= i18n[ language ].route.home.login
+    scetion.header__search.search
+      button.search__button.button
+        +image( {
+          alt: i18n[ language ].util.language,
+          className: 'button__image',
+          src: 'icon/search-black.png',
+        } )
+      form.search__dropdown.dropdown( action = '', method = 'get' )
+        input.dropdown__input( type = 'text', placeholder = i18n[ language ].util.search )
+        button.dropdown__cancel ✕
     //- Navigation Bar
     nav.header__navigation.navigation
 

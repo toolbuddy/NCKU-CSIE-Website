@@ -23,7 +23,7 @@ body > .header {
   @media screen and ( min-width: $xxx-large ) {
     grid: {
       template: {
-        areas: 
+        areas:
           'header__logo header__menu header__calender header__language'
           'header__logo header__menu header__login header__search';
         columns: 38.9vw 42.31vw 13.19vw 5.59vw;
@@ -310,7 +310,8 @@ body > .header {
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
       font-size: 14px;
       font-weight: 500;
-      cursor: pointer;
+      justify-items: center;
+      align-items: center;
 
       //letter-spacing: .16rem;
       color: #ffffff;
@@ -327,7 +328,7 @@ body > .header {
         }
         width: .66rem;
         height: .66rem;
-        filter: 
+        filter:
           invert(100%)
           sepia(0%)
           saturate(7490%)
@@ -342,15 +343,44 @@ body > .header {
   .header__search.search {
     display: none;
     @media screen and ( min-width: $xxx-large ) {
-      display: flex;
+      display: inline-block;
+      flex-direction: row;
       grid-area: header__search;
+      margin-left: .75rem;
       height: .75rem;
       width: .75rem;
-      margin-left: .75rem;
 
-      > .search__image {
+      > .search__button.button {
+        display: flex;
+        background-color: #ffffff;
         height: .75rem;
         width: .75rem;
+        cursor: pointer;
+
+        > .button__image {
+          height: .75rem;
+          width: .75rem;
+        }
+      }
+
+      > .search__dropdown.dropdown {
+        display: flex;
+        position: absolute;
+        height: 2.63rem;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: 1;
+
+        > .dropdown__input {
+          height: 100%;
+          width: 97%;
+        }
+
+        > .dropdown__cancel {
+          height: 100%;
+          background-color: #ffffff;
+        }
       }
     }
   }
