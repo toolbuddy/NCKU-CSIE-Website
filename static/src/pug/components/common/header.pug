@@ -123,123 +123,20 @@ mixin header()
 
     //- Menu Icon
     button.header__menu ☰
-    //------------------------------------------------------//
-    nav.header__menus.menus
-      ul.menus__list.list
-        li.list__item.item
-          a.item__link( href = `/?language=${ language }` )= i18n[ language ].route.home.index
-        li.list__item.item
-          a.item__link( href = `/about?language=${ language }` )= i18n[ language ].route.about.index
-          ul.item__subMenus.item__subMenus--about.subMenus
-            li.subMenus__item.item
-              a.item__link( href = `/about/intro?language=${ language }` )= i18n[ language ].route.about.intro
-            li.subMenus__item.item
-              a.item__link( href = `/about/faculty?language=${ language }` )= i18n[ language ].route.about.faculty
-            li.subMenus__item.item
-              a.item__link( href = `/about/staff?language=${ language }` )= i18n[ language ].route.about.staff
-            li.subMenus__item.item
-              a.item__link( href = `/about/award?language=${ language }` )= i18n[ language ].route.about.award
-            li.subMenus__item.item
-              a.item__link( href = `/about/contact?language=${ language }` )= i18n[ language ].route.about.contact
-        li.list__item.item
-          a.item__link( href = `/research?language=${ language }` )= i18n[ language ].route.research.index
-          ul.item__subMenus.item__subMenus--research.subMenus
-            li.subMenus__item.item
-              a.item__link( href = `/research/labs?language=${ language }` )= i18n[ language ].route.research.labs
-            li.subMenus__item.item
-              a.item__link( href = `/research/groups?language=${ language }` )= i18n[ language ].route.research.groups
-            li.subMenus__item.item
-              a.item__link( href = `/research/publications?language=${ language }` )= i18n[ language ].route.research.publications
-        li.list__item.item
-          a.item__link( href = `/student?language=${ language }` )= i18n[ language ].route.student.index
-          ul.item__subMenus.item__subMenus--student.subMenus
-            li.subMenus__item.item
-              a.item__link( href = `/student/course?language=${ language }` )= i18n[ language ].route.student.course
-            li.subMenus__item.item
-              a.item__link( href = `/student/college?language=${ language }` )= i18n[ language ].route.student.college
-            li.subMenus__item.item
-              a.item__link( href = `/student/master?language=${ language }` )= i18n[ language ].route.student.master
-            li.subMenus__item.item
-              a.item__link( href = `/student/phd?language=${ language }` )= i18n[ language ].route.student.phd
-            li.subMenus__item.item
-              a.item__link( href = `/student/scholarship?language=${ language }` )= i18n[ language ].route.student.scholarship
-            li.subMenus__item.item
-              a.item__link( href = `/student/international?language=${ language }` )= i18n[ language ].route.student.international
-            li.subMenus__item.item
-              a.item__link( href = `/student/internship?language=${ language }` )= i18n[ language ].route.student.internship
-        li.list__item.item
-          a.item__link( href = `/announcement?language=${ language }` )= i18n[ language ].route.announcement.index
-          ul.item__subMenus.item__subMenus--announcement.subMenus
-            li.subMenus__item.item
-              a.item__link( href = `/announcement/all?language=${ language }` )= i18n[ language ].route.announcement.all
-            li.subMenus__item.item
-              a.item__link( href = `/announcement/activity?language=${ language }` )= i18n[ language ].route.announcement.activity
-            li.subMenus__item.item
-              a.item__link( href = `/announcement/recruitment?language=${ language }` )= i18n[ language ].route.announcement.recruitment
-        li.list__item.item
-          a.item__link( href = `/resource?language=${ language }` )= i18n[ language ].route.resource.index
-          ul.item__subMenus.item__subMenus--resource.subMenus
-            li.subMenus__item.item
-              a.item__link( href = `/resource/rule?language=${ language }` )= i18n[ language ].route.resource.rule
-            li.subMenus__item.item
-              a.item__link( href = `/resource/rent?language=${ language }` )= i18n[ language ].route.resource.rent
-            li.subMenus__item.item
-              a.item__link( href = `/resource/fix?language=${ language }` )= i18n[ language ].route.resource.fix
-            li.subMenus__item.item
-              a.item__link( href = `/resource/ieet?language=${ language }` )= i18n[ language ].route.resource.ieet
-            li.subMenus__item.item
-              a.item__link( href = `/resource/sitemap?language=${ language }` )= i18n[ language ].route.resource.sitemap
-            li.subMenus__item.item
-              a.item__link( href = `/resource/alumni?language=${ language }` )= i18n[ language ].route.resource.alumni
-    a.header__calendar.calender( href = `/calendar?language=${ language }` )
-      +image( {
-        alt: i18n[ language ].util.calendar,
-        className: 'calendar__image',
-        src: 'icon/calendar.png',
-      } )
-    section.header__language.language
-      button.language__button.button
-        if language === 'zh-TW'
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'button__image',
-            src: 'icon/flag-zh-TW.png',
-          } )
-        else if language === 'en-US'
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'button__image',
-            src: 'icon/flag-en-US.png',
-            } )
-      ul.language__dropdown.dropdown
-        li.dropdown__item.dropdown__item--TW.item
-          a.item__link( href = '?language=zh-TW' ) 中文
-        li.dropdown__item.dropdown__item--US.item
-          a.item__link( href = '?language=en-US' ) English
-    a.header__login( href = `/login?language=${ language }` )= i18n[ language ].route.home.login
-    scetion.header__search.search
-      button.search__button.button
-        +image( {
-          alt: i18n[ language ].util.language,
-          className: 'button__image',
-          src: 'icon/search-black.png',
-        } )
-      section.search__dropdown.dropdown
-        form.dropdown__form.form( action = '/search', method = 'GET' )
-          input.form__input( type = 'text', placeholder = i18n[ language ].util.search )
-        button.dropdown__cancel ✕
-    //------------------------------------------------------//
+
     //- Navigation Bar
     nav.header__navigation.navigation
 
       //- Search Column, currently not available
+      //- Small screen version
       form.navigation__search.search( action = '/search', method = 'GET' )
         input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
-        input.search__submit( type = 'submit', value = '' )
+        input.search__submit( type = 'submit', value = ' ' )
 
       //- Cancel Icon
       button.navigation__cancel ✕
 
+      //- All routes
       ul.navigation__list.list
         li.list__item.item
           a.item__link( href = `/?language=${ language }` )= i18n[ language ].route.home.index
@@ -247,7 +144,7 @@ mixin header()
           a.item__link( href = `/about?language=${ language }` )= i18n[ language ].route.about.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown
+          ul.item__dropdown.item__dropdown--about.dropdown
             li.dropdown__item.item
               a.item__link( href = `/about/intro?language=${ language }` )= i18n[ language ].route.about.intro
             li.dropdown__item.item
@@ -262,7 +159,7 @@ mixin header()
           a.item__link( href = `/research?language=${ language }` )= i18n[ language ].route.research.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown
+          ul.item__dropdown.item__dropdown--research.dropdown
             li.dropdown__item.item
               a.item__link( href = `/research/labs?language=${ language }` )= i18n[ language ].route.research.labs
             li.dropdown__item.item
@@ -273,7 +170,7 @@ mixin header()
           a.item__link( href = `/student?language=${ language }` )= i18n[ language ].route.student.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown
+          ul.item__dropdown.item__dropdown--student.dropdown
             li.dropdown__item.item
               a.item__link( href = `/student/course?language=${ language }` )= i18n[ language ].route.student.course
             li.dropdown__item.item
@@ -292,7 +189,7 @@ mixin header()
           a.item__link( href = `/announcement?language=${ language }` )= i18n[ language ].route.announcement.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown
+          ul.item__dropdown.item__dropdown--announcement.dropdown
             li.dropdown__item.item
               a.item__link( href = `/announcement/all?language=${ language }` )= i18n[ language ].route.announcement.all
             li.dropdown__item.item
@@ -303,7 +200,7 @@ mixin header()
           a.item__link( href = `/resource?language=${ language }` )= i18n[ language ].route.resource.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.dropdown
+          ul.item__dropdown.item__dropdown--resource.dropdown
             li.dropdown__item.item
               a.item__link( href = `/resource/rule?language=${ language }` )= i18n[ language ].route.resource.rule
             li.dropdown__item.item
@@ -318,6 +215,7 @@ mixin header()
               a.item__link( href = `/resource/alumni?language=${ language }` )= i18n[ language ].route.resource.alumni
 
       //- Login, currently not available
+      //- Small screen version
       a.navigation__login.login( href = `/login?language=${ language }` )
         +image( {
           alt: i18n[ language ].util.login,
@@ -327,6 +225,7 @@ mixin header()
         span.login__text= i18n[ language ].util.login
 
       //- Calendar, currently not available
+      //- Small screen version
       a.navigation__calendar.calendar( href = `/calendar?language=${ language }` )
         +image( {
           alt: i18n[ language ].util.calendar,
@@ -336,19 +235,13 @@ mixin header()
         span.calnedar__text= i18n[ language ].util.calendar
 
       //- Language Choice
+      //- Small screen version
       section.navigation__language.language
-        if language === 'zh-TW'
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'language__image',
-            src: 'icon/flag-zh-TW.png',
-          } )
-        else if language === 'en-US'
-          +image( {
-            alt: i18n[ language ].util.language,
-            className: 'language__image',
-            src: 'icon/flag-en-US.png',
-          } )
+        +image( {
+          alt: i18n[ language ].util.language,
+          className: 'language__image',
+          src: `icon/flag-${ language }.png`,
+        } )
         h3.language__text= i18n[ language ].util.language
         button.language__switch.switch
           span.switch__icon
@@ -375,3 +268,46 @@ mixin header()
                 span.link__text.link__text--active USA
               else
                 span.link__text USA
+
+    //- Calendar, currently not available
+    //- Large screen version
+    a.header__calendar.calender( href = `/calendar?language=${ language }` )
+      +image( {
+        alt: i18n[ language ].util.calendar,
+        className: 'calendar__image',
+        src: 'icon/calendar.png',
+      } )
+
+    //- Language Choice
+    //- Large screen version
+    section.header__language.language
+      button.language__button.button
+        +image( {
+          alt: i18n[ language ].util.language,
+          className: 'button__image',
+          src: `icon/flag-${ language }.png`,
+        } )
+      ul.language__dropdown.dropdown
+        li.dropdown__item.dropdown__item--zh-TW.item
+          a.item__link( href = '?language=zh-TW' ) 中文
+        li.dropdown__item.dropdown__item--en-US.item
+          a.item__link( href = '?language=en-US' ) English
+
+    //- Login, currently not available
+    //- Large screen version
+    a.header__login( href = `/login?language=${ language }` )= i18n[ language ].route.home.login
+
+    //- Search, currently not available
+    //- Large screen version
+    scetion.header__search.search
+      button.search__button.button
+        +image( {
+          alt: i18n[ language ].util.search,
+          className: 'button__image',
+          src: 'icon/search.png',
+        } )
+      section.search__dropdown.dropdown
+        form.dropdown__form.form( action = '/search', method = 'GET' )
+          input.form__input( type = 'text', placeholder = i18n[ language ].util.search )
+          input.form__submit( type = 'submit', value = ''  )
+        button.dropdown__cancel ✕
