@@ -131,7 +131,12 @@ mixin header()
       //- Small screen version
       form.navigation__search.search( action = '/search', method = 'GET' )
         input.search__input( type = 'text', placeholder = i18n[ language ].util.search )
-        input.search__submit( type = 'submit', value = ' ' )
+        button.search__submit.submit
+          +image( {
+            alt: i18n[ language ].util.search,
+            className: 'submit__image',
+            src: 'icon/search.png',
+          } )
 
       //- Cancel Icon
       button.navigation__cancel ✕
@@ -144,7 +149,7 @@ mixin header()
           a.item__link( href = `/about?language=${ language }` )= i18n[ language ].route.about.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.item__dropdown--about.dropdown
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = `/about/intro?language=${ language }` )= i18n[ language ].route.about.intro
             li.dropdown__item.item
@@ -159,7 +164,7 @@ mixin header()
           a.item__link( href = `/research?language=${ language }` )= i18n[ language ].route.research.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.item__dropdown--research.dropdown
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = `/research/labs?language=${ language }` )= i18n[ language ].route.research.labs
             li.dropdown__item.item
@@ -170,7 +175,7 @@ mixin header()
           a.item__link( href = `/student?language=${ language }` )= i18n[ language ].route.student.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.item__dropdown--student.dropdown
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = `/student/course?language=${ language }` )= i18n[ language ].route.student.course
             li.dropdown__item.item
@@ -189,7 +194,7 @@ mixin header()
           a.item__link( href = `/announcement?language=${ language }` )= i18n[ language ].route.announcement.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.item__dropdown--announcement.dropdown
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = `/announcement/all?language=${ language }` )= i18n[ language ].route.announcement.all
             li.dropdown__item.item
@@ -200,7 +205,7 @@ mixin header()
           a.item__link( href = `/resource?language=${ language }` )= i18n[ language ].route.resource.index
           button.item__switch.switch
             span.switch__icon
-          ul.item__dropdown.item__dropdown--resource.dropdown
+          ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = `/resource/rule?language=${ language }` )= i18n[ language ].route.resource.rule
             li.dropdown__item.item

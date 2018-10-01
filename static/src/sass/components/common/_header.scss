@@ -428,6 +428,7 @@ body > .header {
         &.search__dropdown--active {
           // [ layout ]
           display: flex;
+          align-items: center;
         }
 
         // element
@@ -437,6 +438,7 @@ body > .header {
         > .dropdown__form.form {
           // [ layout ]
           display: flex;
+          align-items: center;
 
           // [ skin ]
           height: 100%;
@@ -476,7 +478,7 @@ body > .header {
             // [ skin ]
             cursor: pointer;
             width: 2%;
-            height: auto;
+            height: 30%;
 
             // [ icon ]
             @include icon__search ();
@@ -490,7 +492,7 @@ body > .header {
           margin-left: 2%;
 
           // [ skin ]
-          height: 100%;
+          height: 30%;
           background-color: #ffffff;
           cursor: pointer;
           font-size: 1.3rem;
@@ -638,20 +640,25 @@ body > .header {
 
       > .search__submit {
         grid-area: search__submit;
-        background: {
-          position: center;
-          repeat: no-repeat;
-          size: contain;
-          color: inherit;
+        display: flex;
+        align: {
+          items: center;
+          self: center;
         }
-        filter:
-          invert(100%)
-          sepia(0%)
-          saturate(1%)
-          hue-rotate(49deg)
-          brightness(101%)
-          contrast(101%);
-        @include icon__search();
+        background-color: inherit;
+        width: .38rem;
+        height: .38rem;
+
+        > .submit__image {
+          width: .38rem;
+          filter:
+            invert(100%)
+            sepia(0%)
+            saturate(1%)
+            hue-rotate(49deg)
+            brightness(101%)
+            contrast(101%);
+        }
       }
     }
 
@@ -676,9 +683,8 @@ body > .header {
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
         @media screen and ( min-width: $xxx-large ) {
           display: inline-block;
-          position: relative;
           width: calc( 100% / 6 );
-          height: 2.47rem;
+          height: 1.69rem;
           margin-top: 2.13rem;
 
           &:hover {
@@ -783,9 +789,8 @@ body > .header {
           @media screen and ( min-width: $xxx-large ) {
             // [ layout ]
             display: none;
-            position: relative;
-            top: .78rem;
-            left: -38.9vw;
+            position: absolute;
+            left: 0;
             align-content: center;
             justify-content: center;
 
@@ -797,39 +802,6 @@ body > .header {
             opacity: 100;
             overflow: unset;
             max-height: none;
-
-            &.item__dropdown--about {
-              // [ layout ]
-              left: calc( -38.9vw - 100% );
-            }
-
-            // modifier
-            // `body > .header > .menus > .list > .item > .link > .link__dropdown > .link__dropdown--research`
-            &.item__dropdown--research {
-              // [ layout ]
-              left: calc( -38.9vw - 200% );
-            }
-
-            // modifier
-            // `body > .header > .menus > .list > .item > .link > .link__dropdown > .link__dropdown--student`
-            &.item__dropdown--student {
-              // [ layout ]
-              left: calc( -38.9vw - 300% );
-            }
-
-            // modifier
-            // `body > .header > .menus > .list > .item > .link > .link__dropdown > .link__dropdown--announcement`
-            &.item__dropdown--announcement {
-              // [ layout ]
-              left: calc( -38.9vw - 400% );
-            }
-
-            // modifier
-            // `body > .header > .menus > .list > .item > .link > .link__dropdown > .link__dropdown--resource`
-            &.item__dropdown--resource {
-              // [ layout ]
-              left: calc( -38.9vw - 500% );
-            }
           }
 
           > .dropdown__item.item {
