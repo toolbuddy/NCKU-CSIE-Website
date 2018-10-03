@@ -1,0 +1,12 @@
+mixin time_selector()
+  -
+    let hour = 0;
+    let minute = 0;
+  article.input__time
+    input( type = 'date', name = 'publishDate', class = 'input__time--date' )
+    select.input__time--hour
+      while hour < 24
+        option( value = hour )= ( hour++ ).toString().padStart( 2, '0' )
+    select.input__time--minute
+      while minute < 60
+        option( value = minute )= ( minute++ ).toString().padStart( 2, '0' )

@@ -1,0 +1,49 @@
+mixin filter__tags( tags )
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'tags': {
+          'tags':          'tags',
+          'all':           'all',
+          'award':         'award',
+          'college':       'college',
+          'competition':   'competition',
+          'conference':    'conference',
+          'course':        'course',
+          'exhibition':    'exhibition',
+          'faculty':       'faculty',
+          'international': 'international',
+          'internship':    'internship',
+          'master':        'master',
+          'phd':           'phd',
+          'recruitment':   'recruitment',
+          'rule':          'rule',
+          'scholarship':   'scholarship',
+          'speech':        'speech',
+        },
+      },
+      'zh-TW': {
+        'tags': {
+          'tags':          '標籤',
+          'all':           '全部',
+          'award':         '榮譽',
+          'college':       '大學部',
+          'competition':   '競賽',
+          'conference':    '研討會',
+          'course':        '課程',
+          'exhibition':    '展覽',
+          'faculty':       '教職人員',
+          'international': '國際交流',
+          'internship':    '實習',
+          'master':        '碩士',
+          'phd':           '博士',
+          'recruitment':   '徵人',
+          'rule':          '法規彙編',
+          'scholarship':   '獎學金',
+          'speech':        '演講',
+        },
+      },
+    } );
+  article#filter__tags.filter__tags.filter__tags--hidden.tags
+    each tag in tags
+      button( id=`tags__tag--${ tag }`, class=`tags__tag--${ tag } tags__tag` )= i18n[ language ].tags[ tag ]

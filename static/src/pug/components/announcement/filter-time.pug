@@ -1,0 +1,23 @@
+mixin filter__time()
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'time':   {
+          'start': 'Start Date',
+          'end':   'End Date',
+        },
+      },
+      'zh-TW': {
+        'time':   {
+          'start': '開始日期',
+          'end':   '結束日期',
+        },
+      },
+    } );
+  article#filter__time.filter__time.filter__time--hidden.time
+    aside
+      label= i18n[ language ].time.start
+      input#startTime.time__date( type='date' )
+    aside
+      label= i18n[ language ].time.end
+      input#endTime.time__date( type='date' )

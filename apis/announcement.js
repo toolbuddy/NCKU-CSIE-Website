@@ -12,6 +12,7 @@ const getPinnedAnnouncementsByTags = require( path.join( opRoot, 'get-pinned-ann
 const getAllPages = require( path.join( opRoot, 'get-all-pages' ) );
 const getPagesByTags = require( path.join( opRoot, 'get-pages-by-tags' ) );
 const getAnnouncement = require( path.join( opRoot, 'get-announcement' ) );
+const getAnnouncementAllLanguages = require( path.join( opRoot, 'get-announcement-all-languages' ) );
 
 const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
 const postAnnouncementTags = require( path.resolve( opRoot, 'post-announcementTags' ) );
@@ -161,6 +162,16 @@ apis.get( /^\/tags-pinned$/, async ( req, res ) => {
     else
         /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
+} );
+
+apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
+    try {
+        res.json( await getAnnouncementAllLanguages( { announcementId: req.params[ 0 ], } ) );
+    }
+    catch ( e ) {
+        /* eslint no-magic-numbers: 'off' */
+        res.status( 404 ).end();
+    }
 } );
 
 apis.get( /^\/(\d+)$/, async ( req, res ) => {

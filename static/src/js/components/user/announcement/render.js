@@ -1,7 +1,18 @@
-export function fillData ( data, language ) {
-    document.getElementById( 'input__title' ).value = data[ language ].title;
-    document.getElementById( 'input__content' ).value = data[ language ].content;
-    data.tags.forEach( ( tag ) => {
-        document.getElementById( `input__tag--${ tag }` ).checked = true;
+export function changeEditorLanguage ( editors, language ) {
+    Array.from( editors ).forEach( ( editor ) => {
+        if ( editor.classList.contains( `editor__editor--${ language }` ) )
+            editor.style.display = 'block';
+        else
+            editor.style.display = 'none';
     } );
+}
+
+export function flipTag ( tag ) {
+    if ( !tag.classList.contains( 'tags__tag--active' ) ) {
+        tag.classList.add( 'tags__tag--active' );
+        return true;
+    }
+
+    tag.classList.remove( 'tags__tag--active' );
+    return false;
 }
