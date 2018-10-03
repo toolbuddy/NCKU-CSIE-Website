@@ -4,16 +4,7 @@
 // `body > .header`
 body > .header {
   // [ variable ]
-  $xxxx-small: 380px;
-  $xxx-small: 480px;
-  $xx-small: 560px;
-  $x-small: 640px;
-  $small: 720px;
-  $medium: 800px;
-  $large: 880px;
-  $x-large: 960px;
-  $xx-large: 1040px;
-  $xxx-large: 1120px;
+  $large: 1120px;
   $header-height: 3.2rem;
 
   // [ layout ]
@@ -28,17 +19,15 @@ body > .header {
   height: $header-height;
   background: rgba( 255, 255, 255, .95 );
 
-  // [ RWD: $xxx-large ]
-  @media screen and ( min-width: $xxx-large ) {
+  // [ RWD: $large ]
+  @media screen and ( min-width: $large ) {
     // [ layout ]
-    grid: {
-      template: {
-        areas:
-          'header__logo header__menu header__calender header__language'
-          'header__logo header__menu header__login header__search';
-        columns: 38.9vw 42.31vw 13.19vw 5.59vw;
-        rows: 2.63rem 1.97rem;
-      }
+    grid-template: {
+      areas:
+        'header__logo header__menu header__calender header__language'
+        'header__logo header__menu header__login header__search';
+      columns: 38.9vw 42.31vw 13.19vw 5.59vw;
+      rows: 2.63rem 1.97rem;
     }
 
     // [ skin ]
@@ -62,8 +51,8 @@ body > .header {
     // [ skin ]
     height: $header-height;
 
-    // [ RWD: $xxx-large ]
-    @media screen and ( min-width: $xxx-large ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       justify-content: flex-start;
       padding: {
@@ -137,7 +126,7 @@ body > .header {
   > .header__menu {
     grid-area: header__menu;
     background-color: rgba( 0, 0, 0, 0 );
-    @media screen and ( min-width: $xxx-large ) {
+    @media screen and ( min-width: $large ) {
       display: none;
     }
   }
@@ -150,8 +139,8 @@ body > .header {
     // [ layout ]
     display: none;
 
-    // [ RWD: $xxx-large ]
-    @media screen and ( min-width: $xxx-large ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: flex;
       grid-area: header__calender;
@@ -180,14 +169,16 @@ body > .header {
     // [ layout ]
     display: none;
 
-    // [ RWD: $xxx-large ]
-    @media screen and ( min-width: $xxx-large ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: inline-block;
       flex-direction: row;
       grid-area: header__language;
-      margin-left: .75rem;
-      margin-top: .75rem;
+      margin: {
+        top: .75rem;
+        left: .75rem;
+      }
 
       // [ skin ]
       height: .75rem;
@@ -235,9 +226,9 @@ body > .header {
         height: 2.56rem;
         width: 3.88rem;
         background-color: #1a284d;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+        box-shadow: 0 1px 2px 0 rgba( 0, 0, 0, .25 );
 
-        //modifier
+        // modifier
         // `body > .header > .language > .language__dropdown > .language__dropdown--active`
         &.language__dropdown--active {
           // [ layout ]
@@ -307,8 +298,8 @@ body > .header {
     // [ layout ]
     display: none;
 
-    // [ RWD: $xxx-large ]
-    @media screen and ( min-width: $xxx-large ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: flex;
       grid-area: header__login;
@@ -325,7 +316,7 @@ body > .header {
       width: 105px;
       height: 36px;
       background-color: #213262;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .12);
+      box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, .24 ), 0 0 2px 0 rgba( 0, 0, 0, .12 );
       font: {
         size: 14px;
         weight: 500;
@@ -350,12 +341,12 @@ body > .header {
         width: .66rem;
         height: .66rem;
         filter:
-          invert(100%)
-          sepia(0%)
-          saturate(1%)
-          hue-rotate(49deg)
-          brightness(101%)
-          contrast(101%);
+          invert( 100% )
+          sepia( 0% )
+          saturate( 1% )
+          hue-rotate( 49deg )
+          brightness( 101% )
+          contrast( 101% );
 
         // [ icon ]
         @include icon__user();
@@ -371,8 +362,8 @@ body > .header {
     // [ layout ]
     display: none;
 
-    // [ RWD: $xxx-large ]
-    @media screen and ( min-width: $xxx-large ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: inline-block;
       flex-direction: row;
@@ -508,7 +499,7 @@ body > .header {
   > .header__nav.nav {
     display: none;
     background-color: #213262;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+    box-shadow: 0 1px 2px 0 rgba( 0, 0, 0, .25 );
     grid-area: header__nav;
 
     &:hover {
@@ -530,17 +521,19 @@ body > .header {
     }
     position: fixed;
     top: 0;
-    left: 100%;
+    right: -10rem;
     height: 100%;
-    width: 100%;
+    width: 10rem;
     z-index: 1;
-    transition: left .5s;
+    transition: right .5s;
     overflow-y: auto;
     background-color: #213262;
 
     &.header__navigation--active {
-      left: 0;
+      right: 0;
     }
+
+    /*
     @media screen and ( min-width: $xxx-small ) {
       width: 80%;
 
@@ -596,8 +589,8 @@ body > .header {
       &.header__navigation--active {
         left: 55%;
       }
-    }
-    @media screen and ( min-width: $xxx-large ) {
+    }*/
+    @media screen and ( min-width: $large ) {
       grid-area: header__menu;
       display: block;
       position: unset;
@@ -623,7 +616,7 @@ body > .header {
         left: .56rem;
         bottom: .37rem;
       }
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: none;
       }
 
@@ -652,12 +645,12 @@ body > .header {
         > .submit__image {
           width: .38rem;
           filter:
-            invert(100%)
-            sepia(0%)
-            saturate(1%)
-            hue-rotate(49deg)
-            brightness(101%)
-            contrast(101%);
+            invert( 100% )
+            sepia( 0% )
+            saturate( 1% )
+            hue-rotate( 49deg )
+            brightness( 101% )
+            contrast( 101% );
         }
       }
     }
@@ -666,14 +659,14 @@ body > .header {
       grid-area: navigation__cancel;
       background-color: inherit;
       color: #ffffff;
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: none;
       }
     }
 
     > .navigation__list.list {
       grid-area: navigation__list;
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: flex;
         height: 4.6rem;
       }
@@ -681,30 +674,22 @@ body > .header {
       > .list__item.item {
         $item-height: 1.56rem;
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
-        @media screen and ( min-width: $xxx-large ) {
+        @media screen and ( min-width: $large ) {
           display: inline-block;
           width: calc( 100% / 6 );
-          height: 1.69rem;
           margin-top: 2.13rem;
 
           &:hover {
             > .item__dropdown.dropdown {
-              display: flex;
+              visibility: visible;
+              opacity: 1;
             }
 
             > .item__link {
-              background-color: rgba(196, 196, 196, .3);
+              background-color: rgba( 196, 196, 196, .3 );
             }
           }
         }
-
-        /*grid-template: {
-          areas:
-            'item__link     item__switch'
-            'item__dropdown item__dropdown';
-          columns: 1fr 3fr;
-          rows: $item-height auto;
-        }*/
 
         &:first-of-type {
           grid-template: {
@@ -715,7 +700,7 @@ body > .header {
         }
 
         > .item__link {
-          //grid-area: item__link;
+          // grid-area: item__link;
           color: rgba( 255, 255, 255, .5 );
           font-size: .5rem;
           height: $item-height;
@@ -724,7 +709,7 @@ body > .header {
             top: .4rem;
           }
           display: inline-block;
-          @media screen and ( min-width: $xxx-large ) {
+          @media screen and ( min-width: $large ) {
             // [ layout ]
             display: flex;
             margin: 0;
@@ -743,15 +728,12 @@ body > .header {
         }
 
         > .item__switch.switch {
-          //grid-area: item__switch;
+          // grid-area: item__switch;
           background-color: transparent;
           display: inline-block;
           height: $item-height;
           padding-left: 60%;
-          @media screen and ( min-width: $medium ) {
-            padding-left: 70%;
-          }
-          @media screen and ( min-width: $xxx-large ) {
+          @media screen and ( min-width: $large ) {
             display: none;
           }
 
@@ -782,24 +764,27 @@ body > .header {
           color: rgba( 255, 255, 255, .5 );
           font-size: .5rem;
           display: block;
-          opacity: 0;
           max-height: 0;
           overflow: hidden;
           transition: all .5s;
-          @media screen and ( min-width: $xxx-large ) {
+          @media screen and ( min-width: $large ) {
             // [ layout ]
-            display: none;
+            display: flex;
             position: absolute;
+            transition: all 1s;
             left: 0;
+            top: 4.59rem;
             align-content: center;
             justify-content: center;
+            transition: visibility .3s, opacity .3s linear;
+            visibility: hidden;
 
             // [ skin ]
             background-color: #213262;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+            box-shadow: 0 1px 2px 0 rgba( 0, 0, 0, .25 );
             width: 100vw;
             height: 2.53rem;
-            opacity: 100;
+            opacity: 0;
             overflow: unset;
             max-height: none;
           }
@@ -811,7 +796,9 @@ body > .header {
               top: .78rem;
               left: .93rem;
             }
-            @media screen and ( min-width: $xxx-large ) {
+            @media screen and ( min-width: $large ) {
+              display: flex;
+              align-items: center;
               width: 3.59rem;
               padding: 0;
               margin: 0;
@@ -836,11 +823,10 @@ body > .header {
               display: flex;
               justify-content: center;
               align-items: center;
-              margin-top: .44rem;
 
               // [ skin ]
-              height: 1.69rem;
               width: 100%;
+              height: 1.69rem;
               font-size: .5rem;
               line-height: 1.5;
               letter-spacing: normal;
@@ -870,7 +856,7 @@ body > .header {
         top: .4rem;
       }
       border-top: .01rem solid rgba( 255, 255, 255, .5 );
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: none;
       }
 
@@ -893,7 +879,7 @@ body > .header {
         top: .4rem;
       }
       border-top: .01rem solid rgba( 255, 255, 255, .5 );
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: none;
       }
 
@@ -921,7 +907,7 @@ body > .header {
       display: grid;
       background-color: inherit;
       border-top: .01rem solid rgba( 255, 255, 255, .5 );
-      @media screen and ( min-width: $xxx-large ) {
+      @media screen and ( min-width: $large ) {
         display: none;
       }
 
@@ -952,6 +938,7 @@ body > .header {
         background-color: inherit;
         height: 1.56rem;
         border-top: .01rem solid rgba( 255, 255, 255, .5 );
+        width: 6rem;
 
         > .switch__icon {
           border: {
@@ -965,13 +952,7 @@ body > .header {
           width: .44rem;
           height: .44rem;
           display: inline-block;
-          margin-left: 40%;
-          @media screen and ( min-width: $xxxx-small ) {
-            margin-left: 45%;
-          }
-          @media screen and ( min-width: $medium ) {
-            margin-left: 72%;
-          }
+          margin-left: 71%;
         }
 
         &.language__switch--active {
@@ -1022,15 +1003,4 @@ body > .header {
       }
     }
   }
-
-  /*
-  @media screen and ( min-width: $xxx-large ) {
-    > .header__navigation.navigation {
-      width: 40%;
-
-      &.header__navigation--active {
-        left: 60%;
-      }
-    }
-  }*/
 }

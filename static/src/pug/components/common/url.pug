@@ -1,0 +1,11 @@
+-
+  function url( { link = '', query = null } = {} ) {
+    if ( !query )
+      return `${ link }?language=${ language }`
+    const queryStr = Reflect.ownKeys( query )
+      .map( key => `${ key }=${ query[ key ] }` )
+      .join( '&' );
+    if( query.language )
+      return `${ link }?${ queryStr }`;
+    return `${ link }?${ queryStr }&language=${ language }`;
+  }

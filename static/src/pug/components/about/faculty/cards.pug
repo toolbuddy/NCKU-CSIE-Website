@@ -73,11 +73,11 @@ mixin cards__card( profile = {} )
         each lab in profile.labs
           aside.intro__lab.lab
             span.lab__text.text= `${ i18n[ language ].lab }: `
-              a.text__link( href = lab.labWeb )= `${ lab.name }`
+              a.text__link( href = url( { link : lab.labWeb } ) )= `${ lab.name }`
 
       //- Faculty's detail information link.
       p.intro__more
-        a( href = `/about/faculty/${ profile.profileId }?language=${ language }` )= i18n[ language ].more
+        a( href = url( { link : `/about/faculty/${ profile.profileId }` } ) )= i18n[ language ].more
 
 //- main
     Construct all faculty information with `cards__card`.

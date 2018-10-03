@@ -32,7 +32,7 @@ mixin footer()
     section.footer__contact.contact
       h1.contact__title= i18n[ language ].contact.title
       address.contact__address.address= `${ i18n[ language ].contact.address }｜`
-        a.address__map( href = '/about' )= i18n[ language ].contact.position
+        a.address__map( href = url( { link : '/about' } ) )= i18n[ language ].contact.position
       a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
       a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
     section.footer__copyright.copyright
