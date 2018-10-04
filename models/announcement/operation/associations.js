@@ -1,8 +1,9 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const connect = require( path.join( projectRoot, 'settings/database/connect' ) );
+import path from 'path';
+import connect from 'settings/database/connect.js';
 
-module.exports = async () => {
+const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+
+export default async () => {
     const announcementDatabase = await connect( 'announcement' );
     const tablesRoot = path.join( projectRoot, 'models/announcement/tables' );
     const table = {

@@ -1,7 +1,5 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
-const languageSettings = require( `${ projectRoot }/settings/language/config` );
+import associations from 'models/announcement/operation/associations.js';
+import languageSettings from 'settings/language/config.js';
 
 function isLangExist ( data, language ) {
     for ( let i = 0; i < data.length; i++ ) {
@@ -11,7 +9,7 @@ function isLangExist ( data, language ) {
     return false;
 }
 
-module.exports = async ( { announcementFileData, } = {} ) => {
+export default async ( { announcementFileData, } = {} ) => {
     const table = await associations();
 
     languageSettings.support.forEach( ( lang ) => {

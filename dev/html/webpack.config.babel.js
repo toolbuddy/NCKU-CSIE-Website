@@ -1,15 +1,16 @@
-const path = require( 'path' );
+import language from '../../settings/language/config.js';
+import config from '../../settings/server/config.js';
+import path from 'path';
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const language = require( path.join( projectRoot, 'settings/language/config' ) );
 const pugRoot = path.join( projectRoot, 'static/src/pug' );
 const htmlRoot = path.join( projectRoot, 'static/dist/html' );
-const { staticUrl, } = require( path.join( projectRoot, 'settings/server/config' ) );
 const devMode = true;
+const staticUrl = config.staticUrl;
 
 /* Process.env.NODE_ENV !== 'production' */
 
-module.exports = language.support.map( language => ( {
+export default language.support.map( language => ( {
     devtool: devMode ? 'inline-sourcemap' : null,
     mode:    devMode ? 'development' : 'production',
     entry:   {

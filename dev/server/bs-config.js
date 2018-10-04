@@ -1,7 +1,8 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const { port, url, } = require( path.join( projectRoot, 'settings/server/config' ) );
+const port = 3000;
+const url = `http://localhost:${ port }`;
 
 module.exports = {
     ui: {

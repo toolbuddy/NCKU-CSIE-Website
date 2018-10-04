@@ -1,28 +1,26 @@
-const path = require( 'path' );
-const express = require( 'express' );
-const bodyParser = require( 'body-parser' );
+import express from 'express';
+import bodyParser from 'body-parser';
+
+import getAllAnnouncements from 'models/announcement/operation/get-all-announcements.js';
+import getAnnouncementsByTags from 'models/announcement/operation/get-announcements-by-tags.js';
+import getAllPinnedAnnouncements from 'models/announcement/operation/get-all-pinned-announcements.js';
+import getPinnedAnnouncementsByTags from 'models/announcement/operation/get-pinned-announcements-by-tags.js';
+import getAllPages from 'models/announcement/operation/get-all-pages.js';
+import getPagesByTags from 'models/announcement/operation/get-pages-by-tags.js';
+import getAnnouncement from 'models/announcement/operation/get-announcement.js';
+import getAnnouncementAllLanguages from 'models/announcement/operation/get-announcement-all-languages.js';
+
+import postAnnouncement from 'models/announcement/operation/post-announcement.js';
+import postAnnouncementTags from 'models/announcement/operation/post-announcementTags.js';
+import postAnnouncementFile from 'models/announcement/operation/post-announcementFile.js';
+
+import patchAnnouncement from 'models/announcement/operation/patch-announcement.js';
+
+import deleteAnnouncement from 'models/announcement/operation/delete-announcements.js';
+import deleteAnnouncementTags from 'models/announcement/operation/delete-announcementTags.js';
+import deleteAnnouncementFiles from 'models/announcement/operation/delete-announcementFiles.js';
 
 const apis = express.Router();
-const projectRoot = path.dirname( __dirname );
-const opRoot = path.join( projectRoot, 'models/announcement/operation/' );
-const getAllAnnouncements = require( path.join( opRoot, 'get-all-announcements' ) );
-const getAnnouncementsByTags = require( path.join( opRoot, 'get-announcements-by-tags' ) );
-const getAllPinnedAnnouncements = require( path.join( opRoot, 'get-all-pinned-announcements' ) );
-const getPinnedAnnouncementsByTags = require( path.join( opRoot, 'get-pinned-announcements-by-tags' ) );
-const getAllPages = require( path.join( opRoot, 'get-all-pages' ) );
-const getPagesByTags = require( path.join( opRoot, 'get-pages-by-tags' ) );
-const getAnnouncement = require( path.join( opRoot, 'get-announcement' ) );
-const getAnnouncementAllLanguages = require( path.join( opRoot, 'get-announcement-all-languages' ) );
-
-const postAnnouncement = require( path.resolve( opRoot, 'post-announcement' ) );
-const postAnnouncementTags = require( path.resolve( opRoot, 'post-announcementTags' ) );
-const postAnnouncementFile = require( path.resolve( opRoot, 'post-announcementFile' ) );
-
-const patchAnnouncement = require( path.resolve( opRoot, 'patch-announcement' ) );
-
-const deleteAnnouncement = require( path.resolve( opRoot, 'delete-announcements' ) );
-const deleteAnnouncementTags = require( path.resolve( opRoot, 'delete-announcementTags' ) );
-const deleteAnnouncementFiles = require( path.resolve( opRoot, 'delete-announcementFiles' ) );
 
 apis.use( bodyParser.json() );
 
@@ -257,4 +255,4 @@ apis.delete( '/:id/tags', async ( req, res ) => {
     }
 } );
 
-module.exports = apis;
+export default apis;

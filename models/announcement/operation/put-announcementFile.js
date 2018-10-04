@@ -1,8 +1,6 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+import associations from 'models/announcement/operation/associations.js';
 
-module.exports = async ( { language = 'zh-TW', announcementId, fileId, } = {} ) => {
+export default async ( { language = 'zh-TW', announcementId, fileId, } = {} ) => {
     const table = await associations();
 
     const data = await table.announcementFile.findOne( {

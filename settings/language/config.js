@@ -6,4 +6,4 @@ const language = {
     default: 'zh-TW',
 };
 
-module.exports = language;
+export default language;

@@ -1,8 +1,6 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/announcement/operation/associations` );
+import associations from 'models/announcement/operation/associations.js';
 
-module.exports = async ( { language = 'zh-TW', fileId, } = {} ) => {
+export default async ( { language = 'zh-TW', fileId, } = {} ) => {
     const table = await associations();
 
     const rowCount = await table.announcementI18n.destroy( {
