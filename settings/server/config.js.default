@@ -1,11 +1,12 @@
 /**
  * Web server settings
  * @namespace
- * @readonly {string} host      - Web server host address.
- * @readonly {string} protocol  - Whick protocol web server is using, can be either 'http' or 'https'.
- * @readonly {number} port      - Web server port.
- * @readonly {string} url       - Get web server url.
- * @readonly {string} staticUrl - Get static file server url.
+ * @readonly {string} host        - Web server host address.
+ * @readonly {string} protocol    - Whick protocol web server is using, can be either 'http' or 'https'.
+ * @readonly {number} port        - Web server port.
+ * @readonly {number} projectRoot - Project root path.
+ * @readonly {string} url         - Get web server url.
+ * @readonly {string} staticUrl   - Get static file server url.
  */
 
 const config = {};
@@ -19,6 +20,9 @@ Object.defineProperties( config, {
     },
     'port': {
         value: 3000,
+    },
+    'projectRoot': {
+        value: '',
     },
     'url': {
         get () {

@@ -38,6 +38,7 @@
     "bc": "npm run build:css",
     "bh": "npm run build:html",
     "bj": "npm run build:js",
+    "bs": "npm run build:server",
     "bd": "npm run build:database",
     "c": "npm run clean",
     "cc": "npm run clean:css",

@@ -2,17 +2,13 @@ import language from '../../settings/language/config.js';
 import config from '../../settings/server/config.js';
 import path from 'path';
 
-const projectRoot = path.dirname( path.dirname( __dirname ) );
-const pugRoot = path.join( projectRoot, 'static/src/pug' );
-const htmlRoot = path.join( projectRoot, 'static/dist/html' );
-const devMode = true;
+const pugRoot = path.join( config.projectRoot, 'static/src/pug' );
+const htmlRoot = path.join( config.projectRoot, 'static/dist/html' );
 const staticUrl = config.staticUrl;
 
-/* Process.env.NODE_ENV !== 'production' */
-
 export default language.support.map( language => ( {
-    devtool: devMode ? 'inline-sourcemap' : null,
-    mode:    devMode ? 'development' : 'production',
+    devtool: 'inline-sourcemap',
+    mode:    'development',
     entry:   {
         // Route `about`
         'about/award':          path.join( pugRoot, 'about/award.pug' ),
@@ -77,7 +73,7 @@ export default language.support.map( language => ( {
                     {
                         loader:  'file-loader',
                         options: {
-                            name(file){
+                            name( file ) {
                                 return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
                             },
                         },
@@ -86,7 +82,7 @@ export default language.support.map( language => ( {
                     {
                         loader: 'html-loader',
                         options: {
-                            root: projectRoot,
+                            root: config.projectRoot,
                         },
                     },
                     {

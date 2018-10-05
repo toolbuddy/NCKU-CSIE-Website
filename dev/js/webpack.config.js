@@ -4,11 +4,10 @@ const projectRoot = path.dirname( path.dirname( __dirname ) );
 const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
 const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
 const staticRoot = path.join( projectRoot, 'static' );
-const devMode = true;
 
 module.exports = {
-    devtool: devMode ? 'inline-sourcemap' : null,
-    mode:    devMode ? 'development' : 'production',
+    devtool: 'inline-sourcemap',
+    mode:    'development',
     entry:   {
         // Route `about`
         'about/award':          path.join( jsSrcRoot, 'about/award.js' ),

@@ -1,11 +1,10 @@
 import path from 'path';
+import config from 'settings/server/config.js';
 import connect from 'settings/database/connect.js';
-
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
 
 export default async () => {
     const announcementDatabase = await connect( 'announcement' );
-    const tablesRoot = path.join( projectRoot, 'models/announcement/tables' );
+    const tablesRoot = path.join( config.projectRoot, 'models/announcement/tables' );
     const table = {
         announcementFileI18n: announcementDatabase.import( path.join( tablesRoot, 'announcement_file_i18n' ) ),
         announcementFile:     announcementDatabase.import( path.join( tablesRoot, 'announcement_file' ) ),

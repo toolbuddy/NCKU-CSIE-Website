@@ -1,15 +1,14 @@
 const path = require( 'path' );
 
-// To exclude non-native node module
+// Exclude non-native node module
 const nodeExternals = require( 'webpack-node-externals' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const devMode = true;
 
 module.exports = function () {
     return ( {
-        devtool: devMode ? 'inline-sourcemap' : null,
-        mode:    devMode ? 'development' : 'production',
+        devtool: 'inline-sourcemap',
+        mode:    'development',
 
         // To get async-await function work
         entry:   [
@@ -22,11 +21,11 @@ module.exports = function () {
         },
         target:    'node',
         node:      {
-            __dirname: true,
+            __dirname:  true,
+            __filename: true,
         },
         externals: [ nodeExternals(), ],
-
-        resolve: {
+        resolve:   {
             alias: {
                 apis:     path.join( projectRoot, 'apis' ),
                 dev:      path.join( projectRoot, 'dev' ),

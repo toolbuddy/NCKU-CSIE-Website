@@ -1,6 +1,7 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+import config from 'settings/server/config.js';
 import connect from 'settings/database/connect.js';
+
+const projectRoot = config.projectRoot;
 
 export default async () => {
     const teacherDatabase = await connect( 'faculty' );
