@@ -1,3 +1,264 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
+
+main.content {
+  height: 691px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+
+  aside {
+    position: absolute;
+    margin-left: 0;
+    margin-top: 0;
+    display: inline-block;
+    height: 691px;
+    width: percentage(403px/1920px);
+    display: inline-block;
+    position: absolute;
+    width: percentage(157px/403px);
+    height: percentage(120px/691px);
+    margin-left: percentage(185px/403px);
+    margin-top: percentage(195px/403px);
+
+    //margin-top: percentage(305px/691px);
+
+    //margin: percentage(195px/403px) auto auto percentage(185px/403px);
+  }
+
+  .line_one {
+    display: inline-block;
+    position: absolute;
+    width: percentage( 252.7px/403px );
+    height: percentage(32px/691px);
+    margin-left: percentage(137px/403px);
+    margin-top: percentage(358px/403px);
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, .87);
+    text-align: center;
+  }
+
+  .line_two {
+    display: inline-block;
+    position: absolute;
+    width: percentage(252.7px/403px);
+    height: percentage(32px/691px);
+    margin-left: percentage(137px/403px);
+    margin-top: percentage(388px/403px);
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, .87);
+    text-align: center;
+
+    //margin-top: percentage(43px/691px);
+  }
+
+  .line_three {
+    display: inline-block;
+    position: absolute;
+    width: percentage(280px/403px);
+    height: percentage(24px/691px);
+    margin-left: percentage(123px/403px);
+    margin-top: percentage(425px/403px);
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, .87);
+    text-align: center;
+
+    //margin-top: percentage(43px/691px);
+  }
+
+  .line_four {
+    display: inline-block;
+    position: absolute;
+    width: percentage(280px/0403px);
+    height: percentage(24px/691px);
+    margin-left: percentage(123px/403px);
+    margin-top: percentage(445px/403px);
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, .87);
+    text-align: center;
+    
+  }
+  
+
+  article {
+    header.top_nav section {
+      display: inline-block;
+      width: percentage(218px/1517px);
+      height: percentage(215px/691px);
+      text-align: center;
+      margin-top: percentage(88px/691px);
+      font-size: 24px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #213262;
+    }
+
+    hr {
+      display: block;
+      position: relative;
+      padding: 0;
+      margin: 3% 10px;
+      height: 2px;
+      width: 88%;
+      clear: both;
+      border: none;
+      border-top: 1px solid #aaaaaa;
+      border-bottom: 1px solid #aaaaaa;
+    }
+    position: absolute;
+    display: inline-block;
+    
+    section.link {
+      width: 100％;
+      height: 50%;
+      margin-top: 0;
+      display: grid;
+      grid-template-areas:'home intro lab lectureinformation annall resourcelink'
+        '. professor researcher college annactivity .'
+        '. crew researchCenter master anncompany .'
+        '. award . phd . .'
+        '. traffic . scholarship . .'
+        '. . . exchange . .'
+        '. . . company . .';
+
+      //section {
+      //overflow: hidden;
+
+      //a {
+      // color: #000000;
+      //display: grid;
+
+      //display: block;
+      //width: 100%;
+
+      //margin-top: 0;
+      text-align: center;
+      font-size: .8rem;
+
+      .tags__tag--home {
+        grid-area: home;
+      }
+
+      .tags__tag--intro {
+        grid-area: intro;
+      }
+
+      .tags__tag--professor {
+        grid-area: professor;
+      }
+
+      .tags__tag--crew {
+        grid-area: crew;
+      }
+
+      .tags__tag--award {
+        grid-area: award;
+      }
+
+      .tags__tag--traffic {
+        grid-area: traffic;
+      }
+
+      .tags__tag--lab {
+        grid-area: lab;
+      }
+
+      .tags__tag--researcher {
+        grid-area: researcher;
+      }
+
+      .tags__tag--center {
+        grid-area: researchCenter;
+      }
+
+      .tags__tag--lectureinformation {
+        grid-area: lectureinformation;
+      }
+
+      .tags__tag--college {
+        grid-area: college;
+      }
+
+      .tags__tag--master {
+        grid-area: master;
+      }
+
+      .tags__tag--phd {
+        grid-area: phd;
+      }
+
+      .tags__tag--scholarship {
+        grid-area: scholarship;
+      }
+
+      .tags__tag--exchange {
+        grid-area: exchange;
+      }
+
+      .tags__tag--company {
+        grid-area: company;
+      }
+
+      .tags__tag--announce--all {
+        grid-area: annall;
+      }
+
+      .tags__tag--announce--activity {
+        grid-area: annactivity;
+      }
+
+      .tags__tag--announce--company {
+        grid-area: anncompany;
+      }
+
+      .tags__tag--resourcelink {
+        grid-area: resourcelink;
+      }
+
+      //}
+        
+      /*display: inline-block;
+        position: relative;*/
+      //width: percentage(218px/1517px);
+      //height: 70%;
+      //text-align: center;
+
+      /*font-size: 18px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;*/
+        
+      //}
+      
+    }
+    margin-left: percentage(1517px/1920px);
+    right: 0;
+    height: 691px;
+    width: percentage(1517px/1920px);
+  }
+}
