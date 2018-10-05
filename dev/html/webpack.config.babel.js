@@ -72,15 +72,17 @@ export default language.support.map( language => ( {
                     {
                         loader:  'file-loader',
                         options: {
-                            name( file ) {
+                            name ( file ) {
                                 return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
                             },
                         },
                     },
                     'extract-loader',
                     {
-                        loader: 'html-loader',
+                        loader:  'html-loader',
                         options: {
+                            // Convert root path `/` into `config.projectRoot`.
+                            // Mainly used by `static/src/pug/components/common/image.pug`.
                             root: config.projectRoot,
                         },
                     },

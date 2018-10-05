@@ -1,12 +1,12 @@
 /**
  * Database settings.
- * @namespace
- * @readonly {string} username   - Database server user account.
- * @readonly {string} password   - Database server user password.
- * @readonly {string} domainName - Database server host address.
- * @readonly {number} port       - Database server port.
- * @readonly {string} protocol   - Which database server is used.
- * @readonly {string} host       - Get database server url.
+ *
+ * @readonly {string} username         - Database server user account.
+ * @readonly {string} password         - Database server user password.
+ * @readonly {string} domainName       - Database server domain name/IP.
+ * @readonly {number} port             - Database server port.
+ * @readonly {string} protocol         - Database server protocol.
+ * @readonly {string} connectionString - Database server connection string.
  */
 
 const config = {};
@@ -27,16 +27,11 @@ Object.defineProperties( config, {
     'protocol': {
         value: 'mysql',
     },
-    'host': {
+    'connectionString': {
         value ( databaseName ) {
             return `${ this.protocol }://${ this.username }:${ this.password }@${ this.domainName }:${ this.port }/${ databaseName }`;
         },
     },
-    'projectRoot': {
-        get: function get () {
-            return '';
-        },
-    },
 } );
 
-export default config;
+module.exports = config;

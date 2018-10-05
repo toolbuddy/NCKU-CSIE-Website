@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import config from './config.js';
+import config from 'settings/database/config.js';
 
 export default async ( databaseName, debug = false ) => {
     const database = new Sequelize(
@@ -10,7 +10,6 @@ export default async ( databaseName, debug = false ) => {
             host:             config.domainName,
             dialect:          config.protocol,
             operatorsAliases: false,
-            pool:             config.pool,
             logging:          debug,
             dialectOptions:   {
                 useUTC:   false,

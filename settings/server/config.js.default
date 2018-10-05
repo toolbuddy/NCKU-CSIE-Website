@@ -1,11 +1,12 @@
 /**
- * Web server settings
- * @namespace
- * @readonly {string} domainName - Web server host address.
- * @readonly {string} protocol   - Whick protocol web server is using, can be either 'http' or 'https'.
- * @readonly {number} port       - Web server port.
- * @readonly {string} host       - Get web server url.
- * @readonly {string} staticHost - Get static file server url.
+ * Web server settings.
+ *
+ * @readonly {string} domainName  - Web server domain name/IP.
+ * @readonly {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @readonly {number} port        - Web server port.
+ * @readonly {string} projectRoot - The project root path.
+ * @readonly {string} host        - Web server host.
+ * @readonly {string} staticHost  - Static file server host.
  */
 
 const config = {};
@@ -20,19 +21,21 @@ Object.defineProperties( config, {
     'port': {
         value: 3000,
     },
+    'projectRoot': {
+        value: '',
+    },
     'host': {
-        get: function get () {
-            return ''.concat( config.protocol, '://' ).concat( config.domainName ).concat( config.port === '80' || config.port === '443' ? '' : ':'.concat( config.port ) );
+       get () {
+            return `${ config.protocol }://${ config.domainName }${
+                config.port === '80' || config.port === '443' ?
+                    '' :
+                    `:${ config.port }`
+            }`;
         },
     },
     'staticHost': {
-        get: function get () {
+        get () {
             return config.host;
-        },
-    },
-    'projectRoot': {
-        get: function get () {
-            return '';
         },
     },
 } );

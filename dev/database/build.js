@@ -1,7 +1,7 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const dbConfig = require( path.join( projectRoot, 'settings/database/config' ) );
+const config = require( path.join( projectRoot, 'settings/database/config' ) );
 const generateTables = require( path.join( projectRoot, 'dev/database/gen-tables' ) );
 
 /**
@@ -9,5 +9,5 @@ const generateTables = require( path.join( projectRoot, 'dev/database/gen-tables
  *     Auto generate database table files.
  */
 
-generateTables( 'faculty', dbConfig );
-generateTables( 'announcement', dbConfig );
+generateTables( 'faculty', config );
+generateTables( 'announcement', config );

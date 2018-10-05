@@ -12,6 +12,7 @@ server.listen( config.port );
 // Set static files routes.
 server.use( '/css', express.static( `${ config.projectRoot }/static/dist/css` ) );
 server.use( '/js', express.static( `${ config.projectRoot }/static/dist/js` ) );
+server.use( '/image', express.static( `${ config.projectRoot }/static/src/image` ) );
 
 // Set language option.
 server.use( language );
