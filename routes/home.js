@@ -7,8 +7,6 @@ const projectRoot = config.projectRoot;
 
 // Resolve URL `/`
 router.get( /^\/$/, ( req, res ) => {
-    /* eslint no-console: 0 */
-    console.log();
     res.sendFile( `${ projectRoot }/static/dist/html/home/index.${ req.query.language }.html` );
 } );
 
