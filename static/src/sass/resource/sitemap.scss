@@ -6,117 +6,138 @@ main.content {
   height: 691px;
   background-color: #ffffff;
   box-sizing: border-box;
+  display: grid;
+  grid-template-areas: 'maplogo maplink maplink maplink maplink';
 
   aside {
-    position: absolute;
+    grid-area: maplogo;
+
+    //position: absolute;
     margin-left: 0;
     margin-top: 0;
-    display: inline-block;
-    height: 691px;
-    width: percentage(403px/1920px);
-    display: inline-block;
-    position: absolute;
-    width: percentage(157px/403px);
-    height: percentage(120px/691px);
-    margin-left: percentage(185px/403px);
-    margin-top: percentage(195px/403px);
 
-    //margin-top: percentage(305px/691px);
-
-    //margin: percentage(195px/403px) auto auto percentage(185px/403px);
-  }
-
-  .line_one {
-    display: inline-block;
-    position: absolute;
-    width: percentage( 252.7px/403px );
-    height: percentage(32px/691px);
-    margin-left: percentage(137px/403px);
-    margin-top: percentage(358px/403px);
-    font-size: 24px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.33;
-    letter-spacing: normal;
-    color: rgba(0, 0, 0, .87);
-    text-align: center;
-  }
-
-  .line_two {
-    display: inline-block;
-    position: absolute;
-    width: percentage(252.7px/403px);
-    height: percentage(32px/691px);
-    margin-left: percentage(137px/403px);
-    margin-top: percentage(388px/403px);
-    font-size: 24px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.33;
-    letter-spacing: normal;
-    color: rgba(0, 0, 0, .87);
-    text-align: center;
-
-    //margin-top: percentage(43px/691px);
-  }
-
-  .line_three {
-    display: inline-block;
-    position: absolute;
-    width: percentage(280px/403px);
-    height: percentage(24px/691px);
-    margin-left: percentage(123px/403px);
-    margin-top: percentage(425px/403px);
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    color: rgba(0, 0, 0, .87);
-    text-align: center;
-
-    //margin-top: percentage(43px/691px);
-  }
-
-  .line_four {
-    display: inline-block;
-    position: absolute;
-    width: percentage(280px/0403px);
-    height: percentage(24px/691px);
-    margin-left: percentage(123px/403px);
-    margin-top: percentage(445px/403px);
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    color: rgba(0, 0, 0, .87);
-    text-align: center;
-    
-  }
-  
-
-  article {
-    header.top_nav section {
+    .line_one {
       display: inline-block;
-      width: percentage(218px/1517px);
-      height: percentage(215px/691px);
-      text-align: center;
-      margin-top: percentage(88px/691px);
+      position: absolute;
+      width: percentage( 252.7px/403px );
+      height: percentage(32px/691px);
+      margin-left: percentage(137px/403px);
+      margin-top: percentage(358px/403px);
       font-size: 24px;
       font-weight: bold;
       font-style: normal;
       font-stretch: normal;
-      line-height: normal;
+      line-height: 1.33;
       letter-spacing: normal;
-      color: #213262;
+      color: rgba(0, 0, 0, .87);
+      text-align: center;
+    }
+  
+    .line_two {
+      display: inline-block;
+      position: absolute;
+      width: percentage(252.7px/403px);
+      height: percentage(32px/691px);
+      margin-left: percentage(137px/403px);
+      margin-top: percentage(388px/403px);
+      font-size: 24px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      color: rgba(0, 0, 0, .87);
+      text-align: center;
+  
+      //margin-top: percentage(43px/691px);
+    }
+  
+    .line_three {
+      display: inline-block;
+      position: absolute;
+      width: percentage(280px/403px);
+      height: percentage(24px/691px);
+      margin-left: percentage(123px/403px);
+      margin-top: percentage(425px/403px);
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: rgba(0, 0, 0, .87);
+      text-align: center;
+  
+      //margin-top: percentage(43px/691px);
+    }
+  
+    .line_four {
+      display: inline-block;
+      position: absolute;
+      width: percentage(280px/0403px);
+      height: percentage(24px/691px);
+      margin-left: percentage(123px/403px);
+      margin-top: percentage(445px/403px);
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: rgba(0, 0, 0, .87);
+      text-align: center;
+      
     }
 
-    hr {
+    //margin: percentage(195px/403px) auto auto percentage(185px/403px);
+  }
+
+  article {
+    right: 0;
+    height: 691px;
+    width: percentage(1517px/1920px);
+    grid-area: maplink;
+    position: absolute;
+    display: inline-block;
+
+    /*header.top_nav {
+      width: 100%;
+      margin-top: percentage(88px/691px);
+      font-size: 24px;
+      font-weight: bold;
+      font-style: normal;
+      color: #213262;
+      display: grid;
+      grid-template-areas: 'home about research student announce resources  .';
+      text-align: center;
+
+      .home {
+        grid-area: home;
+      }
+
+      .about {
+        grid-area: about;
+      }
+
+      .research {
+        grid-area: research;
+      }
+
+      .student {
+        grid-area: student;
+      }
+
+      .announce {
+        grid-area: announce;
+        
+      }
+
+      .resource {
+        grid-area: resources;
+      }
+    }*/
+
+    /*hr {
       display: block;
       position: relative;
       padding: 0;
@@ -127,36 +148,70 @@ main.content {
       border: none;
       border-top: 1px solid #aaaaaa;
       border-bottom: 1px solid #aaaaaa;
-    }
-    position: absolute;
-    display: inline-block;
-    
+    }*/
     section.link {
+      margin-top: percentage(88px/691px);
       width: 100％;
       height: 50%;
-      margin-top: 0;
+      border-top: 2px solid red;
       display: grid;
-      grid-template-areas:'home intro lab lectureinformation annall resourcelink'
-        '. professor researcher college annactivity .'
-        '. crew researchCenter master anncompany .'
-        '. award . phd . .'
-        '. traffic . scholarship . .'
-        '. . . exchange . .'
-        '. . . company . .';
-
-      //section {
-      //overflow: hidden;
-
-      //a {
-      // color: #000000;
-      //display: grid;
-
-      //display: block;
-      //width: 100%;
-
-      //margin-top: 0;
+      grid-template-areas:'head_home about research student announce resources .'
+        'myhr myhr myhr myhr myhr myhr myhr'
+        '. . . . . . .'
+        'home intro lab lectureinformation annall resourcelink  .'
+        '. professor researcher college annactivity  . .'
+        '. crew researchCenter master anncompany  . .'
+        '. award . phd . . . '
+        '. traffic . scholarship  . . .'
+        '. . . exchange . . . '
+        '. . . company . . . ';
       text-align: center;
-      font-size: .8rem;
+      font-size: 18px;
+
+      hr {
+        grid-area: myhr;
+        display: block;
+        position: relative;
+        padding: 0;
+        margin: 3% 10px;
+        height: 2px;
+        width: 88%;
+        clear: both;
+        border: none;
+        border-top: 1px solid #aaaaaa;
+        border-bottom: 1px solid #aaaaaa;
+      }
+
+      .home {
+        grid-area: head_home;
+        font-size: 24px;
+      }
+
+      .about {
+        grid-area: about;
+        font-size: 24px;
+      }
+
+      .research {
+        grid-area: research;
+        font-size: 24px;
+      }
+
+      .student {
+        grid-area: student;
+        font-size: 24px;
+      }
+
+      .announce {
+        grid-area: announce;
+        font-size: 24px;
+        
+      }
+
+      .resource {
+        grid-area: resources;
+        font-size: 24px;
+      }
 
       .tags__tag--home {
         grid-area: home;
@@ -237,28 +292,6 @@ main.content {
       .tags__tag--resourcelink {
         grid-area: resourcelink;
       }
-
-      //}
-        
-      /*display: inline-block;
-        position: relative;*/
-      //width: percentage(218px/1517px);
-      //height: 70%;
-      //text-align: center;
-
-      /*font-size: 18px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;*/
-        
-      //}
-      
     }
-    margin-left: percentage(1517px/1920px);
-    right: 0;
-    height: 691px;
-    width: percentage(1517px/1920px);
   }
 }
