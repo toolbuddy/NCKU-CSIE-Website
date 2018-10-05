@@ -1,9 +1,7 @@
-const express = require( 'express' );
-const path = require( 'path' );
+import express from 'express';
 
-const projectRoot = path.dirname( __dirname );
-const announcement = require( path.join( projectRoot, 'apis/announcement' ) );
-const faculty = require( path.join( projectRoot, 'apis/faculty' ) );
+import announcement from 'apis/announcement.js';
+import faculty from 'apis/faculty.js';
 
 const apis = express.Router();
 
@@ -13,4 +11,4 @@ apis.use( '/announcement', announcement );
 // Resolve URL /api/faculty
 apis.use( '/faculty', faculty );
 
-module.exports = apis;
+export default apis;

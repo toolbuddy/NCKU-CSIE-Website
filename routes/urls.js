@@ -1,13 +1,12 @@
-const express = require( 'express' );
-const path = require( 'path' );
+import express from 'express';
 
-const projectRoot = path.dirname( __dirname );
-const home = require( path.join( projectRoot, 'routes/home' ) );
-const student = require( path.join( projectRoot, 'routes/student' ) );
-const about = require( path.join( projectRoot, 'routes/about' ) );
-const research = require( path.join( projectRoot, 'routes/research' ) );
-const announcement = require( path.join( projectRoot, 'routes/announcement' ) );
-const resource = require( path.join( projectRoot, 'routes/resource' ) );
+import home from 'routes/home.js';
+import student from 'routes/student.js';
+import about from 'routes/about.js';
+import research from 'routes/research.js';
+import announcement from 'routes/announcement.js';
+import resource from 'routes/resource.js';
+import user from 'routes/user.js';
 
 const router = express.Router();
 
@@ -28,4 +27,7 @@ router.use( '/resource', resource );
 // Resolve URL /student
 router.use( '/student', student );
 
-module.exports = router;
+// Resolve URL /user
+router.use( '/user', user );
+
+export default router;

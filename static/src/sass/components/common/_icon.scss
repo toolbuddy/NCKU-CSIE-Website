@@ -139,3 +139,7 @@ $icon-path: '../..';
     @content;
   }
 }
+@mixin icon__search--white () {
+  background-image: url( '../../image/icon/search-white.png' );
+  @content;
+}

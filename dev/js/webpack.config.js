@@ -53,6 +53,12 @@ module.exports = {
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.join( jsSrcRoot, 'student/phd.js' ),
         'student/scholarship':   path.join( jsSrcRoot, 'student/scholarship.js' ),
+
+        // Route `user`
+        'user/index':              path.join( jsSrcRoot, 'user/index.js' ),
+        'user/announcement/index': path.join( jsSrcRoot, 'user/announcement/index.js' ),
+        'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
+        'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),
     },
     output: {
         path:     jsDistRoot,

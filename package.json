@@ -4,16 +4,17 @@
   "description": "NCKU CSIE Website",
   "private": true,
   "scripts": {
-    "develop": "npm-run-all --parallel nodemon watch browser-sync",
-    "nodemon": "nodemon --config dev/server/nodemon.json server.js",
+    "develop": "npm-run-all --parallel watch nodemon browser-sync",
+    "nodemon": "nodemon --config dev/server/nodemon.json server.min.js",
     "browser-sync": "browser-sync --config dev/server/bs-config.js start",
     "pre-build": "npm-run-all pre-build:*",
     "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
     "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js",
-    "build": "npm-run-all build:css build:html build:js",
+    "build": "npm-run-all build:server build:css build:html build:js",
     "build:css": "webpack --config dev/css/webpack.config.js",
-    "build:html": "webpack --config dev/html/webpack.config.js",
+    "build:html": "webpack --config dev/html/webpack.config.babel.js",
     "build:js": "webpack --config dev/js/webpack.config.js",
+    "build:server": "webpack --config dev/server/webpack.config.js",
     "build:database": "node dev/database/build.js",
     "clean": "npm-run-all --parallel clean:*",
     "clean:css": "shx rm -rf static/dist/css",
@@ -23,11 +24,12 @@
     "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
     "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
     "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-js --fix \"static/src/js/**/*.js\"",
-    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" server.js",
+    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" server.min.js",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "webpack --watch --config dev/css/webpack.config.js",
-    "watch:html": "webpack --watch --config dev/html/webpack.config.js",
+    "watch:html": "webpack --watch --config dev/html/webpack.config.babel.js",
     "watch:js": "webpack --watch --config dev/js/webpack.config.js",
+    "watch:server": "webpack --watch --config dev/server/webpack.config.js",
     "d": "npm run develop",
     "p": "npm run pre-build",
     "pd": "npm run pre-build:database",
@@ -64,6 +66,7 @@
   "dependencies": {
     "deep-freeze": "0.0.1",
     "express": "^4.16.3",
+    "ftp": "^0.3.10",
     "load-google-maps-api": "^1.3.2",
     "mysql": "^2.16.0",
     "mysql2": "^1.5.3",
@@ -74,6 +77,13 @@
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "browser-sync": "^2.24.5",
     "css-loader": "^1.0.0",
     "cssnano": "^4.0.2",
@@ -97,7 +107,11 @@
     "stylelint-scss": "^3.1.3",
     "stylelint-webpack-plugin": "^0.10.5",
     "url-loader": "^1.0.1",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.8"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.0.8",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "babel":{
+    "presets":["es2015"]
   }
 }

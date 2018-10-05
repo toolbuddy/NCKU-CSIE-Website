@@ -1,0 +1,63 @@
+extends /layouts/user.pug
+include /components/announcement/filter-tags.pug
+include /components/user/announcement/time-selector.pug
+
+append stylesheets
+
+append header
+
+append content
+  main#content.content
+    a( href = '/user/announcement' )= '<<返回'
+    br
+    +filter__tags( [
+        'tags',
+        'award',
+        'college',
+        'competition',
+        'conference',
+        'course',
+        'exhibition',
+        'faculty',
+        'international',
+        'internship',
+        'master',
+        'phd',
+        'recruitment',
+        'rule',
+        'scholarship',
+        'speech',
+      ]
+    )
+    article.editor
+      button.editor__language.editor__language--zh-TW 中文
+      button.editor__language.editor__language--en-US English
+      section.editor__editor.editor__editor--zh-TW
+        input( class = 'editor__input--title', type = 'text', name = 'title', placeholder = '文章標題（最多70字）' )
+        br
+        textarea( class = 'editor__input--content', name = 'content', cols = '30', rows = '10', placeholder = '文章內文' )
+        br
+        p 附件
+        input( type = 'file', name = 'file', multiple )
+      section.editor__editor.editor__editor--en-US
+        input( class = 'editor__input--title', type = 'text', name = 'title', placeholder = 'title (at most 300 letters)' )
+        br
+        textarea( class = 'editor__input--content', name = 'content', cols = '30', rows = '10', placeholder = 'content' )
+        br
+        p 附件
+        input( type = 'file', name = 'file', multiple )
+    article.submit
+      input( type = 'radio', name = 'action', value = 'publish', checked )
+      span 直接發佈
+      br
+      input( type = 'radio', name = 'action', value = 'delay' )
+      span 設定時間發佈
+      br
+      +time_selector()
+      input( type = 'radio', name = 'action', value = 'draft' )
+      span 發佈草稿（不公開）
+      br
+      input( type = 'submit', id = 'editor__input--submit', value = '確認發佈' )
+
+append scripts
+  +js( 'user/announcement/edit' )

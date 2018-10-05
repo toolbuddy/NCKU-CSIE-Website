@@ -1,7 +1,7 @@
-const Sequelize = require( 'sequelize' );
-const config = require( './config' );
+import Sequelize from 'sequelize';
+import config from './config.js';
 
-module.exports = async ( databaseName, debug = false ) => {
+export default async ( databaseName, debug = false ) => {
     const database = new Sequelize(
         databaseName,
         config.username,

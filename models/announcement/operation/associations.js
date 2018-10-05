@@ -1,8 +1,9 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const connect = require( path.join( projectRoot, 'settings/database/connect' ) );
+import path from 'path';
+import connect from 'settings/database/connect.js';
 
-module.exports = async () => {
+const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
+
+export default async () => {
     const announcementDatabase = await connect( 'announcement' );
     const tablesRoot = path.join( projectRoot, 'models/announcement/tables' );
     const table = {
@@ -21,6 +22,7 @@ module.exports = async () => {
         as:         'announcementI18n',
         foreignKey: 'announcementId',
         sourceKey:  'announcementId',
+        onDelete:   'CASCADE',
     } );
 
     // `announcementFile` has many translations.
@@ -28,6 +30,7 @@ module.exports = async () => {
         as:         'announcementFileI18n',
         foreignKey: 'fileId',
         sourceKey:  'fileId',
+        onDelete:   'CASCADE',
     } );
 
     // `tag` has many translations.
@@ -35,6 +38,7 @@ module.exports = async () => {
         as:         'tagI18n',
         foreignKey: 'tagId',
         sourceKey:  'tagId',
+        onDelete:   'CASCADE',
     } );
 
     // Announcement relationship.
@@ -43,6 +47,7 @@ module.exports = async () => {
         as:         'announcementFile',
         foreignKey: 'announcementId',
         sourceKey:  'announcementId',
+        onDelete:   'CASCADE',
     } );
 
     // `announcement` has many `announcementTag`.
@@ -50,6 +55,7 @@ module.exports = async () => {
         as:         'announcementTag',
         foreignKey: 'announcementId',
         sourceKey:  'announcementId',
+        onDelete:   'CASCADE',
     } );
 
     // `announcementTag` has many `tagI18n`.
@@ -57,6 +63,7 @@ module.exports = async () => {
         as:         'tagI18n',
         foreignKey: 'tagId',
         sourceKey:  'tagId',
+        onDelete:   'CASCADE',
     } );
 
     // Any one who use this module should remember to close connection,

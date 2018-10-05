@@ -8,7 +8,7 @@ const projectRoot = path.dirname( path.dirname( __dirname ) );
 const sassRoot = path.join( projectRoot, 'static/src/sass' );
 const imageRoot = path.join( projectRoot, 'static/src/image' );
 const cssRoot = path.join( projectRoot, 'static/dist/css' );
-const browsers = require( path.join( projectRoot, 'settings/browserlist/config.js' ) );
+const browsers = require( path.join( projectRoot, 'dev/css/browserlist.js' ) );
 const devMode = true;
 
 module.exports = {
@@ -58,6 +58,9 @@ module.exports = {
         'student/master':        path.join( sassRoot, 'student/master.scss' ),
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
+
+        // Route `user`
+        'user/index': path.join( sassRoot, 'user/index.scss' ),
     },
     output: {
         path:     cssRoot,
