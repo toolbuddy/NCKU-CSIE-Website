@@ -4,7 +4,6 @@ import path from 'path';
 
 const pugRoot = path.join( config.projectRoot, 'static/src/pug' );
 const htmlRoot = path.join( config.projectRoot, 'static/dist/html' );
-const staticUrl = config.staticUrl;
 
 export default language.support.map( language => ( {
     devtool: 'inline-sourcemap',
@@ -90,7 +89,7 @@ export default language.support.map( language => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
-                                staticUrl,
+                                staticHost: config.staticHost,
                                 language,
                             },
                         },

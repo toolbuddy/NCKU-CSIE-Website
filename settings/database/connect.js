@@ -7,7 +7,7 @@ export default async ( databaseName, debug = false ) => {
         config.username,
         config.password,
         {
-            host:             config.host,
+            host:             config.domainName,
             dialect:          config.protocol,
             operatorsAliases: false,
             pool:             config.pool,

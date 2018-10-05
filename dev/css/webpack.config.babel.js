@@ -1,16 +1,16 @@
-const path = require( 'path' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const StyleLintPlugin = require( 'stylelint-webpack-plugin' );
-const autoprefixer = require( 'autoprefixer' );
-const cssnano = require( 'cssnano' );
+import path from 'path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import StyleLintPlugin from 'stylelint-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import config from '../../settings/server/config.js';
 
-const projectRoot = path.dirname( path.dirname( __dirname ) );
-const sassRoot = path.join( projectRoot, 'static/src/sass' );
-const imageRoot = path.join( projectRoot, 'static/src/image' );
-const cssRoot = path.join( projectRoot, 'static/dist/css' );
-const browserlist = require( path.join( projectRoot, 'dev/css/browserlist.js' ) );
+const sassRoot = path.join( config.projectRoot, 'static/src/sass' );
+const imageRoot = path.join( config.projectRoot, 'static/src/image' );
+const cssRoot = path.join( config.projectRoot, 'static/dist/css' );
+const browserlist = require( path.join( config.projectRoot, 'dev/css/browserlist.js' ) );
 
-module.exports = {
+export default {
     devtool: 'inline-sourcemap',
     mode:    'development',
     entry:   {
@@ -138,7 +138,7 @@ module.exports = {
         // SCSS linter.
         new StyleLintPlugin( {
             // File path for `stylelint` configuration.
-            configFile:    path.join( projectRoot, 'dev/css/.stylelintrc.js' ),
+            configFile:    path.join( config.projectRoot, 'dev/css/.stylelintrc.js' ),
 
             // Store the info about processed files in order to
             // only operate on the changed ones the next time you run `stylelint`.
@@ -146,7 +146,7 @@ module.exports = {
             cache:         true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: path.join( projectRoot, 'node_modules/.cache/.stylelintcache' ),
+            cacheLocation: path.join( config.projectRoot, 'node_modules/.cache/.stylelintcache' ),
 
             // Specify a non-standard syntax that should be used to parse source stylesheets.
             syntax:         'scss',
