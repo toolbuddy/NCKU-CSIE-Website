@@ -15,11 +15,17 @@ append content
 
   main.content
     aside.left_side 
-      figure.map__logo
-      figcaption.line_one|成功大學資訊工程學系
-      figcaption.line_two|暨研究所
-      figcaption.line_three|Department of Computer Science
-      figcaption.line_four|and Information Engineering
+      figure.header__logo.logo
+        +image( {
+        alt: 'csie',
+        className: 'logo__image',
+        src: 'logo/csie.png',
+        } )
+      figcaption.logo__caption.caption
+        h1.caption__text.caption__text--large|成功大學資訊工程學系
+        h1.caption__text.caption__text--large--two|暨研究所
+        h2.caption__text.caption__text--small|Department of Computer Science
+        h2.caption__text.caption__text--small--two|and Information Engineering
     article.tab 
       section.link  
           section.home|首頁 
@@ -29,10 +35,10 @@ append content
           section.announce|系所公告
           section.resource|資源連結
           hr
-          a(class="tags__tag--home" href="")|首頁      
-          a(class="tags__tag--intro" href="")|系所介紹
-          a(class="tags__tag--professor" href="")|師資陣容
-          a(class="tags__tag--crew" href="")|系辦成員
+          a(class="tags__tag--home" href="/")|首頁      
+          a(class="tags__tag--intro" href="/about/intro")|系所介紹
+          a(class="tags__tag--professor" href="/about/faculty")|師資陣容
+          a(class="tags__tag--crew" href="/about/staff")|系辦成員
           a(class="tags__tag--award" href="")|榮譽事蹟
           a(class="tags__tag--traffic" href="")|交通資訊        
           a(class="tags__tag--lab" href="")|實驗室

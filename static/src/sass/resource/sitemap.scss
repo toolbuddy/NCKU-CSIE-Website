@@ -16,13 +16,61 @@ main.content {
     margin-left: 0;
     margin-top: 0;
 
-    .line_one {
-      display: inline-block;
-      position: absolute;
+    figure.header__logo.logo {
+      display: grid;
+      grid-template-areas: '. . logo . . .';
+      margin-top: 38%;
+
+      img {
+        grid-area: logo;
+        width: 157px;
+        height: 120px;
+      }
+
+    }
+
+    figcaption.logo__caption.caption {
+      margin-top: 9%;
+      display: grid;
+      grid-template-areas:
+        '. lineOne .'
+        '. lineTwo .'
+        '. lineThree .'
+        '. lineFour .';
+
+      h1.caption__text.caption__text--large {
+        grid-area: lineOne;
+        font-size: 24px;
+      }
+
+      h1.caption__text.caption__text--large--two {
+        grid-area: lineTwo;
+        text-indent: 72px;
+        font-size: 24px;
+      }
+
+      h2.caption__text.caption__text--small {
+        grid-area: lineThree;
+        font-weight: normal;
+        font-size: 16px;
+      }
+
+      h2.caption__text.caption__text--small--two {
+        grid-area: lineFour;
+        text-indent: 16px;
+        font-weight: normal;
+        font-size: 16px;
+      }
+    }
+
+    /*.line_one {
+      //display: inline-block;
+      //position: absolute;
       width: percentage( 252.7px/403px );
       height: percentage(32px/691px);
-      margin-left: percentage(137px/403px);
-      margin-top: percentage(358px/403px);
+
+      //margin-left: percentage(137px/403px);
+      //margin-top: percentage(358px/403px);
       font-size: 24px;
       font-weight: bold;
       font-style: normal;
@@ -34,12 +82,13 @@ main.content {
     }
   
     .line_two {
-      display: inline-block;
-      position: absolute;
-      width: percentage(252.7px/403px);
+      //display: inline-block;
+      // position: absolute;
+      //width: percentage(252.7px/403px);
       height: percentage(32px/691px);
-      margin-left: percentage(137px/403px);
-      margin-top: percentage(388px/403px);
+
+      // margin-left: percentage(137px/403px);
+      // margin-top: percentage(388px/403px);
       font-size: 24px;
       font-weight: bold;
       font-style: normal;
@@ -53,12 +102,13 @@ main.content {
     }
   
     .line_three {
-      display: inline-block;
-      position: absolute;
+      //display: inline-block;
+      //position: absolute;
       width: percentage(280px/403px);
       height: percentage(24px/691px);
-      margin-left: percentage(123px/403px);
-      margin-top: percentage(425px/403px);
+
+      // margin-left: percentage(123px/403px);
+      // margin-top: percentage(425px/403px);
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
@@ -72,12 +122,13 @@ main.content {
     }
   
     .line_four {
-      display: inline-block;
-      position: absolute;
+      // display: inline-block;
+      // position: absolute;
       width: percentage(280px/0403px);
       height: percentage(24px/691px);
-      margin-left: percentage(123px/403px);
-      margin-top: percentage(445px/403px);
+
+      // margin-left: percentage(123px/403px);
+      // margin-top: percentage(445px/403px);
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
@@ -87,7 +138,7 @@ main.content {
       color: rgba(0, 0, 0, .87);
       text-align: center;
       
-    }
+    }*/
 
     //margin: percentage(195px/403px) auto auto percentage(185px/403px);
   }
@@ -100,60 +151,10 @@ main.content {
     position: absolute;
     display: inline-block;
 
-    /*header.top_nav {
-      width: 100%;
-      margin-top: percentage(88px/691px);
-      font-size: 24px;
-      font-weight: bold;
-      font-style: normal;
-      color: #213262;
-      display: grid;
-      grid-template-areas: 'home about research student announce resources  .';
-      text-align: center;
-
-      .home {
-        grid-area: home;
-      }
-
-      .about {
-        grid-area: about;
-      }
-
-      .research {
-        grid-area: research;
-      }
-
-      .student {
-        grid-area: student;
-      }
-
-      .announce {
-        grid-area: announce;
-        
-      }
-
-      .resource {
-        grid-area: resources;
-      }
-    }*/
-
-    /*hr {
-      display: block;
-      position: relative;
-      padding: 0;
-      margin: 3% 10px;
-      height: 2px;
-      width: 88%;
-      clear: both;
-      border: none;
-      border-top: 1px solid #aaaaaa;
-      border-bottom: 1px solid #aaaaaa;
-    }*/
     section.link {
       margin-top: percentage(88px/691px);
       width: 100％;
       height: 50%;
-      border-top: 2px solid red;
       display: grid;
       grid-template-areas:'head_home about research student announce resources .'
         'myhr myhr myhr myhr myhr myhr myhr'
@@ -183,6 +184,12 @@ main.content {
       }
 
       .home {
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
         grid-area: head_home;
         font-size: 24px;
       }
@@ -190,27 +197,57 @@ main.content {
       .about {
         grid-area: about;
         font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
       }
 
       .research {
         grid-area: research;
         font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
       }
 
       .student {
         grid-area: student;
         font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
       }
 
       .announce {
         grid-area: announce;
         font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
         
       }
 
       .resource {
         grid-area: resources;
         font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #213262;
       }
 
       .tags__tag--home {
