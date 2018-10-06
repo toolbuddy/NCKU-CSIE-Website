@@ -111,7 +111,7 @@ mixin header()
 
   header#header.header
     //- Logo
-    figure.header__logo.logo
+    a.header__logo.logo( href = url( { link : '/' } ) )
       +image( {
         alt:       'csie',
         className: 'logo__image',
@@ -145,7 +145,7 @@ mixin header()
       //- All routes
       ul.navigation__list.list
         li.list__item.item
-          a.item__link( href = url( { link : '/' } ) )= i18n[ language ].route.home.index
+          a.item__link.item__link--homepage( href = url( { link : '/' } ) )= i18n[ language ].route.home.index
         li.list__item.item
           a.item__link( href = url( { link : '/about' } ) )= i18n[ language ].route.about.index
           button.item__switch.switch
