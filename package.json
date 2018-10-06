@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "develop": "npm-run-all --parallel watch nodemon browser-sync",
-    "nodemon": "nodemon --config dev/server/nodemon.json server.min.js",
+    "nodemon": "nodemon --config dev/server/nodemon.json bin/server.min.js",
     "browser-sync": "browser-sync --config dev/server/bs-config.js start",
     "pre-build": "npm-run-all pre-build:*",
     "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
@@ -24,7 +24,7 @@
     "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
     "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
     "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-js --fix \"static/src/js/**/*.js\"",
-    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" server.min.js",
+    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" bin/server.min.js",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "webpack --watch --config dev/css/webpack.config.babel.js",
     "watch:html": "webpack --watch --config dev/html/webpack.config.babel.js",

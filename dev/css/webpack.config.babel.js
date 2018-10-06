@@ -3,12 +3,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
+import browserlist from './browserlist.js';
 import config from '../../settings/server/config.js';
 
 const sassRoot = path.join( config.projectRoot, 'static/src/sass' );
 const imageRoot = path.join( config.projectRoot, 'static/src/image' );
 const cssRoot = path.join( config.projectRoot, 'static/dist/css' );
-const browserlist = require( path.join( config.projectRoot, 'dev/css/browserlist.js' ) );
 
 export default {
     devtool: 'inline-sourcemap',

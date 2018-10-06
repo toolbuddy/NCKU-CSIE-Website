@@ -1,7 +1,5 @@
 import path from 'path';
 import config from '../../settings/server/config.js';
-
-// Exclude non-native node module
 import nodeExternals from 'webpack-node-externals';
 
 export default {
@@ -14,7 +12,7 @@ export default {
         path.join( config.projectRoot, 'server.js' ),
     ],
     output:  {
-        path:     config.projectRoot,
+        path:     path.join( config.projectRoot, 'bin' ),
         filename: 'server.min.js',
     },
     target:    'node',
@@ -22,6 +20,7 @@ export default {
         __dirname:  true,
         __filename: true,
     },
+    // To exclude non-native node module
     externals: [ nodeExternals(), ],
     resolve:   {
         alias: {
@@ -39,12 +38,17 @@ export default {
             // ECMAScript components.
             {
                 test:    /\.js$/,
+                // To prevent node modules being transpiled and linted
                 exclude: /(node_modules)/,
                 use:     [
                     {
                         loader:  'babel-loader',
                         options: {
+                            // to avoid needing to run Babel recompilation process on each run
+                            // default cache directory in node_modules/.cache/babel-loader
+                            cacheDirectory: true,
                             presets: [ '@babel/preset-env', ],
+                            // to avoid babel to read babelrc in package.json, which will make transpilng fail
                             babelrc: false,
                         },
                     },
