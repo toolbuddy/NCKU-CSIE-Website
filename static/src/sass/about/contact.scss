@@ -15,39 +15,39 @@ body > .content {
       areas:
         '. topic .'
         '. map   .'
-        '. thsr  .'
+        '. drive .'
         '. train .'
-        '. drive .';
+        '. thsr  .';
       columns: 1fr 13fr 1fr;
-      rows: 2fr 3fr 2fr 2fr 4fr;
+
+      rows: auto 15rem auto auto auto;
     }
     row-gap: 1rem;
   };
 
   // [ skin ]
+  padding: 2.2rem 0;
   width: 100%;
   background-color: #f2f4f7;
 
   // [ RWD: 768px ]
   @media screen and ( min-width: 768px ) {
     // [ layout ]
-    grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
+    grid-template-rows: auto 20rem auto auto auto;
   }
 
-  // [ RWD: 1024px ]
-  @media screen and ( min-width: 1024px ) {
+  // [ RWD: 1300px ]
+  @media screen and ( min-width: 1300px ) {
     // [ layout ]
     grid: {
       template: {
         areas:
           '. topic topic .'
-          '.  map  thsr  .'
-          '.  map  train .'
           '.  map  drive .'
-          '.   .   drive .'
-          '.   .     .   .';
+          '.  map  train .'
+          '.  map  thsr  .';
         columns: 1fr 6fr 4fr 1fr;
-        rows: 4fr 4fr 4fr 3fr 7fr 2fr;
+        rows: auto auto auto auto;
       }
       column-gap: 2rem;
     };
@@ -58,8 +58,10 @@ body > .content {
 // `body > .content > .topic`
 @include topic() {
   // [ position ]
-  grid-area: topic;
   align-self: center;
+
+  // [ layout ]
+  grid-area: topic;
 }
 
 // block
@@ -74,6 +76,7 @@ body > .content {
 .thsr {
   // [ layout ]
   grid-area: thsr;
+  @include traffic();
 }
 
 // block
@@ -81,6 +84,7 @@ body > .content {
 .train {
   // [ layout ]
   grid-area: train;
+  @include traffic();
 }
 
 // block
@@ -88,4 +92,5 @@ body > .content {
 .drive {
   // [ layout ]
   grid-area: drive;
+  @include traffic();
 }
