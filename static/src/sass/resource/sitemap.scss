@@ -8,6 +8,9 @@ main.content {
   box-sizing: border-box;
   display: grid;
   grid-template-areas: 'maplogo maplink maplink maplink maplink';
+  @media screen and(max-width:1000px) {
+    height: 1000px;
+  }
 
   aside {
     grid-area: maplogo;
@@ -15,6 +18,9 @@ main.content {
     //position: absolute;
     margin-left: 0;
     margin-top: 0;
+    @media screen and(max-width:1000px) {
+      display: none;
+    }
 
     figure.header__logo.logo {
       display: grid;
@@ -62,85 +68,6 @@ main.content {
         font-size: 16px;
       }
     }
-
-    /*.line_one {
-      //display: inline-block;
-      //position: absolute;
-      width: percentage( 252.7px/403px );
-      height: percentage(32px/691px);
-
-      //margin-left: percentage(137px/403px);
-      //margin-top: percentage(358px/403px);
-      font-size: 24px;
-      font-weight: bold;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      color: rgba(0, 0, 0, .87);
-      text-align: center;
-    }
-  
-    .line_two {
-      //display: inline-block;
-      // position: absolute;
-      //width: percentage(252.7px/403px);
-      height: percentage(32px/691px);
-
-      // margin-left: percentage(137px/403px);
-      // margin-top: percentage(388px/403px);
-      font-size: 24px;
-      font-weight: bold;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      color: rgba(0, 0, 0, .87);
-      text-align: center;
-  
-      //margin-top: percentage(43px/691px);
-    }
-  
-    .line_three {
-      //display: inline-block;
-      //position: absolute;
-      width: percentage(280px/403px);
-      height: percentage(24px/691px);
-
-      // margin-left: percentage(123px/403px);
-      // margin-top: percentage(425px/403px);
-      font-size: 16px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      color: rgba(0, 0, 0, .87);
-      text-align: center;
-  
-      //margin-top: percentage(43px/691px);
-    }
-  
-    .line_four {
-      // display: inline-block;
-      // position: absolute;
-      width: percentage(280px/0403px);
-      height: percentage(24px/691px);
-
-      // margin-left: percentage(123px/403px);
-      // margin-top: percentage(445px/403px);
-      font-size: 16px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      color: rgba(0, 0, 0, .87);
-      text-align: center;
-      
-    }*/
-
-    //margin: percentage(195px/403px) auto auto percentage(185px/403px);
   }
 
   article {
@@ -150,12 +77,43 @@ main.content {
     grid-area: maplink;
     position: absolute;
     display: inline-block;
+    @media screen and(max-width:1000px) {
+      width: 100%;
+    }
 
     section.link {
       margin-top: percentage(88px/691px);
       width: 100％;
       height: 50%;
       display: grid;
+      @media screen and(max-width:1000px) {
+        grid-template-areas: 'head_home'
+          'home'
+          'about'
+          'intro'
+          'professor'
+          'crew'
+          'award'
+          'traffic'
+          'research'
+          'lab'
+          'researcher'
+          'researchCenter'
+          'student'
+          'lectureinformation'
+          'college'
+          'master'
+          'phd'
+          'scholarship'
+          'exchange'
+          'company'
+          'announce'
+          'annall'
+          'annactivity'
+          'anncompany'
+          'resources'
+          'resourcelink';
+      }
       grid-template-areas:'head_home about research student announce resources .'
         'myhr myhr myhr myhr myhr myhr myhr'
         '. . . . . . .'
@@ -181,6 +139,9 @@ main.content {
         border: none;
         border-top: 1px solid #aaaaaa;
         border-bottom: 1px solid #aaaaaa;
+        @media screen and(max-width:1000px) {
+          display: none;
+        }
       }
 
       .home {
