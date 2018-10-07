@@ -4,7 +4,9 @@ const headerNavigation = header.querySelector( '.header__navigation' );
 const navigationCancel = headerNavigation.querySelector( '.navigation__cancel' );
 const headerLanguage = header.querySelector( '.header__language' );
 const languageButton = headerLanguage.querySelector( '.language__button' );
-const headerlanguageDropdown = headerLanguage.querySelector( '.language__dropdown' );
+const headerlanguageDropdown = languageButton.querySelector( '.button__dropdown' );
+const chineseButton = headerlanguageDropdown.querySelector( '.dropdown__item--zh-TW' );
+const englishButton = headerlanguageDropdown.querySelector( '.dropdown__item--en-US' );
 const headerSearch = header.querySelector( '.header__search' );
 const searchButton = headerSearch.querySelector( '.search__button' );
 const searchDropdown = headerSearch.querySelector( '.search__dropdown' );
@@ -18,11 +20,20 @@ navigationCancel.addEventListener( 'click', () => {
     headerNavigation.classList.remove( 'header__navigation--active' );
 } );
 
-languageButton.addEventListener( 'click', () => {
-    if ( headerlanguageDropdown.classList.contains( 'language__dropdown--active' ) )
-        headerlanguageDropdown.classList.remove( 'language__dropdown--active' );
-    else
-        headerlanguageDropdown.classList.add( 'language__dropdown--active' );
+languageButton.addEventListener( 'focus', () => {
+    headerlanguageDropdown.classList.add( 'language__dropdown--active' );
+} );
+
+languageButton.addEventListener( 'blur', () => {
+    headerlanguageDropdown.classList.remove( 'language__dropdown--active' );
+} );
+
+chineseButton.addEventListener( 'click', () => {
+    location.href = '?language=zh-TW';
+} );
+
+englishButton.addEventListener( 'click', () => {
+    location.href = '?language=en-US';
 } );
 
 searchButton.addEventListener( 'click', () => {

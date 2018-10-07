@@ -20,7 +20,7 @@ mixin header()
           announcement: {
             activity:    'Activities',
             all:         'All',
-            index:       'Announcement',
+            index:       'News',
             recruitment: 'Recruitment',
           },
           home: {
@@ -293,11 +293,11 @@ mixin header()
           className: 'button__image',
           src:       `icon/flag-${ language }.png`,
         } )
-      ul.language__dropdown.dropdown
-        li.dropdown__item.dropdown__item--zh-TW.item
-          a.item__link( href = url( { query : { language : 'zh-TW' } } ) ) 中文
-        li.dropdown__item.dropdown__item--en-US.item
-          a.item__link( href = url( { query : { language : 'en-US' } } ) ) English
+        ul.button__dropdown.dropdown
+          li.dropdown__item.dropdown__item--zh-TW.item 中文
+            //- a.item__link( href = url( { query : { language : 'zh-TW' } } ) )
+          li.dropdown__item.dropdown__item--en-US.item English
+            //- a.item__link( href = url( { query : { language : 'en-US' } } ) )
 
     //- Login, currently not available
     //- Large screen version
