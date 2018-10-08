@@ -525,7 +525,7 @@ body > .header {
     }
     position: fixed;
     top: 0;
-    right: -12.28rem;
+    right: -12.65rem;
     height: 100%;
     z-index: 1;
     overflow: {
@@ -1085,10 +1085,10 @@ body > .header {
       > .language__switch.switch {
         // [ layout ]
         grid-area: language__switch;
+        margin-top: .01rem;
 
         // [ skin ]
         background-color: inherit;
-        border-top: .01rem solid rgba( 255, 255, 255, .5 );
         height: 1.56rem;
         width: 45%;
 

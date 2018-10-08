@@ -12,6 +12,27 @@ const searchButton = headerSearch.querySelector( '.search__button' );
 const searchDropdown = headerSearch.querySelector( '.search__dropdown' );
 const searchCancel = headerSearch.querySelector( '.dropdown__cancel' );
 
+function IsChild ( child, parent ) {
+    if ( child && parent ) {
+        let parentNode = child.parentNode;
+        while ( parentNode ) {
+            if ( parent === parentNode )
+                return true;
+
+            parentNode = parentNode.parentNode;
+        }
+    }
+    return false;
+}
+
+document.addEventListener( 'click', ( e ) => {
+    if ( headerNavigation.classList.contains( 'header__navigation--active' ) &&
+        e.target !== headerMenu &&
+        e.target !== headerNavigation &&
+        !IsChild( e.target, headerNavigation ) )
+        headerNavigation.classList.remove( 'header__navigation--active' );
+} );
+
 headerMenu.addEventListener( 'click', () => {
     headerNavigation.classList.add( 'header__navigation--active' );
 } );
