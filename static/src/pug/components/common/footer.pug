@@ -21,12 +21,13 @@ mixin footer()
 
   footer.footer
     figure.footer__logo.logo
-      +image( {
-        alt:          'csie',
-        className:    'logo__image',
-        src:          'logo/csie-white.png',
-      } )
-      figcaption.logo__caption.caption
+      a.logo__link.link( href = url( { link : '/' } ) )
+        +image( {
+          alt:          'csie',
+          className:    'link__image',
+          src:          'logo/csie-white.png',
+        } )
+      a.logo__caption.caption( href = url( { link : '/' } ) )
         h1.caption__text 成功大學資訊工程學系暨研究所
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
     section.footer__contact.contact
