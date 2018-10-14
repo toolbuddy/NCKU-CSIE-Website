@@ -20,6 +20,7 @@ export default {
         __dirname:  true,
         __filename: true,
     },
+
     // To exclude non-native node module
     externals: [ nodeExternals(), ],
     resolve:   {
@@ -38,18 +39,20 @@ export default {
             // ECMAScript components.
             {
                 test:    /\.js$/,
+
                 // To prevent node modules being transpiled and linted
                 exclude: /(node_modules)/,
                 use:     [
                     {
                         loader:  'babel-loader',
                         options: {
-                            // to avoid needing to run Babel recompilation process on each run
+                            // To avoid needing to run Babel recompilation process on each run
                             // default cache directory in node_modules/.cache/babel-loader
                             cacheDirectory: true,
-                            presets: [ '@babel/preset-env', ],
-                            // to avoid babel to read babelrc in package.json, which will make transpilng fail
-                            babelrc: false,
+                            presets:        [ '@babel/preset-env', ],
+
+                            // To avoid babel to read babelrc in package.json, which will make transpilng fail
+                            babelrc:        false,
                         },
                     },
                     {

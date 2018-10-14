@@ -9,11 +9,13 @@ Build a better website for NCKU CSIE
 1. Setup server config files
     * Create server configuration files by running `npm run pre-build:server`.
     * Filling-in information required by `settings/server/config.js`.
+        * Fill in `projectRoot` with `pwd` at project root directory.
 2. Setup database config files
     * Create database configuration files by running `npm run pre-build:database`.
     * Filling-in information required by `settings/database/config.js`.
+        * If you need database username and password, please contact us. (Contact information as below)
     * Create database ORM files by running `npm run build:database`.
-3. Build HTML, CSS and ECMAScript files by running `npm run build`.
+3. Build Server, HTML, CSS and ECMAScript files by running `npm run build`.
 
 ## Run
 * `npm start`
@@ -28,12 +30,13 @@ Make sure you follow our convention before you submit a pull request!
 Here are a few standard:
 * ECMAScript ( JavaScript )
     * Using pure ECMAScript to build everything on our server.
-    * ECMAScript6 syntax mainly used.
+    * ECMAScript6 syntax mainly used. (Including backend)
     * Camel form naming style.
     * Other rules can be check by running following commands:
         * Frontend: `npm run lint:js`
         * Backend: `npm run lint:server`
     * Build ECMAScript files: `npm run build:js`
+    * Build server: `npm run build:server`
 * HTML
     * Using Pug template engine.
     * HTML5 tags only.

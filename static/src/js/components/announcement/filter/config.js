@@ -10,9 +10,6 @@ Object.defineProperties( config, {
     'defaultPage': {
         value: 1,
     },
-    'defaultLanguage': {
-        value: 'zh-TW',
-    },
 } );
 
 export default config;
