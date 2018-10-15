@@ -4,7 +4,6 @@ import path from 'path';
 import config from 'settings/server/config.js';
 
 /* eslint no-console: 0 */
-console.log( 'hahaha' );
 
 const router = express.Router();
 
