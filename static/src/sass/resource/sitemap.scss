@@ -2,91 +2,118 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 
-main.content {
-  height: 691px;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-areas: 'maplogo maplink maplink maplink maplink';
-  @media screen and(max-width:1000px) {
-    height: 1000px;
-  }
+$mobile-width: 768px;
+$pad-width: 1024px;
 
-  aside {
-    grid-area: maplogo;
+body {
+  > main.content {
+    margin: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 22% 72% 1fr;
+    grid-template-areas: '. maplogo maplink .';
 
-    //position: absolute;
-    margin-left: 0;
-    margin-top: 0;
-    @media screen and(max-width:1000px) {
-      display: none;
+    // for-mobile
+    @media screen and( max-width: $mobile-width ) {
+      height: 31.25rem;
+    }
+    @media screen and( max-width: $pad-width ) {
+      grid-template-columns: 1fr 80% 1fr;
+      grid-template-areas: '. maplink .';
     }
 
-    figure.header__logo.logo {
-      display: grid;
-      grid-template-areas: '. . logo . . .';
-      margin-top: 38%;
-
-      img {
-        grid-area: logo;
-        width: 157px;
-        height: 120px;
+    > aside {
+      justify-self: center;
+      grid-area: maplogo;
+      @media screen and( max-width: $pad-width ) {
+        display: none;
       }
 
-    }
+      > figure {
+        //margin-top: 38%;
+        justify-content: center;
+        display: flex;
 
-    figcaption.logo__caption.caption {
-      margin-top: 9%;
-      display: grid;
-      grid-template-areas:
-        '. lineOne .'
-        '. lineTwo .'
-        '. lineThree .'
-        '. lineFour .';
-
-      h1.caption__text.caption__text--large {
-        grid-area: lineOne;
-        font-size: 24px;
+        > img {
+          grid-area: logo;
+          width: 4.9063rem;
+          height: 3.75rem;
+        }
       }
 
-      h1.caption__text.caption__text--large--two {
-        grid-area: lineTwo;
-        text-indent: 72px;
-        font-size: 24px;
-      }
+      > figcaption {
+        margin-top: 9%;
+        display: grid;
+        grid-template-areas:
+          '. lineOne .'
+          '. lineTwo .'
+          '. lineThree .'
+          '. lineFour .';
 
-      h2.caption__text.caption__text--small {
-        grid-area: lineThree;
-        font-weight: normal;
-        font-size: 16px;
-      }
+        > h1.caption__text__large {
+          text-align: center;
+          grid-area: lineOne;
+          font-size: .75rem;
+        }
 
-      h2.caption__text.caption__text--small--two {
-        grid-area: lineFour;
-        text-indent: 16px;
-        font-weight: normal;
-        font-size: 16px;
+        > h2.caption__text.caption__text__small {
+          text-align: center;
+          grid-area: lineThree;
+          font-weight: normal;
+          font-size: .5rem;
+        }
       }
     }
-  }
 
-  article {
-    right: 0;
-    height: 691px;
-    width: percentage(1517px/1920px);
-    grid-area: maplink;
-    position: absolute;
-    display: inline-block;
-    @media screen and(max-width:1000px) {
-      width: 100%;
-    }
+    > article {
+      //right: 0;
+      //height: 21.59375rem;
 
-    section.link {
-      margin-top: percentage(88px/691px);
-      width: 100％;
-      height: 50%;
-      display: grid;
-      @media screen and(max-width:1000px) {
+      //width: percentage(1517px/1920px);
+      grid-area: maplink;
+
+      //position: absolute;
+      //display: inline-block;
+      @media screen and(max-width:$mobile-width) {
+        width: 100%;
+      }
+
+      > section.link {
+        //margin-top: percentage(88px/691px);
+        display: grid;
+        @media screen and(min-width:$mobile-width) {
+          grid-template-areas:'head_home about research student announce resources '
+            'myhr myhr myhr myhr myhr myhr'
+            '. . . . . . '
+            'home intro lab lectureinformation annall resourcelink  '
+            '. professor researcher college annactivity  . '
+            '. crew researchCenter master anncompany  . '
+            '. award . phd . . '
+            '. traffic . scholarship  . . '
+            '. . . exchange . .  '
+            '. . . company . . ';
+        }
+        @media screen and(min-width:900px) {
+          grid-template-areas: 'head_home about research'
+            'myhr myhr myhr'
+            'home intro lab'
+            '. professor researcher '
+            '. crew researchCenter '
+            '. award . '
+            '. traffic .'
+            '. . . '
+            '. . .  '
+            'student announce resources '
+            'myhr myhr myhr'
+            '. . . '
+            'lectureinformation annall resourcelink  '
+            'college annactivity  . '
+            ' master anncompany  . '
+            'phd . . '
+            'scholarship  . . '
+            'exchange . .  '
+            'company . . ';
+           
+        }
         grid-template-areas: 'head_home'
           'home'
           'about'
@@ -113,182 +140,170 @@ main.content {
           'anncompany'
           'resources'
           'resourcelink';
-      }
-      grid-template-areas:'head_home about research student announce resources .'
-        'myhr myhr myhr myhr myhr myhr myhr'
-        '. . . . . . .'
-        'home intro lab lectureinformation annall resourcelink  .'
-        '. professor researcher college annactivity  . .'
-        '. crew researchCenter master anncompany  . .'
-        '. award . phd . . . '
-        '. traffic . scholarship  . . .'
-        '. . . exchange . . . '
-        '. . . company . . . ';
-      text-align: center;
-      font-size: 18px;
+        text-align: center;
+        font-size: .5625rem;
 
-      hr {
-        grid-area: myhr;
-        display: block;
-        position: relative;
-        padding: 0;
-        margin: 3% 10px;
-        height: 2px;
-        width: 88%;
-        clear: both;
-        border: none;
-        border-top: 1px solid #aaaaaa;
-        border-bottom: 1px solid #aaaaaa;
-        @media screen and(max-width:1000px) {
-          display: none;
+        > hr {
+          margin: 3% .3125rem;
+          padding: 0;
+          border-top: .03125rem solid #aaaaaa;
+          border-bottom: .03125rem solid #aaaaaa;
+          grid-area: myhr;
+          display: block;
+          position: relative;
+          height: .0625rem;
+          width: 95%;
+          clear: both;
+          @media screen and(max-width:$mobile-width) {
+            display: none;
+          }
         }
-      }
 
-      .home {
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-        grid-area: head_home;
-        font-size: 24px;
-      }
+        > .home {
+          color: #213262;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          grid-area: head_home;
+          font-size: .75rem;
+        }
 
-      .about {
-        grid-area: about;
-        font-size: 24px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-      }
+        > .about {
+          color: #213262;
+          grid-area: about;
+          font-size: .75rem;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+        }
 
-      .research {
-        grid-area: research;
-        font-size: 24px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-      }
+        > .research {
+          color: #213262;
+          grid-area: research;
+          font-size: .75rem;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+        }
 
-      .student {
-        grid-area: student;
-        font-size: 24px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-      }
+        > .student {
+          color: #213262;
+          grid-area: student;
+          font-size: .75rem;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+        }
 
-      .announce {
-        grid-area: announce;
-        font-size: 24px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-        
-      }
+        > .announce {
+          color: #213262;
+          grid-area: announce;
+          font-size: .75rem;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+        }
 
-      .resource {
-        grid-area: resources;
-        font-size: 24px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #213262;
-      }
+        > .resource {
+          color: #213262;
+          grid-area: resources;
+          font-size: .75rem;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+        }
 
-      .tags__tag--home {
-        grid-area: home;
-      }
+        > .tags__tag--home {
+          grid-area: home;
+        }
 
-      .tags__tag--intro {
-        grid-area: intro;
-      }
+        > .tags__tag--intro {
+          grid-area: intro;
+        }
 
-      .tags__tag--professor {
-        grid-area: professor;
-      }
+        > .tags__tag--professor {
+          grid-area: professor;
+        }
 
-      .tags__tag--crew {
-        grid-area: crew;
-      }
+        > .tags__tag--crew {
+          grid-area: crew;
+        }
 
-      .tags__tag--award {
-        grid-area: award;
-      }
+        > .tags__tag--award {
+          grid-area: award;
+        }
 
-      .tags__tag--traffic {
-        grid-area: traffic;
-      }
+        > .tags__tag--traffic {
+          grid-area: traffic;
+        }
 
-      .tags__tag--lab {
-        grid-area: lab;
-      }
+        > .tags__tag--lab {
+          grid-area: lab;
+        }
 
-      .tags__tag--researcher {
-        grid-area: researcher;
-      }
+        > .tags__tag--researcher {
+          grid-area: researcher;
+        }
 
-      .tags__tag--center {
-        grid-area: researchCenter;
-      }
+        > .tags__tag--center {
+          grid-area: researchCenter;
+        }
 
-      .tags__tag--lectureinformation {
-        grid-area: lectureinformation;
-      }
+        > .tags__tag--lectureinformation {
+          grid-area: lectureinformation;
+        }
 
-      .tags__tag--college {
-        grid-area: college;
-      }
+        > .tags__tag--college {
+          grid-area: college;
+        }
 
-      .tags__tag--master {
-        grid-area: master;
-      }
+        > .tags__tag--master {
+          grid-area: master;
+        }
 
-      .tags__tag--phd {
-        grid-area: phd;
-      }
+        > .tags__tag--phd {
+          grid-area: phd;
+        }
 
-      .tags__tag--scholarship {
-        grid-area: scholarship;
-      }
+        > .tags__tag--scholarship {
+          grid-area: scholarship;
+        }
 
-      .tags__tag--exchange {
-        grid-area: exchange;
-      }
+        > .tags__tag--exchange {
+          grid-area: exchange;
+        }
 
-      .tags__tag--company {
-        grid-area: company;
-      }
+        > .tags__tag--company {
+          grid-area: company;
+        }
 
-      .tags__tag--announce--all {
-        grid-area: annall;
-      }
+        > .tags__tag--announce--all {
+          grid-area: annall;
+        }
 
-      .tags__tag--announce--activity {
-        grid-area: annactivity;
-      }
+        > .tags__tag--announce--activity {
+          grid-area: annactivity;
+        }
 
-      .tags__tag--announce--company {
-        grid-area: anncompany;
-      }
+        > .tags__tag--announce--company {
+          grid-area: anncompany;
+        }
 
-      .tags__tag--resourcelink {
-        grid-area: resourcelink;
+        > .tags__tag--resourcelink {
+          grid-area: resourcelink;
+        }
       }
     }
   }
