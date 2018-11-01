@@ -47,7 +47,7 @@ body > .content {
           '.  map  train .'
           '.  map  thsr  .';
         columns: 1fr 6fr 4fr 1fr;
-        rows: auto auto auto auto;
+        rows: auto;
       }
       column-gap: 2rem;
     };
@@ -59,30 +59,28 @@ body > .content {
 @include topic() {
   // [ position ]
   align-self: center;
-
-  // [ layout ]
   grid-area: topic;
 }
 
 // block
-// `#map`
+// `body > .content > #map`
 #map {
-  // [ layout ]
+  // [ position ]
   grid-area: map;
 }
 
 // block
-// `.thsr`
+// `body > .content > .thsr`
 .thsr {
-  // [ layout ]
+  // [ position ]
   grid-area: thsr;
   @include traffic();
 }
 
 // block
-// `.train`
+// `body > .content > .train`
 .train {
-  // [ layout ]
+  // [ position ]
   grid-area: train;
   @include traffic();
 }
@@ -90,7 +88,7 @@ body > .content {
 // block
 // `.drive`
 .drive {
-  // [ layout ]
+  // [ position ]
   grid-area: drive;
   @include traffic();
 }
