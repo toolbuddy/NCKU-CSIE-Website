@@ -65,56 +65,49 @@ body {
     }
 
     > article {
-      //right: 0;
-      //height: 21.59375rem;
-
-      //width: percentage(1517px/1920px);
       grid-area: maplink;
-
-      //position: absolute;
-      //display: inline-block;
       @media screen and(max-width:$mobile-width) {
         width: 100%;
       }
 
-      > section.link {
-        //margin-top: percentage(88px/691px);
+      > section.map__link {
         display: grid;
         @media screen and(min-width:$mobile-width) {
-          grid-template-areas:'head_home about research student announce resources '
-            'myhr myhr myhr myhr myhr myhr'
-            '. . . . . . '
-            'home intro lab lectureinformation annall resourcelink  '
-            '. professor researcher college annactivity  . '
-            '. crew researchCenter master anncompany  . '
-            '. award . phd . . '
-            '. traffic . scholarship  . . '
-            '. . . exchange . .  '
-            '. . . company . . ';
-        }
-        @media screen and(min-width:900px) {
-          grid-template-areas: 'head_home about research'
-            'myhr myhr myhr'
-            'home intro lab'
-            '. professor researcher '
-            '. crew researchCenter '
-            '. award . '
-            '. traffic .'
-            '. . . '
-            '. . .  '
-            'student announce resources '
-            'myhr myhr myhr'
-            '. . . '
-            'lectureinformation annall resourcelink  '
-            'college annactivity  . '
-            ' master anncompany  . '
+          grid-template-areas: 
+            'head_home          about          research '
+            'home               intro               lab '
+            '.                  professor                  researcher '
+            '.                  crew                  researchCenter '
+            '.                  award                  . '
+            '.                  traffic                  . '
+            '.                  .                  . '
+            '.                  .                  .  '
+            'myhr               myhr               myhr '
+            'student            announce            resources '
+            '.                  .                  . '
+            'lectureinformation annall resourcelink '
+            'college            annactivity            . '
+            'master             anncompany             . '
             'phd . . '
-            'scholarship  . . '
-            'exchange . .  '
+            'scholarship . . '
+            'exchange . . '
             'company . . ';
            
         }
-        grid-template-areas: 'head_home'
+        @media screen and(min-width:$pad-width) {
+          grid-template-areas:
+            'head_home   about         research         student             announce      resources     .'
+            'myhr        myhr          myhr             myhr                myhr          myhr          myhr'
+            '.           .             .                .                   .             .             .'
+            'home        intro         lab              lectureinformation  annall        resourcelink  .'
+            '.           professor     researcher       college             annactivity   .             .'
+            '.           crew          researchCenter   master              anncompany    .             .'
+            '.           award         .                phd                 .             .             .'
+            '.           traffic       .                scholarship         .             .             .'
+            '.           .             .                exchange            .             .             .'
+            '.           .             .                company             .             .             .';
+        }
+        grid-template-areas:'head_home'
           'home'
           'about'
           'intro'
