@@ -23,8 +23,11 @@ models/*/tables
 settings/database/config.js
 settings/server/config.js
 
+# executable
+bin/
+
 ## Static files
-static/dist/**/*.*
+static/dist/
 
 #############################
 # OS generated files

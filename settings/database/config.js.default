@@ -1,12 +1,13 @@
 /**
- * Database settings.
- *
- * @readonly {string} username         - Database server user account.
- * @readonly {string} password         - Database server user password.
- * @readonly {string} domainName       - Database server domain name/IP.
- * @readonly {number} port             - Database server port.
- * @readonly {string} protocol         - Database server protocol.
- * @readonly {string} connectionString - Database server connection string.
+ * Database settings module.
+ * @namespace
+ * @readonly
+ * @property {string} username         - Database server user account.
+ * @property {string} password         - Database server user password.
+ * @property {string} domainName       - Database server domain name/IP.
+ * @property {number} port             - Database server port.
+ * @property {string} protocol         - Database server protocol.
+ * @property {string} connectionString - Database server connection string.
  */
 
 const config = {};

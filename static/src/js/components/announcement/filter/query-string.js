@@ -1,4 +1,5 @@
 import config from 'static/src/js/components/announcement/filter/config.js';
+import languageSetting from 'settings/language/config.js';
 import { isValidDate, isValidPage, isValidTags, isValidLanguage, }  from 'test/static/src/js/components/announcement/filter/validate.js';
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
@@ -23,9 +24,9 @@ export default class QueryString {
         if ( !isValidPage( page ) )
             page = config.defaultPage;
 
-        let language = query.get( 'language' ) || config.defaultLanguage;
+        let language = query.get( 'language' ) || languageSetting.default;
         if ( !isValidLanguage( language ) )
-            language = config.defaultLanguage;
+            language = languageSetting.default;
 
         return { tags, startTime, endTime, page, language, };
     }

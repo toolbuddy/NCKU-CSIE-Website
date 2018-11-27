@@ -11,5 +11,5 @@
 # Squelize generated schema
 **/models/**/tables
 
-# server.min.js
-../../server.min.js
+# bin/
+../../bin

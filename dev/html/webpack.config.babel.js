@@ -1,6 +1,6 @@
+import path from 'path';
 import language from '../../settings/language/config.js';
 import config from '../../settings/server/config.js';
-import path from 'path';
 
 const pugRoot = path.join( config.projectRoot, 'static/src/pug' );
 const htmlRoot = path.join( config.projectRoot, 'static/dist/html' );
@@ -73,6 +73,7 @@ export default language.support.map( language => ( {
                         loader:  'file-loader',
                         options: {
                             name ( file ) {
+                                // Get correct file name related to pugRoot
                                 return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
                             },
                         },

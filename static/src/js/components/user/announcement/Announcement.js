@@ -1,4 +1,4 @@
-import languages from 'static/src/js/components/common/languages.js';
+import languages from 'settings/language/config.js';
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
 
 export class Announcement {
