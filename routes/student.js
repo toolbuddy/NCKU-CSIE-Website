@@ -1,5 +1,7 @@
-// router for /student
-const express = require( 'express' );
+// Router for /student
+import express from 'express';
+import config from 'settings/server/config.js';
+
 const router = express.Router();
 const testDB = require ( './testDB' );
 
@@ -39,22 +41,44 @@ const query_handler = ( page_name ) => {
     }
 }
 
-// route to /student/course
-router.get( '/course', query_handler('/course'));
+// Resolve URL `/student`
+router.get( /^\/$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/index.${ req.query.language }.html` );
+} );
 
-// route to /student/college
-router.get( '/college', query_handler('/college'));
+// Resolve URL `/student/college`
+router.get( /^\/college/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/college.${ req.query.language }.html` );
+} );
 
-// route to /student/master
-router.get( '/master', query_handler('/master'));
+// Resolve URL `/student/course`
+router.get( /^\/course$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/course.${ req.query.language }.html` );
+} );
 
-// route to /student/phd
-router.get( '/phd', query_handler('/phd'));
+// Resolve URL `/student/international`
+router.get( /^\/international$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/international.${ req.query.language }.html` );
+} );
 
-// route to /student/scholarship
-router.get( '/scholarship',query_handler('/scholarship'));
+// Resolve URL `/student/international`
+router.get( /^\/internship$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/internship.${ req.query.language }.html` );
+} );
 
-// route to /student/international
-router.get( '/international', query_handler('/international'));
+// Resolve URL `/student/master`
+router.get( /^\/master$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/master.${ req.query.language }.html` );
+} );
 
-module.exports = router;
+// Resolve URL `/student/phd`
+router.get( /^\/phd$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/phd.${ req.query.language }.html` );
+} );
+
+// Resolve URL `/student/scholarship`
+router.get( /^\/scholarship$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/student/scholarship.${ req.query.language }.html` );
+} );
+
+export default router;

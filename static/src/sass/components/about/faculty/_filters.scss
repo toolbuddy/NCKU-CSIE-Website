@@ -1,0 +1,60 @@
+// component
+// `> .filters`
+@mixin filters () {
+  // block
+  // `> .filters`
+  > .filters {
+    // [ layout ]
+    text-align: center;
+
+    // [ skin ]
+    font-size: .44rem;
+
+    // [ customization ]
+    @content;
+
+    // element
+    // `> .filters > .filters__filter`
+    > .filters__filter {
+      // [ layout ]
+      display: inline-block;
+      text-align: center;
+      word: {
+        wrap: break-word;
+        break: break-all;
+      }
+      white-space: normal;
+
+      // [ skin ]
+      margin: .14rem;
+      padding: {
+        left: .5rem;
+        right: .5rem;
+      }
+      border: solid .03rem #8caae2;
+      border-radius: .47rem;
+      min: {
+        width: 3.03rem;
+        height: .94rem;
+      }
+      color: #8caae2;
+      background-color: #eff3f9;
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        cursor: pointer;
+        color: #ffffff;
+        background-color: lighten( $color: #8caae2, $amount: 10% );
+      }
+
+      // modifier
+      // `> .filters > .filters__filter--active`
+      &--active {
+        // [ skin ]
+        color: #ffffff;
+        background-color: #8caae2;
+      }
+    }
+  }
+}

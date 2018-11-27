@@ -1,0 +1,49 @@
+extends /layouts/announcement/briefing.pug
+
+append stylesheets
+
+append header
+
+prepend content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic':  'All',
+        'top':    'Top Announcement',
+        'normal': 'Announcement',
+      },
+      'zh-TW': {
+        'topic':  '全部公告',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
+      },
+    } );
+
+append topic
+  +topic( i18n[ language ].topic )
+
+append filter
+  +filter( {
+    modifier: 'all',
+    tags: [
+      'all',
+      'award',
+      'college',
+      'competition',
+      'conference',
+      'course',
+      'exhibition',
+      'faculty',
+      'international',
+      'internship',
+      'master',
+      'phd',
+      'recruitment',
+      'rule',
+      'scholarship',
+      'speech',
+    ]
+  } )
+
+append scripts
+  +js( 'announcement/all' )

@@ -1,35 +1,33 @@
-const express = require( 'express' );
+import express from 'express';
 
-const home = require( './home' );
-const student = require( './student' );
-const about = require( './about' );
-const research = require( './research' );
-const announcement = require( './announcement' );
-const resource = require( './resource' );
-const api = require( '../apis/urls' );
-
-const config = require( '../settings/server/config' );
+import home from 'routes/home.js';
+import student from 'routes/student.js';
+import about from 'routes/about.js';
+import research from 'routes/research.js';
+import announcement from 'routes/announcement.js';
+import resource from 'routes/resource.js';
+import user from 'routes/user.js';
 
 const router = express.Router();
 
-const static_path = config.staticUrl();
+router.use( '/', home );
 
-const urlSettings = ( req, res, next ) => {
-    res.locals.static = static_path;
-    next();
-};
+// Resolve URL /about
+router.use( '/about', about );
 
-router.use( '/', urlSettings, home );
-// route to pages belongs to /student
-router.use( '/student', urlSettings, student );
-// route to pages belongs to /about
-router.use( '/about', urlSettings,  about );
-// route to pages belongs to /research
-router.use( '/research', urlSettings, research );
-// route to pages belongs to /announcement
-router.use( '/announcement', urlSettings, announcement );
-// route to pages belongs to /resource
-router.use( '/resource', urlSettings, resource );
-router.use( '/api', api );
+// Resolve URL /announcement
+router.use( '/announcement', announcement );
 
-module.exports = router;
+// Resolve URL /research
+router.use( '/research', research );
+
+// Resolve URL /resource
+router.use( '/resource', resource );
+
+// Resolve URL /student
+router.use( '/student', student );
+
+// Resolve URL /user
+router.use( '/user', user );
+
+export default router;

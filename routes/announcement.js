@@ -1,38 +1,32 @@
-const express = require( 'express' );
+// Router for /announcement
+import express from 'express';
+import config from 'settings/server/config.js';
+
 const router = express.Router();
 
-// route to filter (announcement/)
-router.get( '/', (req, res) => {
-    res.render('/');
+// Resolve URL `/announcement`
+router.get( /^\/$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/announcement/index.${ req.query.language }.html` );
 } );
 
-// route to /announcement/all
-router.get( '/all', (req, res) => {
-    res.render('announcement/all');
+// Resolve URL /announcement/activity
+router.get( /^\/activity$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/announcement/activity.${ req.query.language }.html` );
 } );
 
-// route to /announcement/administrator
-router.get( '/administrator', (req, res) => {
-    res.render( 'announcement/administrator' );
+// Resolve URL /announcement/all
+router.get( /^\/all$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/announcement/all.${ req.query.language }.html` );
 } );
 
-// route to /announcement/activity
-router.get( '/activity', (req, res) => {
-    res.render( 'announcement/activity' );
+// Resolve URL /announcement/recruitment
+router.get( /^\/recruitment$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/announcement/recruitment.${ req.query.language }.html` );
 } );
 
-// route to /announcement/speech
-router.get( '/speech', () => {
-    res.render( 'announcement/speech' );
+// Resolve URL /announcement/[id]
+router.get( /^\/\d+$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/announcement/announcement.${ req.query.language }.html` );
 } );
 
-// route to /announcement/recruitment
-router.get( '/recruitment', () => {
-    res.render( 'announcement/recruitment' );
-} );
-
-function errorHandler( err, req, res, next ) {
-    //if ( res. )
-}
-
-module.exports = router;
+export default router;

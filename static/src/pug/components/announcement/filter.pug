@@ -1,0 +1,19 @@
+include /components/announcement/filter-time.pug
+include /components/announcement/filter-tags.pug
+
+mixin filter( filter )
+  section.filter( class=`filter--${ filter.modifier }` )
+    -
+      const i18n = Object.freeze( {
+        'en-US': {
+          'button': 'filter',
+        },
+        'zh-TW': {
+          'button': '過濾器',
+        },
+      } );
+    button#filter__button.filter__button.button
+      span= i18n[ language ].button
+      span#button__icon.button__icon
+    +filter__time()
+    +filter__tags( filter.tags )

@@ -1,9 +1,14 @@
-const express = require( 'express' );
-const announcement = require( './announcement' );
-const config = require( '../settings/server/config' );
-const api = express.Router();
+import express from 'express';
 
-// route to announceent api
-api.use( '/announcement', announcement );
+import announcement from 'apis/announcement.js';
+import faculty from 'apis/faculty.js';
 
-module.exports = api;
+const apis = express.Router();
+
+// Resolve URL /api/announcement
+apis.use( '/announcement', announcement );
+
+// Resolve URL /api/faculty
+apis.use( '/faculty', faculty );
+
+export default apis;

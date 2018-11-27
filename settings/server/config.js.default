@@ -1,0 +1,43 @@
+/**
+ * Web server settings.
+ *
+ * @readonly {string} domainName  - Web server domain name/IP.
+ * @readonly {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @readonly {number} port        - Web server port.
+ * @readonly {string} projectRoot - The project root path.
+ * @readonly {string} host        - Web server host.
+ * @readonly {string} staticHost  - Static file server host.
+ */
+
+const config = {};
+
+Object.defineProperties( config, {
+    'domainName': {
+        value: 'localhost',
+    },
+    'protocol': {
+        value: 'http',
+    },
+    'port': {
+        value: 3000,
+    },
+    'projectRoot': {
+        value: '',
+    },
+    'host': {
+       get () {
+            return `${ config.protocol }://${ config.domainName }${
+                config.port === '80' || config.port === '443' ?
+                    '' :
+                    `:${ config.port }`
+            }`;
+        },
+    },
+    'staticHost': {
+        get () {
+            return config.host;
+        },
+    },
+} );
+
+export default config;

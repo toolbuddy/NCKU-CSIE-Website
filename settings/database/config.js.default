@@ -1,0 +1,37 @@
+/**
+ * Database settings.
+ *
+ * @readonly {string} username         - Database server user account.
+ * @readonly {string} password         - Database server user password.
+ * @readonly {string} domainName       - Database server domain name/IP.
+ * @readonly {number} port             - Database server port.
+ * @readonly {string} protocol         - Database server protocol.
+ * @readonly {string} connectionString - Database server connection string.
+ */
+
+const config = {};
+
+Object.defineProperties( config, {
+    'username': {
+        value: '',
+    },
+    'password': {
+        value: '',
+    },
+    'domainName': {
+        value: 'localhost',
+    },
+    'port': {
+        value: 3306,
+    },
+    'protocol': {
+        value: 'mysql',
+    },
+    'connectionString': {
+        value ( databaseName ) {
+            return `${ this.protocol }://${ this.username }:${ this.password }@${ this.domainName }:${ this.port }/${ databaseName }`;
+        },
+    },
+} );
+
+module.exports = config;

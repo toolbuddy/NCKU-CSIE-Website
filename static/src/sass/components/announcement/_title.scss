@@ -1,0 +1,29 @@
+@import 'components/common/icon';
+
+// component
+// `> .announcement__title`
+@mixin announcement__title () {
+  // element
+  // `> .announcement__tiltle`
+  > .announcement__title {
+    // [ layout ]
+    display: flex;
+
+    // [ skin ]
+    line-height: 1rem;
+    font: {
+      size: .55rem;
+      weight: bold;
+    }
+
+    // [ before ]
+    &::before {
+      // [ skin ]
+      content: '';
+      margin-right: .4rem;
+
+      // [ icon ]
+      @include icon__flag( $size: 1rem );
+    }
+  }
+}

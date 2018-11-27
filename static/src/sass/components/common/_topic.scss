@@ -1,0 +1,43 @@
+// component
+// `> .topic`
+@mixin topic () {
+  // block
+  // `> .topic`
+  .topic {
+    // [ variable ]
+    $tablet: 850px;
+
+    // [ position ]
+    display: flex;
+    justify-content: center;
+
+    // [ skin ]
+    color: #000000;
+
+    // [ customization ]
+    @content;
+
+    // [ RWD: $tablet ]
+    @media screen and ( min-width: $tablet ) {
+      // [ position ]
+      justify-content: flex-start;
+
+      // [skin ]
+      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+    }
+
+    // element
+    // `> .topic > .topic__text`
+
+    > .topic__text {
+      // [ skin ]
+      border-bottom: solid .0156rem #213262;
+      width: auto;
+      line-height: 1.4rem;
+      font: {
+        weight: bold;
+        size: .75rem;
+      }
+    }
+  }
+}

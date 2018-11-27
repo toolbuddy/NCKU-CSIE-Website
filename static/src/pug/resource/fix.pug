@@ -1,0 +1,19 @@
+extends /layouts/resource.pug
+
+append stylesheets
+
+append header
+
+append content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+      },
+      'zh-TW': {
+      },
+    } );
+
+  main.content
+
+append scripts
+  +js( 'resource/fix' )

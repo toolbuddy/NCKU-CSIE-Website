@@ -1,30 +1,27 @@
-// router for /research
-const express = require( 'express' );
+// Router for /research
+import express from 'express';
+import config from 'settings/server/config.js';
+
 const router = express.Router();
 
-// route to /research/labs
-router.get( '/labs', function( req, res ) {
-    res.render( 'research/labs' );
+// Resolve URL `/research`
+router.get( /^\/$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/research/index.${ req.query.language }.html` );
 } );
 
-// route to /research/groups
-router.get( '/groups', function( req, res ) {
-    res.render( 'research/groups' );
+// Resolve URL `/research/groups`
+router.get( /^\/groups$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/research/groups.${ req.query.language }.html` );
 } );
 
-// route to /research/publications
-router.get( '/publications', function( req, res ) {
-    res.render( 'research/publications' );
+// Resolve URL `/research/labs`
+router.get( /^\/labs$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/research/labs.${ req.query.language }.html` );
 } );
 
-// route to /research/awards
-router.get( '/awards', function( req, res ) {
-    res.render( 'research/awards' );
+// Resolve URL `/research/publications`
+router.get( /^\/publications$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/research/publications.${ req.query.language }.html` );
 } );
 
-// route to /research/conferences
-router.get( '/conferences', function( req, res ) {
-    res.render( 'research/conferences' );
-} );
-
-module.exports = router;
+export default router;

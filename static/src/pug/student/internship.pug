@@ -1,0 +1,37 @@
+extends /layouts/announcement/briefing.pug
+
+append stylesheets
+
+append header
+
+prepend content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic':  'Internship',
+        'top':    'Top Announcement',
+        'normal': 'Announcement',
+      },
+      'zh-TW': {
+        'topic':  '實習',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
+      },
+    } );
+
+append topic
+  +topic( i18n[ language ].topic )
+
+append filter
+  +filter( {
+    modifier: 'internship',
+    tags: [
+      'college',
+      'internship',
+      'master',
+      'phd',
+    ]
+  } )
+
+append scripts
+  +js( 'student/internship' )

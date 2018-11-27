@@ -1,0 +1,32 @@
+extends /layouts/announcement/briefing.pug
+
+append stylesheets
+
+append header
+
+prepend content
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'topic':  'Recruitments',
+        'top':    'Top Announcement',
+        'normal': 'Announcement',
+      },
+      'zh-TW': {
+        'topic':  '企業徵才',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
+      },
+    } );
+
+append topic
+  +topic( i18n[ language ].topic )
+
+append filter
+  +filter( {
+    modifier: 'recruitment',
+    tags: [ 'recruitment', ]
+  } )
+
+append scripts
+  +js( 'announcement/recruitment' )

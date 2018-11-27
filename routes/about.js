@@ -1,29 +1,42 @@
-const express = require( 'express' );
+// Router for `/about`
+import express from 'express';
+import config from 'settings/server/config.js';
+
 const router = express.Router();
 
-// deal with the URL about/intro
-router.get( '/intro', function( req, res ) {
-    res.render( 'about/intro' );
+// Resolve URL `/about`
+router.get( /^\/$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/index.${ req.query.language }.html` );
 } );
 
-// deal with the URL about/teachers
-router.get( '/teachers', function( req, res ) {
-    res.render( 'about/teachers' );
+// Resolve URL `/about/award`
+router.get( /^\/award$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/award.${ req.query.language }.html` );
 } );
 
-// deal with the URL about/members
-router.get( '/members', function( req, res ) {
-    res.render( 'about/members' );
+// Resolve URL `/about/contact`
+router.get( /^\/contact$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/contact.${ req.query.language }.html` );
 } );
 
-// deal with the URL about/honor
-router.get( '/honor', function( req, res ) {
-    res.render( 'about/honor' );
+// Resolve URL `/about/intro`
+router.get( /^\/intro$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/intro.${ req.query.language }.html` );
 } );
 
-// deal with the URL about/location
-router.get( '/location', function( req, res ) {
-    res.render( 'about/location' );
+// Resolve URL `/about/faculty`
+router.get( /^\/faculty$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/faculty.${ req.query.language }.html` );
 } );
 
-module.exports = router;
+// Resolve URL `/about/faculty/[id]`
+router.get( /^\/faculty\/[0-9]+$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/faculty-detail.${ req.query.language }.html` );
+} );
+
+// Resolve URL `/about/staff`
+router.get( /^\/staff$/, ( req, res ) => {
+    res.sendFile( `${ config.projectRoot }/static/dist/html/about/staff.${ req.query.language }.html` );
+} );
+
+export default router;
