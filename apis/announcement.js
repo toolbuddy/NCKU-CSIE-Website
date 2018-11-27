@@ -38,13 +38,10 @@ apis.get( /^\/all-announcement$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.length )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -60,13 +57,10 @@ apis.get( /^\/all-pages$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.pageNumber )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -83,13 +77,10 @@ apis.get( /^\/all-pinned$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.length )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -107,13 +98,10 @@ apis.get( /^\/tags-announcement$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.length )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -129,13 +117,10 @@ apis.get( /^\/tags-pages$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.pageNumber )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -152,13 +137,10 @@ apis.get( /^\/tags-pinned$/, async ( req, res ) => {
     } );
 
     if ( result.error )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 400 ).json( result );
     else if ( !result.length )
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     else
-        /* eslint no-magic-numbers: 'off' */
         res.status( 200 ).json( result );
 } );
 
@@ -167,7 +149,6 @@ apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
         res.json( await getAnnouncementAllLanguages( { announcementId: req.params[ 0 ], } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     }
 } );
@@ -177,7 +158,6 @@ apis.get( /^\/(\d+)$/, async ( req, res ) => {
         res.json( await getAnnouncement( { announcementId: req.params[ 0 ], language: req.query.language, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 404 ).end();
     }
 } );
@@ -187,7 +167,6 @@ apis.post( '/', async ( req, res ) => {
         res.json( await postAnnouncement( { announcementData: req.body, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
@@ -197,7 +176,6 @@ apis.patch( '/:id', async ( req, res ) => {
         res.json( await patchAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
@@ -207,18 +185,19 @@ apis.delete( '/:id', async ( req, res ) => {
         res.json( await deleteAnnouncement( { announcementId: req.params.id, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
 
-// TODO: Not yet finished
+/**
+ * @todo Not yet finished
+ */
+
 apis.post( '/:id/file', async ( req, res ) => {
     try {
         res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
@@ -229,7 +208,6 @@ apis.delete( '/:id/file/:id', async ( req, res ) => {
         res.json( await deleteAnnouncementFiles( { announcementFileData: req.body, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
@@ -239,7 +217,6 @@ apis.post( '/:id/tags', async ( req, res ) => {
         res.json( await postAnnouncementTags( { announcementId: req.params.id, tagId: req.body, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );
@@ -250,7 +227,6 @@ apis.delete( '/:id/tags', async ( req, res ) => {
         res.json( await deleteAnnouncementTags( { announcementId: req.params.id, tagId, } ) );
     }
     catch ( e ) {
-        /* eslint no-magic-numbers: 'off' */
         res.status( 500 ).end();
     }
 } );

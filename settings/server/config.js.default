@@ -1,12 +1,13 @@
 /**
- * Web server settings.
- *
- * @readonly {string} domainName  - Web server domain name/IP.
- * @readonly {string} protocol    - Web server protocol, can be either 'http' or 'https'.
- * @readonly {number} port        - Web server port.
- * @readonly {string} projectRoot - The project root path.
- * @readonly {string} host        - Web server host.
- * @readonly {string} staticHost  - Static file server host.
+ * Web server settings module.
+ * @namespace
+ * @readonly
+ * @property {string} domainName  - Web server domain name/IP.
+ * @property {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @property {number} port        - Web server binding port.
+ * @property {string} projectRoot - This very project's root path.
+ * @property {string} host        - Web server host.
+ * @property {string} staticHost  - Static file server host.
  */
 
 const config = {};

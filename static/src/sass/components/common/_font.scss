@@ -1,6 +1,6 @@
 // font [loader]
 // `NotoSansTC`
-@mixin font__load--NotoSansTC() {
+@mixin font__load--NotoSansTC () {
   // Avoid duplicated load file.
   @if not variable-exists( font__load--NotoSansTC ) {
     $font__load--NotoSansTC: 'loaded' !global;
@@ -10,7 +10,7 @@
 
 // font [family]
 // `NotoSansTC`
-@mixin font__family--NotoSansTC() {
+@mixin font__family--NotoSansTC () {
   // Check if font is loaded.
   @if variable-exists( font__load--NotoSansTC ) {
     font: {
@@ -26,7 +26,7 @@
 
 // font [family]
 // `default`
-@mixin font__family--default() {
+@mixin font__family--default () {
   // Avoid duplicated load file.
   @if not variable-exists( font__family--default ) {
     $font__family--default: 'loaded' !global;
