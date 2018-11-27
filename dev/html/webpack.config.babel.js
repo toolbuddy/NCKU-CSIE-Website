@@ -73,7 +73,7 @@ export default language.support.map( language => ( {
                         loader:  'file-loader',
                         options: {
                             name ( file ) {
-                                // get correct file name related to pugRoot
+                                // Get correct file name related to pugRoot
                                 return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
                             },
                         },
