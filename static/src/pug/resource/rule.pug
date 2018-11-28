@@ -1,23 +1,29 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n =  Object.freeze( {
       'en-US': {
+        'title':  'Rule',
         'topic':  'Rule',
         'top':    'Top Announcement',
         'normal': 'Announcement',
       },
       'zh-TW': {
+        'title':  '法規彙編',
         'topic':  '法規彙編',
         'top':    '置頂貼文',
         'normal': '一般公告',
       },
     } );
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'resource/rule' )
+
+append header
 
 append topic
   +topic( i18n[ language ].topic )
@@ -33,6 +39,8 @@ append filter
       'rule',
     ]
   } )
+
+append footer
 
 append scripts
   +js( 'resource/rule' )

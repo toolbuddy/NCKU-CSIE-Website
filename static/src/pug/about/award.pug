@@ -1,23 +1,29 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n =  Object.freeze( {
       'en-US': {
-        'topic':  'Honor',
+        'title':  'Award',
+        'topic':  'Award',
         'top':    'Top Announcement',
         'normal': 'Announcement',
       },
       'zh-TW': {
+        'title':  '榮譽事蹟',
         'topic':  '榮譽',
         'top':    '置頂貼文',
         'normal': '一般公告',
       },
     } );
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'about/award' )
+
+append header
 
 append topic
   +topic( i18n[ language ].topic )
@@ -33,6 +39,8 @@ append filter
       'phd',
     ]
   } )
+
+append footer
 
 append scripts
   +js( 'about/award' )

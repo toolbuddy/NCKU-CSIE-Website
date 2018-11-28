@@ -1,23 +1,29 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title':  'Internship',
         'topic':  'Internship',
         'top':    'Top Announcement',
         'normal': 'Announcement',
       },
       'zh-TW': {
+        'title':  '實習',
         'topic':  '實習',
         'top':    '置頂貼文',
         'normal': '一般公告',
       },
     } );
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/internship' )
+
+append header
 
 append topic
   +topic( i18n[ language ].topic )
@@ -32,6 +38,8 @@ append filter
       'phd',
     ]
   } )
+
+append footer
 
 append scripts
   +js( 'student/internship' )
