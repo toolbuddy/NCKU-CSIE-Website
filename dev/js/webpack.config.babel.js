@@ -1,13 +1,38 @@
 import path from 'path';
-import config from '../../settings/server/config.js';
 
-const jsSrcRoot = path.join( config.projectRoot, 'static/src/js' );
-const jsDistRoot = path.join( config.projectRoot, 'static/dist/js' );
-const staticRoot = path.join( config.projectRoot, 'static' );
+import serverSettings from '../../settings/server/config.js';
+
+const jsSrcRoot = path.join( serverSettings.projectRoot, 'static/src/js' );
+const jsDistRoot = path.join( serverSettings.projectRoot, 'static/dist/js' );
+const staticRoot = path.join( serverSettings.projectRoot, 'static' );
 
 export default {
+    /**
+     * Webpack built-in develop tools.
+     *
+     * Use sourcemap to recover codes from bundle file.
+     * `inline-sourcemap` make sourcemap inline, which is smaller.
+     * In develop, this option should be `devtool: 'inline-sourcemap'`.
+     * In production, this option should be `devtool: false`.
+     */
+
     devtool: 'inline-sourcemap',
+
+    /**
+     * Bundle mode.
+     *
+     * In develop, this option should be `mode: 'development'`.
+     * In production, this option should be `mode: 'production'`.
+     */
+
     mode:    'development',
+
+    /**
+     * Entry files for bundling.
+     *
+     * @todo convert ES6+ syntax into ES5 with ES6 polyfill.
+     */
+
     entry:   {
         // Route `about`
         'about/award':          path.join( jsSrcRoot, 'about/award.js' ),
@@ -59,21 +84,68 @@ export default {
         'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
         'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),
     },
+
+    /**
+     * Bundled file destination.
+     *
+     * After bundling, put file to path `jsDistRoot`.
+     * Rename original file name `f.js` to `f.min.js`.
+     */
+
     output: {
         path:     jsDistRoot,
         filename: '[name].min.js',
     },
+
+    /**
+     * Bundled environment.
+     *
+     * Because JS run in browsers,
+     * so this option must always be `target: 'web'`.
+     */
+
     target:  'web',
+
+    /**
+     * Relative import alias.
+     *
+     * When writing `import` statement for relative import,
+     * no need to start with `'./'` or `'../'`.
+     * Only work for following path:
+     * - `import 'settings/...'`
+     * - `import 'static/.....'`
+     * - `import 'test/.......'`.
+     */
+
     resolve: {
         alias: {
-            settings: path.join( config.projectRoot, 'settings' ),
+            settings: path.join( serverSettings.projectRoot, 'settings' ),
             static:   staticRoot,
-            test:     path.join( config.projectRoot, 'test' ),
+            test:     path.join( serverSettings.projectRoot, 'test' ),
         },
     },
+
+    /**
+     * Webpack loader modules.
+     *
+     * This `webpack.config.babel.js` is specific for client-side bundling,
+     * therefore it can be use with `.css`, `.js`, `.pug` and image related loaders.
+     */
+
     module:  {
         rules: [
-            // CSS components.
+
+            /**
+             * Loader for `.css` files.
+             *
+             * Bundle `.css` file into `.js` by following steps:
+             * 1. Use `css-loader` to resolve `@import` and `url()` in `.css` files.
+             *      - `@import '...css'` will bundle local `.css` file.
+             *      - `@import url('...css')` will fetch and bundle remote `.css` file.
+             *      - `@import url(image)` will use `url-loader` to convert image into data url.
+             * 2. Use `style-loader` to add CSS to DOM by injecting a `<style>` tag.
+             */
+
             {
                 test: /\.css$/,
                 use:  [
@@ -92,19 +164,30 @@ export default {
                 ],
             },
 
-            // ECMAScript components.
+            /**
+             * Loader for `.js` files.
+             *
+             * Use `eslint-loader` to lint.
+             */
+
             {
                 test:    /\.js$/,
                 use:     {
                     loader:  'eslint-loader',
                     options: {
                         fix:           true,
-                        configFile:    path.join( config.projectRoot, 'dev/js/.eslintrc.js' ),
+                        configFile:    path.join( serverSettings.projectRoot, 'dev/js/.eslintrc.js' ),
                     },
                 },
             },
 
-            // HTML components.
+            /**
+             * Loader for `.pug` files.
+             *
+             * Use `pug-loader` to convert `.pug` file into JS function.
+             * Call function with data will return HTML string literal.
+             */
+
             {
                 test: /\.pug$/,
                 use:  [
@@ -117,7 +200,18 @@ export default {
                 ],
             },
 
-            // Image components
+            /**
+             * Loader for image files.
+             *
+             * Use `url-loader` to convert image file into data url.
+             * Image should only appear in `.pug` or `.css` files.
+             * Work with following image format:
+             * - `.gif`
+             * - `.png`
+             * - `.jpg` or `.jpeg`
+             * - `.svg`
+             */
+
             {
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [
