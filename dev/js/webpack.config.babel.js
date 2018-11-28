@@ -1,14 +1,13 @@
-const path = require( 'path' );
+import path from 'path';
+import config from '../../settings/server/config.js';
 
-const projectRoot = path.dirname( path.dirname( __dirname ) );
-const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
-const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
-const staticRoot = path.join( projectRoot, 'static' );
-const devMode = true;
+const jsSrcRoot = path.join( config.projectRoot, 'static/src/js' );
+const jsDistRoot = path.join( config.projectRoot, 'static/dist/js' );
+const staticRoot = path.join( config.projectRoot, 'static' );
 
-module.exports = {
-    devtool: devMode ? 'inline-sourcemap' : null,
-    mode:    devMode ? 'development' : 'production',
+export default {
+    devtool: 'inline-sourcemap',
+    mode:    'development',
     entry:   {
         // Route `about`
         'about/award':          path.join( jsSrcRoot, 'about/award.js' ),
@@ -53,6 +52,12 @@ module.exports = {
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.join( jsSrcRoot, 'student/phd.js' ),
         'student/scholarship':   path.join( jsSrcRoot, 'student/scholarship.js' ),
+
+        // Route `user`
+        'user/index':              path.join( jsSrcRoot, 'user/index.js' ),
+        'user/announcement/index': path.join( jsSrcRoot, 'user/announcement/index.js' ),
+        'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
+        'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),
     },
     output: {
         path:     jsDistRoot,
@@ -61,9 +66,9 @@ module.exports = {
     target:  'web',
     resolve: {
         alias: {
-            settings: path.join( projectRoot, 'settings' ),
+            settings: path.join( config.projectRoot, 'settings' ),
             static:   staticRoot,
-            test:     path.join( projectRoot, 'test' ),
+            test:     path.join( config.projectRoot, 'test' ),
         },
     },
     module:  {
@@ -94,7 +99,7 @@ module.exports = {
                     loader:  'eslint-loader',
                     options: {
                         fix:           true,
-                        configFile:    path.join( projectRoot, 'dev/js/.eslintrc.js' ),
+                        configFile:    path.join( config.projectRoot, 'dev/js/.eslintrc.js' ),
                     },
                 },
             },

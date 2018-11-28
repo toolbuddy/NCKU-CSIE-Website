@@ -1,19 +1,18 @@
-const path = require( 'path' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const StyleLintPlugin = require( 'stylelint-webpack-plugin' );
-const autoprefixer = require( 'autoprefixer' );
-const cssnano = require( 'cssnano' );
+import path from 'path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import StyleLintPlugin from 'stylelint-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import browserlist from './browserlist.js';
+import config from '../../settings/server/config.js';
 
-const projectRoot = path.dirname( path.dirname( __dirname ) );
-const sassRoot = path.join( projectRoot, 'static/src/sass' );
-const imageRoot = path.join( projectRoot, 'static/src/image' );
-const cssRoot = path.join( projectRoot, 'static/dist/css' );
-const browsers = require( path.join( projectRoot, 'settings/browserlist/config.js' ) );
-const devMode = true;
+const sassRoot = path.join( config.projectRoot, 'static/src/sass' );
+const imageRoot = path.join( config.projectRoot, 'static/src/image' );
+const cssRoot = path.join( config.projectRoot, 'static/dist/css' );
 
-module.exports = {
-    devtool: devMode ? 'inline-sourcemap' : null,
-    mode:    devMode ? 'development' : 'production',
+export default {
+    devtool: 'inline-sourcemap',
+    mode:    'development',
     entry:   {
         // Route `about`
         'about/award':          path.join( sassRoot, 'about/award.scss' ),
@@ -58,6 +57,9 @@ module.exports = {
         'student/master':        path.join( sassRoot, 'student/master.scss' ),
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
         'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
+
+        // Route `user`
+        'user/index': path.join( sassRoot, 'user/index.scss' ),
     },
     output: {
         path:     cssRoot,
@@ -67,6 +69,7 @@ module.exports = {
     module:  {
         rules: [
             {
+                // Rules for SCSS files.
                 test: /\.scss$/,
                 use:  [
                     // Extract CSS file.
@@ -85,33 +88,38 @@ module.exports = {
                         },
                     },
 
-                    // Do some trick to CSS.
+                    // Post-Precessing CSS files.
                     {
                         loader:  'postcss-loader',
                         options: {
                             sourceMap: true,
                             plugins:   [
-                                // Parse CSS and add vendor prefixed to CSS rules.
-                                autoprefixer( { browsers, } ),
+                                // Automatically add vendor prefixed to CSS files.
+                                autoprefixer( { browserlist, } ),
 
-                                // CSS optimizations.
+                                // Optimize CSS files.
+                                // Remove redundant and repeated rules.
                                 cssnano(),
                             ],
                         },
                     },
 
-                    // Compile `.scss` files to CSS files.
+                    // Compile SCSS files into CSS files.
                     {
                         loader:  'sass-loader',
                         options: {
-                            includePaths: [ sassRoot,
-                                imageRoot, ],
+                            // Short-hand setting for `path` in `@import path`.
+                            includePaths: [
+                                sassRoot,
+                                imageRoot,
+                            ],
                             sourceMap:    true,
                         },
                     },
                 ],
             },
             {
+                // Convert image binary file into data url.
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [
                     'url-loader',
@@ -122,13 +130,15 @@ module.exports = {
     plugins: [
         // Extract CSS file.
         new MiniCssExtractPlugin( {
+            // Extract and save as `[name].min.css`,
+            // where `[name]` will be replaced with origin SCSS file name.
             filename: '[name].min.css',
         } ),
 
-        // `stylelint` plugin for webpack.
+        // SCSS linter.
         new StyleLintPlugin( {
-            // The path to ECMAScript file that contains `stylelint` configuration object.
-            configFile:    path.join( projectRoot, 'dev/css/.stylelintrc.js' ),
+            // File path for `stylelint` configuration.
+            configFile:    path.join( config.projectRoot, 'dev/css/.stylelintrc.js' ),
 
             // Store the info about processed files in order to
             // only operate on the changed ones the next time you run `stylelint`.
@@ -136,7 +146,7 @@ module.exports = {
             cache:         true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: path.join( projectRoot, 'node_modules/.cache/.stylelintcache' ),
+            cacheLocation: path.join( config.projectRoot, 'node_modules/.cache/.stylelintcache' ),
 
             // Specify a non-standard syntax that should be used to parse source stylesheets.
             syntax:         'scss',

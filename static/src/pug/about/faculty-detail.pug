@@ -1,12 +1,25 @@
 extends /layouts/about.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Detail',
+      },
+      'zh-TW': {
+        'title': '詳細資料',
+      },
+    } );
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'about/faculty-detail' )
 
 append header
 
 append content
-
-  main#content.content
 
 append footer
 

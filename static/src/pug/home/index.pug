@@ -1,33 +1,43 @@
 extends /layouts/home.pug
 
-append stylesheets
-
-append header
-
-append content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title': 'Home',
         'topic': 'Latest news',
         'more':  'more',
         'hot':   'Hot news',
       },
       'zh-TW': {
+        'title': '首頁',
         'topic': '最新消息',
         'more':  '更多資訊',
         'hot':   '最近熱門',
       },
     } );
 
-  main.content
-    +topic( i18n[ language ].topic )
-    section.announcement
-      nav#announcement__briefings.announcement__briefings.briefings
-      a.announcement__button( href = url( { link : '/announcement/all' } ) )= `${ i18n[ language ].more }...`
-    section.announcement.announcement--hot-news
-      header.announcement__title.title
-        h1.title__text= i18n[ language ].hot
-      nav#announcement__briefings--hot-news.announcement__briefings.briefings
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'home/index' )
+
+append header
+
+append content
+  include /components/common/topic.pug
+
+  +topic( i18n[ language ].topic )
+  section.announcement
+    nav#announcement__briefings.announcement__briefings.briefings
+    a.announcement__button( href = url( { link : '/announcement/all' } ) )= `${ i18n[ language ].more }...`
+  section.announcement.announcement--hot-news
+    header.announcement__title.title
+      h1.title__text= i18n[ language ].hot
+    nav#announcement__briefings--hot-news.announcement__briefings.briefings
+
+append footer
 
 append scripts
   +js( 'home/index' )

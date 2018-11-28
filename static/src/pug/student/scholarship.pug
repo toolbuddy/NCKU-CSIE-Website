@@ -1,37 +1,38 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title':  'Scholarship',
         'topic':  'Scholarship',
         'top':    'Top Announcement',
         'normal': 'Announcement',
       },
       'zh-TW': {
+        'title':  '獎學金',
         'topic':  '獎學金',
         'top':    '置頂貼文',
         'normal': '一般公告',
       },
     } );
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'scholarship',
-    tags: [
+    const filterModifier = 'scholarship';
+    const filterTags = [
       'scholarship',
       'college',
       'master',
       'phd',
-    ]
-  } )
+    ];
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/scholarship' )
+
+append header
+
+append footer
 
 append scripts
   +js( 'student/scholarship' )

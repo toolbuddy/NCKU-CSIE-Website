@@ -1,19 +1,27 @@
 extends /layouts/announcement/announcement.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Announcement Detail',
+      },
+      'zh-TW': {
+        'title': '公告內容',
+      },
+    } );
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'announcement/announcement' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main#content.content
+append footer
 
 append scripts
   +js( 'announcement/announcement' )

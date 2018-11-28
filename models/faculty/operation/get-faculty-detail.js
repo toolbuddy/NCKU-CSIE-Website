@@ -1,8 +1,6 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/faculty/operation/associations` );
+import associations from 'models/faculty/operation/associations.js';
 
-module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
+export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
     const table = await associations();
 
     const data = {};

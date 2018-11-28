@@ -1,0 +1,33 @@
+extends /layouts/user.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Announcement',
+      },
+      'zh-TW': {
+        'title': '所有公告',
+      },
+    } );
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'user/announcement/index' )
+
+append header
+
+append content
+  a( href = '/user/announcement/add' ) 新增公告
+  section#announcement__brefings
+    each val in [1, 2, 3, 4, 5]
+      a( href = `/user/announcement/edit/${ val }` )= `公告${ val }`
+      button( type='button', value=`${ val }` )= '刪除'
+      br
+
+append footer
+
+append scripts
+  +js( 'user/announcement/index' )

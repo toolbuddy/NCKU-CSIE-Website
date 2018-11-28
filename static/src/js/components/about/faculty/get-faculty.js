@@ -1,4 +1,5 @@
 import card from 'static/src/pug/components/about/faculty/cards.pug';
+import languageSetting from 'settings/language/config.js';
 
 const reqURL = `${ window.location.protocol }//${ window.location.host }/api/faculty${ location.search }`;
 
@@ -10,5 +11,5 @@ export default target => fetch( reqURL )
     if ( language )
         target.innerHTML = card( { faculty, language, } );
     else
-        target.innerHTML = card( { faculty, language: 'zh-TW', } );
+        target.innerHTML = card( { faculty, language: languageSetting.default, } );
 } );

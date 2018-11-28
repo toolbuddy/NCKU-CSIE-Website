@@ -1,31 +1,23 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title':  'College',
         'topic':  'College',
         'top':    'Top Announcement',
         'normal': 'Announcement',
       },
       'zh-TW': {
+        'title':  '大學部',
         'topic':  '大學部',
         'top':    '置頂貼文',
         'normal': '一般公告',
       },
     } );
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'college',
-    tags: [
+    const filterModifier = 'college';
+    const filterTags = [
       'award',
       'college',
       'competition',
@@ -36,8 +28,17 @@ append filter
       'rule',
       'scholarship',
       'speech',
-    ]
-  } )
+    ];
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/college' )
+
+append header
+
+append footer
 
 append scripts
   +js( 'student/college' )

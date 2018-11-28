@@ -1,40 +1,68 @@
-const express = require( 'express' );
-const path = require( 'path' );
+/**
+ * Router middleware module for `express`.
+ *
+ * Including following sub-routing modules:
+ * - home:         `/`
+ * - about:        `/about`
+ * - announcement: `/announcement`
+ * - research:     `/research`
+ * - resource:     `/resource`
+ * - student:      `/student`
+ * - user:         `/user`
+ */
 
-const projectRoot = path.dirname( __dirname );
-const home = require( path.join( projectRoot, 'routes/home' ) );
-const student = require( path.join( projectRoot, 'routes/student' ) );
-const about = require( path.join( projectRoot, 'routes/about' ) );
-const research = require( path.join( projectRoot, 'routes/research' ) );
-const announcement = require( path.join( projectRoot, 'routes/announcement' ) );
-const resource = require( path.join( projectRoot, 'routes/resource' ) );
-const search = require( path.join( projectRoot, 'routes/search' ) );
-const login = require( path.join( projectRoot, 'routes/login' ) );
-const calendar = require( path.join( projectRoot, 'routes/calendar' ) );
+import express from 'express';
+
+import about from 'routes/about.js';
+import announcement from 'routes/announcement.js';
+import home from 'routes/home.js';
+import research from 'routes/research.js';
+import resource from 'routes/resource.js';
+import student from 'routes/student.js';
+import user from 'routes/user.js';
 
 const router = express.Router();
 
+/**
+ * Resolve URL `/`.
+ */
+
 router.use( '/', home );
 
-// Resolve URL /about
+/**
+ * Resolve URL `/about`.
+ */
+
 router.use( '/about', about );
 
-// Resolve URL /announcement
+/**
+ * Resolve URL `/announcement`.
+ */
+
 router.use( '/announcement', announcement );
 
-// Resolve URL /research
+/**
+ * Resolve URL `/research`.
+ */
+
 router.use( '/research', research );
 
-// Resolve URL /resource
+/**
+ * Resolve URL `/resource`.
+ */
+
 router.use( '/resource', resource );
 
-// Resolve URL /student
+/**
+ * Resolve URL `/student`.
+ */
+
 router.use( '/student', student );
 
-router.use( '/search', search );
+/**
+ * Resolve URL `/user`.
+ */
 
-router.use( '/login', login );
+router.use( '/user', user );
 
-router.use( '/calendar', calendar );
-
-module.exports = router;
+export default router;
