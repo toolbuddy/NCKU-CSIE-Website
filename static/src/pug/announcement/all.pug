@@ -16,6 +16,25 @@ append data
         'normal': '一般公告',
       },
     } );
+    const filterModifier = 'all';
+    const filterTags = [
+        'all',
+        'award',
+        'college',
+        'competition',
+        'conference',
+        'course',
+        'exhibition',
+        'faculty',
+        'international',
+        'internship',
+        'master',
+        'phd',
+        'recruitment',
+        'rule',
+        'scholarship',
+        'speech',
+    ];
 
 append title
   +title( i18n[ language ].title )
@@ -24,32 +43,6 @@ append stylesheets
   +css( 'announcement/all' )
 
 append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'all',
-    tags: [
-      'all',
-      'award',
-      'college',
-      'competition',
-      'conference',
-      'course',
-      'exhibition',
-      'faculty',
-      'international',
-      'internship',
-      'master',
-      'phd',
-      'recruitment',
-      'rule',
-      'scholarship',
-      'speech',
-    ]
-  } )
 
 append footer
 

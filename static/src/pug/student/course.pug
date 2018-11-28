@@ -16,6 +16,13 @@ append data
         'normal': '一般公告',
       },
     } );
+    const filterModifier = 'course';
+    const filterTags = [
+      'college',
+      'course',
+      'master',
+      'phd',
+    ];
 
 append title
   +title( i18n[ language ].title )
@@ -24,20 +31,6 @@ append stylesheets
   +css( 'student/course' )
 
 append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'course',
-    tags: [
-      'college',
-      'course',
-      'master',
-      'phd',
-    ]
-  } )
 
 append footer
 

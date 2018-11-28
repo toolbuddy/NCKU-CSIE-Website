@@ -16,6 +16,14 @@ append data
         'normal': '一般公告',
       },
     } );
+    const filterModifier = 'rule';
+    const filterTags = [
+      'college',
+      'faculty',
+      'master',
+      'phd',
+      'rule',
+    ];
 
 append title
   +title( i18n[ language ].title )
@@ -24,21 +32,6 @@ append stylesheets
   +css( 'resource/rule' )
 
 append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'rule',
-    tags: [
-      'college',
-      'faculty',
-      'master',
-      'phd',
-      'rule',
-    ]
-  } )
 
 append footer
 

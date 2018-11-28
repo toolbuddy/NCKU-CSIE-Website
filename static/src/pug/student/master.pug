@@ -16,22 +16,8 @@ append data
         'normal': '一般公告',
       },
     } );
-
-append title
-  +title( i18n[ language ].title )
-
-append stylesheets
-  +css( 'student/master' )
-
-append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'master',
-    tags: [
+    const filterModifier = 'master';
+    const filterTags = [
       'award',
       'competition',
       'conference',
@@ -42,8 +28,15 @@ append filter
       'rule',
       'scholarship',
       'speech',
-    ]
-  } )
+    ];
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/master' )
+
+append header
 
 append footer
 

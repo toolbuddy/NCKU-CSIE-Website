@@ -16,6 +16,8 @@ append data
         'normal': '一般公告',
       },
     } );
+    const filterModifier = 'recruitment';
+    const filterTags = [ 'recruitment', ];
 
 append title
   +title( i18n[ language ].title )
@@ -24,15 +26,6 @@ append stylesheets
   +css( 'announcement/recruitment' )
 
 append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'recruitment',
-    tags: [ 'recruitment', ]
-  } )
 
 append footer
 

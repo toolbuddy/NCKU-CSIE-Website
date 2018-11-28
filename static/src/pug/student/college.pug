@@ -16,22 +16,8 @@ append data
         'normal': '一般公告',
       },
     } );
-
-append title
-  +title( i18n[ language ].title )
-
-append stylesheets
-  +css( 'student/college' )
-
-append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'college',
-    tags: [
+    const filterModifier = 'college';
+    const filterTags = [
       'award',
       'college',
       'competition',
@@ -42,8 +28,15 @@ append filter
       'rule',
       'scholarship',
       'speech',
-    ]
-  } )
+    ];
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/college' )
+
+append header
 
 append footer
 

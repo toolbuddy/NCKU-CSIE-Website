@@ -16,22 +16,8 @@ append data
         'normal': '一般公告',
       },
     } );
-
-append title
-  +title( i18n[ language ].title )
-
-append stylesheets
-  +css( 'student/phd' )
-
-append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'phd',
-    tags: [
+    const filterModifier = 'phd';
+    const filterTags = [
       'award',
       'competition',
       'conference',
@@ -42,8 +28,15 @@ append filter
       'rule',
       'scholarship',
       'speech',
-    ]
-  } )
+    ];
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/phd' )
+
+append header
 
 append footer
 

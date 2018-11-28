@@ -5,8 +5,11 @@ append content
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
 
-  block topic
-  block filter
+  +topic( i18n[ language ].topic )
+  +filter( {
+    modifier: filterModifier,
+    tags: filterTags
+  } )
 
   section.announcement
     +announcement__title( i18n[ language ].top )

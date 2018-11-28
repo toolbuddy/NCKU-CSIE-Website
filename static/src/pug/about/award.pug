@@ -16,6 +16,14 @@ append data
         'normal': '一般公告',
       },
     } );
+    const filterModifier = 'award';
+    const filterTags = [
+      'award',
+      'faculty',
+      'college',
+      'master',
+      'phd',
+    ];
 
 append title
   +title( i18n[ language ].title )
@@ -24,21 +32,6 @@ append stylesheets
   +css( 'about/award' )
 
 append header
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'award',
-    tags: [
-      'award',
-      'faculty',
-      'college',
-      'master',
-      'phd',
-    ]
-  } )
 
 append footer
 
