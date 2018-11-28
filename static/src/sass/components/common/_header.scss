@@ -5,7 +5,6 @@
 body > .header {
   // [ variable ]
   $large: 1120px;
-  $header-height: 3.2rem;
 
   // [ layout ]
   display: grid;
@@ -16,7 +15,7 @@ body > .header {
 
   // [ skin ]
   width: 100%;
-  height: $header-height;
+  height: 3.2rem;
   background: rgba( 255, 255, 255, .95 );
 
   // [ RWD: $large ]
@@ -26,7 +25,7 @@ body > .header {
       areas:
         'header__logo header__menu header__calender header__language'
         'header__logo header__menu header__login header__search';
-      columns: 38.9vw 42.31vw 13.19vw 5.59vw;
+      columns: 38.9fr 42.31fr 13.19fr 5.59fr;
       rows: 2.63rem 1.97rem;
     }
 
@@ -73,7 +72,6 @@ body > .header {
     > .logo__image {
       // [ layout ]
       grid-area: logo__image;
-      justify-self: end;
 
       // [ skin ]
       width: 1.6rem;
@@ -185,7 +183,6 @@ body > .header {
     @media screen and ( min-width: $large ) {
       // [ layout ]
       display: inline-block;
-      flex-direction: row;
       grid-area: header__language;
       margin: {
         top: .75rem;
@@ -227,10 +224,12 @@ body > .header {
           display: none;
           position: relative;
           flex-direction: column;
-          top: 1rem;
-          left: -4rem;
           align-content: center;
           justify-content: center;
+
+          // [ position ]
+          top: 1rem;
+          left: -4rem;
           z-index: 1;
 
           // [ skin ]
@@ -241,9 +240,28 @@ body > .header {
           font-size: .5rem;
           color: #ffffff;
 
+          &::before {
+            // [ layout ]
+            display: inline;
+            position: absolute;
+            top: -.3rem;
+            right: .3rem;
+
+            // [ skin ]
+            content: '';
+            border: {
+              width: .15rem;
+              style: solid;
+              top-color: transparent;
+              right-color: transparent;
+              bottom-color: #1a284d;
+              left-color: transparent;
+            }
+          }
+
           // modifier
           // `body > .header > .language > .language__dropdown > .language__dropdown--active`
-          &.language__dropdown--active {
+          &.button__dropdown--active {
             // [ layout ]
             display: flex;
           }
@@ -256,7 +274,7 @@ body > .header {
             // [ layout ]
             display: flex;
             align-items: center;
-            justify-content: center;
+            padding-left: .8rem;
 
             // [ skin ]
             height: 1.28rem;
@@ -327,12 +345,12 @@ body > .header {
       }
 
       // [ skin ]
-      width: 105px;
-      height: 36px;
+      width: 3.28rem;
+      height: 1.13rem;
       background-color: #213262;
-      box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, .24 ), 0 0 2px 0 rgba( 0, 0, 0, .12 );
+      box-shadow: 0 .06rem .06rem 0 rgba( 0, 0, 0, .24 ), 0 0 2px 0 rgba( 0, 0, 0, .12 );
       font: {
-        size: 14px;
+        size: .44rem;
         weight: 500;
       }
       color: #ffffff;
@@ -701,7 +719,7 @@ body > .header {
 
           // [ skin ]
           width: calc( 100% / 6 );
-          height: 100%;
+          height: auto;
 
           &:hover {
             // element
@@ -710,8 +728,8 @@ body > .header {
             // `body > .header > .navigation > .list > .item > .dropdown`
             > .item__dropdown.dropdown {
               // [ skin ]
+              background-color: #213262;
               visibility: visible;
-              opacity: 1;
             }
 
             // element
@@ -852,15 +870,13 @@ body > .header {
             top: 4.59rem;
             align-content: center;
             justify-content: center;
-            transition: visibility .3s, opacity .3s linear;
-            visibility: hidden;
 
             // [ skin ]
-            background-color: #213262;
-            box-shadow: 0 1px 2px 0 rgba( 0, 0, 0, .25 );
+            background-color: transparent;
             width: 100vw;
             height: 2.53rem;
-            opacity: 0;
+            visibility: hidden;
+            transition: visibility .3s, background-color .3s linear;
             overflow: unset;
             max-height: none;
           }

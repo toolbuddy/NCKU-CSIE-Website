@@ -10,6 +10,7 @@ const englishButton = headerlanguageDropdown.querySelector( '.dropdown__item--en
 const headerSearch = header.querySelector( '.header__search' );
 const searchButton = headerSearch.querySelector( '.search__button' );
 const searchDropdown = headerSearch.querySelector( '.search__dropdown' );
+const formInput = searchDropdown.querySelector( '.dropdown__form' ).querySelector( '.form__input' );
 const searchCancel = headerSearch.querySelector( '.dropdown__cancel' );
 
 function IsChild ( child, parent ) {
@@ -42,11 +43,11 @@ navigationCancel.addEventListener( 'click', () => {
 } );
 
 languageButton.addEventListener( 'focus', () => {
-    headerlanguageDropdown.classList.add( 'language__dropdown--active' );
+    headerlanguageDropdown.classList.add( 'button__dropdown--active' );
 } );
 
 languageButton.addEventListener( 'blur', () => {
-    headerlanguageDropdown.classList.remove( 'language__dropdown--active' );
+    headerlanguageDropdown.classList.remove( 'button__dropdown--active' );
 } );
 
 chineseButton.addEventListener( 'click', () => {
@@ -60,8 +61,10 @@ englishButton.addEventListener( 'click', () => {
 searchButton.addEventListener( 'click', () => {
     if ( searchDropdown.classList.contains( 'search__dropdown--active' ) )
         searchDropdown.classList.remove( 'search__dropdown--active' );
-    else
+    else {
         searchDropdown.classList.add( 'search__dropdown--active' );
+        formInput.focus();
+    }
 } );
 
 searchCancel.addEventListener( 'click', () => {

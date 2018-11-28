@@ -61,8 +61,6 @@ body > .footer {
       }
     }
 
-
-
     // element
     // `body > .footer > .logo > .logo__caption`
     // block
@@ -72,11 +70,9 @@ body > .footer {
       display: grid;
       grid: {
         area: logo__caption;
-        template: {
-          areas:
-            'caption__text'
-            'caption__text--small';
-        }
+        template-areas:
+          'caption__text'
+          'caption__text--small';
       }
       justify-self: center;
 
