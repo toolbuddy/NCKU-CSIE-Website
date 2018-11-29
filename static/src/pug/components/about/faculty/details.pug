@@ -18,12 +18,12 @@ include /components/common/image.pug
     },
   } );
 
+section.headline
+  header.headline__name= profile.name
+  aside.headline__titles.titles
+    each title in titles
+      span.titles__title= title.name
 section.profile
-  section.profile__headline.headline
-    header.headline__name= profile.name
-    aside.headline__titles.titles
-      each title in titles
-        span.titles__title= title.name
   aside.profile__departments.departments
     each department in departments
       span.departments__department= department.name

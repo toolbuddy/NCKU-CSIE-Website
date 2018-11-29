@@ -11,10 +11,11 @@ else
 
 const reqURL = `${ serverSetting.browerSyncHost }/api/faculty/${ facultyId }?language=${ WebLanguageUtils.currentLanguage }`;
 
-export default target => fetch( reqURL )
+export default ( target, teacherName ) => fetch( reqURL )
 .then( res => res.json() )
 .then( ( data ) => {
     /* eslint no-console: 0 */
     console.log( data );
-    target.innerHTML = detail( data );
+    teacherName.innerHTML = data.profile.name;
+    target.innerHTML = target.innerHTML + detail( data );
 } );

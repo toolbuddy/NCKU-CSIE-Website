@@ -25,10 +25,13 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-  aside.top
-    section.top__image= i18n[language].faculty
+
+append content
+  section.top
+    section.top__image.image
+      h1.image__text= i18n[language].faculty
     nav.top__nav.nav
-      a.nav__link.nav__link--home( href = url( { href: '' } ) )= i18n[language].home
+      a.nav__link( href = url( { href: '' } ) )= i18n[language].home
       +image( {
         alt:       'arrow',
         className: 'nav__arrow',
@@ -41,8 +44,12 @@ append header
         src:       'icon/arrow-right.png',
       } )
       a.nav__link( href = url( { href: 'about/faculty' } ) )= i18n[language].faculty
-
-append content
+      +image( {
+        alt:       'arrow',
+        className: 'nav__arrow',
+        src:       'icon/arrow-right.png',
+      } )
+      p#teacherName.nav__link.nav__link--teacherName
 
 append footer
 
