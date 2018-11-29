@@ -2,6 +2,7 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 
+// [ variable ]
 $mobile-width: 768px;
 $pad-width: 1024px;
 
@@ -12,10 +13,12 @@ body {
     grid-template-columns: 1fr 22% 72% 1fr;
     grid-template-areas: '. maplogo maplink .';
 
-    // for-mobile
+    // [ RWD: $mobile-width ]
     @media screen and( max-width: $mobile-width ) {
       height: 31.25rem;
     }
+
+    // [ RWD: $pad-width ]
     @media screen and( max-width: $pad-width ) {
       grid-template-columns: 1fr 80% 1fr;
       grid-template-areas: '. maplink .';
@@ -24,12 +27,13 @@ body {
     > aside {
       justify-self: center;
       grid-area: maplogo;
+
+      // [ RWD: $pad-width ]
       @media screen and( max-width: $pad-width ) {
         display: none;
       }
 
       > figure {
-        //margin-top: 38%;
         justify-content: center;
         display: flex;
 
@@ -42,22 +46,15 @@ body {
 
       > figcaption {
         margin-top: 9%;
-        display: grid;
-        grid-template-areas:
-          '. lineOne .'
-          '. lineTwo .'
-          '. lineThree .'
-          '. lineFour .';
 
+        // [ body > main.content > aside > figcaption 
         > h1.caption__text__large {
           text-align: center;
-          grid-area: lineOne;
           font-size: .75rem;
         }
 
         > h2.caption__text.caption__text__small {
           text-align: center;
-          grid-area: lineThree;
           font-weight: normal;
           font-size: .5rem;
         }
@@ -66,12 +63,16 @@ body {
 
     > article {
       grid-area: maplink;
+
+      // [ RWD: $mobile-width ]
       @media screen and(max-width:$mobile-width) {
         width: 100%;
       }
 
       > section.map__link {
         display: grid;
+
+        // [ RWD: $mobile-width ]
         @media screen and(min-width:$mobile-width) {
           grid-template-areas: 
             'head_home          about          research '
@@ -94,6 +95,8 @@ body {
             'company . . ';
            
         }
+
+        // [ RWD: $pad-width ]
         @media screen and(min-width:$pad-width) {
           grid-template-areas:
             'head_home   about         research         student             announce      resources     .'
@@ -137,13 +140,16 @@ body {
         font-size: .5625rem;
 
         > hr {
+          // [ layout ]
+          grid-area: myhr;
+          display: block;
+          position: relative;
+
+          // [ skin ]
           margin: 3% .3125rem;
           padding: 0;
           border-top: .03125rem solid #aaaaaa;
           border-bottom: .03125rem solid #aaaaaa;
-          grid-area: myhr;
-          display: block;
-          position: relative;
           height: .0625rem;
           width: 95%;
           clear: both;
