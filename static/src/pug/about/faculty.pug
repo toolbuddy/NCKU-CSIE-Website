@@ -29,7 +29,14 @@ append content
   include /components/about/faculty/filters.pug
 
   +topic( i18n[ language ].topic )
+
+  //- Filter component for faculty selection.
   +filters()
+
+  //- Faculty data display section.
+  //-
+  //- Use card outfit to display faculty information.
+  //- @todo add loading screen.
   section#cards.cards
   section#no-result.no-result.no-result--hide
     p.no-result__text= i18n[ language ].noResult

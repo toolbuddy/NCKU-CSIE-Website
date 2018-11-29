@@ -2,7 +2,7 @@ import path from 'path';
 
 import nodeExternals from 'webpack-node-externals';
 
-import config from '../../settings/server/config.js';
+import serverSettings from '../../settings/server/config.js';
 
 export default {
     /**
@@ -10,6 +10,8 @@ export default {
      *
      * Use sourcemap to recover codes from bundle file.
      * `inline-sourcemap` make sourcemap inline, which is smaller.
+     * In develop, this option should be `devtool: 'inline-sourcemap'`.
+     * In production, this option should be `devtool: false`.
      */
 
     devtool: 'inline-sourcemap',
@@ -32,7 +34,7 @@ export default {
 
     entry:   [
         'babel-polyfill',
-        path.join( config.projectRoot, 'server.js' ),
+        path.join( serverSettings.projectRoot, 'server.js' ),
     ],
 
     /**
@@ -42,7 +44,7 @@ export default {
      */
 
     output:  {
-        path:     path.join( config.projectRoot, 'bin' ),
+        path:     path.join( serverSettings.projectRoot, 'bin' ),
         filename: 'server.min.js',
     },
 
@@ -82,13 +84,13 @@ export default {
 
     resolve:   {
         alias: {
-            apis:     path.join( config.projectRoot, 'apis' ),
-            dev:      path.join( config.projectRoot, 'dev' ),
-            models:   path.join( config.projectRoot, 'models' ),
-            routes:   path.join( config.projectRoot, 'routes' ),
-            settings: path.join( config.projectRoot, 'settings' ),
-            static:   path.join( config.projectRoot, 'static' ),
-            test:     path.join( config.projectRoot, 'test' ),
+            apis:     path.join( serverSettings.projectRoot, 'apis' ),
+            dev:      path.join( serverSettings.projectRoot, 'dev' ),
+            models:   path.join( serverSettings.projectRoot, 'models' ),
+            routes:   path.join( serverSettings.projectRoot, 'routes' ),
+            settings: path.join( serverSettings.projectRoot, 'settings' ),
+            static:   path.join( serverSettings.projectRoot, 'static' ),
+            test:     path.join( serverSettings.projectRoot, 'test' ),
         },
     },
 
@@ -148,7 +150,7 @@ export default {
                         loader:  'eslint-loader',
                         options: {
                             fix:        true,
-                            configFile: path.join( config.projectRoot, 'dev/server/.eslintrc.js' ),
+                            configFile: path.join( serverSettings.projectRoot, 'dev/server/.eslintrc.js' ),
                         },
                     },
                 ],
