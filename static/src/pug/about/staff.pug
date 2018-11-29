@@ -1,19 +1,27 @@
 extends /layouts/about.pug
 
+append data
+  -
+    const i18n= Object.freeze( {
+      'en-US': {
+        'title': 'Staff',
+      },
+      'zh-TW': {
+        'title': '行政人員',
+      },
+    } );
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'about/staff' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'about/staff' )

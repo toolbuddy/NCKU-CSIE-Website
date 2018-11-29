@@ -2,7 +2,6 @@
  * CSS of the file
  */
 /* eslint no-unused-vars: off */
-import style from 'static/dist/css/user/index.min.css';
 import header from 'static/src/js/components/common/header/index.js';
 import { Announcement, } from 'static/src/js/components/user/announcement/Announcement.js';
 import editorEvent from 'static/src/js/components/user/announcement/index.js';

@@ -104,8 +104,8 @@ export default async ( language = 'zh-TW' ) => {
                     .then(
                         labs => labs.map(
                             lab => ( {
-                                labWeb:  lab.labWeb,
-                                name:    lab.labI18n[ 0 ].name,
+                                web:  lab.labWeb,
+                                name: lab.labI18n[ 0 ].name,
                             } )
                         )
                     ),

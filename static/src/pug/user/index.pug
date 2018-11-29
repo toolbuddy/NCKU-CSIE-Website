@@ -1,6 +1,21 @@
 extends /layouts/user.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Personal Page',
+      },
+      'zh-TW': {
+        'title': '個人頁面',
+      },
+    } );
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'user/index' )
 
 append header
 
@@ -11,7 +26,8 @@ append content
         a( href = '/user/profile' ) 個人資料
       ul
         a( href = '/user/announcement' ) 公告管理
-  main.content
+
+append footer
 
 append scripts
   +js( 'user/index' )
