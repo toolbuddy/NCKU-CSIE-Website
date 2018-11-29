@@ -92,6 +92,7 @@ export default language.support.map( language => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
+                                host:       config.host,
                                 staticHost: config.staticHost,
                                 language,
                             },

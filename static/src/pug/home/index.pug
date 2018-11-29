@@ -16,6 +16,7 @@ append data
         'hot':   '最近熱門',
       },
     } );
+    const currentRoute = '';
 
 append title
   +title( i18n[ language ].title )
@@ -31,7 +32,7 @@ append content
   +topic( i18n[ language ].topic )
   section.announcement
     nav#announcement__briefings.announcement__briefings.briefings
-    a.announcement__button( href = url( { link : '/announcement/all' } ) )= `${ i18n[ language ].more }...`
+    a.announcement__button( href = url( { href : 'announcement/all' } ) )= `${ i18n[ language ].more }...`
   section.announcement.announcement--hot-news
     header.announcement__title.title
       h1.title__text= i18n[ language ].hot

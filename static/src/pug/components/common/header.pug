@@ -111,7 +111,7 @@ mixin header()
 
   header#header.header
     //- Logo
-    a.header__logo.logo( href = url( { link : '/' } ) )
+    a.header__logo.logo( href = url( { href : '' } ) )
       +image( {
         alt:       'csie',
         className: 'logo__image',
@@ -129,12 +129,12 @@ mixin header()
 
       //- Search Column, currently not available
       //- Small screen version
-      form.navigation__search.search( action = url( { link : '/search' } ), method = 'GET' )
+      form.navigation__search.search( action = url( { href : 'search' } ), method = 'GET' )
         input.search__hidden( type = 'hidden', value = language, name = 'language' )
         input.search__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
         button.search__submit.submit
           +image( {
-            alt: i18n[ language ].util.search,
+            alt:       i18n[ language ].util.search,
             className: 'submit__image',
             src:       'icon/search.png',
           } )
@@ -145,86 +145,86 @@ mixin header()
       //- All routes
       ul.navigation__list.list
         li.list__item.item
-          a.item__link.item__link--homepage( href = url( { link : '/' } ) )= i18n[ language ].route.home.index
+          a.item__link.item__link--homepage( href = url( { href : '' } ) )= i18n[ language ].route.home.index
         li.list__item.item
-          a.item__link( href = url( { link : '/about' } ) )= i18n[ language ].route.about.index
+          a.item__link( href = url( { href : 'about' } ) )= i18n[ language ].route.about.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/about/intro' } ) )= i18n[ language ].route.about.intro
+              a.item__link( href = url( { href : 'about/intro' } ) )= i18n[ language ].route.about.intro
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/about/faculty' } ) )= i18n[ language ].route.about.faculty
+              a.item__link( href = url( { href : 'about/faculty' } ) )= i18n[ language ].route.about.faculty
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/about/staff' } ) )= i18n[ language ].route.about.staff
+              a.item__link( href = url( { href : 'about/staff' } ) )= i18n[ language ].route.about.staff
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/about/award' }) )= i18n[ language ].route.about.award
+              a.item__link( href = url( { href : 'about/award' }) )= i18n[ language ].route.about.award
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/about/contact' } ) )= i18n[ language ].route.about.contact
+              a.item__link( href = url( { href : 'about/contact' } ) )= i18n[ language ].route.about.contact
         li.list__item.item
-          a.item__link( href = url( { link : '/research' } ) )= i18n[ language ].route.research.index
+          a.item__link( href = url( { href : 'research' } ) )= i18n[ language ].route.research.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/research/labs' } ) )= i18n[ language ].route.research.labs
+              a.item__link( href = url( { href : 'research/labs' } ) )= i18n[ language ].route.research.labs
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/research/groups' } ) )= i18n[ language ].route.research.groups
+              a.item__link( href = url( { href : 'research/groups' } ) )= i18n[ language ].route.research.groups
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/research/publications' } ) )= i18n[ language ].route.research.publications
+              a.item__link( href = url( { href : 'research/publications' } ) )= i18n[ language ].route.research.publications
         li.list__item.item
-          a.item__link( href = url( { link : '/student' } ) )= i18n[ language ].route.student.index
+          a.item__link( href = url( { href : 'student' } ) )= i18n[ language ].route.student.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/course' } ) )= i18n[ language ].route.student.course
+              a.item__link( href = url( { href : 'student/course' } ) )= i18n[ language ].route.student.course
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/college' } ) )= i18n[ language ].route.student.college
+              a.item__link( href = url( { href : 'student/college' } ) )= i18n[ language ].route.student.college
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/master' } ) )= i18n[ language ].route.student.master
+              a.item__link( href = url( { href : 'student/master' } ) )= i18n[ language ].route.student.master
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/phd' } ) )= i18n[ language ].route.student.phd
+              a.item__link( href = url( { href : 'student/phd' } ) )= i18n[ language ].route.student.phd
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/scholarship' } ) )= i18n[ language ].route.student.scholarship
+              a.item__link( href = url( { href : 'student/scholarship' } ) )= i18n[ language ].route.student.scholarship
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/international' } ) )= i18n[ language ].route.student.international
+              a.item__link( href = url( { href : 'student/international' } ) )= i18n[ language ].route.student.international
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/student/internship' } ) )= i18n[ language ].route.student.internship
+              a.item__link( href = url( { href : 'student/internship' } ) )= i18n[ language ].route.student.internship
         li.list__item.item
-          a.item__link( href = url( { link : '/announcement' } ) )= i18n[ language ].route.announcement.index
+          a.item__link( href = url( { href : 'announcement' } ) )= i18n[ language ].route.announcement.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/announcement/all' } ) )= i18n[ language ].route.announcement.all
+              a.item__link( href = url( { href : 'announcement/all' } ) )= i18n[ language ].route.announcement.all
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/announcement/activity' } ) )= i18n[ language ].route.announcement.activity
+              a.item__link( href = url( { href : 'announcement/activity' } ) )= i18n[ language ].route.announcement.activity
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/announcement/recruitment' } ) )= i18n[ language ].route.announcement.recruitment
+              a.item__link( href = url( { href : 'announcement/recruitment' } ) )= i18n[ language ].route.announcement.recruitment
         li.list__item.item
-          a.item__link( href = url( { link : '/resource' } ) )= i18n[ language ].route.resource.index
+          a.item__link( href = url( { href : 'resource' } ) )= i18n[ language ].route.resource.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/rule' } ) )= i18n[ language ].route.resource.rule
+              a.item__link( href = url( { href : 'resource/rule' } ) )= i18n[ language ].route.resource.rule
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/rent' } ) )= i18n[ language ].route.resource.rent
+              a.item__link( href = url( { href : 'resource/rent' } ) )= i18n[ language ].route.resource.rent
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/fix' } ) )= i18n[ language ].route.resource.fix
+              a.item__link( href = url( { href : 'resource/fix' } ) )= i18n[ language ].route.resource.fix
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/ieet' } ) )= i18n[ language ].route.resource.ieet
+              a.item__link( href = url( { href : 'resource/ieet' } ) )= i18n[ language ].route.resource.ieet
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/sitemap' } ) )= i18n[ language ].route.resource.sitemap
+              a.item__link( href = url( { href : 'resource/sitemap' } ) )= i18n[ language ].route.resource.sitemap
             li.dropdown__item.item
-              a.item__link( href = url( { link : '/resource/alumni' } ) )= i18n[ language ].route.resource.alumni
+              a.item__link( href = url( { href : 'resource/alumni' } ) )= i18n[ language ].route.resource.alumni
 
       //- Login, currently not available
       //- Small screen version
-      a.navigation__login.login( href = url( { link : '/login' } ) )
+      a.navigation__login.login( href = url( { href : 'login' } ) )
         +image( {
-          alt: i18n[ language ].util.login,
+          alt:       i18n[ language ].util.login,
           className: 'login__image',
           src:       'icon/user.png',
         } )
@@ -232,9 +232,9 @@ mixin header()
 
       //- Calendar, currently not available
       //- Small screen version
-      a.navigation__calendar.calendar( href = url( { link : '/calendar' } ) )
+      a.navigation__calendar.calendar( href = url( { href : 'calendar' } ) )
         +image( {
-          alt: i18n[ language ].util.calendar,
+          alt:       i18n[ language ].util.calendar,
           className: 'calendar__image',
           src:       'icon/calendar.png',
         } )
@@ -244,7 +244,7 @@ mixin header()
       //- Small screen version
       section.navigation__language.language
         +image( {
-          alt: i18n[ language ].util.language,
+          alt:       i18n[ language ].util.language,
           className: 'language__image',
           src:       `icon/flag-${ language }.png`,
         } )
@@ -253,7 +253,7 @@ mixin header()
           span.switch__icon
         ul.language__dropdown.dropdown
           li.dropdown__item.item.item--zh-TW
-            a.item__link.link( href = url( { query : { language : 'zh-TW' } } ) )
+            a.item__link.link( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) )
               +image( {
                 alt:       '臺灣',
                 className: 'link__image',
@@ -264,7 +264,7 @@ mixin header()
               else
                 span.link__text 臺灣
           li.dropdown__item.item.item--en-US
-            a.item__link.link( href = url( { query : { language : 'en-US' } } ) )
+            a.item__link.link( href = url( { href: currentRoute, query : { language : 'en-US' } } ) )
               +image( {
                 alt:       'USA',
                 className: 'link__image',
@@ -277,9 +277,9 @@ mixin header()
 
     //- Calendar, currently not available
     //- Large screen version
-    a.header__calendar.calender( href = url( { link : '/calendar' } ) )
+    a.header__calendar.calender( href = url( { href : 'calendar' } ) )
       +image( {
-        alt: i18n[ language ].util.calendar,
+        alt:       i18n[ language ].util.calendar,
         className: 'calendar__image',
         src:       'icon/calendar.png',
       } )
@@ -289,19 +289,17 @@ mixin header()
     section.header__language.language
       button.language__button.button
         +image( {
-          alt: i18n[ language ].util.language,
+          alt:       i18n[ language ].util.language,
           className: 'button__image',
           src:       `icon/flag-${ language }.png`,
         } )
         ul.button__dropdown.dropdown
-          li.dropdown__item.dropdown__item--zh-TW.item 中文
-            //- a.item__link( href = url( { query : { language : 'zh-TW' } } ) )
-          li.dropdown__item.dropdown__item--en-US.item English
-            //- a.item__link( href = url( { query : { language : 'en-US' } } ) )
+          a.dropdown__item.dropdown__item--zh-TW( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) ) 中文
+          a.dropdown__item.dropdown__item--en-US( href = url( { href: currentRoute, query : { language : 'en-US' } } ) ) English
 
     //- Login, currently not available
     //- Large screen version
-    a.header__login( href = url( { link : '/login' } ) )= i18n[ language ].route.home.login
+    a.header__login( href = url( { href : 'login' } ) )= i18n[ language ].route.home.login
 
     //- Search, currently not available
     //- Large screen version
@@ -313,7 +311,7 @@ mixin header()
           src:       'icon/search.png',
         } )
       section.search__dropdown.dropdown
-        form.dropdown__form.form( action = url( { link : '/search' } ), method = 'GET' )
+        form.dropdown__form.form( action = url( { href : 'search' } ), method = 'GET' )
           input.form__hidden( type = 'hidden', value = language, name = 'language' )
           input.form__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
           input.form__submit( type = 'submit', value = '' )
