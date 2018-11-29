@@ -11,3 +11,5 @@ multipleDefaultTagsFilter( [
     'exhibition',
     'speech',
 ] );
+
+header( document.getElementById( 'header' ) );

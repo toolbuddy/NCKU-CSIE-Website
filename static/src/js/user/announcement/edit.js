@@ -44,3 +44,5 @@ else
         timeSelector:          document.getElementsByClassName( 'input__time' )[ 0 ],
     } );
 } )();
+
+header( document.getElementById( 'header' ) );

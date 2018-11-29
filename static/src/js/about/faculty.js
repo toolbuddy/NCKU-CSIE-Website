@@ -14,3 +14,5 @@ filters(
 
 // Get all faculty data from database and append to DOM element `#cards`.
 getFactuly( cards );
+
+header( document.getElementById( 'header' ) );

@@ -5,6 +5,55 @@
 @import 'components/common/icon';
 @import 'components/common/footer';
 
+.top {
+  display: flex;
+  flex-direction: column;
+
+  > .top__image {
+    // [ layout ]
+    text-align: center;
+    line-height: 15.63rem;
+
+    // [ skin ]
+    width: 100%;
+    height: 15.63rem;
+    color: #ffffff;
+    background: linear-gradient( rgba( 33, 50, 98, .7 ), rgba( 33, 50, 98, .7 ) ), url( '../../image/icon/faculty-detail.jpg' );
+    font: {
+      size: 24px;
+      weight: bold;
+    }
+  }
+
+  > .top__nav.nav {
+    display: flex;
+    width: 100%;
+    height: 1.34rem;
+
+    > .nav__link {
+      display: flex;
+      margin-top: .59rem;
+      font-size: 14px;
+      text-decoration: underline;
+      color: #6982c0;
+
+      &.nav__link--home {
+        margin-left: .53rem;
+      }
+    }
+
+    > .nav__arrow {
+      margin: {
+        top: .72rem;
+        left: .58rem;
+        right: .58rem;
+      }
+      width: .23rem;
+      height: .375rem;
+    }
+  }
+}
+
 .content {
   $small: 650px;
   $large: 860px;

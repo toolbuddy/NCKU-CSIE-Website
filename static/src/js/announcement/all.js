@@ -7,3 +7,5 @@ import { multipleDefaultTagsFilter, } from 'static/src/js/components/announcemen
 
 // Construct filter with no default tags.
 multipleDefaultTagsFilter( [] );
+
+header( document.getElementById( 'header' ) );

@@ -10,7 +10,7 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import serverSetting from 'settings/server/config.js';
 
 const currentLanguage = WebLanguageUtils.currentLanguage;
-const reqURL = `${ serverSetting.host }/api/faculty?language=${ currentLanguage }`;
+const reqURL = `${ serverSetting.browerSyncHost }/api/faculty?language=${ currentLanguage }`;
 
 export default target => fetch( reqURL )
 .then( res => res.json() )

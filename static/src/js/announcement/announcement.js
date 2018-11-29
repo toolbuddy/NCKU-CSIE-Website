@@ -28,3 +28,5 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/ann
         }
     );
 } )();
+
+header( document.getElementById( 'header' ) );

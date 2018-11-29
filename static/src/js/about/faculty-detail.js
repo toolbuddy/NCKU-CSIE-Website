@@ -5,3 +5,5 @@ import getFacultyDetail from 'static/src/js/components/about/faculty/get-faculty
 const content = document.getElementById( 'content' );
 
 getFacultyDetail( content );
+
+header( document.getElementById( 'header' ) );

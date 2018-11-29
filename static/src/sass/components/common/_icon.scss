@@ -148,3 +148,6 @@ $icon-path: '../..';
 @mixin icon__flag-en-US () {
   background-image: url( '#{ $icon-path }/image/icon/flag-en-US.png' );
 }
+@mixin icon__arrowRight () {
+  background-image: url( '#{ $icon-path }/image/icon/arrow-right.png' );
+}

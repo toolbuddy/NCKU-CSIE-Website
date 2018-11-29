@@ -23,3 +23,5 @@ import editorEvent from 'static/src/js/components/user/announcement/index.js';
         timeSelector:          document.getElementsByClassName( 'input__time' )[ 0 ],
     } );
 } )();
+
+header( document.getElementById( 'header' ) );
