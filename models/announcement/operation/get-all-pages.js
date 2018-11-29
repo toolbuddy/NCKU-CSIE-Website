@@ -5,7 +5,7 @@ import defaultValue from 'settings/default-value/announcement/config.js';
 
 /**
  * A function for getting the number of pages to display all the requested announcements which contain at least one of the given tags.
- * 
+ *
  * @param {string[]} [tags=[]]                          - an array of strings, specifying the announcements with the given tags.
  * @param {string} [startTime = defaultValue.startTime] - a string of the js object Date, specifying the start time of the update time of the announcements.
  * @param {string} [endTime = defaultValue.endTime]     - a string of the js object Date, specifying the end time of the update time of the announcements.

@@ -5,7 +5,7 @@ import defaultValue from 'settings/default-value/announcement/config.js';
 
 /**
  * A function for getting all the announcements which contain all the given tags and are under other given constraints.
- * 
+ *
  * @param {string[]} [tags = []]                        - an array of strings, specifying the announcements with the given tags.
  * @param {string} [startTime = defaultValue.startTime] - a string of the js object Date, specifying the start time of the update time of the announcements.
  * @param {string} [endTime = defaultValue.endTime]     - a string of the js object Date, specifying the end time of the update time of the announcements.

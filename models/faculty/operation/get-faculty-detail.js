@@ -4,7 +4,21 @@ import associations from 'models/faculty/operation/associations.js';
  * A function for getting details of a specified faculty.
  * @param {string} [language = 'zh-TW'] - the specified language of the faculty data.
  * @param {number} [profileId=1]        - the id of the faculty.
- * @returns {object}                      the data(conferences, departments, educations, experiences, honors, labs, offices, patents, profile, projects, publications, specialties, technologyTransfers, titles) of the faculty.
+ * @returns {object}                      the data of the faculty, including:
+ * - conferences
+ * - departments
+ * - educations
+ * - experiences
+ * - honors
+ * - labs
+ * - offices
+ * - patents
+ * - profile
+ * - projects
+ * - publications
+ * - specialties
+ * - technologyTransfers
+ * - titles
  */
 
 export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
