@@ -2,11 +2,11 @@ import associations from 'models/announcement/operation/associations.js';
 import defaultValue from 'settings/default-value/announcement/config.js';
 
 /**
- * A function for getting a specific announcement in specific languages with its associated information by the id of the announcement.
+ * A function for getting a specific announcement in specific languages by the id of the announcement.
  *
- * @param {string} [language = defaultValue.language]   - specify the announcement in the given language.
- * @param {number} [announcementId=1]                   - the id of the requested announcement.
- * @returns {object}                                      the related information of the requested announcement, including:
+ * @param {string} [language = defaultValue.language]   - Specify the announcement in the given language.
+ * @param {number} [announcementId=1]                   - Id of the requested announcement.
+ * @returns {object}                                      Related information of the requested announcement, including:
  * - id
  * - title
  * - content
@@ -17,6 +17,8 @@ import defaultValue from 'settings/default-value/announcement/config.js';
  * - ispinned
  * - files
  * - tags.
+ * 
+ * @async
  */
 
 export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {

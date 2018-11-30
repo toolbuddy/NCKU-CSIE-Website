@@ -4,8 +4,8 @@ import associations from 'models/announcement/operation/associations.js';
  * A function for getting a specific announcement in all languages
  * with its associated information by the id of the announcement.
  * @async
- * @param   {number} [announcementId=1] - the id of the requested announcement.
- * @returns {object}                      the related information of the requested announcement, including:
+ * @param   {number} [announcementId=1] - Id of the requested announcement.
+ * @returns {object}                      Related information of the requested announcement, including:
  * - id
  * - author
  * - updateTime
@@ -16,6 +16,8 @@ import associations from 'models/announcement/operation/associations.js';
  * - zh-TW(title, content)
  * - files
  * - tags.
+ * 
+ * @async
  */
 
 export default async ( { announcementId = 1, } = {} ) => {
