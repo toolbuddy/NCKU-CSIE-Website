@@ -1,5 +1,11 @@
 import associations from 'models/faculty/operation/associations.js';
 
+/**
+ * A function for getting all the basic information of the faculty.
+ * @param {string} [language = 'zh-TW'] - specified the data of the faculty.
+ * @returns {object[]}                  - the data of the faculty in the specified language.
+ */
+
 export default async ( language = 'zh-TW' ) => {
     const table = await associations();
 

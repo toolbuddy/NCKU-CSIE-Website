@@ -1,6 +1,26 @@
 import associations from 'models/announcement/operation/associations.js';
 import defaultValue from 'settings/default-value/announcement/config.js';
 
+/**
+ * A function for getting a specific announcement in specific languages by the id of the announcement.
+ *
+ * @async
+ * @param {string} [language = defaultValue.language]   - Language option of the announcements.
+ * @param {number} [announcementId=1]                   - Id of the requested announcement.
+ * @returns {object}                                      Related information of the requested announcement, including:
+ * - id
+ * - title
+ * - content
+ * - author
+ * - publishTime
+ * - updateTime
+ * - views
+ * - ispinned
+ * - files
+ * - tags.
+ * 
+ */
+
 export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
     const table = await associations();
 

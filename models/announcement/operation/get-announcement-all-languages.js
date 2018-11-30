@@ -1,5 +1,24 @@
 import associations from 'models/announcement/operation/associations.js';
 
+/**
+ * A function for getting a specific announcement in all languages
+ * with its associated information by the id of the announcement.
+ * @async
+ * @param   {number} [announcementId=1] - Id of the requested announcement.
+ * @returns {object}                      Related information of the requested announcement, including:
+ * - id
+ * - author
+ * - updateTime
+ * - views
+ * - ispinned
+ * - isPublished
+ * - en-US(title, content)
+ * - zh-TW(title, content)
+ * - files
+ * - tags.
+ * 
+ */
+
 export default async ( { announcementId = 1, } = {} ) => {
     const table = await associations();
 

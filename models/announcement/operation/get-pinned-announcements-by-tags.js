@@ -5,6 +5,24 @@ import defaultValue from 'settings/default-value/announcement/config.js';
 
 const Op = sequelize.Op;
 
+/**
+ * A function for getting all pinned announcements.
+ *
+ * @async
+ * @param {string[]} [tags = []]                          - Specifying the pinned announcements with the given tags.
+ * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when announcements were post.
+ * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when announcements were post.
+ * @param {string} [language = defaultValue.language]     - Language option of the announcements.
+ * @returns {object[]}                                      Requested announcements, including:
+ * - id
+ * - title
+ * - content
+ * - updateTime
+ * - tags(id, name)
+ * 
+ * All pinned announcements which contain all of the specified tags are taken into account.
+ */
+
 export default async ( {
     tags = [],
     startTime = defaultValue.startTime,

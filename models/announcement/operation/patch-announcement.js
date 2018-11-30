@@ -1,5 +1,6 @@
 import associations from 'models/announcement/operation/associations.js';
 
+
 export default async ( { announcementId, announcementData, } = {} ) => {
     const table = await associations();
 
