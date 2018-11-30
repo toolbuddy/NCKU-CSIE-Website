@@ -4,7 +4,8 @@ import defaultValue from 'settings/default-value/announcement/config.js';
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
  *
- * @param {string} [language = defaultValue.language]   - Specify the announcement in the given language.
+ * @async
+ * @param {string} [language = defaultValue.language]   - Language option of the announcements.
  * @param {number} [announcementId=1]                   - Id of the requested announcement.
  * @returns {object}                                      Related information of the requested announcement, including:
  * - id
@@ -18,7 +19,6 @@ import defaultValue from 'settings/default-value/announcement/config.js';
  * - files
  * - tags.
  * 
- * @async
  */
 
 export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {

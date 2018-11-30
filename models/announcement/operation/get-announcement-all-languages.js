@@ -17,7 +17,6 @@ import associations from 'models/announcement/operation/associations.js';
  * - files
  * - tags.
  * 
- * @async
  */
 
 export default async ( { announcementId = 1, } = {} ) => {
