@@ -11,7 +11,7 @@ const Op = sequelize.Op;
  * @async
  * @param {string[]} [tags=[]]                            - Specifying the announcements with the given tags.
  * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the end time of filter interval when announcements were post.
+ * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when announcements were post.
  * @returns {object}                                        The number of pages required to display all the requested announcements.
  * 
  * Announcements which contain all of the given tags are taken into account.

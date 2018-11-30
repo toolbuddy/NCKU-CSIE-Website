@@ -9,7 +9,7 @@ import defaultValue from 'settings/default-value/announcement/config.js';
  * @async
  * @param {string[]} [tags = []]                          - Specifying the pinned announcements with the given tags.
  * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the end time of filter interval when announcements were post.
+ * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when announcements were post.
  * @param {string} [language = defaultValue.language]     - Language option of the announcements.
  * @returns {object[]}                                      Requested pinned announcements, including:
  * - id
