@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     // The last 2 versions for each browser
     'last 2 versions',
 

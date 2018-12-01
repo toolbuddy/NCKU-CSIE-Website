@@ -3,6 +3,7 @@
 @import 'components/about/faculty/cards';
 @import 'components/about/faculty/filters';
 @import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
 // `body > .content`
@@ -48,9 +49,7 @@ body > .content {
 
   // block
   // `body > .content > .topic`
-
-  > .topic {
-    // [position]
+  @include topic() {
     grid-area: topic;
   }
 

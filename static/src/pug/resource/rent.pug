@@ -1,19 +1,28 @@
 extends /layouts/resource.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Rent',
+      },
+      'zh-TW': {
+        'title': '線上租借',
+      },
+    } );
+    const currentRoute = 'resource/rent';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'resource/rent' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'resource/rent' )

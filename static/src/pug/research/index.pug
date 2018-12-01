@@ -1,19 +1,28 @@
 extends /layouts/research.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Research',
+      },
+      'zh-TW': {
+        'title': '學術研究',
+      },
+    } );
+    const currentRoute = 'research';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'research/index' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'research/index' )

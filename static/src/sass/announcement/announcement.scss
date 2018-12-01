@@ -1,38 +1,47 @@
 @import 'components/common/reset';
 @import 'components/common/header';
+@import 'components/common/footer';
 @import 'components/announcement/announcement';
 @import 'components/announcement/tags';
 
 // block
-// `.content`
-
-.content {
+// `body > .content`
+body > .content {
+  // [ variable ]
   $small: 560px;
   $medium: 768px;
-  $large: 992px;
+  $large: 1080px;
 
-  // block [layout]
+  // [ layout ]
   display: grid;
   grid-template: {
     areas:
         '. announcement .';
     columns: 5% 1fr 5%;
   };
+
+  // [ RWD: $small ]
   @media screen and ( min-width: $small ) {
+    // [ layout ]
     grid-template-columns: 10% 1fr 10%;
   }
+
+  // [ RWD: $medium ]
   @media screen and ( min-width: $medium ) {
+    // [ layout ]
     grid-template-columns: 15% 1fr 15%;
   }
+
+  // [ RWD: $large ]
   @media screen and ( min-width: $large ) {
-    grid-template-columns: 23% 1fr 23%;
+    // [ layout ]
+    grid-template-columns: 1fr 31.81rem 1fr;
   }
 
   // block
-  // `.content .announcement`
-
-  .announcement {
-    // element [position]
+  // `body > .content > .announcement`
+  @include announcement() {
+    // [ position ]
     grid-area: announcement;
   }
 }

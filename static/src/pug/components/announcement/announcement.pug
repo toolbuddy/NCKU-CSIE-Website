@@ -1,4 +1,5 @@
 include /components/announcement/title.pug
+include /components/common/url.pug
 
 section.announcement
   header.announcement__headline.headline
@@ -13,4 +14,4 @@ section.announcement
   nav.announcement__attachments.attachments
     - attachments.sort( ( attachmentA, attachmentB ) => attachmentB.length - attachmentA.length )
     each attachment in attachments
-      a.attachments__attachment( href=attachment.url )= attachment.name
+      a.attachments__attachment( href = attachment.url )= attachment.name

@@ -4,6 +4,7 @@ import {
     renderBriefingsError,
     renderPages,
     renderPagesError,
+    renderPage,
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
@@ -28,12 +29,12 @@ export const singleDefaultTag = {
     defaultTag: null,
 
     getAllPinnedAnnouncements () {
-        const { startTime, endTime, } = QueryString.getFilters( null );
+        const { startTime, endTime, language, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     singleDefaultTag.defaultTag,
             startTime,
             endTime,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
@@ -63,13 +64,13 @@ export const singleDefaultTag = {
      */
 
     getAllAnnouncements () {
-        const { startTime, endTime, page, } = QueryString.getFilters( null );
+        const { startTime, endTime, page, language, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     singleDefaultTag.defaultTag,
             startTime,
             endTime,
             page,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -83,12 +84,17 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     getPinnedAnnouncementsByTags () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, startTime, endTime, language, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -96,7 +102,7 @@ export const singleDefaultTag = {
             ],
             startTime,
             endTime,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
@@ -124,7 +130,7 @@ export const singleDefaultTag = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, startTime, endTime, page, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, startTime, endTime, page, language, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -133,7 +139,7 @@ export const singleDefaultTag = {
             startTime,
             endTime,
             page,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -147,7 +153,12 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
@@ -238,12 +249,12 @@ export const multipleDefaultTags = {
     defaultTags: [],
 
     getAllPinnedAnnouncements () {
-        const { startTime, endTime, } = QueryString.getFilters( null );
+        const { startTime, endTime, language, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     multipleDefaultTags.defaultTags,
             startTime,
             endTime,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/all-pinned?${ query }` )
@@ -273,13 +284,13 @@ export const multipleDefaultTags = {
      */
 
     getAllAnnouncements () {
-        const { startTime, endTime, page, } = QueryString.getFilters( null );
+        const { startTime, endTime, page, language, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags:     multipleDefaultTags.defaultTags,
             startTime,
             endTime,
             page,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -293,17 +304,22 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 
     getPinnedAnnouncementsByTags () {
-        const { tags, startTime, endTime, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, startTime, endTime, language, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             startTime,
             endTime,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/tags-pinned?${ query }` )
@@ -316,7 +332,7 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
+        .then( data => renderBriefings( announcementBriefing, data ) )
         .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
     },
 
@@ -330,13 +346,13 @@ export const multipleDefaultTags = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, startTime, endTime, page, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, startTime, endTime, page, language, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             startTime,
             endTime,
             page,
-            language: 'zh-TW',
+            language,
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -350,7 +366,12 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( ( data ) => {
+            renderBriefings( announcementBriefing, data );
+        } )
+        .then( () => {
+            renderPage();
+        } )
         .catch( err => renderBriefingsError( announcementBriefing, err ) );
     },
 

@@ -4,19 +4,19 @@
   // block
   // `> .filters`
   > .filters {
-    // [layout]
+    // [ layout ]
     text-align: center;
 
-    // [skin]
+    // [ skin ]
     font-size: .44rem;
 
-    // [customization]
+    // [ customization ]
     @content;
 
     // element
     // `> .filters > .filters__filter`
     > .filters__filter {
-      // [layout]
+      // [ layout ]
       display: inline-block;
       text-align: center;
       word: {
@@ -25,7 +25,7 @@
       }
       white-space: normal;
 
-      // [skin]
+      // [ skin ]
       margin: .14rem;
       padding: {
         left: .5rem;
@@ -40,9 +40,9 @@
       color: #8caae2;
       background-color: #eff3f9;
 
-      // [interaction]
+      // [ interaction ]
       &:hover {
-        // [skin]
+        // [ skin ]
         cursor: pointer;
         color: #ffffff;
         background-color: lighten( $color: #8caae2, $amount: 10% );
@@ -51,7 +51,7 @@
       // modifier
       // `> .filters > .filters__filter--active`
       &--active {
-        // [skin]
+        // [ skin ]
         color: #ffffff;
         background-color: #8caae2;
       }

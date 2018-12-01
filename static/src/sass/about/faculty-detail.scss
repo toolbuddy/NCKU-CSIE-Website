@@ -3,6 +3,7 @@
 @import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/icon';
+@import 'components/common/footer';
 
 .content {
   $small: 650px;
@@ -12,21 +13,84 @@
   display: grid;
   grid-template: {
     areas:
-      '. profile__photo   .'
-      '. profile__info    .'
-      '. education        .'
-      '. experience       .'
-      '. award            .'
-      '. publication      .'
-      '. patent           .'
-      '. transfer         .'
-      '. research         .'
-      '. student          .';
-    columns: 2fr 9fr 2fr;
-  };
+      'top              '
+      'profile__headline'
+      'profile__photo   '
+      'profile__info    '
+      'education        '
+      'experience       '
+      'award            '
+      'publication      '
+      'patent           '
+      'transfer         '
+      'research         '
+      'student          ';
+    columns: 100%;
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    grid-area: top;
+
+    > .top__image {
+      // [ layout ]
+      display: flex;
+      justify-content: center;
+
+      // [ skin ]
+      width: 100%;
+      height: 15.63rem;
+      color: #ffffff;
+      background: linear-gradient( rgba( 33, 50, 98, .7 ), rgba( 33, 50, 98, .7 ) ), url( 'https://via.placeholder.com/375x500' );
+      background: {
+        repeat: no-repeat;
+        size: 100% 15.63rem;
+      }
+
+      > .image__text {
+        align-self: center;
+        font: {
+          size: 24px;
+          weight: bold;
+        }
+      }
+    }
+
+    > .top__nav.nav {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: 1.34rem;
+
+      > .nav__link {
+        display: flex;
+        margin-top: .59rem;
+        font-size: 14px;
+        text-decoration: underline;
+        color: #6982c0;
+
+        &.nav__link--teacherName {
+          text-decoration: unset;
+          color: #adacad;
+        }
+      }
+
+      > .nav__arrow {
+        margin: {
+          top: .72rem;
+          left: .26rem;
+          right: .26rem;
+        }
+        width: .23rem;
+        height: .375rem;
+      }
+    }
+  }
   @media screen and ( min-width: $small ) {
     grid-template: {
       areas:
+        '. top              top              .'
         '. profile__info    profile__photo   .'
         '. education        education        .'
         '. experience       experience       .'
@@ -55,46 +119,58 @@
     };
   }
 
+  > .headline {
+    grid-area: profile__headline;
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+
+    > .headline__name {
+      display: flex;
+      justify-content: center;
+      margin-right: .5rem;
+      width: max-content;
+      font: {
+        size: .8rem;
+        weight: bold;
+      }
+      white-space: nowrap;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    > .headline__titles.titles {
+      display: flex;
+      flex-wrap: wrap;
+      padding: .1rem;
+
+      > .titles__title {
+        margin: 0 .05rem;
+        vertical-align: middle;
+        font-size: .5rem;
+        text-align: center;
+        padding: 0 .2rem;
+        color: #adacad;
+        border: solid .05rem #adacad;
+        border-radius: .15rem;
+        width: max-content;
+      }
+    }
+  }
+
   .profile {
-    margin: 1.5rem 0;
     grid-area: profile__info;
     text-align: left;
     color: #000000;
     font-size: .5rem;
 
-    > .profile__headline.headline {
-      display: inline-flex;
-
-      > .headline__name {
-        padding-right: .5rem;
-        font: {
-          size: .8rem;
-          weight: bold;
-        }
-        letter-spacing: normal;
-        color: rgba( 0, 0, 0, .87 );
-      }
-
-      > .headline__titles.titles {
-        display: flex;
-        flex-wrap: wrap;
-        padding: .1rem;
-
-        > .titles__title {
-          margin: 0 .05rem;
-          vertical-align: middle;
-          font-size: .5rem;
-          text-align: center;
-          padding: 0 .2rem;
-          color: #adacad;
-          border: solid .05rem #adacad;
-          border-radius: .15rem;
-        }
-      }
-    }
-
     > .profile__departments.departments {
-      padding: .5rem .3rem .8rem 0;
+      display: flex;
+      justify-content: center;
+      margin: {
+        top: 1rem;
+        bottom: 1.41rem;
+      }
 
       > .departments__department {
         padding: .2rem .8rem;
@@ -108,28 +184,27 @@
       }
     }
 
-    > .profile__office {
+    > .profile__office.office {
       padding: .3rem 0;
 
       &::before {
-        @include icon__location() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        @include icon__location();
       }
     }
 
@@ -138,24 +213,22 @@
       padding: .3rem 0;
 
       &::before {
-        @include icon__envelope() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
       }
     }
 
@@ -164,36 +237,34 @@
       padding: .5rem 0;
 
       &::before {
-        @include icon__phone() {
-          // [layout]
-          vertical-align: middle;
-          background: {
-            position: center;
-            size: cover;
-            repeat: no-repeat;
-          }
-          display: inline-block;
-
-          // [skin]
-          content: '';
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        // [layout]
+        vertical-align: middle;
+        background: {
+          position: center;
+          size: cover;
+          repeat: no-repeat;
         }
+        display: inline-block;
+
+        // [skin]
+        content: '';
+        margin: .1rem;
+        margin-right: .5rem;
+        height: .5rem;
+        width: .5rem;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        @include icon__phone();
       }
     }
 
     > .profile__lab {
       padding: .3rem 0;
-      @include icon__laboratory () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
-      }
+      margin: .1rem;
+      margin-right: .5rem;
+      height: .5rem;
+      width: .5rem;
+      vertical-align: middle;
+      @include icon__laboratory ();
 
       > .profile__lab--location {
         padding: 0 1rem;
@@ -241,9 +312,13 @@
   .photo {
     grid-area: profile__photo;
     border-radius: 4rem;
-    height: 8rem;
-    width: 8rem;
-    margin: auto;
+    height: 8.5rem;
+    width: 8.5rem;
+    margin: {
+      top: 1.56rem;
+      left: auto;
+      right: auto;
+    }
   }
 
   .award {
