@@ -1,19 +1,28 @@
 extends /layouts/about.pug
 
+append data
+  -
+    const i18n= Object.freeze( {
+      'en-US': {
+        'title': 'Introduction',
+      },
+      'zh-TW': {
+        'title': '系所介紹',
+      },
+    } );
+    const currentRoute = 'about/intro';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'about/intro' )
 
 append header
 
 append content
-  -
-    const i18n= Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'about/intro' )

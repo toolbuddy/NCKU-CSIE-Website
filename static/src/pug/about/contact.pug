@@ -1,15 +1,10 @@
 extends /layouts/about.pug
 
-append stylesheets
-
-append header
-
-append content
-  include /components/common/topic.pug
-  include /components/about/contact/traffic.pug
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title': 'Contact Us',
         'topic': 'Contact',
         'thsr':  [
           'For THSR',
@@ -30,6 +25,7 @@ append content
         ],
       },
       'zh-TW': {
+        'title': '聯絡我們',
         'topic': '聯絡方式',
         'thsr':  [
           '搭乘高鐵',
@@ -50,16 +46,28 @@ append content
         ],
       },
     } );
+    const currentRoute = 'about/contact';
 
-  main.content
-    +topic( i18n[ language ].topic )
-    section#map
-    section.thsr
-      +traffic( i18n[ language ].thsr )
-    section.train
-      +traffic( i18n[ language ].train )
-    section.drive
-      +traffic( i18n[ language ].drive )
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'about/contact' )
+
+append header
+
+append content
+  include /components/common/topic.pug
+  include /components/about/contact/traffic.pug
+
+  +topic( i18n[ language ].topic )
+  section#map
+  section.thsr
+    +traffic( i18n[ language ].thsr )
+  section.train
+    +traffic( i18n[ language ].train )
+  section.drive
+    +traffic( i18n[ language ].drive )
 
 append footer
 

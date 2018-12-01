@@ -1,19 +1,28 @@
 extends /layouts/resource.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Sitemap',
+      },
+      'zh-TW': {
+        'title': '網站地圖',
+      },
+    } );
+    const currentRoute = 'resource/sitemap';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'resource/sitemap' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'resource/sitemap' )

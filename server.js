@@ -1,25 +1,46 @@
-global.projectRoot = __dirname;
+import path from 'path';
 
-const express = require( 'express' );
+import express from 'express';
 
-const config = require( `${ global.projectRoot }/settings/server/config` );
-const language = require( `${ global.projectRoot }/settings/language/middleware` );
-const apis = require( `${ global.projectRoot }/apis/urls` );
-const routes = require( `${ global.projectRoot }/routes/urls` );
+import config from 'settings/server/config.js';
+import language from 'settings/language/middleware';
+import apis from 'apis/urls';
+import routes from 'routes/urls';
 
-// Start server.
+/**
+ * Create HTTP server.
+ */
+
 const server = express();
+
+/**
+ * Start HTTP server.
+ */
+
 server.listen( config.port );
 
-// Set static files routes.
-server.use( '/css', express.static( `${ global.projectRoot }/static/dist/css` ) );
-server.use( '/js', express.static( `${ global.projectRoot }/static/dist/js` ) );
+/**
+ * Set static files routes.
+ */
 
-// Set language option.
+server.use( '/css', express.static( path.join( config.projectRoot, 'static/dist/css' ) ) );
+server.use( '/js', express.static( path.join( config.projectRoot, 'static/dist/js' ) ) );
+server.use( '/image', express.static( path.join( config.projectRoot, 'static/src/image' ) ) );
+
+/**
+ * Set language option.
+ */
+
 server.use( language );
 
-// Set web server routes.
+/**
+ * Set web page routes.
+ */
+
 server.use( '/', routes );
 
-// Set web server api routes.
+/**
+ * Set web api routes.
+ */
+
 server.use( '/api', apis );

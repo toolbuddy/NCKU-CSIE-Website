@@ -1,17 +1,32 @@
-const Sequelize = require( 'sequelize' );
-const config = require( './config' );
+/**
+ * Database connection module.
+ */
 
-module.exports = async ( databaseName, debug = false ) => {
+import Sequelize from 'sequelize';
+
+import config from 'settings/database/config.js';
+
+/**
+ * Connect web server to database `databaseName`.
+ *
+ * Settings can be found in file `settings/database/config.js`.
+ * If file not found, run command `npm run pre-build:database` to create file.
+ * @async
+ * @param  {string} databaseName - Name of database to be connected.
+ * @throws {Error}  Throw error when connection failed.
+ * @see {@link https://github.com/sequelize/sequelize/blob/3e5b8772ef75169685fc96024366bca9958fee63/lib/errors.js} for error information.
+ */
+
+export default async ( databaseName ) => {
     const database = new Sequelize(
         databaseName,
         config.username,
         config.password,
         {
-            host:             config.host,
+            host:             config.domainName,
             dialect:          config.protocol,
             operatorsAliases: false,
-            pool:             config.pool,
-            logging:          debug,
+            logging:          false,
             dialectOptions:   {
                 useUTC:   false,
             },
