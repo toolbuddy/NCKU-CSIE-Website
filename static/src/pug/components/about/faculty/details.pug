@@ -29,8 +29,8 @@ section.profile
       span.departments__department= department.name
   aside.profile__offices.offices
     each office in offices
-      address= `${ i18n[ language ].office }： ${ office.address }`
-      a( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+      address.offices__address= `${ i18n[ language ].office }： ${ office.address }`
+      a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
   a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
   aside.profile__labs.labs
     each lab in labs
