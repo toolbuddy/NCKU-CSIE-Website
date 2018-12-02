@@ -7,7 +7,7 @@ module.exports = ( database, config ) => new SequelizeAuto(
     config.username,
     config.password,
     {
-        host:       config.host,
+        host:       config.domainName,
         camelCase:  true,
         dialect:    config.protocol,
         directory:  path.join( projectRoot, `models/${ database }/tables` ),

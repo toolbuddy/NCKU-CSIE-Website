@@ -1,17 +1,19 @@
 /**
- * Web server settings
+ * Web server settings module.
  * @namespace
- * @readonly {string} host      - Web server host address.
- * @readonly {string} protocol  - Whick protocol web server is using, can be either 'http' or 'https'.
- * @readonly {number} port      - Web server port.
- * @readonly {string} url       - Get web server url.
- * @readonly {string} staticUrl - Get static file server url.
+ * @readonly
+ * @property {string} domainName  - Web server domain name/IP.
+ * @property {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @property {number} port        - Web server binding port.
+ * @property {string} projectRoot - This very project's root path.
+ * @property {string} host        - Web server host.
+ * @property {string} staticHost  - Static file server host.
  */
 
 const config = {};
 
 Object.defineProperties( config, {
-    'host': {
+    'domainName': {
         value: 'localhost',
     },
     'protocol': {
@@ -20,20 +22,23 @@ Object.defineProperties( config, {
     'port': {
         value: 3000,
     },
-    'url': {
-        get () {
-            return `${ config.protocol }://${ config.host }${
+    'projectRoot': {
+        value: '',
+    },
+    'host': {
+       get () {
+            return `${ config.protocol }://${ config.domainName }${
                 config.port === '80' || config.port === '443' ?
                     '' :
                     `:${ config.port }`
             }`;
         },
     },
-    'staticUrl': {
+    'staticHost': {
         get () {
-            return config.url;
+            return config.host;
         },
     },
 } );
 
-module.exports = config;
+export default config;

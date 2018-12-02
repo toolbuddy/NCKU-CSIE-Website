@@ -1,19 +1,28 @@
 extends /layouts/resource.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Resource',
+      },
+      'zh-TW': {
+        'title': '資源連結',
+      },
+    } );
+    const currentRoute = 'resource';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'resource/index' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'resource/index' )

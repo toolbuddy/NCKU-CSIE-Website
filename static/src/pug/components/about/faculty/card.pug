@@ -69,11 +69,25 @@ mixin cards__card( profile = {} )
         each lab in profile.labs
           aside.intro__lab.lab
             span.lab__text.text= `${ i18n[ language ].lab }: `
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
               a.text__link( href = lab.labWeb )= `${ lab.name }`
 
       //- link to profile detail
       p.intro__more
         a( href = `/about/faculty/${ profile.profileId }?language=${ language }` )= i18n[ language ].more
+=======
+>>>>>>> 3bbd57c97aa5a069e17ce2fd74ad2ded287329eb
+              a.text__link( href = url( { href : lab.labWeb } ) ) = `${ lab.name }`
+
+      //- link to profile detail
+      p.intro__more
+        a( href = url( { href : `about/faculty/${ profile.profileId }` } ) )= i18n[ language ].more
+<<<<<<< HEAD
+=======
+>>>>>>> 0eb9f0cfb6ce99a7ed01617760d530e275082b38
+>>>>>>> 3bbd57c97aa5a069e17ce2fd74ad2ded287329eb
 
 //- main
 - faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )

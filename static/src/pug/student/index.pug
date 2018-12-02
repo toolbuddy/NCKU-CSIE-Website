@@ -1,19 +1,28 @@
 extends /layouts/student.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Student Affairs',
+      },
+      'zh-TW': {
+        'title': '學生事務',
+      },
+    } );
+    const currentRoute = 'student';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'student/index' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
 
-  main.content
+append footer
 
 append scripts
   +js( 'student/index' )

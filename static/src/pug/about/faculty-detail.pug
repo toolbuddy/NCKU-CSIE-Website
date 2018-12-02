@@ -1,12 +1,55 @@
 extends /layouts/about.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':   'Detail',
+        'faculty': 'Faculties',
+        'home':    'Home',
+        'about':   'About',
+      },
+      'zh-TW': {
+        'title':   '詳細資料',
+        'faculty': '師資陣容',
+        'home':    '首頁',
+        'about':   '關於本系',
+      },
+    } );
+    const currentRoute = 'about/faculty-detail';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'about/faculty-detail' )
 
 append header
 
 append content
-
-  main#content.content
+  section.top
+    section.top__image.image
+      h1.image__text= i18n[language].faculty
+    nav.top__nav.nav
+      a.nav__link( href = url( { href: '' } ) )= i18n[language].home
+      +image( {
+        alt:       'arrow',
+        className: 'nav__arrow',
+        src:       'icon/arrow-right.png',
+      } )
+      a.nav__link( href = url( { href: 'about' } ) )= i18n[language].about
+      +image( {
+        alt:       'arrow',
+        className: 'nav__arrow',
+        src:       'icon/arrow-right.png',
+      } )
+      a.nav__link( href = url( { href: 'about/faculty' } ) )= i18n[language].faculty
+      +image( {
+        alt:       'arrow',
+        className: 'nav__arrow',
+        src:       'icon/arrow-right.png',
+      } )
+      p#teacherName.nav__link.nav__link--teacherName
 
 append footer
 
