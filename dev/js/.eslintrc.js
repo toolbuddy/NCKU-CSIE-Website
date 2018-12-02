@@ -334,6 +334,11 @@ module.exports = {
                     2,
                     -1,
                     -2,
+                    200,
+                    304,
+                    400,
+                    404,
+                    500,
                 ],
 
                 // Array indexes are considered okay.

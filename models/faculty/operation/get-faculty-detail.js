@@ -1,11 +1,9 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( `${ projectRoot }/models/faculty/operation/associations` );
+import associations from 'models/faculty/operation/associations.js';
 
-module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
+export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
     const table = await associations();
 
-    const data = {};
+    const data = { language, };
 
     // Promise.all uses iterator, so it will keep the order of the elements in array that passed in
     [
@@ -48,8 +46,8 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 conferences => conferences.map(
                     conference => ( {
-                        hostDate:   conference.hostDate,
-                        conference: conference.conferenceI18n[ 0 ].conference,
+                        hostDate: conference.hostDate,
+                        name:     conference.conferenceI18n[ 0 ].conference,
                     } )
                 )
             ),
@@ -74,7 +72,7 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 departments => departments.map(
                     department => ( {
-                        department: department.departmentI18n[ 0 ].department,
+                        name: department.departmentI18n[ 0 ].department,
                     } )
                 )
             ),
@@ -452,7 +450,7 @@ module.exports = async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     title => ( {
                         endDate:   title.endDate,
                         startDate: title.startDate,
-                        title:     title.titleI18n[ 0 ].title,
+                        name:      title.titleI18n[ 0 ].title,
                     } )
                 )
             ),

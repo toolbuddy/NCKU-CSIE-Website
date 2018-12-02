@@ -1,37 +1,38 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const connect = require( `${ projectRoot }/settings/database/connect` );
+import path from 'path';
 
-module.exports = async () => {
-    const teacherDatabase = await connect( 'faculty' );
+import serverSettings from 'settings/server/config.js';
+import connect from 'settings/database/connect.js';
+
+export default async () => {
+    const facultyDatabase = await connect( 'faculty' );
     const table = {
-        conferenceI18n:         teacherDatabase.import( `${ projectRoot }/models/faculty/tables/conference_i18n` ),
-        conference:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/conference` ),
-        departmentI18n:         teacherDatabase.import( `${ projectRoot }/models/faculty/tables/department_i18n` ),
-        department:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/department` ),
-        educationI18n:          teacherDatabase.import( `${ projectRoot }/models/faculty/tables/education_i18n` ),
-        education:              teacherDatabase.import( `${ projectRoot }/models/faculty/tables/education` ),
-        experienceI18n:         teacherDatabase.import( `${ projectRoot }/models/faculty/tables/experience_i18n` ),
-        experience:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/experience` ),
-        honorI18n:              teacherDatabase.import( `${ projectRoot }/models/faculty/tables/honor_i18n` ),
-        honor:                  teacherDatabase.import( `${ projectRoot }/models/faculty/tables/honor` ),
-        labI18n:                teacherDatabase.import( `${ projectRoot }/models/faculty/tables/lab_i18n` ),
-        lab:                    teacherDatabase.import( `${ projectRoot }/models/faculty/tables/lab` ),
-        officeI18n:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/office_i18n` ),
-        office:                 teacherDatabase.import( `${ projectRoot }/models/faculty/tables/office` ),
-        patentI18n:             teacherDatabase.import( `${ projectRoot }/models/faculty/tables/patent_i18n` ),
-        patent:                 teacherDatabase.import( `${ projectRoot }/models/faculty/tables/patent` ),
-        profileI18n:            teacherDatabase.import( `${ projectRoot }/models/faculty/tables/profile_i18n` ),
-        profile:                teacherDatabase.import( `${ projectRoot }/models/faculty/tables/profile` ),
-        projectI18n:            teacherDatabase.import( `${ projectRoot }/models/faculty/tables/project_i18n` ),
-        project:                teacherDatabase.import( `${ projectRoot }/models/faculty/tables/project` ),
-        publicationI18n:        teacherDatabase.import( `${ projectRoot }/models/faculty/tables/publication_i18n` ),
-        publication:            teacherDatabase.import( `${ projectRoot }/models/faculty/tables/publication` ),
-        specialty:              teacherDatabase.import( `${ projectRoot }/models/faculty/tables/specialty` ),
-        technologyTransfer:     teacherDatabase.import( `${ projectRoot }/models/faculty/tables/technology_transfer` ),
-        technologyTransferI18n: teacherDatabase.import( `${ projectRoot }/models/faculty/tables/technology_transfer_i18n` ),
-        titleI18n:              teacherDatabase.import( `${ projectRoot }/models/faculty/tables/title_i18n` ),
-        title:                  teacherDatabase.import( `${ projectRoot }/models/faculty/tables/title` ),
+        conferenceI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/conference_i18n' ) ),
+        conference:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/conference' ) ),
+        departmentI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/department_i18n' ) ),
+        department:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/department' ) ),
+        educationI18n:          facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/education_i18n' ) ),
+        education:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/education' ) ),
+        experienceI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience_i18n' ) ),
+        experience:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience' ) ),
+        honorI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/honor_i18n' ) ),
+        honor:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/honor' ) ),
+        labI18n:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/lab_i18n' ) ),
+        lab:                    facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/lab' ) ),
+        officeI18n:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/office_i18n' ) ),
+        office:                 facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/office' ) ),
+        patentI18n:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/patent_i18n' ) ),
+        patent:                 facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/patent' ) ),
+        profileI18n:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/profile_i18n' ) ),
+        profile:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/profile' ) ),
+        projectI18n:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/project_i18n' ) ),
+        project:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/project' ) ),
+        publicationI18n:        facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication_i18n' ) ),
+        publication:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication' ) ),
+        specialty:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/specialty' ) ),
+        technologyTransfer:     facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer' ) ),
+        technologyTransferI18n: facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer_i18n' ) ),
+        titleI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/title_i18n' ) ),
+        title:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/title' ) ),
     };
 
     // Translation relationship.
@@ -220,7 +221,7 @@ module.exports = async () => {
 
     // Any one who use this module should remember to close connection,
     // like `table.database.close()`.
-    table.database = teacherDatabase;
+    table.database = facultyDatabase;
 
     return table;
 };
