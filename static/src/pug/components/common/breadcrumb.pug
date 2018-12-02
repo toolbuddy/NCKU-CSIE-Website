@@ -1,0 +1,10 @@
+mixin breadcrumb()
+  nav.breadcrumb
+    each key, value in i18n[language].path
+      if ( key )
+        +image( {
+          alt:       'arrow',
+          className: 'breadcrumb__arrow',
+          src:       'icon/arrow-right.png',
+        } )
+      a.breadcrumb__link( href = url( { href: `${key}` } ) )= value

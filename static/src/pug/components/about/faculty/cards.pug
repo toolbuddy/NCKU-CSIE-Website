@@ -79,7 +79,7 @@ mixin cards__card( profile = {} )
 
       //- Faculty's detail information link.
       p.intro__more
-        a( href = `/about/faculty/${ profile.profileId }` )= i18n[ language ].more
+        a( href = `/about/faculty/${ profile.profileId }?language=${language}` )= i18n[ language ].more
 
 //- main
     Construct all faculty information with `cards__card`.

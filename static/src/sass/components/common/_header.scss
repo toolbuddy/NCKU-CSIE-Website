@@ -853,6 +853,7 @@ body > .header {
           grid-area: item__dropdown;
           display: block;
           overflow: hidden;
+          z-index: 1;
 
           // [ skin ]
           background-color: #1d2d56;

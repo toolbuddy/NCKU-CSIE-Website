@@ -1,0 +1,36 @@
+.top {
+  $large: 1120px;
+  $image-height: 15.63rem;
+  $image-height-small: 10.94rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  > .top__image {
+    // [ layout ]
+    display: flex;
+    justify-content: center;
+
+    // [ skin ]
+    width: 100%;
+    height: $image-height;
+    @media screen and ( min-width: $large ) {
+      height: $image-height-small;
+    }
+  }
+
+  > .top__text {
+    align-self: center;
+    position: absolute;
+    top: $image-height / 2 - .75rem;
+    color: #ffffff;
+    font: {
+      size: .75rem;
+      weight: bold;
+    }
+    @media screen and ( min-width: $large ) {
+      top: $image-height-small / 2 - 1.56rem;
+      font-size: 1.56rem;
+    }
+  }
+}
