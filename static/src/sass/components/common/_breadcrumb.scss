@@ -1,19 +1,22 @@
 .breadcrumb {
+  $large: 1120px;
   display: flex;
   justify-content: center;
   width: 100%;
   height: 1.34rem;
+  @media screen and ( min-width: $large ) {
+    height: 2.31rem;
+  }
 
   > .breadcrumb__link {
     display: flex;
     margin-top: .59rem;
-    font-size: 14px;
+    font-size: .44rem;
     text-decoration: underline;
     color: #6982c0;
-
-    &.breadcrumb__link--teacherName {
-      text-decoration: unset;
-      color: #adacad;
+    @media screen and ( min-width: $large ) {
+      margin-top: 1.56rem;
+      font-size: .63rem;
     }
   }
 
@@ -25,5 +28,12 @@
     }
     width: .23rem;
     height: .375rem;
+    @media screen and ( min-width: $large ) {
+      margin: {
+        top: 1.85rem;
+        left: .94rem;
+        right: .94rem;
+      }
+    }
   }
 }
