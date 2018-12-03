@@ -104,6 +104,23 @@
     color: #000000;
     font-size: .5rem;
 
+    %profile__icon {
+      // [layout]
+      align-self: center;
+      background: {
+        position: center;
+        size: cover;
+        repeat: no-repeat;
+      }
+
+      // [skin]
+      content: '';
+      margin-right: .59rem;
+      height: .5rem;
+      width: .5rem;
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+    }
+
     > .profile__departments.departments {
       display: flex;
       justify-content: center;
@@ -124,27 +141,34 @@
       }
     }
 
-    > .profile__office.office {
+    > .profile__offices.offices {
+      display: flex;
+      flex-direction: column;
       padding: .3rem 0;
 
-      &::before {
-        // [layout]
-        vertical-align: middle;
-        background: {
-          position: center;
-          size: cover;
-          repeat: no-repeat;
+      > .offices__address {
+        display: flex;
+        align-self: center;
+        font: {
+          size: .5rem;
+          style: normal;
         }
-        display: inline-block;
 
-        // [skin]
-        content: '';
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
-        @include icon__location();
+        &::before {
+          @extend %profile__icon;
+          @include icon__location();
+        }
+      }
+
+      > .offices__phone {
+        display: flex;
+        align-self: center;
+        margin-top: .41rem;
+
+        &::before {
+          @extend %profile__icon;
+          @include icon__phone();
+        }
       }
     }
 
