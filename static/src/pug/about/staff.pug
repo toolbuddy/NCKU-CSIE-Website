@@ -4,10 +4,18 @@ append data
   -
     const i18n= Object.freeze( {
       'en-US': {
-        'title': 'Staff',
+        'title':    'Staff',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
       },
       'zh-TW': {
-        'title': '行政人員',
+        'title':    '行政人員',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
       },
     } );
     const currentRoute = 'about/staff';
@@ -19,6 +27,12 @@ append stylesheets
   +css( 'about/staff' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
 
 append content
 

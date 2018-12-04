@@ -1,10 +1,13 @@
-mixin breadcrumb()
+mixin breadcrumb( breadcrumbList )
   nav.breadcrumb
-    each key, value in i18n[language].path
-      if ( key )
+    each value, index in breadcrumbList
+      if ( index !== 0 )
         +image( {
           alt:       'arrow',
           className: 'breadcrumb__arrow',
           src:       'icon/arrow-right.png',
         } )
-      a.breadcrumb__link( href = url( { href: `${key}` } ) )= value
+      if ( index === breadcrumbList.length - 1 )
+        span.breadcrumb__text= value.text
+      else
+        a.breadcrumb__text.breadcrumb__text--link( href = url( { href: value.url } ) )= value.text

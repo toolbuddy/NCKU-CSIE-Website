@@ -4,105 +4,110 @@
 @import 'components/common/topic';
 @import 'components/common/icon';
 @import 'components/common/footer';
-@import 'components/common/location';
+@import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-.content {
-  $small: 650px;
-  $large: 860px;
-  width: 100%;
-  background-color: #ffffff;
-  display: grid;
-  grid-template: {
-    areas:
-      'profile__headline'
-      'profile__photo   '
-      'profile__info    '
-      'education        '
-      'experience       '
-      'award            '
-      'publication      '
-      'patent           '
-      'transfer         '
-      'research         '
-      'student          ';
-    columns: 100%;
-  }
-  @media screen and ( min-width: $small ) {
+body {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
+
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
+
+  // block
+  // `body > .content`
+  > .content {
+    $small: 650px;
+    $large: 860px;
+    width: 100%;
+    background-color: #ffffff;
+    display: grid;
     grid-template: {
       areas:
-        '. profile__info    profile__photo   .'
-        '. education        education        .'
-        '. experience       experience       .'
-        '. award            award            .'
-        '. publication      publication      .'
-        '. patent           patent           .'
-        '. transfer         transfer         .'
-        '. research         research         .'
-        '. student          student          .';
-      columns: 1fr 5fr 3fr 1fr;
-    };
-  }
-  @media screen and ( min-width: $large ) {
-    grid-template: {
-      areas:
-        '. profile__info    profile__photo   .'
-        '. education        education        .'
-        '. experience       experience       .'
-        '. award            award            .'
-        '. publication      publication      .'
-        '. patent           patent           .'
-        '. transfer         transfer         .'
-        '. research         research         .'
-        '. student          student          .';
-      columns: 5fr 8fr 6fr 5fr;
-    };
-  }
+        'profile__headline'
+        'profile__photo   '
+        'profile__info    '
+        'education        '
+        'experience       '
+        'award            '
+        'publication      '
+        'patent           '
+        'transfer         '
+        'research         '
+        'student          ';
+      columns: 100%;
+    }
+    @media screen and ( min-width: $small ) {
+      grid-template: {
+        areas:
+          '. profile__info    profile__photo   .'
+          '. education        education        .'
+          '. experience       experience       .'
+          '. award            award            .'
+          '. publication      publication      .'
+          '. patent           patent           .'
+          '. transfer         transfer         .'
+          '. research         research         .'
+          '. student          student          .';
+        columns: 1fr 5fr 3fr 1fr;
+      };
+    }
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          '. profile__info    profile__photo   .'
+          '. education        education        .'
+          '. experience       experience       .'
+          '. award            award            .'
+          '. publication      publication      .'
+          '. patent           patent           .'
+          '. transfer         transfer         .'
+          '. research         research         .'
+          '. student          student          .';
+        columns: 5fr 8fr 6fr 5fr;
+      };
+    }
 
-  > .headline {
-    grid-area: profile__headline;
-    display: flex;
-    margin-top: 2rem;
-    justify-content: center;
-
-    > .headline__name {
+    > .headline {
+      grid-area: profile__headline;
       display: flex;
+      margin-top: 2rem;
       justify-content: center;
-      margin-right: .5rem;
-      width: max-content;
-      font: {
-        size: .8rem;
-        weight: bold;
-      }
-      white-space: nowrap;
-      letter-spacing: normal;
-      color: rgba( 0, 0, 0, .87 );
-    }
 
-    > .headline__titles.titles {
-      display: flex;
-      flex-wrap: wrap;
-      padding: .1rem;
-
-      > .titles__title {
-        margin: 0 .05rem;
-        vertical-align: middle;
-        font-size: .5rem;
-        text-align: center;
-        padding: 0 .2rem;
-        color: #adacad;
-        border: solid .05rem #adacad;
-        border-radius: .15rem;
+      > .headline__name {
+        display: flex;
+        justify-content: center;
+        margin-right: .5rem;
         width: max-content;
+        font: {
+          size: .8rem;
+          weight: bold;
+        }
+        white-space: nowrap;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
+      }
+
+      > .headline__titles.titles {
+        display: flex;
+        flex-wrap: wrap;
+        padding: .1rem;
+
+        > .titles__title {
+          margin: 0 .05rem;
+          vertical-align: middle;
+          font-size: .5rem;
+          text-align: center;
+          padding: 0 .2rem;
+          color: #adacad;
+          border: solid .05rem #adacad;
+          border-radius: .15rem;
+          width: max-content;
+        }
       }
     }
-  }
-
-  .profile {
-    grid-area: profile__info;
-    text-align: left;
-    color: #000000;
-    font-size: .5rem;
 
     %profile__icon {
       // [layout]
@@ -121,34 +126,143 @@
       filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
     }
 
-    > .profile__departments.departments {
-      display: flex;
-      justify-content: center;
-      margin: {
-        top: 1rem;
-        bottom: 1.41rem;
-      }
-
-      > .departments__department {
-        padding: .2rem .8rem;
-        border-radius: .5rem;
-        width: 3rem;
-        font-size: .45rem;
-        text-align: center;
-        color: #8caae2;
-        background-color: #eaeff7;
-        margin: .2rem;
-      }
-    }
-
-    > .profile__offices.offices {
+    .profile {
+      grid-area: profile__info;
       display: flex;
       flex-direction: column;
-      padding: .3rem 0;
+      text-align: left;
+      color: #000000;
+      font-size: .5rem;
 
-      > .offices__address {
+      > .profile__departments.departments {
+        display: flex;
+        justify-content: center;
+        margin: {
+          top: 1rem;
+          bottom: 1.41rem;
+        }
+
+        > .departments__department {
+          padding: .2rem .8rem;
+          border-radius: .5rem;
+          width: 3rem;
+          font-size: .45rem;
+          text-align: center;
+          color: #8caae2;
+          background-color: #eaeff7;
+          margin: .2rem;
+        }
+      }
+
+      > .profile__offices.offices {
+        display: flex;
+        flex-direction: column;
+
+        > .offices__address {
+          display: flex;
+          align-self: center;
+          font: {
+            size: .5rem;
+            style: normal;
+          }
+
+          &::before {
+            @extend %profile__icon;
+            @include icon__location();
+          }
+        }
+
+        > .offices__phone {
+          display: flex;
+          align-self: center;
+          margin-top: .41rem;
+          font-size: .5rem;
+
+          &::before {
+            @extend %profile__icon;
+            @include icon__phone();
+          }
+        }
+      }
+
+      > .profile__email {
         display: flex;
         align-self: center;
+        margin-top: .41rem;
+        font-size: .5rem;
+
+        &::before {
+          @extend %profile__icon;
+          @include icon__envelope();
+        }
+      }
+
+      > .profile__phone {
+        display: flex;
+        align-self: center;
+        margin-top: .41rem;
+        font-size: .5rem;
+
+        &::before {
+          @extend %profile__icon;
+          @include icon__phone();
+        }
+      }
+
+      > .profile__labs.labs {
+        display: flex;
+        flex-direction: column;
+
+        > .labs__lab {
+          display: flex;
+          align-self: center;
+          margin-top: .41rem;
+          font-size: .5rem;
+
+          &::before {
+            @extend %profile__icon;
+            @include icon__laboratory ();
+          }
+        }
+
+        > .labs__address {
+          display: flex;
+          align-self: center;
+          margin-top: .41rem;
+          font: {
+            size: .5rem;
+            style: normal;
+          }
+
+          &::before {
+            @extend %profile__icon;
+            @include icon__location ();
+          }
+        }
+
+        > .labs__tel {
+          display: flex;
+          align-self: center;
+          margin-top: .41rem;
+          font: {
+            size: .5rem;
+            style: normal;
+          }
+
+          &::before {
+            @extend %profile__icon;
+            @include icon__phone ();
+          }
+        }
+      }
+
+      > .profile__website {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        margin-top: .41rem;
+        width: 85%;
+        word-break: break-all;
         font: {
           size: .5rem;
           style: normal;
@@ -156,565 +270,479 @@
 
         &::before {
           @extend %profile__icon;
-          @include icon__location();
+          @include icon__user ();
         }
       }
 
-      > .offices__phone {
+      > .profile__domains {
+        font-size: .45rem;
         display: flex;
-        align-self: center;
-        margin-top: .41rem;
-
-        &::before {
-          @extend %profile__icon;
-          @include icon__phone();
-        }
-      }
-    }
-
-    > .profile__email {
-      display: block;
-      padding: .3rem 0;
-
-      &::before {
-        // [layout]
-        vertical-align: middle;
-        background: {
-          position: center;
-          size: cover;
-          repeat: no-repeat;
-        }
-        display: inline-block;
-
-        // [skin]
-        content: '';
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
-      }
-    }
-
-    > .profile__phone {
-      display: block;
-      padding: .5rem 0;
-
-      &::before {
-        // [layout]
-        vertical-align: middle;
-        background: {
-          position: center;
-          size: cover;
-          repeat: no-repeat;
-        }
-        display: inline-block;
-
-        // [skin]
-        content: '';
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
-        @include icon__phone();
-      }
-    }
-
-    > .profile__lab {
-      padding: .3rem 0;
-      margin: .1rem;
-      margin-right: .5rem;
-      height: .5rem;
-      width: .5rem;
-      vertical-align: middle;
-      @include icon__laboratory ();
-
-      > .profile__lab--location {
-        padding: 0 1rem;
-        color: #868686;
-      }
-    }
-
-    > .profile__website {
-      padding: .5rem 0;
-      @include icon--before--user () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
-      }
-    }
-
-    > .profile__domains {
-      font-size: .45rem;
-      display: flex;
-      flex-wrap: wrap;
-      padding: .3rem 0;
-      padding-right: 1rem;
-      @include icon--before--search () {
-        margin: .1rem;
-        margin-right: .5rem;
-        height: .5rem;
-        width: .5rem;
-        vertical-align: middle;
-      }
-
-      > .domains__domain {
-        padding: .15rem .6rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: #adacad;
-        background-color: #ededed;
-        margin: 0 .2rem;
-        vertical-align: baseline;
-      }
-    }
-  }
-
-  .photo {
-    grid-area: profile__photo;
-    border-radius: 4rem;
-    height: 8.5rem;
-    width: 8.5rem;
-    margin: {
-      top: 1.56rem;
-      left: auto;
-      right: auto;
-    }
-  }
-
-  .award {
-    grid-area: award;
-    margin: 1.5rem 0;
-
-    > .award__content {
-      font-size: .5rem;
-      background-color: #ffffff;
-      padding: .5rem;
-      border-radius: .2rem;
-      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .25rem 0;
-      @include icon--before--trophy() {
-        margin-right: .5rem;
-        height: .7rem;
-        width: .7rem;
-        float: left;
-        vertical-align: middle;
-      }
-    }
-  }
-
-  .publication {
-    grid-area: publication;
-    margin: 1rem 0;
-
-    > .publication__content {
-      font-size: .5rem;
-      padding: .5rem;
-      border-radius: .2rem;
-      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .25rem 0;
-      @include icon--before--book() {
-        margin-right: .5rem;
-        height: .7rem;
-        width: .7rem;
-        float: left;
-        vertical-align: middle;
-      }
-    }
-  }
-
-  .patent {
-    grid-area: patent;
-    margin: 1.5rem 0;
-    font-size: .5rem;
-
-    > .patent__table.table {
-      border-collapse: collapse;
-      text-align: center;
-      border: solid .01rem #757575;
-      width: 100%;
-      height: 3rem;
-
-      > .table__body.body {
-        > .body__titles.titles {
-          > .titles__title {
-            border: solid .01rem #757575;
-            padding: .5rem;
-          }
+        flex-wrap: wrap;
+        padding: .3rem 0;
+        padding-right: 1rem;
+        @include icon--before--search () {
+          margin: .1rem;
+          margin-right: .5rem;
+          height: .5rem;
+          width: .5rem;
+          vertical-align: middle;
         }
 
-        > .body__details.details {
-          > .details__detail {
-            border: solid .01rem #757575;
-
-            > .detail__country {
-              @include icon--before--taiwan() {
-                margin: .1rem;
-                margin-left: .2rem;
-                height: .8rem;
-                width: .8rem;
-                vertical-align: baseline;
-              }
-            }
-
-            > .detail__date.date {
-              > .date__begin {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                display: block;
-                margin: {
-                  top: .5rem;
-                  left: .3rem;
-                  right: .3rem;
-                }
-                padding: .1rem;
-              }
-
-              > .date__end {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                display: block;
-                margin: {
-                  bottom: .5rem;
-                  left: .3rem;
-                  right: .3rem;
-                }
-                padding: .1rem;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .transfer {
-    grid-area: transfer;
-    margin: 1rem 0;
-    font-size: .5rem;
-
-    > .transfer__table.table {
-      border-collapse: collapse;
-      text-align: center;
-      border: solid .02rem #757575;
-      width: 100%;
-      height: 3rem;
-
-      > .table__body.body {
-        > .body__titles.titles {
-          > .titles__title {
-            border: solid .02rem #757575;
-            padding: .5rem;
-          }
-        }
-
-        > .body__details.details {
-          > .details__detail {
-            border: solid .02rem #757575;
-
-            > .detail__date.date {
-              > .date__begin {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                display: block;
-                margin: {
-                  top: .5rem;
-                  left: .3rem;
-                  right: .3rem;
-                }
-                padding: .1rem;
-              }
-
-              > .date__end {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                display: block;
-                margin: {
-                  bottom: .5rem;
-                  left: .3rem;
-                  right: .3rem;
-                }
-                padding: .1rem;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .education {
-    grid-area: education;
-    margin: 1.5rem 0;
-    font-size: .45rem;
-
-    > .education__detail.detail {
-      display: flex;
-      flex-wrap: wrap;
-      margin: .6rem  0;
-      padding: .1rem .25rem;
-      border-radius: .5rem;
-      text-align: center;
-      color: rgba( 0, 0, 0, .87 );
-
-      > .detail__begin {
-        padding-top: .2rem;
-        width: 4rem;
-        height: 1rem;
-        border-radius: .5rem;
-        border: solid .02rem #757575;
-        background-color: #ffffff;
-        margin: 0 .1rem;
-      }
-
-      > .detail__untill {
-        font-size: .8rem;
-        color: #757575;
-        vertical-align: middle;
-        margin: 0 .5rem;
-      }
-
-      > .detail__end {
-        padding-top: .2rem;
-        width: 4rem;
-        height: 1rem;
-        border-radius: .5rem;
-        border: solid .02rem #757575;
-        background-color: #ffffff;
-        margin: 0 .1rem;
-        margin-right: 1rem;
-      }
-
-      > .detail__country {
-        margin: 0 .1rem;
-        @include icon--before--taiwan() {
-          margin: {
-            right: .1rem;
-            bottom: .1rem;
-            left: .2rem;
-            top: .2rem;
-          }
-          height: .8rem;
-          width: .8rem;
-          float: left;
+        > .domains__domain {
+          padding: .15rem .6rem;
+          border-radius: .5rem;
+          text-align: center;
+          color: #adacad;
+          background-color: #ededed;
+          margin: 0 .2rem;
           vertical-align: baseline;
         }
       }
+    }
 
-      > .detail__school, .detail__department {
-        margin: 0 .1rem;
-        padding: .15rem .6rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: #adacad;
-        background-color: #ededed;
-      }
-
-      > .detail__degree {
-        margin: 0 .1rem;
-        padding: .15rem .6rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: #8caae2;
-        background-color: #eaeff7;
-        margin-right: .2rem;
+    .photo {
+      grid-area: profile__photo;
+      border-radius: 4rem;
+      height: 8.5rem;
+      width: 8.5rem;
+      margin: {
+        top: 1.56rem;
+        left: auto;
+        right: auto;
       }
     }
-  }
 
-  .experience {
-    grid-area: experience;
-    margin: 1.5rem 0;
-    font-size: .45rem;
+    .award {
+      grid-area: award;
+      margin: 1.5rem 0;
 
-    > .experience__detail.detail {
-      margin: .6rem  0;
-      padding: .1rem .25rem;
-      border-radius: .5rem;
-      text-align: center;
-      color: rgba( 0, 0, 0, .87 );
-      display: flex;
-      flex-wrap: wrap;
-
-      > .detail__begin {
-        padding-top: .2rem;
-        width: 4rem;
-        height: 1rem;
-        border-radius: .5rem;
-        border: solid .02rem #757575;
+      > .award__content {
+        font-size: .5rem;
         background-color: #ffffff;
-        margin: 0 .1rem;
-      }
-
-      > .detail__untill {
-        font-size: .8rem;
-        color: #757575;
-        vertical-align: middle;
-        margin: 0 .5rem;
-      }
-
-      > .detail__end {
-        padding-top: .2rem;
-        width: 4rem;
-        height: 1rem;
-        border-radius: .5rem;
-        border: solid .02rem #757575;
-        background-color: #ffffff;
-        margin: 0 .1rem;
-        margin-right: 2rem;
-      }
-
-      > .detail__school, .detail__department {
-        margin: 0 .1rem;
-        padding: .15rem .6rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: #adacad;
-        background-color: #ededed;
-      }
-
-      > .detail__degree {
-        margin: 0 .1rem;
-        padding: .15rem .6rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: #8caae2;
-        background-color: #eaeff7;
-        margin-right: .2rem;
-      }
-    }
-  }
-
-  .research {
-    grid-area: research;
-    margin: 1.5rem 0;
-    font-size: .5rem;
-
-    > .research__table.table {
-      border-collapse: collapse;
-      text-align: center;
-      border: solid .02rem #757575;
-      width: 100%;
-      height: 3rem;
-
-      > .table__body.body {
-        > .body__titles.titles {
-          > .titles__title {
-            padding: .5rem;
-            border: solid .02rem #757575;
-          }
+        padding: .5rem;
+        border-radius: .2rem;
+        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+        margin: .25rem 0;
+        @include icon--before--trophy() {
+          margin-right: .5rem;
+          height: .7rem;
+          width: .7rem;
+          float: left;
+          vertical-align: middle;
         }
+      }
+    }
 
-        > .body__details.details {
-          > .details__detail {
-            padding: .5rem;
-            border: solid .02rem #757575;
+    .publication {
+      grid-area: publication;
+      margin: 1rem 0;
 
-            > .detail__date.date {
-              > .date__begin {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                margin: .5rem .3rem;
-                padding: .1rem .5rem;
+      > .publication__content {
+        font-size: .5rem;
+        padding: .5rem;
+        border-radius: .2rem;
+        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+        margin: .25rem 0;
+        @include icon--before--book() {
+          margin-right: .5rem;
+          height: .7rem;
+          width: .7rem;
+          float: left;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .patent {
+      grid-area: patent;
+      margin: 1.5rem 0;
+      font-size: .5rem;
+
+      > .patent__table.table {
+        border-collapse: collapse;
+        text-align: center;
+        border: solid .01rem #757575;
+        width: 100%;
+        height: 3rem;
+
+        > .table__body.body {
+          > .body__titles.titles {
+            > .titles__title {
+              border: solid .01rem #757575;
+              padding: .5rem;
+            }
+          }
+
+          > .body__details.details {
+            > .details__detail {
+              border: solid .01rem #757575;
+
+              > .detail__country {
+                @include icon--before--taiwan() {
+                  margin: .1rem;
+                  margin-left: .2rem;
+                  height: .8rem;
+                  width: .8rem;
+                  vertical-align: baseline;
+                }
               }
 
-              > .date__end {
-                border-radius: .5rem;
-                border: solid .02rem #757575;
-                margin: .5rem .3rem;
-                padding: .1rem .5rem;
+              > .detail__date.date {
+                > .date__begin {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  display: block;
+                  margin: {
+                    top: .5rem;
+                    left: .3rem;
+                    right: .3rem;
+                  }
+                  padding: .1rem;
+                }
+
+                > .date__end {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  display: block;
+                  margin: {
+                    bottom: .5rem;
+                    left: .3rem;
+                    right: .3rem;
+                  }
+                  padding: .1rem;
+                }
               }
             }
           }
         }
       }
     }
-  }
 
-  .student {
-    grid-area: student;
-    margin: 1.5rem 0;
+    .transfer {
+      grid-area: transfer;
+      margin: 1rem 0;
+      font-size: .5rem;
 
-    > .student__members {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      @media screen and ( min-width: $small ) {
-        justify-content: flex-start;
+      > .transfer__table.table {
+        border-collapse: collapse;
+        text-align: center;
+        border: solid .02rem #757575;
+        width: 100%;
+        height: 3rem;
+
+        > .table__body.body {
+          > .body__titles.titles {
+            > .titles__title {
+              border: solid .02rem #757575;
+              padding: .5rem;
+            }
+          }
+
+          > .body__details.details {
+            > .details__detail {
+              border: solid .02rem #757575;
+
+              > .detail__date.date {
+                > .date__begin {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  display: block;
+                  margin: {
+                    top: .5rem;
+                    left: .3rem;
+                    right: .3rem;
+                  }
+                  padding: .1rem;
+                }
+
+                > .date__end {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  display: block;
+                  margin: {
+                    bottom: .5rem;
+                    left: .3rem;
+                    right: .3rem;
+                  }
+                  padding: .1rem;
+                }
+              }
+            }
+          }
+        }
       }
-      @media screen and ( min-width: $large ) {
-        justify-content: flex-start;
+    }
+
+    .education {
+      grid-area: education;
+      margin: 1.5rem 0;
+      font-size: .45rem;
+
+      > .education__detail.detail {
+        display: flex;
+        flex-wrap: wrap;
+        margin: .6rem  0;
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: rgba( 0, 0, 0, .87 );
+
+        > .detail__begin {
+          padding-top: .2rem;
+          width: 4rem;
+          height: 1rem;
+          border-radius: .5rem;
+          border: solid .02rem #757575;
+          background-color: #ffffff;
+          margin: 0 .1rem;
+        }
+
+        > .detail__untill {
+          font-size: .8rem;
+          color: #757575;
+          vertical-align: middle;
+          margin: 0 .5rem;
+        }
+
+        > .detail__end {
+          padding-top: .2rem;
+          width: 4rem;
+          height: 1rem;
+          border-radius: .5rem;
+          border: solid .02rem #757575;
+          background-color: #ffffff;
+          margin: 0 .1rem;
+          margin-right: 1rem;
+        }
+
+        > .detail__country {
+          margin: 0 .1rem;
+          @include icon--before--taiwan() {
+            margin: {
+              right: .1rem;
+              bottom: .1rem;
+              left: .2rem;
+              top: .2rem;
+            }
+            height: .8rem;
+            width: .8rem;
+            float: left;
+            vertical-align: baseline;
+          }
+        }
+
+        > .detail__school, .detail__department {
+          margin: 0 .1rem;
+          padding: .15rem .6rem;
+          border-radius: .5rem;
+          text-align: center;
+          color: #adacad;
+          background-color: #ededed;
+        }
+
+        > .detail__degree {
+          margin: 0 .1rem;
+          padding: .15rem .6rem;
+          border-radius: .5rem;
+          text-align: center;
+          color: #8caae2;
+          background-color: #eaeff7;
+          margin-right: .2rem;
+        }
+      }
+    }
+
+    .experience {
+      grid-area: experience;
+      margin: 1.5rem 0;
+      font-size: .45rem;
+
+      > .experience__detail.detail {
+        margin: .6rem  0;
+        padding: .1rem .25rem;
+        border-radius: .5rem;
+        text-align: center;
+        color: rgba( 0, 0, 0, .87 );
+        display: flex;
+        flex-wrap: wrap;
+
+        > .detail__begin {
+          padding-top: .2rem;
+          width: 4rem;
+          height: 1rem;
+          border-radius: .5rem;
+          border: solid .02rem #757575;
+          background-color: #ffffff;
+          margin: 0 .1rem;
+        }
+
+        > .detail__untill {
+          font-size: .8rem;
+          color: #757575;
+          vertical-align: middle;
+          margin: 0 .5rem;
+        }
+
+        > .detail__end {
+          padding-top: .2rem;
+          width: 4rem;
+          height: 1rem;
+          border-radius: .5rem;
+          border: solid .02rem #757575;
+          background-color: #ffffff;
+          margin: 0 .1rem;
+          margin-right: 2rem;
+        }
+
+        > .detail__school, .detail__department {
+          margin: 0 .1rem;
+          padding: .15rem .6rem;
+          border-radius: .5rem;
+          text-align: center;
+          color: #adacad;
+          background-color: #ededed;
+        }
+
+        > .detail__degree {
+          margin: 0 .1rem;
+          padding: .15rem .6rem;
+          border-radius: .5rem;
+          text-align: center;
+          color: #8caae2;
+          background-color: #eaeff7;
+          margin-right: .2rem;
+        }
+      }
+    }
+
+    .research {
+      grid-area: research;
+      margin: 1.5rem 0;
+      font-size: .5rem;
+
+      > .research__table.table {
+        border-collapse: collapse;
+        text-align: center;
+        border: solid .02rem #757575;
+        width: 100%;
+        height: 3rem;
+
+        > .table__body.body {
+          > .body__titles.titles {
+            > .titles__title {
+              padding: .5rem;
+              border: solid .02rem #757575;
+            }
+          }
+
+          > .body__details.details {
+            > .details__detail {
+              padding: .5rem;
+              border: solid .02rem #757575;
+
+              > .detail__date.date {
+                > .date__begin {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  margin: .5rem .3rem;
+                  padding: .1rem .5rem;
+                }
+
+                > .date__end {
+                  border-radius: .5rem;
+                  border: solid .02rem #757575;
+                  margin: .5rem .3rem;
+                  padding: .1rem .5rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .student {
+      grid-area: student;
+      margin: 1.5rem 0;
+
+      > .student__members {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        @media screen and ( min-width: $small ) {
+          justify-content: flex-start;
+        }
+        @media screen and ( min-width: $large ) {
+          justify-content: flex-start;
+        }
+
+        > .student__member--master {
+          font-size: .5rem;
+          background-color: #ffffff;
+          padding: .5rem;
+          border-radius: .2rem;
+          box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+          margin: .25rem;
+          width: 4.5rem;
+          @include icon--before--study() {
+            margin-right: .5rem;
+            height: .8rem;
+            width: .8rem;
+            float: left;
+            vertical-align: middle;
+          }
+        }
+
+        > .student__member--doctoral {
+          display: block;
+          float: left;
+          font-size: .5rem;
+          background-color: #ffffff;
+          padding: .5rem;
+          border-radius: .2rem;
+          box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+          margin: .25rem;
+          width: 4.5rem;
+          @include icon--before--studentcap() {
+            margin-right: .5rem;
+            height: .8rem;
+            width: .8rem;
+            float: left;
+            vertical-align: middle;
+          }
+        }
       }
 
-      > .student__member--master {
+      > .student__award {
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-        margin: .25rem;
-        width: 4.5rem;
-        @include icon--before--study() {
+        margin: .5rem 0;
+        @include icon--before--trophy() {
           margin-right: .5rem;
-          height: .8rem;
-          width: .8rem;
+          height: .7rem;
+          width: .7rem;
           float: left;
           vertical-align: middle;
         }
       }
 
-      > .student__member--doctoral {
-        display: block;
-        float: left;
+      > .student__meeting {
         font-size: .5rem;
         background-color: #ffffff;
         padding: .5rem;
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-        margin: .25rem;
-        width: 4.5rem;
-        @include icon--before--studentcap() {
+        margin: .5rem 0;
+        @include icon--before--book() {
           margin-right: .5rem;
-          height: .8rem;
-          width: .8rem;
+          height: .7rem;
+          width: .7rem;
           float: left;
           vertical-align: middle;
         }
-      }
-    }
-
-    > .student__award {
-      font-size: .5rem;
-      background-color: #ffffff;
-      padding: .5rem;
-      border-radius: .2rem;
-      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .5rem 0;
-      @include icon--before--trophy() {
-        margin-right: .5rem;
-        height: .7rem;
-        width: .7rem;
-        float: left;
-        vertical-align: middle;
-      }
-    }
-
-    > .student__meeting {
-      font-size: .5rem;
-      background-color: #ffffff;
-      padding: .5rem;
-      border-radius: .2rem;
-      box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-      margin: .5rem 0;
-      @include icon--before--book() {
-        margin-right: .5rem;
-        height: .7rem;
-        width: .7rem;
-        float: left;
-        vertical-align: middle;
       }
     }
   }

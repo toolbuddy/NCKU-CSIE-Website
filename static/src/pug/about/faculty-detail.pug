@@ -4,27 +4,19 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':   'Detail',
-        'faculty': 'Faculties',
-        'home':    'Home',
-        'about':   'About',
-        'topText': 'Faculties',
-        'path': {
-          'Home':      '',
-          'About':     'about',
-          'Faculties': 'about/faculty',
+        'title':    'Detail',
+        'faculty':  'Faculties',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
         },
       },
       'zh-TW': {
-        'title':   '詳細資料',
-        'faculty': '師資陣容',
-        'home':    '首頁',
-        'about':   '關於本系',
-        'topText': '師資陣容',
-        'path': {
-          '首頁':    '',
-          '關於本系': 'about',
-          '師資陣容': 'about/faculty',
+        'title':    '詳細資料',
+        'faculty':  '師資陣容',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
         },
       },
     } );
@@ -37,8 +29,12 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-  +location( 'https://via.placeholder.com/1920x500' )
-  +breadcrumb()
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
 append content
 
 append footer
