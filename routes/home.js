@@ -12,7 +12,7 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -29,7 +29,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/login$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -37,7 +37,7 @@ router.get( /^\/login$/, ( req, res ) => {
  */
 
 router.get( /^\/search$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -45,7 +45,7 @@ router.get( /^\/search$/, ( req, res ) => {
  */
 
 router.get( /^\/calendar$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
 } );
 
 export default router;

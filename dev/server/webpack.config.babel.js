@@ -2,7 +2,7 @@ import path from 'path';
 
 import nodeExternals from 'webpack-node-externals';
 
-import serverSettings from '../../settings/server/config.js';
+import { projectRoot, } from '../../settings/server/config.js';
 
 export default {
     /**
@@ -34,7 +34,7 @@ export default {
 
     entry:   [
         'babel-polyfill',
-        path.join( serverSettings.projectRoot, 'server.js' ),
+        path.join( projectRoot, 'server.js' ),
     ],
 
     /**
@@ -44,7 +44,7 @@ export default {
      */
 
     output:  {
-        path:     path.join( serverSettings.projectRoot, 'bin' ),
+        path:     path.join( projectRoot, 'bin' ),
         filename: 'server.min.js',
     },
 
@@ -84,13 +84,13 @@ export default {
 
     resolve:   {
         alias: {
-            apis:     path.join( serverSettings.projectRoot, 'apis' ),
-            dev:      path.join( serverSettings.projectRoot, 'dev' ),
-            models:   path.join( serverSettings.projectRoot, 'models' ),
-            routes:   path.join( serverSettings.projectRoot, 'routes' ),
-            settings: path.join( serverSettings.projectRoot, 'settings' ),
-            static:   path.join( serverSettings.projectRoot, 'static' ),
-            test:     path.join( serverSettings.projectRoot, 'test' ),
+            apis:     path.join( projectRoot, 'apis' ),
+            dev:      path.join( projectRoot, 'dev' ),
+            models:   path.join( projectRoot, 'models' ),
+            routes:   path.join( projectRoot, 'routes' ),
+            settings: path.join( projectRoot, 'settings' ),
+            static:   path.join( projectRoot, 'static' ),
+            test:     path.join( projectRoot, 'test' ),
         },
     },
 
@@ -150,7 +150,7 @@ export default {
                         loader:  'eslint-loader',
                         options: {
                             fix:        true,
-                            configFile: path.join( serverSettings.projectRoot, 'dev/server/.eslintrc.js' ),
+                            configFile: path.join( projectRoot, 'dev/server/.eslintrc.js' ),
                         },
                     },
                 ],
