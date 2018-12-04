@@ -1,6 +1,6 @@
 import detail from 'static/src/pug/components/about/faculty/details.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import serverSetting from 'settings/server/config.js';
+import { host } from 'settings/server/config.js';
 
 let facultyId = /about\/faculty\/(\d+)/.exec( window.location.pathname );
 
@@ -9,7 +9,7 @@ if ( facultyId === null )
 else
     facultyId = facultyId[ 1 ];
 
-const reqURL = `${ serverSetting.host }/api/faculty/${ facultyId }?language=${ WebLanguageUtils.currentLanguage }`;
+const reqURL = `${ host }/api/faculty/${ facultyId }?language=${ WebLanguageUtils.currentLanguage }`;
 
 export default target => fetch( reqURL )
 .then( res => res.json() )
