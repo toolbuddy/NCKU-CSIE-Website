@@ -7,7 +7,7 @@ $mobile-width: 768px;
 $pad-width: 1024px;
 
 body {
-  > main.content {
+  > .content {
     margin: 4rem 0;
     display: grid;
     grid-template-columns: 1fr 22% 72% 1fr;
@@ -24,7 +24,7 @@ body {
       grid-template-areas: '. maplink .';
     }
 
-    > aside {
+    > .logo {
       justify-self: center;
       grid-area: maplogo;
 
@@ -44,16 +44,16 @@ body {
         }
       }
 
-      > figcaption {
+      > .logo__caption {
         margin-top: 9%;
 
         // [ body > main.content > aside > figcaption 
-        > h1.caption__text__large {
+        > .caption__text__large {
           text-align: center;
           font-size: .75rem;
         }
 
-        > h2.caption__text.caption__text__small {
+        > .caption__text.caption__text__small {
           text-align: center;
           font-weight: normal;
           font-size: .5rem;
@@ -61,7 +61,7 @@ body {
       }
     }
 
-    > article {
+    > .map {
       grid-area: maplink;
 
       // [ RWD: $mobile-width ]
@@ -69,7 +69,7 @@ body {
         width: 100%;
       }
 
-      > section.map__link {
+      > .map__link {
         display: grid;
 
         // [ RWD: $mobile-width ]
@@ -142,6 +142,8 @@ body {
         > hr {
           // [ layout ]
           grid-area: myhr;
+
+          // [ position ]
           display: block;
           position: relative;
 
@@ -159,148 +161,226 @@ body {
         }
 
         > .home {
+          // [ skin ]
           color: #213262;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
-          grid-area: head_home;
           font-size: .75rem;
+
+          // [ layout ]
+          grid-area: head_home;
         }
 
         > .about {
+          // [ skin ]
           color: #213262;
-          grid-area: about;
           font-size: .75rem;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
+
+          // [ layout ]
+          grid-area: about;
         }
 
         > .research {
+          // [ skin ]
           color: #213262;
-          grid-area: research;
           font-size: .75rem;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
+
+          // [ layout ]
+          grid-area: research;
         }
 
         > .student {
+          // [ skin ]
           color: #213262;
-          grid-area: student;
           font-size: .75rem;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
+
+          // [ layout ]
+          grid-area: student;
         }
 
         > .announce {
+          // [ skin ]
           color: #213262;
-          grid-area: announce;
           font-size: .75rem;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
+
+          // [ layout ]
+          grid-area: announce;
         }
 
         > .resource {
+          // [ skin ]
           color: #213262;
-          grid-area: resources;
           font-size: .75rem;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
+
+          // [ layout ]
+          grid-area: resources;
         }
 
+        //　block
+        // `.tags_tag--home`
         > .tags__tag--home {
+          // [ layout ]
           grid-area: home;
         }
 
+        // block
+        // `.tags__tag--intro`
         > .tags__tag--intro {
+          // [ layout ]
           grid-area: intro;
         }
 
+        // block
+        // `.tags__tag--professor`
         > .tags__tag--professor {
+          // [ layout ]
           grid-area: professor;
         }
 
+        //block
+        // `.tags__tag--crew`
         > .tags__tag--crew {
+          // [ layout ]
           grid-area: crew;
         }
 
+        // block
+        // `.tags__tag--award`
         > .tags__tag--award {
+          // [ layout ]
           grid-area: award;
         }
 
+        // block
+        // `.tags__tag--trafic`
         > .tags__tag--traffic {
+          // [ layout ]
           grid-area: traffic;
         }
 
+        // block
+        // `.tags__tag--lab`
         > .tags__tag--lab {
+          // [ layout ]
           grid-area: lab;
         }
 
+        // block
+        // `.tags__tag--researcher`
         > .tags__tag--researcher {
+          // [ layout ]
           grid-area: researcher;
         }
 
+        // block
+        // `.tags__tag--center`
         > .tags__tag--center {
+          // [ layout ]
           grid-area: researchCenter;
         }
 
+        // block
+        // `.tags__tag--lectureinformation`
         > .tags__tag--lectureinformation {
+          // [ layout ]
           grid-area: lectureinformation;
         }
 
+        // block
+        // `.tags__tag--college`
         > .tags__tag--college {
+          // [ layout ]
           grid-area: college;
         }
 
+        // block
+        // `.tags_tag--master`
         > .tags__tag--master {
+          // [ layout ]
           grid-area: master;
         }
 
+        // block
+        // `.tags__tag--phd`
         > .tags__tag--phd {
+          // [ layout ]
           grid-area: phd;
         }
 
+        // block
+        // `.tags__tag--scholarship`
         > .tags__tag--scholarship {
+          // [ layout ]
           grid-area: scholarship;
         }
 
+        // block
+        // `.tags__tag--exchange`
         > .tags__tag--exchange {
+          // [ layout ]
           grid-area: exchange;
         }
 
+        // block
+        // `.tags__tag--company`
         > .tags__tag--company {
+          // [ layout ]
           grid-area: company;
         }
 
+        // block
+        // `.tags__tag--announce--all`
         > .tags__tag--announce--all {
+          // [ layout ]
           grid-area: annall;
         }
 
+        // block
+        // `.tags__tag--announce--activity`
         > .tags__tag--announce--activity {
+          // [ layout ]
           grid-area: annactivity;
         }
 
+        // block
+        // `.tags__tag--announce--company`
         > .tags__tag--announce--company {
+          // [ layout ]
           grid-area: anncompany;
         }
 
+        // block
+        // `.tags__tag--resourcelink`
         > .tags__tag--resourcelink {
+          // [ layout ]
           grid-area: resourcelink;
         }
       }
