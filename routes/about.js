@@ -15,7 +15,9 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, host, staticHost, } from 'settings/server/config.js';
+
+import getFacultyDetail from 'models/faculty/operation/get-faculty-detail.js';
 
 const router = express.Router();
 
@@ -24,7 +26,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -32,7 +34,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/award$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/award.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/award.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -40,7 +42,7 @@ router.get( /^\/award$/, ( req, res ) => {
  */
 
 router.get( /^\/contact$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/contact.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/contact.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -48,7 +50,7 @@ router.get( /^\/contact$/, ( req, res ) => {
  */
 
 router.get( /^\/intro$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/intro.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/intro.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -56,15 +58,19 @@ router.get( /^\/intro$/, ( req, res ) => {
  */
 
 router.get( /^\/faculty$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/faculty.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/faculty.${ req.query.language }.html` ) );
 } );
 
 /**
  * Resolve URL `/about/faculty/[id]`.
  */
 
-router.get( /^\/faculty\/[0-9]+$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/faculty-detail.${ req.query.language }.html` ) );
+router.get( /^\/faculty\/(\d+)$/, async ( req, res ) => {
+    const data = await getFacultyDetail( { profileId: req.params[ 0 ], language: req.query.language, } );
+    data.language = req.query.language;
+    data.host = host;
+    data.staticHost = staticHost;
+    res.render( 'about/faculty-detail.pug', data );
 } );
 
 /**
@@ -72,7 +78,7 @@ router.get( /^\/faculty\/[0-9]+$/, ( req, res ) => {
  */
 
 router.get( /^\/staff$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/about/staff.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/about/staff.${ req.query.language }.html` ) );
 } );
 
 export default router;
