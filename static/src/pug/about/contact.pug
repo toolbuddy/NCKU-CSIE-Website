@@ -4,8 +4,12 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Contact Us',
-        'topic': 'Contact',
+        'title':    'Contact Us',
+        'topic':    'Contact',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
         'thsr':  [
           'For THSR',
           '搭乘台灣高鐵抵台南站者，可至高鐵台南站二樓轉乘通廊或一樓大廳1號出口前往台鐵沙崙站搭乘 台鐵區間車前往台南火車站，約30分鐘一班車，20分鐘可到達台南火車站；成功大學自台南火車站後站步行即可到達。',
@@ -25,8 +29,12 @@ append data
         ],
       },
       'zh-TW': {
-        'title': '聯絡我們',
-        'topic': '聯絡方式',
+        'title':    '聯絡我們',
+        'topic':    '聯絡方式',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
         'thsr':  [
           '搭乘高鐵',
           '搭乘台灣高鐵抵台南站者，可至高鐵台南站二樓轉乘通廊或一樓大廳1號出口前往台鐵沙崙站搭乘 台鐵區間車前往台南火車站，約30分鐘一班車，20分鐘可到達台南火車站；成功大學自台南火車站後站步行即可到達。',
@@ -55,6 +63,12 @@ append stylesheets
   +css( 'about/contact' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
 
 append content
   include /components/common/topic.pug

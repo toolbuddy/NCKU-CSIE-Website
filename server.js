@@ -2,13 +2,13 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { port, projectRoot, } from 'settings/server/config.js';
 import language from 'settings/language/middleware';
 import apis from 'apis/urls';
 import routes from 'routes/urls';
 
 /**
- * Create HTTP server.
+ * Create HTTP server instance.
  */
 
 const server = express();
@@ -17,30 +17,43 @@ const server = express();
  * Start HTTP server.
  */
 
-server.listen( config.port );
+server.listen( port );
 
 /**
- * Set static files routes.
+ * Set HTML template engine.
  */
 
-server.use( '/css', express.static( path.join( config.projectRoot, 'static/dist/css' ) ) );
-server.use( '/js', express.static( path.join( config.projectRoot, 'static/dist/js' ) ) );
-server.use( '/image', express.static( path.join( config.projectRoot, 'static/src/image' ) ) );
+server.locals.basedir = path.join( projectRoot, '/static/src/pug' );
+server.set( 'view engine', 'pug' );
+server.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
 
 /**
- * Set language option.
+ * Setup static files routes.
+ */
+
+server.use( '/css', express.static( path.join( projectRoot, '/static/dist/css' ) ) );
+server.use( '/js', express.static( path.join( projectRoot, '/static/dist/js' ) ) );
+
+/**
+ * @todo solve webpack conflict, server side render did not provide data url conversion.
+ */
+
+server.use( '/static/src/image', express.static( path.join( projectRoot, '/static/src/image' ) ) );
+
+/**
+ * Setup language option.
  */
 
 server.use( language );
 
 /**
- * Set web page routes.
+ * Setup web page routes.
  */
 
 server.use( '/', routes );
 
 /**
- * Set web api routes.
+ * Setup web api routes.
  */
 
 server.use( '/api', apis );

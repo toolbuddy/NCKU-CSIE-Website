@@ -4,10 +4,18 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Sitemap',
+        'title':      'Sitemap',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
       },
       'zh-TW': {
-        'title': '網站地圖',
+        'title':      '網站地圖',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
       },
     } );
     const currentRoute = 'resource/sitemap';
@@ -19,6 +27,12 @@ append stylesheets
   +css( 'resource/sitemap' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
+    { text: i18n[ language ].title },
+   ] )
 
 append content
 

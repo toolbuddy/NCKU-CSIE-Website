@@ -12,7 +12,7 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/research/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/research/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -29,7 +29,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/groups$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/research/groups.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/research/groups.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -37,7 +37,7 @@ router.get( /^\/groups$/, ( req, res ) => {
  */
 
 router.get( /^\/labs$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/research/labs.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/research/labs.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -45,7 +45,7 @@ router.get( /^\/labs$/, ( req, res ) => {
  */
 
 router.get( /^\/publications$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/research/publications.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/research/publications.${ req.query.language }.html` ) );
 } );
 
 export default router;
