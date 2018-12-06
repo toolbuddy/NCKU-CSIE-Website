@@ -16,7 +16,7 @@ const validTags = Object.freeze( [
     'speech',
 ] );
 
-module.exports = {
+export default {
     isValidTags ( tags ) {
         return tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0;
     },

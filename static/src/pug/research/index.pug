@@ -1,19 +1,39 @@
 extends /layouts/research.pug
 
-append stylesheets
-
-append header
-
-append content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
+        'title':    'Research',
+        'breadcrumb': {
+          'home':   'Home',
+        },
       },
       'zh-TW': {
+        'title':    '學術研究',
+        'breadcrumb': {
+          'home':   '首頁',
+        },
       },
     } );
+    const currentRoute = 'research';
 
-  main.content
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'research/index' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].title },
+   ] )
+
+append content
+
+append footer
 
 append scripts
   +js( 'research/index' )

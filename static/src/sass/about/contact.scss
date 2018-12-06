@@ -2,93 +2,175 @@
 @import 'components/common/header';
 @import 'components/common/font';
 @import 'components/common/topic';
-@import 'components/about/contact/traffic';
 @import 'components/common/footer';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 
 // block
-// `body > .content`
-body > .content {
-  // [ layout ]
-  display: grid;
-  grid: {
-    template: {
-      areas:
-        '. topic .'
-        '. map   .'
-        '. drive .'
-        '. train .'
-        '. thsr  .';
-      columns: 1fr 13fr 1fr;
-      rows: auto 15rem auto auto auto;
-    }
-    row-gap: 1rem;
-  };
+// `body`
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
 
-  // [ skin ]
-  padding: 2.2rem 0;
-  width: 100%;
-  background-color: #f2f4f7;
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #eff3f9 );
 
-  // [ RWD: 768px ]
-  @media screen and ( min-width: 768px ) {
+  // block
+  // `body > .content`
+  > .content {
     // [ layout ]
-    grid-template-rows: auto 20rem auto auto auto;
-  }
-
-  // [ RWD: 1300px ]
-  @media screen and ( min-width: 1300px ) {
-    // [ layout ]
+    display: grid;
     grid: {
       template: {
         areas:
-          '. topic topic .'
-          '.  map  drive .'
-          '.  map  train .'
-          '.  map  thsr  .';
-        columns: 1fr 6fr 4fr 1fr;
-        rows: auto;
+          '. .     .'
+          '. map   .'
+          '. drive .'
+          '. train .'
+          '. thsr  .'
+          '. .     .';
+        columns: 1fr 13fr 1fr;
+        rows: .5rem 15rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
       }
-      column-gap: 2rem;
+      row-gap: 1rem;
     };
-  }
 
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    // [ position ]
-    align-self: center;
-    grid-area: topic;
-  }
+    // [ skin ]
+    width: 100%;
+    background-color: #f2f4f7;
 
-  // block
-  // `body > .content > #map`
-  #map {
-    // [ position ]
-    grid-area: map;
-  }
+    // [ RWD: 768px ]
+    @media screen and ( min-width: 768px ) {
+      // [ layout ]
+      grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
+    }
 
-  // block
-  // `body > .content > .traffic`
-  @include traffic();
+    // [ RWD: 1300px ]
+    @media screen and ( min-width: 1300px ) {
+      // [ layout ]
+      display: grid;
+      grid: {
+        template: {
+          areas:
+            '.  .   .     .'
+            '.  map drive .'
+            '.  map train .'
+            '.  map thsr  .'
+            '.  map .     .'
+            '.  .   .     .';
+          columns: 1fr 6fr 4fr 1fr;
+          rows: 1.6rem repeat( 3, minmax( auto, min-content ) ) 1rem 3.125rem;
+        }
+        column-gap: 2rem;
+        row-gap: 0;
+      };
+    }
 
-  // block
-  // `body > .content > .traffic.traffic--thsr`
-  .traffic--thsr {
-    // [ position ]
-    grid-area: thsr;
-  }
+    // block
+    // `body > .content > .map`
+    > .map {
+      // [ position ]
+      grid-area: map;
+    }
 
-  // block
-  // `body > .content > .traffic.traffic--train`
-  .traffic--train {
-    // [ position ]
-    grid-area: train;
-  }
+    // block
+    // `body > .content > .traffic`
+    > .traffic {
+      // block
+      // `body > .content > .traffic.traffic--thsr`
+      &.traffic--thsr {
+        // [ position ]
+        grid-area: thsr;
+      }
 
-  // block
-  // `body > .content > .traffic.traffic--drive`
-  .traffic--drive {
-    // [ position ]
-    grid-area: drive;
+      // block
+      // `body > .content > .traffic.traffic--train`
+      &.traffic--train {
+        // [ position ]
+        grid-area: train;
+      }
+
+      // block
+      // `body > .content > .traffic.traffic--drive`
+      &.traffic--drive {
+        // [ position ]
+        grid-area: drive;
+      }
+
+      // element
+      // `> .traffic > .traffic__text.traffic__text--`
+      > .traffic__text.traffic__text-- {
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--information`
+        &information {
+          // [ skin ]
+          font-size: .5rem;
+        }
+
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--title`
+        &title {
+          // [ layout ]
+          display: inline;
+
+          // [ skin ]
+          border-bottom: solid .0156rem #213262;
+          padding-bottom: .3rem;
+          font: {
+            size: .75rem;
+            weight: bold;
+          }
+
+          // [ before ]
+          &::before {
+            // [ layout ]
+            display: block;
+
+            // [ skin ]
+            content: '';
+            margin-top: 1.5625rem;
+          }
+
+          // [ after ]
+          &::after {
+            // [ layout ]
+            display: block;
+
+            // [ skin ]
+            content: '';
+            margin-top: 1.5938rem;
+          }
+        }
+
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--direction`
+        &direction {
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          margin: {
+            top: .9688rem;
+            bottom: .4688rem;
+          }
+          border: solid .0313rem #adacad;
+          border-radius: .0938rem;
+          padding: .1rem;
+          color: #adacad;
+          font: {
+            size: .4375rem;
+            weight: bold;
+          }
+
+          // [ first-of-type ]
+          &:first-of-type {
+            // [ skin ]
+            margin-top: 0;
+          }
+        }
+      }
+    }
   }
 }

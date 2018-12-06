@@ -6,84 +6,96 @@
 @import 'components/announcement/filter';
 @import 'components/announcement/title';
 @import 'components/announcement/pages';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 
-// block
-// `body > .content`
-body > .content {
-  // [ variable ]
-  $small: 850px;
-  $large: 992px;
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
 
-  // [ layout ]
-  display: grid;
-  grid: {
-    gap: 1.2rem 0;
-    template: {
-      columns: 1fr;
-      areas:
-        'filter'
-        'topic';
-    }
-  }
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
 
-  // [ skin ]
-  margin: 0 auto;
-  padding: 2.2rem .5rem;
-  max-width: 26rem;
+  // block
+  // `body > .content`
+  > .content {
+    // [ variable ]
+    $small: 850px;
+    $large: 992px;
 
-  // [ RWD: $small ]
-  @media screen and ( min-width: $small ) {
     // [ layout ]
-    grid-template-areas:
-      'topic'
-      'filter';
-  }
+    display: grid;
+    grid: {
+      gap: 1.2rem 0;
+      template: {
+        columns: 1fr;
+        areas:
+          'filter'
+          'topic';
+      }
+    }
 
-  // [ RWD: $large ]
-  @media screen and ( min-width: $large ) {
     // [ skin ]
-    padding: 2.2rem 0;
-  }
+    margin: 0 auto;
+    padding: 2.2rem .5rem;
+    max-width: 26rem;
 
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    // [ position ]
-    grid-area: topic;
-    grid-column: {
-      start: 1;
-      end: 11;
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template-areas:
+        'topic'
+        'filter';
     }
-  }
 
-  // block
-  // `body > .content > .filter`
-  @include filter--phd() {
-    // [ position ]
-    grid-area: filter;
-    grid-column: {
-      start: 1;
-      end: 11;
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ skin ]
+      padding: 2.2rem 0;
     }
-  }
 
-  // block
-  // `body > .content > .announcement`
-  @include announcement() {
-    // [ position ]
-    grid-column: {
-      start: 1;
-      end: 11;
+    // block
+    // `body > .content > .topic`
+    @include topic() {
+      // [ position ]
+      grid-area: topic;
+      grid-column: {
+        start: 1;
+        end: 11;
+      }
     }
-  }
 
-  // block
-  // `body > .content > .pages`
-  @include pages () {
-    // [ position ]
-    grid-column: {
-      start: 1;
-      end: 11;
+    // block
+    // `body > .content > .filter`
+    @include filter--phd() {
+      // [ position ]
+      grid-area: filter;
+      grid-column: {
+        start: 1;
+        end: 11;
+      }
+    }
+
+    // block
+    // `body > .content > .announcement`
+    @include announcement() {
+      // [ position ]
+      grid-column: {
+        start: 1;
+        end: 11;
+      }
+    }
+
+    // block
+    // `body > .content > .pages`
+    @include pages () {
+      // [ position ]
+      grid-column: {
+        start: 1;
+        end: 11;
+      }
     }
   }
 }

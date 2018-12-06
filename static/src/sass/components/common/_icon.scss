@@ -77,7 +77,7 @@ $icon-path: '../..';
     background: {
       position: center;
       size: cover;
-      image: url( '#{ $icon-path }/image/icon/search-black.png' );
+      image: url( '#{ $icon-path }/image/icon/search.png' );
     }
 
     // template [extend]
@@ -124,8 +124,8 @@ $icon-path: '../..';
     @content;
   }
 }
-@mixin icon__search--white () {
-  background-image: url( '#{ $icon-path }/image/icon/search-white.png' );
+@mixin icon__search () {
+  background-image: url( '#{ $icon-path }/image/icon/search.png' );
 }
 @mixin icon--before--user () {
   @include icon--before__template() {
@@ -138,4 +138,16 @@ $icon-path: '../..';
     // template [extend]
     @content;
   }
+}
+@mixin icon__user () {
+  background-image: url( '#{ $icon-path }/image/icon/user.png' );
+}
+@mixin icon__flag-zh-TW () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-zh-TW.png' );
+}
+@mixin icon__flag-en-US () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-en-US.png' );
+}
+@mixin icon__arrowRight () {
+  background-image: url( '#{ $icon-path }/image/icon/arrow-right.png' );
 }
