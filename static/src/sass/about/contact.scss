@@ -19,7 +19,6 @@ body > .content {
         '. train .'
         '. thsr  .';
       columns: 1fr 13fr 1fr;
-
       rows: auto 15rem auto auto auto;
     }
     row-gap: 1rem;
@@ -52,43 +51,44 @@ body > .content {
       column-gap: 2rem;
     };
   }
-}
 
-// block
-// `body > .content > .topic`
-@include topic() {
-  // [ position ]
-  align-self: center;
-  grid-area: topic;
-}
+  // block
+  // `body > .content > .topic`
+  @include topic() {
+    // [ position ]
+    align-self: center;
+    grid-area: topic;
+  }
 
-// block
-// `body > .content > #map`
-#map {
-  // [ position ]
-  grid-area: map;
-}
+  // block
+  // `body > .content > #map`
+  #map {
+    // [ position ]
+    grid-area: map;
+  }
 
-// block
-// `body > .content > .thsr`
-.thsr {
-  // [ position ]
-  grid-area: thsr;
+  // block
+  // `body > .content > .traffic`
   @include traffic();
-}
 
-// block
-// `body > .content > .train`
-.train {
-  // [ position ]
-  grid-area: train;
-  @include traffic();
-}
+  // block
+  // `body > .content > .traffic.traffic--thsr`
+  .traffic--thsr {
+    // [ position ]
+    grid-area: thsr;
+  }
 
-// block
-// `.drive`
-.drive {
-  // [ position ]
-  grid-area: drive;
-  @include traffic();
+  // block
+  // `body > .content > .traffic.traffic--train`
+  .traffic--train {
+    // [ position ]
+    grid-area: train;
+  }
+
+  // block
+  // `body > .content > .traffic.traffic--drive`
+  .traffic--drive {
+    // [ position ]
+    grid-area: drive;
+  }
 }

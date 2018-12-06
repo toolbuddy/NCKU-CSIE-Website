@@ -54,14 +54,15 @@ append content
   main.content
     +topic( i18n[ language ].topic )
     section#map
-    section.drive
+    section.traffic.traffic--drive
       +traffic( i18n[ language ].drive )
-    section.train
+    section.traffic.traffic--train
       +traffic( i18n[ language ].train )
-    section.thsr
+    section.traffic.traffic--thsr
       +traffic( i18n[ language ].thsr )
 
 append footer
 
 append scripts
   +js( 'about/contact' )
+  
