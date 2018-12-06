@@ -14,7 +14,7 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/announcement/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -31,7 +31,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/activity$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/announcement/activity.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/activity.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -39,7 +39,7 @@ router.get( /^\/activity$/, ( req, res ) => {
  */
 
 router.get( /^\/all$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/announcement/all.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/all.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -47,7 +47,7 @@ router.get( /^\/all$/, ( req, res ) => {
  */
 
 router.get( /^\/recruitment$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/announcement/recruitment.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/recruitment.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -55,7 +55,7 @@ router.get( /^\/recruitment$/, ( req, res ) => {
  */
 
 router.get( /^\/\d+$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/announcement/announcement.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/announcement.${ req.query.language }.html` ) );
 } );
 
 export default router;

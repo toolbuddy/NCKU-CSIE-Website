@@ -6,50 +6,77 @@ append data
       'en-US': {
         'title':   'Detail',
         'faculty': 'Faculties',
+        'breadcrumb': {
+          'home':    'Home',
+          'about':   'About',
+          'faculty': 'Faculty',
+        },
         'home':    'Home',
         'about':   'About',
+        'office':  'Office Address',
+        'tel':     'Office Tel',
+        'ext':     'ext.',
+        'lab':     'Laboratory',
+        'address': 'Address',
       },
       'zh-TW': {
         'title':   '詳細資料',
         'faculty': '師資陣容',
+        'breadcrumb': {
+          'home':    '首頁',
+          'about':   '關於本系',
+          'faculty': '師資陣容',
+        },
         'home':    '首頁',
         'about':   '關於本系',
+        'office':  '辦公室',
+        'tel':     '電話',
+        'ext':     '分機',
+        'lab':     '實驗室',
+        'address': '位置',
       },
     } );
     const currentRoute = 'about/faculty-detail';
 
 append title
-  +title( i18n[ language ].title )
+  +title( profile.name )
 
 append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].breadcrumb.faculty, url: 'about/faculty' },
+    { text: profile.name },
+   ] )
 append content
-  section.top
-    section.top__image.image
-      h1.image__text= i18n[language].faculty
-    nav.top__nav.nav
-      a.nav__link( href = url( { href: '' } ) )= i18n[language].home
-      +image( {
-        alt:       'arrow',
-        className: 'nav__arrow',
-        src:       'icon/arrow-right.png',
-      } )
-      a.nav__link( href = url( { href: 'about' } ) )= i18n[language].about
-      +image( {
-        alt:       'arrow',
-        className: 'nav__arrow',
-        src:       'icon/arrow-right.png',
-      } )
-      a.nav__link( href = url( { href: 'about/faculty' } ) )= i18n[language].faculty
-      +image( {
-        alt:       'arrow',
-        className: 'nav__arrow',
-        src:       'icon/arrow-right.png',
-      } )
-      p#teacherName.nav__link.nav__link--teacherName
+  include /components/common/topic.pug
+  include /components/common/image.pug
+
+  section.headline
+    header.headline__name= profile.name
+    aside.headline__titles.titles
+      each title in titles
+        span.titles__title= title.name
+  section.profile
+    aside.profile__departments.departments
+      each department in departments
+        span.departments__department= department.name
+    aside.profile__offices.offices
+      each office in offices
+        address.offices__address= `${ i18n[ language ].office }： ${ office.address }`
+        a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+    a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
+    aside.profile__labs.labs
+      each lab in labs
+        a.labs__lab( href = lab.web )= `${ i18n[ language ].lab }: ${ lab.name }`
+        address.labs__address= `${ i18n[ language ].address }: ${ lab.address }`
+        a.labs__tel( href = `tel:${ lab.tel }` )= `${ i18n[ language ].tel }: ${ lab.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+    a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
+  img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer
 

@@ -41,4 +41,10 @@ Object.defineProperties( config, {
     },
 } );
 
+export const domainName = config.domainName;
+export const protocol = config.protocol;
+export const port = config.port;
+export const projectRoot = config.projectRoot;
+export const host = config.host;
+export const staticHost = config.staticHost;
 export default config;
