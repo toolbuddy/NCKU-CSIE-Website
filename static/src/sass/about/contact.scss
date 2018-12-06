@@ -2,11 +2,12 @@
 @import 'components/common/header';
 @import 'components/common/font';
 @import 'components/common/topic';
-@import 'components/about/contact/traffic';
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
+// block
+// `body`
 body > {
   // block
   // `body > .banner`
@@ -24,13 +25,14 @@ body > {
     grid: {
       template: {
         areas:
-          '. topic .'
+          '. .     .'
           '. map   .'
-          '. thsr  .'
+          '. drive .'
           '. train .'
-          '. drive .';
+          '. thsr  .'
+          '. .     .';
         columns: 1fr 13fr 1fr;
-        rows: 2fr 3fr 2fr 2fr 4fr;
+        rows: .5rem 15rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
       }
       row-gap: 1rem;
     };
@@ -42,62 +44,133 @@ body > {
     // [ RWD: 768px ]
     @media screen and ( min-width: 768px ) {
       // [ layout ]
-      grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
+      grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
     }
 
-    // [ RWD: 1024px ]
-    @media screen and ( min-width: 1024px ) {
+    // [ RWD: 1300px ]
+    @media screen and ( min-width: 1300px ) {
       // [ layout ]
+      display: grid;
       grid: {
         template: {
           areas:
-            '. topic topic .'
-            '.  map  thsr  .'
-            '.  map  train .'
-            '.  map  drive .'
-            '.   .   drive .'
-            '.   .     .   .';
+            '.  .   .     .'
+            '.  map drive .'
+            '.  map train .'
+            '.  map thsr  .'
+            '.  map .     .'
+            '.  .   .     .';
           columns: 1fr 6fr 4fr 1fr;
-          rows: 4fr 4fr 4fr 3fr 7fr 2fr;
+          rows: 1.6rem repeat( 3, minmax( auto, min-content ) ) 1rem 3.125rem;
         }
         column-gap: 2rem;
+        row-gap: 0;
       };
     }
-  }
 
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    // [ position ]
-    grid-area: topic;
-    align-self: center;
-  }
+    // block
+    // `body > .content > .map`
+    > .map {
+      // [ position ]
+      grid-area: map;
+    }
 
-  // block
-  // `#map`
-  #map {
-    // [ layout ]
-    grid-area: map;
-  }
+    // block
+    // `body > .content > .traffic`
+    > .traffic {
+      // block
+      // `body > .content > .traffic.traffic--thsr`
+      &.traffic--thsr {
+        // [ position ]
+        grid-area: thsr;
+      }
 
-  // block
-  // `.thsr`
-  .thsr {
-    // [ layout ]
-    grid-area: thsr;
-  }
+      // block
+      // `body > .content > .traffic.traffic--train`
+      &.traffic--train {
+        // [ position ]
+        grid-area: train;
+      }
 
-  // block
-  // `.train`
-  .train {
-    // [ layout ]
-    grid-area: train;
-  }
+      // block
+      // `body > .content > .traffic.traffic--drive`
+      &.traffic--drive {
+        // [ position ]
+        grid-area: drive;
+      }
 
-  // block
-  // `.drive`
-  .drive {
-    // [ layout ]
-    grid-area: drive;
+      // element
+      // `> .traffic > .traffic__text.traffic__text--`
+      > .traffic__text.traffic__text-- {
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--information`
+        &information {
+          // [ skin ]
+          font-size: .5rem;
+        }
+
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--title`
+        &title {
+          // [ layout ]
+          display: inline;
+
+          // [ skin ]
+          border-bottom: solid .0156rem #213262;
+          padding-bottom: .3rem;
+          font: {
+            size: .75rem;
+            weight: bold;
+          }
+
+          // [ before ]
+          &::before {
+            // [ layout ]
+            display: block;
+
+            // [ skin ]
+            content: '';
+            margin-top: 1.5625rem;
+          }
+
+          // [ after ]
+          &::after {
+            // [ layout ]
+            display: block;
+
+            // [ skin ]
+            content: '';
+            margin-top: 1.5938rem;
+          }
+        }
+
+        // modifier
+        // `> .traffic > .traffic__text.traffic__text--direction`
+        &direction {
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          margin: {
+            top: .9688rem;
+            bottom: .4688rem;
+          }
+          border: solid .0313rem #adacad;
+          border-radius: .0938rem;
+          padding: .1rem;
+          color: #adacad;
+          font: {
+            size: .4375rem;
+            weight: bold;
+          }
+
+          // [ first-of-type ]
+          &:first-of-type {
+            // [ skin ]
+            margin-top: 0;
+          }
+        }
+      }
+    }
   }
 }

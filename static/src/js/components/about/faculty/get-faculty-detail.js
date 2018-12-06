@@ -1,6 +1,6 @@
 import detail from 'static/src/pug/components/about/faculty/details.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { host } from 'settings/server/config.js';
+import { host, } from 'settings/server/config.js';
 
 let facultyId = /about\/faculty\/(\d+)/.exec( window.location.pathname );
 

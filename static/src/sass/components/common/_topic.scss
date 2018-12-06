@@ -3,7 +3,7 @@
 @mixin topic () {
   // block
   // `> .topic`
-  .topic {
+  > .topic {
     // [ variable ]
     $tablet: 850px;
 

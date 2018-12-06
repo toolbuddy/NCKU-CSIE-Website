@@ -7,10 +7,7 @@
 
     // [ dispaly ]
     display: flex;
-    padding: {
-      left: 5%;
-      bottom: 3.44rem;
-    }
+    padding-left: 5%;
 
     // [ skin ]
     width: 100%;
@@ -20,13 +17,7 @@
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ display ]
-      padding: {
-        left: 20%;
-        bottom: 2.19rem;
-      }
-
-      // [ skin ]
-      height: 4.5rem;
+      padding-left: 20%;
     }
 
     // element
