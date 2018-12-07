@@ -1,0 +1,54 @@
+extends /layouts/announcement/briefing.pug
+
+append data
+  -
+    const i18n =  Object.freeze( {
+      'en-US': {
+        'title':      'Rule',
+        'topic':      'Rule',
+        'top':        'Top Announcement',
+        'normal':     'Announcement',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
+      },
+      'zh-TW': {
+        'title':      '法規彙編',
+        'topic':      '法規彙編',
+        'top':        '置頂貼文',
+        'normal':     '一般公告',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
+      },
+    } );
+    const filterModifier = 'rule';
+    const filterTags = [
+      'college',
+      'faculty',
+      'master',
+      'phd',
+      'rule',
+    ];
+    const currentRoute = 'resource/rule';
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'resource/rule' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
+
+append scripts
+  +js( 'resource/rule' )

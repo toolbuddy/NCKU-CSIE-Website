@@ -1,0 +1,48 @@
+@mixin banner ( $image ) {
+  // block
+  // `> .banner`
+  > .banner {
+    // [ variable ]
+    $large: 1120px;
+
+    // [ layout ]
+    display: flex;
+    justify-content: center;
+
+    // [ skin ]
+    width: 100%;
+    height: 15.63rem;
+    background: {
+      image: linear-gradient( rgba( 33, 50, 98, .7 ), rgba( 33, 50, 98, .7 ) ), url( $image );
+      position: center;
+      size: cover;
+      repeat: no-repeat;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ skin ]
+      height: 10.94rem;
+    }
+
+    // element
+    // `> .banner > .banner__text`
+    > .banner__text {
+      // [ layout ]
+      align-self: center;
+
+      // [ skin ]
+      color: #ffffff;
+      font: {
+        size: .8rem;
+        weight: bold;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        font-size: 1.56rem;
+      }
+    }
+  }
+}

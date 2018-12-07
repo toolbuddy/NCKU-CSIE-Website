@@ -1,37 +1,59 @@
 extends /layouts/announcement/briefing.pug
 
-block append stylesheets
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':     'College',
+        'topic':     'College',
+        'top':       'Top Announcement',
+        'normal':    'Announcement',
+        'breadcrumb': {
+          'home':    'Home',
+          'student': 'Student',
+        },
+      },
+      'zh-TW': {
+        'title':     '大學部',
+        'topic':     '大學部',
+        'top':       '置頂貼文',
+        'normal':    '一般公告',
+        'breadcrumb': {
+          'home':    '首頁',
+          'student': '學生事務',
+        },
+      },
+    } );
+    const filterModifier = 'college';
+    const filterTags = [
+      'award',
+      'college',
+      'competition',
+      'conference',
+      'exhibition',
+      'international',
+      'internship',
+      'rule',
+      'scholarship',
+      'speech',
+    ];
+    const currentRoute = 'student/college';
 
-block append content
-  include /components/common/topic.pug
-  include /components/announcement/filter.pug
-  include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'student/college' ) );
+append title
+  +title( i18n[ language ].title )
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filter( {
-      modifier: 'college',
-      tags: [
-        'all',
-        'competition',
-        'conference',
-        'exhibition',
-        'international',
-        'internship',
-        'rule',
-        'scholarship',
-        'speech',
-        'honor',
-      ]
-    } )
-    section.announcement
-      +announcement__title( i18n[ language ].top )
-      nav#announcement__brefings--top.announcement__briefings.briefings
+append stylesheets
+  +css( 'student/college' )
 
-    section.announcement
-      +announcement__title( i18n[ language ].normal )
-      nav#announcement__brefings.announcement__briefings.briefings
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.student, url: 'student' },
+    { text: i18n[ language ].title },
+   ] )
 
-block append scripts
+append footer
+
+append scripts
   +js( 'student/college' )

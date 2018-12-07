@@ -1,1 +1,20 @@
 extends /layouts/base.pug
+
+append content
+  include /components/common/topic.pug
+  include /components/announcement/filter.pug
+  include /components/announcement/title.pug
+
+  +topic( i18n[ language ].topic )
+  +filter( {
+    modifier: filterModifier,
+    tags: filterTags
+  } )
+
+  section.announcement
+    +announcement__title( i18n[ language ].top )
+    nav#announcement__brefings--top.announcement__briefings.briefings
+  section.announcement
+    +announcement__title( i18n[ language ].normal )
+    nav#announcement__brefings.announcement__briefings.briefings
+  section#pages.pages

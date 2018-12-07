@@ -1,1 +1,15 @@
 @import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/footer';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
+
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
+}

@@ -1,4 +1,4 @@
-$icon-path: '../../';
+$icon-path: '../..';
 
 // template
 // `icon--before__template`
@@ -11,136 +11,143 @@ $icon-path: '../../';
     @content;
   }
 }
-@mixin icon--after__template {
-  // template [skin]
-  &::after {
-    content: '';
-    display: inline-block;
-    @content;
+@mixin icon__flag ( $size ) {
+  // [ skin ]
+  border: {
+    style: solid;
+    color: #f5c150 #f5c150 transparent;
+    radius: ( $size * .1 ) ( $size * .1 ) 0 0;
+    width: ( $size * .8 ) ( $size * .35 ) ( $size * .16 );
   }
 }
-@mixin icon__arrow {
-  @include icon--after__template() {
-    right: -.094rem;
-    background: none repeat scroll 0 0 #757575;
-    border-radius: .312rem;
-    height: .0625rem;
-    position: absolute;
-    top: .1875rem;
-    transition: all 300ms ease 0s;
-    width: .343rem;
-    transform: rotate( -45deg );
-  }
-  @include icon--before__template() {
-    left: -.094rem;
-    background: none repeat scroll 0 0 #757575;
-    border-radius: .312rem;
-    height: .0625rem;
-    position: absolute;
-    top: .1875rem;
-    transition: all 300ms ease 0s;
-    width: .343rem;
-    transform: rotate( 45deg );
-  }
-
-  &--active {
-    &::before {
-      transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
-    }
-
-    &::after {
-      transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
-    }
-  }
+@mixin icon__download () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/download.png' );
 }
-@mixin icon--before__flag {
-  @include icon--before__template() {
-    border: {
-      style: solid;
-      color: #f5c150 #f5c150 transparent;
-      radius: .1rem .1rem 0 0;
-    }
-    @content;
-  }
-}
-@mixin icon--before__arrow {
-  @include icon--before__template() {
-    position: absolute;
-    overflow: hidden;
-    display: inline-block;
-    font-size: 2px; /* set the size for arrow */
-    width: 2rem;
-    height: 2rem;
-    margin-top: -2rem;
-    top: 50%;
-    border: {
-      top: 1px solid #a9a9a9;
-      right: 1px solid #a9a9a9;
-    }
-    transform: rotate( 136deg ) skew( 3deg );
-    right: 500px;
-    @content;
-  }
-}
-@mixin icon--before__download {
+@mixin icon--before--trophy () {
   @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBwkRLAUMz9XVAAAA60lEQVRo3u3YvQ3CMBCG4TOiZwXqFMwRMQFiinRshBgHsQkTHA0/FoqTO/vu3HxfFSlW3qeMTCQcj6zZKP3uRnrQawAAAAAAAAAAAAAAALD9PfKOTpSKJwfVd4+8L75juqXn/JtJ9etdu2kBHkBYygcQ1vLOBEnekSDNOxE0eQeCNm9MqMkbEmrzRoSWvAGhNd9IsMg3EKzylQTLfAXBOq8keOQVBK+8kOCZFxC88yuEiPwCISpfIETmZwjR+T9Cj3xG6JV/E3rmMQyzWHYjwgc6B1Wv6fF5zK5oaKBLEOBOX0D3SyoAAOgOeAEU8JM7trjpNwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0wOVQxNzo0NDowNSswMjowMPUAL6AAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMDlUMTc6NDQ6MDUrMDI6MDCEXZccAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==' );
+      image: url( '#{ $icon-path }/image/icon/trophy.png' );
     }
 
     // template [extend]
     @content;
   }
 }
-@mixin icon--before__template--small {
+@mixin icon--before--book () {
   @include icon--before__template() {
-    font-size: .5rem;
-    @content;
-  }
-}
-@mixin icon--before__email--small () {
-  @include icon--before__template--small() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRkPOQB3cU3LAAAAnUlEQVQoz6XRrQoCARDE8d9d0mryFcwGwWQxWHwOsdjM+iCC72AQq1WwWm2CWEW8E9ZyiIdfwd02f2ZYZvl3EkzUP9CDKXSdxJs96pBauWjavrg3mm5WhNxY1bzknqkYy4VCWKgZyoRwNVCzKMjDs9fStrbW1rJ/6E+xmREYFUkhRCJKp+3QKPcQvk76q8nU+Ss/J/p6kg84LP9+pjta2ExLRTITNgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNS0yNVQxNTo1NzowMCswMjowMOp3lHEAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDUtMjVUMTU6NTc6MDArMDI6MDCbKizNAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==' );
+      image: url( '#{ $icon-path }/image/icon/open-book.png' );
     }
 
     // template [extend]
     @content;
   }
 }
-
-// template
-// `icon--before__location--small`
-@mixin icon--before__location--small () {
-  // template [skin]
-  @include icon--before__template--small() {
+@mixin icon--before--study () {
+  @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRkQBBuAhijUAAAAyElEQVQoz3XRIU6DQRCG4aeEIioqEJQLILgKIanBFUMQuBocISEowgEQHADTCxRVgsCiMHW/IIGEGkwFbRjMtt2l7btq53s3s7PLjJpjz0aG7hxaYstAZOtBvRTuiziEizzeNhXCu0vXPoUwtrMQOunUEThIu1PYAHtJfAQvfsHuQnhLwgk4S9VBPsOXECb6XlODSi2/5u3SFFflmE0fRVxp/H+qTiG0reBpHvesZN+PEL61rOFGCOfW0lAZlt+0WQhjXVOTvPQHa6xb/LMJhJkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDUtMjVUMTY6MDQ6MjcrMDI6MDBKX9YNAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA1LTI1VDE2OjA0OjI3KzAyOjAwOwJusQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=' );
+      image: url( '#{ $icon-path }/image/icon/study.png' );
     }
 
     // template [extend]
     @content;
   }
 }
-
-// template
-// `icon--before__phone--small`
-@mixin icon--before__phone--small () {
-  // template [skin]
-  @include icon--before__template--small() {
+@mixin icon--before--students () {
+  @include icon--before__template() {
     background: {
       position: center;
       size: cover;
-      image: url( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBRURIjHT97epAAAArklEQVQoz3XRvQ4BQRDA8b/T0BEV8RRKHkOlFr1CXCPiQUShkci9gwodteIoRHOJTnLF5bKaybg9u7vNJPPb+cgChNyZ4T1DDAbDygeOAgxLN3gryGn/pwNyjW8krgpneR/TdaUDdhJV+bhnaPCQGnvfHj1SIRMfGQtIlVRo2WSty0Y06XAlIyyCmm5jeBJLtCiSOlslvzu3G03JSuBVHrfPwQLOLxyw4UTChRF8AVVhWCBptaGIAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA1LTIxVDE3OjM0OjQ5KzAyOjAwTEpX1AAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wNS0yMVQxNzozNDo0OSswMjowMD0X72gAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC' );
+      image: url( '#{ $icon-path }/image/icon/students.png' );
     }
 
     // template [extend]
     @content;
   }
+}
+@mixin icon--before--search () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '#{ $icon-path }/image/icon/search.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon__location () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/location.png' );
+}
+@mixin icon__envelope () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/envelope.png' );
+}
+@mixin icon__phone () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/phone.png' );
+}
+@mixin icon__laboratory () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/image/icon/laboratory.png' );
+}
+@mixin icon--before--taiwan () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '#{ $icon-path }/image/icon/taiwan.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon--before--studentcap () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '#{ $icon-path }/image/icon/students-cap.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon__search () {
+  background-image: url( '#{ $icon-path }/image/icon/search.png' );
+}
+@mixin icon--before--user () {
+  @include icon--before__template() {
+    background: {
+      position: center;
+      size: cover;
+      image: url( '#{ $icon-path }/image/icon/user.png' );
+    }
+
+    // template [extend]
+    @content;
+  }
+}
+@mixin icon__user () {
+  background-image: url( '#{ $icon-path }/image/icon/user.png' );
+}
+@mixin icon__flag-zh-TW () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-zh-TW.png' );
+}
+@mixin icon__flag-en-US () {
+  background-image: url( '#{ $icon-path }/image/icon/flag-en-US.png' );
+}
+@mixin icon__arrowRight () {
+  background-image: url( '#{ $icon-path }/image/icon/arrow-right.png' );
 }

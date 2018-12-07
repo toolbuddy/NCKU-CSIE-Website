@@ -1,30 +1,52 @@
 extends /layouts/announcement/briefing.pug
 
-block append stylesheets
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':    'Activities',
+        'topic':    'Activities',
+        'top':      'Top Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
+      },
+      'zh-TW': {
+        'title':    '活動公告',
+        'topic':    '活動公告',
+        'top':      '置頂貼文',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
+      },
+    } );
+    const filterModifier = 'activity';
+    const filterTags = [
+      'all',
+      'competition',
+      'conference',
+      'exhibition',
+      'speech',
+    ];
+    const currentRoute = 'announcement/activity';
 
-block append content
-  include /components/common/topic.pug
-  include /components/announcement/filter.pug
-  include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'announcement/activity' ) );
+append title
+  +title( i18n[ language ].title )
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filter( {
-      modifier: 'activity',
-      tags: [
-        'all',
-        'competition',
-        'conference',
-        'exhibition',
-        'speech',
-      ]
-    } )
-    section.announcement
-      +announcement__title( i18n[ language ].top )
-      nav#announcement__brefings--top.announcement__briefings.briefings
-    section.announcement
-      +announcement__title( i18n[ language ].normal )
-      nav#announcement__brefings.announcement__briefings.briefings
-block append scripts
+append stylesheets
+  +css( 'announcement/activity' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
+
+append scripts
   +js( 'announcement/activity' )

@@ -1,0 +1,318 @@
+mixin header()
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        util: {
+          calendar: 'Calendar',
+          login:    'Login',
+          search:   'Search',
+          language: 'Language',
+        },
+        route: {
+          about: {
+            award:   'Awards',
+            contact: 'Contact Us',
+            faculty: 'Faculties',
+            index:   'About',
+            intro:   'Introduction',
+            staff:   'Staff',
+          },
+          announcement: {
+            activity:    'Activities',
+            all:         'All',
+            index:       'News',
+            recruitment: 'Recruitment',
+          },
+          home: {
+            index: 'Home',
+            login: 'Login',
+          },
+          research: {
+            groups:       'Groups',
+            index:        'Research',
+            labs:         'Laboratories',
+            publications: 'Publications',
+          },
+          resource: {
+            alumni:  'Alumni',
+            fix:     'Fix',
+            ieet:    'IEET',
+            index:   'Resource',
+            rent:    'Rent',
+            rule:    'Rule',
+            sitemap: 'Site Map',
+          },
+          student: {
+            college:       'College',
+            course:        'Course',
+            index:         'Student',
+            international: 'International',
+            internship:    'Internship',
+            master:        'Master',
+            phd:           'Ph.D',
+            scholarship:   'Scholarship',
+          },
+        },
+      },
+      'zh-TW': {
+        util: {
+          calendar: '行事曆',
+          login:    '登入',
+          search:   '搜尋',
+          language: '語言',
+        },
+        route: {
+          about: {
+            award:   '榮譽事蹟',
+            contact: '聯絡我們',
+            faculty: '師資陣容',
+            index:   '關於本系',
+            intro:   '系所介紹',
+            staff:   '行政人員',
+          },
+          announcement: {
+            activity:    '活動公告',
+            all:         '全部公告',
+            index:       '系所公告',
+            recruitment: '徵才資訊',
+          },
+          home: {
+            index: '首頁',
+            login: '登入',
+          },
+          research: {
+            groups:       '研究群',
+            index:        '學術研究',
+            labs:         '實驗室',
+            publications: '發表論文',
+          },
+          resource: {
+            alumni:  '系友專區',
+            fix:     '修繕登記',
+            ieet:    'IEET工程認證',
+            index:   '資源連結',
+            rent:    '線上租借',
+            rule:    '法規彙編',
+            sitemap: '網站地圖',
+          },
+          student: {
+            college:       '大學部',
+            course:        '課程資訊',
+            index:         '學生事務',
+            international: '國際交流',
+            internship:    '實習',
+            master:        '碩士',
+            phd:           '博士',
+            scholarship:   '獎學金',
+          },
+        },
+      }
+    } );
+
+  header#header.header
+    //- Logo
+    a.header__logo.logo( href = url( { href : '' } ) )
+      +image( {
+        alt:       'csie',
+        className: 'logo__image',
+        src:       'logo/csie.png',
+      } )
+      figcaption.logo__caption.caption
+        h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+        h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+
+    //- Menu Icon
+    button.header__menu ☰
+
+    //- Navigation Bar
+    nav.header__navigation.navigation
+
+      //- Search Column, currently not available
+      //- Small screen version
+      form.navigation__search.search( action = url( { href : 'search' } ), method = 'GET' )
+        input.search__hidden( type = 'hidden', value = language, name = 'language' )
+        input.search__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
+        button.search__submit.submit
+          +image( {
+            alt:       i18n[ language ].util.search,
+            className: 'submit__image',
+            src:       'icon/search.png',
+          } )
+
+      //- Cancel Icon
+      button.navigation__cancel ✕
+
+      //- All routes
+      ul.navigation__list.list
+        li.list__item.item
+          a.item__link.item__link--homepage( href = url( { href : '' } ) )= i18n[ language ].route.home.index
+        li.list__item.item
+          a.item__link( href = url( { href : 'about' } ) )= i18n[ language ].route.about.index
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'about/intro' } ) )= i18n[ language ].route.about.intro
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'about/faculty' } ) )= i18n[ language ].route.about.faculty
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'about/staff' } ) )= i18n[ language ].route.about.staff
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'about/award' }) )= i18n[ language ].route.about.award
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'about/contact' } ) )= i18n[ language ].route.about.contact
+        li.list__item.item
+          a.item__link( href = url( { href : 'research' } ) )= i18n[ language ].route.research.index
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'research/labs' } ) )= i18n[ language ].route.research.labs
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'research/groups' } ) )= i18n[ language ].route.research.groups
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'research/publications' } ) )= i18n[ language ].route.research.publications
+        li.list__item.item
+          a.item__link( href = url( { href : 'student' } ) )= i18n[ language ].route.student.index
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/course' } ) )= i18n[ language ].route.student.course
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/college' } ) )= i18n[ language ].route.student.college
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/master' } ) )= i18n[ language ].route.student.master
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/phd' } ) )= i18n[ language ].route.student.phd
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/scholarship' } ) )= i18n[ language ].route.student.scholarship
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/international' } ) )= i18n[ language ].route.student.international
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'student/internship' } ) )= i18n[ language ].route.student.internship
+        li.list__item.item
+          a.item__link( href = url( { href : 'announcement' } ) )= i18n[ language ].route.announcement.index
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'announcement/all' } ) )= i18n[ language ].route.announcement.all
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'announcement/activity' } ) )= i18n[ language ].route.announcement.activity
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'announcement/recruitment' } ) )= i18n[ language ].route.announcement.recruitment
+        li.list__item.item
+          a.item__link( href = url( { href : 'resource' } ) )= i18n[ language ].route.resource.index
+          button.item__switch.switch
+            span.switch__icon
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/rule' } ) )= i18n[ language ].route.resource.rule
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/rent' } ) )= i18n[ language ].route.resource.rent
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/fix' } ) )= i18n[ language ].route.resource.fix
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/ieet' } ) )= i18n[ language ].route.resource.ieet
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/sitemap' } ) )= i18n[ language ].route.resource.sitemap
+            li.dropdown__item.item
+              a.item__link( href = url( { href : 'resource/alumni' } ) )= i18n[ language ].route.resource.alumni
+
+      //- Login, currently not available
+      //- Small screen version
+      a.navigation__login.login( href = url( { href : 'login' } ) )
+        +image( {
+          alt:       i18n[ language ].util.login,
+          className: 'login__image',
+          src:       'icon/user.png',
+        } )
+        span.login__text= i18n[ language ].util.login
+
+      //- Calendar, currently not available
+      //- Small screen version
+      a.navigation__calendar.calendar( href = url( { href : 'calendar' } ) )
+        +image( {
+          alt:       i18n[ language ].util.calendar,
+          className: 'calendar__image',
+          src:       'icon/calendar.png',
+        } )
+        span.calnedar__text= i18n[ language ].util.calendar
+
+      //- Language Choice
+      //- Small screen version
+      section.navigation__language.language
+        +image( {
+          alt:       i18n[ language ].util.language,
+          className: 'language__image',
+          src:       `icon/flag-${ language }.png`,
+        } )
+        h3.language__text= i18n[ language ].util.language
+        button.language__switch.switch
+          span.switch__icon
+        ul.language__dropdown.dropdown
+          li.dropdown__item.item.item--zh-TW
+            a.item__link.link( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) )
+              +image( {
+                alt:       '臺灣',
+                className: 'link__image',
+                src:       'icon/flag-zh-TW.png',
+              } )
+              if language === 'zh-TW'
+                span.link__text.link__text--active 臺灣
+              else
+                span.link__text 臺灣
+          li.dropdown__item.item.item--en-US
+            a.item__link.link( href = url( { href: currentRoute, query : { language : 'en-US' } } ) )
+              +image( {
+                alt:       'USA',
+                className: 'link__image',
+                src:       'icon/flag-en-US.png',
+              } )
+              if language === 'en-US'
+                span.link__text.link__text--active USA
+              else
+                span.link__text USA
+
+    //- Calendar, currently not available
+    //- Large screen version
+    a.header__calendar.calender( href = url( { href : 'calendar' } ) )
+      +image( {
+        alt:       i18n[ language ].util.calendar,
+        className: 'calendar__image',
+        src:       'icon/calendar.png',
+      } )
+
+    //- Language Choice
+    //- Large screen version
+    section.header__language.language
+      button.language__button.button
+        +image( {
+          alt:       i18n[ language ].util.language,
+          className: 'button__image',
+          src:       `icon/flag-${ language }.png`,
+        } )
+        ul.button__dropdown.dropdown
+          a.dropdown__item.dropdown__item--zh-TW( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) ) 中文
+          a.dropdown__item.dropdown__item--en-US( href = url( { href: currentRoute, query : { language : 'en-US' } } ) ) English
+
+    //- Login, currently not available
+    //- Large screen version
+    a.header__login( href = url( { href : 'login' } ) )= i18n[ language ].route.home.login
+
+    //- Search, currently not available
+    //- Large screen version
+    scetion.header__search.search
+      button.search__button.button
+        +image( {
+          alt: i18n[ language ].util.search,
+          className: 'button__image',
+          src:       'icon/search.png',
+        } )
+      section.search__dropdown.dropdown
+        form.dropdown__form.form( action = url( { href : 'search' } ), method = 'GET' )
+          input.form__hidden( type = 'hidden', value = language, name = 'language' )
+          input.form__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
+          input.form__submit( type = 'submit', value = '' )
+        button.dropdown__cancel ✕

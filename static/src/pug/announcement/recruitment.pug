@@ -1,24 +1,46 @@
 extends /layouts/announcement/briefing.pug
 
-block append stylesheets
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':    'Recruitments',
+        'topic':    'Recruitments',
+        'top':      'Top Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
+      },
+      'zh-TW': {
+        'title':    '徵人資訊',
+        'topic':    '徵人資訊',
+        'top':      '置頂貼文',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
+      },
+    } );
+    const filterModifier = 'recruitment';
+    const filterTags = [ 'recruitment', ];
+    const currentRoute = 'announcement/recruitment';
 
-block append content
-  include /components/common/topic.pug
-  include /components/announcement/filter.pug
-  include /components/announcement/title.pug
-  - const i18n = require( path.resolve( languageRoot, 'announcement/recruitment' ) );
+append title
+  +title( i18n[ language ].title )
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filter( {
-      modifier: 'recruitment',
-      tags: [ 'recruitment', ]
-    } )
-    section.announcement
-      +announcement__title( i18n[ language ].top )
-      nav#announcement__brefings--top.announcement__briefings.briefings
-    section.announcement
-      +announcement__title( i18n[ language ].normal )
-      nav#announcement__brefings.announcement__briefings.briefings
-block append scripts
+append stylesheets
+  +css( 'announcement/recruitment' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
+
+append scripts
   +js( 'announcement/recruitment' )

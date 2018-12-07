@@ -1,0 +1,13 @@
+mixin breadcrumb( breadcrumbList )
+  nav.breadcrumb
+    each value, index in breadcrumbList
+      if ( index !== 0 )
+        +image( {
+          alt:       'arrow',
+          className: 'breadcrumb__arrow',
+          src:       'icon/arrow-right.png',
+        } )
+      if ( index === breadcrumbList.length - 1 )
+        span.breadcrumb__text= value.text
+      else
+        a.breadcrumb__text.breadcrumb__text--link( href = url( { href: value.url } ) )= value.text

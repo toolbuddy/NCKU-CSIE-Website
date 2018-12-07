@@ -6,7 +6,10 @@
 ../../static/js/**/*.js
 
 # NodeJS modules
-../../node_modules
+**/node_modules
 
 # Squelize generated schema
-../../models/**/tables
+**/models/**/tables
+
+# bin/
+../../bin

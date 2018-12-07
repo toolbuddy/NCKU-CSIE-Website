@@ -1,5 +1,3 @@
-/**
- * CSS of the file
- */
-/* eslint no-unused-vars: off */
-import style from 'cssComponent/research/labs.min.css';
+import header from 'static/src/js/components/common/header/index.js';
+
+header( document.getElementById( 'header' ) );

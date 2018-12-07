@@ -1,37 +1,59 @@
 @import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/footer';
 @import 'components/announcement/announcement';
 @import 'components/announcement/tags';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 
-// block
-// `.content`
-
-.content {
-  $small: 560px;
-  $medium: 768px;
-  $large: 992px;
-
-  // block [layout]
-  display: grid;
-  grid-template: {
-    areas:
-        '.   announcement   .';
-    columns: 5% 1fr 5%;
-  };
-  @media screen and ( min-width: $small ) {
-    grid-template-columns: 10% 1fr 10%;
-  }
-  @media screen and ( min-width: $medium ) {
-    grid-template-columns: 15% 1fr 15%;
-  }
-  @media screen and ( min-width: $large ) {
-    grid-template-columns: 23% 1fr 23%;
-  }
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
 
   // block
-  // `.content .announcement`
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
 
-  .announcement {
-    // element [position]
-    grid-area: announcement;
+  // block
+  // `body > .content`
+  > .content {
+    // [ variable ]
+    $small: 560px;
+    $medium: 768px;
+    $large: 1080px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+          '. announcement .';
+      columns: 5% 1fr 5%;
+    };
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template-columns: 10% 1fr 10%;
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template-columns: 15% 1fr 15%;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template-columns: 1fr 31.81rem 1fr;
+    }
+
+    // block
+    // `body > .content > .announcement`
+    @include announcement() {
+      // [ position ]
+      grid-area: announcement;
+    }
   }
 }

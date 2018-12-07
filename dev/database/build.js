@@ -1,13 +1,13 @@
 const path = require( 'path' );
 
 const projectRoot = path.dirname( path.dirname( __dirname ) );
-const dbConfig = require( path.resolve( projectRoot, 'settings/database/config' ) );
-const generateTables = require( path.resolve( projectRoot, 'dev/database/gen-tables' ) );
+const databaseSettings = require( path.join( projectRoot, 'settings/database/config.js' ) );
+const generateTables = require( path.join( projectRoot, 'dev/database/gen-tables.js' ) );
 
 /**
  * Task `build:database`:
  *     Auto generate database table files.
  */
 
-generateTables( 'teacher', dbConfig );
-generateTables( 'announcement', dbConfig );
+generateTables( 'faculty', databaseSettings );
+generateTables( 'announcement', databaseSettings );

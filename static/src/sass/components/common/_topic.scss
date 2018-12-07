@@ -1,30 +1,43 @@
-// block
-// `.topic`
-.topic {
-  $tablet: 850px;
+// component
+// `> .topic`
+@mixin topic () {
+  // block
+  // `> .topic`
+  > .topic {
+    // [ variable ]
+    $tablet: 850px;
 
-  // block [position]
-  display: flex;
-  justify-content: center;
+    // [ position ]
+    display: flex;
+    justify-content: center;
 
-  // block [skin]
-  color: #000000;
-  @media screen and ( min-width: $tablet ) {
-    justify-content: flex-start;
-    border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
-  }
+    // [ skin ]
+    color: #000000;
 
-  // element
-  // `.topic .topic__text`
+    // [ customization ]
+    @content;
 
-  &__text {
-    // element [skin]
-    width: auto;
-    border-bottom: solid .0156rem #213262;
-    line-height: 1.4rem;
-    font: {
-      weight: bold;
-      size: .75rem;
+    // [ RWD: $tablet ]
+    @media screen and ( min-width: $tablet ) {
+      // [ position ]
+      justify-content: flex-start;
+
+      // [skin ]
+      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+    }
+
+    // element
+    // `> .topic > .topic__text`
+
+    > .topic__text {
+      // [ skin ]
+      border-bottom: solid .0156rem #213262;
+      width: auto;
+      line-height: 1.4rem;
+      font: {
+        weight: bold;
+        size: .75rem;
+      }
     }
   }
 }

@@ -1,9 +1,42 @@
 extends /layouts/about.pug
 
-block append stylesheets
+append data
+  -
+    const i18n= Object.freeze( {
+      'en-US': {
+        'title':    'Introduction',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
+      },
+      'zh-TW': {
+        'title':    '系所介紹',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
+      },
+    } );
+    const currentRoute = 'about/intro';
 
-block append content
-  - const i18n = require( path.resolve( languageRoot, 'about/intro' ) );
+append title
+  +title( i18n[ language ].title )
 
-block append scripts
+append stylesheets
+  +css( 'about/intro' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
+
+append content
+
+append footer
+
+append scripts
   +js( 'about/intro' )

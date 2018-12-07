@@ -1,9 +1,42 @@
 extends /layouts/resource.pug
 
-block append stylesheets
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':      'Rent',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
+      },
+      'zh-TW': {
+        'title':      '線上租借',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
+      },
+    } );
+    const currentRoute = 'resource/rent';
 
-block append content
-  - const i18n = require( path.resolve( languageRoot, 'resource/rent' ) );
+append title
+  +title( i18n[ language ].title )
 
-block append scripts
+append stylesheets
+  +css( 'resource/rent' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
+    { text: i18n[ language ].title },
+   ] )
+
+append content
+
+append footer
+
+append scripts
   +js( 'resource/rent' )

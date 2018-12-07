@@ -1,14 +1,28 @@
-const express = require( 'express' );
+/**
+ * API router middleware module for `express`.
+ *
+ * Including following sub-routing modules:
+ * - announcement: `/api/announcement`
+ * - faculty:      `/api/faculty`
+ */
 
-const teacher = require( './teacher' );
-const teachers = require( './teachers' );
+import express from 'express';
+
+import announcement from 'apis/announcement.js';
+import faculty from 'apis/faculty.js';
 
 const apis = express.Router();
 
-// Resolve URL /api/teacher
-apis.use( '/teacher', teacher );
+/**
+ * Resolve URL `/api/announcement`.
+ */
 
-// Resolve URL /api/teacher
-apis.use( '/teachers', teachers );
+apis.use( '/announcement', announcement );
 
-module.exports = apis;
+/**
+ * Resolve URL `/api/faculty`.
+ */
+
+apis.use( '/faculty', faculty );
+
+export default apis;

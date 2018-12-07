@@ -1,0 +1,39 @@
+extends /layouts/resource.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':      'Resource',
+        'breadcrumb': {
+          'home':     'Home',
+        },
+      },
+      'zh-TW': {
+        'title':      '資源連結',
+        'breadcrumb': {
+          'home':     '首頁',
+        },
+      },
+    } );
+    const currentRoute = 'resource';
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'resource/index' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].title },
+   ] )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'resource/index' )
