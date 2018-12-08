@@ -1,31 +1,31 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'topic':  'Ph.D',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':     'Ph.D',
+        'topic':     'Ph.D',
+        'top':       'Top Announcement',
+        'normal':    'Announcement',
+        'breadcrumb': {
+          'home':    'Home',
+          'student': 'Student',
+        },
       },
       'zh-TW': {
-        'topic':  '博士',
-        'top':    '置頂貼文',
-        'normal': '一般公告',
+        'title':     '博士',
+        'topic':     '博士',
+        'top':       '置頂貼文',
+        'normal':    '一般公告',
+        'breadcrumb': {
+          'home':    '首頁',
+          'student': '學生事務',
+        },
       },
     } );
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'phd',
-    tags: [
+    const filterModifier = 'phd';
+    const filterTags = [
       'award',
       'competition',
       'conference',
@@ -36,8 +36,24 @@ append filter
       'rule',
       'scholarship',
       'speech',
-    ]
-  } )
+    ];
+    const currentRoute = 'student/phd';
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'student/phd' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.student, url: 'student' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
 
 append scripts
   +js( 'student/phd' )

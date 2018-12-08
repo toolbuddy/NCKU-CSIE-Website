@@ -1,32 +1,46 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'topic':  'Recruitments',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':    'Recruitments',
+        'topic':    'Recruitments',
+        'top':      'Top Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
       },
       'zh-TW': {
-        'topic':  '企業徵才',
-        'top':    '置頂貼文',
-        'normal': '一般公告',
+        'title':    '徵人資訊',
+        'topic':    '徵人資訊',
+        'top':      '置頂貼文',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
       },
     } );
+    const filterModifier = 'recruitment';
+    const filterTags = [ 'recruitment', ];
+    const currentRoute = 'announcement/recruitment';
 
-append topic
-  +topic( i18n[ language ].topic )
+append title
+  +title( i18n[ language ].title )
 
-append filter
-  +filter( {
-    modifier: 'recruitment',
-    tags: [ 'recruitment', ]
-  } )
+append stylesheets
+  +css( 'announcement/recruitment' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
 
 append scripts
   +js( 'announcement/recruitment' )

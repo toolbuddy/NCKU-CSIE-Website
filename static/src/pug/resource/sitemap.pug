@@ -1,10 +1,6 @@
 extends /layouts/resource.pug
 
-append stylesheets
-
-append header
-
-append content
+append data
   -
     const i18n = Object.freeze( {
       'en-US': {
@@ -16,9 +12,7 @@ append content
           'announcement': 'announcement',
           'resource': 'resource',
         },
-        'links': {
-
-        },
+        'title':'Sitemap',
       },
       'zh-TW': {
         'titles': {
@@ -29,57 +23,67 @@ append content
           'announcement': '系所公告',
           'resource': '資源連結',
         },
-        'links': {
-
-        },
-      },
+        'title':      '網站地圖',
+      }
     } );
-    alltitles = [
+    const currentRoute = 'resource/sitemap';
+    const alltitles = [
       'home',
       'about',
       'research',
       'student',
       'announcement',
       'resource',
-    ]
-  mixin map__title( titles )
-    each title in titles
-      section( class=` map__title map__title--${ title } ` )= i18n[ language ].titles[ title ]
+    ];
 
-  main.content
-    figure.logo
-      +image( {
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'resource/sitemap' )
+
+append header
+  +banner( i18n[ language ].title )
+
+append content
+  mixin sitemap__title( titles )
+    each title in titles
+      section.sitemap__title( class = `sitemap__title--${ title } ` )= i18n[ language ].titles[ title ]
+
+  figure.logo
+    +image( {
       alt: 'csie',
       className: 'logo__image',
       src: 'logo/csie.png',
-      } )
-      figcaption.logo__caption.caption
-        h1.caption__text.caption__text--large|成功大學資訊工程學系暨研究所
-        h2.caption__text.caption__text--small|Department of Computer Science and Information Engineering
-    article.map
-      +map__title(alltitles)
-      hr
-      a.map__link(class="map__link--home" href="/")|首頁
-      a.map__link(class="map__link--intro" href="/about/intro")|系所介紹
-      a.map__link(class="map__link--professor" href="/about/faculty")|師資陣容
-      a.map__link(class="map__link--crew" href="/about/staff")|系辦成員
-      a.map__link(class="map__link--award" href="/about/award")|榮譽事蹟
-      a.map__link(class="map__link--traffic" href="/about/contact")|聯絡我們
-      a.map__link(class="map__link--lab" href="/research/labs")|實驗室
-      a.map__link(class="map__link--researcher" href="/research/groups")|研究群
-      a.map__link(class="map__link--researchCenter" href="/research/publications")|研究中心
-      a.map__link(class="map__link--lectureinformation" href="/student/course")|課程資訊
-      a.map__link(class="map__link--college" href="/student/college")|大學部
-      a.map__link(class="map__link--master" href="/student/master")|碩士
-      a.map__link(class="map__link--phd" href="/student/phd")|博士
-      a.map__link(class="map__link--scholarship" href="/student/scholarship")|獎學金
-      a.map__link(class="map__link--exchange" href="/student/international")|國際交流
-      a.map__link(class="map__link--company" href="/student/internship")|企業徵才
-      a.map__link(class="map__link--annall" href="/announcement/all")|全部公告
-      a.map__link(class="map__link--annactivity" href="/announcement/activity")|活動訊息
-      a.map__link(class="map__link--anncompany" href="/announcement/recruitment")|徵人資訊
-      a.map__link(class="map__link--resourcelink" href="/resource")|資源連結
+    } )
+    figcaption.logo__caption.caption
+      h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+      h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+  article.sitemap
+    +sitemap__title(alltitles)
+    hr.sitemap__horizontal-line
+    a.sitemap__link.sitemap__link--home( href = url( { href : '' } ) ) 首頁
+    a.sitemap__link.sitemap__link--intro( href = url( { href : 'about/intro' } ) ) 系所介紹
+    a.sitemap__link.sitemap__link--professor( href = url( { href : 'about/faculty' } ) ) 師資陣容
+    a.sitemap__link.sitemap__link--crew( href = url( { href : 'about/staff' } ) ) 系辦成員
+    a.sitemap__link.sitemap__link--award( href = url( { href : 'about/award' } ) ) 榮譽事蹟
+    a.sitemap__link.sitemap__link--traffic( href = url( { href : 'about/contact' } ) ) 聯絡我們
+    a.sitemap__link.sitemap__link--lab( href = url( { href : 'research/labs' } ) ) 實驗室
+    a.sitemap__link.sitemap__link--researcher( href = url( { href : 'research/groups' } ) ) 研究群
+    a.sitemap__link.sitemap__link--researchCenter( href = url( { href : 'research/publications' } ) ) 研究中心
+    a.sitemap__link.sitemap__link--lectureinformation( href = url( { href : 'student/course' } ) ) 課程資訊
+    a.sitemap__link.sitemap__link--college( href = url( { href : 'student/college' } ) ) 大學部
+    a.sitemap__link.sitemap__link--master( href = url( { href : 'student/master' } ) ) 碩士
+    a.sitemap__link.sitemap__link--phd( href = url( { href : 'student/phd' } ) ) 博士
+    a.sitemap__link.sitemap__link--scholarship( href = url( { href : 'student/scholarship' } ) ) 獎學金
+    a.sitemap__link.sitemap__link--exchange( href = url( { href : 'student/international' } ) ) 國際交流
+    a.sitemap__link.sitemap__link--company( href = url( { href : 'student/internship' } ) ) 企業徵才
+    a.sitemap__link.sitemap__link--annall( href = url( { href : 'announcement/all' } ) ) 全部公告
+    a.sitemap__link.sitemap__link--annactivity( href = url( { href : 'announcement/activity' } ) ) 活動訊息
+    a.sitemap__link.sitemap__link--anncompany( href = url( { href : 'announcement/recruitment' } ) ) 徵人資訊
+    a.sitemap__link.sitemap__link--resourcelink( href = url( { href : 'resource' } ) ) 資源連結
 
+append footer
 
 append scripts
   +js( 'resource/sitemap' )

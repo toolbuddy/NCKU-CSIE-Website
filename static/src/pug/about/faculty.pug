@@ -1,30 +1,61 @@
 extends /layouts/about.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':    'Faculty',
+        'topic':    'Faculty',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
+        'noResult': 'No Result',
+      },
+      'zh-TW': {
+        'title':    '師資陣容',
+        'topic':    '師資陣容',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
+        'noResult': '無結果',
+      },
+    } );
+    const currentRoute = 'about/faculty';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'about/faculty' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
 
 append content
   include /components/common/topic.pug
   include /components/about/faculty/filters.pug
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-        'topic':    'Faculty',
-        'noResult': 'No Result',
-      },
-      'zh-TW': {
-        'topic':    '師資陣容',
-        'noResult': '無結果',
-      },
-    } );
 
-  main.content
-    +topic( i18n[ language ].topic )
-    +filters()
-    section#cards.cards
-    section#no-result.no-result.no-result--hide
-      p.no-result__text= i18n[ language ].noResult
+  +topic( i18n[ language ].topic )
+
+  //- Filter component for faculty selection.
+  +filters()
+
+  //- Faculty data display section.
+  //-
+  //- Use card outfit to display faculty information.
+  //- @todo add loading screen.
+  section#cards.cards
+  section#no-result.no-result.no-result--hide
+    p.no-result__text= i18n[ language ].noResult
+
+append footer
 
 append scripts
   +js( 'about/faculty' )

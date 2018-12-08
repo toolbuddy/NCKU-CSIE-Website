@@ -1,3 +1,5 @@
+import languages from 'settings/language/config.js';
+
 export function isValidDate ( date ) {
     return date instanceof Date && !Number.isNaN( date );
 }
@@ -14,4 +16,8 @@ if ( validTags.indexOf( 'all' ) !== -1 )
 
 export function isValidTags ( tags ) {
     return ( tags.filter( tag => validTags.indexOf( tag ) < 0 ).length === 0 ) && tags.length;
+}
+
+export function isValidLanguage ( language ) {
+    return languages.support.includes( language );
 }
