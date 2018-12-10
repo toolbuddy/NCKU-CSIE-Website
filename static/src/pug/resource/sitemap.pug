@@ -12,6 +12,9 @@ append data
           'announcement': 'announcement',
           'resource': 'resource',
         },
+        'links': {
+
+        },
         'title':'Sitemap',
       },
       'zh-TW': {
@@ -22,6 +25,28 @@ append data
           'student': '學生事務',
           'announcement': '系所公告',
           'resource': '資源連結',
+        },
+        'links': {
+          'home': '首頁',
+          'intro': '系所介紹',
+          'professor': '師資陣容',
+          'crew': '系辦成員',
+          'award': '榮譽事蹟',
+          'traffic': '聯絡我們',
+          'lab': '實驗室',
+          'researcher': '研究群',
+          'researchCenter': '研究中心',
+          'lectureinformation': '課程資訊',
+          'college': '大學部',
+          'master': '碩士',
+          'phd': '博士',
+          'scholarship': '獎學金',
+          'exchange': '國際交流',
+          'company': '企業徵才',
+          'annall': '全部公告',
+          'annactivity': '活動訊息',
+          'anncompany': '徵人資訊',
+          'resourcelink': '資源連結'
         },
         'title':      '網站地圖',
       }
@@ -35,6 +60,28 @@ append data
       'announcement',
       'resource',
     ];
+    const alllinks = {
+      home: '',
+      intro: 'about/intro',
+      professor: 'about/faculty',
+      crew: 'about/staff',
+      award: 'about/award',
+      traffic: 'about/contact',
+      lab: 'research/labs',
+      researcher: 'research/groups',
+      researchCenter: 'research/publications',
+      lectureinformation: 'student/course',
+      college: 'student/college',
+      master: 'student/master',
+      phd: 'student/phd',
+      scholarship: 'student/scholarship',
+      exchange: 'student/international',
+      company: 'student/internship',
+      annall: 'announcement/all',
+      annactivity: 'announcement/activity',
+      anncompany: 'announcement/recruiment',
+      resourcelink: 'resource'
+    }
 
 append title
   +title( i18n[ language ].title )
@@ -49,6 +96,9 @@ append content
   mixin sitemap__title( titles )
     each title in titles
       section.sitemap__title( class = `sitemap__title--${ title } ` )= i18n[ language ].titles[ title ]
+  mixin sitemap__link( links )
+    each val, index in links
+      a.sitemap__link( class = `sitemap__link--${ index } ` href = url( { href : `${ val }` } ) )= i18n[ language ].links[ index ]
 
   figure.logo
     +image( {
@@ -62,26 +112,8 @@ append content
   article.sitemap
     +sitemap__title(alltitles)
     hr.sitemap__horizontal-line
-    a.sitemap__link.sitemap__link--home( href = url( { href : '' } ) ) 首頁
-    a.sitemap__link.sitemap__link--intro( href = url( { href : 'about/intro' } ) ) 系所介紹
-    a.sitemap__link.sitemap__link--professor( href = url( { href : 'about/faculty' } ) ) 師資陣容
-    a.sitemap__link.sitemap__link--crew( href = url( { href : 'about/staff' } ) ) 系辦成員
-    a.sitemap__link.sitemap__link--award( href = url( { href : 'about/award' } ) ) 榮譽事蹟
-    a.sitemap__link.sitemap__link--traffic( href = url( { href : 'about/contact' } ) ) 聯絡我們
-    a.sitemap__link.sitemap__link--lab( href = url( { href : 'research/labs' } ) ) 實驗室
-    a.sitemap__link.sitemap__link--researcher( href = url( { href : 'research/groups' } ) ) 研究群
-    a.sitemap__link.sitemap__link--researchCenter( href = url( { href : 'research/publications' } ) ) 研究中心
-    a.sitemap__link.sitemap__link--lectureinformation( href = url( { href : 'student/course' } ) ) 課程資訊
-    a.sitemap__link.sitemap__link--college( href = url( { href : 'student/college' } ) ) 大學部
-    a.sitemap__link.sitemap__link--master( href = url( { href : 'student/master' } ) ) 碩士
-    a.sitemap__link.sitemap__link--phd( href = url( { href : 'student/phd' } ) ) 博士
-    a.sitemap__link.sitemap__link--scholarship( href = url( { href : 'student/scholarship' } ) ) 獎學金
-    a.sitemap__link.sitemap__link--exchange( href = url( { href : 'student/international' } ) ) 國際交流
-    a.sitemap__link.sitemap__link--company( href = url( { href : 'student/internship' } ) ) 企業徵才
-    a.sitemap__link.sitemap__link--annall( href = url( { href : 'announcement/all' } ) ) 全部公告
-    a.sitemap__link.sitemap__link--annactivity( href = url( { href : 'announcement/activity' } ) ) 活動訊息
-    a.sitemap__link.sitemap__link--anncompany( href = url( { href : 'announcement/recruitment' } ) ) 徵人資訊
-    a.sitemap__link.sitemap__link--resourcelink( href = url( { href : 'resource' } ) ) 資源連結
+    +sitemap__link(alllinks)
+    
 
 append footer
 
