@@ -46,10 +46,6 @@ body {
     // block
     // `body > .content > .logo`
     > .logo {
-      // [ variable ]
-      $small: 768px;
-      $large: 1024px;
-
       // [ position ]
       grid-area: sitemap__logo;
 
@@ -219,7 +215,6 @@ body {
           size: .75rem;
           weight: bold;
           style: normal;
-          stretch: normal;
         };
         line-height: normal;
         letter-spacing: normal;
@@ -271,6 +266,8 @@ body {
         }
       }
 
+      // template
+      // `body > .content > .sitemap > .sitemap__link.sitemap__link--
       > .sitemap__link.sitemap__link-- {
         // modifier
         // `body > .content > .sitemap > .sitemap__link.sitemap__link--home
