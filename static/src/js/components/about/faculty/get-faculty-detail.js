@@ -1,6 +1,6 @@
 import detail from 'static/src/pug/components/about/faculty/details.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { host } from 'settings/server/config.js';
+import { host, } from 'settings/server/config.js';
 
 let facultyId = /about\/faculty\/(\d+)/.exec( window.location.pathname );
 
@@ -14,7 +14,5 @@ const reqURL = `${ host }/api/faculty/${ facultyId }?language=${ WebLanguageUtil
 export default target => fetch( reqURL )
 .then( res => res.json() )
 .then( ( data ) => {
-    /* eslint no-console: 0 */
-    console.log( data );
     target.innerHTML = detail( data );
 } );
