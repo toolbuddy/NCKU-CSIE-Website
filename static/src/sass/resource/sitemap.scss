@@ -2,14 +2,413 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 @import 'components/common/banner';
-@import 'components/common/breadcrumb';
 
-body > {
+// block
+// `body > .content`
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
 
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `body > .content`
+  > .content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1024px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      columns: 1fr 80% 1fr;
+      areas: '. sitemap__link .';
+    }
+
+    // [ skin ]
+    margin: 4rem 0;
+
+    // [ RWD: $small ]
+    @media screen and( min-width: $small ) {
+      grid-template: {
+        columns: 1fr 80% 1fr;
+        areas: '. sitemap__link .';
+      }
+    }
+
+    // [ RWD: $large ]
+    @media screen and( min-width: $large ) {
+      grid-template: {
+        areas: '. sitemap__logo sitemap__link .';
+        columns: 1fr 22% 72% 1fr;
+      }
+    }
+
+    // block
+    // `body > .content > .logo`
+    > .logo {
+      // [ position ]
+      grid-area: sitemap__logo;
+
+      // [ layout ]
+      display: none;
+
+      // [ RWD: $large ]
+      @media screen and( min-width: $large ) {
+        display: grid;
+      }
+
+      // element
+      // `body > .logo > .logo__image`
+      > .logo__image {
+        // [ position ]
+        justify-self: center;
+
+        // [ skin ]
+        width: 4.9063rem;
+      }
+
+      // element
+      // `body > .logo > .logo__caption`
+      // block
+      // `body > .logo > .caption`
+      > .logo__caption.caption {
+        // [ skin ]
+        margin-top: 9%;
+
+        // element
+        // `body > .logo > .caption > .caption__text`
+        > .caption__text {
+          // [ skin ]
+          text-align: center;
+
+          // modifier
+          // `body > .logo > .caption > .caption__text.caption__text--large`
+          &.caption__text--large {
+            font-size: .75rem;
+          }
+
+          // modifier
+          // `body > .logo > .caption > .caption__text.caption__text--small`
+          &.caption__text--small {
+            font: {
+              weight: normal;
+              size: .5rem;
+            }
+          }
+        }
+      }
+    }
+
+    // block
+    // `body > .content > .sitemap`
+    > .sitemap {
+      grid: {
+        // [ position ]
+        area: sitemap__link;
+
+        // [ layout ]
+        template-areas:
+          'sitemap__title--home'
+          'sitemap__link--home'
+          'sitemap__title--about'
+          'sitemap__link--intro'
+          'sitemap__link--faculty'
+          'sitemap__link--staff'
+          'sitemap__link--award'
+          'sitemap__link--contact'
+          'sitemap__title--research'
+          'sitemap__link--lab'
+          'sitemap__link--group'
+          'sitemap__link--publication'
+          'sitemap__title--student'
+          'sitemap__link--course'
+          'sitemap__link--college'
+          'sitemap__link--master'
+          'sitemap__link--phd'
+          'sitemap__link--scholar'
+          'sitemap__link--exchange'
+          'sitemap__link--intern'
+          'sitemap__title--announce'
+          'sitemap__link--all'
+          'sitemap__link--activity'
+          'sitemap__link--recruit'
+          'sitemap__title--resource'
+          'sitemap__link--resource';
+      }
+      display: grid;
+
+      // [ skin ]
+      text-align: center;
+      font-size: .5625rem;
+
+      // [ RWD: $small ]
+      @media screen and( min-width: $small ) {
+        // [ layout ]
+        grid-template-areas:
+          'sitemap__title--home    sitemap__title--about    sitemap__title--research'
+          'sitemap__link--home     sitemap__link--intro     sitemap__link--lab'
+          '.                       sitemap__link--faculty   sitemap__link--group'
+          '.                       sitemap__link--staff     sitemap__link--publication'
+          '.                       sitemap__link--award     .'
+          '.                       sitemap__link--contact   .'
+          '.                       .                        .'
+          '.                       .                        .'
+          'sitemap__hr             sitemap__hr              sitemap__hr'
+          'sitemap__title--student sitemap__title--announce sitemap__title--resource'
+          '.                       .                        .'
+          'sitemap__link--course   sitemap__link--all       sitemap__link--resource'
+          'sitemap__link--college  sitemap__link--activity  .'
+          'sitemap__link--master   sitemap__link--recruit   .'
+          'sitemap__link--phd      .                        .'
+          'sitemap__link--scholar  .                        .'
+          'sitemap__link--exchange .                        .'
+          'sitemap__link--intern   .                        .';
+      }
+
+      // [ RWD: $large ]
+      @media screen and( min-width: $large ) {
+        // [ layout ]
+        grid-template-areas:
+          'sitemap__title--home sitemap__title--about  sitemap__title--research   sitemap__title--student sitemap__title--announce sitemap__title--resource .'
+          'sitemap__hr          sitemap__hr            sitemap__hr                sitemap__hr             sitemap__hr              sitemap__hr              .'
+          '.                    .                      .                          .                       .                        .                        .'
+          'sitemap__link--home  sitemap__link--intro   sitemap__link--lab         sitemap__link--course   sitemap__link--all       sitemap__link--resource  .'
+          '.                    sitemap__link--faculty sitemap__link--group       sitemap__link--college  sitemap__link--activity  .                        .'
+          '.                    sitemap__link--staff   sitemap__link--publication sitemap__link--master   sitemap__link--recruit   .                        .'
+          '.                    sitemap__link--award   .                          sitemap__link--phd      .                        .                        .'
+          '.                    sitemap__link--contact .                          sitemap__link--scholar  .                        .                        .'
+          '.                    .                      .                          sitemap__link--exchange .                        .                        .'
+          '.                    .                      .                          sitemap__link--intern   .                        .                        .';
+      }
+
+      // element
+      // `body > .content > .sitemap > .sitemap__hr`
+      > .sitemap__hr {
+        // [ layout ]
+        grid-area: sitemap__hr;
+
+        // [ position ]
+        display: none;
+
+        // [ skin ]
+        margin: 3% .3125rem;
+        border: {
+          top: .0313rem solid #aaaaaa;
+          bottom: .0313rem solid #aaaaaa;
+        }
+        height: .0625rem;
+        width: 95%;
+
+        // [ RWD: $small ]
+        @media screen and( min-width: $small ) {
+          // [ layout ]
+          display: block;
+        }
+      }
+
+      // element
+      // `body > .content > .sitemap > .sitemap__title`
+      > .sitemap__title {
+        // [ skin ]
+        color: #213262;
+        font: {
+          size: .75rem;
+          weight: bold;
+          style: normal;
+        };
+        line-height: normal;
+        letter-spacing: normal;
+
+        // template
+        // `body > .content > .sitemap > .sitemap__title.sitemap__title--`
+        &.sitemap__title-- {
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--home
+          &home {
+            // [ position ]
+            grid-area: sitemap__title--home;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--about
+          &about {
+            // [ position ]
+            grid-area: sitemap__title--about;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--research
+          &research {
+            // [ position ]
+            grid-area: sitemap__title--research;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--student
+          &student {
+            // [ position ]
+            grid-area: sitemap__title--student;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--announce
+          &announce {
+            // [ position ]
+            grid-area: sitemap__title--announce;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--resource
+          &resource {
+            // [ position ]
+            grid-area: sitemap__title--resource;
+          }
+        }
+      }
+
+      // template
+      // `body > .content > .sitemap > .sitemap__link.sitemap__link--
+      > .sitemap__link.sitemap__link-- {
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--home
+        &home {
+          // [ position ]
+          grid-area: sitemap__link--home;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--intro
+        &intro {
+          // [ position ]
+          grid-area: sitemap__link--intro;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
+        &faculty {
+          // [ position ]
+          grid-area: sitemap__link--faculty;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--staff
+        &staff {
+          // [ position ]
+          grid-area: sitemap__link--staff;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--award
+        &award {
+          // [ position ]
+          grid-area: sitemap__link--award;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--contact
+        &contact {
+          // [ position ]
+          grid-area: sitemap__link--contact;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--lab
+        &lab {
+          // [ position ]
+          grid-area: sitemap__link--lab;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--groups
+        &groups {
+          // [ position ]
+          grid-area: sitemap__link--group;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--publications
+        &publications {
+          // [ position ]
+          grid-area: sitemap__link--publication;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--course
+        &course {
+          // [ position ]
+          grid-area: sitemap__link--course;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--college
+        &college {
+          // [ position ]
+          grid-area: sitemap__link--college;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--master
+        &master {
+          // [ position ]
+          grid-area: sitemap__link--master;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--phd
+        &phd {
+          // [ position ]
+          grid-area: sitemap__link--phd;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
+        &scholarship {
+          // [ position ]
+          grid-area: sitemap__link--scholar;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--international
+        &international {
+          // [ position ]
+          grid-area: sitemap__link--exchange;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--internship
+        &internship {
+          // [ position ]
+          grid-area: sitemap__link--intern;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--all
+        &all {
+          // [ position ]
+          grid-area: sitemap__link--all;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--activity
+        &activity {
+          // [ position ]
+          grid-area: sitemap__link--activity;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
+        &recruitment {
+          // [ position ]
+          grid-area: sitemap__link--recruit;
+        }
+
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--resource
+        &resource {
+          // [ position ]
+          grid-area: sitemap__link--resource;
+        }
+      }
+    }
+  }
 }

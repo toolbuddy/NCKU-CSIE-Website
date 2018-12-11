@@ -4,21 +4,95 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':      'Sitemap',
-        'breadcrumb': {
-          'home':     'Home',
-          'resource': 'Resource',
+        'titles': {
+          'home':         'Home',
+          'about':        'About',
+          'research':     'Research',
+          'student':      'Student',
+          'announce': 'Announcement',
+          'resource':     'Resource',
         },
+        'links': {
+          'home':          'Home',
+          'intro':         'Introduction',
+          'faculty':       'Faculty',
+          'staff':         'Staff',
+          'award':         'Award',
+          'contact':       'Contact',
+          'lab':           'Lab',
+          'groups':        'Groups',
+          'publications':  'Publications',
+          'course':        'Course',
+          'college':       'College',
+          'master':        'Master',
+          'phd':           'Phd',
+          'scholarship':   'Scholarship',
+          'international': 'International',
+          'internship':    'Internship',
+          'all':           'All',
+          'activity':      'Activity',
+          'recruitment':   'Recruitment',
+          'resource':      'Resource',
+        },
+        'title': 'Sitemap',
       },
       'zh-TW': {
-        'title':      '網站地圖',
-        'breadcrumb': {
-          'home':     '首頁',
-          'resource': '資源連結',
+        'titles': {
+          'home':         '首頁',
+          'about':        '關於本系',
+          'research':     '學術研究',
+          'student':      '學生事務',
+          'announce':     '系所公告',
+          'resource':     '資源連結',
         },
-      },
+        'links': {
+          'home':          '首頁',
+          'intro':         '系所介紹',
+          'faculty':       '師資陣容',
+          'staff':         '系辦成員',
+          'award':         '榮譽事蹟',
+          'contact':       '聯絡我們',
+          'lab':           '實驗室',
+          'groups':        '研究群',
+          'publications':  '研究中心',
+          'course':        '課程資訊',
+          'college':       '大學部',
+          'master':        '碩士',
+          'phd':           '博士',
+          'scholarship':   '獎學金',
+          'international': '國際交流',
+          'internship':    '企業徵才',
+          'all':           '全部公告',
+          'activity':      '活動訊息',
+          'recruitment':   '徵人資訊',
+          'resource':      '資源連結',
+        },
+        'title': '網站地圖',
+      }
     } );
     const currentRoute = 'resource/sitemap';
+    const allLinks = {
+      home: '',
+      intro: 'about/intro',
+      faculty: 'about/faculty',
+      staff: 'about/staff',
+      award: 'about/award',
+      contact: 'about/contact',
+      lab: 'research/labs',
+      groups: 'research/groups',
+      publications: 'research/publications',
+      course: 'student/course',
+      college: 'student/college',
+      master: 'student/master',
+      phd: 'student/phd',
+      scholarship: 'student/scholarship',
+      international: 'student/international',
+      internship: 'student/internship',
+      all: 'announcement/all',
+      activity: 'announcement/activity',
+      recruitment: 'announcement/recruitment',
+      resource: 'resource',
+    }
 
 append title
   +title( i18n[ language ].title )
@@ -28,13 +102,24 @@ append stylesheets
 
 append header
   +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
-    { text: i18n[ language ].title },
-   ] )
 
 append content
+
+  figure.logo
+    +image( {
+      alt:       'csie',
+      className: 'logo__image',
+      src:       'logo/csie.png',
+    } )
+    figcaption.logo__caption.caption
+      h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
+      h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+  section.sitemap
+    each val, index in i18n[ language ].titles
+      article.sitemap__title( class = `sitemap__title--${ index }` )= val
+    hr.sitemap__hr
+    each val, index in allLinks
+      a.sitemap__link( class = `sitemap__link--${ index }`, href = url( { href : `${ val }` } ) )= i18n[ language ].links[ index ]
 
 append footer
 
