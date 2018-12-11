@@ -1,9 +1,7 @@
-const path = require( 'path' );
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const associations = require( path.join( projectRoot, 'models/announcement/operation/associations' ) );
-const defaultValue = require( path.join( projectRoot, 'settings/default-value/announcement/config' ) );
+import associations from 'models/announcement/operation/associations.js';
+import defaultValue from 'settings/default-value/announcement/config.js';
 
-module.exports = async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
+export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
     const table = await associations();
 
     const data = await table.announcement.findOne( {

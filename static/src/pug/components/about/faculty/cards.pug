@@ -7,12 +7,14 @@ mixin cards__card( profile = {} )
         'email':  'Email',
         'office': 'Office',
         'tel':    'Tel',
+        'ext':    'ext.',
         'lab':    'Lab',
       },
       'zh-TW': {
         'more':   '更多資訊',
         'email':  '信箱',
         'office': '辦公室',
+        'ext':    '分機',
         'tel':    '電話',
         'lab':    '實驗室',
       },
@@ -66,7 +68,7 @@ mixin cards__card( profile = {} )
           if office.address
             address.intro__address= `${ i18n[ language ].office }: ${ office.address }`
           if office.tel
-            a.intro__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel }`
+            a.intro__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
 
       //- Faculty run some labs.
       if profile.labs
@@ -77,7 +79,7 @@ mixin cards__card( profile = {} )
 
       //- Faculty's detail information link.
       p.intro__more
-        a( href = `/about/faculty/${ profile.profileId }?language=${ language }` )= i18n[ language ].more
+        a( href = `/about/faculty/${ profile.profileId }?language=${language}` )= i18n[ language ].more
 
 //- main
     Construct all faculty information with `cards__card`.

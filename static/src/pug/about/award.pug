@@ -1,38 +1,54 @@
 extends /layouts/announcement/briefing.pug
 
-append stylesheets
-
-append header
-
-prepend content
+append data
   -
     const i18n =  Object.freeze( {
       'en-US': {
-        'topic':  'Honor',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':    'Award',
+        'topic':    'Award',
+        'top':      'Top Announcement',
+        'normal':   'Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
       },
       'zh-TW': {
-        'topic':  '榮譽',
-        'top':    '置頂貼文',
-        'normal': '一般公告',
+        'title':    '榮譽事蹟',
+        'topic':    '榮譽',
+        'top':      '置頂貼文',
+        'normal':   '一般公告',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
       },
     } );
-
-append topic
-  +topic( i18n[ language ].topic )
-
-append filter
-  +filter( {
-    modifier: 'award',
-    tags: [
+    const filterModifier = 'award';
+    const filterTags = [
       'award',
       'faculty',
       'college',
       'master',
       'phd',
-    ]
-  } )
+    ];
+    const currentRoute = 'about/award';
+
+append title
+  +title( i18n[ language ].title )
+
+append stylesheets
+  +css( 'about/award' )
+
+append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
+
+append footer
 
 append scripts
   +js( 'about/award' )

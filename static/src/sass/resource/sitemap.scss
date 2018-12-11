@@ -1,387 +1,412 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
+@import 'components/common/banner';
 
-// [ variable ]
-$mobile-width: 768px;
-$pad-width: 1024px;
-
+// block
+// `body > .content`
 body {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
+
+  // block
+  // `body > .content`
   > .content {
-    margin: 4rem 0;
+    // [ variable ]
+    $small: 768px;
+    $large: 1024px;
+
+    // [ layout ]
     display: grid;
-    grid-template-columns: 1fr 22% 72% 1fr;
-    grid-template-areas: '. maplogo maplink .';
-
-    // [ RWD: $mobile-width ]
-    @media screen and( max-width: $mobile-width ) {
-      height: 31.25rem;
+    grid-template: {
+      columns: 1fr 80% 1fr;
+      areas: '. sitemap__link .';
     }
 
-    // [ RWD: $pad-width ]
-    @media screen and( max-width: $pad-width ) {
-      grid-template-columns: 1fr 80% 1fr;
-      grid-template-areas: '. maplink .';
+    // [ skin ]
+    margin: 4rem 0;
+
+    // [ RWD: $small ]
+    @media screen and( min-width: $small ) {
+      grid-template: {
+        columns: 1fr 80% 1fr;
+        areas: '. sitemap__link .';
+      }
     }
 
+    // [ RWD: $large ]
+    @media screen and( min-width: $large ) {
+      grid-template: {
+        areas: '. sitemap__logo sitemap__link .';
+        columns: 1fr 22% 72% 1fr;
+      }
+    }
+
+    // block
+    // `body > .content > .logo`
     > .logo {
-      justify-self: center;
-      grid-area: maplogo;
+      // [ position ]
+      grid-area: sitemap__logo;
 
-      // [ RWD: $pad-width ]
-      @media screen and( max-width: $pad-width ) {
-        display: none;
+      // [ layout ]
+      display: none;
+
+      // [ RWD: $large ]
+      @media screen and( min-width: $large ) {
+        display: grid;
       }
 
-      > figure {
-        justify-content: center;
-        display: flex;
+      // element
+      // `body > .logo > .logo__image`
+      > .logo__image {
+        // [ position ]
+        justify-self: center;
 
-        > img {
-          grid-area: logo;
-          width: 4.9063rem;
-          height: 3.75rem;
-        }
+        // [ skin ]
+        width: 4.9063rem;
       }
 
-      > .logo__caption {
+      // element
+      // `body > .logo > .logo__caption`
+      // block
+      // `body > .logo > .caption`
+      > .logo__caption.caption {
+        // [ skin ]
         margin-top: 9%;
 
-        // [ body > main.content > aside > figcaption 
-        > .caption__text__large {
+        // element
+        // `body > .logo > .caption > .caption__text`
+        > .caption__text {
+          // [ skin ]
           text-align: center;
-          font-size: .75rem;
-        }
 
-        > .caption__text.caption__text__small {
-          text-align: center;
-          font-weight: normal;
-          font-size: .5rem;
+          // modifier
+          // `body > .logo > .caption > .caption__text.caption__text--large`
+          &.caption__text--large {
+            font-size: .75rem;
+          }
+
+          // modifier
+          // `body > .logo > .caption > .caption__text.caption__text--small`
+          &.caption__text--small {
+            font: {
+              weight: normal;
+              size: .5rem;
+            }
+          }
         }
       }
     }
 
-    > .map {
-      grid-area: maplink;
+    // block
+    // `body > .content > .sitemap`
+    > .sitemap {
+      grid: {
+        // [ position ]
+        area: sitemap__link;
 
-      // [ RWD: $mobile-width ]
-      @media screen and(max-width:$mobile-width) {
-        width: 100%;
+        // [ layout ]
+        template-areas:
+          'sitemap__title--home'
+          'sitemap__link--home'
+          'sitemap__title--about'
+          'sitemap__link--intro'
+          'sitemap__link--faculty'
+          'sitemap__link--staff'
+          'sitemap__link--award'
+          'sitemap__link--contact'
+          'sitemap__title--research'
+          'sitemap__link--lab'
+          'sitemap__link--group'
+          'sitemap__link--publication'
+          'sitemap__title--student'
+          'sitemap__link--course'
+          'sitemap__link--college'
+          'sitemap__link--master'
+          'sitemap__link--phd'
+          'sitemap__link--scholar'
+          'sitemap__link--exchange'
+          'sitemap__link--intern'
+          'sitemap__title--announce'
+          'sitemap__link--all'
+          'sitemap__link--activity'
+          'sitemap__link--recruit'
+          'sitemap__title--resource'
+          'sitemap__link--resource';
+      }
+      display: grid;
+
+      // [ skin ]
+      text-align: center;
+      font-size: .5625rem;
+
+      // [ RWD: $small ]
+      @media screen and( min-width: $small ) {
+        // [ layout ]
+        grid-template-areas:
+          'sitemap__title--home    sitemap__title--about    sitemap__title--research'
+          'sitemap__link--home     sitemap__link--intro     sitemap__link--lab'
+          '.                       sitemap__link--faculty   sitemap__link--group'
+          '.                       sitemap__link--staff     sitemap__link--publication'
+          '.                       sitemap__link--award     .'
+          '.                       sitemap__link--contact   .'
+          '.                       .                        .'
+          '.                       .                        .'
+          'sitemap__hr             sitemap__hr              sitemap__hr'
+          'sitemap__title--student sitemap__title--announce sitemap__title--resource'
+          '.                       .                        .'
+          'sitemap__link--course   sitemap__link--all       sitemap__link--resource'
+          'sitemap__link--college  sitemap__link--activity  .'
+          'sitemap__link--master   sitemap__link--recruit   .'
+          'sitemap__link--phd      .                        .'
+          'sitemap__link--scholar  .                        .'
+          'sitemap__link--exchange .                        .'
+          'sitemap__link--intern   .                        .';
       }
 
-      > .map__link {
-        display: grid;
+      // [ RWD: $large ]
+      @media screen and( min-width: $large ) {
+        // [ layout ]
+        grid-template-areas:
+          'sitemap__title--home sitemap__title--about  sitemap__title--research   sitemap__title--student sitemap__title--announce sitemap__title--resource .'
+          'sitemap__hr          sitemap__hr            sitemap__hr                sitemap__hr             sitemap__hr              sitemap__hr              .'
+          '.                    .                      .                          .                       .                        .                        .'
+          'sitemap__link--home  sitemap__link--intro   sitemap__link--lab         sitemap__link--course   sitemap__link--all       sitemap__link--resource  .'
+          '.                    sitemap__link--faculty sitemap__link--group       sitemap__link--college  sitemap__link--activity  .                        .'
+          '.                    sitemap__link--staff   sitemap__link--publication sitemap__link--master   sitemap__link--recruit   .                        .'
+          '.                    sitemap__link--award   .                          sitemap__link--phd      .                        .                        .'
+          '.                    sitemap__link--contact .                          sitemap__link--scholar  .                        .                        .'
+          '.                    .                      .                          sitemap__link--exchange .                        .                        .'
+          '.                    .                      .                          sitemap__link--intern   .                        .                        .';
+      }
 
-        // [ RWD: $mobile-width ]
-        @media screen and(min-width:$mobile-width) {
-          grid-template-areas: 
-            'head_home          about          research '
-            'home               intro               lab '
-            '.                  professor                  researcher '
-            '.                  crew                  researchCenter '
-            '.                  award                  . '
-            '.                  traffic                  . '
-            '.                  .                  . '
-            '.                  .                  .  '
-            'myhr               myhr               myhr '
-            'student            announce            resources '
-            '.                  .                  . '
-            'lectureinformation annall resourcelink '
-            'college            annactivity            . '
-            'master             anncompany             . '
-            'phd . . '
-            'scholarship . . '
-            'exchange . . '
-            'company . . ';
-           
+      // element
+      // `body > .content > .sitemap > .sitemap__hr`
+      > .sitemap__hr {
+        // [ layout ]
+        grid-area: sitemap__hr;
+
+        // [ position ]
+        display: none;
+
+        // [ skin ]
+        margin: 3% .3125rem;
+        border: {
+          top: .0313rem solid #aaaaaa;
+          bottom: .0313rem solid #aaaaaa;
         }
+        height: .0625rem;
+        width: 95%;
 
-        // [ RWD: $pad-width ]
-        @media screen and(min-width:$pad-width) {
-          grid-template-areas:
-            'head_home   about         research         student             announce      resources     .'
-            'myhr        myhr          myhr             myhr                myhr          myhr          myhr'
-            '.           .             .                .                   .             .             .'
-            'home        intro         lab              lectureinformation  annall        resourcelink  .'
-            '.           professor     researcher       college             annactivity   .             .'
-            '.           crew          researchCenter   master              anncompany    .             .'
-            '.           award         .                phd                 .             .             .'
-            '.           traffic       .                scholarship         .             .             .'
-            '.           .             .                exchange            .             .             .'
-            '.           .             .                company             .             .             .';
-        }
-        grid-template-areas:'head_home'
-          'home'
-          'about'
-          'intro'
-          'professor'
-          'crew'
-          'award'
-          'traffic'
-          'research'
-          'lab'
-          'researcher'
-          'researchCenter'
-          'student'
-          'lectureinformation'
-          'college'
-          'master'
-          'phd'
-          'scholarship'
-          'exchange'
-          'company'
-          'announce'
-          'annall'
-          'annactivity'
-          'anncompany'
-          'resources'
-          'resourcelink';
-        text-align: center;
-        font-size: .5625rem;
-
-        > hr {
+        // [ RWD: $small ]
+        @media screen and( min-width: $small ) {
           // [ layout ]
-          grid-area: myhr;
-
-          // [ position ]
           display: block;
-          position: relative;
+        }
+      }
 
-          // [ skin ]
-          margin: 3% .3125rem;
-          padding: 0;
-          border-top: .03125rem solid #aaaaaa;
-          border-bottom: .03125rem solid #aaaaaa;
-          height: .0625rem;
-          width: 95%;
-          clear: both;
-          @media screen and(max-width:$mobile-width) {
-            display: none;
+      // element
+      // `body > .content > .sitemap > .sitemap__title`
+      > .sitemap__title {
+        // [ skin ]
+        color: #213262;
+        font: {
+          size: .75rem;
+          weight: bold;
+          style: normal;
+        };
+        line-height: normal;
+        letter-spacing: normal;
+
+        // template
+        // `body > .content > .sitemap > .sitemap__title.sitemap__title--`
+        &.sitemap__title-- {
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--home
+          &home {
+            // [ position ]
+            grid-area: sitemap__title--home;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--about
+          &about {
+            // [ position ]
+            grid-area: sitemap__title--about;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--research
+          &research {
+            // [ position ]
+            grid-area: sitemap__title--research;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--student
+          &student {
+            // [ position ]
+            grid-area: sitemap__title--student;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--announce
+          &announce {
+            // [ position ]
+            grid-area: sitemap__title--announce;
+          }
+
+          // modifier
+          // `body > .content > .sitemap > .sitemap__title.sitemap__title--resource
+          &resource {
+            // [ position ]
+            grid-area: sitemap__title--resource;
           }
         }
+      }
 
-        > .home {
-          // [ skin ]
-          color: #213262;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-          font-size: .75rem;
-
-          // [ layout ]
-          grid-area: head_home;
+      // template
+      // `body > .content > .sitemap > .sitemap__link.sitemap__link--
+      > .sitemap__link.sitemap__link-- {
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--home
+        &home {
+          // [ position ]
+          grid-area: sitemap__link--home;
         }
 
-        > .about {
-          // [ skin ]
-          color: #213262;
-          font-size: .75rem;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-
-          // [ layout ]
-          grid-area: about;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--intro
+        &intro {
+          // [ position ]
+          grid-area: sitemap__link--intro;
         }
 
-        > .research {
-          // [ skin ]
-          color: #213262;
-          font-size: .75rem;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-
-          // [ layout ]
-          grid-area: research;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
+        &faculty {
+          // [ position ]
+          grid-area: sitemap__link--faculty;
         }
 
-        > .student {
-          // [ skin ]
-          color: #213262;
-          font-size: .75rem;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-
-          // [ layout ]
-          grid-area: student;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--staff
+        &staff {
+          // [ position ]
+          grid-area: sitemap__link--staff;
         }
 
-        > .announce {
-          // [ skin ]
-          color: #213262;
-          font-size: .75rem;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-
-          // [ layout ]
-          grid-area: announce;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--award
+        &award {
+          // [ position ]
+          grid-area: sitemap__link--award;
         }
 
-        > .resource {
-          // [ skin ]
-          color: #213262;
-          font-size: .75rem;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-
-          // [ layout ]
-          grid-area: resources;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--contact
+        &contact {
+          // [ position ]
+          grid-area: sitemap__link--contact;
         }
 
-        //　block
-        // `.tags_tag--home`
-        > .tags__tag--home {
-          // [ layout ]
-          grid-area: home;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--lab
+        &lab {
+          // [ position ]
+          grid-area: sitemap__link--lab;
         }
 
-        // block
-        // `.tags__tag--intro`
-        > .tags__tag--intro {
-          // [ layout ]
-          grid-area: intro;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--groups
+        &groups {
+          // [ position ]
+          grid-area: sitemap__link--group;
         }
 
-        // block
-        // `.tags__tag--professor`
-        > .tags__tag--professor {
-          // [ layout ]
-          grid-area: professor;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--publications
+        &publications {
+          // [ position ]
+          grid-area: sitemap__link--publication;
         }
 
-        //block
-        // `.tags__tag--crew`
-        > .tags__tag--crew {
-          // [ layout ]
-          grid-area: crew;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--course
+        &course {
+          // [ position ]
+          grid-area: sitemap__link--course;
         }
 
-        // block
-        // `.tags__tag--award`
-        > .tags__tag--award {
-          // [ layout ]
-          grid-area: award;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--college
+        &college {
+          // [ position ]
+          grid-area: sitemap__link--college;
         }
 
-        // block
-        // `.tags__tag--trafic`
-        > .tags__tag--traffic {
-          // [ layout ]
-          grid-area: traffic;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--master
+        &master {
+          // [ position ]
+          grid-area: sitemap__link--master;
         }
 
-        // block
-        // `.tags__tag--lab`
-        > .tags__tag--lab {
-          // [ layout ]
-          grid-area: lab;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--phd
+        &phd {
+          // [ position ]
+          grid-area: sitemap__link--phd;
         }
 
-        // block
-        // `.tags__tag--researcher`
-        > .tags__tag--researcher {
-          // [ layout ]
-          grid-area: researcher;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
+        &scholarship {
+          // [ position ]
+          grid-area: sitemap__link--scholar;
         }
 
-        // block
-        // `.tags__tag--center`
-        > .tags__tag--center {
-          // [ layout ]
-          grid-area: researchCenter;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--international
+        &international {
+          // [ position ]
+          grid-area: sitemap__link--exchange;
         }
 
-        // block
-        // `.tags__tag--lectureinformation`
-        > .tags__tag--lectureinformation {
-          // [ layout ]
-          grid-area: lectureinformation;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--internship
+        &internship {
+          // [ position ]
+          grid-area: sitemap__link--intern;
         }
 
-        // block
-        // `.tags__tag--college`
-        > .tags__tag--college {
-          // [ layout ]
-          grid-area: college;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--all
+        &all {
+          // [ position ]
+          grid-area: sitemap__link--all;
         }
 
-        // block
-        // `.tags_tag--master`
-        > .tags__tag--master {
-          // [ layout ]
-          grid-area: master;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--activity
+        &activity {
+          // [ position ]
+          grid-area: sitemap__link--activity;
         }
 
-        // block
-        // `.tags__tag--phd`
-        > .tags__tag--phd {
-          // [ layout ]
-          grid-area: phd;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
+        &recruitment {
+          // [ position ]
+          grid-area: sitemap__link--recruit;
         }
 
-        // block
-        // `.tags__tag--scholarship`
-        > .tags__tag--scholarship {
-          // [ layout ]
-          grid-area: scholarship;
-        }
-
-        // block
-        // `.tags__tag--exchange`
-        > .tags__tag--exchange {
-          // [ layout ]
-          grid-area: exchange;
-        }
-
-        // block
-        // `.tags__tag--company`
-        > .tags__tag--company {
-          // [ layout ]
-          grid-area: company;
-        }
-
-        // block
-        // `.tags__tag--announce--all`
-        > .tags__tag--announce--all {
-          // [ layout ]
-          grid-area: annall;
-        }
-
-        // block
-        // `.tags__tag--announce--activity`
-        > .tags__tag--announce--activity {
-          // [ layout ]
-          grid-area: annactivity;
-        }
-
-        // block
-        // `.tags__tag--announce--company`
-        > .tags__tag--announce--company {
-          // [ layout ]
-          grid-area: anncompany;
-        }
-
-        // block
-        // `.tags__tag--resourcelink`
-        > .tags__tag--resourcelink {
-          // [ layout ]
-          grid-area: resourcelink;
+        // modifier
+        // `body > .content > .sitemap > .sitemap__link.sitemap__link--resource
+        &resource {
+          // [ position ]
+          grid-area: sitemap__link--resource;
         }
       }
     }

@@ -1,16 +1,28 @@
-const express = require( 'express' );
-const path = require( 'path' );
+/**
+ * API router middleware module for `express`.
+ *
+ * Including following sub-routing modules:
+ * - announcement: `/api/announcement`
+ * - faculty:      `/api/faculty`
+ */
 
-const projectRoot = path.dirname( __dirname );
-const announcement = require( path.join( projectRoot, 'apis/announcement' ) );
-const faculty = require( path.join( projectRoot, 'apis/faculty' ) );
+import express from 'express';
+
+import announcement from 'apis/announcement.js';
+import faculty from 'apis/faculty.js';
 
 const apis = express.Router();
 
-// Resolve URL /api/announcement
+/**
+ * Resolve URL `/api/announcement`.
+ */
+
 apis.use( '/announcement', announcement );
 
-// Resolve URL /api/faculty
+/**
+ * Resolve URL `/api/faculty`.
+ */
+
 apis.use( '/faculty', faculty );
 
-module.exports = apis;
+export default apis;

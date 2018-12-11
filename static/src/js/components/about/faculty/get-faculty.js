@@ -1,14 +1,19 @@
-import card from 'static/src/pug/components/about/faculty/cards.pug';
+/**
+ * Data loading module for loading faculty data.
+ *
+ * @todo add loading fail handler
+ * @todo disable faculty filter before data is completely loaded.
+ */
 
-const reqURL = `${ window.location.protocol }//${ window.location.host }/api/faculty${ location.search }`;
+import card from 'static/src/pug/components/about/faculty/cards.pug';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
+import serverSetting from 'settings/server/config.js';
+
+const currentLanguage = WebLanguageUtils.currentLanguage;
+const reqURL = `${ serverSetting.host }/api/faculty?language=${ currentLanguage }`;
 
 export default target => fetch( reqURL )
 .then( res => res.json() )
 .then( ( faculty ) => {
-    const query = new URLSearchParams( window.location.search );
-    const language = query.get( 'language' );
-    if ( language )
-        target.innerHTML = card( { faculty, language, } );
-    else
-        target.innerHTML = card( { faculty, language: 'zh-TW', } );
+    target.innerHTML = card( { faculty, language: currentLanguage, } );
 } );
