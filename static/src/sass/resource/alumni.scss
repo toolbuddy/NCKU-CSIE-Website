@@ -3,6 +3,7 @@
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/fixing';
 
 body > {
   // block
@@ -12,4 +13,8 @@ body > {
   // block
   // `body > .breadcrumb`
   @include breadcrumb( #ffffff );
+
+  > main {
+    @include fixing();
+  }
 }
