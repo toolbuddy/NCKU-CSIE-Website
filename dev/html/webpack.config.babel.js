@@ -27,6 +27,7 @@ export default language.support.map( language => ( {
 
         // Route `home`
         'home/index': path.join( pugRoot, 'home/index.pug' ),
+        'home/error': path.join( pugRoot, 'home/error.pug' ),
 
         // Route `research`
         'research/groups':       path.join( pugRoot, 'research/groups.pug' ),

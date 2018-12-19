@@ -18,7 +18,7 @@ import defaultValue from 'settings/default-value/announcement/config.js';
  * - ispinned
  * - files
  * - tags.
- * 
+ *
  */
 
 export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {

@@ -1,0 +1,40 @@
+// block
+.no-results-img {
+  // [ layout ]
+  text-align: center;
+  margin-top: 2rem;
+
+  // [ skin ]
+  color: #adacad;
+  font-family: var( --font__family--NotoSansTC );
+  min-width: 73px;
+
+  // element
+  // `.no-results-img > .no-results-img__image`
+  > .no-results-img__image {
+    // [ layout ]
+    width: 7%;
+    margin-top: 3rem;
+  }
+
+  // element
+  // `.no-results-img > .no-results-img__caption`
+  // block
+  // `.no-results-img > .no-results-img__caption > .caption`
+  > .no-results-img__caption.caption {
+    // element
+    // `.no-results-img > .no-results-img__caption > .caption > .caption__text`
+    > .caption__text {
+      // [ skin ]
+      font-size: .4125rem;
+      line-height: 1.2rem;
+
+      // modifier
+      // `.no-results-img > .no-results-img__caption > .caption > .caption__text > .caption__text--link`
+      & .caption__text--link {
+        // [ skin ]
+        text-decoration: underline;
+      }
+    }
+  }
+}

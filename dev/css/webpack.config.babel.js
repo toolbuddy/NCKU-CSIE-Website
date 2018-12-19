@@ -32,6 +32,7 @@ export default {
 
         // Route `home`
         'home/index': path.join( sassRoot, 'home/index.scss' ),
+        'home/error': path.join( sassRoot, 'home/error.scss' ),
 
         // Route `research`
         'research/groups':       path.join( sassRoot, 'research/groups.scss' ),

@@ -1,0 +1,41 @@
+//- No-result content template module.
+mixin noResults()
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'noResults':  'No results'
+      },
+      'zh-TW': {
+        'noResults':  '查無結果'
+      }
+    } );
+
+  section.no-results
+    h2.no-results__caption= i18n[ language ].noResults
+
+//- No-result content template module.
+mixin noResultsWithImage()
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'noResults':  'No results',
+        'suggestion': 'Try changing the filters or return to the ',
+        'homeLink':   'home page.'
+      },
+      'zh-TW': {
+        'noResults':  '查無結果',
+        'suggestion': '變更篩選器或回到',
+        'homeLink':   '首頁'
+      }
+    } );
+
+  figure.no-results-img
+    +image( {
+      alt:       'No-results',
+      className: 'no-results-img__image',
+      src:       'icon/no-results.png',
+    } )
+    figcaption.no-results-img__caption.caption
+      h2.caption__text= i18n[ language ].noResults
+      h2.caption__text= i18n[ language ].suggestion
+        a.caption__text.caption__text--link( href = `/?language=${ language }` )= i18n[ language ].homeLink

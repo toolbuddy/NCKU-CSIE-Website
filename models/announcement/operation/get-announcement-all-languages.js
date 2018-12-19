@@ -16,7 +16,7 @@ import associations from 'models/announcement/operation/associations.js';
  * - zh-TW(title, content)
  * - files
  * - tags.
- * 
+ *
  */
 
 export default async ( { announcementId = 1, } = {} ) => {

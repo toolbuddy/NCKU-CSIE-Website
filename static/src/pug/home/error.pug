@@ -1,0 +1,60 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'notExist': 'Page not found',
+        'back':     'return to home page',
+        'or':       'or'
+      },
+      'zh-TW': {
+        'notExist': '您造訪的頁面不存在',
+        'back':     '返回首頁',
+        'or':       '或'
+      },
+    } );
+
+append content
+  section.error
+    figure#error__image--iconContainer
+      +image( {
+        alt:       '404 page not found',
+        className: 'error__image--icon',
+        src:       'icon/404.png',
+      } )
+      +image( {
+        alt:       'shape',
+        className: 'error__image--shape',
+        src:       'icon/triangle.png',
+      } )
+      +image( {
+        alt:       'shape',
+        className: 'error__image--shape',
+        src:       'icon/star.png',
+      } )
+      +image( {
+        alt:       'shape',
+        className: 'error__image--shape',
+        src:       'icon/circle.png',
+      } )
+      +image( {
+        alt:       'shape',
+        className: 'error__image--shape',
+        src:       'icon/square.png',
+      } )
+      div.error__image.error__image--shadow
+  section.redirect
+    h2.redirect__text= i18n[ language ].notExist
+      br.redirect__text
+      a.redirect__text.redirect__text--link( href = `/?language=${ language }` )= i18n[ language ].back
+      span.redirect__text.redirect__text--or= i18n[ language ].or
+      input.redirect__text.redirect__text--input
+      +image( {alt: 'search icon', className: 'redirect__text--icon', src: 'icon/search-black.png', } )
+
+append stylesheets
+  +css( 'home/error' )
+
+append scripts
+  +js( 'home/error' )
+  

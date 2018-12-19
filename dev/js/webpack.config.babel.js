@@ -52,6 +52,7 @@ export default {
 
         // Route `home`
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
+        'home/error': path.join( jsSrcRoot, 'home/error.js' ),
 
         // Route `research`
         'research/groups':       path.join( jsSrcRoot, 'research/groups.js' ),
