@@ -31,7 +31,7 @@
 
       // modifier
       // `.no-results-img > .no-results-img__caption > .caption > .caption__text > .caption__text--link`
-      & .caption__text--link {
+      > .caption__text--link {
         // [ skin ]
         text-decoration: underline;
       }

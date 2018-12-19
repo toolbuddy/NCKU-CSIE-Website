@@ -15,16 +15,20 @@
     // [ layout ]
     width: 100px;
     height: 100px;
-    margin-right: auto;
-    margin-left: auto;
+    margin: {
+      right: auto;
+      left: auto;
+    }
     text-align: center;
 
     // [ variable ]
     $mountain-color: #335098;
     @mixin mountain_animation () {
-      animation-duration: 2.6s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
+      animation: {
+        duration: 2.6s;
+        iteration-count: infinite;
+        timing-function: linear;
+      }
     }
 
     // element
@@ -59,8 +63,6 @@
       @include mountain_animation();
     }
   }
-
-
 
   // element
   // `.loading > .loading__caption`

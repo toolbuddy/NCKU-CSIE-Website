@@ -35,9 +35,11 @@ $shape-ending-top: 115%;
         margin: auto;
 
         // [ animation ]
-        animation-name: floating;
-        animation-duration: 2s;
-        animation-iteration-count: infinite;
+        animation: {
+          name: floating;
+          duration: 2s;
+          iteration-count: infinite;
+        }
       }
 
       // modifier
@@ -50,17 +52,21 @@ $shape-ending-top: 115%;
         margin: auto;
         width: 18vw;
         height: 3vw;
-        min-width: 6rem;
-        min-height: .8rem;
+        min: {
+          width: 6rem;
+          height: .8rem;
+        }
 
         // [ skin ]
         background-color: rgba( 173, 172, 173, .49 );
         border-radius: 50%;
 
         // [ animation ]
-        animation-name: scaling;
-        animation-duration: 2s;
-        animation-iteration-count: infinite;
+        animation: {
+          name: scaling;
+          duration: 2s;
+          iteration-count: infinite;
+        }
       }
 
       // modifier
@@ -72,10 +78,12 @@ $shape-ending-top: 115%;
         z-index: 1;
 
         // [ animation ]
-        animation-name: falling;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
+        animation: {
+          name: falling;
+          duration: 10s;
+          iteration-count: infinite;
+          timing-function: linear;
+        }
       }
     }
   }
@@ -143,8 +151,10 @@ $shape-ending-top: 115%;
     font-size: .825rem;
     color: #757575;
     line-height: 2rem;
-    margin-top: .825rem;
-    margin-bottom: 7rem;
+    margin: {
+      top: .825rem;
+      bottom: 7rem;
+    }
 
     // [ RWD: $x-small ]
     @media screen and ( max-width: $x-small ) {
@@ -154,22 +164,24 @@ $shape-ending-top: 115%;
 
     // modifier
     // `.redirect > .redirect__text--or`
-    & .redirect__text--or {
+    > .redirect__text--or {
       // [ layout ]
-      margin-left: 1rem;
-      margin-right: 1rem;
+      margin: {
+        left: 1rem;
+        right: 1rem;
+      }
     }
 
     // modifier
     // `.redirect > .redirect__text--link`
-    & .redirect__text--link {
+    > .redirect__text--link {
       // [ skin ]
       text-decoration: underline;
     }
 
     // modifier
     // `.redirect > .redirect__text--input`
-    & .redirect__text--input {
+    > .redirect__text--input {
       // [ skin ]
       border: 1px solid #757575;
       border-radius: 4px;
@@ -178,7 +190,7 @@ $shape-ending-top: 115%;
 
     // modifier
     // `.redirect > .redirect__text--icon`
-    & .redirect__text--icon {
+    > .redirect__text--icon {
       // [ layout ]
       min-width: 26.2px;
       vertical-align: middle;

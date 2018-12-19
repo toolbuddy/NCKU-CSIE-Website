@@ -4,16 +4,22 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':  'Activities',
-        'topic':  'Activities',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':    'Activities',
+        'topic':    'Activities',
+        'top':      'Top Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
       },
       'zh-TW': {
-          'title':  '活動公告',
-          'topic':  '活動公告',
-          'top':    '置頂貼文',
-          'normal': '一般公告',
+        'title':    '活動公告',
+        'topic':    '活動公告',
+        'top':      '置頂貼文',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
       },
     } );
     const filterModifier = 'activity';
@@ -24,6 +30,7 @@ append data
       'exhibition',
       'speech',
     ];
+    const currentRoute = 'announcement/activity';
 
 append title
   +title( i18n[ language ].title )
@@ -32,6 +39,12 @@ append stylesheets
   +css( 'announcement/activity' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].title },
+   ] )
 
 append footer
 

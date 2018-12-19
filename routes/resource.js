@@ -15,7 +15,7 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -32,7 +32,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/rule$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/rule.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rule.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -40,7 +40,7 @@ router.get( /^\/rule$/, ( req, res ) => {
  */
 
 router.get( /^\/rent$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/rent.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rent.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -48,7 +48,7 @@ router.get( /^\/rent$/, ( req, res ) => {
  */
 
 router.get( /^\/fix$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/fix.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/fix.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -56,7 +56,7 @@ router.get( /^\/fix$/, ( req, res ) => {
  */
 
 router.get( /^\/ieet$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/ieet.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/ieet.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -64,7 +64,7 @@ router.get( /^\/ieet$/, ( req, res ) => {
  */
 
 router.get( /^\/sitemap$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/sitemap.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/sitemap.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -72,7 +72,7 @@ router.get( /^\/sitemap$/, ( req, res ) => {
  */
 
 router.get( /^\/alumni$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/resource/alumni.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/alumni.${ req.query.language }.html` ) );
 } );
 
 export default router;

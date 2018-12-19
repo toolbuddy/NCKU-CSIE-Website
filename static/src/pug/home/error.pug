@@ -50,11 +50,14 @@ append content
       a.redirect__text.redirect__text--link( href = `/?language=${ language }` )= i18n[ language ].back
       span.redirect__text.redirect__text--or= i18n[ language ].or
       input.redirect__text.redirect__text--input
-      +image( {alt: 'search icon', className: 'redirect__text--icon', src: 'icon/search-black.png', } )
+      +image( {
+        alt: 'search icon',
+        className: 'redirect__text--icon',
+        src: 'icon/search.png',
+      } )
 
 append stylesheets
   +css( 'home/error' )
 
 append scripts
   +js( 'home/error' )
-  

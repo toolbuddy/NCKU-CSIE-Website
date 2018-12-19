@@ -94,23 +94,23 @@ Here are a few standard:
 
 ### Known issue in develop mode
 - We use `webpack --watch` to monitor files change. Some Linux OS will complain about watching too many file, run the following command to fix this issue:
-```
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-```
+    ```
+    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+    ```
 - We use `browser-sync` to run a dedicated develop server which automatically refresh browser each time files change. `browser-sync` take up port `3001` (always be server port + 1 by default, may change based on server port setting), and it will trigger `no-cors` for specific page (e.g. `/about/faculty/[id]`). Fixing this issue by changing the following code in file `settings/server/config.js`:
-```
-...
-'host': {
-    get () {
-        return `${ config.protocol }://${ config.domainName }${
-            config.port === '80' || config.port === '443' ?
-                '' :
-                `:${ config.port + 1 }` // -> originally `:${ config.port }`
-        }`;
+    ```
+    ...
+    'host': {
+        get () {
+            return `${ config.protocol }://${ config.domainName }${
+                config.port === '80' || config.port === '443' ?
+                    '' :
+                    `:${ config.port + 1 }` // -> originally `:${ config.port }`
+            }`;
+        },
     },
-},
-...
-```
+    ...
+    ```
 
 ## Long Term Goal
 We are going to build a website which have following feature:
@@ -126,6 +126,7 @@ Feel free to contact us if you have question.
 
 ## Team ProFatXuanAll
 Special thanks for
-- [lanhsincheng](https://github.com/lanhsincheng) for designing our website.
-- [Rispolyv0n](https://github.com/Rispolyv0n), [kaeteyaruyo](https://github.com/kaeteyaruyo), [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [IsabelTseng](https://github.com/IsabelTseng), [f26401004](https://github.com/f26401004), [ya-sin](https://github.com/ya-sin), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115), [laxative](https://github.com/laxative), [HMKRL](https://github.com/HMKRL) working on Frontend and Backend.
+- Designer: [lanhsincheng](https://github.com/lanhsincheng) and [Cindy](https://www.facebook.com/cindy461022).
+- Active Developer: [ProFatXuanAll](https://github.com/ProFatXuanAll), [kaeteyaruyo](https://github.com/kaeteyaruyo), [Rispolyv0n](https://github.com/Rispolyv0n), [IsabelTseng](https://github.com/IsabelTseng), [ya-sin](https://github.com/ya-sin), [danielian1121](https://github.com/danielian1121), [AmyLin0210](https://github.com/AmyLin0210), [aqwefghnm](https://github.com/aqwefghnm), [claire11327](https://github.com/claire11327), [d4n1elchen](https://github.com/d4n1elchen), [eecheng87](https://github.com/eecheng87).
+- Participant: [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [f26401004](https://github.com/f26401004), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115), [laxative](https://github.com/laxative), [HMKRL](https://github.com/HMKRL), [DyslexiaS](https://github.com/DyslexiaS), [james831018](https://github.com/james831018), [wang0630](https://github.com/wang0630).
 - [kevinbird61](https://github.com/kevinbird61) our mentor, also the founder of [Toolbuddy](https://github.com/toolbuddy) Organization.

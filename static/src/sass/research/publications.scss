@@ -1,3 +1,17 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
+@import 'components/common/not-available';
+
+// block
+// `body`
+body > {
+  // block
+  // `body > .content`
+  > .content {
+    // block
+    // `body > .content > .not-available`
+    height: 120%;
+    @include not-available();
+  }
+}

@@ -4,16 +4,24 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':  'College',
-        'topic':  'College',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':     'College',
+        'topic':     'College',
+        'top':       'Top Announcement',
+        'normal':    'Announcement',
+        'breadcrumb': {
+          'home':    'Home',
+          'student': 'Student',
+        },
       },
       'zh-TW': {
-        'title':  '大學部',
-        'topic':  '大學部',
-        'top':    '置頂貼文',
-        'normal': '一般公告',
+        'title':     '大學部',
+        'topic':     '大學部',
+        'top':       '置頂貼文',
+        'normal':    '一般公告',
+        'breadcrumb': {
+          'home':    '首頁',
+          'student': '學生事務',
+        },
       },
     } );
     const filterModifier = 'college';
@@ -29,6 +37,7 @@ append data
       'scholarship',
       'speech',
     ];
+    const currentRoute = 'student/college';
 
 append title
   +title( i18n[ language ].title )
@@ -37,6 +46,12 @@ append stylesheets
   +css( 'student/college' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.student, url: 'student' },
+    { text: i18n[ language ].title },
+   ] )
 
 append footer
 

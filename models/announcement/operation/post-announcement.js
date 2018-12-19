@@ -1,7 +1,6 @@
 import associations from 'models/announcement/operation/associations.js';
 import languageSettings from 'settings/language/config.js';
 
-
 function isLangExist ( data, language ) {
     for ( let i = 0; i < data.length; i++ ) {
         if ( data[ i ].language === language )
@@ -9,7 +8,6 @@ function isLangExist ( data, language ) {
     }
     return false;
 }
-
 
 export default async ( { announcementData, } = {} ) => {
     const table = await associations();

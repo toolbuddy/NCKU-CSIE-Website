@@ -4,12 +4,13 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Laboratories',
+        'title':　'Laboratories',
       },
       'zh-TW': {
-        'title': '實驗室',
+        'title':　'實驗室',
       },
     } );
+    const currentRoute = 'research/labs';
 
 append title
   +title( i18n[ language ].title )
@@ -20,6 +21,8 @@ append stylesheets
 append header
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 

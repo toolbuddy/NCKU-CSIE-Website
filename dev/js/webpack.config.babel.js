@@ -1,10 +1,10 @@
 import path from 'path';
 
-import serverSettings from '../../settings/server/config.js';
+import { projectRoot, } from '../../settings/server/config.js';
 
-const jsSrcRoot = path.join( serverSettings.projectRoot, 'static/src/js' );
-const jsDistRoot = path.join( serverSettings.projectRoot, 'static/dist/js' );
-const staticRoot = path.join( serverSettings.projectRoot, 'static' );
+const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
+const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
+const staticRoot = path.join( projectRoot, 'static' );
 
 export default {
     /**
@@ -55,7 +55,6 @@ export default {
         'home/error': path.join( jsSrcRoot, 'home/error.js' ),
 
         // Route `research`
-        'research/groups':       path.join( jsSrcRoot, 'research/groups.js' ),
         'research/index':        path.join( jsSrcRoot, 'research/index.js' ),
         'research/labs':         path.join( jsSrcRoot, 'research/labs.js' ),
         'research/publications': path.join( jsSrcRoot, 'research/publications.js' ),
@@ -120,9 +119,9 @@ export default {
 
     resolve: {
         alias: {
-            settings: path.join( serverSettings.projectRoot, 'settings' ),
+            settings: path.join( projectRoot, 'settings' ),
             static:   staticRoot,
-            test:     path.join( serverSettings.projectRoot, 'test' ),
+            test:     path.join( projectRoot, 'test' ),
         },
     },
 
@@ -177,7 +176,7 @@ export default {
                     loader:  'eslint-loader',
                     options: {
                         fix:           true,
-                        configFile:    path.join( serverSettings.projectRoot, 'dev/js/.eslintrc.js' ),
+                        configFile:    path.join( projectRoot, 'dev/js/.eslintrc.js' ),
                     },
                 },
             },

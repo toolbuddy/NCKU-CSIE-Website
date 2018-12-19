@@ -1,10 +1,8 @@
-/**
- * CSS of the file
- */
-/* eslint no-unused-vars: off */
 import header from 'static/src/js/components/common/header/index.js';
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
 import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
+
+header( document.getElementById( 'header' ) );
 
 // Normal briefings
 const announcementBriefing = document.getElementById( 'announcement__briefings' );

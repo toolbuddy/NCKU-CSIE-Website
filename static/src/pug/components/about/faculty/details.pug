@@ -1,36 +1,19 @@
 include /components/common/topic.pug
 include /components/common/image.pug
--
-  const i18n = Object.freeze( {
-    'en-US': {
-      'office':             'Office Address',
-      'tel':                'Office Tel',
-      'ext':                'ext.',
-      'lab':                'Laboratory',
-      'address':            'Address',
-    },
-    'zh-TW': {
-      'office':             '辦公室',
-      'tel':                '電話',
-      'ext':                '分機',
-      'lab':                '實驗室',
-      'address':            '位置',
-    },
-  } );
 
+section.headline
+  header.headline__name= profile.name
+  aside.headline__titles.titles
+    each title in titles
+      span.titles__title= title.name
 section.profile
-  section.profile__headline.headline
-    header.headline__name= profile.name
-    aside.headline__titles.titles
-      each title in titles
-        span.titles__title= title.name
   aside.profile__departments.departments
     each department in departments
       span.departments__department= department.name
   aside.profile__offices.offices
     each office in offices
-      address= `${ i18n[ language ].office }： ${ office.address }`
-      a( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+      address.offices__address= `${ i18n[ language ].office }： ${ office.address }`
+      a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
   a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
   aside.profile__labs.labs
     each lab in labs

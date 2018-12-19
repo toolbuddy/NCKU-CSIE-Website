@@ -13,7 +13,7 @@ import path from 'path';
 
 import express from 'express';
 
-import config from 'settings/server/config.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/user/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/user/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -30,7 +30,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/profile$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/user/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/user/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -38,7 +38,7 @@ router.get( /^\/profile$/, ( req, res ) => {
  */
 
 router.get( /^\/announcement$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/user/announcement/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/index.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -46,7 +46,7 @@ router.get( /^\/announcement$/, ( req, res ) => {
  */
 
 router.get( /^\/announcement\/add$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/user/announcement/add.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/add.${ req.query.language }.html` ) );
 } );
 
 /**
@@ -54,7 +54,7 @@ router.get( /^\/announcement\/add$/, ( req, res ) => {
  */
 
 router.get( /^\/announcement\/edit\/(\d+)$/, ( req, res ) => {
-    res.sendFile( path.join( config.projectRoot, `/static/dist/html/user/announcement/edit.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/edit.${ req.query.language }.html` ) );
 } );
 
 export default router;

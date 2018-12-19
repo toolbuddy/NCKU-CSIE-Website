@@ -1,10 +1,8 @@
-/**
- * CSS of the file
- */
-/* eslint no-unused-vars: 'off' */
 import header from 'static/src/js/components/common/header/index.js';
 import announcement from 'static/src/pug/components/announcement/announcement.pug';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
+
+header( document.getElementById( 'header' ) );
 
 let id = /announcement\/(\d+)/.exec( window.location.pathname );
 
