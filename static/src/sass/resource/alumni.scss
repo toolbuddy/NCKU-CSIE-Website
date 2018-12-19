@@ -1,20 +1,17 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
-@import 'components/common/banner';
-@import 'components/common/breadcrumb';
-@import 'components/common/fixing';
+@import 'components/common/not-available';
 
+// block
+// `body`
 body > {
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
-
-  // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
-
-  > main {
-    @include fixing();
+  // `body > .content`
+  > .content {
+    // block
+    // `body > .content > .not-available`
+    height: 120%;
+    @include not-available();
   }
 }
