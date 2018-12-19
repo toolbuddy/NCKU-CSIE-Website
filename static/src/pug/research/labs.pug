@@ -4,18 +4,10 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':      'Laboratories',
-        'breadcrumb': {
-          'home':     'Home',
-          'research': 'Research',
-        },
+        'title':　'Laboratories',
       },
       'zh-TW': {
-        'title':      '實驗室',
-        'breadcrumb': {
-          'home':     '首頁',
-          'research': '學術研究',
-        },
+        'title':　'實驗室',
       },
     } );
     const currentRoute = 'research/labs';
@@ -27,14 +19,10 @@ append stylesheets
   +css( 'research/labs' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.research, url: 'research' },
-    { text: i18n[ language ].title },
-   ] )
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 

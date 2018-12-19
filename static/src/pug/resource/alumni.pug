@@ -4,18 +4,10 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':      'Alumni',
-        'breadcrumb': {
-          'home':     'Home',
-          'resource': 'Resource',
-        },
+        'title': 'Alumni',
       },
       'zh-TW': {
-        'title':      '系友專區',
-        'breadcrumb': {
-          'home':     '首頁',
-          'resource': '資源連結',
-        },
+        'title': '系友專區',
       },
     } );
     const currentRoute = 'resource/alumni';
@@ -27,14 +19,10 @@ append stylesheets
   +css( 'resource/alumni' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
-    { text: i18n[ language ].title },
-   ] )
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 
