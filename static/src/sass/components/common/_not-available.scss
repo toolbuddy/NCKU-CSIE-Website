@@ -28,7 +28,7 @@
     width: 100%;
     height: 100%;
 
-    // [ RWD $large ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid-template: {
@@ -67,7 +67,7 @@
       font-size: 1.125rem;
       color: #757575;
 
-      // [ RWD $small ]
+      // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
         word-spacing: .3125rem;
       }
