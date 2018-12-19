@@ -4,21 +4,23 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':    'Activities',
-        'topic':    'Activities',
-        'top':      'Top Announcement',
+        'title':  'Activities',
+        'topic':  'Activities',
+        'top':    'Pinned Announcement',
+        'normal': 'Announcement',
         'breadcrumb': {
-          'home':   'Home',
-          'normal': 'Announcement',
+          'home':         'Home',
+          'announcement': 'Announcement',
         },
       },
       'zh-TW': {
-        'title':    '活動公告',
-        'topic':    '活動公告',
-        'top':      '置頂貼文',
+        'title':  '活動公告',
+        'topic':  '活動公告',
+        'top':    '置頂貼文',
+        'normal': '一般公告',
         'breadcrumb': {
-          'normal': '系所公告',
-          'home':   '首頁',
+          'home':         '首頁',
+          'announcement': '系所公告',
         },
       },
     } );
@@ -42,7 +44,7 @@ append header
   +banner( i18n[ language ].title )
   +breadcrumb( [
     { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].breadcrumb.announcement, url: 'announcement' },
     { text: i18n[ language ].title },
    ] )
 

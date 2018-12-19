@@ -1,236 +1,238 @@
-// block
-.loading {
-  // [ layout ]
-  text-align: center;
-
-  // [ skin ]
-  color: #adacad;
-  font-family: var( --font__family--NotoSansTC );
-
-  // element
-  // `.loading > .loading__image`
+%mountain_animation {
+  animation: {
+    duration: 2.6s;
+    iteration-count: infinite;
+    timing-function: linear;
+  }
+}
+@mixin loading () {
   // block
-  // `.loading > .loading__image > .image`
-  > .loading__image.image {
+  > .loading {
     // [ layout ]
-    width: 100px;
-    height: 100px;
-    margin: {
-      right: auto;
-      left: auto;
-    }
     text-align: center;
 
-    // [ variable ]
-    $mountain-color: #335098;
-    @mixin mountain_animation () {
-      animation: {
-        duration: 2.6s;
-        iteration-count: infinite;
-        timing-function: linear;
+    // [ skin ]
+    color: #adacad;
+    font-family: var( --font__family--NotoSansTC );
+
+    // element
+    // `.loading > .loading__image`
+    // block
+    // `.loading > .loading__image > .image`
+    > .loading__image.image {
+      // [ layout ]
+      width: 100px;
+      height: 100px;
+      margin: {
+        right: auto;
+        left: auto;
+      }
+      text-align: center;
+
+      // [ variable ]
+      $mountain-color: #335098;
+
+      // element
+      // `.loading > .loading__image > .image > .image__a`
+      > .image__a {
+        fill: $mountain-color;
+        animation-name: mountain_a;
+        @extend %mountain_animation;
+      }
+
+      // element
+      // `.loading > .loading__image > .image > .image__b`
+      > .image__b {
+        fill: $mountain-color;
+        animation-name: mountain_b;
+        @extend %mountain_animation;
+      }
+
+      // element
+      // `.loading > .loading__image > .image > .image__c`
+      > .image__c {
+        fill: $mountain-color;
+        animation-name: mountain_c;
+        @extend %mountain_animation;
+      }
+
+      // element
+      // `.loading > .loading__image > .image > .image__d`
+      > .image__d {
+        fill: $mountain-color;
+        animation-name: mountain_d;
+        @extend %mountain_animation;
       }
     }
 
     // element
-    // `.loading > .loading__image > .image > .image__a`
-    > .image__a {
-      fill: $mountain-color;
-      animation-name: mountain_a;
-      @include mountain_animation();
-    }
-
-    // element
-    // `.loading > .loading__image > .image > .image__b`
-    > .image__b {
-      fill: $mountain-color;
-      animation-name: mountain_b;
-      @include mountain_animation();
-    }
-
-    // element
-    // `.loading > .loading__image > .image > .image__c`
-    > .image__c {
-      fill: $mountain-color;
-      animation-name: mountain_c;
-      @include mountain_animation();
-    }
-
-    // element
-    // `.loading > .loading__image > .image > .image__d`
-    > .image__d {
-      fill: $mountain-color;
-      animation-name: mountain_d;
-      @include mountain_animation();
+    // `.loading > .loading__caption`
+    // block
+    // `.loading > .loading__caption > .caption`
+    > .loading__caption.caption {
+      // element
+      // `.loading > .loading__caption > .caption > .caption__text`
+      > .caption__text {
+        // [ skin ]
+        font-size: .4125rem;
+        text-shadow: 0 4px 4px rgba( 0, 0, 0, .25 );
+      }
     }
   }
 
-  // element
-  // `.loading > .loading__caption`
-  // block
-  // `.loading > .loading__caption > .caption`
-  > .loading__caption.caption {
-    // element
-    // `.loading > .loading__caption > .caption > .caption__text`
-    > .caption__text {
-      // [ skin ]
-      font-size: .4125rem;
-      text-shadow: 0 4px 4px rgba( 0, 0, 0, .25 );
+  // animation
+  @keyframes mountain_a {
+    0% {
+      opacity: 0;
+    }
+
+    33.33% {
+      opacity: 0;
+    }
+
+    40% {
+      opacity: .1;
+    }
+
+    46.66% {
+      opacity: .2;
+    }
+
+    60% {
+      opacity: .2;
+    }
+
+    66.66% {
+      opacity: .1;
+    }
+
+    73.33% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
     }
   }
-}
 
-// animation
-@keyframes mountain_a {
-  0% {
-    opacity: 0;
+  // animation
+  @keyframes mountain_b {
+    0% {
+      opacity: 0;
+    }
+
+    20% {
+      opacity: 0;
+    }
+
+    26.66% {
+      opacity: .2;
+    }
+
+    33.33% {
+      opacity: .4;
+    }
+
+    60% {
+      opacity: .4;
+    }
+
+    66.66% {
+      opacity: .2;
+    }
+
+    73.33% {
+      opacity: .1;
+    }
+
+    80% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
+    }
   }
 
-  33.33% {
-    opacity: 0;
+  // animation
+  @keyframes mountain_c {
+    0% {
+      opacity: 0;
+    }
+
+    6.66% {
+      opacity: 0;
+    }
+
+    13.33% {
+      opacity: .3;
+    }
+
+    20% {
+      opacity: .6;
+    }
+
+    60% {
+      opacity: .6;
+    }
+
+    66.66% {
+      opacity: .4;
+    }
+
+    73.33% {
+      opacity: .2;
+    }
+
+    80% {
+      opacity: .1;
+    }
+
+    86.66% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
+    }
   }
 
-  40% {
-    opacity: .1;
-  }
+  // animation
+  @keyframes mountain_d {
+    0% {
+      opacity: .4;
+    }
 
-  46.66% {
-    opacity: .2;
-  }
+    6.66% {
+      opacity: .8;
+    }
 
-  60% {
-    opacity: .2;
-  }
+    60% {
+      opacity: .8;
+    }
 
-  66.66% {
-    opacity: .1;
-  }
+    66.66% {
+      opacity: .6;
+    }
 
-  73.33% {
-    opacity: 0;
-  }
+    73.33% {
+      opacity: .4;
+    }
 
-  100% {
-    opacity: 0;
-  }
-}
+    80% {
+      opacity: .2;
+    }
 
-// animation
-@keyframes mountain_b {
-  0% {
-    opacity: 0;
-  }
+    86.66% {
+      opacity: .1;
+    }
 
-  20% {
-    opacity: 0;
-  }
+    93.33% {
+      opacity: 0;
+    }
 
-  26.66% {
-    opacity: .2;
-  }
-
-  33.33% {
-    opacity: .4;
-  }
-
-  60% {
-    opacity: .4;
-  }
-
-  66.66% {
-    opacity: .2;
-  }
-
-  73.33% {
-    opacity: .1;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-// animation
-@keyframes mountain_c {
-  0% {
-    opacity: 0;
-  }
-
-  6.66% {
-    opacity: 0;
-  }
-
-  13.33% {
-    opacity: .3;
-  }
-
-  20% {
-    opacity: .6;
-  }
-
-  60% {
-    opacity: .6;
-  }
-
-  66.66% {
-    opacity: .4;
-  }
-
-  73.33% {
-    opacity: .2;
-  }
-
-  80% {
-    opacity: .1;
-  }
-
-  86.66% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-// animation
-@keyframes mountain_d {
-  0% {
-    opacity: .4;
-  }
-
-  6.66% {
-    opacity: .8;
-  }
-
-  60% {
-    opacity: .8;
-  }
-
-  66.66% {
-    opacity: .6;
-  }
-
-  73.33% {
-    opacity: .4;
-  }
-
-  80% {
-    opacity: .2;
-  }
-
-  86.66% {
-    opacity: .1;
-  }
-
-  93.33% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
+    100% {
+      opacity: 0;
+    }
   }
 }

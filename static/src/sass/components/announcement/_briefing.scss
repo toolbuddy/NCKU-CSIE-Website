@@ -1,4 +1,6 @@
 @import 'components/common/icon';
+@import 'components/common/no-result';
+@import 'components/common/loading';
 @import 'components/announcement/tags';
 @import 'components/announcement/title';
 
@@ -19,6 +21,8 @@
     // element
     // `> .announcement > .announcement__title`
     @include announcement__title();
+    @include no-result();
+    @include loading();
 
     // element
     // `> .announcement > .announcement__briefings`

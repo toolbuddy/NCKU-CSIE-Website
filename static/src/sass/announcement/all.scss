@@ -2,9 +2,6 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/common/loading';
-@import 'components/common/no-results';
-@import 'components/common/no-results-img';
 @import 'components/announcement/briefing';
 @import 'components/announcement/filter';
 @import 'components/announcement/title';
@@ -12,7 +9,7 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body > {
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
