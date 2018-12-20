@@ -4,16 +4,24 @@ append data
   -
     const i18n =  Object.freeze( {
       'en-US': {
-        'title':  'Award',
-        'topic':  'Award',
-        'top':    'Top Announcement',
-        'normal': 'Announcement',
+        'title':    'Award',
+        'topic':    'Award',
+        'top':      'Top Announcement',
+        'normal':   'Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
       },
       'zh-TW': {
-        'title':  '榮譽事蹟',
-        'topic':  '榮譽',
-        'top':    '置頂貼文',
-        'normal': '一般公告',
+        'title':    '榮譽事蹟',
+        'topic':    '榮譽',
+        'top':      '置頂貼文',
+        'normal':   '一般公告',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
       },
     } );
     const filterModifier = 'award';
@@ -33,6 +41,12 @@ append stylesheets
   +css( 'about/award' )
 
 append header
+  +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.about, url: 'about' },
+    { text: i18n[ language ].title },
+   ] )
 
 append footer
 

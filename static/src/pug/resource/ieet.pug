@@ -4,10 +4,10 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'IEET',
+        'title':      'IEET',
       },
       'zh-TW': {
-        'title': '工程認証',
+        'title':      '工程認証',
       },
     } );
     const currentRoute = 'resource/ieet';
@@ -21,6 +21,8 @@ append stylesheets
 append header
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 

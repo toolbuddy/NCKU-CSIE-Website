@@ -4,10 +4,10 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Rent',
+        'title':      'Rent',
       },
       'zh-TW': {
-        'title': '線上租借',
+        'title':      '線上租借',
       },
     } );
     const currentRoute = 'resource/rent';
@@ -21,6 +21,8 @@ append stylesheets
 append header
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 

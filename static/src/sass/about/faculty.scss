@@ -4,86 +4,97 @@
 @import 'components/about/faculty/filters';
 @import 'components/common/topic';
 @import 'components/common/footer';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 
-// block
-// `body > .content`
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
 
-body > .content {
-  // [variable]
-  $large: 475px;
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #eff3f9 );
 
-  // [layout]
-  display: grid;
-  grid: {
-    template: {
-      areas:
-        '.'
-        'topic   '
-        'filters '
-        'cards   '
-        'noResult';
-      columns: 100%;
-    }
-    row-gap: 2rem;
-  };
+  // block
+  // `body > .content`
+  > .content {
+    // [variable]
+    $large: 475px;
 
-  // [skin]
-  width: 100%;
-  background-color: #eff3f9;
-
-  // [RWD: $large]
-  @media screen and ( min-width: $large ) {
+    // [layout]
+    display: grid;
     grid: {
       template: {
         areas:
-          '. .        .'
-          '. topic    .'
-          '. filters  .'
-          '. cards    .'
-          '. noResult .';
-        columns: 1fr 95% 1fr;
+          '.'
+          'topic   '
+          'filters '
+          'cards   '
+          'noResult';
+        columns: 100%;
       }
       row-gap: 2rem;
     };
-  }
-
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    grid-area: topic;
-  }
-
-  // block
-  // `body > .content > .filters`
-  @include filters() {
-    // [position]
-    grid-area: filters;
-  }
-
-  // block
-  // `body > .content > .cards`
-  @include cards() {
-    // [position]
-    grid-area: cards;
-  }
-
-  // block
-  // `body > .content > .no-result`
-  > .no-result {
-    // [position]
-    grid-area: noResult;
-
-    // [layout]
-    text-align: center;
 
     // [skin]
-    min-height: 100%;
+    width: 100%;
+    background-color: #eff3f9;
 
-    // modifier
-    // `body > .content > .no-result--hide`
-    &--hide {
+    // [RWD: $large]
+    @media screen and ( min-width: $large ) {
+      grid: {
+        template: {
+          areas:
+            '. .        .'
+            '. topic    .'
+            '. filters  .'
+            '. cards    .'
+            '. noResult .';
+          columns: 1fr 95% 1fr;
+        }
+        row-gap: 2rem;
+      };
+    }
+
+    // block
+    // `body > .content > .topic`
+    @include topic() {
+      grid-area: topic;
+    }
+
+    // block
+    // `body > .content > .filters`
+    @include filters() {
+      // [position]
+      grid-area: filters;
+    }
+
+    // block
+    // `body > .content > .cards`
+    @include cards() {
+      // [position]
+      grid-area: cards;
+    }
+
+    // block
+    // `body > .content > .no-result`
+    > .no-result {
+      // [position]
+      grid-area: noResult;
+
       // [layout]
-      display: none;
+      text-align: center;
+
+      // [skin]
+      min-height: 100%;
+
+      // modifier
+      // `body > .content > .no-result--hide`
+      &--hide {
+        // [layout]
+        display: none;
+      }
     }
   }
 }

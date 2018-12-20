@@ -4,10 +4,10 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Equipment Repair',
+        'title':      'Equipment Repair',
       },
       'zh-TW': {
-        'title': '修繕登記',
+        'title':      '修繕登記',
       },
     } );
     const currentRoute = 'resource/fix';
@@ -21,6 +21,8 @@ append stylesheets
 append header
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 
