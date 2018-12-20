@@ -54,7 +54,6 @@ export default {
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/groups':       path.join( jsSrcRoot, 'research/groups.js' ),
         'research/index':        path.join( jsSrcRoot, 'research/index.js' ),
         'research/labs':         path.join( jsSrcRoot, 'research/labs.js' ),
         'research/publications': path.join( jsSrcRoot, 'research/publications.js' ),

@@ -28,7 +28,6 @@ mixin header()
             login: 'Login',
           },
           research: {
-            groups:       'Groups',
             index:        'Research',
             labs:         'Laboratories',
             publications: 'Publications',
@@ -81,7 +80,6 @@ mixin header()
             login: '登入',
           },
           research: {
-            groups:       '研究群',
             index:        '學術研究',
             labs:         '實驗室',
             publications: '發表論文',
@@ -168,8 +166,6 @@ mixin header()
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = url( { href : 'research/labs' } ) )= i18n[ language ].route.research.labs
-            li.dropdown__item.item
-              a.item__link( href = url( { href : 'research/groups' } ) )= i18n[ language ].route.research.groups
             li.dropdown__item.item
               a.item__link( href = url( { href : 'research/publications' } ) )= i18n[ language ].route.research.publications
         li.list__item.item

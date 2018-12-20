@@ -5,6 +5,7 @@ append data
     const i18n = Object.freeze( {
       'en-US': {
         'title':      'Rent',
+<<<<<<< HEAD
         'breadcrumb': {
           'home':     'Home',
           'resource': 'Resource',
@@ -16,6 +17,11 @@ append data
           'home':     '首頁',
           'resource': '資源連結',
         },
+=======
+      },
+      'zh-TW': {
+        'title':      '線上租借',
+>>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
       },
     } );
     const currentRoute = 'resource/rent';
@@ -35,6 +41,8 @@ append header
    ] )
 
 append content
+  include /components/common/not-available.pug
+  +notAvailable()
 
 append footer
 
