@@ -6,30 +6,18 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-<<<<<<< HEAD
-=======
 // block
 // `body`
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
 body > {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
-<<<<<<< HEAD
 
   // block
   // `body > .breadcrumb`
   @include breadcrumb( #eff3f9 );
 
   // block
-=======
-
-  // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
-
-  // block
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
   // `body > .content`
   > .content {
     // [ layout ]
@@ -37,83 +25,6 @@ body > {
     grid: {
       template: {
         areas:
-<<<<<<< HEAD
-          '. topic .'
-          '. map   .'
-          '. thsr  .'
-          '. train .'
-          '. drive .';
-        columns: 1fr 13fr 1fr;
-        rows: 2fr 3fr 2fr 2fr 4fr;
-      }
-      row-gap: 1rem;
-    };
-
-    // [ skin ]
-    width: 100%;
-    background-color: #f2f4f7;
-
-    // [ RWD: 768px ]
-    @media screen and ( min-width: 768px ) {
-      // [ layout ]
-      grid-template-rows: 1fr 3fr 1fr 1fr 4fr;
-    }
-
-    // [ RWD: 1024px ]
-    @media screen and ( min-width: 1024px ) {
-      // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. topic topic .'
-            '.  map  thsr  .'
-            '.  map  train .'
-            '.  map  drive .'
-            '.   .   drive .'
-            '.   .     .   .';
-          columns: 1fr 6fr 4fr 1fr;
-          rows: 4fr 4fr 4fr 3fr 7fr 2fr;
-        }
-        column-gap: 2rem;
-      };
-    }
-  }
-
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    // [ position ]
-    grid-area: topic;
-    align-self: center;
-  }
-
-  // block
-  // `#map`
-  #map {
-    // [ layout ]
-    grid-area: map;
-  }
-
-  // block
-  // `.thsr`
-  .thsr {
-    // [ layout ]
-    grid-area: thsr;
-  }
-
-  // block
-  // `.train`
-  .train {
-    // [ layout ]
-    grid-area: train;
-  }
-
-  // block
-  // `.drive`
-  .drive {
-    // [ layout ]
-    grid-area: drive;
-=======
           '. .     .'
           '. map   .'
           '. drive .'
@@ -261,6 +172,5 @@ body > {
         }
       }
     }
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
   }
 }

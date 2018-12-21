@@ -4,21 +4,6 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-<<<<<<< HEAD
-        'title':      'Sitemap',
-        'breadcrumb': {
-          'home':     'Home',
-          'resource': 'Resource',
-        },
-      },
-      'zh-TW': {
-        'title':      '網站地圖',
-        'breadcrumb': {
-          'home':     '首頁',
-          'resource': '資源連結',
-        },
-      },
-=======
         'titles': {
           'home':         'Home',
           'about':        'About',
@@ -50,6 +35,10 @@ append data
           'resource':      'Resource',
         },
         'title': 'Sitemap',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
       },
       'zh-TW': {
         'titles': {
@@ -83,8 +72,11 @@ append data
           'resource':      '資源連結',
         },
         'title': '網站地圖',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
       }
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
     } );
     const currentRoute = 'resource/sitemap';
     const allLinks = {
@@ -118,14 +110,11 @@ append stylesheets
 
 append header
   +banner( i18n[ language ].title )
-<<<<<<< HEAD
   +breadcrumb( [
     { text: i18n[ language ].breadcrumb.home, url: '' },
     { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
     { text: i18n[ language ].title },
-   ] )
-=======
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
+  ] )
 
 append content
 

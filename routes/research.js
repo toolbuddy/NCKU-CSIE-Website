@@ -21,7 +21,6 @@ const router = express.Router();
 
 router.get( /^\/$/, ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/research/index.${ req.query.language }.html` ) );
-<<<<<<< HEAD
 } );
 
 /**
@@ -30,8 +29,6 @@ router.get( /^\/$/, ( req, res ) => {
 
 router.get( /^\/groups$/, ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/research/groups.${ req.query.language }.html` ) );
-=======
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
 } );
 
 /**

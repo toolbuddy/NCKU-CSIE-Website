@@ -7,14 +7,10 @@
 
     // [ dispaly ]
     display: flex;
-<<<<<<< HEAD
     padding: {
       left: 5%;
       bottom: 3.44rem;
     }
-=======
-    padding-left: 5%;
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
 
     // [ skin ]
     width: 100%;
@@ -24,7 +20,6 @@
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ display ]
-<<<<<<< HEAD
       padding: {
         left: 20%;
         bottom: 2.19rem;
@@ -32,9 +27,6 @@
 
       // [ skin ]
       height: 4.5rem;
-=======
-      padding-left: 20%;
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
     }
 
     // element

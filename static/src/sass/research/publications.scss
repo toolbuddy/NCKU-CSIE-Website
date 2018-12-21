@@ -1,10 +1,12 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
-<<<<<<< HEAD
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/not-available';
 
+// block
+// `body`
 body > {
   // block
   // `body > .banner`
@@ -13,12 +15,7 @@ body > {
   // block
   // `body > .breadcrumb`
   @include breadcrumb( #ffffff );
-=======
-@import 'components/common/not-available';
 
-// block
-// `body`
-body > {
   // block
   // `body > .content`
   > .content {
@@ -27,5 +24,4 @@ body > {
     height: 120%;
     @include not-available();
   }
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
 }

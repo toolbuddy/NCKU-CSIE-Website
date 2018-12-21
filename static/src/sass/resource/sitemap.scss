@@ -2,25 +2,19 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 @import 'components/common/banner';
-<<<<<<< HEAD
 @import 'components/common/breadcrumb';
-
-body > {
-=======
 
 // block
 // `body > .content`
 body {
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
 
   // block
-<<<<<<< HEAD
   // `body > .breadcrumb`
   @include breadcrumb( #ffffff );
-=======
+
   // `body > .content`
   > .content {
     // [ variable ]
@@ -421,5 +415,4 @@ body {
       }
     }
   }
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
 }

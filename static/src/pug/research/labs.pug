@@ -4,7 +4,6 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-<<<<<<< HEAD
         'title':      'Laboratories',
         'breadcrumb': {
           'home':     'Home',
@@ -17,12 +16,6 @@ append data
           'home':     '首頁',
           'research': '學術研究',
         },
-=======
-        'title':　'Laboratories',
-      },
-      'zh-TW': {
-        'title':　'實驗室',
->>>>>>> b3666109267378fc0667e4b337114d5c0afb0ef8
       },
     } );
     const currentRoute = 'research/labs';
@@ -39,7 +32,7 @@ append header
     { text: i18n[ language ].breadcrumb.home, url: '' },
     { text: i18n[ language ].breadcrumb.research, url: 'research' },
     { text: i18n[ language ].title },
-   ] )
+  ] )
 
 append content
   include /components/common/not-available.pug
