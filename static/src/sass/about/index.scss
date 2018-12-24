@@ -2,59 +2,70 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 @import 'components/about/index/subtitles';
 
-// block
-// `body > .content`
+body > {
+  // block
+  // `body > .banner`
+  @include banner( 'https://via.placeholder.com/1920x500' );
 
-body > .content {
-  // [variable]
-  $large: 475px;
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
 
-  // [layout]
-  display: grid;
-  grid: {
-    template: {
-      areas:
-        '.'
-        'filters'
-        'topic'
-        'subtitles'
-        'noResult';
-      columns: 100%;
-    }
-    row-gap: .6rem;
-  };
+  // block
+  // `body > .content`
+  > .content {
+    // [variable]
+    $large: 475px;
 
-  // [skin]
-  width: 100%;
-  background-color: #eff3f9;
-
-  // [rwd:large]
-  @media screen and ( min-width: $large ) {
+    // [layout]
+    display: grid;
     grid: {
       template: {
         areas:
-          '. . .'
-          '. filters .'
-          '. topic .'
-          '. subtitles .'
-          '. noResult .';
-        columns: 1fr 95% 1fr;
+          '.'
+          'filters'
+          'topic'
+          'subtitles'
+          'noResult';
+        columns: 100%;
       }
-      row-gap: 3.1rem;
+      row-gap: .6rem;
     };
-  }
 
-  // block
-  // `body > .content > .topic`
-  @include topic() {
-    grid-area: topic;
-  }
+    // [skin]
+    width: 100%;
+    background-color: #eff3f9;
 
-  // block
-  // `body > .content > .subtitles`
-  @include subtitles() {
-    grid-area: subtitles;
+    // [rwd:large]
+    @media screen and ( min-width: $large ) {
+      grid: {
+        template: {
+          areas:
+            '. . .'
+            '. filters .'
+            '. topic .'
+            '. subtitles .'
+            '. noResult .';
+          columns: 1fr 95% 1fr;
+        }
+        row-gap: 3.1rem;
+      };
+    }
+
+    // block
+    // `body > .content > .topic`
+    @include topic() {
+      grid-area: topic;
+    }
+
+    // block
+    // `body > .content > .subtitles`
+    @include subtitles() {
+      grid-area: subtitles;
+    }
   }
 }

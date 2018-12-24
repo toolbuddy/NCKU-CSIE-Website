@@ -1,19 +1,30 @@
 extends /layouts/research.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':　'Laboratories',
+      },
+      'zh-TW': {
+        'title':　'實驗室',
+      },
+    } );
+    const currentRoute = 'research/labs';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'research/labs' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
+  include /components/common/not-available.pug
+  +notAvailable()
 
-  main.content
+append footer
 
 append scripts
   +js( 'research/labs' )

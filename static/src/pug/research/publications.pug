@@ -1,19 +1,30 @@
 extends /layouts/research.pug
 
+append data
+  -
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title': 'Publications',
+      },
+      'zh-TW': {
+        'title': '發表著作',
+      },
+    } );
+    const currentRoute = 'research/publications';
+
+append title
+  +title( i18n[ language ].title )
+
 append stylesheets
+  +css( 'research/publications' )
 
 append header
 
 append content
-  -
-    const i18n = Object.freeze( {
-      'en-US': {
-      },
-      'zh-TW': {
-      },
-    } );
+  include /components/common/not-available.pug
+  +notAvailable()
 
-  main.content
+append footer
 
 append scripts
   +js( 'research/publications' )

@@ -1,13 +1,11 @@
-const path = require( 'path' );
-const sequelize = require( 'sequelize' );
-const Op = sequelize.Op;
-const projectRoot = path.dirname( path.dirname( path.dirname( __dirname ) ) );
-const opRoot = path.join( projectRoot, 'models/announcement/operation' );
-const associations = require( path.join( opRoot, 'associations' ) );
-const validate = require( path.join( projectRoot, 'test/models/announcement/operation/validate' ) );
-const defaultValue = require( path.join( projectRoot, 'settings/default-value/announcement/config' ) );
+import sequelize from 'sequelize';
+import associations from 'models/announcement/operation/associations.js';
+import validate from 'test/models/announcement/operation/validate.js';
+import defaultValue from 'settings/default-value/announcement/config.js';
 
-module.exports = async ( {
+const Op = sequelize.Op;
+
+export default async ( {
     tags = [],
     startTime = defaultValue.startTime,
     endTime = defaultValue.endTime,

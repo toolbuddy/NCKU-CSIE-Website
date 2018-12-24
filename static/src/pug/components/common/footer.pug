@@ -21,18 +21,19 @@ mixin footer()
 
   footer.footer
     figure.footer__logo.logo
-      +image( {
-        alt:          'csie',
-        className:    'logo__image',
-        src:          'logo/csie-white.png',
-      } )
-      figcaption.logo__caption.caption
+      a.logo__link.link( href = url( { href : '' } ) )
+        +image( {
+          alt:          'csie',
+          className:    'link__image',
+          src:          'logo/csie-white.png',
+        } )
+      a.logo__caption.caption( href = url( { href : '' } ) )
         h1.caption__text 成功大學資訊工程學系暨研究所
         h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
     section.footer__contact.contact
       h1.contact__title= i18n[ language ].contact.title
       address.contact__address.address= `${ i18n[ language ].contact.address }｜`
-        a.address__map( href = '/about' )= i18n[ language ].contact.position
+        a.address__map( href = url( { href : 'about' } ) )= i18n[ language ].contact.position
       a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
       a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
     section.footer__copyright.copyright

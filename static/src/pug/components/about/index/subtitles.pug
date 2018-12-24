@@ -15,6 +15,6 @@ mixin subtitles__subtitle( word = {} )
   h1.subtitles__subtitle.subtitle
     a.subtitle__title( href = "" )= word.title
     p.subtitle__detail= word.detail
-    //- a.subtitle__subtitle( href = "" )= word.subtitle
-    if word.class == "red"
-      a.subtitle__subtitle.red( href = "" )= word.subtitle
+    a.subtitle__subtitle( href = "" )= word.subtitle
+    //- if word.class == "red"
+    //-   a.subtitle__subtitle.red( href = "" )= word.subtitle

@@ -1,4 +1,4 @@
-module.exports = [
+export const browserSupportConditions = [
     // The last 2 versions for each browser
     'last 2 versions',
 
@@ -21,3 +21,5 @@ module.exports = [
     // Exclude ie
     'not ie <= 11',
 ];
+
+export default browserSupportConditions;
