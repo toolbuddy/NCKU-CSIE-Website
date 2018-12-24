@@ -1,0 +1,20 @@
+mixin subtitles__subtitle( word = {} )
+  //-
+    const i18n = Object.freeze( {
+      'en-US': {
+        'title':   'title',
+        'details':  'details',
+        'subtitles':  'subtitles',
+      },
+      'zh-TW': {
+        'title':   'title',
+        'details':  'details',
+        'subtitles':  'subtitles',
+    } );
+  
+  h1.subtitles__subtitle.subtitle
+    a.subtitle__title( href = "" )= word.title
+    p.subtitle__detail= word.detail
+    //- a.subtitle__subtitle( href = "" )= word.subtitle
+    if word.class == "red"
+      a.subtitle__subtitle.red( href = "" )= word.subtitle

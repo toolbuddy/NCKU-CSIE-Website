@@ -1,0 +1,145 @@
+// component
+// `> .subtitles`
+@mixin subtitles () {
+  // block
+  // `> .subtitles`
+  > .subtitles {
+    // variables
+    $large: 545px;
+    $subtitles__subtitle--width: 13.4rem;
+    $subtitles__subtitle--height: 5.3rem;
+
+    // layout
+    display: block;
+    border: {
+      width: 4rem;
+      color: black;
+    }
+
+    // [RWD: $large]
+    @media screen and ( min-width: $large ) {
+      // [layout]
+      display: grid;
+      grid: {
+        template-columns: repeat( auto-fit, $subtitles__subtitle--width );
+        gap: 2.3rem;
+      };
+      justify-content: center;
+    }
+
+    // [customization]??
+    @content;
+
+    > .subtitles__subtitle.subtitle.red {
+      border: {
+        top: .2rem;
+        color: red;
+        style: solid;
+      }
+    }
+
+    // element
+    // `> .subtitles > .subtitles__subtitle`
+    > .subtitles__subtitle.subtitle {
+      // [layout]
+      display: block;
+      text-align: center;
+
+      // [skin]
+      border: {
+        top: .2rem;
+        color: red;
+        style: solid;
+      }
+      width: 100%;
+      height: 5.3rem;
+      min-height: $subtitles__subtitle--height;
+      background-color: #ffffff;
+
+      // [RWD:large]
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        border: {
+          top: .2rem;
+          bottom: .1rem;
+          color: red;
+          style: solid;
+        }
+        height: 15.7rem;
+        background-color: #ffffff;
+        width: $subtitles__subtitle--width;
+      }
+
+      &--hide {
+        display: none;
+      }
+
+      // element
+      > .subtitle__title {
+        // [layout]
+        display: block;
+        text-align: center;
+        word: {
+          wrap: break-word;
+          break: break-all;
+        }
+        white-space: normal;
+
+        // [skin]
+        margin: {
+          top: 5.8rem;
+          left: auto;
+          right: auto;
+          bottom: .3rem;
+        }
+        line-height: 1.1rem;
+        font-size: .8rem;
+        color: black;
+        background-color: #ffffff;
+      }
+
+      > .subtitle__detail {
+        // [layout]
+        display: block;
+        text-align: center;
+        word: {
+          wrap: break-word;
+          break: break-all;
+        }
+        white-space: normal;
+
+        // [skin]
+        margin: {
+          left: 2.3rem;
+          right: 2.3rem;
+          bottom: 1.3rem;
+        }
+        line-height: .8rem;
+        font-size: .5rem;
+        color: #757575;
+        background-color: #ffffff;
+      }
+
+      > .subtitle__subtitle {
+        // [layout]
+        display: block;
+        text-align: center;
+        word: {
+          wrap: break-word;
+          break: break-all;
+        }
+        white-space: normal;
+
+        // [skin]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+        line-height: .8rem;
+        font-size: .5rem;
+        color: #6982c0;
+        background-color: #ffffff;
+      }
+    }
+  }
+}
