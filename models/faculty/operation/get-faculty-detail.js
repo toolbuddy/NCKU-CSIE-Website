@@ -295,7 +295,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     'nation',
                     'personalWeb',
                     'photo',
-                    'position',
                 ],
                 where: {
                     profileId,
@@ -308,7 +307,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     nation:      profile.nation,
                     personalWeb: profile.personalWeb,
                     photo:       profile.photo,
-                    position:    profile.position,
                     name:        profile.profileI18n[ 0 ].name,
                     profileId,
                 } )
@@ -438,8 +436,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'endDate',
-                    'startDate',
+                    'to',
+                    'from',
                 ],
                 where: {
                     profileId,
@@ -448,8 +446,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 titles => titles.map(
                     title => ( {
-                        endDate:   title.endDate,
-                        startDate: title.startDate,
+                        to:        title.to,
+                        from:      title.from,
                         name:      title.titleI18n[ 0 ].title,
                     } )
                 )

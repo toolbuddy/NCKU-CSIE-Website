@@ -8,7 +8,13 @@ mixin cards__card( profile = {} )
         'office': 'Office',
         'tel':    'Tel',
         'ext':    'ext.',
-        'lab':    'Lab',
+        'lab':      'Lab',
+        'department': {
+          '0': 'dept. CSIE',
+          '1': 'inst. CSIE',
+          '3': 'IMI',
+          '4': 'IMIS',
+        }
       },
       'zh-TW': {
         'more':   '更多資訊',
@@ -17,8 +23,16 @@ mixin cards__card( profile = {} )
         'ext':    '分機',
         'tel':    '電話',
         'lab':    '實驗室',
+        'department': {
+          '0': '資訊系',
+          '1': '資訊所',
+          '3': '醫資所',
+          '4': '製造所',
+        }
       },
     } );
+
+    /*
     const filter = Object.freeze( {
       '資訊系':      '0',
       'dept. CSIE': '0',
@@ -29,6 +43,7 @@ mixin cards__card( profile = {} )
       '製造所':      '3',
       'IMIS':       '3',
     } );
+    */
 
   section.cards__card.card
     //- Faculty's photo.
@@ -44,7 +59,7 @@ mixin cards__card( profile = {} )
       if profile.departments
         aside.intro__departments.departments
           each department in profile.departments
-            span.departments__department( data = filter[ department.department ] )= department.department
+            span.departments__department( data = `${department.type}` )= i18n[ language ].department[ department.type ]
 
       //- Faculty's name.
       if profile.name
@@ -63,19 +78,17 @@ mixin cards__card( profile = {} )
             a.text__link( href = `mailto:${ profile.email }` )= profile.email
 
       //- Faculty owns some offices, including address and phone.
-      if profile.offices
-        each office in profile.offices
-          if office.address
-            address.intro__address= `${ i18n[ language ].office }: ${ office.address }`
-          if office.tel
-            a.intro__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+
+      if profile.officeAddress
+        address.intro__address= `${ i18n[ language ].office }: ${ profile.officeAddress }`
+      if profile.officeTel
+        a.intro__phone( href = `tel:${ profile.officeTel }` )= `${ i18n[ language ].tel }: ${ profile.officeTel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
 
       //- Faculty run some labs.
-      if profile.labs
-        each lab in profile.labs
-          aside.intro__lab.lab
-            span.lab__text.text= `${ i18n[ language ].lab }: `
-              a.text__link( href = lab.labWeb )= `${ lab.name }`
+      if profile.labName
+        aside.intro__lab.lab
+          span.lab__text.text= `${ i18n[ language ].lab }: `
+            a.text__link( href = profile.labWeb )= `${ profile.labName }`
 
       //- Faculty's detail information link.
       p.intro__more
@@ -84,6 +97,6 @@ mixin cards__card( profile = {} )
 //- main
     Construct all faculty information with `cards__card`.
 //- Sort faculty based on their showing order.
-- faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
+- faculty.sort( ( facultyA, facultyB ) => facultyA.profile_id - facultyB.profile_id )
 each profile in faculty
   +cards__card( profile )
