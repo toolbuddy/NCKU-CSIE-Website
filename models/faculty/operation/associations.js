@@ -14,8 +14,8 @@ export default async () => {
         education:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/education' ) ),
         experienceI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience_i18n' ) ),
         experience:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience' ) ),
-        honorI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/honor_i18n' ) ),
-        honor:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/honor' ) ),
+        awardI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/award_i18n' ) ),
+        award:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/award' ) ),
         labI18n:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/lab_i18n' ) ),
         lab:                    facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/lab' ) ),
         officeI18n:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/office_i18n' ) ),
@@ -28,7 +28,7 @@ export default async () => {
         project:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/project' ) ),
         publicationI18n:        facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication_i18n' ) ),
         publication:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication' ) ),
-        specialty:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/specialty' ) ),
+        specialtyI18n:          facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/specialty_i18n' ) ),
         technologyTransfer:     facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer' ) ),
         technologyTransferI18n: facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer_i18n' ) ),
         titleI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/title_i18n' ) ),
@@ -64,11 +64,11 @@ export default async () => {
         sourceKey:  'experienceId',
     } );
 
-    // `honor` has many translations.
-    table.honor.hasMany( table.honorI18n, {
-        as:         'honorI18n',
-        foreignKey: 'honorId',
-        sourceKey:  'honorId',
+    // `award` has many translations.
+    table.award.hasMany( table.awardI18n, {
+        as:         'awardI18n',
+        foreignKey: 'awardId',
+        sourceKey:  'awardId',
     } );
 
     // `lab` has many translations.
@@ -156,10 +156,10 @@ export default async () => {
         sourceKey:  'profileId',
     } );
 
-    // `profile` has many `honor`.
-    table.profile.hasMany( table.honor, {
-        as:         'honor',
-        foreignKey: 'honorId',
+    // `profile` has many `award`.
+    table.profile.hasMany( table.award, {
+        as:         'award',
+        foreignKey: 'awardId',
         sourceKey:  'profileId',
     } );
 
@@ -198,8 +198,8 @@ export default async () => {
         sourceKey:  'profileId',
     } );
 
-    // `profile` has many `specialty`.
-    table.profile.hasMany( table.specialty, {
+    // `profile` has many `specialty_i18n`.
+    table.profile.hasMany( table.specialty_i18n, {
         as:         'specialty',
         foreignKey: 'specialtyId',
         sourceKey:  'profileId',

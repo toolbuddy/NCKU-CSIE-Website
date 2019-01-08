@@ -1,6 +1,6 @@
 import associations from 'models/faculty/operation/associations.js';
 
-export default async ( language = 'zh-TW' ) => {
+export default async ( language = '0' ) => {
     const table = await associations();
 
     const data = await table.profile.findAll( {
