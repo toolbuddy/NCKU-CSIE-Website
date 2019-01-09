@@ -199,8 +199,8 @@ export default async () => {
     } );
 
     // `profile` has many `specialty_i18n`.
-    table.profile.hasMany( table.specialty_i18n, {
-        as:         'specialty',
+    table.profile.hasMany( table.specialtyI18n, {
+        as:         'specialtyI18n',
         foreignKey: 'specialtyId',
         sourceKey:  'profileId',
     } );

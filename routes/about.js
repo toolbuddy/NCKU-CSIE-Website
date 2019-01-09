@@ -67,6 +67,10 @@ router.get( /^\/faculty$/, ( req, res ) => {
 
 router.get( /^\/faculty\/(\d+)$/, async ( req, res ) => {
     const data = await getFacultyDetail( { profileId: req.params[ 0 ], language: req.query.language, } );
+
+    /* eslint no-console: 0 */
+    console.log( data.experiences );
+
     data.language = req.query.language;
     data.host = host;
     data.staticHost = staticHost;

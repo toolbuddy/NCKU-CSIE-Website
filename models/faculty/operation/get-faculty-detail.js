@@ -12,8 +12,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
         data.educations,
         data.experiences,
         data.awards,
-        data.labs,
-        data.offices,
         data.patents,
         data.profile,
         data.projects,
@@ -52,30 +50,13 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 )
             ),
             table.department.findAll( {
-                include: [
-                    {
-                        model:      table.departmentI18n,
-                        as:         'departmentI18n',
-                        attributes: [
-                            'department',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
+                attributes: [
+                    'type',
                 ],
-                attributes: [],
                 where:      {
                     profileId,
                 },
-            } )
-            .then(
-                departments => departments.map(
-                    department => ( {
-                        name: department.departmentI18n[ 0 ].department,
-                    } )
-                )
-            ),
+            } ),
             table.education.findAll( {
                 include: [
                     {
@@ -160,7 +141,7 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'awardYear',
+                    'receiveYear',
                 ],
                 where: {
                     profileId,
@@ -169,68 +150,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 awards => awards.map(
                     award => ( {
-                        awardYear: award.awardYear,
+                        awardYear: award.receiveYear,
                         award:     award.awardI18n[ 0 ].award,
-                    } )
-                )
-            ),
-            table.lab.findAll( {
-                include: [
-                    {
-                        model:      table.labI18n,
-                        as:         'labI18n',
-                        attributes: [
-                            'address',
-                            'name',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
-                ],
-                attributes: [
-                    'labWeb',
-                    'tel',
-                ],
-                where: {
-                    profileId,
-                },
-            } )
-            .then(
-                labs => labs.map(
-                    lab => ( {
-                        labWeb:  lab.labWeb,
-                        tel:     lab.tel,
-                        address: lab.labI18n[ 0 ].address,
-                        name:    lab.labI18n[ 0 ].name,
-                    } )
-                )
-            ),
-            table.office.findAll( {
-                include: [
-                    {
-                        model:      table.officeI18n,
-                        as:         'officeI18n',
-                        attributes: [
-                            'address',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
-                ],
-                attributes: [
-                    'tel',
-                ],
-                where: {
-                    profileId,
-                },
-            } )
-            .then(
-                offices => offices.map(
-                    office => ( {
-                        tel:     office.tel,
-                        address: office.officeI18n[ 0 ].address,
                     } )
                 )
             ),
@@ -281,6 +202,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         as:         'profileI18n',
                         attributes: [
                             'name',
+                            'officeAddress',
+                            'labAddress',
+                            'labName',
                         ],
                         where: {
                             language,
@@ -293,6 +217,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     'nation',
                     'personalWeb',
                     'photo',
+                    'officeTel',
+                    'labWeb',
+                    'labTel',
                 ],
                 where: {
                     profileId,
@@ -306,6 +233,16 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     personalWeb: profile.personalWeb,
                     photo:       profile.photo,
                     name:        profile.profileI18n[ 0 ].name,
+                    office:      {
+                        tel:     profile.officeTel,
+                        address: profile.profileI18n[ 0 ].officeAddress,
+                    },
+                    lab: {
+                        tel:     profile.labTel,
+                        web:     profile.labWeb,
+                        name:    profile.profileI18n[ 0 ].labName,
+                        address: profile.profileI18n[ 0 ].labAddress,
+                    },
                     profileId,
                 } )
             ),

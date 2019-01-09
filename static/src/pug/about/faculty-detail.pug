@@ -4,36 +4,61 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':   'Detail',
-        'faculty': 'Faculties',
+        'title':      'Detail',
+        'faculty':    'Faculties',
         'breadcrumb': {
-          'home':    'Home',
-          'about':   'About',
-          'faculty': 'Faculty',
+          'home':     'Home',
+          'about':    'About',
+          'faculty':  'Faculty',
         },
-        'home':    'Home',
-        'about':   'About',
-        'office':  'Office Address',
-        'tel':     'Office Tel',
-        'ext':     'ext.',
-        'lab':     'Laboratory',
-        'address': 'Address',
+        'home':       'Home',
+        'about':      'About',
+        'office':     'Office Address',
+        'tel':        'Office Tel',
+        'ext':        'ext.',
+        'lab':        'Laboratory',
+        'address':    'Address',
+        'education':  'School Record',
+        'experience': 'Record',
+        'department': {
+          '0': 'dept. CSIE',
+          '1': 'inst. CSIE',
+          '3': 'IMI',
+          '4': 'IMIS',
+        },
+        'degree': {
+          '0': 'B.S.',
+          '1': 'M.S.',
+          '2': 'Ph.D',
+        }
       },
       'zh-TW': {
-        'title':   '詳細資料',
-        'faculty': '師資陣容',
+        'title':      '詳細資料',
+        'faculty':    '師資陣容',
         'breadcrumb': {
-          'home':    '首頁',
-          'about':   '關於本系',
-          'faculty': '師資陣容',
+          'home':     '首頁',
+          'about':    '關於本系',
+          'faculty':  '師資陣容',
         },
-        'home':    '首頁',
-        'about':   '關於本系',
-        'office':  '辦公室',
-        'tel':     '電話',
-        'ext':     '分機',
-        'lab':     '實驗室',
-        'address': '位置',
+        'home':       '首頁',
+        'about':      '關於本系',
+        'office':     '辦公室',
+        'tel':        '電話',
+        'ext':        '分機',
+        'lab':        '實驗室',
+        'address':    '位置',
+        'education':  '學歷',
+        'experience': '經歷',
+        'department': {
+          '0': '資訊系',
+          '1': '資訊所',
+          '3': '醫資所',
+          '4': '製造所',
+        },
+        'degree': {
+          '0': '學士',
+          '1': '碩士',
+          '2': '博士',}
       },
     } );
     const currentRoute = 'about/faculty-detail';
@@ -64,18 +89,37 @@ append content
   section.profile
     aside.profile__departments.departments
       each department in departments
-        span.departments__department= department.name
+        span.departments__department= i18n[ language ].department[ department.type ]
     aside.profile__offices.offices
-      each office in offices
-        address.offices__address= `${ i18n[ language ].office }： ${ office.address }`
-        a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+      address.offices__address= `${ i18n[ language ].office }： ${ profile.office.address }`
+      a.offices__phone( href = `tel:${ profile.office.tel }` )= `${ i18n[ language ].tel }: ${ profile.office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
     a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
     aside.profile__labs.labs
-      each lab in labs
-        a.labs__lab( href = lab.web )= `${ i18n[ language ].lab }: ${ lab.name }`
-        address.labs__address= `${ i18n[ language ].address }: ${ lab.address }`
-        a.labs__tel( href = `tel:${ lab.tel }` )= `${ i18n[ language ].tel }: ${ lab.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
-    a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
+      if profile.lab
+        a.labs__lab( href = profile.lab.labWeb )= `${ i18n[ language ].lab }: ${ profile.lab.name }`
+        address.labs__address= `${ i18n[ language ].address }: ${ profile.lab.address }`
+        a.labs__tel( href = `tel:${ profile.lab.tel }` )= `${ i18n[ language ].tel }: ${ profile.lab.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+    if profile.personalWeb
+      a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
+  section.education
+    h2.education__title= i18n[ language ].education
+    each education in educations
+      ul.education__list.list
+        li.list__from= education.from
+        li.list__to= education.to
+        li.list__nation= education.nation
+        li.list__school= education.school
+        li.list__major= education.major
+        li.list__degree= i18n[ language ].degree[ education.degree ]
+  section.experience
+    h2.education__title= i18n[ language ].experience
+    each experience in experiences
+      ul.experience__list.list
+        li.list__from= experience.from
+        li.list__to= experience.to
+        li.list__organization= experience.organization
+        li.list__department= experience.department
+        li.list__title= experience.title
   img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer
