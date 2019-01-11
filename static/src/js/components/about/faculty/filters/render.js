@@ -11,6 +11,10 @@
 export function renderFilter ( filter ) {
     if ( filter.classList.contains( 'filters__filter--active' ) )
         filter.classList.remove( 'filters__filter--active' );
+    else if ( filter.classList.contains( 'filters__filter--research--active' ) )
+        filter.classList.remove( 'filters__filter--research--active' );
+    else if ( filter.classList.contains( 'filters__filter--research' ) )
+        filter.classList.add( 'filters__filter--research--active' );
     else
         filter.classList.add( 'filters__filter--active' );
 }
@@ -65,7 +69,7 @@ export function renderCards ( filters, cards, noResult ) {
         // Get testing target from `cards__card`.
         const departments = Array.from( card.getElementsByClassName( 'departments__department' ) )
         .map( department => department.getAttribute( 'data' ) )
-        .filter( data => data != null );
+        .filter( data => data !== null );
 
         // Filter on test target.
         if ( departments.length ) {

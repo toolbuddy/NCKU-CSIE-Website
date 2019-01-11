@@ -13,9 +13,13 @@ import { registClick, registFilter, } from 'static/src/js/components/about/facul
  */
 
 export default ( filters, cards, noResult ) => {
-    filters = Array.from( filters.getElementsByClassName( 'filters__filter' ) );
-    filters.forEach( ( filter ) => {
+    const departmentFilters = Array.from( filters.getElementsByClassName( 'filters__filter--dept' ) );
+    departmentFilters.forEach( ( filter ) => {
         registClick( filter );
-        registFilter( filter, filters, cards, noResult );
+        registFilter( filter, departmentFilters, cards, noResult );
+    } );
+    const researchFilters = Array.from( filters.getElementsByClassName( 'filters__filter--research' ) );
+    researchFilters.forEach( ( filter ) => {
+        registClick( filter );
     } );
 };

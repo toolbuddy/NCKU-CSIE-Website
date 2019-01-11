@@ -4,61 +4,92 @@ append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':      'Detail',
-        'faculty':    'Faculties',
+        'title':       'Detail',
+        'faculty':     'Faculties',
         'breadcrumb': {
-          'home':     'Home',
-          'about':    'About',
-          'faculty':  'Faculty',
+          'home':      'Home',
+          'about':     'About',
+          'faculty':   'Faculty',
         },
-        'home':       'Home',
-        'about':      'About',
-        'office':     'Office Address',
-        'tel':        'Office Tel',
-        'ext':        'ext.',
-        'lab':        'Laboratory',
-        'address':    'Address',
-        'education':  'School Record',
-        'experience': 'Record',
+        'home':        'Home',
+        'about':       'About',
+        'office':      'Office Address',
+        'tel':         'Office Tel',
+        'ext':         'ext.',
+        'lab':         'Laboratory',
+        'address':     'Address',
+        'education':   'School Record',
+        'experience':  'Record',
+        'award':       'Honor & Awards',
+        'publication': 'Publications',
         'department': {
-          '0': 'dept. CSIE',
-          '1': 'inst. CSIE',
-          '3': 'IMI',
-          '4': 'IMIS',
+          '0':         'dept. CSIE',
+          '1':         'inst. CSIE',
+          '3':         'IMI',
+          '4':         'IMIS',
         },
         'degree': {
-          '0': 'B.S.',
-          '1': 'M.S.',
-          '2': 'Ph.D',
-        }
+          '0':         'B.S.',
+          '1':         'M.S.',
+          '2':         'Ph.D',
+        },
+        'patent': {
+          'type':      'Type',
+          'name':      'Name',
+          'nation':    'Nation',
+          'owner':     'Owner',
+          'inventor':  'Inventor',
+          'number':    'Patent Number',
+          'period':    'Period',
+        },
       },
       'zh-TW': {
-        'title':      '詳細資料',
-        'faculty':    '師資陣容',
+        'title':       '詳細資料',
+        'faculty':     '師資陣容',
         'breadcrumb': {
-          'home':     '首頁',
-          'about':    '關於本系',
-          'faculty':  '師資陣容',
+          'home':      '首頁',
+          'about':     '關於本系',
+          'faculty':   '師資陣容',
         },
-        'home':       '首頁',
-        'about':      '關於本系',
-        'office':     '辦公室',
-        'tel':        '電話',
-        'ext':        '分機',
-        'lab':        '實驗室',
-        'address':    '位置',
-        'education':  '學歷',
-        'experience': '經歷',
+        'home':        '首頁',
+        'about':       '關於本系',
+        'office':      '辦公室',
+        'tel':         '電話',
+        'ext':         '分機',
+        'lab':         '實驗室',
+        'address':     '位置',
+        'education':   '學歷',
+        'experience':  '經歷',
+        'award':       '榮譽及獲獎',
+        'publication': '著作',
         'department': {
-          '0': '資訊系',
-          '1': '資訊所',
-          '3': '醫資所',
-          '4': '製造所',
+          '0':         '資訊系',
+          '1':         '資訊所',
+          '3':         '醫資所',
+          '4':         '製造所',
         },
         'degree': {
-          '0': '學士',
-          '1': '碩士',
-          '2': '博士',}
+          '0':         '學士',
+          '1':         '碩士',
+          '2':         '博士',
+        },
+        'patent': {
+          'type':      '類別',
+          'name':      '專利名稱',
+          'nation':    '國別',
+          'owner':     '專利權人',
+          'inventor':  '發明人',
+          'number':    '專利號碼',
+          'date':      '專利期間',
+        },
+        'technologyTransfer': {
+          'index':            '項次',
+          'technologyName':   '技術名稱',
+          'patentName':       '專利名稱',
+          'authorizingParty': '授權單位',
+          'authorizedParty:': '接受單位',
+          'period':           '合約期間',
+        },
       },
     } );
     const currentRoute = 'about/faculty-detail';
@@ -120,6 +151,67 @@ append content
         li.list__organization= experience.organization
         li.list__department= experience.department
         li.list__title= experience.title
+  section.award
+    h2.award__title= i18n[ language ].award
+    - awards.sort( ( awardA, awardB ) => awardA.awardYear - awardB.awardYear )
+    each award in awards
+      if award.awardYear !== 0
+        h3.award__year= award.awardYear
+      ul.award__list.list
+        each awardName in award.awardName
+          li.list__name= awardName
+  section.publication
+    h2.publication__title= i18n[ language ].publication
+    h3.publication__paper Papers
+    ul.publication__paperList.paperList
+      each publication in publications
+        li.paperList__data= publication.publication
+    h3.publication__conference Conference
+    ul.publication__conferenceList.conferenceList
+      each conference in conferences
+        li.conferenceList__data= conference.name
+  if patents.length !== 0
+    section.patent
+      table.patent__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__type= i18n[ language ].patent.type
+            th.row__name= i18n[ language ].patent.name
+            th.row__nation= i18n[ language ].patent.nation
+            th.row__owner= i18n[ language ].patent.owner
+            th.row__inventor= i18n[ language ].patent.inventor
+            th.row__number= i18n[ language ].patent.number
+            th.row__date= i18n[ language ].patent.period
+        tbody.table__body.body
+          each patent in patents
+            tr.body__row.row
+              td.row__type= patent.type
+              td.row__name= patent.patent
+              td.row__nation= patent.nation
+              td.row__owner= patent.patentOwner
+              td.row__inventor= patent.inventor
+              td.row__number= patent.certificationNumber
+              td.row__date= `${ patent.issue_date ? patent.issue_date : '' } ~ ${ patent.expire_date ? patent.expire_date : '' }`
+  if technologyTransfers.length !== 0
+    section.transfer
+      table.transfer__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__index= i18n[ language ].technologyTransfer.index
+            th.row__technologyName= i18n[ language ].technologyTransfer.technologyName
+            th.row__patentName= i18n[ language ].technologyTransfer.patentName
+            th.row__authorizingParty= i18n[ language ].technologyTransfer.authorizingParty
+            th.row__authorizedParty= i18n[ language ].technologyTransfer.authorizedParty
+            th.row__period= i18n[ language ].technologyTransfer.period
+        tbody.table__body.body
+          each technologyTransfer, index in technologyTransfers
+            tr.body__row.row
+              th.row__index= index+1
+              th.row__technologyName= technologyTransfer.technology
+              th.row__patentName= technologyTransfer.patent
+              th.row__authorizingParty= technologyTransfer.authorizingParty
+              th.row__authorizedParty= technologyTransfer.authorizedParty
+              th.row__period= `${ technologyTransfer.from ? technologyTransfer.from : '' } ~ ${ technologyTransfer.to ? technologyTransfer.to : '' }`
   img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer

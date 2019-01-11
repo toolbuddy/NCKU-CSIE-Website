@@ -26,8 +26,8 @@ mixin cards__card( profile = {} )
         'department': {
           '0': '資訊系',
           '1': '資訊所',
-          '3': '醫資所',
-          '4': '製造所',
+          '2': '合聘師資',
+          '3': '兼任師資',
         }
       },
     } );
@@ -45,7 +45,7 @@ mixin cards__card( profile = {} )
     } );
     */
 
-  section.cards__card.card
+  section.cards__card.card( research-group = `${ profile.researchGruops }` )
     //- Faculty's photo.
     img.card__photo(
       src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
@@ -59,7 +59,7 @@ mixin cards__card( profile = {} )
       if profile.departments
         aside.intro__departments.departments
           each department in profile.departments
-            span.departments__department( data = `${department.type}` )= i18n[ language ].department[ department.type ]
+            span.departments__department( data = `${ department.type }` )= i18n[ language ].department[ department.type ]
 
       //- Faculty's name.
       if profile.name

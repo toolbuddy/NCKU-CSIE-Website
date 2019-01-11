@@ -20,6 +20,7 @@ export default async ( language = '0' ) => {
                     departments,
                     profileI18n,
                     titles,
+                    researchGruops,
                 ] = await Promise.all( [
                     table.department.findAll( {
                         attributes: [
@@ -77,6 +78,22 @@ export default async ( language = '0' ) => {
                             } )
                         )
                     ),
+                    table.researchGroup.findAll( {
+                        attributes: [
+                            'type',
+                        ],
+                        where:      {
+                            profileId: profile.profileId,
+                        },
+                    } )
+                    .then(
+                        ( researchGroups ) => {
+                            let result = '';
+                            for ( const data of researchGroups )
+                                result = `${ result } ${ data.type }`;
+                            return result.substring( 1 );
+                        }
+                    ),
                 ] );
 
                 return ( {
@@ -91,6 +108,7 @@ export default async ( language = '0' ) => {
                     labName:       profileI18n.labName,
                     titles,
                     departments,
+                    researchGruops,
                 } );
             }
         ) )

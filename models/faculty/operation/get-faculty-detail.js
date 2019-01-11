@@ -148,12 +148,28 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 },
             } )
             .then(
-                awards => awards.map(
-                    award => ( {
-                        awardYear: award.receiveYear,
-                        award:     award.awardI18n[ 0 ].award,
-                    } )
-                )
+                ( awards ) => {
+                    let results = [];
+                    for ( const award of awards ) {
+                        let flag = true;
+                        results = results.map(
+                            ( result ) => {
+                                if ( result.awardYear === award.receiveYear ) {
+                                    result.awardName.push( award.awardI18n[ 0 ].award );
+                                    flag = false;
+                                }
+                                return result;
+                            }
+                        );
+                        if ( flag ) {
+                            results.push( {
+                                awardYear:     award.receiveYear,
+                                awardName:     [ award.awardI18n[ 0 ].award, ],
+                            } );
+                        }
+                    }
+                    return results;
+                }
             ),
             table.patent.findAll( {
                 include: [
@@ -270,7 +286,35 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 },
             } )
             .then(
-                projects => projects.map(
+                ( projects ) => {
+                    const result = {
+                        '0': [],
+                        '1': [],
+                    };
+                    for ( const project of projects ) {
+                        if ( project.category === 0 ) {
+                            result[ '0' ].push( {
+                                category:  project.category,
+                                to:        project.to,
+                                from:      project.from,
+                                name:      project.projectI18n[ 0 ].name,
+                                support:   project.projectI18n[ 0 ].support,
+                            } );
+                        }
+                        else if ( project.category === 1 ) {
+                            result[ '1' ].push( {
+                                category:  project.category,
+                                to:        project.to,
+                                from:      project.from,
+                                name:      project.projectI18n[ 0 ].name,
+                                support:   project.projectI18n[ 0 ].support,
+                            } );
+                        }
+                    }
+                    return result;
+                }
+
+                /* Projects => projects.map(
                     project => ( {
                         category:  project.category,
                         to:        project.to,
@@ -278,7 +322,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         name:      project.projectI18n[ 0 ].name,
                         support:   project.projectI18n[ 0 ].support,
                     } )
-                )
+                )*/
+
             ),
             table.publication.findAll( {
                 include: [
