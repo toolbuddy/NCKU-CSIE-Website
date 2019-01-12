@@ -74,6 +74,7 @@ append data
           '2':         '博士',
         },
         'patent': {
+          'title':     '專利',
           'type':      '類別',
           'name':      '專利名稱',
           'nation':    '國別',
@@ -83,6 +84,7 @@ append data
           'date':      '專利期間',
         },
         'technologyTransfer': {
+          'title':            '技術轉移',
           'index':            '項次',
           'technologyName':   '技術名稱',
           'patentName':       '專利名稱',
@@ -90,6 +92,13 @@ append data
           'authorizedParty:': '接受單位',
           'period':           '合約期間',
         },
+        'project': {
+          '0':       '國科會計畫',
+          '1':       '一般建教案',
+          'name':    '計畫名稱',
+          'period':  '起訖日期',
+          'support': '補助單位',
+        }
       },
     } );
     const currentRoute = 'about/faculty-detail';
@@ -166,12 +175,9 @@ append content
     ul.publication__paperList.paperList
       each publication in publications
         li.paperList__data= publication.publication
-    h3.publication__conference Conference
-    ul.publication__conferenceList.conferenceList
-      each conference in conferences
-        li.conferenceList__data= conference.name
   if patents.length !== 0
     section.patent
+      h2.patent__title= i18n[ language ].patent.title
       table.patent__table.table
         thead.table__head.head
           tr.head__row.row
@@ -194,6 +200,7 @@ append content
               td.row__date= `${ patent.issue_date ? patent.issue_date : '' } ~ ${ patent.expire_date ? patent.expire_date : '' }`
   if technologyTransfers.length !== 0
     section.transfer
+      h2.transfer__title= i18n[ language ].technologyTransfer.title
       table.transfer__table.table
         thead.table__head.head
           tr.head__row.row
@@ -212,6 +219,40 @@ append content
               th.row__authorizingParty= technologyTransfer.authorizingParty
               th.row__authorizedParty= technologyTransfer.authorizedParty
               th.row__period= `${ technologyTransfer.from ? technologyTransfer.from : '' } ~ ${ technologyTransfer.to ? technologyTransfer.to : '' }`
+  section.project
+    if projects[ '0' ].length !== 0
+      h2.project__title= i18n[ language ].project[ '0' ]
+      table.project__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__name= i18n[ language ].project.name
+            th.row__period= i18n[ language ].project.period
+            th.row__support= i18n[ language ].project.support
+        tbody.table__body.body
+          each project in projects[ '0' ]
+            tr.body__row.row
+              td.row__name= project.name
+              td.row__period= `${ project.from ? project.from : '' } ~ ${ project.to ? project.to : '' }`
+              td.row__support= project.support
+    if projects[ '1' ].length !== 0
+      h2.project__title= i18n[ language ].project[ '1' ]
+      table.project__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__name= i18n[ language ].project.name
+            th.row__period= i18n[ language ].project.period
+            th.row__support= i18n[ language ].project.support
+        tbody.table__body.body
+          each project in projects[ '1' ]
+            tr.body__row.row
+              td.row__name= project.name
+              td.row__period
+              td.row__support= project.support
+  section.conference
+    h2.conference.title Conference
+    ul.conference__list.list
+      each conference in conferences
+        li.list__data= conference.name
   img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer

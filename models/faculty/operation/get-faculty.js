@@ -90,8 +90,8 @@ export default async ( language = '0' ) => {
                         ( researchGroups ) => {
                             let result = '';
                             for ( const data of researchGroups )
-                                result = `${ result } ${ data.type }`;
-                            return result.substring( 1 );
+                                result = `${ result }${ data.type }`;
+                            return result;
                         }
                     ),
                 ] );

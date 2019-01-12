@@ -294,7 +294,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     for ( const project of projects ) {
                         if ( project.category === 0 ) {
                             result[ '0' ].push( {
-                                category:  project.category,
                                 to:        project.to,
                                 from:      project.from,
                                 name:      project.projectI18n[ 0 ].name,
@@ -303,7 +302,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         }
                         else if ( project.category === 1 ) {
                             result[ '1' ].push( {
-                                category:  project.category,
                                 to:        project.to,
                                 from:      project.from,
                                 name:      project.projectI18n[ 0 ].name,

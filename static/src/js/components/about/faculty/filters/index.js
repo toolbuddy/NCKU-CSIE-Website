@@ -1,4 +1,4 @@
-import { registClick, registFilter, } from 'static/src/js/components/about/faculty/filters/event.js';
+import { registClick, registClickResearch, registFilter, } from 'static/src/js/components/about/faculty/filters/event.js';
 
 /**
  * Construct filter's events on DOM element `filters`, 'cards`, `noResult`.
@@ -16,10 +16,13 @@ export default ( filters, cards, noResult ) => {
     const departmentFilters = Array.from( filters.getElementsByClassName( 'filters__filter--dept' ) );
     departmentFilters.forEach( ( filter ) => {
         registClick( filter );
-        registFilter( filter, departmentFilters, cards, noResult );
     } );
     const researchFilters = Array.from( filters.getElementsByClassName( 'filters__filter--research' ) );
     researchFilters.forEach( ( filter ) => {
-        registClick( filter );
+        registClickResearch( filter );
+    } );
+    const allFilters = Array.from( filters.getElementsByClassName( 'filters__filter' ) );
+    allFilters.forEach( ( filter ) => {
+        registFilter( filter, allFilters, cards, noResult );
     } );
 };

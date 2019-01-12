@@ -11,12 +11,15 @@
 export function renderFilter ( filter ) {
     if ( filter.classList.contains( 'filters__filter--active' ) )
         filter.classList.remove( 'filters__filter--active' );
-    else if ( filter.classList.contains( 'filters__filter--research--active' ) )
-        filter.classList.remove( 'filters__filter--research--active' );
-    else if ( filter.classList.contains( 'filters__filter--research' ) )
-        filter.classList.add( 'filters__filter--research--active' );
     else
         filter.classList.add( 'filters__filter--active' );
+}
+
+export function renderFilterResearch ( filter ) {
+    if ( filter.classList.contains( 'filters__filter--research--active' ) )
+        filter.classList.remove( 'filters__filter--research--active' );
+    else
+        filter.classList.add( 'filters__filter--research--active' );
 }
 
 /**
@@ -44,8 +47,12 @@ export function renderCards ( filters, cards, noResult ) {
     .filter( filter => filter.classList.contains( 'filters__filter--active' ) )
     .map( filter => filter.getAttribute( 'data' ) );
 
+    const selectedFiltersResearch = filters
+    .filter( filter => filter.classList.contains( 'filters__filter--research--active' ) )
+    .map( filter => filter.getAttribute( 'research-group' ) );
+
     // If no filter condition is presented.
-    if ( selectedFilters.length === 0 ) {
+    if ( selectedFilters.length === 0 && selectedFiltersResearch === 0 ) {
         // Show all `cards__card`.
         Array.from( cards.getElementsByClassName( 'cards__card' ) )
         .forEach( ( card ) => {
@@ -71,10 +78,33 @@ export function renderCards ( filters, cards, noResult ) {
         .map( department => department.getAttribute( 'data' ) )
         .filter( data => data !== null );
 
+        const researchGroup = Array.from( card.getAttribute( 'research-group' ) )
+        .filter( data => data !== null );
+
+        let ifTestPass = true;
+
         // Filter on test target.
         if ( departments.length ) {
             // Test failed.
             if ( selectedFilters.some( filter => departments.indexOf( filter ) < 0 ) ) {
+                if ( !card.classList.contains( 'card--hide' ) ) {
+                    card.classList.add( 'card--hide' );
+                    ifTestPass = false;
+                }
+            }
+
+            // Test passed.
+            else {
+                noShowedCard = false;
+                if ( card.classList.contains( 'card--hide' ) )
+                    card.classList.remove( 'card--hide' );
+            }
+        }
+
+        // Filter on test target.
+        if ( ifTestPass && researchGroup.length ) {
+            // Test failed.
+            if ( selectedFiltersResearch.some( filter => researchGroup.indexOf( filter ) < 0 ) ) {
                 if ( !card.classList.contains( 'card--hide' ) )
                     card.classList.add( 'card--hide' );
             }

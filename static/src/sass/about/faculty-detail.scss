@@ -35,8 +35,9 @@ body {
         '. publication       .'
         '. patent            .'
         '. transfer          .'
-        '. research          .'
-        '. student           .';
+        '. project           .'
+        '. student           .'
+        '. conference        .';
       columns: 1fr 90% 1fr;
     }
     @media screen and ( min-width: $small ) {
@@ -49,7 +50,7 @@ body {
           '. publication      publication      .'
           '. patent           patent           .'
           '. transfer         transfer         .'
-          '. research         research         .'
+          '. project          project          .'
           '. student          student          .';
         columns: 1fr 5fr 3fr 1fr;
       };
@@ -64,7 +65,7 @@ body {
           '. publication      publication      .'
           '. patent           patent           .'
           '. transfer         transfer         .'
-          '. research         research         .'
+          '. project          project          .'
           '. student          student          .';
         columns: 5fr 8fr 6fr 5fr;
       };
@@ -508,12 +509,12 @@ body {
       }
     }
 
-    .research {
-      grid-area: research;
+    .project {
+      grid-area: project;
       margin: 1.5rem 0;
       font-size: .5rem;
 
-      > .research__table.table {
+      > .project__table.table {
         border-collapse: collapse;
         text-align: center;
         border: solid .02rem #757575;
@@ -637,6 +638,10 @@ body {
           vertical-align: middle;
         }
       }
+    }
+
+    .conference {
+      grid-area: conference;
     }
   }
 }
