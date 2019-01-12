@@ -47,12 +47,15 @@ export function renderCards ( filters, cards, noResult ) {
     .filter( filter => filter.classList.contains( 'filters__filter--active' ) )
     .map( filter => filter.getAttribute( 'data' ) );
 
+    /* eslint no-console: 0 */
+    console.log( selectedFilters );
+
     const selectedFiltersResearch = filters
     .filter( filter => filter.classList.contains( 'filters__filter--research--active' ) )
     .map( filter => filter.getAttribute( 'research-group' ) );
 
     // If no filter condition is presented.
-    if ( selectedFilters.length === 0 && selectedFiltersResearch === 0 ) {
+    if ( selectedFilters.length === 0 && selectedFiltersResearch.length === 0 ) {
         // Show all `cards__card`.
         Array.from( cards.getElementsByClassName( 'cards__card' ) )
         .forEach( ( card ) => {
@@ -87,19 +90,19 @@ export function renderCards ( filters, cards, noResult ) {
         if ( departments.length ) {
             // Test failed.
             if ( selectedFilters.some( filter => departments.indexOf( filter ) < 0 ) ) {
-                if ( !card.classList.contains( 'card--hide' ) ) {
+                if ( !card.classList.contains( 'card--hide' ) )
                     card.classList.add( 'card--hide' );
-                    ifTestPass = false;
-                }
+                ifTestPass = false;
             }
 
             // Test passed.
             else {
-                noShowedCard = false;
                 if ( card.classList.contains( 'card--hide' ) )
                     card.classList.remove( 'card--hide' );
             }
         }
+        else if ( selectedFilters.length !== 0 )
+            ifTestPass = false;
 
         // Filter on test target.
         if ( ifTestPass && researchGroup.length ) {
@@ -111,16 +114,18 @@ export function renderCards ( filters, cards, noResult ) {
 
             // Test passed.
             else {
-                noShowedCard = false;
-
                 if ( card.classList.contains( 'card--hide' ) )
                     card.classList.remove( 'card--hide' );
             }
         }
+        else if ( selectedFiltersResearch.length !== 0 )
+            ifTestPass = false;
 
         // Test failed.
-        else if ( !card.classList.contains( 'card--hide' ) )
+        if ( !ifTestPass && !card.classList.contains( 'card--hide' ) )
             card.classList.add( 'card--hide' );
+        if ( !card.classList.contains( 'card--hide' ) )
+            noShowedCard = false;
     } );
 
     // All `cards__card` failed test.
