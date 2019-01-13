@@ -1,0 +1,168 @@
+@import 'components/user/announcement/items';
+
+// [ variable ]
+$bgcolor: #f1f1f1;
+$bordercolor: rgba( 224, 224, 224, .4 );
+$buttoncolor: #8caae2;
+$wordcolor: #7c7f84;
+$midume: 675px;
+@mixin editor () {
+  // .content > .editor
+  > .editor {
+    // background-color: aqua;
+    // [ layout ]
+    display: grid;
+    grid: {
+      // [ position ]
+      area: edit__editor;
+      gap: .5rem;
+      template: {
+        areas:
+          ' . language__zh   language__en   . '
+          ' . editor__editor editor__editor . ';
+
+        columns:  .1rem 1fr 1fr .1rem;
+      }
+    }
+    max-width: 100%;
+    @media screen and ( min-width: $midume ) {
+      grid-template: {
+        areas:
+          ' .            .              '
+          ' language__zh editor__editor '
+          ' language__en editor__editor '
+          ' .            editor__editor ';
+        columns: 1.33rem minmax( 60%, 100% );
+        rows: .3rem 3.524rem 3.524rem 6.7rem;
+      };
+    }
+
+    // .content > .editor >. editor__language--zh-TW
+    > .editor__language--zh-TW {
+      // [ position ]
+      grid-area: language__zh;
+    }
+
+    // .content > .editor >. editor__language--en-US
+    > .editor__language--en-US {
+      // [ position ]
+      grid-area: language__en;
+    }
+
+    // .content > .editor > .editor__language--horizontal
+    > .editor__language--horizontal {
+      // [ skin ]
+      @include editor__language();
+      @media screen and ( min-width: $midume ) {
+        display: none;
+      }
+    }
+
+    > .editor__language--vertical {
+      // [ skin ]
+      @include editor__language();
+      font-size: .667rem;
+      @media screen and ( max-width: $midume ) {
+        display: none;
+      }
+    }
+
+    > .editor__editor {
+      // [ position ]
+      grid-area: editor__editor;
+      @include editor__editor() ;
+    }
+
+    > .editor__editor--show {
+      z-index: 0;
+      visibility: visible;
+    }
+  }
+}
+@mixin editor__language () {
+  // [ skin ]
+  background-color: $buttoncolor;
+  color: #ffffff;
+  font: {
+    size: .667rem;
+    style: normal;
+    weight: 500;
+    family: notosanscjktc;
+  }
+  line-height: 1.29;
+  letter-spacing: normal;
+  display: block;
+
+  // on small device
+  @media screen and ( max-width: $midume ) {
+    text-align: center;
+    height: 1.3rem;
+    font-size: .5rem;
+  }
+}
+@mixin editor__editor () {
+  // .content > .editor > .editor__editor 
+
+  // [ initialize]
+  visibility: hidden;
+  z-index: -1;
+
+  // [ item skin ]
+  border-radius: .0714rem;
+
+  // layout
+  display: grid;
+  grid: {
+    template: {
+      areas:
+        ' title '
+        ' content '
+        ' addfile ';
+      rows: 1.571rem 11.524rem 2.26rem;
+    }
+    gap: .5rem;
+  }
+
+  > .editor__input--title {
+    // [ position ]
+    grid-area: title;
+    width: 100%;
+    margin: auto;
+
+    // [ skin ]
+    @include items ( $bgcolor: $bgcolor, $bordercolor: $bordercolor );
+  }
+
+  > .editor__input--content {
+    // [ position ]
+    grid-area: content;
+    width: 100%;
+
+    // [ skin ]
+    @include items ( $bgcolor: $bgcolor, $bordercolor: $bordercolor);
+  }
+
+  > .editor__input--addfile {
+    grid-area: addfile;
+    background-color: $buttoncolor;
+    height: 1.3rem;
+    width: 3rem;
+    margin-bottom: .5rem;
+    @media screen and ( min-width: 675px ) {
+      width: 4.5rem;
+    }
+
+    > .editor__input--addfile-content {
+      color: white;
+      font-size: .5rem;
+      text-align: center;
+      margin-top: .3rem;
+    }
+  }
+
+  > .editor__input--addfile-input {
+    grid-area: addfile;
+    z-index: -1;
+    visibility: hidden;
+  }
+}

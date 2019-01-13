@@ -1,0 +1,37 @@
+@import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/footer';
+@import 'components/user/announcement/tags';
+@import 'components/user/announcement/edit';
+
+body > .content {
+  // [ variable ]
+  $small: 615px;
+  $medium: 675px;
+  $large: 1080px;
+
+  // [layout]
+  display: grid;
+
+  grid-template: {
+    areas:
+      '. edit__top    .'
+      '. edit__tags   .'
+      '. edit__editor .'
+      '. edit__submit .';
+    columns: 5vw 90vw 5vw;
+  }
+
+  // [ RWD: $small ]
+  @media screen and ( min-width: $small ) {
+    // [ layout ]
+    grid-template-columns: 10vw 80vw 10vw;
+  }
+
+  // [ RWD: $large ]
+  @media screen and ( min-width: $large ) {
+    // [ layout ]
+    grid-template-columns: 1fr 60vw 1fr;
+  }
+  @include edit();
+}

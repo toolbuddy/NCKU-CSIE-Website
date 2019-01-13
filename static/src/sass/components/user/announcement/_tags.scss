@@ -1,0 +1,245 @@
+// template
+// `.tags > .tags__tag.tags__tag--?`
+// This mixin should not be used outside this file.
+@mixin tags__tag ( $color, $bgcolor ) {
+  // [ skin ]
+  color: $color;
+  background-color: $bgcolor;
+
+  // modifier
+  // `.tags > .tags__tag.tags__tag--?.tags__tag--active`
+  &.tags__tag--active {
+    // [ skin ]
+    color: #ffffff;
+    background-color: $color;
+  }
+}
+
+// component
+// `> .tags`
+@mixin tags () {
+  // block
+  // `> .tags`
+  > .tags {
+    // [ skin ]
+    color: #ffffff;
+
+    // element
+    // `> .tags > .tags__tag`
+
+    > .tags__tag {
+      // [ skin ]
+
+      margin: {
+        top: .3rem;
+        bottom: .3rem;
+      }
+      border-radius: .6rem;
+      padding: .1rem .2rem;
+      width: 100%;
+      height: 1.057rem;
+      justify-self: center;
+      font: {
+        size: .476rem;
+        style: normal;
+        weight: 500;
+        family: notosanscjktc;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        cursor: pointer;
+      }
+
+      &.tags__tag-- {
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--tags`
+        &tags {
+          // [ position ]
+          grid-area: tags__tag--tags;
+
+          // [ template ]
+          @include tags__tag( $color:#757575, $bgcolor: #e0e0e0 );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--all`
+        &all {
+          // [ position ]
+          grid-area: tags__tag--all;
+
+          // [ template ]
+          @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--award
+
+        &award {
+          // [ position ]
+          grid-area: tags__tag--award;
+
+          // [ template ]
+          @include tags__tag( $color: #f67057, $bgcolor: #ffe3df );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--college`
+
+        &college {
+          // [ position ]
+          grid-area: tags__tag--college;
+
+          // [ template ]
+          @include tags__tag( $color: #399dff, $bgcolor: #dfeffe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--competition`
+
+        &competition {
+          // [ position ]
+          grid-area: tags__tag--competition;
+
+          // [ template ]
+          @include tags__tag( $color: #f67057, $bgcolor: #ffe3df );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--conference`
+
+        &conference {
+          // [ position ]
+          grid-area: tags__tag--conference;
+
+          // [ template ]
+          @include tags__tag( $color: #9053ff, $bgcolor: #e8dafe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--course`
+
+        &course {
+          // [ position ]
+          grid-area: tags__tag--course;
+
+          // [ template ]
+          @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--exhibition`
+
+        &exhibition {
+          // [ position ]
+          grid-area: tags__tag--exhibition;
+
+          // [ template ]
+          @include tags__tag( $color: #9053ff, $bgcolor: #e8dafe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--faculty`
+
+        &faculty {
+          // [ position ]
+          grid-area: tags__tag--faculty;
+
+          // [ template ]
+          @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--international`
+
+        &international {
+          // [ position ]
+          grid-area: tags__tag--international;
+
+          // [ template ]
+          @include tags__tag( $color: #f67057, $bgcolor: #ffe3df );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--internship`
+
+        &internship {
+          // [ position ]
+          grid-area: tags__tag--internship;
+
+          // [ template ]
+          @include tags__tag( $color: #9053ff, $bgcolor: #e8dafe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--master`
+
+        &master {
+          // [ position ]
+          grid-area: tags__tag--master;
+
+          // [ template ]
+          @include tags__tag( $color: #399dff, $bgcolor: #dfeffe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--phd`
+
+        &phd {
+          // [ position ]
+          grid-area: tags__tag--phd;
+
+          // [ template ]
+          @include tags__tag( $color: #399dff, $bgcolor: #dfeffe );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--rule`
+
+        &rule {
+          // [ position ]
+          grid-area: tags__tag--rule;
+
+          // [ template ]
+          @include tags__tag( $color: #0dc589, $bgcolor: #c6ffec );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--recruitment`
+
+        &recruitment {
+          // [ position ]
+          grid-area: tags__tag--recruitment;
+
+          // [ template ]
+          @include tags__tag( $color: #0dc589, $bgcolor: #c6ffec );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--scholarship`
+
+        &scholarship {
+          // [ position ]
+          grid-area: tags__tag--scholarship;
+
+          // [ template ]
+          @include tags__tag( $color: #f67057, $bgcolor: #ffe3df );
+        }
+
+        // modifier
+        // `> .tags > .tags__tag.tags__tag--speech`
+
+        &speech {
+          // [ position ]
+          grid-area: tags__tag--speech;
+
+          // [ template ]
+          @include tags__tag( $color: #9053ff, $bgcolor: #e8dafe );
+        }
+      }
+    }
+  }
+}

@@ -90,7 +90,8 @@ export default {
         'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
 
         // Route `user`
-        'user/index': path.join( sassRoot, 'user/index.scss' ),
+        'user/index':             path.join( sassRoot, 'user/index.scss' ),
+        'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
     },
 
     /**
@@ -113,6 +114,12 @@ export default {
      */
 
     target:  'web',
+
+    resolve: {
+        alias: {
+            image: imageRoot,
+        },
+    },
 
     /**
      * Webpack loader modules.
@@ -168,7 +175,6 @@ export default {
                         options: {
                             includePaths: [
                                 sassRoot,
-                                imageRoot,
                             ],
                             sourceMap:    true,
                         },

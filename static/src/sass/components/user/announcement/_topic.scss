@@ -1,0 +1,66 @@
+// [ variable ]
+$bordercolor: #b8bbc1;
+$bgcolor: #eff1f4;
+@mixin topic () {
+  // big screen
+  @media screen and ( min-width: 675px ) {
+    // .content > .content--top > .topic
+    > .topic {
+      // [ position ]
+      grid-area: edit__top;
+
+      // [ position ]
+      justify-content: flex-start;
+
+      // [skin ]
+      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+
+      // .content > .content--top > .topic > .topic__text
+      > .topic__text {
+        // [ skin ]
+        border-bottom: solid .0156rem #213262;
+        width: auto;
+        line-height: 1.4rem;
+        font: {
+          weight: bold;
+          size: .75rem;
+        }
+      }
+    }
+
+    // .content > .content--top > .topic
+    > .content--return {
+      // [ position ]
+      grid-area: edit__top;
+
+      // [ status: hidden ]
+      visibility: hidden;
+      z-index: -1;
+    }
+  }
+
+  // small screen
+  @media screen and ( max-width: 675px ) {
+    // .content > .topic
+    > .topic {
+      // [ position ]
+      grid-area: edit__top;
+
+      // [ status: hidden ]
+      visibility: hidden;
+      z-index: -1;
+    }
+
+    // .content > .content--return
+    > .content--return {
+      // [ position ]
+      grid-area: edit__top;
+
+      // [ skin ]
+      border-bottom: .156rem solid $bgcolor;
+      margin-bottom: .7rem;
+      font-size: .8rem;
+      color: #8caae2;
+    }
+  }
+}

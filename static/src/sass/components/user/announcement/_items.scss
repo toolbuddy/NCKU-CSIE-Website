@@ -1,0 +1,14 @@
+@mixin items ( $bgcolor, $bordercolor) {
+  background-color: $bgcolor;
+  border-left: .156rem solid $bordercolor;
+  padding: .3rem;
+  font: {
+    size: .571rem;
+    style: normal;
+    weight: 500;
+    family: notosanscjktc;
+  }
+  line-height: 1;
+  letter-spacing: normal;
+  color: #757575;
+}

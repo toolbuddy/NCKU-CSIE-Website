@@ -1,4 +1,4 @@
-$icon-path: '../..';
+$icon-path: '~image/icon';
 
 // template
 // `icon--before__template`
@@ -22,132 +22,36 @@ $icon-path: '../..';
 }
 @mixin icon__download () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/image/icon/download.png' );
-}
-@mixin icon--before--trophy () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/trophy.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before--book () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/open-book.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before--study () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/study.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before--students () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/students.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before--search () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/search.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
+  background-image: url( '#{ $icon-path }/download.png' );
 }
 @mixin icon__location () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/image/icon/location.png' );
+  background-image: url( '#{ $icon-path }/location.png' );
 }
 @mixin icon__envelope () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/image/icon/envelope.png' );
+  background-image: url( '#{ $icon-path }/envelope.png' );
 }
 @mixin icon__phone () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/image/icon/phone.png' );
+  background-image: url( '#{ $icon-path }/phone.png' );
 }
 @mixin icon__laboratory () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/image/icon/laboratory.png' );
-}
-@mixin icon--before--taiwan () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/taiwan.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
-}
-@mixin icon--before--studentcap () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/students-cap.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
+  background-image: url( '#{ $icon-path }/laboratory.png' );
 }
 @mixin icon__search () {
-  background-image: url( '#{ $icon-path }/image/icon/search.png' );
-}
-@mixin icon--before--user () {
-  @include icon--before__template() {
-    background: {
-      position: center;
-      size: cover;
-      image: url( '#{ $icon-path }/image/icon/user.png' );
-    }
-
-    // template [extend]
-    @content;
-  }
+  background-image: url( '#{ $icon-path }/search.png' );
 }
 @mixin icon__user () {
-  background-image: url( '#{ $icon-path }/image/icon/user.png' );
+  background-image: url( '#{ $icon-path }/user.png' );
 }
 @mixin icon__flag-zh-TW () {
-  background-image: url( '#{ $icon-path }/image/icon/flag-zh-TW.png' );
+  background-image: url( '#{ $icon-path }/flag-zh-TW.png' );
 }
 @mixin icon__flag-en-US () {
-  background-image: url( '#{ $icon-path }/image/icon/flag-en-US.png' );
+  background-image: url( '#{ $icon-path }/flag-en-US.png' );
 }
 @mixin icon__arrowRight () {
-  background-image: url( '#{ $icon-path }/image/icon/arrow-right.png' );
+  background-image: url( '#{ $icon-path }/arrow-right.png' );
 }

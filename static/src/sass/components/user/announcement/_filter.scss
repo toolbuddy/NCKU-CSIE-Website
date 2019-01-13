@@ -1,0 +1,82 @@
+// set all the tags in the correct position
+@mixin filter__tags () {
+  // .content > .filter__tags.tags
+  > .filter__tags {
+    // [ position ]
+    grid-area: edit__tags;
+    align-self: center;
+
+    // [ variable ]
+    $font--small: 302px;
+    $font--midume: 344px;
+
+    // [ skin ]
+    @media screen and ( max-width: $font--small ) {
+      font-size: .375rem;
+    }
+    @media screen and ( min-width: $font--small ) {
+      font-size: .375rem;
+    }
+    @media screen and ( min-width: $font--midume ) {
+      font-size: .4375rem;
+    }
+
+    // [ layout ]
+    display: grid;
+
+    // [ variable ]
+    $small: 425px;
+    $medium: 567px;
+    $large: 675px;
+    grid-template: {
+      areas:
+        'tags__tag--tags        tags__tag--college  tags__tag--speech      tags__tag--competition'
+        'tags__tag--faculty     tags__tag--master   tags__tag--conference  tags__tag--scholarship'
+        'tags__tag--course      tags__tag--phd      tags__tag--exhibition  tags__tag--international'
+        'tags__tag--recruitment tags__tag--rule     tags__tag--internship  tags__tag--award';
+      columns: repeat( 4, 1fr );
+    }
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          'tags__tag--tags    tags__tag--college  tags__tag--speech tags__tag--competition'
+          'tags__tag--faculty  tags__tag--master   tags__tag--conference  tags__tag--scholarship'
+          'tags__tag--course tags__tag--phd      tags__tag--exhibition  tags__tag--international'
+          'tags__tag--recruitment tags__tag--rule tags__tag--internship  tags__tag--award';
+        columns: repeat( 4, 1fr );
+      }
+    }
+
+    // [ RWD: $medium]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. tags__tag--tags    tags__tag--college  tags__tag--speech tags__tag--competition .'
+          '. tags__tag--faculty  tags__tag--master   tags__tag--conference  tags__tag--scholarship .'
+          '. tags__tag--course tags__tag--phd      tags__tag--exhibition  tags__tag--international .'
+          '. tags__tag--recruitment tags__tag--rule tags__tag--internship  tags__tag--award .';
+        columns: 1fr repeat( 4, 4rem ) 1fr;
+      }
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid: {
+        template: {
+          areas:
+            '. tags__tag--tags    tags__tag--college  tags__tag--speech tags__tag--competition'
+            '. tags__tag--faculty  tags__tag--master   tags__tag--conference  tags__tag--scholarship'
+            '. tags__tag--course tags__tag--phd      tags__tag--exhibition  tags__tag--international'
+            '. tags__tag--recruitment tags__tag--rule tags__tag--internship  tags__tag--award';
+          columns: 1.33rem repeat( 4, 2.74rem );
+        }
+        column-gap: .3rem;
+      }
+    }
+  }
+}
