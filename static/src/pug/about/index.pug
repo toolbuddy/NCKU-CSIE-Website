@@ -37,7 +37,6 @@ append header
 append content
   include /components/common/topic.pug
   include /components/about/index/subtitles.pug
-  //- main.content
   +topic( i18n[ language ].topic )
   section#subtitles.subtitles
     //- +subtitles__subtitle()
@@ -45,16 +44,19 @@ append content
       title: '全部公告',
       detail: '系上級學校重要資訊公告，不分類別',
       subtitle: '50 則公告',
+      color: 'red',
     } )
     +subtitles__subtitle( {
       title: '活動訊息',
       detail: '與行政事務相關的內容查詢，包含學校公告以及各類法規更新',
       subtitle: '23 則公告',
+      color: 'green',
     } )
     +subtitles__subtitle( {
       title: '徵人資訊',
       detail: '系上級學校活動資訊公佈，包含系會活動及各類競賽辦法',
       subtitle: '3 則公告',
+      color: 'yellow',
     } )
 append footer
 

@@ -15,6 +15,10 @@
       width: 4rem;
       color: black;
     }
+    margin: {
+      top:3.5rem;
+      bottom: 3.5rem;
+    }
 
     // [RWD: $large]
     @media screen and ( min-width: $large ) {
@@ -30,11 +34,66 @@
     // [customization]??
     @content;
 
-    > .subtitles__subtitle.subtitle.red {
+    > .subtitles__subtitle--red.subtitle {
       border: {
         top: .2rem;
-        color: red;
+        top-color: red;
+        left: .1rem;
+        right: .1rem;
         style: solid;
+      }
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        border: {
+          top: .2rem;
+          bottom: .1rem;
+          left: .1rem;
+          right: .1rem;
+          top-color: red;
+          style: solid;
+        }
+      }
+    }
+
+    > .subtitles__subtitle--green.subtitle {
+      border: {
+        top: .2rem;
+        top-color: green;
+        left: .1rem;
+        right: .1rem;
+        style: solid;
+      }
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        border: {
+          top: .2rem;
+          bottom: .1rem;
+          left: .1rem;
+          right: .1rem;
+          top-color: green;
+          style: solid;
+        }
+      }
+    }
+
+    > .subtitles__subtitle--yellow.subtitle {
+      border: {
+        top: .2rem;
+        top-color: yellow;
+        left: .1rem;
+        right: .1rem;
+        style: solid;
+      }
+      @media screen and ( min-width: $large ) {
+        // [skin]
+        border: {
+          top: .2rem;
+          bottom: .1rem;
+          left: .1rem;
+          right: .1rem;
+          top-color: yellow;
+          style: solid;
+        }
       }
     }
 
@@ -46,11 +105,6 @@
       text-align: center;
 
       // [skin]
-      border: {
-        top: .2rem;
-        color: red;
-        style: solid;
-      }
       width: 100%;
       height: 5.3rem;
       min-height: $subtitles__subtitle--height;
@@ -58,13 +112,15 @@
 
       // [RWD:large]
       @media screen and ( min-width: $large ) {
-        // [skin]
-        border: {
-          top: .2rem;
-          bottom: .1rem;
-          color: red;
-          style: solid;
-        }
+        //     // [skin]
+        //     border: {
+        //       top: .2rem;
+        //       bottom: .1rem;
+        //       left: .1rem;
+        //       right: .1rem;
+        //       top-color: navy;
+        //       style: solid;
+        //     }
         height: 15.7rem;
         background-color: #ffffff;
         width: $subtitles__subtitle--width;
@@ -87,7 +143,7 @@
 
         // [skin]
         margin: {
-          top: 5.8rem;
+          top: 1.9rem;
           left: auto;
           right: auto;
           bottom: .3rem;
@@ -99,25 +155,30 @@
       }
 
       > .subtitle__detail {
-        // [layout]
-        display: block;
-        text-align: center;
-        word: {
-          wrap: break-word;
-          break: break-all;
-        }
-        white-space: normal;
+        display: none;
 
-        // [skin]
-        margin: {
-          left: 2.3rem;
-          right: 2.3rem;
-          bottom: 1.3rem;
+        //
+        @media screen and ( min-width: $large ) {
+          // [layout]
+          display: block;
+          text-align: center;
+          word: {
+            wrap: break-word;
+            break: break-all;
+          }
+          white-space: normal;
+
+          // [skin]
+          margin: {
+            left: 2.3rem;
+            right: 2.3rem;
+            bottom: 1.3rem;
+          }
+          line-height: .8rem;
+          font-size: .5rem;
+          color: #757575;
+          background-color: #ffffff;
         }
-        line-height: .8rem;
-        font-size: .5rem;
-        color: #757575;
-        background-color: #ffffff;
       }
 
       > .subtitle__subtitle {

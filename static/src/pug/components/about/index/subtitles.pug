@@ -12,9 +12,24 @@ mixin subtitles__subtitle( word = {} )
         'subtitles':  'subtitles',
     } );
   
-  h1.subtitles__subtitle.subtitle
-    a.subtitle__title( href = "" )= word.title
-    p.subtitle__detail= word.detail
-    a.subtitle__subtitle( href = "" )= word.subtitle
-    //- if word.class == "red"
-    //-   a.subtitle__subtitle.red( href = "" )= word.subtitle
+  //- h1.subtitles__subtitle.subtitle
+  //-   a.subtitle__title( href = "" )= word.title
+  //-   p.subtitle__detail= word.detail
+  //-   a.subtitle__subtitle( href = "" )= word.subtitle
+  //-   subtitle__color = word.color
+
+  if word.color == "red"
+    h1.subtitles__subtitle.subtitles__subtitle--red.subtitle
+      a.subtitle__title( href = "" )= word.title
+      p.subtitle__detail= word.detail
+      a.subtitle__subtitle( href = "" )= word.subtitle
+  else if word.color == "green"
+    h1.subtitles__subtitle.subtitles__subtitle--green.subtitle
+      a.subtitle__title( href = "" )= word.title
+      p.subtitle__detail= word.detail
+      a.subtitle__subtitle( href = "" )= word.subtitle
+  else if word.color == "yellow"
+    h1.subtitles__subtitle.subtitles__subtitle--yellow.subtitle
+      a.subtitle__title( href = "" )= word.title
+      p.subtitle__detail= word.detail
+      a.subtitle__subtitle( href = "" )= word.subtitle
