@@ -1,7 +1,8 @@
 import sequelize from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
-import defaultValue from 'settings/default-value/announcement/config.js';
+import { defaultValue, tagNameToNum, } from 'settings/default-value/announcement/config.js';
+import languageUtils from 'settings/language/utils.js';
 
 /**
  * A function for getting all announcements.
@@ -31,11 +32,12 @@ export default async ( {
     startTime = defaultValue.startTime,
     endTime = defaultValue.endTime,
     page = defaultValue.page,
-    language = defaultValue.language,
+    language = languageUtils.languageToNum( defaultValue.language ),
 } = {} ) => {
     tags = [ ...new Set( tags ), ];
     startTime = new Date( startTime );
     endTime = new Date( endTime );
+    language = languageUtils.languageToNum( language );
 
     if ( !validate.isValidTags( tags ) )
         return { error: 'invalid tag name', };
@@ -49,14 +51,19 @@ export default async ( {
     if ( !validate.isValidPage( page ) )
         return { error: 'invalid page', };
 
+    const numOfTags = [];
+    const tagLen = tags.length;
+    for ( let i = 0; i < tagLen; ++i )
+        numOfTags.push( tagNameToNum[ 'en-US' ][ tags[ i ] ] );
+
     const table = await associations();
     if ( page <= 0 )
         return [];
     const data = await table.announcement.findAll( {
         attributes: [ 'announcementId', ],
         where:      {
-            '$announcementTag.tagI18n.name$': {
-                [ Op.in ]: tags,
+            '$tag.type$': {
+                [ Op.in ]: numOfTags,
             },
             'updateTime': {
                 [ Op.between ]: [
@@ -65,17 +72,11 @@ export default async ( {
                 ],
             },
             'isPublished': 1,
-            'isApproved':  1,
         },
         include: [ {
-            model:      table.announcementTag,
+            model:      table.tag,
             attributes: [],
-            as:         'announcementTag',
-            include:    [ {
-                model:      table.tagI18n,
-                attributes: [],
-                as:         'tagI18n',
-            }, ],
+            as:         'tag',
         }, ],
         group:  'announcementId',
         having: sequelize.literal( `count(*) = ${ tags.length }` ),
@@ -105,17 +106,9 @@ export default async ( {
                 },
             },
             {
-                model:      table.announcementTag,
-                as:         'announcementTag',
-                attributes: [ 'tagId', ],
-                include:    [ {
-                    model:      table.tagI18n,
-                    as:         'tagI18n',
-                    attributes: [ 'name', ],
-                    where:      {
-                        language: 'en-US',
-                    },
-                }, ],
+                model:      table.tag,
+                as:         'tag',
+                attributes: [ 'type', ],
             },
         ],
     } ) )
@@ -124,9 +117,8 @@ export default async ( {
         title:      announcement.announcementI18n[ 0 ].title,
         content:    announcement.announcementI18n[ 0 ].content,
         updateTime: announcement.updateTime,
-        tags:       announcement.announcementTag.map( tag => ( {
-            id:   tag.tagId,
-            name: tag.tagI18n[ 0 ].name,
+        tags:       announcement.tag.map( tag => ( {
+            name: tag.type,
         } ) ),
     } ) ) );
 

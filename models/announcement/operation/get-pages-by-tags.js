@@ -1,7 +1,7 @@
 import sequelize from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
-import defaultValue from 'settings/default-value/announcement/config.js';
+import { defaultValue, tagNameToNum, } from 'settings/default-value/announcement/config.js';
 
 const Op = sequelize.Op;
 
@@ -37,11 +37,16 @@ export default async ( {
     if ( !validate.isValidDate( endTime ) )
         return { error: 'invalid end time', };
 
+    const numOfTags = [];
+    const tagLen = tags.length;
+    for ( let i = 0; i < tagLen; ++i )
+        numOfTags.push( tagNameToNum[ 'en-US' ][ tags[ i ] ] );
+
     const table = await associations();
     const count = await table.announcement.count( {
         where: {
-            '$announcementTag.tagI18n.name$': {
-                [ Op.in ]: tags,
+            '$tag.type$': {
+                [ Op.in ]: numOfTags,
             },
             'updateTime':                       {
                 [ Op.between ]: [
@@ -50,15 +55,10 @@ export default async ( {
                 ],
             },
             'isPublished': 1,
-            'isApproved':  1,
         },
         include: [ {
-            model:   table.announcementTag,
-            as:      'announcementTag',
-            include: [ {
-                model:      table.tagI18n,
-                as:         'tagI18n',
-            }, ],
+            model:   table.tag,
+            as:      'tag',
         }, ],
         group:  '`announcement`.`announcement_id`',
         having: sequelize.literal( `count(*) = ${ tags.length }` ),

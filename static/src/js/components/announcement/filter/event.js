@@ -1,5 +1,7 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
-import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
+import { renderFilter,
+         renderLoading
+} from 'static/src/js/components/announcement/filter/render.js';
 
 let filterOnChange = null;
 let pageOnChange = null;
@@ -20,6 +22,7 @@ export function setURLOnChange (
             getAnnouncementsByTags();
     };
     filterOnChange = () => {
+        renderLoading();
         renderFilter( defaultTagName );
         if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
             new Promise( ( res, rej ) => {
@@ -157,7 +160,6 @@ function dateOnChange ( event ) {
         };
         query.set( targetDate, dateFormating( argument[ targetDate ] ) );
     }
-
     query.delete( 'page' );
     updateURL( query );
 }
@@ -177,7 +179,6 @@ export function pageOnClick ( event ) {
     // If page is same, do nothing
     if ( query.get( 'page' ) === page )
         return;
-
     query.set( 'page', page );
     updateURL( query );
 }

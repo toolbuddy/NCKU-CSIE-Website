@@ -1,5 +1,6 @@
 import associations from 'models/announcement/operation/associations.js';
-import defaultValue from 'settings/default-value/announcement/config.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import languageUtils from 'settings/language/utils.js';
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -21,8 +22,9 @@ import defaultValue from 'settings/default-value/announcement/config.js';
  *
  */
 
-export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
+export default async ( { language = languageUtils.languageToNum( defaultValue.language ), announcementId = 1, } = {} ) => {
     const table = await associations();
+    language = languageUtils.languageToNum( language );
 
     const data = await table.announcement.findOne( {
         include: [
@@ -38,21 +40,8 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
                 },
             },
             {
-                model:   table.announcementTag,
-                as:      'announcementTag',
-                include: [
-                    {
-                        model:      table.tagI18n,
-                        as:         'tagI18n',
-                        attributes: [
-                            'tagId',
-                            'name',
-                        ],
-                        where: {
-                            language: 'en-US',
-                        },
-                    },
-                ],
+                model:   table.tag,
+                as:      'tag',
             },
             {
                 model:   table.announcementFile,
@@ -62,17 +51,13 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
                         model:      table.announcementFileI18n,
                         as:         'announcementFileI18n',
                         attributes: [
-                            'url',
+                            'filepath',
                             'name',
                         ],
                         where: {
                             language,
                         },
                     },
-                ],
-                attributes: [
-                    'type',
-                    'uploadTime',
                 ],
             },
         ],
@@ -100,16 +85,13 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
             isPinned:    announcement.isPinned,
             files:       announcement.announcementFile.map(
                 announcementFile => ( {
-                    uploadTime: announcementFile.uploadTime,
-                    type:       announcementFile.type,
-                    url:        announcementFile.announcementFileI18n[ 0 ].url,
+                    url:        announcementFile.announcementFileI18n[ 0 ].filepath,
                     name:       announcementFile.announcementFileI18n[ 0 ].name,
                 } ),
             ),
-            tags:        announcement.announcementTag.map(
-                announcementTag => ( {
-                    id:   announcementTag.tagI18n[ 0 ].tagId,
-                    name: announcementTag.tagI18n[ 0 ].name,
+            tags:        announcement.tag.map(
+                tag => ( {
+                    name: tag.type,
                 } )
             ),
         } )

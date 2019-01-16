@@ -4,7 +4,7 @@ import {
     renderBriefingsError,
     renderPages,
     renderPagesError,
-    renderPage,
+    renderPage
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
@@ -332,7 +332,7 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
+        .then( data => renderBriefings( announcementBriefingTop, data ) )
         .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
     },
 

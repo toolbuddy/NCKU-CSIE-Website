@@ -10,6 +10,10 @@
     font-family: var( --font__family--NotoSansTC );
     min-width: 73px;
 
+    &--hidden {
+      display: none;
+    }
+
     // element
     // `.no-result > .no-result__caption`
     > .no-result__caption {

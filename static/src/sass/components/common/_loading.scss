@@ -1,4 +1,4 @@
-%mountain_animation {
+@mixin mountain_animation {
   animation: {
     duration: 2.6s;
     iteration-count: infinite;
@@ -14,6 +14,10 @@
     // [ skin ]
     color: #adacad;
     font-family: var( --font__family--NotoSansTC );
+
+    &--hidden {
+      display: none;
+    }
 
     // element
     // `.loading > .loading__image`
@@ -37,7 +41,7 @@
       > .image__a {
         fill: $mountain-color;
         animation-name: mountain_a;
-        @extend %mountain_animation;
+        @include mountain_animation ();
       }
 
       // element
@@ -45,7 +49,7 @@
       > .image__b {
         fill: $mountain-color;
         animation-name: mountain_b;
-        @extend %mountain_animation;
+        @include mountain_animation ();
       }
 
       // element
@@ -53,7 +57,7 @@
       > .image__c {
         fill: $mountain-color;
         animation-name: mountain_c;
-        @extend %mountain_animation;
+        @include mountain_animation ();
       }
 
       // element
@@ -61,7 +65,7 @@
       > .image__d {
         fill: $mountain-color;
         animation-name: mountain_d;
-        @extend %mountain_animation;
+        @include mountain_animation ();
       }
     }
 

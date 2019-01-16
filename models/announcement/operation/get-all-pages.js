@@ -1,7 +1,7 @@
 import { Op, } from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
-import defaultValue from 'settings/default-value/announcement/config.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
 
 /**
  * A function for getting the number of pages to display all requested announcements.
@@ -34,7 +34,6 @@ export default async ( {
 
     if ( !validate.isValidDate( endTime ) )
         return { error: 'invalid end time', };
-
     const table = await associations();
     let count = 0;
     if ( tags.length === 0 ) {
@@ -47,14 +46,13 @@ export default async ( {
                     ],
                 },
                 isPublished: 1,
-                isApproved:  1,
             },
         } );
     }
     else {
         count = await table.announcement.count( {
             where: {
-                '$announcementTag.tagI18n.name$': {
+                '$tag.type$': {
                     [ Op.in ]: tags,
                 },
                 'updateTime': {
@@ -64,18 +62,11 @@ export default async ( {
                     ],
                 },
                 'isPublished': 1,
-                'isApproved':  1,
             },
             include: [
                 {
-                    model:   table.announcementTag,
-                    as:      'announcementTag',
-                    include: [
-                        {
-                            model: table.tagI18n,
-                            as:    'tagI18n',
-                        },
-                    ],
+                    model:   table.tag,
+                    as:      'tag',
                 },
             ],
             distinct: true,

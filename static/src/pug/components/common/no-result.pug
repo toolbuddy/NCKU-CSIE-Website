@@ -10,7 +10,7 @@ mixin noResult()
       }
     } );
 
-  section.no-result
+  section.no-result.no-result--hidden
     h2.no-result__caption= i18n[ language ].noResult
 
 //- No result content template module.
@@ -29,7 +29,7 @@ mixin noResultWithImage()
       }
     } );
 
-  figure.no-result.no-result--with-image
+  figure.no-result.no-result--with-image.no-result--hidden
     +image( {
       alt:       i18n[ language ].noResult,
       className: 'no-result__image',

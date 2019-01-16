@@ -153,7 +153,18 @@ export function renderPage () {
 }
 
 export function renderBriefings ( container, announcements ) {
+    /* Hide no-result */
     container.innerHTML = '';
+    const noResult = container.parentElement.getElementsByClassName('no-result')[ 0 ];
+    if(typeof(noResult) !== 'undefined')
+        classAdd(noResult, 'no-result--hidden');
+    
+    /* Hide loading */
+    const loading = container.parentElement.getElementsByClassName('loading')[ 0 ];
+    if(typeof(loading) !== 'undefined')
+        classAdd(loading, 'loading--hidden');
+
+    /* Render briefings */
     announcements.forEach( ( announcement ) => {
         container.innerHTML += briefing( {
             id:      announcement.id,
@@ -166,5 +177,23 @@ export function renderBriefings ( container, announcements ) {
 }
 
 export function renderBriefingsError ( container, errorMessage ) {
+    /* Hide loading */
+    const loading = container.parentElement.getElementsByClassName('loading')[ 0 ];
+    if(typeof(loading) !== 'undefined')
+        classAdd(loading, 'loading--hidden');
+
+    /* Render no-result */
+    const noResult = container.parentElement.getElementsByClassName('no-result--hidden')[ 0 ];
+    if(typeof(noResult) !== 'undefined')
+        classRemove(noResult, 'no-result--hidden');
     container.innerHTML = errorMessage;
+    container.innerHTML = '';
+}
+
+export function renderLoading () {
+    Array.from( document.getElementsByClassName('loading--hidden') ).forEach( ( item ) => {
+        if(typeof(item) !== 'undefined')
+            classRemove(item, 'loading--hidden');
+    } );
+    
 }

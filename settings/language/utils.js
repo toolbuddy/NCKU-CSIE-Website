@@ -1,13 +1,20 @@
-import languageSettings from 'settings/language/config.js';
+import { default as language, langToNum, numToLang, } from 'settings/language/config.js';
 
 class LanguageUtils {
     static isSupported ( language ) {
-        return languageSettings.support.includes( language );
+        return language.support.includes( language );
     }
 
     static get defaultLanguage () {
-        return languageSettings.default;
+        return language.default;
+    }
+
+    static languageToNum ( language ) {
+        return langToNum[ language ];
+    }
+
+    static numToLanguage ( num ) {
+        return numToLang[ num ];
     }
 }
-
 export default LanguageUtils;

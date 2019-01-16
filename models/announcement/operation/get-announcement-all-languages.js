@@ -33,21 +33,8 @@ export default async ( { announcementId = 1, } = {} ) => {
                 ],
             },
             {
-                model:   table.announcementTag,
-                as:      'announcementTag',
-                include: [
-                    {
-                        model:      table.tagI18n,
-                        as:         'tagI18n',
-                        attributes: [
-                            'tagId',
-                            'name',
-                        ],
-                        where: {
-                            language: 'en-US',
-                        },
-                    },
-                ],
+                model:   table.tag,
+                as:      'tag',
             },
             {
                 model:   table.announcementFile,
@@ -57,14 +44,10 @@ export default async ( { announcementId = 1, } = {} ) => {
                         model:      table.announcementFileI18n,
                         as:         'announcementFileI18n',
                         attributes: [
-                            'url',
+                            'filepath',
                             'name',
                         ],
                     },
-                ],
-                attributes: [
-                    'type',
-                    'uploadTime',
                 ],
             },
         ],
@@ -98,14 +81,12 @@ export default async ( { announcementId = 1, } = {} ) => {
             },
             'files':       announcement.announcementFile.map(
                 announcementFile => ( {
-                    uploadTime: announcementFile.uploadTime,
-                    type:       announcementFile.type,
-                    url:        announcementFile.announcementFileI18n[ 0 ].url,
+                    url:        announcementFile.announcementFileI18n[ 0 ].filepath,
                     name:       announcementFile.announcementFileI18n[ 0 ].name,
                 } ),
             ),
-            'tags':        announcement.announcementTag.map(
-                announcementTag => announcementTag.tagI18n[ 0 ].name,
+            'tags':        announcement.tag.map(
+                tag => tag.type,
             ),
         } )
     );
