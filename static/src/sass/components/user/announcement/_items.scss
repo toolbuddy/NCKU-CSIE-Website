@@ -1,6 +1,9 @@
-@mixin items ( $bgcolor, $bordercolor) {
-  background-color: $bgcolor;
-  border-left: .156rem solid $bordercolor;
+@mixin items {
+  background-color: rgba( 224, 224, 224, .4 );
+  border: {
+    left: .19rem solid rgba( 153, 153, 153, .4 );
+    radius: .071rem;
+  }
   padding: .3rem;
   font: {
     size: .571rem;

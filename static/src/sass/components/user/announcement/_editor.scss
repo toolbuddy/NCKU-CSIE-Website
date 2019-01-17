@@ -1,8 +1,8 @@
 @import 'components/user/announcement/items';
 
 // [ variable ]
-$bgcolor: #f1f1f1;
-$bordercolor: rgba( 224, 224, 224, .4 );
+$bgcolor: rgba( 224, 224, 224, .4 );
+$bordercolor: rgba( 224, 224, 224, .1 );
 $buttoncolor: #8caae2;
 $wordcolor: #7c7f84;
 $midume: 675px;
@@ -32,8 +32,8 @@ $midume: 675px;
           ' language__zh editor__editor '
           ' language__en editor__editor '
           ' .            editor__editor ';
-        columns: 1.33rem minmax( 60%, 100% );
-        rows: .3rem 3.524rem 3.524rem 6.7rem;
+        columns: 1.33rem 1fr;
+        rows: .3rem 3.524rem 3.524rem 8.4rem;
       };
     }
 
@@ -126,37 +126,51 @@ $midume: 675px;
   > .editor__input--title {
     // [ position ]
     grid-area: title;
-    width: 100%;
-    margin: auto;
+    width: 24.048rem;
+    height: 1.571rem;
+    margin-bottom: 1rem;
 
     // [ skin ]
-    @include items ( $bgcolor: $bgcolor, $bordercolor: $bordercolor );
+    @include items ();
   }
 
   > .editor__input--content {
     // [ position ]
     grid-area: content;
-    width: 100%;
+    width: 24.048rem;
+    height: 11.524rem;
+    margin-bottom: .88rem;
 
     // [ skin ]
-    @include items ( $bgcolor: $bgcolor, $bordercolor: $bordercolor);
+    @include items ();
   }
 
   > .editor__input--addfile {
     grid-area: addfile;
-    background-color: $buttoncolor;
-    height: 1.3rem;
-    width: 3rem;
-    margin-bottom: .5rem;
+    background-color: #8caae2;
+    height: 1.552rem;
+    width: 4.774rem;
+    display: block;
     @media screen and ( min-width: 675px ) {
       width: 4.5rem;
     }
 
     > .editor__input--addfile-content {
-      color: white;
-      font-size: .5rem;
-      text-align: center;
-      margin-top: .3rem;
+      font: {
+        family: notosanscjktc;
+        size: .571rem;
+        weight: normal;
+        style: normal;
+        stretch: normal;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: #ffffff;
+      margin: {
+        top: .3rem;
+        left: 1.2rem;
+        right: auto;
+      }
     }
   }
 

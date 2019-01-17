@@ -31,7 +31,7 @@ body > .content {
   // [ RWD: $large ]
   @media screen and ( min-width: $large ) {
     // [ layout ]
-    grid-template-columns: 1fr 60vw 1fr;
+    grid-template-columns: 1fr 25.881rem 1fr;
   }
   @include edit();
 }

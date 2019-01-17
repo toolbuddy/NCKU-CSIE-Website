@@ -1,6 +1,6 @@
 // [variable]
-$bgcolor: #f1f1f1;
-$bordercolor: #b8bbc1;
+$bgcolor: rgba( 224, 224, 224, .1 );
+$bordercolor: rgba( 153, 153, 153, .4 );
 $wordcolor: #7c7f84;
 $buttoncolor: #8caae2;
 $midume: 675px;
@@ -26,7 +26,7 @@ $midume: 675px;
         areas:
           '. option'
           '. release';
-        columns: 1.5rem 1fr;
+        columns: 1.33rem 1fr;
       };
     }
 
@@ -45,8 +45,12 @@ $midume: 675px;
 
     // [ skin ]
     padding: .5rem 0 .5rem .2rem;
+    width: 24.048rem;
     background-color: $bgcolor;
-    border-left: .156rem solid $bordercolor;
+    border: {
+      left: .19rem solid $bordercolor;
+      radius: .071rem;
+    }
 
     // .content > .submit > .submit__option
     > h2 {
