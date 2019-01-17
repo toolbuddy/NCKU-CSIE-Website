@@ -1,8 +1,10 @@
 @import 'components/common/reset';
 @import 'components/common/header';
+@import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/about/index/entries';
 
 body > {
   // block
@@ -12,4 +14,48 @@ body > {
   // block
   // `body > .breadcrumb`
   @include breadcrumb( #ffffff );
+
+  // block
+  // `body > .content`
+  > .content {
+    // [variable]
+    $large: 475px;
+
+    // [layout]
+    display: grid;
+    grid: {
+      template: {
+        areas:
+          '.'
+          'entries'
+          '.';
+        columns: 100%;
+      }
+      row-gap: .6rem;
+    };
+
+    // [skin]
+    width: 100%;
+    background-color: #eff3f9;
+
+    // [rwd:large]
+    @media screen and ( min-width: $large ) {
+      grid: {
+        template: {
+          areas:
+            '. . .'
+            '. entries .'
+            '. . .';
+          columns: 1fr 95% 1fr;
+        }
+        row-gap: 3.1rem;
+      };
+    }
+
+    // block
+    // `body > .content > .entries`
+    @include entries() {
+      grid-area: entries;
+    }
+  }
 }
