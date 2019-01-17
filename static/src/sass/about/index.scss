@@ -4,7 +4,7 @@
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
-@import 'components/about/index/subtitles';
+@import 'components/about/index/entries';
 
 body > {
   // block
@@ -27,10 +27,8 @@ body > {
       template: {
         areas:
           '.'
-          'filters'
-          'topic'
-          'subtitles'
-          'noResult';
+          'entries'
+          '.';
         columns: 100%;
       }
       row-gap: .6rem;
@@ -46,10 +44,8 @@ body > {
         template: {
           areas:
             '. . .'
-            '. filters .'
-            '. topic .'
-            '. subtitles .'
-            '. noResult .';
+            '. entries .'
+            '. . .';
           columns: 1fr 95% 1fr;
         }
         row-gap: 3.1rem;
@@ -57,15 +53,9 @@ body > {
     }
 
     // block
-    // `body > .content > .topic`
-    @include topic() {
-      grid-area: topic;
-    }
-
-    // block
-    // `body > .content > .subtitles`
-    @include subtitles() {
-      grid-area: subtitles;
+    // `body > .content > .entries`
+    @include entries() {
+      grid-area: entries;
     }
   }
 }
