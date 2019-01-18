@@ -3,9 +3,11 @@ import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcem
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 
 // Single default tag filter constructor.
-export function singleDefaultTagFilter ( tag = null ) {
+export function singleDefaultTagFilter ( tag = null, briefingTopObj = null, briefingObj = null ) {
     // Set default tag for query functions.
     singleDefaultTag.defaultTag = tag;
+    singleDefaultTag.announcementBriefingTop = briefingTopObj;
+    singleDefaultTag.announcementBriefing = briefingObj;
 
     // Render filter.
     renderFilter( tag );
@@ -40,9 +42,11 @@ export function singleDefaultTagFilter ( tag = null ) {
 
 
 // Multiple default tags filter constructor.
-export function multipleDefaultTagsFilter ( tags = [] ) {
+export function multipleDefaultTagsFilter ( tags = [], briefingTopObj = null, briefingObj = null ) {
     // Set default tags for query functions.
     multipleDefaultTags.defaultTags = tags;
+    multipleDefaultTags.announcementBriefingTop = briefingTopObj;
+    multipleDefaultTags.announcementBriefing = briefingObj;
 
     // Render filter, must be `tags__tag--all`.
     renderFilter( 'all' );
