@@ -3,7 +3,9 @@ $bgcolor: rgba( 224, 224, 224, .1 );
 $bordercolor: rgba( 153, 153, 153, .4 );
 $wordcolor: #7c7f84;
 $buttoncolor: #8caae2;
-$midume: 675px;
+$small: 450px;
+$medium: 675px;
+$large: 976px;
 @mixin submit () {
   // .content > .submit
   > .submit {
@@ -21,7 +23,7 @@ $midume: 675px;
         '. release .';
       columns: .1rem 1fr .1rem;
     };
-    @media screen and ( min-width: $midume ) {
+    @media screen and ( min-width: $medium ) {
       grid-template: {
         areas:
           '. option'
@@ -45,11 +47,19 @@ $midume: 675px;
 
     // [ skin ]
     padding: .5rem 0 .5rem .2rem;
-    width: 24.048rem;
     background-color: $bgcolor;
     border: {
       left: .19rem solid $bordercolor;
       radius: .071rem;
+    }
+    @media screen and ( max-width: $medium ) {
+      width: 90vw;
+    }
+    @media screen and ( min-width: $medium ) {
+      width: 17rem;
+    }
+    @media screen and ( min-width: $large ) {
+      width: 24.048rem;
     }
 
     // .content > .submit > .submit__option
@@ -81,8 +91,11 @@ $midume: 675px;
 
     // [ skin ]
     height: 1.3rem;
-    width: 100% ;
-    @media screen and ( min-width: 675px ) {
+    @media screen and ( max-width: $small ) {
+      width: 7.595rem ;
+      height: .928rem;
+    }
+    @media screen and ( min-width: $small ) {
       width: 4.5rem;
     }
     font-size: .5rem;

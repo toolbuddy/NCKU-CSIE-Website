@@ -5,7 +5,8 @@ $bgcolor: rgba( 224, 224, 224, .4 );
 $bordercolor: rgba( 224, 224, 224, .1 );
 $buttoncolor: #8caae2;
 $wordcolor: #7c7f84;
-$midume: 675px;
+$medium: 675px;
+$large: 976px;
 @mixin editor () {
   // .content > .editor
   > .editor {
@@ -24,8 +25,9 @@ $midume: 675px;
         columns:  .1rem 1fr 1fr .1rem;
       }
     }
-    max-width: 100%;
-    @media screen and ( min-width: $midume ) {
+
+    //max-width: 100%;
+    @media screen and ( min-width: $medium ) {
       grid-template: {
         areas:
           ' .            .              '
@@ -53,7 +55,7 @@ $midume: 675px;
     > .editor__language--horizontal {
       // [ skin ]
       @include editor__language();
-      @media screen and ( min-width: $midume ) {
+      @media screen and ( min-width: $medium ) {
         display: none;
       }
     }
@@ -62,7 +64,7 @@ $midume: 675px;
       // [ skin ]
       @include editor__language();
       font-size: .667rem;
-      @media screen and ( max-width: $midume ) {
+      @media screen and ( max-width: $medium ) {
         display: none;
       }
     }
@@ -94,7 +96,7 @@ $midume: 675px;
   display: block;
 
   // on small device
-  @media screen and ( max-width: $midume ) {
+  @media screen and ( max-width: $medium ) {
     text-align: center;
     height: 1.3rem;
     font-size: .5rem;
@@ -126,9 +128,24 @@ $midume: 675px;
   > .editor__input--title {
     // [ position ]
     grid-area: title;
-    width: 24.048rem;
     height: 1.571rem;
-    margin-bottom: 1rem;
+    @media screen and ( max-width: $medium ) {
+      width: 90vw;
+      height: 1.571rem;
+      margin: {
+        bottom: 1rem;
+        left: 4.5vw;
+        right: 4.5vw;
+      }
+    }
+    @media screen and ( min-width: $medium ) {
+      width: 17rem;
+      margin-bottom: 1rem;
+    }
+    @media screen and ( min-width: $large ) {
+      width: 24.048rem;
+      margin-bottom: 1rem;
+    }
 
     // [ skin ]
     @include items ();
@@ -137,9 +154,25 @@ $midume: 675px;
   > .editor__input--content {
     // [ position ]
     grid-area: content;
-    width: 24.048rem;
     height: 11.524rem;
-    margin-bottom: .88rem;
+
+    // [ RWD: small ]
+    @media screen and ( max-width: $medium ) {
+      width: 90vw;
+      margin: {
+        bottom: .88rem;
+        left: 4.5vw;
+        right: 4.5vw;
+      }
+    }
+    @media screen and ( min-width: $medium ) {
+      width: 17rem;
+      margin-bottom: .88rem;
+    }
+    @media screen and ( min-width: $large ) {
+      width: 24.048rem;
+      margin-bottom: .88rem;
+    }
 
     // [ skin ]
     @include items ();
@@ -150,8 +183,10 @@ $midume: 675px;
     background-color: #8caae2;
     height: 1.552rem;
     width: 4.774rem;
+    border-radius: .071rem;
+    box-shadow: 0 .095rem .095rem 0 rgba( 0, 0, 0, .25 );
     display: block;
-    @media screen and ( min-width: 675px ) {
+    @media screen and ( min-width: $medium ) {
       width: 4.5rem;
     }
 
