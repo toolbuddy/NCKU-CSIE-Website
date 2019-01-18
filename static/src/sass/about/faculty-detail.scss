@@ -280,13 +280,6 @@ body {
         flex-wrap: wrap;
         padding: .3rem 0;
         padding-right: 1rem;
-        @include icon--before--search () {
-          margin: .1rem;
-          margin-right: .5rem;
-          height: .5rem;
-          width: .5rem;
-          vertical-align: middle;
-        }
 
         > .domains__domain {
           padding: .15rem .6rem;
@@ -323,13 +316,6 @@ body {
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem 0;
-        @include icon--before--trophy() {
-          margin-right: .5rem;
-          height: .7rem;
-          width: .7rem;
-          float: left;
-          vertical-align: middle;
-        }
       }
     }
 
@@ -343,13 +329,6 @@ body {
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem 0;
-        @include icon--before--book() {
-          margin-right: .5rem;
-          height: .7rem;
-          width: .7rem;
-          float: left;
-          vertical-align: middle;
-        }
       }
     }
 
@@ -376,16 +355,6 @@ body {
           > .body__details.details {
             > .details__detail {
               border: solid .01rem #757575;
-
-              > .detail__country {
-                @include icon--before--taiwan() {
-                  margin: .1rem;
-                  margin-left: .2rem;
-                  height: .8rem;
-                  width: .8rem;
-                  vertical-align: baseline;
-                }
-              }
 
               > .detail__date.date {
                 > .date__begin {
@@ -517,18 +486,6 @@ body {
 
         > .detail__country {
           margin: 0 .1rem;
-          @include icon--before--taiwan() {
-            margin: {
-              right: .1rem;
-              bottom: .1rem;
-              left: .2rem;
-              top: .2rem;
-            }
-            height: .8rem;
-            width: .8rem;
-            float: left;
-            vertical-align: baseline;
-          }
         }
 
         > .detail__school, .detail__department {
@@ -684,13 +641,6 @@ body {
           box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
           margin: .25rem;
           width: 4.5rem;
-          @include icon--before--study() {
-            margin-right: .5rem;
-            height: .8rem;
-            width: .8rem;
-            float: left;
-            vertical-align: middle;
-          }
         }
 
         > .student__member--doctoral {
@@ -703,13 +653,6 @@ body {
           box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
           margin: .25rem;
           width: 4.5rem;
-          @include icon--before--studentcap() {
-            margin-right: .5rem;
-            height: .8rem;
-            width: .8rem;
-            float: left;
-            vertical-align: middle;
-          }
         }
       }
 
@@ -720,13 +663,6 @@ body {
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .5rem 0;
-        @include icon--before--trophy() {
-          margin-right: .5rem;
-          height: .7rem;
-          width: .7rem;
-          float: left;
-          vertical-align: middle;
-        }
       }
 
       > .student__meeting {
@@ -736,13 +672,6 @@ body {
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .5rem 0;
-        @include icon--before--book() {
-          margin-right: .5rem;
-          height: .7rem;
-          width: .7rem;
-          float: left;
-          vertical-align: middle;
-        }
       }
     }
   }

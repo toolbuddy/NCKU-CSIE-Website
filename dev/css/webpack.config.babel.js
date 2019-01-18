@@ -111,6 +111,21 @@ export default {
     target:  'web',
 
     /**
+     * Relative url alias.
+     *
+     * When writing `url` statement for relative import,
+     * no need to start with `'./'` or `'../'`.
+     * Only work for following path:
+     * - `url('image/...')`
+     */
+
+    resolve: {
+        alias: {
+            image: imageRoot,
+        },
+    },
+
+    /**
      * Webpack loader modules.
      *
      * This `webpack.config.babel.js` is specific for client-side bundling,
@@ -164,7 +179,6 @@ export default {
                         options: {
                             includePaths: [
                                 sassRoot,
-                                imageRoot,
                             ],
                             sourceMap:    true,
                         },
