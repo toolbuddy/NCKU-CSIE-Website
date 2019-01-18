@@ -81,13 +81,9 @@ export default {
 
         // Route `student`
         'student/college':       path.join( sassRoot, 'student/college.scss' ),
-        'student/course':        path.join( sassRoot, 'student/course.scss' ),
         'student/index':         path.join( sassRoot, 'student/index.scss' ),
-        'student/international': path.join( sassRoot, 'student/international.scss' ),
-        'student/internship':    path.join( sassRoot, 'student/internship.scss' ),
         'student/master':        path.join( sassRoot, 'student/master.scss' ),
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
-        'student/scholarship':   path.join( sassRoot, 'student/scholarship.scss' ),
 
         // Route `user`
         'user/index': path.join( sassRoot, 'user/index.scss' ),
@@ -113,6 +109,21 @@ export default {
      */
 
     target:  'web',
+
+    /**
+     * Relative url alias.
+     *
+     * When writing `url` statement for relative import,
+     * no need to start with `'./'` or `'../'`.
+     * Only work for following path:
+     * - `url('image/...')`
+     */
+
+    resolve: {
+        alias: {
+            image: imageRoot,
+        },
+    },
 
     /**
      * Webpack loader modules.
@@ -169,7 +180,6 @@ export default {
                         options: {
                             includePaths: [
                                 sassRoot,
-                                imageRoot,
                             ],
                             sourceMap:    true,
                         },

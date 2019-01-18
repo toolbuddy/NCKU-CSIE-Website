@@ -70,13 +70,9 @@ export default {
 
         // Route `student`
         'student/college':       path.join( jsSrcRoot, 'student/college.js' ),
-        'student/course':        path.join( jsSrcRoot, 'student/course.js' ),
         'student/index':         path.join( jsSrcRoot, 'student/index.js' ),
-        'student/international': path.join( jsSrcRoot, 'student/international.js' ),
-        'student/internship':    path.join( jsSrcRoot, 'student/internship.js' ),
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
         'student/phd':           path.join( jsSrcRoot, 'student/phd.js' ),
-        'student/scholarship':   path.join( jsSrcRoot, 'student/scholarship.js' ),
 
         // Route `user`
         'user/index':              path.join( jsSrcRoot, 'user/index.js' ),

@@ -8,12 +8,52 @@ append data
         'breadcrumb': {
           'home':   'Home',
         },
+        'entries': [
+          {
+            title: 'All Announcement',
+            detail: 'Announcements of department and university',
+            modifier: 'red',
+            href: url( { href: 'announcement/all', } ),
+          },
+          {
+            title: 'Activities',
+            detail: 'Conference, speech, competitions and exhibition held by department',
+            modifier: 'green',
+            href: url( { href: 'announcement/activity', } ),
+          },
+          {
+            title: 'Recruitment',
+            detail: 'Recruitment information',
+            modifier: 'yellow',
+            href: url( { href: 'announcement/recruitment', } ),
+          },
+        ],
       },
       'zh-TW': {
         'title':    '系所公告',
         'breadcrumb': {
           'home':   '首頁',
         },
+        'entries': [
+          {
+            title: '所有公告',
+            detail: '系所及學校重要資訊公告，不分類別',
+            modifier: 'red',
+            href: url( { href: 'announcement/all', } ),
+          },
+          {
+            title: '活動訊息',
+            detail: '系所舉辦的研討會、演講、競賽及展覽',
+            modifier: 'green',
+            href: url( { href: 'announcement/activity', } ),
+          },
+          {
+            title: '徵人資訊',
+            detail: '系所招聘人才資訊',
+            modifier: 'yellow',
+            href: url( { href: 'announcement/recruitment', } ),
+          },
+        ],
       },
     } );
     const currentRoute = 'announcement';
@@ -32,6 +72,8 @@ append header
    ] )
 
 append content
+  include /components/common/entries.pug
+  +entries( i18n[ language ].entries )
 
 append footer
 
