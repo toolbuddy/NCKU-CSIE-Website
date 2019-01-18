@@ -43,13 +43,9 @@ mixin header()
           },
           student: {
             college:       'College',
-            course:        'Course',
             index:         'Student',
-            international: 'International',
-            internship:    'Internship',
             master:        'Master',
             phd:           'Ph.D',
-            scholarship:   'Scholarship',
           },
         },
       },
@@ -95,13 +91,9 @@ mixin header()
           },
           student: {
             college:       '大學部',
-            course:        '課程資訊',
             index:         '學生事務',
-            international: '國際交流',
-            internship:    '實習',
             master:        '碩士',
             phd:           '博士',
-            scholarship:   '獎學金',
           },
         },
       }
@@ -174,19 +166,11 @@ mixin header()
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/course' } ) )= i18n[ language ].route.student.course
-            li.dropdown__item.item
               a.item__link( href = url( { href : 'student/college' } ) )= i18n[ language ].route.student.college
             li.dropdown__item.item
               a.item__link( href = url( { href : 'student/master' } ) )= i18n[ language ].route.student.master
             li.dropdown__item.item
               a.item__link( href = url( { href : 'student/phd' } ) )= i18n[ language ].route.student.phd
-            li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/scholarship' } ) )= i18n[ language ].route.student.scholarship
-            li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/international' } ) )= i18n[ language ].route.student.international
-            li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/internship' } ) )= i18n[ language ].route.student.internship
         li.list__item.item
           a.item__link( href = url( { href : 'announcement' } ) )= i18n[ language ].route.announcement.index
           button.item__switch.switch

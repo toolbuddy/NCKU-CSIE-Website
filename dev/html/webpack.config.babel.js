@@ -87,13 +87,9 @@ export default languageSettings.support.map( language => ( {
 
         // Route `student`
         'student/college':       path.join( pugRoot, 'student/college.pug' ),
-        'student/course':        path.join( pugRoot, 'student/course.pug' ),
         'student/index':         path.join( pugRoot, 'student/index.pug' ),
-        'student/international': path.join( pugRoot, 'student/international.pug' ),
-        'student/internship':    path.join( pugRoot, 'student/internship.pug' ),
         'student/master':        path.join( pugRoot, 'student/master.pug' ),
         'student/phd':           path.join( pugRoot, 'student/phd.pug' ),
-        'student/scholarship':   path.join( pugRoot, 'student/scholarship.pug' ),
 
         // Route `user`
         'user/index':              path.join( pugRoot, 'user/index.pug' ),
