@@ -8,12 +8,52 @@ append data
         'breadcrumb': {
           'home':    'Home',
         },
+        'entries': [
+          {
+            title: 'College',
+            detail: 'Information related to undergraduated students, including course, internship, scholarship and more',
+            modifier: 'red',
+            href: url( { href: 'student/college', } ),
+          },
+          {
+            title: 'Master',
+            detail: 'Information related to graduated students, including course, internship, scholarship and more',
+            modifier: 'green',
+            href: url( { href: 'student/master', } ),
+          },
+          {
+            title: 'Ph.D.',
+            detail: 'Information related to Ph.D students, including course, internship, scholarship and more',
+            modifier: 'yellow',
+            href: url( { href: 'student/phd', } ),
+          },
+        ],
       },
       'zh-TW': {
         'title':     '學生事務',
         'breadcrumb': {
           'home':    '首頁',
         },
+        'entries': [
+          {
+            title: '大學部',
+            detail: '資訊系大學部的相關資訊，包含課程、實習、獎學金等',
+            modifier: 'red',
+            href: url( { href: 'student/college', } ),
+          },
+          {
+            title: '碩士',
+            detail: '資訊所碩士班的相關資訊，包含課程、實習、獎學金等',
+            modifier: 'green',
+            href: url( { href: 'student/master', } ),
+          },
+          {
+            title: '博士',
+            detail: '資訊所博士班的相關資訊，包含課程、實習、獎學金等',
+            modifier: 'yellow',
+            href: url( { href: 'student/phd', } ),
+          },
+        ],
       },
     } );
     const currentRoute = 'student';
@@ -32,6 +72,8 @@ append header
    ] )
 
 append content
+  include /components/common/entries.pug
+  +entries( i18n[ language ].entries )
 
 append footer
 
