@@ -1,10 +1,9 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
-@import 'components/about/index/entries';
+@import 'components/common/entries';
 
 body > {
   // block
@@ -18,10 +17,10 @@ body > {
   // block
   // `body > .content`
   > .content {
-    // [variable]
+    // [ variable ]
     $large: 475px;
 
-    // [layout]
+    // [ layout ]
     display: grid;
     grid: {
       template: {
@@ -34,12 +33,13 @@ body > {
       row-gap: .6rem;
     };
 
-    // [skin]
+    // [ skin ]
     width: 100%;
-    background-color: #eff3f9;
+    background-color: #ffffff;
 
-    // [rwd:large]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
       grid: {
         template: {
           areas:
@@ -55,6 +55,7 @@ body > {
     // block
     // `body > .content > .entries`
     @include entries() {
+      // [ position ]
       grid-area: entries;
     }
   }

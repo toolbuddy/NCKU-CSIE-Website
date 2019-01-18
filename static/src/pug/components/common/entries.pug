@@ -1,0 +1,6 @@
+mixin entries( entryArr )
+  section.entries
+    each entry in entryArr
+      a.entries__entry.entry( class = `entries__entry--${ entry.modifier }`, href = entry.href )
+        p.entry__title= entry.title
+        p.entry__detail= entry.detail

@@ -8,12 +8,40 @@ append data
         'breadcrumb': {
           'home':   'Home',
         },
+        'entries': [
+          {
+            title: 'Laboratories',
+            detail: 'List of all laboratories of department',
+            modifier: 'red',
+            href: url( { href: 'research/labs', } ),
+          },
+          {
+            title: 'Publications',
+            detail: 'List of all publications of department',
+            modifier: 'green',
+            href: url( { href: 'research/publications', } ),
+          },
+        ],
       },
       'zh-TW': {
         'title':    '學術研究',
         'breadcrumb': {
           'home':   '首頁',
         },
+        'entries': [
+          {
+            title: '實驗室',
+            detail: '資訊所研究實驗室列表',
+            modifier: 'red',
+            href: url( { href: 'research/labs', } ),
+          },
+          {
+            title: '發表論文',
+            detail: '已發表的論文總覽',
+            modifier: 'green',
+            href: url( { href: 'research/publications', } ),
+          },
+        ],
       },
     } );
     const currentRoute = 'research';
@@ -32,6 +60,8 @@ append header
    ] )
 
 append content
+  include /components/common/entries.pug
+  +entries( i18n[ language ].entries )
 
 append footer
 
