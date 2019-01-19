@@ -62,13 +62,13 @@ $icon-path: '~image';
 // [ icon ]
 // Taiwan flag
 @mixin icon__flag-zh-TW () {
-  background-image: url( '#{ $icon-path }/icon/flag-zh-TW.png' );
+  background-image: url( '#{ $icon-path }/icon/flag-0.png' );
 }
 
 // [ icon ]
 // America flag
 @mixin icon__flag-en-US () {
-  background-image: url( '#{ $icon-path }/icon/flag-en-US.png' );
+  background-image: url( '#{ $icon-path }/icon/flag-1.png' );
 }
 
 // [ icon ]

@@ -22,9 +22,8 @@ import languageUtils from 'settings/language/utils.js';
  *
  */
 
-export default async ( { language = languageUtils.languageToNum( defaultValue.language ), announcementId = 1, } = {} ) => {
+export default async ( { language = languageUtils.getLanguageId( defaultValue.language ), announcementId = 1, } = {} ) => {
     const table = await associations();
-    language = languageUtils.languageToNum( language );
 
     const data = await table.announcement.findOne( {
         include: [

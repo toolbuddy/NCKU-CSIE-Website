@@ -1,7 +1,7 @@
 mixin filter__tags( tags )
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'tags': {
           'tags':          'tags',
           'all':           'all',
@@ -22,7 +22,7 @@ mixin filter__tags( tags )
           'speech':        'speech',
         },
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'tags': {
           'tags':          '標籤',
           'all':           '全部',
@@ -46,4 +46,4 @@ mixin filter__tags( tags )
     } );
   article#filter__tags.filter__tags.filter__tags--hidden.tags
     each tag in tags
-      button( id=`tags__tag--${ tag }`, class=`tags__tag--${ tag } tags__tag` )= i18n[ language ].tags[ tag ]
+      button( id=`tags__tag--${ tag }`, class=`tags__tag--${ tag } tags__tag` )= i18n[ language.id ].tags[ tag ]

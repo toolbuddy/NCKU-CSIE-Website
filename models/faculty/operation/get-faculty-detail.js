@@ -1,27 +1,7 @@
+import LanguageUtils from 'settings/language/utils.js';
 import associations from 'models/faculty/operation/associations.js';
 
-/**
- * A function for getting details of a specified faculty.
- * @param {string} [language = 'zh-TW'] - the specified language of the faculty data.
- * @param {number} [profileId=1]        - the id of the faculty.
- * @returns {object}                      the data of the faculty, including:
- * - conferences
- * - departments
- * - educations
- * - experiences
- * - honors
- * - labs
- * - offices
- * - patents
- * - profile
- * - projects
- * - publications
- * - specialties
- * - technologyTransfers
- * - titles
- */
-
-export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
+export default async ( { language = LanguageUtils.defaultLanguageId, profileId = 1, } = {} ) => {
     const table = await associations();
 
     const data = { language, };
@@ -32,9 +12,7 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
         data.departments,
         data.educations,
         data.experiences,
-        data.honors,
-        data.labs,
-        data.offices,
+        data.awards,
         data.patents,
         data.profile,
         data.projects,
@@ -58,7 +36,7 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'hostDate',
+                    'hostYear',
                 ],
                 where: {
                     profileId,
@@ -67,36 +45,19 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 conferences => conferences.map(
                     conference => ( {
-                        hostDate: conference.hostDate,
+                        hostYear: conference.hostYear,
                         name:     conference.conferenceI18n[ 0 ].conference,
                     } )
                 )
             ),
             table.department.findAll( {
-                include: [
-                    {
-                        model:      table.departmentI18n,
-                        as:         'departmentI18n',
-                        attributes: [
-                            'department',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
+                attributes: [
+                    'type',
                 ],
-                attributes: [],
                 where:      {
                     profileId,
                 },
-            } )
-            .then(
-                departments => departments.map(
-                    department => ( {
-                        name: department.departmentI18n[ 0 ].department,
-                    } )
-                )
-            ),
+            } ),
             table.education.findAll( {
                 include: [
                     {
@@ -113,9 +74,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 ],
                 attributes: [
                     'degree',
-                    'endYear',
+                    'to',
                     'nation',
-                    'startYear',
+                    'from',
                 ],
                 where: {
                     profileId,
@@ -125,9 +86,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 educations => educations.map(
                     education => ( {
                         degree:    education.degree,
-                        endYear:   education.endYear,
+                        to:        education.to,
                         nation:    education.nation,
-                        startYear: education.startYear,
+                        from:      education.from,
                         major:     education.educationI18n[ 0 ].major,
                         school:    education.educationI18n[ 0 ].school,
                     } )
@@ -149,8 +110,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'endYear',
-                    'startYear',
+                    'to',
+                    'from',
                 ],
                 where: {
                     profileId,
@@ -159,21 +120,21 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 experiences => experiences.map(
                     experience => ( {
-                        endYear:      experience.endYear,
-                        startYear:    experience.startYear,
+                        to:           experience.to,
+                        from:         experience.from,
                         department:   experience.experienceI18n[ 0 ].department,
                         organization: experience.experienceI18n[ 0 ].organization,
                         title:        experience.experienceI18n[ 0 ].title,
                     } )
                 )
             ),
-            table.honor.findAll( {
+            table.award.findAll( {
                 include: [
                     {
-                        model:      table.honorI18n,
-                        as:         'honorI18n',
+                        model:      table.awardI18n,
+                        as:         'awardI18n',
                         attributes: [
-                            'honor',
+                            'award',
                         ],
                         where: {
                             language,
@@ -181,79 +142,35 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'honorYear',
+                    'receiveYear',
                 ],
                 where: {
                     profileId,
                 },
             } )
             .then(
-                honors => honors.map(
-                    honor => ( {
-                        honorYear: honor.honorYear,
-                        honor:     honor.honorI18n[ 0 ].honor,
-                    } )
-                )
-            ),
-            table.lab.findAll( {
-                include: [
-                    {
-                        model:      table.labI18n,
-                        as:         'labI18n',
-                        attributes: [
-                            'address',
-                            'name',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
-                ],
-                attributes: [
-                    'labWeb',
-                    'tel',
-                ],
-                where: {
-                    profileId,
-                },
-            } )
-            .then(
-                labs => labs.map(
-                    lab => ( {
-                        labWeb:  lab.labWeb,
-                        tel:     lab.tel,
-                        address: lab.labI18n[ 0 ].address,
-                        name:    lab.labI18n[ 0 ].name,
-                    } )
-                )
-            ),
-            table.office.findAll( {
-                include: [
-                    {
-                        model:      table.officeI18n,
-                        as:         'officeI18n',
-                        attributes: [
-                            'address',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
-                ],
-                attributes: [
-                    'tel',
-                ],
-                where: {
-                    profileId,
-                },
-            } )
-            .then(
-                offices => offices.map(
-                    office => ( {
-                        tel:     office.tel,
-                        address: office.officeI18n[ 0 ].address,
-                    } )
-                )
+                ( awards ) => {
+                    let results = [];
+                    for ( const award of awards ) {
+                        let flag = true;
+                        results = results.map(
+                            ( result ) => {
+                                if ( result.awardYear === award.receiveYear ) {
+                                    result.awardName.push( award.awardI18n[ 0 ].award );
+                                    flag = false;
+                                }
+                                return result;
+                            }
+                        );
+                        if ( flag ) {
+                            results.push( {
+                                awardYear:     award.receiveYear,
+                                awardName:     [ award.awardI18n[ 0 ].award, ],
+                            } );
+                        }
+                    }
+                    return results;
+                }
             ),
             table.patent.findAll( {
                 include: [
@@ -276,7 +193,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     'expireDate',
                     'issueDate',
                     'nation',
-                    'nscNumber',
                 ],
                 where: {
                     profileId,
@@ -290,7 +206,6 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         expireDate:          patent.expireDate,
                         issueDate:           patent.issueDate,
                         nation:              patent.nation,
-                        nscNumber:           patent.nscNumber,
                         inventor:            patent.patentI18n[ 0 ].inventor,
                         patent:              patent.patentI18n[ 0 ].patent,
                         patentOwner:         patent.patentI18n[ 0 ].patentOwner,
@@ -304,6 +219,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         as:         'profileI18n',
                         attributes: [
                             'name',
+                            'officeAddress',
+                            'labAddress',
+                            'labName',
                         ],
                         where: {
                             language,
@@ -316,7 +234,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     'nation',
                     'personalWeb',
                     'photo',
-                    'position',
+                    'officeTel',
+                    'labWeb',
+                    'labTel',
                 ],
                 where: {
                     profileId,
@@ -329,8 +249,17 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     nation:      profile.nation,
                     personalWeb: profile.personalWeb,
                     photo:       profile.photo,
-                    position:    profile.position,
                     name:        profile.profileI18n[ 0 ].name,
+                    office:      {
+                        tel:     profile.officeTel,
+                        address: profile.profileI18n[ 0 ].officeAddress,
+                    },
+                    lab: {
+                        tel:     profile.labTel,
+                        web:     profile.labWeb,
+                        name:    profile.profileI18n[ 0 ].labName,
+                        address: profile.profileI18n[ 0 ].labAddress,
+                    },
                     profileId,
                 } )
             ),
@@ -350,23 +279,50 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                 ],
                 attributes: [
                     'category',
-                    'endYear',
-                    'startYear',
+                    'to',
+                    'from',
                 ],
                 where: {
                     profileId,
                 },
             } )
             .then(
-                projects => projects.map(
+                ( projects ) => {
+                    const result = {
+                        '0': [],
+                        '1': [],
+                    };
+                    for ( const project of projects ) {
+                        if ( project.category === 0 ) {
+                            result[ '0' ].push( {
+                                to:        project.to,
+                                from:      project.from,
+                                name:      project.projectI18n[ 0 ].name,
+                                support:   project.projectI18n[ 0 ].support,
+                            } );
+                        }
+                        else if ( project.category === 1 ) {
+                            result[ '1' ].push( {
+                                to:        project.to,
+                                from:      project.from,
+                                name:      project.projectI18n[ 0 ].name,
+                                support:   project.projectI18n[ 0 ].support,
+                            } );
+                        }
+                    }
+                    return result;
+                }
+
+                /* Projects => projects.map(
                     project => ( {
                         category:  project.category,
-                        endYear:   project.endYear,
-                        startYear: project.startYear,
+                        to:        project.to,
+                        from:      project.from,
                         name:      project.projectI18n[ 0 ].name,
                         support:   project.projectI18n[ 0 ].support,
                     } )
-                )
+                )*/
+
             ),
             table.publication.findAll( {
                 include: [
@@ -398,7 +354,7 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     } )
                 )
             ),
-            table.specialty.findAll( {
+            table.specialtyI18n.findAll( {
                 attributes: [
                     'specialty',
                 ],
@@ -413,9 +369,9 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                         model:      table.technologyTransferI18n,
                         as:         'technologyTransferI18n',
                         attributes: [
-                            'authority',
+                            'authorizingParty',
                             'patent',
-                            'receiver',
+                            'authorizedParty',
                             'technology',
                         ],
                         where: {
@@ -424,9 +380,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'endDate',
-                    'nscNumber',
-                    'startDate',
+                    'from',
+                    'to',
                 ],
                 where: {
                     profileId,
@@ -435,13 +390,12 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 technologyTransfers => technologyTransfers.map(
                     technologyTransfer => ( {
-                        endDate:    technologyTransfer.endDate,
-                        nscNumber:  technologyTransfer.nscNumber,
-                        startDate:  technologyTransfer.startDate,
-                        authority:  technologyTransfer.technologyTransferI18n[ 0 ].authority,
-                        patent:     technologyTransfer.technologyTransferI18n[ 0 ].patent,
-                        receiver:   technologyTransfer.technologyTransferI18n[ 0 ].receiver,
-                        technology: technologyTransfer.technologyTransferI18n[ 0 ].technology,
+                        to:                technologyTransfer.to,
+                        from:              technologyTransfer.from,
+                        authorizingParty:  technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
+                        patent:            technologyTransfer.technologyTransferI18n[ 0 ].patent,
+                        authorizedParty:   technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
+                        technology:        technologyTransfer.technologyTransferI18n[ 0 ].technology,
                     } )
                 )
             ),
@@ -459,8 +413,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
                     },
                 ],
                 attributes: [
-                    'endDate',
-                    'startDate',
+                    'to',
+                    'from',
                 ],
                 where: {
                     profileId,
@@ -469,8 +423,8 @@ export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
             .then(
                 titles => titles.map(
                     title => ( {
-                        endDate:   title.endDate,
-                        startDate: title.startDate,
+                        to:        title.to,
+                        from:      title.from,
                         name:      title.titleI18n[ 0 ].title,
                     } )
                 )

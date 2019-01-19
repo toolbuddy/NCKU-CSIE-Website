@@ -34,7 +34,7 @@ apis.get( /^\/all-announcement$/, async ( req, res ) => {
         startTime: req.query.startTime,
         endTime:   req.query.endTime,
         page:      req.query.page,
-        language:  req.query.language,
+        language:  req.query.languageId,
     } );
 
     if ( result.error )
@@ -73,7 +73,7 @@ apis.get( /^\/all-pinned$/, async ( req, res ) => {
         tags,
         startTime: req.query.startTime,
         endTime:   req.query.endTime,
-        language:  req.query.language,
+        language:  req.query.languageId,
     } );
 
     if ( result.error )
@@ -94,7 +94,7 @@ apis.get( /^\/tags-announcement$/, async ( req, res ) => {
         startTime: req.query.startTime,
         endTime:   req.query.endTime,
         page:      req.query.page,
-        language:  req.query.language,
+        language:  req.query.languageId,
     } );
 
     if ( result.error )
@@ -133,7 +133,7 @@ apis.get( /^\/tags-pinned$/, async ( req, res ) => {
         tags,
         startTime: req.query.startTime,
         endTime:   req.query.endTime,
-        language:  req.query.language,
+        language:  req.query.languageId,
     } );
 
     if ( result.error )
@@ -155,7 +155,7 @@ apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
 
 apis.get( /^\/(\d+)$/, async ( req, res ) => {
     try {
-        res.json( await getAnnouncement( { announcementId: req.params[ 0 ], language: req.query.language, } ) );
+        res.json( await getAnnouncement( { announcementId: req.params[ 0 ], language: req.query.languageId, } ) );
     }
     catch ( e ) {
         res.status( 404 ).end();

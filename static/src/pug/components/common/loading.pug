@@ -3,10 +3,10 @@
 mixin loading()
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'loading': 'Loading'
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'loading': '載入中'
       }
     } );
@@ -18,4 +18,4 @@ mixin loading()
       polygon.image__c( points = '0,86.424 100,86.424 29,37.908' )
       polygon.image__d( points = '0,86.424 100,86.424 80,52.246' )
     figcaption.loading__caption.caption
-      h2.caption__text= i18n[ language ].loading
+      h2.caption__text= i18n[ language.id ].loading

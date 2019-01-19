@@ -21,7 +21,7 @@ const router = express.Router();
  */
 
 router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/index.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/student/index.${ req.query.languageId }.html` ) );
 } );
 
 /**
@@ -29,7 +29,7 @@ router.get( /^\/$/, ( req, res ) => {
  */
 
 router.get( /^\/college/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/college.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/student/college.${ req.query.languageId }.html` ) );
 } );
 
 /**
@@ -37,7 +37,7 @@ router.get( /^\/college/, ( req, res ) => {
  */
 
 router.get( /^\/master$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/master.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/student/master.${ req.query.languageId }.html` ) );
 } );
 
 /**
@@ -45,7 +45,7 @@ router.get( /^\/master$/, ( req, res ) => {
  */
 
 router.get( /^\/phd$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/phd.${ req.query.language }.html` ) );
+    res.sendFile( path.join( projectRoot, `/static/dist/html/student/phd.${ req.query.languageId }.html` ) );
 } );
 
 export default router;

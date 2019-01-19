@@ -1,24 +1,48 @@
-import { default as language, langToNum, numToLang, } from 'settings/language/config.js';
+import languageSettings from './config.js';
 
 class LanguageUtils {
-    static isSupported ( language ) {
-        return language.support.includes( language );
+    static isSupportedLanguage ( language ) {
+        if ( typeof ( language ) !== 'string' )
+            throw new TypeError( 'Queried language should be a string.' );
+        return languageSettings.support.includes( language );
+    }
+
+    static isSupportedLanguageId ( id ) {
+        if ( typeof ( Number( id ) ) !== 'number' )
+            throw new TypeError( 'Queried id should be a number.' );
+        return LanguageUtils.supportedLanguageId.includes( Number( id ) );
     }
 
     static get defaultLanguage () {
-        return language.default;
+        return languageSettings.default;
     }
 
-    static languageToNum ( language ) {
-        return langToNum[ language ];
+    static get defaultLanguageId () {
+        return languageSettings.support.indexOf( languageSettings.default );
     }
 
-    static numToLanguage ( num ) {
-        return numToLang[ num ];
+    static get supportedLanguage () {
+        return Array.from( languageSettings.support );
     }
 
-    static get currentLanguage () {
-        return new URLSearchParams( window.location.search ).get( 'language' );
+    static get supportedLanguageId () {
+        return languageSettings.support.map( ( {}, index ) => index );
+    }
+
+    static getLanguageId ( language ) {
+        if ( typeof ( language ) !== 'string' )
+            throw new TypeError( 'Queried language should be a string.' );
+        if ( !LanguageUtils.isSupportedLanguage( language ) )
+            throw new Error( 'Queried language is not supported.' );
+        return languageSettings.support.indexOf( language );
+    }
+
+    static getLanguageById ( id ) {
+        if ( typeof ( id ) !== 'number' )
+            throw new TypeError( 'Queried id should be a number.' );
+        if ( !Number.isInteger( id ) || id < 0 || id >= languageSettings.support.length )
+            throw new RangeError( 'Queried id out of range.' );
+        return String( languageSettings.support[ id ] );
     }
 }
 export default LanguageUtils;

@@ -32,12 +32,11 @@ export default async ( {
     startTime = defaultValue.startTime,
     endTime = defaultValue.endTime,
     page = defaultValue.page,
-    language = languageUtils.languageToNum( defaultValue.language ),
+    language = languageUtils.getLanugageId( defaultValue.language ),
 } = {} ) => {
     tags = [ ...new Set( tags ), ];
     startTime = new Date( startTime );
     endTime = new Date( endTime );
-    language = languageUtils.languageToNum( language );
 
     // If ( !tagUtils.isValidTagNums( tags ) )
     //    return { error: 'invalid tag num', };

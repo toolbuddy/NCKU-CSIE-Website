@@ -3,7 +3,7 @@ extends /layouts/student.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'title':     'Student Affairs',
         'breadcrumb': {
           'home':    'Home',
@@ -29,7 +29,7 @@ append data
           },
         ],
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'title':     '學生事務',
         'breadcrumb': {
           'home':    '首頁',
@@ -59,21 +59,21 @@ append data
     const currentRoute = 'student';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ language.id ].title )
 
 append stylesheets
   +css( 'student/index' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ language.id ].title )
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].title },
-   ] )
+    { text: i18n[ language.id ].breadcrumb.home, url: '' },
+    { text: i18n[ language.id ].title },
+  ] )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language ].entries )
+  +entries( i18n[ language.id ].entries )
 
 append footer
 

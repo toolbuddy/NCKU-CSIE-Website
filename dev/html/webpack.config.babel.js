@@ -1,6 +1,6 @@
 import path from 'path';
 
-import languageSettings from '../../settings/language/config.js';
+import LanguageUtils from '../../settings/language/utils.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
 const pugRoot = path.join( projectRoot, 'static/src/pug' );
@@ -27,7 +27,7 @@ const htmlRoot = path.join( projectRoot, 'static/dist/html' );
  *      - Lowest completely loading page time (client will need to wait twice to see all page content) among three.
  */
 
-export default languageSettings.support.map( language => ( {
+export default LanguageUtils.supportedLanguageId.map( languageId => ( {
     /**
      * Webpack built-in develop tools.
      *
@@ -149,7 +149,7 @@ export default languageSettings.support.map( language => ( {
                         loader:  'file-loader',
                         options: {
                             name ( file ) {
-                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
+                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ languageId }.html`;
                             },
                         },
                     },
@@ -168,7 +168,10 @@ export default languageSettings.support.map( language => ( {
                             data:    {
                                 host,
                                 staticHost,
-                                language,
+                                language: {
+                                    id:            languageId,
+                                    getLanguageId: LanguageUtils.getLanguageId,
+                                },
                             },
                         },
                     },

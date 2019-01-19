@@ -1,11 +1,11 @@
 -
   function url( { href = '', query = null } = {} ) {
     if ( !query )
-      return `${ host }/${ href }?language=${ language }`
+      return `${ host }/${ href }?languageId=${ language.id }`
     const queryStr = Reflect.ownKeys( query )
       .map( key => `${ key }=${ query[ key ] }` )
       .join( '&' );
-    if( query.language )
+    if( query.languageId )
       return `${ host }/${ href }?${ queryStr }`;
-    return `${ host }/${ href }?${ queryStr }&language=${ language }`;
+    return `${ host }/${ href }?${ queryStr }&languageId=${ language.id }`;
   }

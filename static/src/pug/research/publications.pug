@@ -3,17 +3,17 @@ extends /layouts/research.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'title': 'Publications',
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'title': '發表著作',
       },
     } );
     const currentRoute = 'research/publications';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ language.id ].title )
 
 append stylesheets
   +css( 'research/publications' )

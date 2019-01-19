@@ -4,7 +4,7 @@ import {
     renderBriefingsError,
     renderPages,
     renderPagesError,
-    renderPage
+    renderPage,
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.

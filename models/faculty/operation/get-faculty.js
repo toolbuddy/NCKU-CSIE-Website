@@ -1,12 +1,7 @@
+import LanguageUtils from 'settings/language/utils.js';
 import associations from 'models/faculty/operation/associations.js';
 
-/**
- * A function for getting all the basic information of the faculty.
- * @param {string} [language = 'zh-TW'] - specified the data of the faculty.
- * @returns {object[]}                  - the data of the faculty in the specified language.
- */
-
-export default async ( language = 'zh-TW' ) => {
+export default async ( language = LanguageUtils.defaultLanguageId ) => {
     const table = await associations();
 
     const data = await table.profile.findAll( {
@@ -14,8 +9,9 @@ export default async ( language = 'zh-TW' ) => {
             'email',
             'personalWeb',
             'photo',
-            'position',
             'profileId',
+            'officeTel',
+            'labWeb',
         ],
     } )
     .then(
@@ -23,101 +19,36 @@ export default async ( language = 'zh-TW' ) => {
             async ( profile ) => {
                 const [
                     departments,
-                    offices,
-                    labs,
                     profileI18n,
                     titles,
+                    researchGruops,
                 ] = await Promise.all( [
                     table.department.findAll( {
-                        include: [
-                            {
-                                model:      table.departmentI18n,
-                                as:         'departmentI18n',
-                                attributes: [
-                                    'department',
-                                ],
-                                where: {
-                                    language,
-                                },
-                            },
+                        attributes: [
+                            'type',
                         ],
-                        attributes: [],
                         where:      {
                             profileId: profile.profileId,
                         },
-                    } )
-                    .then(
-                        departments => departments.map(
-                            department => ( {
-                                department: department.departmentI18n[ 0 ].department,
-                            } )
-                        )
-                    ),
-                    table.office.findAll( {
-                        include: [
-                            {
-                                model:      table.officeI18n,
-                                as:         'officeI18n',
-                                attributes: [
-                                    'address',
-                                ],
-                                where: {
-                                    language,
-                                },
-                            },
-                        ],
-                        attributes: [
-                            'tel',
-                        ],
-                        where: {
-                            profileId: profile.profileId,
-                        },
-                    } )
-                    .then(
-                        offices => offices.map(
-                            office => ( {
-                                tel:     office.tel,
-                                address: office.officeI18n[ 0 ].address,
-                            } )
-                        )
-                    ),
-                    table.lab.findAll( {
-                        include: [
-                            {
-                                model:      table.labI18n,
-                                as:         'labI18n',
-                                attributes: [
-                                    'name',
-                                ],
-                                where: {
-                                    language,
-                                },
-                            },
-                        ],
-                        attributes: [
-                            'labWeb',
-                        ],
-                        where: {
-                            profileId: profile.profileId,
-                        },
-                    } )
-                    .then(
-                        labs => labs.map(
-                            lab => ( {
-                                web:  lab.labWeb,
-                                name: lab.labI18n[ 0 ].name,
-                            } )
-                        )
-                    ),
+                    } ),
                     table.profileI18n.findOne( {
                         attributes: [
                             'name',
+                            'officeAddress',
+                            'labName',
                         ],
                         where: {
                             language,
                             profileId: profile.profileId,
                         },
-                    } ),
+                    } )
+                    .then(
+                        profileI18ns => ( {
+                            name:          profileI18ns.name,
+                            officeAddress: profileI18ns.officeAddress,
+                            labName:       profileI18ns.labName,
+                        } )
+                    ),
                     table.title.findAll( {
                         include: [
                             {
@@ -132,8 +63,8 @@ export default async ( language = 'zh-TW' ) => {
                             },
                         ],
                         attributes: [
-                            'endDate',
-                            'startDate',
+                            'to',
+                            'from',
                         ],
                         where: {
                             profileId: profile.profileId,
@@ -142,31 +73,48 @@ export default async ( language = 'zh-TW' ) => {
                     .then(
                         titles => titles.map(
                             title => ( {
-                                endDate:   title.endDate,
-                                startDate: title.startDate,
+                                to:        title.to,
+                                from:      title.from,
                                 title:     title.titleI18n[ 0 ].title,
                             } )
                         )
                     ),
+                    table.researchGroup.findAll( {
+                        attributes: [
+                            'type',
+                        ],
+                        where:      {
+                            profileId: profile.profileId,
+                        },
+                    } )
+                    .then(
+                        ( researchGroups ) => {
+                            let result = '';
+                            for ( const data of researchGroups )
+                                result = `${ result }${ data.type }`;
+                            return result;
+                        }
+                    ),
                 ] );
 
                 return ( {
-                    email:       profile.email,
-                    name:        profileI18n.name,
-                    personalWeb: profile.email,
-                    photo:       profile.photo,
-                    position:    profile.position,
-                    profileId:   profile.profileId,
+                    email:         profile.email,
+                    name:          profileI18n.name,
+                    personalWeb:   profile.email,
+                    photo:         profile.photo,
+                    profileId:     profile.profileId,
+                    officeTel:     profile.officeTel,
+                    officeAddress: profileI18n.officeAddress,
+                    labWeb:        profile.labWeb,
+                    labName:       profileI18n.labName,
                     titles,
                     departments,
-                    offices,
-                    labs,
+                    researchGruops,
                 } );
             }
         ) )
     );
 
     table.database.close();
-
     return data;
 };
