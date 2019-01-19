@@ -1,6 +1,8 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/announcement/breadcrumb';
 @import 'components/user/announcement/tags';
 @import 'components/user/announcement/edit';
 
@@ -15,6 +17,7 @@ body > .content {
 
   grid-template: {
     areas:
+      ' . edit__breadcrumb . '
       ' . edit__top . '
       ' . edit__tags . '
       ' . edit__editor . '
@@ -42,4 +45,8 @@ body > .content {
     grid-template-columns: 1fr 25.881rem 1fr;
   }
   @include edit();
+
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
 }

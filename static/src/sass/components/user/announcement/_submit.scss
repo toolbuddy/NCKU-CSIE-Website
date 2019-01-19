@@ -90,16 +90,16 @@ $large: 976px;
     grid-area: release;
 
     // [ skin ]
-    height: 1.3rem;
-    @media screen and ( max-width: $small ) {
-      width: 7.595rem ;
-      height: .928rem;
-    }
-    @media screen and ( min-width: $small ) {
+    background-color: #8caae2;
+    height: 1.552rem;
+    width: 4.774rem;
+    border-radius: .071rem;
+    box-shadow: 0 .095rem .095rem 0 rgba( 0, 0, 0, .25 );
+    display: block;
+    @media screen and ( min-width: $medium ) {
       width: 4.5rem;
     }
     font-size: .5rem;
-    background-color: $buttoncolor;
     color: white;
     margin-bottom: .5rem;
   }

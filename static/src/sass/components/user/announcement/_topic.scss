@@ -10,6 +10,9 @@ $bgcolor: #eff1f4;
       grid-area: edit__top;
 
       // [ position ]
+      display: flex;
+      margin-left: 1.5rem;
+      margin-bottom: .5rem;
       justify-content: flex-start;
 
       // [skin ]
@@ -19,11 +22,16 @@ $bgcolor: #eff1f4;
       > .topic__text {
         // [ skin ]
         border-bottom: solid .0156rem #213262;
-        width: auto;
+        width: 3.5rem;
         line-height: 1.4rem;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
         font: {
           weight: bold;
           size: .75rem;
+          family: notosanscjktc;
+          style: normal;
+          stretch: normal;
         }
       }
     }

@@ -2,18 +2,30 @@ extends /layouts/user.pug
 include /components/announcement/filter-tags.pug
 include /components/user/announcement/time-selector.pug
 include /components/common/topic.pug
+include /components/common/breadcrumb.pug
 
 append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title': 'Edit Announcement',
+        'title':    'Edit Announcement',
+        'topic':    'Edit Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
       },
       'zh-TW': {
-        'title': '編輯公告',
+        'title':    '新增公告',
+        'topic':    '新增公告',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
       },
     } );
     const currentRoute = 'user/announcement/edit';
+
 
 append title
   +title( i18n[ language ].title )
@@ -24,6 +36,11 @@ append stylesheets
 append header
 
 append content
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].title },
+   ] )
   +topic( '新增公告' )
   a.content--return( href = '/user/announcement' )= '<取消'
   br
