@@ -31,13 +31,13 @@
         left: .5rem;
         right: .5rem;
       }
-      border: solid .03rem #8caae2;
+      border: solid .03rem #f67057;
       border-radius: .47rem;
       min: {
         width: 3.03rem;
         height: .94rem;
       }
-      color: #8caae2;
+      color: #f67057;
       background-color: #eff3f9;
 
       // [ interaction ]
@@ -45,7 +45,7 @@
         // [ skin ]
         cursor: pointer;
         color: #ffffff;
-        background-color: lighten( $color: #8caae2, $amount: 10% );
+        background-color: lighten( $color: #f67057, $amount: 10% );
       }
 
       // modifier
@@ -53,7 +53,25 @@
       &--active {
         // [ skin ]
         color: #ffffff;
-        background-color: #8caae2;
+        background-color: #f67057;
+      }
+
+      &.filters__filter--research {
+        border: solid .03rem #8caae2;
+        color: #8caae2;
+
+        &:hover {
+          // [ skin ]
+          cursor: pointer;
+          color: #ffffff;
+          background-color: lighten( $color: #8caae2, $amount: 10% );
+        }
+
+        &--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #8caae2;
+        }
       }
     }
   }

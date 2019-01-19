@@ -12,6 +12,8 @@ Object.defineProperties( language, {
         value: [
             'zh-TW',
             'en-US',
+            '0',
+            '1',
         ],
     },
     'default': {

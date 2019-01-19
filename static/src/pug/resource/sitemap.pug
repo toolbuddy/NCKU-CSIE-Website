@@ -35,6 +35,10 @@ append data
           'resource':      'Resource',
         },
         'title': 'Sitemap',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
       },
       'zh-TW': {
         'titles': {
@@ -68,6 +72,10 @@ append data
           'resource':      '資源連結',
         },
         'title': '網站地圖',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
       }
     } );
     const currentRoute = 'resource/sitemap';
@@ -102,6 +110,11 @@ append stylesheets
 
 append header
   +banner( i18n[ language ].title )
+  +breadcrumb( [
+    { text: i18n[ language ].breadcrumb.home, url: '' },
+    { text: i18n[ language ].breadcrumb.resource, url: 'resource' },
+    { text: i18n[ language ].title },
+  ] )
 
 append content
 
