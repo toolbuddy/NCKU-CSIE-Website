@@ -5,7 +5,7 @@
     const queryStr = Reflect.ownKeys( query )
       .map( key => `${ key }=${ query[ key ] }` )
       .join( '&' );
-    if( query.languageId )
+    if( typeof( Number( query.languageId ) ) === 'number' )
       return `${ host }/${ href }?${ queryStr }`;
     return `${ host }/${ href }?${ queryStr }&languageId=${ language.id }`;
   }
