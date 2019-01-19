@@ -18,7 +18,7 @@ const apis = express.Router();
  */
 
 apis.get( /^\/$/, async ( req, res ) => {
-    res.json( await getFaculty( req.query.language ) );
+    res.json( await getFaculty( req.query.languageId ) );
 } );
 
 /**
@@ -26,7 +26,7 @@ apis.get( /^\/$/, async ( req, res ) => {
  */
 
 apis.get( /^\/(\d+)$/, async ( req, res ) => {
-    res.json( await getFacultyDetail( { profileId: req.params[ 0 ], language: req.query.language, } ) );
+    res.json( await getFacultyDetail( { profileId: req.params[ 0 ], language: req.query.languageId, } ) );
 } );
 
 export default apis;

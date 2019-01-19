@@ -1,6 +1,7 @@
+import LanguageUtils from 'settings/language/utils.js';
 import associations from 'models/faculty/operation/associations.js';
 
-export default async ( { language = 'zh-TW', profileId = 1, } = {} ) => {
+export default async ( { language = LanguageUtils.defaultLanguageId, profileId = 1, } = {} ) => {
     const table = await associations();
 
     const data = { language, };

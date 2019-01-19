@@ -3,14 +3,14 @@ extends /layouts/research.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'title':      'Research Groups',
         'breadcrumb': {
           'home':     'Home',
           'research': 'Research',
         },
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'title':      '研究群',
         'breadcrumb': {
           'home':     '首頁',
@@ -21,17 +21,17 @@ append data
     const currentRoute = 'research/groups';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ language.id ].title )
 
 append stylesheets
   +css( 'research/groups' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ language.id ].title )
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.research, url: 'research' },
-    { text: i18n[ language ].title },
+    { text: i18n[ language.id ].breadcrumb.home, url: '' },
+    { text: i18n[ language.id ].breadcrumb.research, url: 'research' },
+    { text: i18n[ language.id ].title },
   ] )
 
 append content

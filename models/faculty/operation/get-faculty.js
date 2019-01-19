@@ -1,6 +1,7 @@
+import LanguageUtils from 'settings/language/utils.js';
 import associations from 'models/faculty/operation/associations.js';
 
-export default async ( language = '0' ) => {
+export default async ( language = LanguageUtils.defaultLanguageId ) => {
     const table = await associations();
 
     const data = await table.profile.findAll( {

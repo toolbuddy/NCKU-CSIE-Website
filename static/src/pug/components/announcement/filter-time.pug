@@ -1,13 +1,13 @@
 mixin filter__time()
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'time':   {
           'start': 'Start Date',
           'end':   'End Date',
         },
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'time':   {
           'start': '開始日期',
           'end':   '結束日期',
@@ -16,8 +16,8 @@ mixin filter__time()
     } );
   article#filter__time.filter__time.filter__time--hidden.time
     aside
-      label= i18n[ language ].time.start
+      label= i18n[ language.id ].time.start
       input#startTime.time__date( type='date' )
     aside
-      label= i18n[ language ].time.end
+      label= i18n[ language.id ].time.end
       input#endTime.time__date( type='date' )

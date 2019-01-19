@@ -3,7 +3,7 @@ extends /layouts/research.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'title':    'Research',
         'breadcrumb': {
           'home':   'Home',
@@ -23,7 +23,7 @@ append data
           },
         ],
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'title':    '學術研究',
         'breadcrumb': {
           'home':   '首頁',
@@ -47,21 +47,21 @@ append data
     const currentRoute = 'research';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ language.id ].title )
 
 append stylesheets
   +css( 'research/index' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ language.id ].title )
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].title },
+    { text: i18n[ language.id ].breadcrumb.home, url: '' },
+    { text: i18n[ language.id ].title },
   ] )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language ].entries )
+  +entries( i18n[ language.id ].entries )
 
 append footer
 

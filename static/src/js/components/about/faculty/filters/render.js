@@ -96,10 +96,8 @@ export function renderCards ( filters, cards, noResult ) {
             }
 
             // Test passed.
-            else {
-                if ( card.classList.contains( 'card--hide' ) )
-                    card.classList.remove( 'card--hide' );
-            }
+            else if ( card.classList.contains( 'card--hide' ) )
+                card.classList.remove( 'card--hide' );
         }
         else if ( selectedFilters.length !== 0 )
             ifTestPass = false;
@@ -113,10 +111,8 @@ export function renderCards ( filters, cards, noResult ) {
             }
 
             // Test passed.
-            else {
-                if ( card.classList.contains( 'card--hide' ) )
-                    card.classList.remove( 'card--hide' );
-            }
+            else if ( card.classList.contains( 'card--hide' ) )
+                card.classList.remove( 'card--hide' );
         }
         else if ( selectedFiltersResearch.length !== 0 )
             ifTestPass = false;

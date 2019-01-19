@@ -292,8 +292,9 @@ module.exports = {
         // Disallow empty functions.
         'no-empty-function': 'error',
 
-        // Disallow empty destructuring patterns.
-        'no-empty-pattern': 'error',
+        // Allow empty destructuring patterns.
+        // Should only be used when built-in function arguments are not needed.
+        'no-empty-pattern': 'off',
 
         // Disallow `eval()`.
         'no-eval': 'error',

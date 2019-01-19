@@ -3,7 +3,7 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ language.getLanguageId( 'en-US' ) ]: {
         'title':     'Ph.D',
         'topic':     'Ph.D',
         'pinned':    'Pinned Announcement',
@@ -13,7 +13,7 @@ append data
           'student': 'Student',
         },
       },
-      'zh-TW': {
+      [ language.getLanguageId( 'zh-TW' ) ]: {
         'title':     '博士',
         'topic':     '博士',
         'pinned':    '置頂貼文',
@@ -40,17 +40,17 @@ append data
     const currentRoute = 'student/phd';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ language.id ].title )
 
 append stylesheets
   +css( 'student/phd' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ language.id ].title )
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.student, url: 'student' },
-    { text: i18n[ language ].title },
+    { text: i18n[ language.id ].breadcrumb.home, url: '' },
+    { text: i18n[ language.id ].breadcrumb.student, url: 'student' },
+    { text: i18n[ language.id ].title },
   ] )
 
 append footer

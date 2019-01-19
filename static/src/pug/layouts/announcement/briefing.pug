@@ -5,16 +5,16 @@ append content
   include /components/announcement/filter.pug
   include /components/announcement/title.pug
 
-  +topic( i18n[ language ].topic )
+  +topic( i18n[ language.id ].topic )
   +filter( {
     modifier: filterModifier,
     tags: filterTags
   } )
 
   section.announcement
-    +announcement__title( i18n[ language ].pinned )
+    +announcement__title( i18n[ language.id ].pinned )
     nav#announcement__brefings--top.announcement__briefings.briefings
   section.announcement
-    +announcement__title( i18n[ language ].normal )
+    +announcement__title( i18n[ language.id ].normal )
     nav#announcement__brefings.announcement__briefings.briefings
   section#pages.pages
