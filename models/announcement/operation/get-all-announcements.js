@@ -1,8 +1,9 @@
 import { Op, } from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, tagNameToNum, } from 'settings/default-value/announcement/config.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
 import languageUtils from 'settings/language/utils.js';
+import tagUtils from 'settings/components/tags/utils.js';
 
 /**
  * A function for getting all announcements.
@@ -38,8 +39,8 @@ export default async ( {
     endTime = new Date( endTime );
     language = languageUtils.languageToNum( language );
 
-    if ( !validate.isValidTags( tags ) )
-        return { error: 'invalid tag name', };
+    // If ( !tagUtils.isValidTagNums( tags ) )
+    //    return { error: 'invalid tag num', };
 
     if ( !validate.isValidDate( startTime ) )
         return { error: 'invalid start time', };
@@ -93,21 +94,16 @@ export default async ( {
             content:    announcement.announcementI18n[ 0 ].content,
             updateTime: announcement.updateTime,
             tags:       announcement.tag.map( tag => ( {
-                name: tag.type,
+                type: tag.type,
             } ) ),
         } ) ) );
     }
     else {
-        const numOfTags = [];
-        const tagLen = tags.length;
-        for ( let i = 0; i < tagLen; ++i )
-            numOfTags.push( tagNameToNum[ 'en-US' ][ tags[ i ] ] );
-
         data = await table.announcement.findAll( {
             attributes: [ 'announcementId', ],
             where:      {
                 '$tag.type$': {
-                    [ Op.in ]: numOfTags,
+                    [ Op.in ]: tags,
                 },
                 'updateTime':                       {
                     [ Op.between ]: [
@@ -162,7 +158,7 @@ export default async ( {
             content:    announcement.announcementI18n[ 0 ].content,
             updateTime: announcement.updateTime,
             tags:       announcement.tag.map( tag => ( {
-                name: tag.type,
+                type: tag.type,
             } ) ),
         } ) ) );
     }

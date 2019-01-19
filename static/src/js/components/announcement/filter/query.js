@@ -27,6 +27,8 @@ export const singleDefaultTag = {
     defaultTag: null,
     announcementBriefingTop: null,
     announcementBriefing: null,
+    briefingTopNum: null,
+    briefingNum: null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );
@@ -249,6 +251,8 @@ export const multipleDefaultTags = {
     defaultTags: [],
     announcementBriefingTop: null,
     announcementBriefing: null,
+    briefingTopNum: null,
+    briefingNum: null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );

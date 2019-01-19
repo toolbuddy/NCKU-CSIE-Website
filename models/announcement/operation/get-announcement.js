@@ -91,7 +91,7 @@ export default async ( { language = languageUtils.languageToNum( defaultValue.la
             ),
             tags:        announcement.tag.map(
                 tag => ( {
-                    name: tag.type,
+                    type: tag.type,
                 } )
             ),
         } )

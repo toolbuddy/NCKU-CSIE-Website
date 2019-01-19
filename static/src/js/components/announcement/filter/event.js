@@ -1,4 +1,5 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
+import tagUtils from 'settings/components/tags/utils.js';
 import { renderFilter,
          renderLoading
 } from 'static/src/js/components/announcement/filter/render.js';
@@ -106,20 +107,21 @@ function defaultTagOnClick () {
 
 function tagOnClick ( event ) {
     // Get event triggered tag's name.
-    const targetTag = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
+    const targetTagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
+    const targetTagNum = tagUtils.tagNameToNum(targetTagName, 'en-US');
     const query = new URLSearchParams( window.location.search );
     const currentTags = query.getAll( 'tags' );
 
     // If `tags__tag--${ targetTag }` has not been selected,
     // append current tags with `tags__tag--${ targetTag }` to make a new query.
-    if ( currentTags.indexOf( targetTag ) === -1 )
-        query.append( 'tags', targetTag );
+    if ( currentTags.indexOf( targetTagNum ) === -1 )
+        query.append( 'tags', targetTagNum );
 
     // If `tags__tag--${ targetTag }` has not been selected,
     // remove all tags from query and recreate without `tags__tag--${ targetTag }`.
     else {
         query.delete( 'tags' );
-        currentTags.filter( tag => tag !== targetTag )
+        currentTags.filter( tag => tag !== targetTagNum )
         .forEach( tag => query.append( 'tags', tag ) );
     }
 

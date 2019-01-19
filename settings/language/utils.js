@@ -16,5 +16,9 @@ class LanguageUtils {
     static numToLanguage ( num ) {
         return numToLang[ num ];
     }
+
+    static get currentLanguage () {
+        return new URLSearchParams( window.location.search ).get( 'language' );
+    }
 }
 export default LanguageUtils;

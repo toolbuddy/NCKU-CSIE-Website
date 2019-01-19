@@ -1,7 +1,8 @@
 import sequelize from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, tagNameToNum, } from 'settings/default-value/announcement/config.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import tagUtils from 'settings/components/tags/utils.js';
 
 const Op = sequelize.Op;
 
@@ -28,8 +29,8 @@ export default async ( {
     startTime = new Date( startTime );
     endTime = new Date( endTime );
 
-    if ( !validate.isValidTags( tags ) )
-        return { error: 'invalid tag name', };
+    // If ( !tagUtils.isValidTagNums( tags ) )
+    //    return { error: 'invalid tag num', };
 
     if ( !validate.isValidDate( startTime ) )
         return { error: 'invalid start time', };
@@ -37,16 +38,11 @@ export default async ( {
     if ( !validate.isValidDate( endTime ) )
         return { error: 'invalid end time', };
 
-    const numOfTags = [];
-    const tagLen = tags.length;
-    for ( let i = 0; i < tagLen; ++i )
-        numOfTags.push( tagNameToNum[ 'en-US' ][ tags[ i ] ] );
-
     const table = await associations();
     const count = await table.announcement.count( {
         where: {
             '$tag.type$': {
-                [ Op.in ]: numOfTags,
+                [ Op.in ]: tags,
             },
             'updateTime':                       {
                 [ Op.between ]: [

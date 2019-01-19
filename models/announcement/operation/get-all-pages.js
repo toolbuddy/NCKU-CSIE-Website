@@ -2,6 +2,7 @@ import { Op, } from 'sequelize';
 import associations from 'models/announcement/operation/associations.js';
 import validate from 'test/models/announcement/operation/validate.js';
 import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import tagUtils from 'settings/components/tags/utils.js';
 
 /**
  * A function for getting the number of pages to display all requested announcements.
@@ -26,8 +27,8 @@ export default async ( {
     startTime = new Date( startTime );
     endTime = new Date( endTime );
 
-    if ( !validate.isValidTags( tags ) )
-        return { error: 'invalid tag name', };
+    // If ( !tagUtils.isValidTagNums( tags ) )
+    //    return { error: 'invalid tag num', };
 
     if ( !validate.isValidDate( startTime ) )
         return { error: 'invalid start time', };
