@@ -25,8 +25,6 @@ $large: 976px;
         columns:  .1rem 1fr 1fr .1rem;
       }
     }
-
-    //max-width: 100%;
     @media screen and ( min-width: $medium ) {
       grid-template: {
         areas:

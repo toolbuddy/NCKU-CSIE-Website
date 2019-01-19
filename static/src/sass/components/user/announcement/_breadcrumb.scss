@@ -22,8 +22,10 @@
     > .breadcrumb__text {
       // [ layout ]
       display: flex;
-      margin-top: .59rem;
-      margin-bottom: 1.5rem;
+      margin: {
+        top: .59rem;
+        bottom: 1.5rem;
+      }
 
       // [ skin ]
       font-size: .63rem;

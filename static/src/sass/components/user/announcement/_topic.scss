@@ -11,8 +11,10 @@ $bgcolor: #eff1f4;
 
       // [ position ]
       display: flex;
-      margin-left: 1.5rem;
-      margin-bottom: .5rem;
+      margin: {
+        left: 1.5rem;
+        bottom: .5rem;
+      }
       justify-content: flex-start;
 
       // [skin ]

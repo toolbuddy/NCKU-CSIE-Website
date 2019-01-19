@@ -18,12 +18,14 @@
     @media screen and ( max-width: $small ) {
       font-size: calc( 100% - 2rem );
       grid: {
-        template-areas:
-          ' . tags__tag--tags        tags__tag--college  tags__tag--speech      tags__tag--competition . '
-          ' . tags__tag--faculty     tags__tag--master   tags__tag--conference  tags__tag--scholarship . '
-          ' . tags__tag--course      tags__tag--phd      tags__tag--exhibition  tags__tag--international . '
-          ' . tags__tag--recruitment tags__tag--rule     tags__tag--internship  tags__tag--award . ';
-        template-columns: .57rem repeat( 4, 2rem ) .57rem;
+        template: {
+          areas:
+            ' . tags__tag--tags        tags__tag--college  tags__tag--speech      tags__tag--competition . '
+            ' . tags__tag--faculty     tags__tag--master   tags__tag--conference  tags__tag--scholarship . '
+            ' . tags__tag--course      tags__tag--phd      tags__tag--exhibition  tags__tag--international . '
+            ' . tags__tag--recruitment tags__tag--rule     tags__tag--internship  tags__tag--award . ';
+          columns: .57rem repeat( 4, 2rem ) .57rem;
+        }
         gap: .125rem;
       }
     }
@@ -41,7 +43,6 @@
         gap: .3rem;
       }
     }
-
 
     // [ RWD: $large ]
     @media screen and ( min-width: $medium ) {
