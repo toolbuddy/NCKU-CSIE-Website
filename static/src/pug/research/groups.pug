@@ -1,36 +1,36 @@
-extends /layouts/announcement/announcement.pug
+extends /layouts/research.pug
 
 append data
   -
     const i18n = Object.freeze( {
       'en-US': {
-        'title':    'Announcement Detail',
+        'title':      'Research Groups',
         'breadcrumb': {
-          'home':   'Home',
-          'normal': 'Announcement',
+          'home':     'Home',
+          'research': 'Research',
         },
       },
       'zh-TW': {
-        'title':    '公告內容',
+        'title':      '研究群',
         'breadcrumb': {
-          'normal': '系所公告',
-          'home':   '首頁',
+          'home':     '首頁',
+          'research': '學術研究',
         },
       },
     } );
-    const currentRoute = 'announcement/announcement';
+    const currentRoute = 'research/groups';
 
 append title
   +title( i18n[ language ].title )
 
 append stylesheets
-  +css( 'announcement/announcement' )
+  +css( 'research/groups' )
 
 append header
   +banner( i18n[ language ].title )
   +breadcrumb( [
     { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ language ].breadcrumb.research, url: 'research' },
     { text: i18n[ language ].title },
   ] )
 
@@ -39,4 +39,4 @@ append content
 append footer
 
 append scripts
-  +js( 'announcement/announcement' )
+  +js( 'research/groups' )

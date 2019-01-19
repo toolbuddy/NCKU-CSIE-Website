@@ -3,7 +3,6 @@
  */
 
 import Sequelize from 'sequelize';
-
 import config from 'settings/database/config.js';
 
 /**
