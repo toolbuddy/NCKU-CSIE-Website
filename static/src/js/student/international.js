@@ -5,5 +5,4 @@ header( document.getElementById( 'header' ) );
 
 singleDefaultTagFilter( 'international',
     document.getElementById( 'announcement__brefings--top' ),
-    document.getElementById( 'announcement__brefings' ), 
-);
+    document.getElementById( 'announcement__brefings' ), );

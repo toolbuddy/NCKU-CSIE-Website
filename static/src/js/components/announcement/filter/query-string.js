@@ -6,11 +6,13 @@ import { dateFormating, }  from 'static/src/js/components/announcement/filter/fo
 export default class QueryString {
     static getFilters ( defaultTags ) {
         const query = new URLSearchParams( window.location.search );
-        let tags = [ ...new Set( query.getAll( 'tags' ) ), ];
+        const tags = [ ...new Set( query.getAll( 'tags' ) ), ];
+
         /*
-        if ( !isValidTags( tags ) )
+        If ( !isValidTags( tags ) )
             tags = defaultTags;
         */
+
         let startTime = new Date( query.get( 'startTime' ) || config.defaultStartTime );
         if ( !isValidDate( startTime ) )
             startTime = new Date( config.defaultStartTime );

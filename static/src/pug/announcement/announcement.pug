@@ -3,14 +3,14 @@ extends /layouts/announcement/announcement.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Announcement Detail',
         'breadcrumb': {
           'home':   'Home',
           'normal': 'Announcement',
         },
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '公告內容',
         'breadcrumb': {
           'normal': '系所公告',
@@ -21,17 +21,17 @@ append data
     const currentRoute = 'announcement/announcement';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'announcement/announcement' )
 
 append header
-  +banner( i18n[ language.id ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language.id ].breadcrumb.home, url: '' },
-    { text: i18n[ language.id ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ language.id ].title },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ LANG.id ].title },
   ] )
 
 append content

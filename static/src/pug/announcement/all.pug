@@ -3,7 +3,7 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'All Announcement',
         'topic':    'All Announcement',
         'pinned':   'Pinned Announcement',
@@ -13,7 +13,7 @@ append data
           'announcement': 'Announcement',
         },
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '全部公告',
         'topic':    '全部公告',
         'pinned':   '置頂貼文',
@@ -46,17 +46,17 @@ append data
     const currentRoute = 'announcement/all';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'announcement/all' )
 
 append header
-  +banner( i18n[ language.id ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language.id ].breadcrumb.home, url: '' },
-    { text: i18n[ language.id ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ language.id ].title },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ LANG.id ].title },
   ] )
 
 append footer

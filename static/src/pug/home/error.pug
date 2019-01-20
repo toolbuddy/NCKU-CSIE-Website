@@ -3,12 +3,12 @@ extends /layouts/base.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'notExist': 'Page not found',
         'back':     'return to home page',
         'or':       'or'
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'notExist': '您造訪的頁面不存在',
         'back':     '返回首頁',
         'or':       '或'
@@ -45,10 +45,10 @@ append content
       } )
       div.error__image.error__image--shadow
   section.redirect
-    h2.redirect__text= i18n[ language ].notExist
+    h2.redirect__text= i18n[ LANG.id ].notExist
       br.redirect__text
-      a.redirect__text.redirect__text--link( href = `/?language=${ language }` )= i18n[ language ].back
-      span.redirect__text.redirect__text--or= i18n[ language ].or
+      a.redirect__text.redirect__text--link( href = `/?language=${ LANG.id }` )= i18n[ LANG.id ].back
+      span.redirect__text.redirect__text--or= i18n[ LANG.id ].or
       input.redirect__text.redirect__text--input
       +image( {
         alt: 'search icon',

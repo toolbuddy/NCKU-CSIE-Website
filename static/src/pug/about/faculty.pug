@@ -3,7 +3,7 @@ extends /layouts/about.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Faculty',
         'topic':    'Faculty',
         'breadcrumb': {
@@ -12,7 +12,7 @@ append data
         },
         'noResult': 'No Result',
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '師資陣容',
         'topic':    '師資陣容',
         'breadcrumb': {
@@ -25,24 +25,24 @@ append data
     const currentRoute = 'about/faculty';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'about/faculty' )
 
 append header
-  +banner( i18n[ language.id ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language.id ].breadcrumb.home, url: '' },
-    { text: i18n[ language.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ language.id ].title },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+    { text: i18n[ LANG.id ].title },
   ] )
 
 append content
   include /components/common/topic.pug
   include /components/about/faculty/filters.pug
 
-  +topic( i18n[ language.id ].topic )
+  +topic( i18n[ LANG.id ].topic )
 
   //- Filter component for faculty selection.
   +filters()
@@ -53,7 +53,7 @@ append content
   //- @todo add loading screen.
   section#cards.cards
   section#no-result.no-result.no-result--hide
-    p.no-result__text= i18n[ language.id ].noResult
+    p.no-result__text= i18n[ LANG.id ].noResult
 
 append footer
 

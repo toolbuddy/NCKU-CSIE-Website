@@ -3,17 +3,17 @@ extends /layouts/resource.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':      'Equipment Repair',
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':      '修繕登記',
       },
     } );
     const currentRoute = 'resource/fix';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'resource/fix' )

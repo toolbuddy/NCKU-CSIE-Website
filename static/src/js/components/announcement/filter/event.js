@@ -1,7 +1,8 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 import tagUtils from 'settings/components/tags/utils.js';
-import { renderFilter,
-         renderLoading
+import {
+    renderFilter,
+    renderLoading,
 } from 'static/src/js/components/announcement/filter/render.js';
 
 let filterOnChange = null;
@@ -108,7 +109,7 @@ function defaultTagOnClick () {
 function tagOnClick ( event ) {
     // Get event triggered tag's name.
     const targetTagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
-    const targetTagNum = tagUtils.tagNameToNum(targetTagName, 'en-US');
+    const targetTagNum = tagUtils.tagNameToNum( targetTagName, 'en-US' );
     const query = new URLSearchParams( window.location.search );
     const currentTags = query.getAll( 'tags' );
 

@@ -5,15 +5,15 @@ import tagUtils from 'settings/components/tags/utils.js';
 import { defaultValue, } from 'settings/default-value/announcement/config.js';
 
 // Single default tag filter constructor.
-export function singleDefaultTagFilter ( 
-        tag = null, 
-        briefingTopObj = null, 
-        briefingObj = null, 
-        briefingTopNum = defaultValue.announcementsPerPage, 
-        briefingNum = defaultValue.announcementsPerPage 
+export function singleDefaultTagFilter (
+        tag = null,
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = defaultValue.announcementsPerPage,
+        briefingNum = defaultValue.announcementsPerPage
 ) {
     // Set default tag for query functions.
-    let tagNum = tagUtils.tagNameToNum(tag, 'en-US');
+    const tagNum = tagUtils.tagNameToNum( tag, 'en-US' );
     singleDefaultTag.defaultTag = tagNum;
     singleDefaultTag.announcementBriefingTop = briefingTopObj;
     singleDefaultTag.announcementBriefing = briefingObj;
@@ -53,18 +53,18 @@ export function singleDefaultTagFilter (
 
 
 // Multiple default tags filter constructor.
-export function multipleDefaultTagsFilter ( 
-        tags = [], 
-        briefingTopObj = null, 
-        briefingObj = null, 
-        briefingTopNum = defaultValue.announcementsPerPage, 
-        briefingNum = defaultValue.announcementsPerPage 
+export function multipleDefaultTagsFilter (
+        tags = [],
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = defaultValue.announcementsPerPage,
+        briefingNum = defaultValue.announcementsPerPage
 ) {
     // Set default tags for query functions.
-    let tagsNum = [];
-    tags.forEach((tag) => {
-        tagsNum.push(tagUtils.tagNameToNum(tag, 'en-US'));
-    });
+    const tagsNum = [];
+    tags.forEach( ( tag ) => {
+        tagsNum.push( tagUtils.tagNameToNum( tag, 'en-US' ) );
+    } );
     multipleDefaultTags.defaultTags = tagsNum;
     multipleDefaultTags.announcementBriefingTop = briefingTopObj;
     multipleDefaultTags.announcementBriefing = briefingObj;

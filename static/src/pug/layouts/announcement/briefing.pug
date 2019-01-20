@@ -8,19 +8,19 @@ append content
   include /components/common/no-result.pug
 
 
-  +topic( i18n[ language.id ].topic )
+  +topic( i18n[ LANG.id ].topic )
   +filter( {
     modifier: filterModifier,
     tags: filterTags
   } )
 
   section.announcement
-    +announcement__title( i18n[ language.id ].pinned )
+    +announcement__title( i18n[ LANG.id ].pinned )
     +noResult
     +loading
     nav#announcement__brefings--top.announcement__briefings.briefings
   section.announcement
-    +announcement__title( i18n[ language.id ].normal )
+    +announcement__title( i18n[ LANG.id ].normal )
     +noResultWithImage
     +loading
     nav#announcement__brefings.announcement__briefings.briefings

@@ -8,7 +8,6 @@ multipleDefaultTagsFilter( [
     'conference',
     'exhibition',
     'speech',
-    ],
-    document.getElementById( 'announcement__brefings--top' ),
-    document.getElementById( 'announcement__brefings' ),
-);
+],
+document.getElementById( 'announcement__brefings--top' ),
+document.getElementById( 'announcement__brefings' ), );

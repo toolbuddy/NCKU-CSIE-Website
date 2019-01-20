@@ -45,4 +45,5 @@ class LanguageUtils {
         return String( languageSettings.support[ id ] );
     }
 }
+
 export default LanguageUtils;

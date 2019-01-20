@@ -1,6 +1,7 @@
 import path from 'path';
 
 import LanguageUtils from '../../settings/language/utils.js';
+import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
 const pugRoot = path.join( projectRoot, 'static/src/pug' );
@@ -166,11 +167,16 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
-                                host,
-                                staticHost,
-                                language: {
+                                SERVER: {
+                                    host,
+                                    staticHost,
+                                },
+                                LANG: {
                                     id:            languageId,
                                     getLanguageId: LanguageUtils.getLanguageId,
+                                },
+                                UTILS: {
+                                    url: ( new UrlUtils( host, languageId ) ).serverUrl,
                                 },
                             },
                         },

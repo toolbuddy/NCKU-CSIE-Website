@@ -3,8 +3,8 @@ import { singleDefaultTagFilter, } from 'static/src/js/components/announcement/f
 
 header( document.getElementById( 'header' ) );
 
-singleDefaultTagFilter( 
+singleDefaultTagFilter(
     'award',
     document.getElementById( 'announcement__brefings--top' ),
-    document.getElementById( 'announcement__brefings' ), 
+    document.getElementById( 'announcement__brefings' ),
 );

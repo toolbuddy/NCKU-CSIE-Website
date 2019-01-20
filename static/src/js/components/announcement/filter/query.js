@@ -24,11 +24,11 @@ const apiURL = `${ window.location.protocol }//${ window.location.host }/api/ann
 export const singleDefaultTag = {
     // `defaultTag` is used as default tag to get announcement ( OR operation ),
     // its type must be 'string' and cannot be null.
-    defaultTag: null,
+    defaultTag:              null,
     announcementBriefingTop: null,
-    announcementBriefing: null,
-    briefingTopNum: null,
-    briefingNum: null,
+    announcementBriefing:    null,
+    briefingTopNum:          null,
+    briefingNum:             null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );
@@ -248,11 +248,11 @@ export const singleDefaultTag = {
 export const multipleDefaultTags = {
     // If default tags is empty array, then it is used by route `announcement/all`.
     // Otherwise it is used as multiple default tags to get announcement ( OR operation ).
-    defaultTags: [],
+    defaultTags:             [],
     announcementBriefingTop: null,
-    announcementBriefing: null,
-    briefingTopNum: null,
-    briefingNum: null,
+    announcementBriefing:    null,
+    briefingTopNum:          null,
+    briefingNum:             null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );

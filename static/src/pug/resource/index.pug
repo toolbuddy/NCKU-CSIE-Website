@@ -3,7 +3,7 @@ extends /layouts/resource.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':      'Resource',
         'breadcrumb': {
           'home':     'Home',
@@ -13,41 +13,41 @@ append data
             title: 'Rule',
             detail: 'Rules of department, graduation requirements and documents',
             modifier: 'red',
-            href: url( { href: 'resource/rule', } ),
+            href: UTILS.url( { href: 'resource/rule', } ),
           },
           {
             title: 'Rent',
             detail: 'Borrow things from department',
             modifier: 'green',
-            href: url( { href: 'resource/rent', } ),
+            href: UTILS.url( { href: 'resource/rent', } ),
           },
           {
             title: 'Fix',
             detail: 'Reporting broken equipment or classroom',
             modifier: 'yellow',
-            href: url( { href: 'resource/fix', } ),
+            href: UTILS.url( { href: 'resource/fix', } ),
           },
           {
             title: 'IEET',
             detail: 'Fill in survey form for classes',
             modifier: 'blue',
-            href: url( { href: 'resource/ieet', } ),
+            href: UTILS.url( { href: 'resource/ieet', } ),
           },
           {
             title: 'Sitemap',
             detail: 'Navigation for the website',
             modifier: 'purple',
-            href: url( { href: 'resource/sitemap', } ),
+            href: UTILS.url( { href: 'resource/sitemap', } ),
           },
           {
             title: 'Alumni',
             detail: 'Graduation students information',
             modifier: 'gray',
-            href: url( { href: 'resource/alumni', } ),
+            href: UTILS.url( { href: 'resource/alumni', } ),
           },
         ],
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':      '資源連結',
         'breadcrumb': {
           'home':     '首頁',
@@ -57,37 +57,37 @@ append data
             title: '法規彙編',
             detail: '系所規範、畢業辦法與表單文件',
             modifier: 'red',
-            href: url( { href: 'resource/rule', } ),
+            href: UTILS.url( { href: 'resource/rule', } ),
           },
           {
             title: '線上租借',
             detail: '系所租借設備或場地',
             modifier: 'green',
-            href: url( { href: 'resource/rent', } ),
+            href: UTILS.url( { href: 'resource/rent', } ),
           },
           {
             title: '修繕登記',
             detail: '租借設備維修、報銷與教室場地修繕登記',
             modifier: 'yellow',
-            href: url( { href: 'resource/fix', } ),
+            href: UTILS.url( { href: 'resource/fix', } ),
           },
           {
             title: 'IEET工程認證',
             detail: '工程認證目標與問卷填寫',
             modifier: 'blue',
-            href: url( { href: 'resource/ieet', } ),
+            href: UTILS.url( { href: 'resource/ieet', } ),
           },
           {
             title: '網站地圖',
             detail: '網站空間的概觀',
             modifier: 'purple',
-            href: url( { href: 'resource/sitemap', } ),
+            href: UTILS.url( { href: 'resource/sitemap', } ),
           },
           {
             title: '系友專區',
             detail: '畢業資訊填寫與系友相關資訊',
             modifier: 'gray',
-            href: url( { href: 'resource/alumni', } ),
+            href: UTILS.url( { href: 'resource/alumni', } ),
           },
         ],
       },
@@ -95,21 +95,21 @@ append data
     const currentRoute = 'resource';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'resource/index' )
 
 append header
-  +banner( i18n[ language.id ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language.id ].breadcrumb.home, url: '' },
-    { text: i18n[ language.id ].title },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].title },
   ] )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language.id ].entries )
+  +entries( i18n[ LANG.id ].entries )
 
 append footer
 
