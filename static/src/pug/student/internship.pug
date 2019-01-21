@@ -1,0 +1,53 @@
+extends /layouts/announcement/briefing.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':     'Internship',
+        'topic':     'Internship',
+        'top':       'Pinned Announcement',
+        'normal':    'Announcement',
+        'breadcrumb': {
+          'home':    'Home',
+          'student': 'Student',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':     '實習',
+        'topic':     '實習',
+        'top':       '置頂貼文',
+        'normal':    '一般公告',
+        'breadcrumb': {
+          'home':    '首頁',
+          'student': '學生事務',
+        },
+      },
+    } );
+    const filterModifier = 'internship';
+    const filterTags = [
+      'college',
+      'internship',
+      'master',
+      'phd',
+    ];
+    const currentRoute = 'student/internship';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'student/internship' )
+
+append header
+  +banner( i18n[ LANG.id ].title )
+  +breadcrumb( [
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.student, url: 'student' },
+    { text: i18n[ LANG.id ].title },
+   ] )
+
+append footer
+
+append scripts
+  +js( 'student/internship' )

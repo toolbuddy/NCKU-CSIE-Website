@@ -1,14 +1,17 @@
 import config from 'static/src/js/components/announcement/filter/config.js';
 import languageSetting from 'settings/language/config.js';
-import { isValidDate, isValidPage, isValidTags, isValidLanguage, }  from 'test/static/src/js/components/announcement/filter/validate.js';
+import { isValidDate, isValidPage, isValidLanguage, }  from 'test/static/src/js/components/announcement/filter/validate.js';
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 export default class QueryString {
     static getFilters ( defaultTags ) {
         const query = new URLSearchParams( window.location.search );
-        let tags = [ ...new Set( query.getAll( 'tags' ) ), ];
-        if ( !isValidTags( tags ) )
+        const tags = [ ...new Set( query.getAll( 'tags' ) ), ];
+
+        /*
+        If ( !isValidTags( tags ) )
             tags = defaultTags;
+        */
 
         let startTime = new Date( query.get( 'startTime' ) || config.defaultStartTime );
         if ( !isValidDate( startTime ) )

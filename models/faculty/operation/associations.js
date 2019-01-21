@@ -1,35 +1,35 @@
 import path from 'path';
 
-import serverSettings from 'settings/server/config.js';
+import { projectRoot } from 'settings/server/config.js';
 import connect from 'settings/database/connect.js';
 
 export default async () => {
     const facultyDatabase = await connect( 'faculty' );
     const table = {
-        conferenceI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/conference_i18n' ) ),
-        conference:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/conference' ) ),
-        departmentI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/department_i18n' ) ),
-        department:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/department' ) ),
-        educationI18n:          facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/education_i18n' ) ),
-        education:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/education' ) ),
-        experienceI18n:         facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience_i18n' ) ),
-        experience:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/experience' ) ),
-        researchGroup:          facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/research_group' ) ),
-        awardI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/award_i18n' ) ),
-        award:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/award' ) ),
-        patentI18n:             facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/patent_i18n' ) ),
-        patent:                 facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/patent' ) ),
-        profileI18n:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/profile_i18n' ) ),
-        profile:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/profile' ) ),
-        projectI18n:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/project_i18n' ) ),
-        project:                facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/project' ) ),
-        publicationI18n:        facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication_i18n' ) ),
-        publication:            facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/publication' ) ),
-        specialtyI18n:          facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/specialty_i18n' ) ),
-        technologyTransfer:     facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer' ) ),
-        technologyTransferI18n: facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/technology_transfer_i18n' ) ),
-        titleI18n:              facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/title_i18n' ) ),
-        title:                  facultyDatabase.import( path.join( serverSettings.projectRoot, '/models/faculty/tables/title' ) ),
+        conferenceI18n:         facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/conference_i18n' ) ),
+        conference:             facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/conference' ) ),
+        departmentI18n:         facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/department_i18n' ) ),
+        department:             facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/department' ) ),
+        educationI18n:          facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/education_i18n' ) ),
+        education:              facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/education' ) ),
+        experienceI18n:         facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/experience_i18n' ) ),
+        experience:             facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/experience' ) ),
+        researchGroup:          facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/research_group' ) ),
+        awardI18n:              facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/award_i18n' ) ),
+        award:                  facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/award' ) ),
+        patentI18n:             facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/patent_i18n' ) ),
+        patent:                 facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/patent' ) ),
+        profileI18n:            facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/profile_i18n' ) ),
+        profile:                facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/profile' ) ),
+        projectI18n:            facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/project_i18n' ) ),
+        project:                facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/project' ) ),
+        publicationI18n:        facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/publication_i18n' ) ),
+        publication:            facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/publication' ) ),
+        specialtyI18n:          facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/specialty_i18n' ) ),
+        technologyTransfer:     facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/technology_transfer' ) ),
+        technologyTransferI18n: facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/technology_transfer_i18n' ) ),
+        titleI18n:              facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/title_i18n' ) ),
+        title:                  facultyDatabase.import( path.join( projectRoot, '/models/faculty/tables/title' ) ),
     };
 
     // Translation relationship.

@@ -9,8 +9,6 @@ import {
 
 // Announcement api URL prefix.
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
-const announcementBriefingTop = document.getElementById( 'announcement__brefings--top' );
-const announcementBriefing = document.getElementById( 'announcement__brefings' );
 
 /**
  * Construct single default tag.
@@ -26,7 +24,11 @@ const announcementBriefing = document.getElementById( 'announcement__brefings' )
 export const singleDefaultTag = {
     // `defaultTag` is used as default tag to get announcement ( OR operation ),
     // its type must be 'string' and cannot be null.
-    defaultTag: null,
+    defaultTag:              null,
+    announcementBriefingTop: null,
+    announcementBriefing:    null,
+    briefingTopNum:          null,
+    briefingNum:             null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );
@@ -48,8 +50,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
-        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
+        .then( data => renderBriefings( singleDefaultTag.announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefingTop, err ) );
     },
 
     /**
@@ -85,12 +87,12 @@ export const singleDefaultTag = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( announcementBriefing, data );
+            renderBriefings( singleDefaultTag.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
         } )
-        .catch( err => renderBriefingsError( announcementBriefing, err ) );
+        .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefing, err ) );
     },
 
     getPinnedAnnouncementsByTags () {
@@ -116,8 +118,8 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
-        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
+        .then( data => renderBriefings( singleDefaultTag.announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefingTop, err ) );
     },
 
     /**
@@ -154,12 +156,12 @@ export const singleDefaultTag = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( announcementBriefing, data );
+            renderBriefings( singleDefaultTag.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
         } )
-        .catch( err => renderBriefingsError( announcementBriefing, err ) );
+        .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefing, err ) );
     },
 
     /**
@@ -246,7 +248,11 @@ export const singleDefaultTag = {
 export const multipleDefaultTags = {
     // If default tags is empty array, then it is used by route `announcement/all`.
     // Otherwise it is used as multiple default tags to get announcement ( OR operation ).
-    defaultTags: [],
+    defaultTags:             [],
+    announcementBriefingTop: null,
+    announcementBriefing:    null,
+    briefingTopNum:          null,
+    briefingNum:             null,
 
     getAllPinnedAnnouncements () {
         const { startTime, endTime, language, } = QueryString.getFilters( null );
@@ -268,8 +274,8 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefingTop, data ) )
-        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
+        .then( data => renderBriefings( multipleDefaultTags.announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefingTop, err ) );
     },
 
     /**
@@ -305,12 +311,12 @@ export const multipleDefaultTags = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( announcementBriefing, data );
+            renderBriefings( multipleDefaultTags.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
         } )
-        .catch( err => renderBriefingsError( announcementBriefing, err ) );
+        .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefing, err ) );
     },
 
     getPinnedAnnouncementsByTags () {
@@ -332,8 +338,8 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( announcementBriefing, data ) )
-        .catch( err => renderBriefingsError( announcementBriefingTop, err ) );
+        .then( data => renderBriefings( multipleDefaultTags.announcementBriefingTop, data ) )
+        .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefingTop, err ) );
     },
 
     /**
@@ -367,12 +373,12 @@ export const multipleDefaultTags = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( announcementBriefing, data );
+            renderBriefings( multipleDefaultTags.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
         } )
-        .catch( err => renderBriefingsError( announcementBriefing, err ) );
+        .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefing, err ) );
     },
 
     /**

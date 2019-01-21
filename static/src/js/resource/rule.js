@@ -3,4 +3,6 @@ import { singleDefaultTagFilter, } from 'static/src/js/components/announcement/f
 
 header( document.getElementById( 'header' ) );
 
-singleDefaultTagFilter( 'rule' );
+singleDefaultTagFilter( 'rule',
+    document.getElementById( 'announcement__brefings--top' ),
+    document.getElementById( 'announcement__brefings' ), );

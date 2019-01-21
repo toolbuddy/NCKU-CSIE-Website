@@ -48,4 +48,12 @@ router.get( /^\/calendar$/, ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.languageId }.html` ) );
 } );
 
+/**
+ * Resolve URL `/error`.
+ */
+
+router.get( /^\/error$/, ( req, res ) => {
+    res.sendFile( path.join( projectRoot, `/static/dist/html/home/error.${ req.query.language }.html` ) );
+} );
+
 export default router;

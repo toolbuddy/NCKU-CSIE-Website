@@ -23,13 +23,10 @@ export default async ( databaseName ) => {
         config.password,
         {
             host:             config.domainName,
-            dialect:          config.protocol,
+            dialect:          config.dialect,
             operatorsAliases: false,
             logging:          false,
-            dialectOptions:   {
-                useUTC:   false,
-            },
-            timezone: '+08:00',
+            freezeTableName: true,
         }
     );
 

@@ -2,7 +2,7 @@
 mixin cards__card( profile = {} )
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'more':   'Read more',
         'email':  'Email',
         'office': 'Office',
@@ -16,7 +16,7 @@ mixin cards__card( profile = {} )
           '4': 'IMIS',
         },
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'more':   '更多資訊',
         'email':  '信箱',
         'office': '辦公室',
@@ -46,7 +46,7 @@ mixin cards__card( profile = {} )
       if profile.departments
         aside.intro__departments.departments
           each department in profile.departments
-            span.departments__department( data = `${ department.type }` )= i18n[ language.id ].department[ department.type ]
+            span.departments__department( data = `${ department.type }` )= i18n[ LANG.id ].department[ department.type ]
 
       //- Faculty's name.
       if profile.name
@@ -61,26 +61,26 @@ mixin cards__card( profile = {} )
       //- Faculty's email.
       if profile.email
         aside.intro__email.email
-          span.email__text.text= `${ i18n[ language.id ].email }: `
+          span.email__text.text= `${ i18n[ LANG.id ].email }: `
             a.text__link( href = `mailto:${ profile.email }` )= profile.email
 
       //- Faculty owns some offices, including address and phone.
 
       if profile.officeAddress
-        address.intro__address= `${ i18n[ language.id ].office }: ${ profile.officeAddress }`
+        address.intro__address= `${ i18n[ LANG.id ].office }: ${ profile.officeAddress }`
       if profile.officeTel
-        - const officeTel = `${ i18n[ language.id ].tel }: ${ profile.officeTel.split(',').join( ` ${ i18n[ language.id ].ext } ` ) }`
+        - const officeTel = `${ i18n[ LANG.id ].tel }: ${ profile.officeTel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
         a.intro__phone( href = `tel:${ profile.officeTel }` )= officeTel
 
       //- Faculty run some labs.
       if profile.labName
         aside.intro__lab.lab
-          span.lab__text.text= `${ i18n[ language.id ].lab }: `
+          span.lab__text.text= `${ i18n[ LANG.id ].lab }: `
             a.text__link( href = profile.labWeb )= `${ profile.labName }`
 
       //- Faculty's detail information link.
       p.intro__more
-        a( href = `/about/faculty/${ profile.profileId }?language=${ language.id }` )= i18n[ language.id ].more
+        a( href = `/about/faculty/${ profile.profileId }?language=${ LANG.id }` )= i18n[ LANG.id ].more
 
 //- main
     Construct all faculty information with `cards__card`.

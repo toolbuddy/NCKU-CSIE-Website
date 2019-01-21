@@ -3,7 +3,7 @@ extends /layouts/about.pug
 append data
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':       'Detail',
         'faculty':     'Faculties',
         'breadcrumb': {
@@ -43,7 +43,7 @@ append data
           'period':    'Period',
         },
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':       '詳細資料',
         'faculty':     '師資陣容',
         'breadcrumb': {
@@ -110,11 +110,11 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-  +banner( i18n[ language.id ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language.id ].breadcrumb.home, url: '' },
-    { text: i18n[ language.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ language.id ].breadcrumb.faculty, url: 'about/faculty' },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+    { text: i18n[ LANG.id ].breadcrumb.faculty, url: 'about/faculty' },
     { text: profile.name },
   ] )
 append content
@@ -129,22 +129,22 @@ append content
   section.profile
     aside.profile__departments.departments
       each department in departments
-        span.departments__department= i18n[ language.id ].department[ department.type ]
+        span.departments__department= i18n[ LANG.id ].department[ department.type ]
     aside.profile__offices.offices
-      address.offices__address= `${ i18n[ language.id ].office }： ${ profile.office.address }`
-      - const officePhone = `${ i18n[ language.id ].tel }: ${ profile.office.tel.split(',').join( ` ${ i18n[ language.id ].ext } ` ) }`
+      address.offices__address= `${ i18n[ LANG.id ].office }： ${ profile.office.address }`
+      - const officePhone = `${ i18n[ LANG.id ].tel }: ${ profile.office.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
       a.offices__phone( href = `tel:${ profile.office.tel }` )= officePhone
     a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
     aside.profile__labs.labs
       if profile.lab
-        a.labs__lab( href = profile.lab.labWeb )= `${ i18n[ language.id ].lab }: ${ profile.lab.name }`
-        address.labs__address= `${ i18n[ language.id ].address }: ${ profile.lab.address }`
-        - const labTel = `${ i18n[ language.id ].tel }: ${ profile.lab.tel.split(',').join( ` ${ i18n[ language.id ].ext } ` ) }`
+        a.labs__lab( href = profile.lab.labWeb )= `${ i18n[ LANG.id ].lab }: ${ profile.lab.name }`
+        address.labs__address= `${ i18n[ LANG.id ].address }: ${ profile.lab.address }`
+        - const labTel = `${ i18n[ LANG.id ].tel }: ${ profile.lab.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
         a.labs__tel( href = `tel:${ profile.lab.tel }` )= labTel
     if profile.personalWeb
       a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
   section.education
-    h2.education__title= i18n[ language.id ].education
+    h2.education__title= i18n[ LANG.id ].education
     each education in educations
       ul.education__list.list
         li.list__from= education.from
@@ -152,9 +152,9 @@ append content
         li.list__nation= education.nation
         li.list__school= education.school
         li.list__major= education.major
-        li.list__degree= i18n[ language.id ].degree[ education.degree ]
+        li.list__degree= i18n[ LANG.id ].degree[ education.degree ]
   section.experience
-    h2.education__title= i18n[ language.id ].experience
+    h2.education__title= i18n[ LANG.id ].experience
     each experience in experiences
       ul.experience__list.list
         li.list__from= experience.from
@@ -163,7 +163,7 @@ append content
         li.list__department= experience.department
         li.list__title= experience.title
   section.award
-    h2.award__title= i18n[ language.id ].award
+    h2.award__title= i18n[ LANG.id ].award
     - awards.sort( ( awardA, awardB ) => awardA.awardYear - awardB.awardYear )
     each award in awards
       if award.awardYear !== 0
@@ -172,24 +172,24 @@ append content
         each awardName in award.awardName
           li.list__name= awardName
   section.publication
-    h2.publication__title= i18n[ language.id ].publication
+    h2.publication__title= i18n[ LANG.id ].publication
     h3.publication__paper Papers
     ul.publication__paperList.paperList
       each publication in publications
         li.paperList__data= publication.publication
   if patents.length !== 0
     section.patent
-      h2.patent__title= i18n[ language.id ].patent.title
+      h2.patent__title= i18n[ LANG.id ].patent.title
       table.patent__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__type= i18n[ language.id ].patent.type
-            th.row__name= i18n[ language.id ].patent.name
-            th.row__nation= i18n[ language.id ].patent.nation
-            th.row__owner= i18n[ language.id ].patent.owner
-            th.row__inventor= i18n[ language.id ].patent.inventor
-            th.row__number= i18n[ language.id ].patent.number
-            th.row__date= i18n[ language.id ].patent.period
+            th.row__type= i18n[ LANG.id ].patent.type
+            th.row__name= i18n[ LANG.id ].patent.name
+            th.row__nation= i18n[ LANG.id ].patent.nation
+            th.row__owner= i18n[ LANG.id ].patent.owner
+            th.row__inventor= i18n[ LANG.id ].patent.inventor
+            th.row__number= i18n[ LANG.id ].patent.number
+            th.row__date= i18n[ LANG.id ].patent.period
         tbody.table__body.body
           each patent in patents
             tr.body__row.row
@@ -202,16 +202,16 @@ append content
               td.row__date= `${ patent.issue_date ? patent.issue_date : '' } ~ ${ patent.expire_date ? patent.expire_date : '' }`
   if technologyTransfers.length !== 0
     section.transfer
-      h2.transfer__title= i18n[ language.id ].technologyTransfer.title
+      h2.transfer__title= i18n[ LANG.id ].technologyTransfer.title
       table.transfer__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__index= i18n[ language.id ].technologyTransfer.index
-            th.row__technologyName= i18n[ language.id ].technologyTransfer.technologyName
-            th.row__patentName= i18n[ language.id ].technologyTransfer.patentName
-            th.row__authorizingParty= i18n[ language.id ].technologyTransfer.authorizingParty
-            th.row__authorizedParty= i18n[ language.id ].technologyTransfer.authorizedParty
-            th.row__period= i18n[ language.id ].technologyTransfer.period
+            th.row__index= i18n[ LANG.id ].technologyTransfer.index
+            th.row__technologyName= i18n[ LANG.id ].technologyTransfer.technologyName
+            th.row__patentName= i18n[ LANG.id ].technologyTransfer.patentName
+            th.row__authorizingParty= i18n[ LANG.id ].technologyTransfer.authorizingParty
+            th.row__authorizedParty= i18n[ LANG.id ].technologyTransfer.authorizedParty
+            th.row__period= i18n[ LANG.id ].technologyTransfer.period
         tbody.table__body.body
           each technologyTransfer, index in technologyTransfers
             tr.body__row.row
@@ -223,13 +223,13 @@ append content
               th.row__period= `${ technologyTransfer.from ? technologyTransfer.from : '' } ~ ${ technologyTransfer.to ? technologyTransfer.to : '' }`
   section.project
     if projects[ '0' ].length !== 0
-      h2.project__title= i18n[ language.id ].project[ '0' ]
+      h2.project__title= i18n[ LANG.id ].project[ '0' ]
       table.project__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__name= i18n[ language.id ].project.name
-            th.row__period= i18n[ language.id ].project.period
-            th.row__support= i18n[ language.id ].project.support
+            th.row__name= i18n[ LANG.id ].project.name
+            th.row__period= i18n[ LANG.id ].project.period
+            th.row__support= i18n[ LANG.id ].project.support
         tbody.table__body.body
           each project in projects[ '0' ]
             tr.body__row.row
@@ -237,13 +237,13 @@ append content
               td.row__period= `${ project.from ? project.from : '' } ~ ${ project.to ? project.to : '' }`
               td.row__support= project.support
     if projects[ '1' ].length !== 0
-      h2.project__title= i18n[ language.id ].project[ '1' ]
+      h2.project__title= i18n[ LANG.id ].project[ '1' ]
       table.project__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__name= i18n[ language.id ].project.name
-            th.row__period= i18n[ language.id ].project.period
-            th.row__support= i18n[ language.id ].project.support
+            th.row__name= i18n[ LANG.id ].project.name
+            th.row__period= i18n[ LANG.id ].project.period
+            th.row__support= i18n[ LANG.id ].project.support
         tbody.table__body.body
           each project in projects[ '1' ]
             tr.body__row.row

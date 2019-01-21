@@ -3,17 +3,17 @@ extends /layouts/about.pug
 append data
   -
     const i18n= Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Staff',
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '行政人員',
       },
     } );
     const currentRoute = 'about/staff';
 
 append title
-  +title( i18n[ language.id ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'about/staff' )

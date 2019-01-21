@@ -25,13 +25,8 @@ Object.defineProperties( config, {
     'port': {
         value: 3306,
     },
-    'protocol': {
-        value: 'mysql',
-    },
-    'connectionString': {
-        value ( databaseName ) {
-            return `${ this.protocol }://${ this.username }:${ this.password }@${ this.domainName }:${ this.port }/${ databaseName }`;
-        },
+    'dialect': {
+        value: 'mysql'
     },
 } );
 

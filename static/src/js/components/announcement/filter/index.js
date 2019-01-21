@@ -1,17 +1,30 @@
 import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
+import tagUtils from 'settings/components/tags/utils.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
 
 // Single default tag filter constructor.
-export function singleDefaultTagFilter ( tag = null ) {
+export function singleDefaultTagFilter (
+        tag = null,
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = defaultValue.announcementsPerPage,
+        briefingNum = defaultValue.announcementsPerPage
+) {
     // Set default tag for query functions.
-    singleDefaultTag.defaultTag = tag;
+    const tagNum = tagUtils.tagNameToNum( tag, 'en-US' );
+    singleDefaultTag.defaultTag = tagNum;
+    singleDefaultTag.announcementBriefingTop = briefingTopObj;
+    singleDefaultTag.announcementBriefing = briefingObj;
+    singleDefaultTag.briefingTopNum = briefingTopNum;
+    singleDefaultTag.briefingNum = briefingNum;
 
     // Render filter.
     renderFilter( tag );
 
     const urlOnChange = setURLOnChange(
-        singleDefaultTag.defaultTag,
+        tag,
         singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
@@ -40,9 +53,23 @@ export function singleDefaultTagFilter ( tag = null ) {
 
 
 // Multiple default tags filter constructor.
-export function multipleDefaultTagsFilter ( tags = [] ) {
+export function multipleDefaultTagsFilter (
+        tags = [],
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = defaultValue.announcementsPerPage,
+        briefingNum = defaultValue.announcementsPerPage
+) {
     // Set default tags for query functions.
-    multipleDefaultTags.defaultTags = tags;
+    const tagsNum = [];
+    tags.forEach( ( tag ) => {
+        tagsNum.push( tagUtils.tagNameToNum( tag, 'en-US' ) );
+    } );
+    multipleDefaultTags.defaultTags = tagsNum;
+    multipleDefaultTags.announcementBriefingTop = briefingTopObj;
+    multipleDefaultTags.announcementBriefing = briefingObj;
+    multipleDefaultTags.briefingTopNum = briefingTopNum;
+    multipleDefaultTags.briefingNum = briefingNum;
 
     // Render filter, must be `tags__tag--all`.
     renderFilter( 'all' );

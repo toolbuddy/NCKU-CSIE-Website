@@ -1,5 +1,5 @@
 import associations from 'models/announcement/operation/associations.js';
-import languageSettings from 'settings/language/config.js';
+import language from 'settings/language/config.js';
 
 function isLangExist ( data, language ) {
     for ( let i = 0; i < data.length; i++ ) {
@@ -12,7 +12,7 @@ function isLangExist ( data, language ) {
 export default async ( { announcementData, } = {} ) => {
     const table = await associations();
 
-    languageSettings.support.forEach( ( lang ) => {
+    language.support.forEach( ( lang ) => {
         if ( !isLangExist( announcementData.announcementI18n, lang ) )
             throw new Error( `Missing language for announcementI18n: ${ lang }` );
 

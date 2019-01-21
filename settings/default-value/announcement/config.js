@@ -18,4 +18,4 @@ Object.defineProperties( defaultValue, {
     },
 } );
 
-export default defaultValue;
+export { defaultValue, };

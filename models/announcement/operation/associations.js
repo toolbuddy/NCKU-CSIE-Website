@@ -10,9 +10,10 @@ export default async () => {
         announcementFile:     announcementDatabase.import( path.join( tablesRoot, 'announcement_file' ) ),
         announcementI18n:     announcementDatabase.import( path.join( tablesRoot, 'announcement_i18n' ) ),
         announcement:         announcementDatabase.import( path.join( tablesRoot, 'announcement' ) ),
-        announcementTag:      announcementDatabase.import( path.join( tablesRoot, 'announcement_tag' ) ),
-        tagI18n:              announcementDatabase.import( path.join( tablesRoot, 'tag_i18n' ) ),
         tag:                  announcementDatabase.import( path.join( tablesRoot, 'tag' ) ),
+
+        // AnnouncementTag:      announcementDatabase.import( path.join( tablesRoot, 'announcement_tag' ) ),
+        // tagI18n:              announcementDatabase.import( path.join( tablesRoot, 'tag_i18n' ) ),
     };
 
     // Translation relationship.
@@ -33,12 +34,14 @@ export default async () => {
     } );
 
     // `tag` has many translations.
+    /*
     table.tag.hasMany( table.tagI18n, {
         as:         'tagI18n',
         foreignKey: 'tagId',
         sourceKey:  'tagId',
         onDelete:   'CASCADE',
     } );
+    */
 
     // Announcement relationship.
     // `announcement` has many `file`.
@@ -50,13 +53,14 @@ export default async () => {
     } );
 
     // `announcement` has many `announcementTag`.
-    table.announcement.hasMany( table.announcementTag, {
-        as:         'announcementTag',
+    table.announcement.hasMany( table.tag, {
+        as:         'tag',
         foreignKey: 'announcementId',
         sourceKey:  'announcementId',
         onDelete:   'CASCADE',
     } );
 
+    /*
     // `announcementTag` has many `tagI18n`.
     table.announcementTag.hasMany( table.tagI18n, {
         as:         'tagI18n',
@@ -64,7 +68,7 @@ export default async () => {
         sourceKey:  'tagId',
         onDelete:   'CASCADE',
     } );
-
+    */
     // Any one who use this module should remember to close connection,
     // like `table.database.close()`.
     table.database = announcementDatabase;

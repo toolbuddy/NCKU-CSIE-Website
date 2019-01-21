@@ -4,4 +4,6 @@ import { multipleDefaultTagsFilter, } from 'static/src/js/components/announcemen
 header( document.getElementById( 'header' ) );
 
 // Construct filter with no default tags.
-multipleDefaultTagsFilter( [] );
+multipleDefaultTagsFilter( [],
+    document.getElementById( 'announcement__brefings--top' ),
+    document.getElementById( 'announcement__brefings' ), );

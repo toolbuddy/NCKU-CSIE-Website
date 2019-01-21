@@ -5,7 +5,7 @@
 mixin filters()
   -
     const i18n = Object.freeze( {
-      [ language.getLanguageId( 'en-US' ) ]: {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'departments': [ 'dept. CSIE', 'inst. CSIE', 'Joint Appointment', 'Adjunct Professor' ],
         'researchGroup': [
           '數位生活科技與軟體技術',
@@ -17,7 +17,7 @@ mixin filters()
           '製造工程',
         ],
       },
-      [ language.getLanguageId( 'zh-TW' ) ]: {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'departments': [ '資訊系', '資訊所', '合併師資', '兼任師資' ],
         'researchGroup': [
           '數位生活科技與軟體技術',
@@ -31,7 +31,7 @@ mixin filters()
       },
     } );
   section#filters.filters
-    each value, index in i18n[ language.id ].departments
+    each value, index in i18n[ LANG.id ].departments
       button.filters__filter.filters__filter--dept( data = index )= value
-    each value, index in i18n[ language.id ].researchGroup
+    each value, index in i18n[ LANG.id ].researchGroup
       button.filters__filter.filters__filter--research( research-group = index )= value

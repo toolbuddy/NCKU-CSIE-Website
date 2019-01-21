@@ -5,6 +5,9 @@ import {
     controlOnClick,
 } from 'static/src/js/components/announcement/filter/event.js';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
+import tagUtils from 'settings/components/tags/utils.js';
+import languageUtils from 'settings/language/utils.js';
+
 
 /**
  * Activate `tags__tag--{ defaultTagName }` if:
@@ -39,7 +42,7 @@ export function renderFilter ( defaultTagName = 'all' ) {
     let activeTagCount = 0;
 
     Reflect.ownKeys( allTags ).forEach( ( tag ) => {
-        if ( currentTags.indexOf( tag ) !== -1 ) {
+        if ( currentTags.indexOf( tagUtils.tagNameToNum( tag, 'en-US' ) ) !== -1 ) {
             activeTagCount += 1;
             classAdd( allTags[ tag ], 'tags__tag--active' );
         }
@@ -153,18 +156,51 @@ export function renderPage () {
 }
 
 export function renderBriefings ( container, announcements ) {
+    /* Hide no-result */
+
     container.innerHTML = '';
+    const noResult = container.parentElement.getElementsByClassName( 'no-result' )[ 0 ];
+    if ( typeof ( noResult ) !== 'undefined' )
+        classAdd( noResult, 'no-result--hidden' );
+
+    /* Hide loading */
+
+    const loading = container.parentElement.getElementsByClassName( 'loading' )[ 0 ];
+    if ( typeof ( loading ) !== 'undefined' )
+        classAdd( loading, 'loading--hidden' );
+
+    /* Render briefings */
+
     announcements.forEach( ( announcement ) => {
         container.innerHTML += briefing( {
             id:      announcement.id,
             title:   announcement.title,
             time:    timeFormating( announcement.updateTime ),
             content: announcement.content,
-            tags:    announcement.tags.map( tag => tag.name ),
+            tags:    announcement.tags.map( tag => tagUtils.tagNumToName( tag.type, languageUtils.currentLanguage ) ),
         } );
     } );
 }
 
 export function renderBriefingsError ( container, errorMessage ) {
+    /* Hide loading */
+
+    const loading = container.parentElement.getElementsByClassName( 'loading' )[ 0 ];
+    if ( typeof ( loading ) !== 'undefined' )
+        classAdd( loading, 'loading--hidden' );
+
+    /* Render no-result */
+
+    const noResult = container.parentElement.getElementsByClassName( 'no-result--hidden' )[ 0 ];
+    if ( typeof ( noResult ) !== 'undefined' )
+        classRemove( noResult, 'no-result--hidden' );
     container.innerHTML = errorMessage;
+    container.innerHTML = '';
+}
+
+export function renderLoading () {
+    Array.from( document.getElementsByClassName( 'loading--hidden' ) ).forEach( ( item ) => {
+        if ( typeof ( item ) !== 'undefined' )
+            classRemove( item, 'loading--hidden' );
+    } );
 }

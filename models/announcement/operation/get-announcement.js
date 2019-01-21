@@ -1,7 +1,28 @@
 import associations from 'models/announcement/operation/associations.js';
-import defaultValue from 'settings/default-value/announcement/config.js';
+import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import languageUtils from 'settings/language/utils.js';
 
-export default async ( { language = defaultValue.language, announcementId = 1, } = {} ) => {
+/**
+ * A function for getting a specific announcement in specific languages by the id of the announcement.
+ *
+ * @async
+ * @param {string} [language = defaultValue.language]   - Language option of the announcements.
+ * @param {number} [announcementId=1]                   - Id of the requested announcement.
+ * @returns {object}                                      Related information of the requested announcement, including:
+ * - id
+ * - title
+ * - content
+ * - author
+ * - publishTime
+ * - updateTime
+ * - views
+ * - ispinned
+ * - files
+ * - tags.
+ *
+ */
+
+export default async ( { language = languageUtils.getLanguageId( defaultValue.language ), announcementId = 1, } = {} ) => {
     const table = await associations();
 
     const data = await table.announcement.findOne( {
@@ -18,21 +39,8 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
                 },
             },
             {
-                model:   table.announcementTag,
-                as:      'announcementTag',
-                include: [
-                    {
-                        model:      table.tagI18n,
-                        as:         'tagI18n',
-                        attributes: [
-                            'tagId',
-                            'name',
-                        ],
-                        where: {
-                            language: 'en-US',
-                        },
-                    },
-                ],
+                model:   table.tag,
+                as:      'tag',
             },
             {
                 model:   table.announcementFile,
@@ -42,17 +50,13 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
                         model:      table.announcementFileI18n,
                         as:         'announcementFileI18n',
                         attributes: [
-                            'url',
+                            'filepath',
                             'name',
                         ],
                         where: {
                             language,
                         },
                     },
-                ],
-                attributes: [
-                    'type',
-                    'uploadTime',
                 ],
             },
         ],
@@ -80,16 +84,13 @@ export default async ( { language = defaultValue.language, announcementId = 1, }
             isPinned:    announcement.isPinned,
             files:       announcement.announcementFile.map(
                 announcementFile => ( {
-                    uploadTime: announcementFile.uploadTime,
-                    type:       announcementFile.type,
-                    url:        announcementFile.announcementFileI18n[ 0 ].url,
+                    url:        announcementFile.announcementFileI18n[ 0 ].filepath,
                     name:       announcementFile.announcementFileI18n[ 0 ].name,
                 } ),
             ),
-            tags:        announcement.announcementTag.map(
-                announcementTag => ( {
-                    id:   announcementTag.tagI18n[ 0 ].tagId,
-                    name: announcementTag.tagI18n[ 0 ].name,
+            tags:        announcement.tag.map(
+                tag => ( {
+                    type: tag.type,
                 } )
             ),
         } )

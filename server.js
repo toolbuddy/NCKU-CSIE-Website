@@ -1,6 +1,7 @@
 import path from 'path';
 
 import express from 'express';
+import compression from 'compression';
 
 import { port, projectRoot, } from 'settings/server/config.js';
 import language from 'settings/language/middleware';
@@ -26,6 +27,11 @@ server.listen( port );
 server.locals.basedir = path.join( projectRoot, '/static/src/pug' );
 server.set( 'view engine', 'pug' );
 server.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
+
+/**
+ * Setup utils middleware.
+ */
+server.use( compression() );
 
 /**
  * Setup static files routes.

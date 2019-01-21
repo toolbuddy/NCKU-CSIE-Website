@@ -1,5 +1,4 @@
 import path from 'path';
-
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import autoprefixer from 'autoprefixer';
@@ -64,6 +63,7 @@ export default {
 
         // Route `home`
         'home/index': path.join( sassRoot, 'home/index.scss' ),
+        'home/error': path.join( sassRoot, 'home/error.scss' ),
 
         // Route `research`
         'research/index':        path.join( sassRoot, 'research/index.scss' ),
@@ -150,6 +150,7 @@ export default {
              */
 
             {
+                // Rules for SCSS files.
                 test: /\.scss$/,
                 use:  [
                     {
@@ -199,6 +200,7 @@ export default {
              */
 
             {
+                // Convert image binary file into data url.
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [
                     'url-loader',
