@@ -16,15 +16,4 @@ class UrlUtils {
     }
 }
 
-// Function url( { href = '', query = null } = {} ) {
-//     if ( !query )
-//         return SERVER.host + '/' + href + '/' + '?languageId=' + LANG.id;
-//     const queryStr = Reflect.ownKeys( query )
-//         .map( key => key + '=' + query[ key ] )
-//         .join( '&' );
-//     if( query.languageId )
-//         return SERVER.host + '/' + href + '?' + queryStr;
-//     return SERVER.host + '/' + href + '?' + queryStr + '&languageId=' + LANG.id;
-// }
-
 export default UrlUtils;

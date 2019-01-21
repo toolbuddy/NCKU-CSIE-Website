@@ -10,7 +10,7 @@ Object.defineProperties( defaultValue, {
     'page': {
         value: 1,
     },
-    'langauge': {
+    'language': {
         value: 'zh-TW',
     },
     'announcementsPerPage': {
@@ -18,4 +18,4 @@ Object.defineProperties( defaultValue, {
     },
 } );
 
-export { defaultValue, };
+export default defaultValue;

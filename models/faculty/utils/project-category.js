@@ -11,15 +11,17 @@ class ProjectCategoryUtils {
     }
 
     static isSupportedType ( typeObj ) {
+        //if ( typeof ( typeObj.typeName ) !== 'string' )
+        //    throw new TypeError( 'Queried projectType should be a string.' );
         if ( typeof ( typeObj.typeName ) !== 'string' )
-            throw new TypeError( 'Queried projectType should be a string.' );
+            return false;
         return projectCategoryMap[ typeObj.languageId ].support.includes( typeObj.typeName );
     }
 
     static isSupportedTypeId ( typeId ) {
-        if ( typeof ( Number( typeId ) ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        return ProjectCategoryUtils.supportedTypeId.includes( Number( typeId ) );
+        //if ( typeof ( Number( typeId ) ) !== 'number' )
+        //    throw new TypeError( 'Queried id should be a number.' );
+        return ProjectCategoryUtils.supportedTypeId.includes( typeId );
     }
 
     static supportedType ( languageId ) {
@@ -33,9 +35,9 @@ class ProjectCategoryUtils {
     static getTypeId ( typeObj ) {
         if ( typeof ( typeObj.typeName ) !== 'string' )
             throw new TypeError( 'Queried projectType should be a string.' );
-        if ( !ProjectCategoryUtils.isSupportedType( typeObj.typeName, typeObj.languageId ) )
+        if ( !ProjectCategoryUtils.isSupportedType( typeObj ) )
             throw new Error( 'Queried projectType is not supported.' );
-        return projectCategoryMap[ LanguageUtils.getLanguageId( typeObj.languageId ) ].support.indexOf( typeObj.typeName );
+        return projectCategoryMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
     }
 
     static getTypeById ( typeObj ) {

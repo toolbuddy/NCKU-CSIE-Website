@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node bin/server.min.js",
     "develop": "npm-run-all --parallel watch nodemon browser-sync",
+    "test": "cross-env NODE_PATH=./ mocha --compilers js:babel-core/register ./test/**/*.js",
     "nodemon": "nodemon --config dev/server/nodemon.json bin/server.min.js",
     "browser-sync": "browser-sync --config dev/server/bs-config.js start",
     "pre-build": "npm-run-all pre-build:*",
@@ -88,6 +89,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "browser-sync": "^2.26.3",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "cssnano": "^4.1.7",
     "eslint": "^5.9.0",
@@ -107,6 +109,7 @@
     "sass-loader": "^7.1.0",
     "sequelize-auto": "^0.4.29",
     "shx": "^0.3.2",
+    "sinon": "^7.2.3",
     "style-loader": "^0.23.1",
     "stylelint": "^9.8.0",
     "stylelint-scss": "^3.4.0",
