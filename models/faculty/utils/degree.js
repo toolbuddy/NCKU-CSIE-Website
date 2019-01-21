@@ -11,17 +11,17 @@ class DegreeTypeUtils {
     }
 
     static isSupportedType ( typeObj ) {
-        if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
-            return false;
+        //if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
+        //    return false;
         if ( typeof ( typeObj.typeName ) !== 'string' )
             return false;
         return degreeMap[ typeObj.languageId ].support.includes( typeObj.typeName );
     }
 
     static isSupportedTypeId ( typeId ) {
-        typeId = Number( typeId );
-        if ( typeof ( typeId ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
+        //typeId = Number( typeId );
+        //if ( typeof ( typeId ) !== 'number' )
+        //    throw new TypeError( 'Queried id should be a number.' );
         return DegreeTypeUtils.supportedTypeId.includes( typeId );
     }
 
@@ -36,9 +36,9 @@ class DegreeTypeUtils {
     static getTypeId ( typeObj ) {
         if ( typeof ( typeObj.typeName ) !== 'string' )
             throw new TypeError( 'Queried degree should be a string.' );
-        if ( !DegreeTypeUtils.isSupportedType( typeObj.typeName, typeObj.languageId ) )
+        if ( !DegreeTypeUtils.isSupportedType( typeObj ) )
             throw new Error( 'Queried degree is not supported.' );
-        return degreeMap[ LanguageUtils.getLanguageId( typeObj.languageId ) ].support.indexOf( typeObj.typeName );
+        return degreeMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
     }
 
     static getTypeById ( typeObj ) {

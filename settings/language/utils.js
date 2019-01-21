@@ -2,14 +2,14 @@ import languageSettings from './config.js';
 
 class LanguageUtils {
     static isSupportedLanguage ( language ) {
-        if ( typeof ( language ) !== 'string' )
-            throw new TypeError( 'Queried language should be a string.' );
+        //if ( typeof ( language ) !== 'string' )
+        //    throw new TypeError( 'Queried language should be a string.' );
         return languageSettings.support.includes( language );
     }
 
     static isSupportedLanguageId ( id ) {
-        if ( typeof ( Number( id ) ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
+        //if ( typeof ( Number( id ) ) !== 'number' )
+        //    throw new TypeError( 'Queried id should be a number.' );
         return LanguageUtils.supportedLanguageId.includes( Number( id ) );
     }
 

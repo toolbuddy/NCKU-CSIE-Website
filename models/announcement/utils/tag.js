@@ -1,7 +1,7 @@
 import LanguageUtils from 'settings/language/utils.js';
 import tagMap from 'models/announcement/map/tag.js';
 
-class tagUtils {
+class TagUtils {
     static defaultType ( languageId ) {
         return tagMap[ languageId ].default;
     }
@@ -11,18 +11,18 @@ class tagUtils {
     }
 
     static isSupportedType ( typeObj ) {
-        if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
-            return false;
+        //if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
+        //    return false;
         if ( typeof ( typeObj.typeName ) !== 'string' )
             return false;
         return tagMap[ typeObj.languageId ].support.includes( typeObj.typeName );
     }
 
     static isSupportedTypeId ( typeId ) {
-        typeId = Number( typeId );
-        if ( typeof ( typeId ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        return tagUtils.supportedTypeId.includes( typeId );
+        //typeId = Number( typeId );
+        //if ( typeof ( typeId ) !== 'number' )
+        //    throw new TypeError( 'Queried id should be a number.' );
+        return TagUtils.supportedTypeId.includes( typeId );
     }
 
     static supportedType ( languageId ) {
@@ -36,9 +36,9 @@ class tagUtils {
     static getTypeId ( typeObj ) {
         if ( typeof ( typeObj.typeName ) !== 'string' )
             throw new TypeError( 'Queried tag should be a string.' );
-        if ( !tagUtils.isSupportedType( typeObj.typeName, typeObj.languageId ) )
+        if ( !TagUtils.isSupportedType( typeObj ) )
             throw new Error( 'Queried tag is not supported.' );
-        return tagMap[ LanguageUtils.getLanguageId( typeObj.languageId ) ].support.indexOf( typeObj.typeName );
+        return tagMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
     }
 
     static getTypeById ( typeObj ) {
@@ -50,4 +50,4 @@ class tagUtils {
     }
 }
 
-export default tagUtils;
+export default TagUtils;

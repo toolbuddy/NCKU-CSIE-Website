@@ -11,15 +11,17 @@ class DepartmentTypeUtils {
     }
 
     static isSupportedType ( typeObj ) {
+        //if ( typeof ( typeObj.typeName ) !== 'string' )
+        //    throw new TypeError( 'Queried departmentType should be a string.' );
         if ( typeof ( typeObj.typeName ) !== 'string' )
-            throw new TypeError( 'Queried departmentType should be a string.' );
+            return false;
         return departmentTypeMap[ typeObj.languageId ].support.includes( typeObj.typeName );
     }
 
     static isSupportedTypeId ( typeId ) {
-        if ( typeof ( Number( typeId ) ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        return DepartmentTypeUtils.supportedTypeId.includes( Number( typeId ) );
+        //if ( typeof ( Number( typeId ) ) !== 'number' )
+        //    throw new TypeError( 'Queried id should be a number.' );
+        return DepartmentTypeUtils.supportedTypeId.includes( typeId );
     }
 
     static supportedType ( languageId ) {
@@ -33,9 +35,9 @@ class DepartmentTypeUtils {
     static getTypeId ( typeObj ) {
         if ( typeof ( typeObj.typeName ) !== 'string' )
             throw new TypeError( 'Queried departmentType should be a string.' );
-        if ( !DepartmentTypeUtils.isSupportedType( typeObj.typeName, typeObj.languageId ) )
+        if ( !DepartmentTypeUtils.isSupportedType( typeObj ) )
             throw new Error( 'Queried departmentType is not supported.' );
-        return departmentTypeMap[ LanguageUtils.getLanguageId( typeObj.languageId ) ].support.indexOf( typeObj.typeName );
+        return departmentTypeMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
     }
 
     static getTypeById ( typeObj ) {
