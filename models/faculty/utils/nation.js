@@ -1,51 +1,93 @@
-import LanguageUtils from 'settings/language/utils.js';
-import nationMap from 'models/faculty/map/nation.js';
+/**
+ * NationUtils module.
+ *
+ * All `^default*` and `^get*` methods should only return one of the following types:
+ *     - `string`
+ *     - `number`
+ *     - `undefined`
+ * All `^is*` methods should only return `boolean`.
+ * All `^supported*` methods should return an `array` having following properties:
+ *     - `configurable: true`
+ *     - `writable: true`
+ *     - `enumerable: true`
+ *
+ * In each function call stack,
+ * function `LanguageUtils.isSupportedLanguageId` should only be called at most once,
+ * functions other than called function should also only be called at most once.
+ */
+
+import LanguageUtils from 'models/common/utils/language.js';
+import nationMap from 'models/faculty/maps/nation.js';
 
 class NationUtils {
-    static defaultType ( languageId ) {
-        return nationMap[ languageId ].default;
+    static defaultNation ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return nationMap[ languageId ].default;
     }
 
-    static get defaultTypeId () {
-        return nationMap[ LanguageUtils.defaultLanguageId ].support.indexOf( nationMap[ LanguageUtils.defaultLanguageId ].default );
+    static get defaultNationId () {
+        return nationMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .indexOf( nationMap[ LanguageUtils.defaultLanguageId ].default );
     }
 
-    static isSupportedType ( typeObj ) {
-        //if ( typeof ( typeObj.typeName ) !== 'string' )
-        //    throw new TypeError( 'Queried nation should be a string.' );
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            return false;
-        return nationMap[ typeObj.languageId ].support.includes( typeObj.typeName );
+    static supportedNation ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return Array.from( nationMap[ languageId ].support );
+        return [];
     }
 
-    static isSupportedTypeId ( typeId ) {
-        //if ( typeof ( Number( typeId ) ) !== 'number' )
-        //    throw new TypeError( 'Queried id should be a number.' );
-        return NationUtils.supportedTypeId.includes( typeId );
+    static get supportedNationId () {
+        return nationMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .map( ( {}, index ) => index );
     }
 
-    static supportedType ( languageId ) {
-        return Array.from( nationMap[ languageId ].support );
+    static isSupportedNation ( opt ) {
+        opt = opt || {};
+        const {
+            nation = null,
+            languageId = null,
+        } = opt;
+        if ( typeof ( nation ) === 'string' && LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            return nationMap[ languageId ]
+            .support
+            .includes( nation );
+        }
+        return false;
     }
 
-    static get supportedTypeId () {
-        return nationMap[ LanguageUtils.defaultLanguageId ].support.map( ( {}, index ) => index );
+    static isSupportedNationId ( nationId = null ) {
+        if ( typeof ( nationId ) === 'number' ) {
+            return NationUtils
+            .supportedNationId
+            .includes( nationId );
+        }
+        return false;
     }
 
-    static getTypeId ( typeObj ) {
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            throw new TypeError( 'Queried nation should be a string.' );
-        if ( !NationUtils.isSupportedType( typeObj ) )
-            throw new Error( 'Queried nation is not supported.' );
-        return nationMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
+    static getNationId ( opt ) {
+        opt = opt || {};
+        const {
+            nation = null,
+            languageId = null,
+        } = opt;
+        if ( NationUtils.isSupportedNation( { nation, languageId, } ) ) {
+            return nationMap[ languageId ]
+            .support
+            .indexOf( nation );
+        }
     }
 
-    static getTypeById ( typeObj ) {
-        if ( typeof ( typeObj.typeId ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        if ( !Number.isInteger( typeObj.typeId ) || typeObj.typeId < 0 || typeObj.typeId >= nationMap[ typeObj.languageId ].support.length )
-            throw new RangeError( 'Queried id out of range.' );
-        return String( nationMap[ typeObj.languageId ].support[ typeObj.typeId ] );
+    static getNationById ( opt ) {
+        opt = opt || {};
+        const {
+            nationId = null,
+            languageId = null,
+        } = opt;
+        if ( NationUtils.isSupportedNationId( nationId ) && LanguageUtils.isSupportedLanguageId( languageId ) )
+            return nationMap[ languageId ].support[ nationId ];
     }
 }
+
 export default NationUtils;

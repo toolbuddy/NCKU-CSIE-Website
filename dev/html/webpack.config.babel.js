@@ -1,6 +1,6 @@
 import path from 'path';
 
-import LanguageUtils from '../../settings/language/utils.js';
+import LanguageUtils from '../../models/common/utils/language.js';
 import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
@@ -176,7 +176,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                     getLanguageId: LanguageUtils.getLanguageId,
                                 },
                                 UTILS: {
-                                    url: ( new UrlUtils( host, languageId ) ).serverUrl,
+                                    url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
                                 },
                             },
                         },

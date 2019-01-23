@@ -222,7 +222,7 @@ mixin header()
 
       //- Language Choice
       //- Small screen version
-      section.navigation__LANG.language
+      section.navigation__language.language
         +image( {
           alt:       i18n[ LANG.id ].util.language,
           className: 'language__image',
@@ -233,7 +233,12 @@ mixin header()
           span.switch__icon
         ul.language__dropdown.dropdown
           li.dropdown__item.item.item--zh-TW
-            a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'zh-TW' ) } } ) )
+            a.item__link.link(
+              href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } )
+            )
               +image( {
                 alt:       '臺灣',
                 className: 'link__image',
@@ -266,7 +271,7 @@ mixin header()
 
     //- Language Choice
     //- Large screen version
-    section.header__LANG.language
+    section.header__language.language
       button.language__button.button
         +image( {
           alt:       i18n[ LANG.id ].util.language,

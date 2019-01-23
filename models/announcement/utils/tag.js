@@ -1,52 +1,92 @@
-import LanguageUtils from 'settings/language/utils.js';
-import tagMap from 'models/announcement/map/tag.js';
+/**
+ * TagUtils module.
+ *
+ * All `^default*` and `^get*` methods should only return one of the following ResearchGroups:
+ *     - `string`
+ *     - `number`
+ *     - `undefined`
+ * All `^is*` methods should only return `boolean`.
+ * All `^supported*` methods should return an `array` having following properties:
+ *     - `configurable: true`
+ *     - `writable: true`
+ *     - `enumerable: true`
+ *
+ * In each function call stack,
+ * function `LanguageUtils.isSupportedLanguageId` should only be called at most once,
+ * functions other than called function should also only be called at most once.
+ */
+
+import LanguageUtils from 'models/common/utils/language.js';
+import tagMap from 'models/announcement/maps/tag.js';
 
 class TagUtils {
-    static defaultType ( languageId ) {
-        return tagMap[ languageId ].default;
+    static defaultTag ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return tagMap[ languageId ].default;
     }
 
-    static get defaultTypeId () {
-        return tagMap[ LanguageUtils.defaultLanguageId ].support.indexOf( tagMap[ LanguageUtils.defaultLanguageId ].default );
+    static get defaultTagId () {
+        return tagMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .indexOf( tagMap[ LanguageUtils.defaultLanguageId ].default );
     }
 
-    static isSupportedType ( typeObj ) {
-        //if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
-        //    return false;
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            return false;
-        return tagMap[ typeObj.languageId ].support.includes( typeObj.typeName );
+    static supportedTag ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return Array.from( tagMap[ languageId ].support );
+        return [];
     }
 
-    static isSupportedTypeId ( typeId ) {
-        //typeId = Number( typeId );
-        //if ( typeof ( typeId ) !== 'number' )
-        //    throw new TypeError( 'Queried id should be a number.' );
-        return TagUtils.supportedTypeId.includes( typeId );
+    static get supportedTagId () {
+        return tagMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .map( ( {}, index ) => index );
     }
 
-    static supportedType ( languageId ) {
-        return Array.from( tagMap[ languageId ].support );
+    static isSupportedTag ( opt ) {
+        opt = opt || {};
+        const {
+            tag = null,
+            languageId = null,
+        } = opt;
+        if ( typeof ( tag ) === 'string' && LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            return tagMap[ languageId ]
+            .support
+            .includes( tag );
+        }
+        return false;
     }
 
-    static get supportedTypeId () {
-        return tagMap[ LanguageUtils.defaultLanguageId ].support.map( ( {}, index ) => index );
+    static isSupportedTagId ( tagId = null ) {
+        if ( typeof ( tagId ) === 'number' ) {
+            return TagUtils
+            .supportedTagId
+            .includes( tagId );
+        }
+        return false;
     }
 
-    static getTypeId ( typeObj ) {
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            throw new TypeError( 'Queried tag should be a string.' );
-        if ( !TagUtils.isSupportedType( typeObj ) )
-            throw new Error( 'Queried tag is not supported.' );
-        return tagMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
+    static getTagId ( opt ) {
+        opt = opt || {};
+        const {
+            tag = null,
+            languageId = null,
+        } = opt;
+        if ( TagUtils.isSupportedTag( { tag, languageId, } ) ) {
+            return tagMap[ languageId ]
+            .support
+            .indexOf( tag );
+        }
     }
 
-    static getTypeById ( typeObj ) {
-        if ( typeof ( typeObj.typeId ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        if ( !Number.isInteger( typeObj.typeId ) || typeObj.typeId < 0 || typeObj.typeId >= tagMap[ typeObj.languageId ].support.length )
-            throw new RangeError( 'Queried id out of range.' );
-        return String( tagMap[ typeObj.languageId ].support[ typeObj.typeId ] );
+    static getTagById ( opt ) {
+        opt = opt || {};
+        const {
+            tagId = null,
+            languageId = null,
+        } = opt;
+        if ( TagUtils.isSupportedTagId( tagId ) && LanguageUtils.isSupportedLanguageId( languageId ) )
+            return tagMap[ languageId ].support[ tagId ];
     }
 }
 

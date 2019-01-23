@@ -23,7 +23,7 @@ const router = express.Router();
  * Resolve URL `/resource`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
+router.get( '/', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/index.${ req.query.languageId }.html` ) );
 } );
 
@@ -31,7 +31,7 @@ router.get( /^\/$/, ( req, res ) => {
  * Resolve URL `/resource/rule`.
  */
 
-router.get( /^\/rule$/, ( req, res ) => {
+router.get( '/rule', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rule.${ req.query.languageId }.html` ) );
 } );
 
@@ -39,7 +39,7 @@ router.get( /^\/rule$/, ( req, res ) => {
  * Resolve URL `/resource/rent`.
  */
 
-router.get( /^\/rent$/, ( req, res ) => {
+router.get( '/rent', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rent.${ req.query.languageId }.html` ) );
 } );
 
@@ -47,7 +47,7 @@ router.get( /^\/rent$/, ( req, res ) => {
  * Resolve URL `/resource/fix`.
  */
 
-router.get( /^\/fix$/, ( req, res ) => {
+router.get( '/fix', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/fix.${ req.query.languageId }.html` ) );
 } );
 
@@ -55,7 +55,7 @@ router.get( /^\/fix$/, ( req, res ) => {
  * Resolve URL `/resource/ieet`.
  */
 
-router.get( /^\/ieet$/, ( req, res ) => {
+router.get( '/ieet', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/ieet.${ req.query.languageId }.html` ) );
 } );
 
@@ -63,7 +63,7 @@ router.get( /^\/ieet$/, ( req, res ) => {
  * Resolve URL `/resource/sitemap`.
  */
 
-router.get( /^\/sitemap$/, ( req, res ) => {
+router.get( '/sitemap', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/sitemap.${ req.query.languageId }.html` ) );
 } );
 
@@ -71,7 +71,7 @@ router.get( /^\/sitemap$/, ( req, res ) => {
  * Resolve URL `/resource/alumni`.
  */
 
-router.get( /^\/alumni$/, ( req, res ) => {
+router.get( '/alumni', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/resource/alumni.${ req.query.languageId }.html` ) );
 } );
 

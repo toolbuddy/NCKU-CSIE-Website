@@ -20,7 +20,7 @@ const router = express.Router();
  * Resolve URL `/`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
+router.get( '/', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.languageId }.html` ) );
 } );
 
@@ -28,7 +28,7 @@ router.get( /^\/$/, ( req, res ) => {
  * Resolve URL `/login`.
  */
 
-router.get( /^\/login$/, ( req, res ) => {
+router.get( '/login', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.languageId }.html` ) );
 } );
 
@@ -36,7 +36,7 @@ router.get( /^\/login$/, ( req, res ) => {
  * Resolve URL `/search`.
  */
 
-router.get( /^\/search$/, ( req, res ) => {
+router.get( '/search', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.languageId }.html` ) );
 } );
 
@@ -44,7 +44,7 @@ router.get( /^\/search$/, ( req, res ) => {
  * Resolve URL `/calender`.
  */
 
-router.get( /^\/calendar$/, ( req, res ) => {
+router.get( '/calendar', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.languageId }.html` ) );
 } );
 
@@ -52,7 +52,7 @@ router.get( /^\/calendar$/, ( req, res ) => {
  * Resolve URL `/error`.
  */
 
-router.get( /^\/error$/, ( req, res ) => {
+router.get( '/error', ( req, res ) => {
     res.sendFile( path.join( projectRoot, `/static/dist/html/home/error.${ req.query.language }.html` ) );
 } );
 

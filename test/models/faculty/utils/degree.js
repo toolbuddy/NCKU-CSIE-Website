@@ -1,258 +1,360 @@
-import assert from 'assert';
+import chai from 'chai';
 
-import DegreeTypeUtils from 'models/faculty/utils/degree.js';
-import LanguageUtils from 'settings/language/utils.js';
+import DegreeUtils from 'models/faculty/utils/degree.js';
+import LanguageUtils from 'models/common/utils/language.js';
+
+const expect = chai.expect;
 
 describe('models/faculty/utils/degree.js', () => {
-    let correctSampleTypeA = {
-        typeName: 'bachelor',
-        languageId: LanguageUtils.getLanguageId('en-US'),
-        typeId: 0,
-    };
-    let correctSampleTypeB = {
-        typeName: 'phd',
-        languageId: LanguageUtils.getLanguageId('en-US'),
-        typeId: 2,
-    };
-    let correctSampleTypeC = {
-        typeName: '碩士',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 1,
-    };
-    let correctSampleTypeD = {
-        typeName: '學士',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 0,
-    };
-    let correctSampleTypeE = {
-        typeName: '博士',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 2,
-    };
-
-    let wrongSampleTypeA = {
-        typeName: 'bbbachelor',
-        languageId: LanguageUtils.getLanguageId('en-US')
-    };
-    let wrongSampleTypeB = {
-        typeName: 'bachelor',
-        languageId: LanguageUtils.getLanguageId('zh-TW')
-    };
-    let wrongSampleTypeC = {
-        typeName: 'Bachelor',
-        languageId: LanguageUtils.getLanguageId('en-US')
-    };
-    let wrongSampleTypeD = {
-        languageId: LanguageUtils.getLanguageId('zh-TW')
-    };
-    let wrongSampleTypeE = {
-        typeName: 'bachelor',
-    };
-    let wrongSampleTypeF = {
-        typeName: 'bachelor',
-        languageId: 10000
-    };
-    let wrongSampleTypeG = {};
-
-    context('defaultType', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( DegreeTypeUtils.defaultType( LanguageUtils.defaultLanguageId ) ), typeof(String()));
-        });
-        it('should throw an error when passing invalid language id', () => {
-            assert.throws( () => { DegreeTypeUtils.defaultType( -1 ); }, TypeError);
-        });
-        it('should throw an error when passing arguments of wrong type', () => {
-            assert.throws( () => { DegreeTypeUtils.defaultType( {} ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.defaultType( undefined ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.defaultType( null ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.defaultType( Boolean() ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.defaultType( Symbol() ); }, TypeError);
-        });
-        it('should success', () => {
-            assert.equal( DegreeTypeUtils.defaultType( LanguageUtils.getLanguageId('zh-TW').toString() ), '學士' );
-            assert.equal( DegreeTypeUtils.defaultType( LanguageUtils.getLanguageId('en-US').toString() ), 'bachelor' );
-            assert.equal( DegreeTypeUtils.defaultType( LanguageUtils.getLanguageId('zh-TW') ), '學士' );
-            assert.equal( DegreeTypeUtils.defaultType( LanguageUtils.getLanguageId('en-US') ), 'bachelor' );
+    context('DegreeUtils.defaultDegree', ()=>{
+        it('should return value `undefined` when `languageId` is invalid', ()=>{
+            expect(DegreeUtils.defaultDegree(true)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(false)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree({})).to.be.undefined;
+            expect(DegreeUtils.defaultDegree({failed: true})).to.be.undefined;
+            expect(DegreeUtils.defaultDegree([])).to.be.undefined;
+            expect(DegreeUtils.defaultDegree([1,2,3])).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(null)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree('')).to.be.undefined;
+            expect(DegreeUtils.defaultDegree('string')).to.be.undefined;
+            expect(DegreeUtils.defaultDegree('0')).to.be.undefined;
+            expect(DegreeUtils.defaultDegree('1')).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(-1)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.MAX_VALUE)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.MIN_VALUE)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(0.1)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(-0.1)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.POSITIVE_INFINITY)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Number.NEGATIVE_INFINITY)).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Symbol())).to.be.undefined;
+            expect(DegreeUtils.defaultDegree(Symbol('string'))).to.be.undefined;
+        })
+        it('should return a string when `languageId` is valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.defaultDegree(languageId)).to.be.a('string');
+            })
+        })
+        it('should return a string when `languageId` is not provided', ()=>{
+            expect(DegreeUtils.defaultDegree()).to.be.a('string');
+        })
+        it('should not return empty string', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.defaultDegree(languageId)).to.not.empty;
+            })
+        })
+        it('should be supported', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.supportedDegree(languageId)).to.include(DegreeUtils.defaultDegree(languageId));
+            })
+        })
+        it('should be a pure function', ()=>{
+            expect(DegreeUtils.defaultDegree()).to.be.equal(DegreeUtils.defaultDegree())
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.defaultDegree(languageId)).to.be.equal(DegreeUtils.defaultDegree(languageId));
+            })
         })
     });
-
-    context('defaultTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof(DegreeTypeUtils.defaultTypeId), typeof(Number()));
-        });
-        it('should success', () => {
-            assert.equal( DegreeTypeUtils.defaultTypeId, 0);
-        });
-    });
-
-    context('isSupportedType', () => {
-        it('should return true when giving a correct object', () => {
-            assert.equal( DegreeTypeUtils.isSupportedType(correctSampleTypeA), true);
-            assert.equal( DegreeTypeUtils.isSupportedType(correctSampleTypeB), true);
-            assert.equal( DegreeTypeUtils.isSupportedType(correctSampleTypeC), true);
-            assert.equal( DegreeTypeUtils.isSupportedType(correctSampleTypeD), true);
-            assert.equal( DegreeTypeUtils.isSupportedType(correctSampleTypeE), true);
-        });
-        it('should return false or throw an error when giving an incorrect object', () => {
-            assert.equal( DegreeTypeUtils.isSupportedType(wrongSampleTypeA), false);
-            assert.equal( DegreeTypeUtils.isSupportedType(wrongSampleTypeB), false);
-            assert.equal( DegreeTypeUtils.isSupportedType(wrongSampleTypeC), false);
-            assert.equal( DegreeTypeUtils.isSupportedType(wrongSampleTypeD), false);
-            assert.throws( () => { DegreeTypeUtils.isSupportedType(wrongSampleTypeE); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.isSupportedType(wrongSampleTypeF); }, TypeError);
-            assert.equal( DegreeTypeUtils.isSupportedType(wrongSampleTypeG), false);
-        });
-        it('should return false or throw an error when giving an argument of wrong type', () => {
-            assert.equal( DegreeTypeUtils.isSupportedType(String()), false );
-            assert.equal( DegreeTypeUtils.isSupportedType(Boolean()), false );
-            assert.equal( DegreeTypeUtils.isSupportedType(Number()), false );
-            assert.equal( DegreeTypeUtils.isSupportedType(Symbol()), false );
-            assert.throws( () => { DegreeTypeUtils.isSupportedType(undefined); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.isSupportedType(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( DegreeTypeUtils.isSupportedType( correctSampleTypeA )), typeof( Boolean() ) );
-        });
-    });
-
-    context('isSupportedTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( DegreeTypeUtils.isSupportedTypeId( LanguageUtils.defaultTypeId )), typeof(Boolean()));
-        });
-        it('should return true when giving a correct argument', () => {
-            assert.equal( DegreeTypeUtils.isSupportedTypeId( 0 ), true);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId( 1 ), true);
-        });
-        it('should return false when giving an invalid argument', () => {
-            assert.equal( DegreeTypeUtils.isSupportedTypeId( -1 ), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId( 10000 ), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId( '1' ), false);
-        });
-        it('should return false or throw an error when giving an argument of wrong type', () => {
-            assert.equal( DegreeTypeUtils.isSupportedTypeId(Symbol()), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId(undefined), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId(null), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId(Boolean()), false);
-            assert.equal( DegreeTypeUtils.isSupportedTypeId(String()), false);
-        });
-    });
-
-    context('supportedType', () => {
-        it('should return the value in the correct type', () => {
-            assert( Array.isArray( DegreeTypeUtils.supportedType( LanguageUtils.defaultLanguageId ) ) );
-        });
-        it('should throw an error when passing invalid language id', () => {
-            assert.throws( () => { DegreeTypeUtils.supportedType( -1 ); }, TypeError);
-        });
-        it('should throw an error when passing arguments of wrong type', () => {
-            assert.throws( () => { DegreeTypeUtils.supportedType( {} ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.supportedType( undefined ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.supportedType( null ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.supportedType( Boolean() ); }, TypeError);
-            assert.throws( () => { DegreeTypeUtils.supportedType( Symbol() ); }, TypeError);
-        });
-        it('should success', () => {
-            assert( DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('zh-TW').toString() ).includes('碩士') );
-            assert( DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('en-US').toString() ).includes('phd') );
-            assert( DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('zh-TW') ).includes('碩士') );
-            assert( DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('en-US') ).includes('phd') );
-            assert.equal( 
-                DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('zh-TW') ).length,
-                DegreeTypeUtils.supportedType( LanguageUtils.getLanguageId('en-US') ).length
-            );
+    context('DegreeUtils.defaultDegreeId', ()=>{
+        it('should return a number', ()=>{
+            expect(DegreeUtils.defaultDegreeId).to.be.a('number');
         })
-    });
-
-    context('supportedTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert( Array.isArray( DegreeTypeUtils.supportedTypeId ) );
-            assert( DegreeTypeUtils.supportedTypeId.every( (id) => { return typeof( id ) === 'number'; } ) );
-        });
-        it('should success', () => {
-            assert.equal( DegreeTypeUtils.supportedTypeId.length, DegreeTypeUtils.supportedType( LanguageUtils.defaultLanguageId ).length);
-        });
-    });
-
-    context('getTypeId', () => {
-        it('should success', () => {
-            assert.equal( DegreeTypeUtils.getTypeId(correctSampleTypeA), correctSampleTypeA.typeId);
-            assert.equal( DegreeTypeUtils.getTypeId(correctSampleTypeB), correctSampleTypeB.typeId);
-            assert.equal( DegreeTypeUtils.getTypeId(correctSampleTypeC), correctSampleTypeC.typeId);
-            assert.equal( DegreeTypeUtils.getTypeId(correctSampleTypeD), correctSampleTypeD.typeId);
-            assert.equal( DegreeTypeUtils.getTypeId(correctSampleTypeE), correctSampleTypeE.typeId);
-        });
-        it('should throw an error when giving an incorrect object', () => {
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeA); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeB); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeC); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeD); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeE); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeF); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeId(wrongSampleTypeG); }, Error);
-        });
-        it('should throw an error when giving an argument of wrong type', () => {
-            assert.throws( () => { DegreeTypeUtils.getTypeId(String()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeId(Number()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeId(Boolean()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeId(Symbol()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeId(undefined); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeId(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( DegreeTypeUtils.getTypeId( correctSampleTypeA )), typeof( Number() ) );
-        });
-    });
-
-    context('getTypeById', () => {
-        it('should success', () => {
-            assert.equal( DegreeTypeUtils.getTypeById(correctSampleTypeA), correctSampleTypeA.typeName);
-            assert.equal( DegreeTypeUtils.getTypeById(correctSampleTypeB), correctSampleTypeB.typeName);
-            assert.equal( DegreeTypeUtils.getTypeById(correctSampleTypeC), correctSampleTypeC.typeName);
-            assert.equal( DegreeTypeUtils.getTypeById(correctSampleTypeD), correctSampleTypeD.typeName);
-            assert.equal( DegreeTypeUtils.getTypeById(correctSampleTypeE), correctSampleTypeE.typeName);
-        });
-        it('should throw an error when giving an incorrect object', () => {
-            let wrongSampleTypeH = {
-                typeId: 'ABC',
-                languageId: 0,
-            };
-            let wrongSampleTypeI = {
-                typeId: 0,
-                languageId: 'ABC',
-            };
-            let wrongSampleTypeJ = {
-                typeId: 0,
-            };
-            let wrongSampleTypeK = {
-                languageId: 0,
-            };
-            let wrongSampleTypeL = {};
-            let wrongSampleTypeM = {
-                typeId: -1,
-                languageId: 0,
-            };
-            let wrongSampleTypeN = {
-                typeId: 0,
-                languageId: -1,
-            };
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeH); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeI); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeJ); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeK); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeL); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeM); }, Error);
-            assert.throws( () => { DegreeTypeUtils.getTypeById(wrongSampleTypeN); }, Error);
-        });
-        it('should throw an error when giving an argument of wrong type', () => {
-            assert.throws( () => { DegreeTypeUtils.getTypeById(String()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeById(Number()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeById(Boolean()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeById(Symbol()); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeById(undefined); }, TypeError );
-            assert.throws( () => { DegreeTypeUtils.getTypeById(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( DegreeTypeUtils.getTypeById( correctSampleTypeA )), typeof( String() ) );
-        });
-    });
+        it('should be supported', ()=>{
+            expect(DegreeUtils.supportedDegreeId).to.include(DegreeUtils.defaultDegreeId);
+        })
+        it('should be a pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(()=>{
+                expect(DegreeUtils.defaultDegreeId).to.be.equal(DegreeUtils.defaultDegreeId);
+            })
+        })
+    })
+    context('DegreeUtils.supportedDegree', ()=>{
+        it('should return value `[]` when `languageId` is invalid', ()=>{
+            expect(DegreeUtils.supportedDegree(true)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(false)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree({})).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree({failed: true})).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree([])).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree([1,2,3])).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(null)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree('')).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree('string')).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree('0')).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree('1')).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(-1)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.MAX_SAFE_INTEGER)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.MAX_VALUE)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.POSITIVE_INFINITY)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.MIN_SAFE_INTEGER)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(0.1)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(-0.1)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.MIN_VALUE)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Number.NEGATIVE_INFINITY)).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Symbol())).to.be.instanceOf(Array).that.is.empty;
+            expect(DegreeUtils.supportedDegree(Symbol('string'))).to.be.instanceOf(Array).that.is.empty;
+        })
+        it('should return an array of string of supported degree when `languageId` is valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.supportedDegree(languageId)).to.be.instanceOf(Array);
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(degree).to.be.a('string')
+                })
+            })
+        })
+        it('should return an array of string of supported degree when `languageId` is not provided', ()=>{
+            expect(DegreeUtils.supportedDegree()).to.be.instanceOf(Array);
+            DegreeUtils.supportedDegree().map(degree=>{
+                expect(degree).to.be.a('string')
+            })
+        })
+        it('should have same number of supported degree for all language',()=>{
+            const sameLength = DegreeUtils.supportedDegree().length;
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.supportedDegree(languageId)).to.have.lengthOf(sameLength);
+            })
+        })
+        it('should be supported', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.isSupportedDegree({degree, languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be a pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.supportedDegree(languageId)).to.deep.equal(DegreeUtils.supportedDegree(languageId));
+            })
+        })
+        it('should be an unforzen array', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(DegreeUtils.supportedDegree(languageId)).to.not.frozen;
+            })
+        })
+    })
+    context('DegreeUtils.supportedDegreeId', ()=>{
+        it('should return an array of number', ()=>{
+            expect(DegreeUtils.supportedDegreeId).to.be.instanceOf(Array);
+            DegreeUtils.supportedDegreeId.map(degreeId=>{
+                expect(degreeId).to.be.a('number')
+            })
+        })
+        it('should be supported', ()=>{
+            DegreeUtils.supportedDegreeId.map(degreeId=>{
+                expect(DegreeUtils.isSupportedDegreeId(degreeId)).to.be.true;
+            })
+        })
+        it('should be pure function', ()=>{
+            expect(DegreeUtils.supportedDegreeId).to.deep.equal(DegreeUtils.supportedDegreeId);
+        })
+        it('should be an unforzen array', ()=>{
+            expect(DegreeUtils.supportedDegreeId).to.not.frozen;
+        })
+    })
+    context('DegreeUtils.isSupportedDegree', ()=>{
+        it('should return false when invalid input is provided', ()=>{
+            expect(DegreeUtils.isSupportedDegree()).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(undefined)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(true)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(false)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree({})).to.be.false;
+            expect(DegreeUtils.isSupportedDegree({failed:true})).to.be.false;
+            expect(DegreeUtils.isSupportedDegree([])).to.be.false;
+            expect(DegreeUtils.isSupportedDegree([1,2,3])).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(null)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree('')).to.be.false;
+            expect(DegreeUtils.isSupportedDegree('0')).to.be.false;
+            expect(DegreeUtils.isSupportedDegree('1')).to.be.false;
+            expect(DegreeUtils.isSupportedDegree('string')).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(0)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(-1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Number.MAX_SAFE_INTEGER)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Number.MAX_VALUE)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Number.MIN_SAFE_INTEGER)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Number.MIN_VALUE)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(0.1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(-0.1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Symbol())).to.be.false;
+            expect(DegreeUtils.isSupportedDegree(Symbol('string'))).to.be.false;
+        })
+        it('should return false when only `degree` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.isSupportedDegree({degree})).to.be.false;
+                })
+            })
+        })
+        it('should return false when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(()=>{
+                    expect(DegreeUtils.isSupportedDegree({languageId})).to.be.false;
+                })
+            })
+        })
+        it('should return true when both `degree` and `languageId` are valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.isSupportedDegree({degree,languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.isSupportedDegree({degree,languageId})).to.equal(DegreeUtils.isSupportedDegree({degree,languageId}));
+                })
+            })
+        })
+    })
+    context('DegreeUtils.isSupportedDegreeId', ()=>{
+        it('should return false when `degreeId` is invalid', ()=>{
+            expect(DegreeUtils.isSupportedDegreeId()).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(undefined)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(true)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(false)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId({})).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId({failed:true})).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId([])).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId([1,2,3])).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(null)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId('')).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId('0')).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId('1')).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId('string')).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(-1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Number.MAX_SAFE_INTEGER)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Number.MAX_VALUE)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Number.MIN_SAFE_INTEGER)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Number.MIN_VALUE)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(0.1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(-0.1)).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Symbol())).to.be.false;
+            expect(DegreeUtils.isSupportedDegreeId(Symbol('string'))).to.be.false;
+        })
+        it('should return true when `degreeId` is valid', ()=>{
+            DegreeUtils.supportedDegreeId.map(degreeId=>{
+                expect(DegreeUtils.isSupportedDegreeId(degreeId)).to.be.true;
+            })
+        })
+        it('should be pure function', ()=>{
+            DegreeUtils.supportedDegreeId.map(degreeId=>{
+                expect(DegreeUtils.isSupportedDegreeId(degreeId)).to.equal(DegreeUtils.isSupportedDegreeId(degreeId));
+            })
+        })
+    })
+    context('DegreeUtils.getDegreeId', ()=>{
+        it('should return value `undefined` when invalid input is provided', ()=>{
+            expect(DegreeUtils.getDegreeId()).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(undefined)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(true)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(false)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId({})).to.be.undefined;
+            expect(DegreeUtils.getDegreeId({failed:true})).to.be.undefined;
+            expect(DegreeUtils.getDegreeId([])).to.be.undefined;
+            expect(DegreeUtils.getDegreeId([1,2,3])).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(null)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId('')).to.be.undefined;
+            expect(DegreeUtils.getDegreeId('0')).to.be.undefined;
+            expect(DegreeUtils.getDegreeId('1')).to.be.undefined;
+            expect(DegreeUtils.getDegreeId('string')).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(0)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(-1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Number.MAX_VALUE)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Number.MIN_VALUE)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(0.1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(-0.1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Symbol())).to.be.undefined;
+            expect(DegreeUtils.getDegreeId(Symbol('string'))).to.be.undefined;
+        })
+        it('should return value `undefined` when only `degree` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.getDegreeId({degree})).to.be.undefined;
+                })
+            })
+        })
+        it('should return value `undefined` when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(()=>{
+                    expect(DegreeUtils.getDegreeId({languageId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return a number represent `degreeId` when both `degree` and `languageId` are provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    const degreeId = DegreeUtils.getDegreeId({degree, languageId})
+                    expect(degreeId).to.be.a('number');
+                    expect(DegreeUtils.isSupportedDegreeId(degreeId)).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegree(languageId).map(degree=>{
+                    expect(DegreeUtils.getDegreeId({degree, languageId})).to.equal(DegreeUtils.getDegreeId({degree, languageId}))
+                })
+            })
+        })
+    })
+    context('DegreeUtils.getDegreeById', ()=>{
+        it('should return value `undefined` when invalid input is provided', ()=>{
+            expect(DegreeUtils.getDegreeById()).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(undefined)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(true)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(false)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById({})).to.be.undefined;
+            expect(DegreeUtils.getDegreeById({failed:true})).to.be.undefined;
+            expect(DegreeUtils.getDegreeById([])).to.be.undefined;
+            expect(DegreeUtils.getDegreeById([1,2,3])).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(null)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById('')).to.be.undefined;
+            expect(DegreeUtils.getDegreeById('0')).to.be.undefined;
+            expect(DegreeUtils.getDegreeById('1')).to.be.undefined;
+            expect(DegreeUtils.getDegreeById('string')).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(-1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Number.MAX_VALUE)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Number.MIN_VALUE)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(0.1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(-0.1)).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Symbol())).to.be.undefined;
+            expect(DegreeUtils.getDegreeById(Symbol('string'))).to.be.undefined;
+        })
+        it('should return value `undefined` when only `degreeId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(()=>{
+                DegreeUtils.supportedDegreeId.map(degreeId=>{
+                    expect(DegreeUtils.getDegreeById({degreeId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return value `undefined` when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegreeId.map(()=>{
+                    expect(DegreeUtils.getDegreeById({languageId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return a string represent `degree` when both `degreeId` and `languageId` are provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegreeId.map(degreeId=>{
+                    const degree = DegreeUtils.getDegreeById({degreeId, languageId})
+                    expect(degree).to.be.a('string');
+                    expect(DegreeUtils.isSupportedDegree({degree, languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                DegreeUtils.supportedDegreeId.map(degreeId=>{
+                    expect(DegreeUtils.getDegreeById({degreeId, languageId})).to.equal(DegreeUtils.getDegreeById({degreeId, languageId}))
+                })
+            })
+        })
+    })
 });

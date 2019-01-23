@@ -4,15 +4,17 @@ class UrlUtils {
         this.languagId = languagId;
     }
 
-    serverUrl ( { href = '', query = null, } = {} ) {
-        if ( !query )
-            return `${ this.host }/${ href }/` + `?languageId=${ this.languagId }`;
-        const queryStr = Reflect.ownKeys( query )
-        .map( key => `${ key }=${ query[ key ] }` )
-        .join( '&' );
-        if ( query.languageId )
-            return `${ this.host }/${ href }?${ queryStr }`;
-        return `${ this.host }/${ href }?${ queryStr }&languageId=${ this.languagId }`;
+    static serverUrl ( urlUtils ) {
+        return ( { href = '', query = null, } = {} ) => {
+            if ( !query )
+                return `${ urlUtils.host }/${ href }?languageId=${ urlUtils.languagId }`;
+            const queryStr = Reflect.ownKeys( query )
+            .map( key => `${ key }=${ query[ key ] }` )
+            .join( '&' );
+            if ( typeof ( query ) === 'object' && Object.prototype.hasOwnProperty.call( query, 'languageId' ) )
+                return `${ urlUtils.host }/${ href }?${ queryStr }`;
+            return `${ urlUtils.host }/${ href }?${ queryStr }&languageId=${ urlUtils.languagId }`;
+        };
     }
 }
 

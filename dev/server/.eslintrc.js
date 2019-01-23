@@ -237,9 +237,6 @@ module.exports = {
         // Enforce that class methods utilize `this`.
         'class-methods-use-this': 'error',
 
-        // Require `return` statements to either always or never specify values.
-        'consistent-return': 'error',
-
         // Require following curly brace conventions.
         'curly': [
             'error',
@@ -337,30 +334,6 @@ module.exports = {
 
         // Disallow functions in loops.
         'no-loop-func': 'error',
-
-        // Disallow magic numbers.
-        'no-magic-numbers': [
-            'error',
-            {
-
-                // An array of numbers to ignore.
-                'ignore': [
-                    0,
-                    1,
-                    2,
-                    -1,
-                    -2,
-                    200,
-                    304,
-                    400,
-                    404,
-                    500,
-                ],
-
-                // Array indexes are considered okay.
-                'ignoreArrayIndexes': true,
-            },
-        ],
 
         // Disallow multiple spaces.
         'no-multi-spaces': [

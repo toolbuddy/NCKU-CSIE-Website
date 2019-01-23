@@ -10,36 +10,24 @@
  * @property {string} staticHost  - Static file server host.
  */
 
-const config = {};
+const config = {
+    'domainName': 'localhost',
+    'protocol': 'http',
+    'port': 3000,
+    'projectRoot': '',
+    get 'host' () {
+        return `${ config.protocol }://${ config.domainName }${
+            config.port === '80' || config.port === '443' ?
+                '' :
+                `:${ config.port }`
+        }`;
+    },
+    get 'staticHost' () {
+        return config.host;
+    },
+};
 
-Object.defineProperties( config, {
-    'domainName': {
-        value: 'localhost',
-    },
-    'protocol': {
-        value: 'http',
-    },
-    'port': {
-        value: 3000,
-    },
-    'projectRoot': {
-        value: '',
-    },
-    'host': {
-       get () {
-            return `${ config.protocol }://${ config.domainName }${
-                config.port === '80' || config.port === '443' ?
-                    '' :
-                    `:${ config.port }`
-            }`;
-        },
-    },
-    'staticHost': {
-        get () {
-            return config.host;
-        },
-    },
-} );
+Object.freeze( config );
 
 export const domainName = config.domainName;
 export const protocol = config.protocol;

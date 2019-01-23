@@ -10,24 +10,14 @@
  * @property {string} connectionString - Database server connection string.
  */
 
-const config = {};
+const config = {
+    'username':   '',
+    'password':   '',
+    'domainName': 'localhost',
+    'port':       3306,
+    'dialect':    'mysql',
+};
 
-Object.defineProperties( config, {
-    'username': {
-        value: '',
-    },
-    'password': {
-        value: '',
-    },
-    'domainName': {
-        value: 'localhost',
-    },
-    'port': {
-        value: 3306,
-    },
-    'dialect': {
-        value: 'mysql'
-    },
-} );
+Object.freeze( config );
 
 module.exports = config;

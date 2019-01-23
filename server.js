@@ -1,10 +1,12 @@
 import path from 'path';
 
 import express from 'express';
+
 import compression from 'compression';
 
 import { port, projectRoot, } from 'settings/server/config.js';
-import language from 'settings/language/middleware';
+import language from 'routes/utils/language.js';
+
 import apis from 'apis/urls';
 import routes from 'routes/urls';
 
@@ -31,6 +33,7 @@ server.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
 /**
  * Setup utils middleware.
  */
+
 server.use( compression() );
 
 /**

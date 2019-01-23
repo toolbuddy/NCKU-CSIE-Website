@@ -22,17 +22,6 @@ append data
         'experience':  'Record',
         'award':       'Honor & Awards',
         'publication': 'Publications',
-        'department': {
-          '0':         'dept. CSIE',
-          '1':         'inst. CSIE',
-          '3':         'IMI',
-          '4':         'IMIS',
-        },
-        'degree': {
-          '0':         'B.S.',
-          '1':         'M.S.',
-          '2':         'Ph.D',
-        },
         'patent': {
           'type':      'Type',
           'name':      'Name',
@@ -62,17 +51,6 @@ append data
         'experience':  '經歷',
         'award':       '榮譽及獲獎',
         'publication': '著作',
-        'department': {
-          '0':         '資訊系',
-          '1':         '資訊所',
-          '3':         '醫資所',
-          '4':         '製造所',
-        },
-        'degree': {
-          '0':         '學士',
-          '1':         '碩士',
-          '2':         '博士',
-        },
         'patent': {
           'title':     '專利',
           'type':      '類別',
@@ -93,8 +71,6 @@ append data
           'period':           '合約期間',
         },
         'project': {
-          '0':       '國科會計畫',
-          '1':       '一般建教案',
           'name':    '計畫名稱',
           'period':  '起訖日期',
           'support': '補助單位',
@@ -104,7 +80,7 @@ append data
     const currentRoute = 'about/faculty-detail';
 
 append title
-  +title( profile.name )
+  +title( data.profile.name )
 
 append stylesheets
   +css( 'about/faculty-detail' )
@@ -115,47 +91,47 @@ append header
     { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
     { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
     { text: i18n[ LANG.id ].breadcrumb.faculty, url: 'about/faculty' },
-    { text: profile.name },
+    { text: data.profile.name },
   ] )
 append content
   include /components/common/topic.pug
   include /components/common/image.pug
 
   section.headline
-    header.headline__name= profile.name
+    header.headline__name= data.profile.name
     aside.headline__titles.titles
-      each title in titles
-        span.titles__title= title.name
-  section.profile
-    aside.profile__departments.departments
-      each department in departments
-        span.departments__department= i18n[ LANG.id ].department[ department.type ]
-    aside.profile__offices.offices
-      address.offices__address= `${ i18n[ LANG.id ].office }： ${ profile.office.address }`
-      - const officePhone = `${ i18n[ LANG.id ].tel }: ${ profile.office.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
-      a.offices__phone( href = `tel:${ profile.office.tel }` )= officePhone
-    a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
-    aside.profile__labs.labs
-      if profile.lab
-        a.labs__lab( href = profile.lab.labWeb )= `${ i18n[ LANG.id ].lab }: ${ profile.lab.name }`
-        address.labs__address= `${ i18n[ LANG.id ].address }: ${ profile.lab.address }`
-        - const labTel = `${ i18n[ LANG.id ].tel }: ${ profile.lab.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
-        a.labs__tel( href = `tel:${ profile.lab.tel }` )= labTel
-    if profile.personalWeb
-      a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
+      each titleObj in data.title
+        span.titles__title= titleObj.title
+  section.data.profile
+    aside.data.profile__departments.departments
+      each department in data.department
+        span.departments__department= department
+    aside.data.profile__offices.offices
+      address.offices__address= `${ i18n[ LANG.id ].office }： ${ data.profile.officeAddress }`
+      - const officePhone = `${ i18n[ LANG.id ].tel }: ${ data.profile.officeTel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
+      a.offices__phone( href = `tel:${ data.profile.officeTel }` )= officePhone
+    a.data.profile__email( href = `mailto:${ data.profile.email }` )= `Email： ${ data.profile.email }`
+    aside.data.profile__labs.labs
+      if data.profile.lab
+        a.labs__lab( href = data.profile.labWeb )= `${ i18n[ LANG.id ].lab }: ${ data.profile.labName }`
+        address.labs__address= `${ i18n[ LANG.id ].address }: ${ data.profile.labAddress }`
+        - const labTel = `${ i18n[ LANG.id ].tel }: ${ data.profile.labTel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
+        a.labs__tel( href = `tel:${ data.profile.labTel }` )= labTel
+    if data.profile.personalWeb
+      a.data.profile__website( href = data.profile.personalWeb )= `個人網頁： ${ data.profile.personalWeb }`
   section.education
     h2.education__title= i18n[ LANG.id ].education
-    each education in educations
+    each education in data.education
       ul.education__list.list
         li.list__from= education.from
         li.list__to= education.to
         li.list__nation= education.nation
         li.list__school= education.school
         li.list__major= education.major
-        li.list__degree= i18n[ LANG.id ].degree[ education.degree ]
+        li.list__degree= education.degree
   section.experience
     h2.education__title= i18n[ LANG.id ].experience
-    each experience in experiences
+    each experience in data.experience
       ul.experience__list.list
         li.list__from= experience.from
         li.list__to= experience.to
@@ -164,20 +140,27 @@ append content
         li.list__title= experience.title
   section.award
     h2.award__title= i18n[ LANG.id ].award
-    - awards.sort( ( awardA, awardB ) => awardA.awardYear - awardB.awardYear )
-    each award in awards
-      if award.awardYear !== 0
-        h3.award__year= award.awardYear
-      ul.award__list.list
-        each awardName in award.awardName
-          li.list__name= awardName
+    - data.award.sort( ( awardA, awardB ) => awardA.receivedYear - awardB.receivedYear )
+    ul.award__list
+      each awardObj in data.award
+        h2.award__name= awardObj.award
+        h3.award__year= awardObj.receivedYear
+        if awardObj.receivedMonth
+          h3.award__year= awardObj.receivedMonth
+        if awardObj.receivedDay
+          h3.award__year= awardObj.receivedDay
   section.publication
     h2.publication__title= i18n[ LANG.id ].publication
     h3.publication__paper Papers
     ul.publication__paperList.paperList
-      each publication in publications
-        li.paperList__data= publication.publication
-  if patents.length !== 0
+      each publicationObj in data.publication
+        li.paperList__data= publicationObj.author
+        li.paperList__data= publicationObj.title
+        li.paperList__data= publicationObj.category
+        li.paperList__data= publicationObj.international
+        li.paperList__data= publicationObj.issueYear
+        li.paperList__data= publicationObj.refereed
+  if data.patent.length !== 0
     section.patent
       h2.patent__title= i18n[ LANG.id ].patent.title
       table.patent__table.table
@@ -191,16 +174,17 @@ append content
             th.row__number= i18n[ LANG.id ].patent.number
             th.row__date= i18n[ LANG.id ].patent.period
         tbody.table__body.body
-          each patent in patents
+          each patentObj in data.patent
             tr.body__row.row
-              td.row__type= patent.type
-              td.row__name= patent.patent
-              td.row__nation= patent.nation
-              td.row__owner= patent.patentOwner
-              td.row__inventor= patent.inventor
-              td.row__number= patent.certificationNumber
-              td.row__date= `${ patent.issue_date ? patent.issue_date : '' } ~ ${ patent.expire_date ? patent.expire_date : '' }`
-  if technologyTransfers.length !== 0
+              td.row__type= patentObj.type
+              td.row__name= patentObj.patent
+              td.row__nation= patentObj.nation
+              td.row__owner= patentObj.patentOwner
+              td.row__inventor= patentObj.inventor
+              td.row__number= patentObj.certificationNumber
+              td.row__date= `${ patentObj.issueDate ? patentObj.issueDate : '' } ~ ${ patentObj.expireDate ? patentObj.expireDate : '' }`
+              td.row__date= `${ patentObj.applicationDate ? patentObj.applicationDate : '' }`
+  if data.technologyTransfer.length !== 0
     section.transfer
       h2.transfer__title= i18n[ LANG.id ].technologyTransfer.title
       table.transfer__table.table
@@ -213,17 +197,18 @@ append content
             th.row__authorizedParty= i18n[ LANG.id ].technologyTransfer.authorizedParty
             th.row__period= i18n[ LANG.id ].technologyTransfer.period
         tbody.table__body.body
-          each technologyTransfer, index in technologyTransfers
+          each technologyTransferObj, index in data.technologyTransfer
             tr.body__row.row
               th.row__index= index+1
-              th.row__technologyName= technologyTransfer.technology
-              th.row__patentName= technologyTransfer.patent
-              th.row__authorizingParty= technologyTransfer.authorizingParty
-              th.row__authorizedParty= technologyTransfer.authorizedParty
-              th.row__period= `${ technologyTransfer.from ? technologyTransfer.from : '' } ~ ${ technologyTransfer.to ? technologyTransfer.to : '' }`
+              th.row__technologyName= technologyTransferObj.technology
+              each patentObj in technologyTransferObj.patent
+                th.row__patentName= patentObj.patent
+              th.row__authorizingParty= technologyTransferObj.authorizingParty
+              th.row__authorizedParty= technologyTransferObj.authorizedParty
+              th.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
-    if projects[ '0' ].length !== 0
-      h2.project__title= i18n[ LANG.id ].project[ '0' ]
+    if data.project.length !== 0
+      h2.project__title= i18n[ LANG.id ].project.name
       table.project__table.table
         thead.table__head.head
           tr.head__row.row
@@ -231,31 +216,20 @@ append content
             th.row__period= i18n[ LANG.id ].project.period
             th.row__support= i18n[ LANG.id ].project.support
         tbody.table__body.body
-          each project in projects[ '0' ]
+          each projectObj in data.project
             tr.body__row.row
-              td.row__name= project.name
-              td.row__period= `${ project.from ? project.from : '' } ~ ${ project.to ? project.to : '' }`
-              td.row__support= project.support
-    if projects[ '1' ].length !== 0
-      h2.project__title= i18n[ LANG.id ].project[ '1' ]
-      table.project__table.table
-        thead.table__head.head
-          tr.head__row.row
-            th.row__name= i18n[ LANG.id ].project.name
-            th.row__period= i18n[ LANG.id ].project.period
-            th.row__support= i18n[ LANG.id ].project.support
-        tbody.table__body.body
-          each project in projects[ '1' ]
-            tr.body__row.row
-              td.row__name= project.name
-              td.row__period
-              td.row__support= project.support
+              td.row__name= projectObj.name
+              td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
+              td.row__support= projectObj.support
+              td.row__support= projectObj.category
   section.conference
     h2.conference.title Conference
     ul.conference__list.list
-      each conference in conferences
-        li.list__data= conference.name
-  img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )
+      each conferenceObj in data.conference
+        li.list__data= conferenceObj.conference
+        li.list__data= conferenceObj.title
+        li.list__data= conferenceObj.hostYear
+  img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ data.profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer
 

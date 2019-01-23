@@ -1,52 +1,93 @@
-import LanguageUtils from 'settings/language/utils.js';
-import degreeMap from 'models/faculty/map/degree.js';
+/**
+ * DegreeUtils module.
+ *
+ * All `^default*` and `^get*` methods should only return one of the following types:
+ *     - `string`
+ *     - `number`
+ *     - `undefined`
+ * All `^is*` methods should only return `boolean`.
+ * All `^supported*` methods should return an `array` having following properties:
+ *     - `configurable: true`
+ *     - `writable: true`
+ *     - `enumerable: true`.
+ *
+ * In each function call stack,
+ * function `LanguageUtils.isSupportedLanguageId` should only be called at most once,
+ * functions other than called function should also only be called at most once.
+ */
 
-class DegreeTypeUtils {
-    static defaultType ( languageId ) {
-        return degreeMap[ languageId ].default;
+import LanguageUtils from 'models/common/utils/language.js';
+import degreeMap from 'models/faculty/maps/degree.js';
+
+class DegreeUtils {
+    static defaultDegree ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return degreeMap[ languageId ].default;
     }
 
-    static get defaultTypeId () {
-        return degreeMap[ LanguageUtils.defaultLanguageId ].support.indexOf( degreeMap[ LanguageUtils.defaultLanguageId ].default );
+    static get defaultDegreeId () {
+        return degreeMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .indexOf( degreeMap[ LanguageUtils.defaultLanguageId ].default );
     }
 
-    static isSupportedType ( typeObj ) {
-        //if ( !LanguageUtils.isSupportedLanguageId( typeObj.languageId ) )
-        //    return false;
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            return false;
-        return degreeMap[ typeObj.languageId ].support.includes( typeObj.typeName );
+    static supportedDegree ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return Array.from( degreeMap[ languageId ].support );
+        return [];
     }
 
-    static isSupportedTypeId ( typeId ) {
-        //typeId = Number( typeId );
-        //if ( typeof ( typeId ) !== 'number' )
-        //    throw new TypeError( 'Queried id should be a number.' );
-        return DegreeTypeUtils.supportedTypeId.includes( typeId );
+    static get supportedDegreeId () {
+        return degreeMap[ LanguageUtils.defaultLanguageId ]
+        .support
+        .map( ( {}, index ) => index );
     }
 
-    static supportedType ( languageId ) {
-        return Array.from( degreeMap[ languageId ].support );
+    static isSupportedDegree ( opt ) {
+        opt = opt || {};
+        const {
+            degree = null,
+            languageId = null,
+        } = opt;
+        if ( typeof ( degree ) === 'string' && LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            return degreeMap[ languageId ]
+            .support
+            .includes( degree );
+        }
+        return false;
     }
 
-    static get supportedTypeId () {
-        return degreeMap[ LanguageUtils.defaultLanguageId ].support.map( ( {}, index ) => index );
+    static isSupportedDegreeId ( degreeId = null ) {
+        if ( typeof ( degreeId ) === 'number' ) {
+            return DegreeUtils
+            .supportedDegreeId
+            .includes( degreeId );
+        }
+        return false;
     }
 
-    static getTypeId ( typeObj ) {
-        if ( typeof ( typeObj.typeName ) !== 'string' )
-            throw new TypeError( 'Queried degree should be a string.' );
-        if ( !DegreeTypeUtils.isSupportedType( typeObj ) )
-            throw new Error( 'Queried degree is not supported.' );
-        return degreeMap[ typeObj.languageId ].support.indexOf( typeObj.typeName );
+    static getDegreeId ( opt ) {
+        opt = opt || {};
+        const {
+            degree = null,
+            languageId = null,
+        } = opt;
+        if ( DegreeUtils.isSupportedDegree( { degree, languageId, } ) ) {
+            return degreeMap[ languageId ]
+            .support
+            .indexOf( degree );
+        }
     }
 
-    static getTypeById ( typeObj ) {
-        if ( typeof ( typeObj.typeId ) !== 'number' )
-            throw new TypeError( 'Queried id should be a number.' );
-        if ( !Number.isInteger( typeObj.typeId ) || typeObj.typeId < 0 || typeObj.typeId >= degreeMap[ typeObj.languageId ].support.length )
-            throw new RangeError( 'Queried id out of range.' );
-        return String( degreeMap[ typeObj.languageId ].support[ typeObj.typeId ] );
+    static getDegreeById ( opt ) {
+        opt = opt || {};
+        const {
+            degreeId = null,
+            languageId = null,
+        } = opt;
+        if ( DegreeUtils.isSupportedDegreeId( degreeId ) && LanguageUtils.isSupportedLanguageId( languageId ) )
+            return degreeMap[ languageId ].support[ degreeId ];
     }
 }
-export default DegreeTypeUtils;
+
+export default DegreeUtils;

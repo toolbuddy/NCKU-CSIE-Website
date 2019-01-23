@@ -78,8 +78,7 @@ export default {
      * - `import 'models/.....'`
      * - `import 'routes/.....'`
      * - `import 'settings/...'`
-     * - `import 'static/.....'`
-     * - `import 'test/.......'`.
+     * - `import 'static/.....'`.
      */
 
     resolve:   {
@@ -90,7 +89,6 @@ export default {
             routes:   path.join( projectRoot, 'routes' ),
             settings: path.join( projectRoot, 'settings' ),
             static:   path.join( projectRoot, 'static' ),
-            test:     path.join( projectRoot, 'test' ),
         },
     },
 

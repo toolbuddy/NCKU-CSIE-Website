@@ -1,10 +1,11 @@
-import LanguageUtils from 'settings/language/utils.js';
+import LanguageUtils from 'models/common/utils/language.js';
 
 class WebLanguageUtils extends LanguageUtils {
     static get currentLanguageId () {
-        const queryLanguageId = new URLSearchParams( window.location.search ).get( 'languageId' );
-        if ( queryLanguageId && LanguageUtils.isSupportedLanguageId( queryLanguageId ) )
-            return queryLanguageId;
+        let languageId = new URLSearchParams( window.location.search ).get( 'languageId' );
+        languageId = Number( languageId );
+        if ( languageId && WebLanguageUtils.isSupportedLanguageId( languageId ) )
+            return languageId;
         return LanguageUtils.defaultLanguageId;
     }
 }

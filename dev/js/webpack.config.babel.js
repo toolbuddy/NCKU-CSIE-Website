@@ -108,16 +108,16 @@ export default {
      * When writing `import` statement for relative import,
      * no need to start with `'./'` or `'../'`.
      * Only work for following path:
+     * - `import 'models/.......'`
      * - `import 'settings/...'`
      * - `import 'static/.....'`
-     * - `import 'test/.......'`.
      */
 
     resolve: {
         alias: {
-            settings: path.join( projectRoot, 'settings' ),
+            models:   path.join( projectRoot, 'models' ),
             static:   staticRoot,
-            test:     path.join( projectRoot, 'test' ),
+            settings: path.join( projectRoot, 'settings' ),
         },
     },
 

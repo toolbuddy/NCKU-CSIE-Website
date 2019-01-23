@@ -1,258 +1,360 @@
-import assert from 'assert';
+import chai from 'chai';
 
 import TagUtils from 'models/announcement/utils/tag.js';
-import LanguageUtils from 'settings/language/utils.js';
+import LanguageUtils from 'models/common/utils/language.js';
+
+const expect = chai.expect;
 
 describe('models/announcement/utils/tag.js', () => {
-    let correctSampleTypeA = {
-        typeName: 'faculty',
-        languageId: LanguageUtils.getLanguageId('en-US'),
-        typeId: 0,
-    };
-    let correctSampleTypeB = {
-        typeName: 'college',
-        languageId: LanguageUtils.getLanguageId('en-US'),
-        typeId: 2,
-    };
-    let correctSampleTypeC = {
-        typeName: '演講',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 5,
-    };
-    let correctSampleTypeD = {
-        typeName: '徵人',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 13,
-    };
-    let correctSampleTypeE = {
-        typeName: '教職人員',
-        languageId: LanguageUtils.getLanguageId('zh-TW'),
-        typeId: 0,
-    };
-
-    let wrongSampleTypeA = {
-        typeName: 'fffaculty',
-        languageId: LanguageUtils.getLanguageId('en-US')
-    };
-    let wrongSampleTypeB = {
-        typeName: 'faculty',
-        languageId: LanguageUtils.getLanguageId('zh-TW')
-    };
-    let wrongSampleTypeC = {
-        typeName: 'Faculty',
-        languageId: LanguageUtils.getLanguageId('en-US')
-    };
-    let wrongSampleTypeD = {
-        languageId: LanguageUtils.getLanguageId('zh-TW')
-    };
-    let wrongSampleTypeE = {
-        typeName: 'fffaculty',
-    };
-    let wrongSampleTypeF = {
-        typeName: 'faculty',
-        languageId: 10000
-    };
-    let wrongSampleTypeG = {};
-
-    context('defaultType', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( TagUtils.defaultType( LanguageUtils.defaultLanguageId ) ), typeof(String()));
-        });
-        it('should throw an error when passing invalid language id', () => {
-            assert.throws( () => { TagUtils.defaultType( -1 ); }, TypeError);
-        });
-        it('should throw an error when passing arguments of wrong type', () => {
-            assert.throws( () => { TagUtils.defaultType( {} ); }, TypeError);
-            assert.throws( () => { TagUtils.defaultType( undefined ); }, TypeError);
-            assert.throws( () => { TagUtils.defaultType( null ); }, TypeError);
-            assert.throws( () => { TagUtils.defaultType( Boolean() ); }, TypeError);
-            assert.throws( () => { TagUtils.defaultType( Symbol() ); }, TypeError);
-        });
-        it('should success', () => {
-            assert.equal( TagUtils.defaultType( LanguageUtils.getLanguageId('zh-TW').toString() ), '教職人員' );
-            assert.equal( TagUtils.defaultType( LanguageUtils.getLanguageId('en-US').toString() ), 'faculty' );
-            assert.equal( TagUtils.defaultType( LanguageUtils.getLanguageId('zh-TW') ), '教職人員' );
-            assert.equal( TagUtils.defaultType( LanguageUtils.getLanguageId('en-US') ), 'faculty' );
+    context('TagUtils.defaultTag', ()=>{
+        it('should return value `undefined` when `languageId` is invalid', ()=>{
+            expect(TagUtils.defaultTag(true)).to.be.undefined;
+            expect(TagUtils.defaultTag(false)).to.be.undefined;
+            expect(TagUtils.defaultTag({})).to.be.undefined;
+            expect(TagUtils.defaultTag({failed: true})).to.be.undefined;
+            expect(TagUtils.defaultTag([])).to.be.undefined;
+            expect(TagUtils.defaultTag([1,2,3])).to.be.undefined;
+            expect(TagUtils.defaultTag(null)).to.be.undefined;
+            expect(TagUtils.defaultTag('')).to.be.undefined;
+            expect(TagUtils.defaultTag('string')).to.be.undefined;
+            expect(TagUtils.defaultTag('0')).to.be.undefined;
+            expect(TagUtils.defaultTag('1')).to.be.undefined;
+            expect(TagUtils.defaultTag(-1)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.MAX_VALUE)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.MIN_VALUE)).to.be.undefined;
+            expect(TagUtils.defaultTag(0.1)).to.be.undefined;
+            expect(TagUtils.defaultTag(-0.1)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.POSITIVE_INFINITY)).to.be.undefined;
+            expect(TagUtils.defaultTag(Number.NEGATIVE_INFINITY)).to.be.undefined;
+            expect(TagUtils.defaultTag(Symbol())).to.be.undefined;
+            expect(TagUtils.defaultTag(Symbol('string'))).to.be.undefined;
+        })
+        it('should return a string when `languageId` is valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.defaultTag(languageId)).to.be.a('string');
+            })
+        })
+        it('should return a string when `languageId` is not provided', ()=>{
+            expect(TagUtils.defaultTag()).to.be.a('string');
+        })
+        it('should not return empty string', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.defaultTag(languageId)).to.not.empty;
+            })
+        })
+        it('should be supported', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.supportedTag(languageId)).to.include(TagUtils.defaultTag(languageId));
+            })
+        })
+        it('should be a pure function', ()=>{
+            expect(TagUtils.defaultTag()).to.be.equal(TagUtils.defaultTag())
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.defaultTag(languageId)).to.be.equal(TagUtils.defaultTag(languageId));
+            })
         })
     });
-
-    context('defaultTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof(TagUtils.defaultTypeId), typeof(Number()));
-        });
-        it('should success', () => {
-            assert.equal( TagUtils.defaultTypeId, 0);
-        });
-    });
-
-    context('isSupportedType', () => {
-        it('should return true when giving a correct object', () => {
-            assert.equal( TagUtils.isSupportedType(correctSampleTypeA), true);
-            assert.equal( TagUtils.isSupportedType(correctSampleTypeB), true);
-            assert.equal( TagUtils.isSupportedType(correctSampleTypeC), true);
-            assert.equal( TagUtils.isSupportedType(correctSampleTypeD), true);
-            assert.equal( TagUtils.isSupportedType(correctSampleTypeE), true);
-        });
-        it('should return false or throw an error when giving an incorrect object', () => {
-            assert.equal( TagUtils.isSupportedType(wrongSampleTypeA), false);
-            assert.equal( TagUtils.isSupportedType(wrongSampleTypeB), false);
-            assert.equal( TagUtils.isSupportedType(wrongSampleTypeC), false);
-            assert.equal( TagUtils.isSupportedType(wrongSampleTypeD), false);
-            assert.throws( () => { TagUtils.isSupportedType(wrongSampleTypeE); }, TypeError);
-            assert.throws( () => { TagUtils.isSupportedType(wrongSampleTypeF); }, TypeError);
-            assert.equal( TagUtils.isSupportedType(wrongSampleTypeG), false);
-        });
-        it('should return false or throw an error when giving an argument of wrong type', () => {
-            assert.equal( TagUtils.isSupportedType(String()), false );
-            assert.equal( TagUtils.isSupportedType(Boolean()), false );
-            assert.equal( TagUtils.isSupportedType(Number()), false );
-            assert.equal( TagUtils.isSupportedType(Symbol()), false );
-            assert.throws( () => { TagUtils.isSupportedType(undefined); }, TypeError );
-            assert.throws( () => { TagUtils.isSupportedType(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( TagUtils.isSupportedType( correctSampleTypeA )), typeof( Boolean() ) );
-        });
-    });
-
-    context('isSupportedTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( TagUtils.isSupportedTypeId( LanguageUtils.defaultTypeId )), typeof(Boolean()));
-        });
-        it('should return true when giving a correct argument', () => {
-            assert.equal( TagUtils.isSupportedTypeId( 0 ), true);
-            assert.equal( TagUtils.isSupportedTypeId( 1 ), true);
-        });
-        it('should return false when giving an invalid argument', () => {
-            assert.equal( TagUtils.isSupportedTypeId( -1 ), false);
-            assert.equal( TagUtils.isSupportedTypeId( 10000 ), false);
-            assert.equal( TagUtils.isSupportedTypeId( '1' ), false);
-        });
-        it('should return false or throw an error when giving an argument of wrong type', () => {
-            assert.equal( TagUtils.isSupportedTypeId(Symbol()), false);
-            assert.equal( TagUtils.isSupportedTypeId(undefined), false);
-            assert.equal( TagUtils.isSupportedTypeId(null), false);
-            assert.equal( TagUtils.isSupportedTypeId(Boolean()), false);
-            assert.equal( TagUtils.isSupportedTypeId(String()), false);
-        });
-    });
-
-    context('supportedType', () => {
-        it('should return the value in the correct type', () => {
-            assert( Array.isArray( TagUtils.supportedType( LanguageUtils.defaultLanguageId ) ) );
-        });
-        it('should throw an error when passing invalid language id', () => {
-            assert.throws( () => { TagUtils.supportedType( -1 ); }, TypeError);
-        });
-        it('should throw an error when passing arguments of wrong type', () => {
-            assert.throws( () => { TagUtils.supportedType( {} ); }, TypeError);
-            assert.throws( () => { TagUtils.supportedType( undefined ); }, TypeError);
-            assert.throws( () => { TagUtils.supportedType( null ); }, TypeError);
-            assert.throws( () => { TagUtils.supportedType( Boolean() ); }, TypeError);
-            assert.throws( () => { TagUtils.supportedType( Symbol() ); }, TypeError);
-        });
-        it('should success', () => {
-            assert( TagUtils.supportedType( LanguageUtils.getLanguageId('zh-TW').toString() ).includes('教職人員') );
-            assert( TagUtils.supportedType( LanguageUtils.getLanguageId('en-US').toString() ).includes('conference') );
-            assert( TagUtils.supportedType( LanguageUtils.getLanguageId('zh-TW') ).includes('教職人員') );
-            assert( TagUtils.supportedType( LanguageUtils.getLanguageId('en-US') ).includes('conference') );
-            assert.equal( 
-                TagUtils.supportedType( LanguageUtils.getLanguageId('zh-TW') ).length,
-                TagUtils.supportedType( LanguageUtils.getLanguageId('en-US') ).length
-            );
+    context('TagUtils.defaultTagId', ()=>{
+        it('should return a number', ()=>{
+            expect(TagUtils.defaultTagId).to.be.a('number');
         })
-    });
-
-    context('supportedTypeId', () => {
-        it('should return the value in the correct type', () => {
-            assert( Array.isArray( TagUtils.supportedTypeId ) );
-            assert( TagUtils.supportedTypeId.every( (id) => { return typeof( id ) === 'number'; } ) );
-        });
-        it('should success', () => {
-            assert.equal( TagUtils.supportedTypeId.length, TagUtils.supportedType( LanguageUtils.defaultLanguageId ).length);
-        });
-    });
-
-    context('getTypeId', () => {
-        it('should success', () => {
-            assert.equal( TagUtils.getTypeId(correctSampleTypeA), correctSampleTypeA.typeId);
-            assert.equal( TagUtils.getTypeId(correctSampleTypeB), correctSampleTypeB.typeId);
-            assert.equal( TagUtils.getTypeId(correctSampleTypeC), correctSampleTypeC.typeId);
-            assert.equal( TagUtils.getTypeId(correctSampleTypeD), correctSampleTypeD.typeId);
-            assert.equal( TagUtils.getTypeId(correctSampleTypeE), correctSampleTypeE.typeId);
-        });
-        it('should throw an error when giving an incorrect object', () => {
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeA); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeB); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeC); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeD); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeE); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeF); }, Error);
-            assert.throws( () => { TagUtils.getTypeId(wrongSampleTypeG); }, Error);
-        });
-        it('should throw an error when giving an argument of wrong type', () => {
-            assert.throws( () => { TagUtils.getTypeId(String()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeId(Number()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeId(Boolean()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeId(Symbol()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeId(undefined); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeId(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( TagUtils.getTypeId( correctSampleTypeA )), typeof( Number() ) );
-        });
-    });
-
-    context('getTypeById', () => {
-        it('should success', () => {
-            assert.equal( TagUtils.getTypeById(correctSampleTypeA), correctSampleTypeA.typeName);
-            assert.equal( TagUtils.getTypeById(correctSampleTypeB), correctSampleTypeB.typeName);
-            assert.equal( TagUtils.getTypeById(correctSampleTypeC), correctSampleTypeC.typeName);
-            assert.equal( TagUtils.getTypeById(correctSampleTypeD), correctSampleTypeD.typeName);
-            assert.equal( TagUtils.getTypeById(correctSampleTypeE), correctSampleTypeE.typeName);
-        });
-        it('should throw an error when giving an incorrect object', () => {
-            let wrongSampleTypeH = {
-                typeId: 'ABC',
-                languageId: 0,
-            };
-            let wrongSampleTypeI = {
-                typeId: 0,
-                languageId: 'ABC',
-            };
-            let wrongSampleTypeJ = {
-                typeId: 0,
-            };
-            let wrongSampleTypeK = {
-                languageId: 0,
-            };
-            let wrongSampleTypeL = {};
-            let wrongSampleTypeM = {
-                typeId: -1,
-                languageId: 0,
-            };
-            let wrongSampleTypeN = {
-                typeId: 0,
-                languageId: -1,
-            };
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeH); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeI); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeJ); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeK); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeL); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeM); }, Error);
-            assert.throws( () => { TagUtils.getTypeById(wrongSampleTypeN); }, Error);
-        });
-        it('should throw an error when giving an argument of wrong type', () => {
-            assert.throws( () => { TagUtils.getTypeById(String()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeById(Number()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeById(Boolean()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeById(Symbol()); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeById(undefined); }, TypeError );
-            assert.throws( () => { TagUtils.getTypeById(null); }, TypeError );
-        });
-        it('should return the value in the correct type', () => {
-            assert.equal( typeof( TagUtils.getTypeById( correctSampleTypeA )), typeof( String() ) );
-        });
-    });
+        it('should be supported', ()=>{
+            expect(TagUtils.supportedTagId).to.include(TagUtils.defaultTagId);
+        })
+        it('should be a pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(()=>{
+                expect(TagUtils.defaultTagId).to.be.equal(TagUtils.defaultTagId);
+            })
+        })
+    })
+    context('TagUtils.supportedTag', ()=>{
+        it('should return value `[]` when `languageId` is invalid', ()=>{
+            expect(TagUtils.supportedTag(true)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(false)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag({})).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag({failed: true})).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag([])).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag([1,2,3])).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(null)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag('')).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag('string')).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag('0')).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag('1')).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(-1)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.MAX_SAFE_INTEGER)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.MAX_VALUE)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.POSITIVE_INFINITY)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.MIN_SAFE_INTEGER)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(0.1)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(-0.1)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.MIN_VALUE)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Number.NEGATIVE_INFINITY)).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Symbol())).to.be.instanceOf(Array).that.is.empty;
+            expect(TagUtils.supportedTag(Symbol('string'))).to.be.instanceOf(Array).that.is.empty;
+        })
+        it('should return an array of string of supported tag when `languageId` is valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.supportedTag(languageId)).to.be.instanceOf(Array);
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(tag).to.be.a('string')
+                })
+            })
+        })
+        it('should return an array of string of supported tag when `languageId` is not provided', ()=>{
+            expect(TagUtils.supportedTag()).to.be.instanceOf(Array);
+            TagUtils.supportedTag().map(tag=>{
+                expect(tag).to.be.a('string')
+            })
+        })
+        it('should have same number of supported tag for all language',()=>{
+            const sameLength = TagUtils.supportedTag().length;
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.supportedTag(languageId)).to.have.lengthOf(sameLength);
+            })
+        })
+        it('should be supported', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.isSupportedTag({tag, languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be a pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.supportedTag(languageId)).to.deep.equal(TagUtils.supportedTag(languageId));
+            })
+        })
+        it('should be an unforzen array', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                expect(TagUtils.supportedTag(languageId)).to.not.frozen;
+            })
+        })
+    })
+    context('TagUtils.supportedTagId', ()=>{
+        it('should return an array of number', ()=>{
+            expect(TagUtils.supportedTagId).to.be.instanceOf(Array);
+            TagUtils.supportedTagId.map(tagId=>{
+                expect(tagId).to.be.a('number')
+            })
+        })
+        it('should be supported', ()=>{
+            TagUtils.supportedTagId.map(tagId=>{
+                expect(TagUtils.isSupportedTagId(tagId)).to.be.true;
+            })
+        })
+        it('should be pure function', ()=>{
+            expect(TagUtils.supportedTagId).to.deep.equal(TagUtils.supportedTagId);
+        })
+        it('should be an unforzen array', ()=>{
+            expect(TagUtils.supportedTagId).to.not.frozen;
+        })
+    })
+    context('TagUtils.isSupportedTag', ()=>{
+        it('should return false when invalid input is provided', ()=>{
+            expect(TagUtils.isSupportedTag()).to.be.false;
+            expect(TagUtils.isSupportedTag(undefined)).to.be.false;
+            expect(TagUtils.isSupportedTag(true)).to.be.false;
+            expect(TagUtils.isSupportedTag(false)).to.be.false;
+            expect(TagUtils.isSupportedTag({})).to.be.false;
+            expect(TagUtils.isSupportedTag({failed:true})).to.be.false;
+            expect(TagUtils.isSupportedTag([])).to.be.false;
+            expect(TagUtils.isSupportedTag([1,2,3])).to.be.false;
+            expect(TagUtils.isSupportedTag(null)).to.be.false;
+            expect(TagUtils.isSupportedTag('')).to.be.false;
+            expect(TagUtils.isSupportedTag('0')).to.be.false;
+            expect(TagUtils.isSupportedTag('1')).to.be.false;
+            expect(TagUtils.isSupportedTag('string')).to.be.false;
+            expect(TagUtils.isSupportedTag(0)).to.be.false;
+            expect(TagUtils.isSupportedTag(1)).to.be.false;
+            expect(TagUtils.isSupportedTag(-1)).to.be.false;
+            expect(TagUtils.isSupportedTag(Number.MAX_SAFE_INTEGER)).to.be.false;
+            expect(TagUtils.isSupportedTag(Number.MAX_VALUE)).to.be.false;
+            expect(TagUtils.isSupportedTag(Number.MIN_SAFE_INTEGER)).to.be.false;
+            expect(TagUtils.isSupportedTag(Number.MIN_VALUE)).to.be.false;
+            expect(TagUtils.isSupportedTag(0.1)).to.be.false;
+            expect(TagUtils.isSupportedTag(-0.1)).to.be.false;
+            expect(TagUtils.isSupportedTag(Symbol())).to.be.false;
+            expect(TagUtils.isSupportedTag(Symbol('string'))).to.be.false;
+        })
+        it('should return false when only `tag` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.isSupportedTag({tag})).to.be.false;
+                })
+            })
+        })
+        it('should return false when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(()=>{
+                    expect(TagUtils.isSupportedTag({languageId})).to.be.false;
+                })
+            })
+        })
+        it('should return true when both `tag` and `languageId` are valid', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.isSupportedTag({tag,languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.isSupportedTag({tag,languageId})).to.equal(TagUtils.isSupportedTag({tag,languageId}));
+                })
+            })
+        })
+    })
+    context('TagUtils.isSupportedTagId', ()=>{
+        it('should return false when `tagId` is invalid', ()=>{
+            expect(TagUtils.isSupportedTagId()).to.be.false;
+            expect(TagUtils.isSupportedTagId(undefined)).to.be.false;
+            expect(TagUtils.isSupportedTagId(true)).to.be.false;
+            expect(TagUtils.isSupportedTagId(false)).to.be.false;
+            expect(TagUtils.isSupportedTagId({})).to.be.false;
+            expect(TagUtils.isSupportedTagId({failed:true})).to.be.false;
+            expect(TagUtils.isSupportedTagId([])).to.be.false;
+            expect(TagUtils.isSupportedTagId([1,2,3])).to.be.false;
+            expect(TagUtils.isSupportedTagId(null)).to.be.false;
+            expect(TagUtils.isSupportedTagId('')).to.be.false;
+            expect(TagUtils.isSupportedTagId('0')).to.be.false;
+            expect(TagUtils.isSupportedTagId('1')).to.be.false;
+            expect(TagUtils.isSupportedTagId('string')).to.be.false;
+            expect(TagUtils.isSupportedTagId(-1)).to.be.false;
+            expect(TagUtils.isSupportedTagId(Number.MAX_SAFE_INTEGER)).to.be.false;
+            expect(TagUtils.isSupportedTagId(Number.MAX_VALUE)).to.be.false;
+            expect(TagUtils.isSupportedTagId(Number.MIN_SAFE_INTEGER)).to.be.false;
+            expect(TagUtils.isSupportedTagId(Number.MIN_VALUE)).to.be.false;
+            expect(TagUtils.isSupportedTagId(0.1)).to.be.false;
+            expect(TagUtils.isSupportedTagId(-0.1)).to.be.false;
+            expect(TagUtils.isSupportedTagId(Symbol())).to.be.false;
+            expect(TagUtils.isSupportedTagId(Symbol('string'))).to.be.false;
+        })
+        it('should return true when `tagId` is valid', ()=>{
+            TagUtils.supportedTagId.map(tagId=>{
+                expect(TagUtils.isSupportedTagId(tagId)).to.be.true;
+            })
+        })
+        it('should be pure function', ()=>{
+            TagUtils.supportedTagId.map(tagId=>{
+                expect(TagUtils.isSupportedTagId(tagId)).to.equal(TagUtils.isSupportedTagId(tagId));
+            })
+        })
+    })
+    context('TagUtils.getTagId', ()=>{
+        it('should return value `undefined` when invalid input is provided', ()=>{
+            expect(TagUtils.getTagId()).to.be.undefined;
+            expect(TagUtils.getTagId(undefined)).to.be.undefined;
+            expect(TagUtils.getTagId(true)).to.be.undefined;
+            expect(TagUtils.getTagId(false)).to.be.undefined;
+            expect(TagUtils.getTagId({})).to.be.undefined;
+            expect(TagUtils.getTagId({failed:true})).to.be.undefined;
+            expect(TagUtils.getTagId([])).to.be.undefined;
+            expect(TagUtils.getTagId([1,2,3])).to.be.undefined;
+            expect(TagUtils.getTagId(null)).to.be.undefined;
+            expect(TagUtils.getTagId('')).to.be.undefined;
+            expect(TagUtils.getTagId('0')).to.be.undefined;
+            expect(TagUtils.getTagId('1')).to.be.undefined;
+            expect(TagUtils.getTagId('string')).to.be.undefined;
+            expect(TagUtils.getTagId(0)).to.be.undefined;
+            expect(TagUtils.getTagId(1)).to.be.undefined;
+            expect(TagUtils.getTagId(-1)).to.be.undefined;
+            expect(TagUtils.getTagId(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.getTagId(Number.MAX_VALUE)).to.be.undefined;
+            expect(TagUtils.getTagId(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.getTagId(Number.MIN_VALUE)).to.be.undefined;
+            expect(TagUtils.getTagId(0.1)).to.be.undefined;
+            expect(TagUtils.getTagId(-0.1)).to.be.undefined;
+            expect(TagUtils.getTagId(Symbol())).to.be.undefined;
+            expect(TagUtils.getTagId(Symbol('string'))).to.be.undefined;
+        })
+        it('should return value `undefined` when only `tag` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.getTagId({tag})).to.be.undefined;
+                })
+            })
+        })
+        it('should return value `undefined` when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(()=>{
+                    expect(TagUtils.getTagId({languageId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return a number represent `tagId` when both `tag` and `languageId` are provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    const tagId = TagUtils.getTagId({tag, languageId})
+                    expect(tagId).to.be.a('number');
+                    expect(TagUtils.isSupportedTagId(tagId)).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTag(languageId).map(tag=>{
+                    expect(TagUtils.getTagId({tag, languageId})).to.equal(TagUtils.getTagId({tag, languageId}))
+                })
+            })
+        })
+    })
+    context('TagUtils.getTagById', ()=>{
+        it('should return value `undefined` when invalid input is provided', ()=>{
+            expect(TagUtils.getTagById()).to.be.undefined;
+            expect(TagUtils.getTagById(undefined)).to.be.undefined;
+            expect(TagUtils.getTagById(true)).to.be.undefined;
+            expect(TagUtils.getTagById(false)).to.be.undefined;
+            expect(TagUtils.getTagById({})).to.be.undefined;
+            expect(TagUtils.getTagById({failed:true})).to.be.undefined;
+            expect(TagUtils.getTagById([])).to.be.undefined;
+            expect(TagUtils.getTagById([1,2,3])).to.be.undefined;
+            expect(TagUtils.getTagById(null)).to.be.undefined;
+            expect(TagUtils.getTagById('')).to.be.undefined;
+            expect(TagUtils.getTagById('0')).to.be.undefined;
+            expect(TagUtils.getTagById('1')).to.be.undefined;
+            expect(TagUtils.getTagById('string')).to.be.undefined;
+            expect(TagUtils.getTagById(-1)).to.be.undefined;
+            expect(TagUtils.getTagById(Number.MAX_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.getTagById(Number.MAX_VALUE)).to.be.undefined;
+            expect(TagUtils.getTagById(Number.MIN_SAFE_INTEGER)).to.be.undefined;
+            expect(TagUtils.getTagById(Number.MIN_VALUE)).to.be.undefined;
+            expect(TagUtils.getTagById(0.1)).to.be.undefined;
+            expect(TagUtils.getTagById(-0.1)).to.be.undefined;
+            expect(TagUtils.getTagById(Symbol())).to.be.undefined;
+            expect(TagUtils.getTagById(Symbol('string'))).to.be.undefined;
+        })
+        it('should return value `undefined` when only `tagId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(()=>{
+                TagUtils.supportedTagId.map(tagId=>{
+                    expect(TagUtils.getTagById({tagId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return value `undefined` when only `languageId` is provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTagId.map(()=>{
+                    expect(TagUtils.getTagById({languageId})).to.be.undefined;
+                })
+            })
+        })
+        it('should return a string represent `tag` when both `tagId` and `languageId` are provided', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTagId.map(tagId=>{
+                    const tag = TagUtils.getTagById({tagId, languageId})
+                    expect(tag).to.be.a('string');
+                    expect(TagUtils.isSupportedTag({tag, languageId})).to.be.true;
+                })
+            })
+        })
+        it('should be pure function', ()=>{
+            LanguageUtils.supportedLanguageId.map(languageId=>{
+                TagUtils.supportedTagId.map(tagId=>{
+                    expect(TagUtils.getTagById({tagId, languageId})).to.equal(TagUtils.getTagById({tagId, languageId}))
+                })
+            })
+        })
+    })
 });

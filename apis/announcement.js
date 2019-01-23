@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 
 import getAllAnnouncements from 'models/announcement/operation/get-all-announcements.js';
 import getAnnouncementsByTags from 'models/announcement/operation/get-announcements-by-tags.js';
@@ -21,8 +20,6 @@ import deleteAnnouncementTags from 'models/announcement/operation/delete-announc
 import deleteAnnouncementFiles from 'models/announcement/operation/delete-announcementFiles.js';
 
 const apis = express.Router();
-
-apis.use( bodyParser.json() );
 
 apis.get( /^\/all-announcement$/, async ( req, res ) => {
     let tags = req.query.tags;
