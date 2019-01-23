@@ -21,6 +21,7 @@ const connect = databaseName => new Sequelize(
     config.password,
     {
         host:             config.domainName,
+        port:             config.port,
         dialect:          config.dialect,
         operatorsAliases: false,
         logging:          false,
