@@ -74,6 +74,7 @@ append data
           'name':    '計畫名稱',
           'period':  '起訖日期',
           'support': '補助單位',
+          'category':'種類',
         }
       },
     } );
@@ -124,16 +125,18 @@ append content
     each education in data.education
       ul.education__list.list
         li.list__from= education.from
+        li.list__period= '-'
         li.list__to= education.to
         li.list__nation= education.nation
         li.list__school= education.school
         li.list__major= education.major
         li.list__degree= education.degree
   section.experience
-    h2.education__title= i18n[ LANG.id ].experience
+    h2.experience__title= i18n[ LANG.id ].experience
     each experience in data.experience
       ul.experience__list.list
         li.list__from= experience.from
+        li.list__period= '-'
         li.list__to= experience.to
         li.list__organization= experience.organization
         li.list__department= experience.department
@@ -152,8 +155,8 @@ append content
   section.publication
     h2.publication__title= i18n[ LANG.id ].publication
     h3.publication__paper Papers
-    ul.publication__paperList.paperList
-      each publicationObj in data.publication
+    each publicationObj in data.publication
+      ul.publication__paperList.paperList
         li.paperList__data= publicationObj.author
         li.paperList__data= publicationObj.title
         li.paperList__data= publicationObj.category
@@ -215,13 +218,14 @@ append content
             th.row__name= i18n[ LANG.id ].project.name
             th.row__period= i18n[ LANG.id ].project.period
             th.row__support= i18n[ LANG.id ].project.support
+            th.row__category= i18n[ LANG.id ].project.category
         tbody.table__body.body
           each projectObj in data.project
             tr.body__row.row
               td.row__name= projectObj.name
               td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
               td.row__support= projectObj.support
-              td.row__support= projectObj.category
+              td.row__category= projectObj.category
   section.conference
     h2.conference.title Conference
     ul.conference__list.list
