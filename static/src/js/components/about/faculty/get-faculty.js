@@ -27,6 +27,9 @@ export default target => fetch( reqURL )
         return profile;
     } );
 
+    /* eslint no-console: 0 */
+    console.log(faculty)
+
     target.innerHTML = card( {
         faculty,
         LANG: {
