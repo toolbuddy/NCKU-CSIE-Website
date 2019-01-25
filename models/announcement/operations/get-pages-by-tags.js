@@ -1,11 +1,13 @@
-import sequelize from 'sequelize';
-import associations from 'models/announcement/operation/associations.js';
-import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import Sequelize from 'sequelize';
+import {
+    Announcement,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import AnnouncementUtils from 'models/announcement/utils/announcement.js';
+import TagUtils from 'models/announcement/utils/tag.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
 
-// Import tagUtils from 'settings/components/tags/utils.js';
-
-const Op = sequelize.Op;
+const op = Sequelize.Op;
 
 /**
  * A function for getting the number of pages to display all requested announcements.
@@ -21,48 +23,88 @@ const Op = sequelize.Op;
  * Announcements which contain all of the given tags are taken into account.
  */
 
-export default async ( {
-    tags = [],
-    startTime = defaultValue.startTime,
-    endTime = defaultValue.endTime,
-} = {} ) => {
-    tags = [ ...new Set( tags ), ];
-    startTime = new Date( startTime );
-    endTime = new Date( endTime );
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        tags = [],
+        from = AnnouncementUtils.defaultFromTime,
+        to = AnnouncementUtils.defaultToTime,
+        amount = 1,
+    } = opt;
 
-    // If ( !tagUtils.isValidTagNums( tags ) )
-    //    return { error: 'invalid tag num', };
+    let tagIds = [];
+    tagIds = tags.map( Number );
 
-    if ( !validate.isValidDate( startTime ) )
-        return { error: 'invalid start time', };
-
-    if ( !validate.isValidDate( endTime ) )
-        return { error: 'invalid end time', };
-
-    const table = await associations();
-    const count = await table.announcement.count( {
-        where: {
-            '$tag.type$': {
-                [ Op.in ]: tags,
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid tag id',
             },
-            'updateTime':                       {
-                [ Op.between ]: [
-                    new Date( startTime ),
-                    new Date( endTime ),
+        };
+    }
+    if ( !ValidateUtils.isValidNumber( amount ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid amount',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - from',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - to',
+            },
+        };
+    }
+
+    const fromTime = new Date( from ).toISOString();
+    const toTime = new Date( to ).toISOString();
+
+    const count = await Announcement.count( {
+        attributes: [
+            'announcementId',
+            [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+                'tagsCount', ],
+        ],
+        where: {
+            updateTime: {
+                [ op.between ]: [
+                    fromTime,
+                    toTime,
                 ],
             },
-            'isPublished': 1,
+            isPublished: 1,
         },
-        include: [ {
-            model:   table.tag,
-            as:      'tag',
-        }, ],
-        group:  '`announcement`.`announcement_id`',
-        having: sequelize.literal( `count(*) = ${ tags.length }` ),
-    } )
-    .then( count => count.length );
+        include: [
+            {
+                model:      Tag,
+                as:         'tag',
+                attributes: [],
+                where:      {
+                    TypeId: {
+                        [ op.in ]: tagIds,
+                    },
+                },
+            },
+        ],
+        group:  [ 'announcementId', ],
+        having: {
+            tagsCount: {
+                [ op.gte ]: tagIds.length,
+            },
+        },
+    } );
 
-    table.database.close();
-
-    return { pageNumber: Math.ceil( count / defaultValue.announcementsPerPage ), };
+    return Math.ceil( count.length / amount );
 };

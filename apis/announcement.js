@@ -5,9 +5,10 @@ import getAllPages from 'models/announcement/operations/get-all-pages.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import getAllPinnedAnnouncements from 'models/announcement/operations/get-all-pinned-announcements.js';
 import getAnnouncementsByTags from 'models/announcement/operations/get-announcements-by-tags.js';
+import getPagesByTags from '../models/announcement/operations/get-pages-by-tags';
+import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pinned-announcements-by-tags.js';
 
-// Import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pinned-announcements-by-tags.js';
-// import getPagesByTags from 'models/announcement/operations/get-pages-by-tags.js';
+// Import getPagesByTags from 'models/announcement/operations/get-pages-by-tags.js';
 // import getAnnouncementAllLanguages from 'models/announcement/operations/get-announcement-all-languages.js';
 
 // import postAnnouncement from 'models/announcement/operations/post-announcement.js';
@@ -73,67 +74,27 @@ apis.get( '/tags-announcement', async ( req, res ) => {
     } ) );
 } );
 
-// Apis.get( /^\/tags-announcement$/, async ( req, res ) => {
-//     let tags = req.query.tags;
-//     if ( typeof tags === 'string' )
-//         tags = Array.of( tags );
+apis.get( '/tags-pages', async ( req, res ) => {
+    const tags = req.query.tags || [];
+    res.json( await getPagesByTags( {
+        amount: req.query.amount,
+        tags:   [ ...tags, ],
+        from:   req.query.from,
+        to:     req.query.to,
+    } ) );
+} );
 
-//     const result = await getAnnouncementsByTags( {
-//         tags,
-//         startTime: req.query.startTime,
-//         endTime:   req.query.endTime,
-//         page:      req.query.page,
-//         language:  req.query.languageId,
-//     } );
+apis.get( '/tags-pinned', async ( req, res ) => {
+    const tags = req.query.tags || [];
+    res.json( await getPinnedAnnouncementsByTags( {
+        tags:       [ ...tags, ],
+        from:       req.query.from,
+        to:         req.query.to,
+        languageId:  req.query.languageId,
+    } ) );
+} );
 
-//     if ( result.error )
-//         res.status( 400 ).json( result );
-//     else if ( !result.length )
-//         res.status( 404 ).end();
-//     else
-//         res.status( 200 ).json( result );
-// } );
-
-// apis.get( /^\/tags-pages$/, async ( req, res ) => {
-//     let tags = req.query.tags;
-//     if ( typeof tags === 'string' )
-//         tags = Array.of( tags );
-
-//     const result = await getPagesByTags( {
-//         tags,
-//         startTime: req.query.startTime,
-//         endTime:   req.query.endTime,
-//     } );
-
-//     if ( result.error )
-//         res.status( 400 ).json( result );
-//     else if ( !result.pageNumber )
-//         res.status( 404 ).end();
-//     else
-//         res.status( 200 ).json( result );
-// } );
-
-// apis.get( /^\/tags-pinned$/, async ( req, res ) => {
-//     let tags = req.query.tags;
-//     if ( typeof tags === 'string' )
-//         tags = Array.of( tags );
-
-//     const result = await getPinnedAnnouncementsByTags( {
-//         tags,
-//         startTime: req.query.startTime,
-//         endTime:   req.query.endTime,
-//         language:  req.query.languageId,
-//     } );
-
-//     if ( result.error )
-//         res.status( 400 ).json( result );
-//     else if ( !result.length )
-//         res.status( 404 ).end();
-//     else
-//         res.status( 200 ).json( result );
-// } );
-
-// apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
+// Apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
 //     try {
 //         res.json( await getAnnouncementAllLanguages( { announcementId: req.params[ 0 ], } ) );
 //     }

@@ -48,18 +48,54 @@ export default async ( opt ) => {
     else
         tagIds = tags.map( Number );
 
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
-        return { error: 'invalid tag id', };
-    if ( !ValidateUtils.isValidNumber( page ) )
-        return { error: 'invalid page', };
-    if ( !ValidateUtils.isValidNumber( amount ) )
-        return { error: 'invalid amount', };
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
-        return { error: 'invalid time - from', };
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
-        return { error: 'invalid time - to', };
-    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
-        return { error: 'invalid language id', };
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid tag id',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidNumber( page ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid page',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidNumber( amount ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid amount',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - from',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - to',
+            },
+        };
+    }
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid language id',
+            },
+        };
+    }
 
 
     const fromTime = new Date( from ).toISOString();

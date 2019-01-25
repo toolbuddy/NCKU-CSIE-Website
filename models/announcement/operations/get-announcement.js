@@ -35,10 +35,22 @@ export default async ( opt ) => {
         announcementId = null,
     } = opt;
 
-    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
-        return { error: 'invalid language id', };
-    if ( !ValidateUtils.isValidNumber( announcementId ) )
-        return { error: 'invalid announcement id', };
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid language id',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidNumber( announcementId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid announcement id',
+            },
+        };
+    }
 
     const data = await Announcement.findOne( {
         include: [

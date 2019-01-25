@@ -19,8 +19,8 @@ export function setURLOnChange (
         getPageNumberByTags
 ) {
     pageOnChange = () => {
-        if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
-            getAllAnnouncements();
+        // If ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
+        getAllAnnouncements();
 
         // Else
         //    getAnnouncementsByTags();

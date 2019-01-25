@@ -36,14 +36,38 @@ export default async ( opt ) => {
     else
         tagIds = tags.map( Number );
 
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
-        return { error: 'invalid tag id', };
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
-        return { error: 'invalid time - from', };
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
-        return { error: 'invalid time - to', };
-    if ( !ValidateUtils.isValidNumber( amount ) )
-        return { error: 'invalid amount', };
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid tag id',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidNumber( amount ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid amount',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - from',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - to',
+            },
+        };
+    }
 
     const fromTime = new Date( from ).toISOString();
     const toTime = new Date( to ).toISOString();

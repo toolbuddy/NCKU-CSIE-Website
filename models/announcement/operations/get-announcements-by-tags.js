@@ -33,84 +33,156 @@ import TagUtils from 'models/announcement/utils/tag.js';
 const op = Sequelize.Op;
 
 export default async ( opt ) => {
-    opt = opt || {};
-    const {
-        tags = [],
-        page = 1,
-        amount = 1,
-        from = AnnouncementUtils.defaultFromTime,
-        to = AnnouncementUtils.defaultToTime,
-        languageId = LanguageUtils.defaultLanguageId,
-    } = opt;
+    try {
+        opt = opt || {};
+        const {
+            tags = [],
+            page = 1,
+            amount = 1,
+            from = AnnouncementUtils.defaultFromTime,
+            to = AnnouncementUtils.defaultToTime,
+            languageId = LanguageUtils.defaultLanguageId,
+        } = opt;
 
-    let tagIds = [];
-    tagIds = tags.map( Number );
-
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
-        return { error: 'invalid tag id', };
-    if ( !ValidateUtils.isValidNumber( page ) )
-        return { error: 'invalid page', };
-    if ( !ValidateUtils.isValidNumber( amount ) )
-        return { error: 'invalid amount', };
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
-        return { error: 'invalid time - from', };
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
-        return { error: 'invalid time - to', };
-    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
-        return { error: 'invalid language id', };
+        let tagIds = [];
+        tagIds = tags.map( Number );
 
 
-    const fromTime = new Date( from ).toISOString();
-    const toTime = new Date( to ).toISOString();
-    const offset = Number( amount * ( page - 1 ) );
-    const limit = Number( amount );
-
-    const data = await Announcement.findAll( {
-        attributes: [
-            'announcementId',
-
-            // [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-            //    'tagsCount', ],
-        ],
-
-        group: [ 'announcementId', ],
-        where:      {
-            updateTime: {
-                [ op.between ]: [
-                    fromTime,
-                    toTime,
-                ],
-            },
-            isPublished: 1,
-        },
-        include: [
-            {
-                model:      AnnouncementI18n,
-                as:         'announcementI18n',
-                attributes: [
-                    'title',
-                    'content',
-                ],
-                where: {
-                    languageId,
+        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid tag id',
                 },
+            };
+        }
+        if ( !ValidateUtils.isValidNumber( page ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid page',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidNumber( amount ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid amount',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - from',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - to',
+                },
+            };
+        }
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid language id',
+                },
+            };
+        }
+
+        const fromTime = new Date( from ).toISOString();
+        const toTime = new Date( to ).toISOString();
+        const offset = Number( amount * ( page - 1 ) );
+        const limit = Number( amount );
+
+        const data = await Announcement.findAll( {
+            attributes: [
+                'announcementId',
+                [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+                    'tagsCount', ],
+            ],
+            where: {
+                updateTime: {
+                    [ op.between ]: [
+                        fromTime,
+                        toTime,
+                    ],
+                },
+                isPublished: 1,
             },
-            {
-                model:      Tag,
-                as:         'tag',
-                attributes: [ 'typeId', ],
-                Where:      {
-                    TypeId: {
-                        [ op.in ]: tagIds,
+            include: [
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [],
+                    where:      {
+                        TypeId: {
+                            [ op.in ]: tagIds,
+                        },
                     },
                 },
+            ],
+            group:  [ 'announcementId', ],
+            having: {
+                tagsCount: {
+                    [ op.gte ]: tagIds.length,
+                },
             },
-        ],
-        distinct: true,
-        raw:      true,
+        } ).then( announcementData => Announcement.findAll( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+                'views',
+                'author',
+            ],
+            where: {
+                announcementId: {
+                    [ op.in ]: announcementData.map( d => d.announcementId ),
+                },
+            },
+            limit,
+            offset,
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
+                    },
+                },
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [ 'typeId', ],
+                },
+            ],
+        } ) );
 
-        // Having: Sequelize.literal( `count(*) = ${ tagIds.length }` ),
-    } );
+        return data;
+    }
 
-    return data;
+    /**
+     * Something wrong, must be a server error.
+     * Handle with 500 internal server error.
+     */
+
+    catch ( error ) {
+        return {
+            status: 500,
+            error:  {
+                message: 'server internal error',
+            },
+        };
+    }
 };

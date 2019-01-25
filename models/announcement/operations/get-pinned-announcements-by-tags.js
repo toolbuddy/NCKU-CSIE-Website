@@ -1,12 +1,15 @@
-import sequelize from 'sequelize';
-import associations from 'models/announcement/operation/associations.js';
-import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import Sequelize from 'sequelize';
+import {
+    Announcement,
+    AnnouncementI18n,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 
-// Import tagUtils from 'settings/components/tags/utils.js';
-
-const Op = sequelize.Op;
+const op = Sequelize.Op;
 
 /**
  * A function for getting all pinned announcements.
@@ -28,87 +31,122 @@ const Op = sequelize.Op;
  * All pinned announcements which contain all of the specified tags are taken into account.
  */
 
-export default async ( {
-    tags = [],
-    startTime = defaultValue.startTime,
-    endTime = defaultValue.endTime,
-    language = LanguageUtils.getLanguageId( defaultValue.language ),
-} = {} ) => {
-    tags = [ ...new Set( tags ), ];
-    startTime = new Date( startTime );
-    endTime = new Date( endTime );
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        tags = [],
+        from = AnnouncementUtils.defaultFromTime,
+        to = AnnouncementUtils.defaultToTime,
+        languageId = LanguageUtils.defaultLanguageId,
+    } = opt;
 
-    // If ( !tagUtils.isValidTagNums( tags ) )
-    //    return { error: 'invalid tag num', };
+    let tagIds = [];
+    if ( tags.length === 0 )
+        tagIds = TagUtils.supportedTagId;
+    else
+        tagIds = tags.map( Number );
 
-    if ( !validate.isValidDate( startTime ) )
-        return { error: 'invalid start time', };
-
-    if ( !validate.isValidDate( endTime ) )
-        return { error: 'invalid end time', };
-
-    const table = await associations();
-    const data = await table.announcement.findAll( {
-        attributes: [ 'announcementId', ],
-        where:      {
-            '$tag.type$': {
-                [ Op.in ]: tags,
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid tag id',
             },
-            'updateTime':                       {
-                [ Op.between ]: [
-                    new Date( startTime ),
-                    new Date( endTime ),
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - from',
+            },
+        };
+    }
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid time - to',
+            },
+        };
+    }
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        return {
+            status: 400,
+            error:  {
+                message: 'invalid language id',
+            },
+        };
+    }
+
+    const fromTime = new Date( from ).toISOString();
+    const toTime = new Date( to ).toISOString();
+
+    const data = await Announcement.findAll( {
+        attributes: [
+            'announcementId',
+            [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+                'tagsCount', ],
+        ],
+        where: {
+            updateTime: {
+                [ op.between ]: [
+                    fromTime,
+                    toTime,
                 ],
             },
-            'isPinned':    1,
-            'isPublished': 1,
+            isPublished: 1,
+            isPinned:    1,
         },
-        include: [ {
-            model:      table.tag,
-            as:         'tag',
-        }, ],
-        group:  'announcementId',
-        having: sequelize.literal( `count(*) = ${ tags.length }` ),
-    } )
-    .then( ids => table.announcement.findAll( {
+        include: [
+            {
+                model:      Tag,
+                as:         'tag',
+                attributes: [],
+                where:      {
+                    TypeId: {
+                        [ op.in ]: tagIds,
+                    },
+                },
+            },
+        ],
+        group:  [ 'announcementId', ],
+        having: {
+            tagsCount: {
+                [ op.gte ]: tagIds.length,
+            },
+        },
+    } ).then( announcementData => Announcement.findAll( {
         attributes: [
             'announcementId',
             'updateTime',
+            'views',
+            'author',
         ],
         where: {
             announcementId: {
-                [ Op.in ]: ids.map( id => id.announcementId ),
+                [ op.in ]: announcementData.map( d => d.announcementId ),
             },
         },
         include: [
             {
-                model:      table.announcementI18n,
+                model:      AnnouncementI18n,
                 as:         'announcementI18n',
                 attributes: [
                     'title',
                     'content',
                 ],
                 where: {
-                    language,
+                    languageId,
                 },
             },
             {
-                model:      table.tag,
+                model:      Tag,
                 as:         'tag',
+                attributes: [ 'typeId', ],
             },
         ],
-    } ) )
-    .then( announcements => announcements.map( announcement => ( {
-        id:         announcement.announcementId,
-        title:      announcement.announcementI18n[ 0 ].title,
-        content:    announcement.announcementI18n[ 0 ].content,
-        updateTime: announcement.updateTime,
-        tags:       announcement.tag.map( tag => ( {
-            type: tag.type,
-        } ) ),
-    } ) ) );
-
-    table.database.close();
+    } ) );
 
     return data;
 };
