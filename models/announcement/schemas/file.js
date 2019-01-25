@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
-import { announcement, } from 'models/utils/connect.js';
+import { announcement, } from 'models/common/utils/connect.js';
 
-const AnnouncementFile = announcement.define( 'announcementFile', {
+const File = announcement.define( 'file', {
     announcementId: {
         type:       Sequelize.INTEGER.UNSIGNED,
         allowNull:  false,
@@ -15,4 +15,4 @@ const AnnouncementFile = announcement.define( 'announcementFile', {
     },
 } );
 
-export default AnnouncementFile;
+export default File;

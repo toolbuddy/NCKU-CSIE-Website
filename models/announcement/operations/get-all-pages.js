@@ -1,80 +1,74 @@
 import { Op, } from 'sequelize';
-import associations from 'models/announcement/operation/associations.js';
-import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
-
-// Import tagUtils from 'settings/components/tags/utils.js';
+import {
+    Announcement,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import AnnouncementUtils from 'models/announcement/utils/announcement.js';
+import TagUtils from 'models/announcement/utils/tag.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
 
 /**
  * A function for getting the number of pages to display all requested announcements.
  *
  * @async
  * @param {string[]} [tags=[]]                            - Specifying the announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
+ * @param {string}   [from = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
  *                                                          announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
+ * @param {string}   [to = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
  *                                                          announcements were post.
  * @returns {object}                                        The number of pages required to display all the requested announcements.
  *
  * Announcements which contain at least one of the given tags are taken into account.
  */
 
-export default async ( {
-    tags = [],
-    startTime = defaultValue.startTime,
-    endTime = defaultValue.endTime,
-} = {} ) => {
-    tags = [ ...new Set( tags ), ];
-    startTime = new Date( startTime );
-    endTime = new Date( endTime );
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        tags = [],
+        from = AnnouncementUtils.defaultFromTime,
+        to = AnnouncementUtils.defaultToTime,
+        amount = 1,
+    } = opt;
 
-    // If ( !tagUtils.isValidTagNums( tags ) )
-    //    return { error: 'invalid tag num', };
+    let tagIds = [];
+    if ( tags.length === 0 )
+        tagIds = TagUtils.supportedTagId;
+    else
+        tagIds = tags.map( Number );
 
-    if ( !validate.isValidDate( startTime ) )
-        return { error: 'invalid start time', };
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
+        return { error: 'invalid tag id', };
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
+        return { error: 'invalid time - from', };
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
+        return { error: 'invalid time - to', };
+    if ( !ValidateUtils.isValidNumber( amount ) )
+        return { error: 'invalid amount', };
 
-    if ( !validate.isValidDate( endTime ) )
-        return { error: 'invalid end time', };
-    const table = await associations();
-    let count = 0;
-    if ( tags.length === 0 ) {
-        count = await table.announcement.count( {
-            where: {
-                updateTime: {
-                    [ Op.between ]: [
-                        startTime,
-                        endTime,
-                    ],
-                },
-                isPublished: 1,
+    const fromTime = new Date( from ).toISOString();
+    const toTime = new Date( to ).toISOString();
+
+    const count = await Announcement.count( {
+        where: {
+            updateTime: {
+                [ Op.between ]: [
+                    fromTime,
+                    toTime,
+                ],
             },
-        } );
-    }
-    else {
-        count = await table.announcement.count( {
-            where: {
-                '$tag.type$': {
-                    [ Op.in ]: tags,
+            isPublished: 1,
+        },
+        include: [ {
+            model:      Tag,
+            as:         'tag',
+            attributes: [ 'typeId', ],
+            where:      {
+                TypeId: {
+                    [ Op.in ]: tagIds,
                 },
-                'updateTime': {
-                    [ Op.between ]: [
-                        startTime,
-                        endTime,
-                    ],
-                },
-                'isPublished': 1,
             },
-            include: [
-                {
-                    model:   table.tag,
-                    as:      'tag',
-                },
-            ],
-            distinct: true,
-        } );
-    }
-    table.database.close();
-
-    return { pageNumber: Math.ceil( count / defaultValue.announcementsPerPage ), };
+        }, ],
+        distinct: true,
+    } );
+    return Math.ceil( count / amount );
 };

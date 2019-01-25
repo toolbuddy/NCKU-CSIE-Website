@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
-import { announcement, } from 'models/utils/connect.js';
+import { announcement, } from 'models/common/utils/connect.js';
 
 const Announcement = announcement.define( 'announcement', {
     announcementId: {
-        type:          Sequelize.INTEGER( 10 ).UNSIGNED,
+        type:          Sequelize.INTEGER.UNSIGNED,
         allowNull:     false,
         primaryKey:    true,
         autoIncrement: true,
@@ -17,21 +17,21 @@ const Announcement = announcement.define( 'announcement', {
         allowNull: true,
     },
     author: {
-        type:      Sequelize.INTEGER( 11 ),
+        type:      Sequelize.INTEGER,
         allowNull: true,
     },
     views: {
-        type:         Sequelize.INTEGER( 32 ).UNSIGNED,
+        type:         Sequelize.INTEGER.UNSIGNED,
         allowNull:    true,
         defaultValue: '0',
     },
     isPinned: {
-        type:         Sequelize.INTEGER( 1 ),
+        type:         Sequelize.BOOLEAN,
         allowNull:    true,
         defaultValue: '0',
     },
     isPublished: {
-        type:         Sequelize.INTEGER( 1 ),
+        type:         Sequelize.BOOLEAN,
         allowNull:    true,
         defaultValue: '1',
     },

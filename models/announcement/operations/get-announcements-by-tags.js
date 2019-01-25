@@ -1,11 +1,13 @@
-import sequelize from 'sequelize';
-import associations from 'models/announcement/operation/associations.js';
-import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
-
+import Sequelize from 'sequelize';
+import {
+    Announcement,
+    AnnouncementI18n,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import LanguageUtils from 'models/common/utils/language.js';
-
-// Import tagUtils from 'settings/components/tags/utils.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 
 /**
  * A function for getting all announcements.
@@ -28,98 +30,87 @@ import LanguageUtils from 'models/common/utils/language.js';
  * Announcements which contain all the given tags are taken into account.
  */
 
-const Op = sequelize.Op;
+const op = Sequelize.Op;
 
-export default async ( {
-    tags = [],
-    startTime = defaultValue.startTime,
-    endTime = defaultValue.endTime,
-    page = defaultValue.page,
-    language = LanguageUtils.getLanguageId( defaultValue.language ),
-} = {} ) => {
-    tags = [ ...new Set( tags ), ];
-    startTime = new Date( startTime );
-    endTime = new Date( endTime );
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        tags = [],
+        page = 1,
+        amount = 1,
+        from = AnnouncementUtils.defaultFromTime,
+        to = AnnouncementUtils.defaultToTime,
+        languageId = LanguageUtils.defaultLanguageId,
+    } = opt;
 
-    // If ( !tagUtils.isValidTagNums( tags ) )
-    //    return { error: 'invalid tag num', };
+    let tagIds = [];
+    tagIds = tags.map( Number );
 
-    if ( !validate.isValidDate( startTime ) )
-        return { error: 'invalid start time', };
-
-    if ( !validate.isValidDate( endTime ) )
-        return { error: 'invalid end time', };
-
-    if ( !validate.isValidPage( page ) )
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
+        return { error: 'invalid tag id', };
+    if ( !ValidateUtils.isValidNumber( page ) )
         return { error: 'invalid page', };
+    if ( !ValidateUtils.isValidNumber( amount ) )
+        return { error: 'invalid amount', };
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
+        return { error: 'invalid time - from', };
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
+        return { error: 'invalid time - to', };
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
+        return { error: 'invalid language id', };
 
-    const table = await associations();
-    if ( page <= 0 )
-        return [];
-    const data = await table.announcement.findAll( {
-        attributes: [ 'announcementId', ],
-        where:      {
-            '$tag.type$': {
-                [ Op.in ]: tags,
-            },
-            'updateTime': {
-                [ Op.between ]: [
-                    new Date( startTime ),
-                    new Date( endTime ),
-                ],
-            },
-            'isPublished': 1,
-        },
-        include: [ {
-            model:      table.tag,
-            attributes: [],
-            as:         'tag',
-        }, ],
-        group:  'announcementId',
-        having: sequelize.literal( `count(*) = ${ tags.length }` ),
-    } )
-    .then( ids => table.announcement.findAll( {
+
+    const fromTime = new Date( from ).toISOString();
+    const toTime = new Date( to ).toISOString();
+    const offset = Number( amount * ( page - 1 ) );
+    const limit = Number( amount );
+
+    const data = await Announcement.findAll( {
         attributes: [
             'announcementId',
-            'updateTime',
+
+            // [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+            //    'tagsCount', ],
         ],
-        where: {
-            announcementId: {
-                [ Op.in ]: ids.map( id => id.announcementId ),
+
+        group: [ 'announcementId', ],
+        where:      {
+            updateTime: {
+                [ op.between ]: [
+                    fromTime,
+                    toTime,
+                ],
             },
+            isPublished: 1,
         },
-        offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
-        limit:   defaultValue.announcementsPerPage,
         include: [
             {
-                model:      table.announcementI18n,
+                model:      AnnouncementI18n,
                 as:         'announcementI18n',
                 attributes: [
                     'title',
                     'content',
                 ],
                 where: {
-                    language,
+                    languageId,
                 },
             },
             {
-                model:      table.tag,
+                model:      Tag,
                 as:         'tag',
-                attributes: [ 'type', ],
+                attributes: [ 'typeId', ],
+                Where:      {
+                    TypeId: {
+                        [ op.in ]: tagIds,
+                    },
+                },
             },
         ],
-    } ) )
-    .then( announcements => announcements.map( announcement => ( {
-        id:         announcement.announcementId,
-        title:      announcement.announcementI18n[ 0 ].title,
-        content:    announcement.announcementI18n[ 0 ].content,
-        updateTime: announcement.updateTime,
-        tags:       announcement.tag.map( tag => ( {
-            type: tag.type,
-        } ) ),
-    } ) ) );
+        distinct: true,
+        raw:      true,
 
-    table.database.close();
+        // Having: Sequelize.literal( `count(*) = ${ tagIds.length }` ),
+    } );
 
     return data;
 };

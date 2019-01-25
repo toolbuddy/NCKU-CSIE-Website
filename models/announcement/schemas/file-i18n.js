@@ -1,14 +1,14 @@
 import Sequelize from 'sequelize';
-import { announcement, } from 'models/utils/connect.js';
+import { announcement, } from 'models/common/utils/connect.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
-const AnnouncementFileI18n = announcement.define( 'announcementFileI18n', {
+const FileI18n = announcement.define( 'fileI18n', {
     fileId: {
         type:       Sequelize.INTEGER.UNSIGNED,
         allowNull:  false,
         primaryKey: true,
     },
-    language: {
+    languageId: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         defaultValue: LanguageUtils.defaultLanguageId,
@@ -24,4 +24,4 @@ const AnnouncementFileI18n = announcement.define( 'announcementFileI18n', {
     },
 } );
 
-export default AnnouncementFileI18n;
+export default FileI18n;
