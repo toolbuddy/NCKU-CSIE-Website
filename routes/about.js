@@ -24,7 +24,11 @@ import ProjectUtils from 'models/faculty/utils/project';
 import PublicationUtils from 'models/faculty/utils/publication';
 import ResearchGroupUtils from 'models/faculty/utils/research-group';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/about`.

@@ -28,7 +28,7 @@ const config = {
     protocol:    'http',
     secret:      'deepest darkest secret of ncku csie',
     get staticHost () {
-        return config.host;
+        return `${ config.host }/static`;
     },
     whiteList: [
         'localhost:3000',
