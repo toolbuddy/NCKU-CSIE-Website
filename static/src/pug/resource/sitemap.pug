@@ -3,7 +3,7 @@ extends /layouts/resource.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'titles': {
           'home':         'Home',
           'about':        'About',
@@ -35,8 +35,12 @@ append data
           'resource':      'Resource',
         },
         'title': 'Sitemap',
+        'breadcrumb': {
+          'home':     'Home',
+          'resource': 'Resource',
+        },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'titles': {
           'home':         '首頁',
           'about':        '關於本系',
@@ -68,6 +72,10 @@ append data
           'resource':      '資源連結',
         },
         'title': '網站地圖',
+        'breadcrumb': {
+          'home':     '首頁',
+          'resource': '資源連結',
+        },
       }
     } );
     const currentRoute = 'resource/sitemap';
@@ -95,13 +103,18 @@ append data
     }
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'resource/sitemap' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ LANG.id ].title )
+  +breadcrumb( [
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.resource, url: 'resource' },
+    { text: i18n[ LANG.id ].title },
+  ] )
 
 append content
 
@@ -115,11 +128,11 @@ append content
       h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
       h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
   section.sitemap
-    each val, index in i18n[ language ].titles
+    each val, index in i18n[ LANG.id ].titles
       article.sitemap__title( class = `sitemap__title--${ index }` )= val
     hr.sitemap__hr
     each val, index in allLinks
-      a.sitemap__link( class = `sitemap__link--${ index }`, href = url( { href : `${ val }` } ) )= i18n[ language ].links[ index ]
+      a.sitemap__link( class = `sitemap__link--${ index }`, href = UTILS.url( { href : `${ val }` } ) )= i18n[ LANG.id ].links[ index ]
 
 append footer
 

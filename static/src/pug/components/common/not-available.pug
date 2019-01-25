@@ -1,20 +1,20 @@
 mixin notAvailable()
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'caption': 'SERVICE IS NOT AVAILABLE YET',
         'home':    'Return to home page'
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'caption': '施工中 敬請期待',
         'home':    '返回首頁'
       }
     } );
   figure.not-available
     +image( {
-      alt:       i18n[ language ].caption,
+      alt:       i18n[ LANG.id ].caption,
       className: 'not-available__image',
       src:       'icon/fix-tools.png',
     } )
-    figcaption.not-available__caption= i18n[ language ].caption
-    a.not-availabke__link( href = url( { href : '/' } ) )= i18n[ language ].home
+    figcaption.not-available__caption= i18n[ LANG.id ].caption
+    a.not-availabke__link( href = UTILS.url( { href : '' } ) )= i18n[ LANG.id ].home

@@ -8,11 +8,9 @@
  * - `/calendar`
  */
 
-import path from 'path';
-
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
 const router = express.Router();
 
@@ -20,32 +18,40 @@ const router = express.Router();
  * Resolve URL `/`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'home/index' ) );
 
 /**
  * Resolve URL `/login`.
  */
 
-router.get( /^\/login$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/login' )
+.get( staticHtml( 'home/index' ) );
 
 /**
  * Resolve URL `/search`.
  */
 
-router.get( /^\/search$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/search' )
+.get( staticHtml( 'home/index' ) );
 
 /**
  * Resolve URL `/calender`.
  */
 
-router.get( /^\/calendar$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/home/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/calendar' )
+.get( staticHtml( 'home/index' ) );
+
+/**
+ * Resolve URL `/error`.
+ */
+
+router
+.route( '/error' )
+.get( staticHtml( 'home/index' ) );
 
 export default router;

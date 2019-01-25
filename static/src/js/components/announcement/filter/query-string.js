@@ -1,34 +1,39 @@
 import config from 'static/src/js/components/announcement/filter/config.js';
-import languageSetting from 'settings/language/config.js';
-import { isValidDate, isValidPage, isValidTags, isValidLanguage, }  from 'test/static/src/js/components/announcement/filter/validate.js';
+import LanguageUtils from 'models/common/utils/language.js';
+import ValidateUtils  from 'models/announcement/utils/validate.js';
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 export default class QueryString {
     static getFilters ( defaultTags ) {
         const query = new URLSearchParams( window.location.search );
-        let tags = [ ...new Set( query.getAll( 'tags' ) ), ];
-        if ( !isValidTags( tags ) )
+        const tags = [ ...new Set( query.getAll( 'tags' ) ), ];
+
+        /*
+        If ( !isValidTags( tags ) )
             tags = defaultTags;
+        */
 
-        let startTime = new Date( query.get( 'startTime' ) || config.defaultStartTime );
-        if ( !isValidDate( startTime ) )
-            startTime = new Date( config.defaultStartTime );
-        startTime = dateFormating( startTime );
+        let from = new Date( query.get( 'from' ) || config.defaultStartTime );
+        if ( !ValidateUtils.isValidDate( from ) )
+            from = new Date( config.defaultStartTime );
+        from = dateFormating( from );
 
-        let endTime = new Date( query.get( 'endTime' ) || config.defaultEndTime );
-        if ( !isValidDate( endTime ) )
-            endTime = new Date( config.defaultEndTime );
-        endTime = dateFormating( endTime );
+        let to = new Date( query.get( 'to' ) || config.defaultEndTime );
+        if ( !ValidateUtils.isValidDate( to ) )
+            to = new Date( config.defaultEndTime );
+        to = dateFormating( to );
 
         let page = query.get( 'page' ) || config.defaultPage;
-        if ( !isValidPage( page ) )
+        if ( !ValidateUtils.isValidPage( page ) )
             page = config.defaultPage;
 
-        let language = query.get( 'language' ) || languageSetting.default;
-        if ( !isValidLanguage( language ) )
-            language = languageSetting.default;
+        let amount = query.get( 'amount' ) || 1;
 
-        return { tags, startTime, endTime, page, language, };
+        let languageId = query.get( 'languageId' ) || LanguageUtils.defaultLanguageId;
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
+            languageId = LanguageUtils.defaultLanguageId;
+
+        return { tags, from, to, page, languageId, amount, };
     }
 
     static generate ( obj = null ) {

@@ -1,10 +1,13 @@
 import path from 'path';
 
-import languageSettings from '../../settings/language/config.js';
+import LanguageUtils from '../../models/common/utils/language.js';
+import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
 const pugRoot = path.join( projectRoot, 'static/src/pug' );
 const htmlRoot = path.join( projectRoot, 'static/dist/html' );
+
+const isDevMode = process.env.NODE_ENV === 'development';
 
 /**
  * Build different language version HTML for each `.pug` file.
@@ -27,7 +30,7 @@ const htmlRoot = path.join( projectRoot, 'static/dist/html' );
  *      - Lowest completely loading page time (client will need to wait twice to see all page content) among three.
  */
 
-export default languageSettings.support.map( language => ( {
+export default LanguageUtils.supportedLanguageId.map( languageId => ( {
     /**
      * Webpack built-in develop tools.
      *
@@ -37,7 +40,7 @@ export default languageSettings.support.map( language => ( {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -46,7 +49,7 @@ export default languageSettings.support.map( language => ( {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
@@ -149,7 +152,7 @@ export default languageSettings.support.map( language => ( {
                         loader:  'file-loader',
                         options: {
                             name ( file ) {
-                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ language }.html`;
+                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ languageId }.html`;
                             },
                         },
                     },
@@ -166,9 +169,17 @@ export default languageSettings.support.map( language => ( {
                         options: {
                             basedir: pugRoot,
                             data:    {
-                                host,
-                                staticHost,
-                                language,
+                                SERVER: {
+                                    host,
+                                    staticHost,
+                                },
+                                LANG: {
+                                    id:            languageId,
+                                    getLanguageId: LanguageUtils.getLanguageId,
+                                },
+                                UTILS: {
+                                    url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                },
                             },
                         },
                     },

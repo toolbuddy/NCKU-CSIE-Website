@@ -11,11 +11,10 @@
  * - `/resource/alumni`
  */
 
-import path from 'path';
 
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
 const router = express.Router();
 
@@ -23,56 +22,56 @@ const router = express.Router();
  * Resolve URL `/resource`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'resource/index' ) );
 
 /**
  * Resolve URL `/resource/rule`.
  */
 
-router.get( /^\/rule$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rule.${ req.query.language }.html` ) );
-} );
+router
+.route( '/rule' )
+.get( staticHtml( 'resource/rule' ) );
 
 /**
  * Resolve URL `/resource/rent`.
  */
 
-router.get( /^\/rent$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/rent.${ req.query.language }.html` ) );
-} );
+router
+.route( '/rent' )
+.get( staticHtml( 'resource/rent' ) );
 
 /**
  * Resolve URL `/resource/fix`.
  */
 
-router.get( /^\/fix$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/fix.${ req.query.language }.html` ) );
-} );
+router
+.route( '/fix' )
+.get( staticHtml( 'resource/fix' ) );
 
 /**
  * Resolve URL `/resource/ieet`.
  */
 
-router.get( /^\/ieet$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/ieet.${ req.query.language }.html` ) );
-} );
+router
+.route( '/ieet' )
+.get( staticHtml( 'resource/ieet' ) );
 
 /**
  * Resolve URL `/resource/sitemap`.
  */
 
-router.get( /^\/sitemap$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/sitemap.${ req.query.language }.html` ) );
-} );
+router
+.route( '/sitemap' )
+.get( staticHtml( 'resource/sitemap' ) );
 
 /**
  * Resolve URL `/resource/alumni`.
  */
 
-router.get( /^\/alumni$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/resource/alumni.${ req.query.language }.html` ) );
-} );
+router
+.route( '/alumni' )
+.get( staticHtml( 'resource/alumni' ) );
 
 export default router;

@@ -12,13 +12,13 @@ section.profile
       span.departments__department= department.name
   aside.profile__offices.offices
     each office in offices
-      address.offices__address= `${ i18n[ language ].office }： ${ office.address }`
-      a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+      address.offices__address= `${ i18n[ LANG.id ].office }： ${ office.address }`
+      a.offices__phone( href = `tel:${ office.tel }` )= `${ i18n[ LANG.id ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
   a.profile__email( href = `mailto:${ profile.email }` )= `Email： ${ profile.email }`
   aside.profile__labs.labs
     each lab in labs
-      a.labs__lab( href = lab.web )= `${ i18n[ language ].lab }: ${ lab.name }`
-      address.labs__address= `${ i18n[ language ].address }: ${ lab.address }`
-      a.labs__tel( href = `tel:${ lab.tel }` )= `${ i18n[ language ].tel }: ${ lab.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+      a.labs__lab( href = lab.web )= `${ i18n[ LANG.id ].lab }: ${ lab.name }`
+      address.labs__address= `${ i18n[ LANG.id ].address }: ${ lab.address }`
+      a.labs__tel( href = `tel:${ lab.tel }` )= `${ i18n[ LANG.id ].tel }: ${ lab.tel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
   a.profile__website( href = profile.personalWeb )= `個人網頁： ${ profile.personalWeb }`
 img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`, alt = 'Image Title' )

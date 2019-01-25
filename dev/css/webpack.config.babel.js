@@ -1,5 +1,4 @@
 import path from 'path';
-
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import autoprefixer from 'autoprefixer';
@@ -12,6 +11,7 @@ const sassRoot = path.join( projectRoot, 'static/src/sass' );
 const imageRoot = path.join( projectRoot, 'static/src/image' );
 const cssRoot = path.join( projectRoot, 'static/dist/css' );
 
+const isDevMode = process.env.NODE_ENV === 'development';
 
 /**
  * Build CSS off all language version HTML for each `.scss` file.
@@ -30,7 +30,7 @@ export default {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -39,7 +39,7 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
@@ -64,6 +64,7 @@ export default {
 
         // Route `home`
         'home/index': path.join( sassRoot, 'home/index.scss' ),
+        'home/error': path.join( sassRoot, 'home/error.scss' ),
 
         // Route `research`
         'research/index':        path.join( sassRoot, 'research/index.scss' ),
@@ -151,6 +152,7 @@ export default {
              */
 
             {
+                // Rules for SCSS files.
                 test: /\.scss$/,
                 use:  [
                     {
@@ -162,13 +164,13 @@ export default {
                     {
                         loader:  'css-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                         },
                     },
                     {
                         loader:  'postcss-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                             plugins:   [
                                 autoprefixer( { browserSupportConditions, } ),
                                 cssnano(),
@@ -181,7 +183,7 @@ export default {
                             includePaths: [
                                 sassRoot,
                             ],
-                            sourceMap:    true,
+                            sourceMap:    isDevMode,
                         },
                     },
                 ],
@@ -200,6 +202,7 @@ export default {
              */
 
             {
+                // Convert image binary file into data url.
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [
                     'url-loader',

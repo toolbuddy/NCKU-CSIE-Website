@@ -4,6 +4,8 @@ import nodeExternals from 'webpack-node-externals';
 
 import { projectRoot, } from '../../settings/server/config.js';
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
 export default {
     /**
      * Webpack built-in develop tools.
@@ -14,7 +16,7 @@ export default {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -23,7 +25,7 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry file for bundling.
@@ -78,8 +80,7 @@ export default {
      * - `import 'models/.....'`
      * - `import 'routes/.....'`
      * - `import 'settings/...'`
-     * - `import 'static/.....'`
-     * - `import 'test/.......'`.
+     * - `import 'static/.....'`.
      */
 
     resolve:   {
@@ -90,7 +91,6 @@ export default {
             routes:   path.join( projectRoot, 'routes' ),
             settings: path.join( projectRoot, 'settings' ),
             static:   path.join( projectRoot, 'static' ),
-            test:     path.join( projectRoot, 'test' ),
         },
     },
 

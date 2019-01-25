@@ -5,17 +5,17 @@ include /components/user/announcement/time-selector.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Create Announcement',
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '新增公告',
       },
     } );
     const currentRoute = 'user/announcement/add';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'user/announcement/add' )

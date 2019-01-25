@@ -9,7 +9,7 @@ if ( facultyId === null )
 else
     facultyId = facultyId[ 1 ];
 
-const reqURL = `${ host }/api/faculty/${ facultyId }?language=${ WebLanguageUtils.currentLanguage }`;
+const reqURL = `${ host }/api/faculty/${ facultyId }?language=${ WebLanguageUtils.currentLanguageId }`;
 
 export default target => fetch( reqURL )
 .then( res => res.json() )

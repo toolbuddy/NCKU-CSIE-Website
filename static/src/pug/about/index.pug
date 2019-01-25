@@ -2,7 +2,7 @@ extends /layouts/about.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'About Us',
         'breadcrumb': {
           'home':   'Home',
@@ -12,35 +12,35 @@ append data
             title: 'Introduction',
             detail: 'Department history, education goals and developing directions',
             modifier: 'red',
-            href: url( { href: 'about/intro', } ),
+            href: UTILS.url( { href: 'about/intro', } ),
           },
           {
             title: 'Faculty',
             detail: 'Faculty, belonging department and research groups',
             modifier: 'green',
-            href: url( { href: 'about/faculty', } ),
+            href: UTILS.url( { href: 'about/faculty', } ),
           },
           {
             title: 'Staff',
             detail: 'Administrative support, public relations and finance',
             modifier: 'yellow',
-            href: url( { href: 'about/staff', } ),
+            href: UTILS.url( { href: 'about/staff', } ),
           },
           {
             title: 'Awards',
             detail: 'Competition results, receiving awards and excellent research publications',
             modifier: 'blue',
-            href: url( { href: 'about/award', } ),
+            href: UTILS.url( { href: 'about/award', } ),
           },
           {
             title: 'Contact Us',
             detail: 'Providing three different traffic information, including self-driving, train and THSR',
             modifier: 'purple',
-            href: url( { href: 'about/contact', } ),
+            href: UTILS.url( { href: 'about/contact', } ),
           },
         ],
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '關於本系',
         'breadcrumb': {
           'home':   '首頁',
@@ -50,31 +50,31 @@ append data
             title: '系所介紹',
             detail: '系所的歷史沿革、教育目標與發展方向',
             modifier: 'red',
-            href: url( { href: 'about/intro', } ),
+            href: UTILS.url( { href: 'about/intro', } ),
           },
           {
             title: '師資陣容',
             detail: '系所的教職人員、隸屬部門與研究類群',
             modifier: 'green',
-            href: url( { href: 'about/faculty', } ),
+            href: UTILS.url( { href: 'about/faculty', } ),
           },
           {
             title: '行政人員',
             detail: '承辦業務與聯絡的主要人員',
             modifier: 'yellow',
-            href: url( { href: 'about/staff', } ),
+            href: UTILS.url( { href: 'about/staff', } ),
           },
           {
             title: '榮譽事蹟',
             detail: '包含競賽成績、獲頒獎項與優秀的研究成果等',
             modifier: 'blue',
-            href: url( { href: 'about/award', } ),
+            href: UTILS.url( { href: 'about/award', } ),
           },
           {
             title: '聯絡我們',
             detail: '提供自行開車、搭乘火車及高鐵三種不同的交通資訊',
             modifier: 'purple',
-            href: url( { href: 'about/contact', } ),
+            href: UTILS.url( { href: 'about/contact', } ),
           },
         ],
       },
@@ -82,21 +82,21 @@ append data
     const currentRoute = 'about';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'about/index' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].title },
-   ] )
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].title },
+  ] )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language ].entries )
+  +entries( i18n[ LANG.id ].entries )
 
 append footer
 

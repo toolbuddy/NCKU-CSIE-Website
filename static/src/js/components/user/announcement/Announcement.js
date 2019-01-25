@@ -1,4 +1,4 @@
-import languages from 'settings/language/config.js';
+import LanguagesUtils from 'models/common/utils/language.js';
 const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
 
 export class Announcement {
@@ -20,7 +20,7 @@ export class Announcement {
         this.updateTime = null;
         this.isPinned = false;
         this.isPublished = false;
-        languages.support.forEach( ( language ) => {
+        LanguagesUtils.supportedLanguage.forEach( ( language ) => {
             this[ language ] = {
                 title:   '',
                 content: '',
@@ -38,7 +38,7 @@ export class Announcement {
         this.updateTime = data.updateTime;
         this.isPinned = data.isPinned;
         this.isPublished = data.isPublished;
-        languages.support.forEach( ( language ) => {
+        LanguagesUtils.supportedLanguage.forEach( ( language ) => {
             this[ language ].title = data[ language ].title;
             this[ language ].content = data[ language ].content;
         } );

@@ -3,13 +3,13 @@ extends /layouts/home.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Home',
         'topic': 'Latest news',
         'more':  'more',
         'hot':   'Hot news',
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
         'more':  '更多資訊',
@@ -19,24 +19,24 @@ append data
     const currentRoute = '';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'home/index' )
 
 append header
-  +banner( i18n[ language ].title )
+  +banner( i18n[ LANG.id ].title )
 
 append content
   include /components/common/topic.pug
 
-  +topic( i18n[ language ].topic )
+  +topic( i18n[ LANG.id ].topic )
   section.announcement
     nav#announcement__briefings.announcement__briefings.briefings
-    a.announcement__button( href = url( { href : 'announcement/all' } ) )= `${ i18n[ language ].more }...`
+    a.announcement__button( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }...`
   section.announcement.announcement--hot-news
     header.announcement__title.title
-      h1.title__text= i18n[ language ].hot
+      h1.title__text= i18n[ LANG.id ].hot
     nav#announcement__briefings--hot-news.announcement__briefings.briefings
 
 append footer

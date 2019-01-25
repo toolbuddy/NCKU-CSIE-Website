@@ -7,7 +7,7 @@ include /components/common/breadcrumb.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Edit Announcement',
         'topic':    'Edit Announcement',
         'breadcrumb': {
@@ -15,7 +15,7 @@ append data
           'normal': 'Announcement',
         },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '新增公告',
         'topic':    '新增公告',
         'breadcrumb': {
@@ -28,7 +28,7 @@ append data
 
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'user/announcement/edit' )
@@ -37,9 +37,9 @@ append header
 
 append content
   +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ language ].title },
+    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ LANG.id ].title },
    ] )
   +topic( '新增公告' )
   a.content--return( href = '/user/announcement' )= '<取消'

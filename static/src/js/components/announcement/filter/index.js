@@ -1,17 +1,31 @@
 import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
+import TagUtils from 'models/announcement/utils/tag.js';
+import LanguageUtils from 'models/common/utils/language.js';
+
 
 // Single default tag filter constructor.
-export function singleDefaultTagFilter ( tag = null ) {
+export function singleDefaultTagFilter (
+        tag = null,
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = 1,
+        briefingNum = 1
+) {
     // Set default tag for query functions.
-    singleDefaultTag.defaultTag = tag;
+    const tagNum = TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')});
+    singleDefaultTag.defaultTag = tagNum;
+    singleDefaultTag.announcementBriefingTop = briefingTopObj;
+    singleDefaultTag.announcementBriefing = briefingObj;
+    singleDefaultTag.briefingTopNum = briefingTopNum;
+    singleDefaultTag.briefingNum = briefingNum;
 
     // Render filter.
     renderFilter( tag );
 
     const urlOnChange = setURLOnChange(
-        singleDefaultTag.defaultTag,
+        tag,
         singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
@@ -40,9 +54,23 @@ export function singleDefaultTagFilter ( tag = null ) {
 
 
 // Multiple default tags filter constructor.
-export function multipleDefaultTagsFilter ( tags = [] ) {
+export function multipleDefaultTagsFilter (
+        tags = [],
+        briefingTopObj = null,
+        briefingObj = null,
+        briefingTopNum = 1,
+        briefingNum = 1
+) {
     // Set default tags for query functions.
-    multipleDefaultTags.defaultTags = tags;
+    const tagsNum = [];
+    tags.forEach( ( tag ) => {
+        tagsNum.push( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')}) );
+    } );
+    multipleDefaultTags.defaultTags = tagsNum;
+    multipleDefaultTags.announcementBriefingTop = briefingTopObj;
+    multipleDefaultTags.announcementBriefing = briefingObj;
+    multipleDefaultTags.briefingTopNum = briefingTopNum;
+    multipleDefaultTags.briefingNum = briefingNum;
 
     // Render filter, must be `tags__tag--all`.
     renderFilter( 'all' );

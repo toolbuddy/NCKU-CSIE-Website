@@ -1,4 +1,4 @@
-$icon-path: '~image';
+$icon-path: '~image/icon';
 
 // [ icon ]
 // Yellow flag
@@ -16,63 +16,63 @@ $icon-path: '~image';
 // Download
 @mixin icon__download () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/icon/download.png' );
+  background-image: url( '#{ $icon-path }/download.png' );
 }
 
 // [ icon ]
 // Location
 @mixin icon__location () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/icon/location.png' );
+  background-image: url( '#{ $icon-path }/location.png' );
 }
 
 // [ icon ]
 // Envelope
 @mixin icon__envelope () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/icon/envelope.png' );
+  background-image: url( '#{ $icon-path }/envelope.png' );
 }
 
 // [ icon ]
 // Phone
 @mixin icon__phone () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/icon/phone.png' );
+  background-image: url( '#{ $icon-path }/phone.png' );
 }
 
 // [ icon ]
 // Laboratory
 @mixin icon__laboratory () {
   // [ skin ]
-  background-image: url( '#{ $icon-path }/icon/laboratory.png' );
+  background-image: url( '#{ $icon-path }/laboratory.png' );
 }
 
 // [ icon ]
 // Search
 @mixin icon__search () {
-  background-image: url( '#{ $icon-path }/icon/search.png' );
+  background-image: url( '#{ $icon-path }/search.png' );
 }
 
 // [ icon ]
 // User
 @mixin icon__user () {
-  background-image: url( '#{ $icon-path }/icon/user.png' );
+  background-image: url( '#{ $icon-path }/user.png' );
 }
 
 // [ icon ]
 // Taiwan flag
 @mixin icon__flag-zh-TW () {
-  background-image: url( '#{ $icon-path }/icon/flag-zh-TW.png' );
+  background-image: url( '#{ $icon-path }/flag-0.png' );
 }
 
 // [ icon ]
 // America flag
 @mixin icon__flag-en-US () {
-  background-image: url( '#{ $icon-path }/icon/flag-en-US.png' );
+  background-image: url( '#{ $icon-path }/flag-1.png' );
 }
 
 // [ icon ]
 // Arrow point to right
 @mixin icon__arrowRight () {
-  background-image: url( '#{ $icon-path }/icon/arrow-right.png' );
+  background-image: url( '#{ $icon-path }/arrow-right.png' );
 }

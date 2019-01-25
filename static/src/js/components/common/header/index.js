@@ -1,5 +1,10 @@
-import { registClickToActive, registItemSwitch, registClickToHide, registLanguageSwitch, registClickToActiveAndFocus, }
-    from 'static/src/js/components/common/header/event.js';
+import {
+    registClickToActive,
+    registItemSwitch,
+    registClickToHide,
+    registLanguageSwitch,
+    registClickToActiveAndFocus,
+} from 'static/src/js/components/common/header/event.js';
 
 export default ( header ) => {
     // Large screen

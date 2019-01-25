@@ -10,4 +10,4 @@ mixin breadcrumb( breadcrumbList )
       if ( index === breadcrumbList.length - 1 )
         span.breadcrumb__text= value.text
       else
-        a.breadcrumb__text.breadcrumb__text--link( href = url( { href: value.url } ) )= value.text
+        a.breadcrumb__text.breadcrumb__text--link( href = UTILS.url( { href: value.url } ) )= value.text
