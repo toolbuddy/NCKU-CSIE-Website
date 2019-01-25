@@ -26,7 +26,11 @@ import { host, staticHost, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 router.use( ( req, res, next ) => {
     res.locals = {

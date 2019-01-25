@@ -454,6 +454,7 @@ export default async ( opt ) => {
                 officeTel:     profile.officeTel,
                 personalWeb:   profile.personalWeb,
                 photo:         profile.photo,
+                profileId,
             },
             project: project.map( project => ( {
                 category: project.category,

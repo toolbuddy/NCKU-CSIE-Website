@@ -14,8 +14,8 @@ import faculty from 'apis/faculty.js';
 const apis = express.Router();
 
 /**
- * Make sure HTTP request header `Accept` include json,
- * because all routes for api should return json only.
+ * Make sure HTTP request header `Accept` include JSON related MIME types,
+ * because all routes for api should return JSON only.
  */
 
 apis.use( ( req, res, next ) => {
@@ -25,12 +25,6 @@ apis.use( ( req, res, next ) => {
     }
     next();
 } );
-
-/**
- * Parse HTTP request body into json.
- */
-
-apis.use( express.json() );
 
 /**
  * Resolve URL `/api/announcement`.
