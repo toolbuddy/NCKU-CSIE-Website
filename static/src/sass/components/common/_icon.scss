@@ -76,3 +76,21 @@ $icon-path: '~image';
 @mixin icon__arrowRight () {
   background-image: url( '#{ $icon-path }/icon/arrow-right.png' );
 }
+
+// [ icon ]
+// Trophys
+@mixin icon__award () {
+  background-image: url( '#{ $icon-path }/icon/trophy.png' );
+}
+
+// [ icon ]
+// Conference
+@mixin icon__conference () {
+  background-image: url( '#{ $icon-path }/icon/conference.png' );
+}
+
+// [ icon ]
+// Paper
+@mixin icon__paper () {
+  background-image: url( '#{ $icon-path }/icon/open-book.png' );
+}

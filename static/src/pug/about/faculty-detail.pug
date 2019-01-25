@@ -146,12 +146,13 @@ append content
     - data.award.sort( ( awardA, awardB ) => awardA.receivedYear - awardB.receivedYear )
     ul.award__list
       each awardObj in data.award
-        h2.award__name= awardObj.award
-        h3.award__year= awardObj.receivedYear
-        if awardObj.receivedMonth
-          h3.award__year= awardObj.receivedMonth
-        if awardObj.receivedDay
-          h3.award__year= awardObj.receivedDay
+        li.eachList
+          h2.award__name= awardObj.award
+          h3.award__year= awardObj.receivedYear
+          if awardObj.receivedMonth
+            h3.award__year= awardObj.receivedMonth
+          if awardObj.receivedDay
+            h3.award__year= awardObj.receivedDay
   section.publication
     h2.publication__title= i18n[ LANG.id ].publication
     h3.publication__paper Papers
@@ -175,7 +176,7 @@ append content
             th.row__owner= i18n[ LANG.id ].patent.owner
             th.row__inventor= i18n[ LANG.id ].patent.inventor
             th.row__number= i18n[ LANG.id ].patent.number
-            th.row__date= i18n[ LANG.id ].patent.period
+            th.row__date= i18n[ LANG.id ].patent.date
         tbody.table__body.body
           each patentObj in data.patent
             tr.body__row.row
@@ -186,7 +187,6 @@ append content
               td.row__inventor= patentObj.inventor
               td.row__number= patentObj.certificationNumber
               td.row__date= `${ patentObj.issueDate ? patentObj.issueDate : '' } ~ ${ patentObj.expireDate ? patentObj.expireDate : '' }`
-              td.row__date= `${ patentObj.applicationDate ? patentObj.applicationDate : '' }`
   if data.technologyTransfer.length !== 0
     section.transfer
       h2.transfer__title= i18n[ LANG.id ].technologyTransfer.title
@@ -207,7 +207,7 @@ append content
               each patentObj in technologyTransferObj.patent
                 th.row__patentName= patentObj.patent
               th.row__authorizingParty= technologyTransferObj.authorizingParty
-              th.row__authorizedParty= technologyTransferObj.authorizedParty
+              th.row__authorizedParty= technologyTransferObj.authorizingParty
               th.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
     if data.project.length !== 0
@@ -228,11 +228,11 @@ append content
               td.row__category= projectObj.category
   section.conference
     h2.conference.title Conference
-    ul.conference__list.list
-      each conferenceObj in data.conference
+    each conferenceObj in data.conference
+      ul.conference__list.list
+        li.list__data__year= conferenceObj.hostYear
         li.list__data= conferenceObj.conference
         li.list__data= conferenceObj.title
-        li.list__data= conferenceObj.hostYear
   img.photo( src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ data.profile.profileId }.jpg`, alt = 'Image Title' )
 
 append footer

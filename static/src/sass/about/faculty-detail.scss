@@ -27,7 +27,6 @@ body {
     grid-template: {
       areas:
         '. profile__headline .'
-        '. profile__headline .'
         '. profile__photo    .'
         '. profile__info     .'
         '. education         .'
@@ -45,15 +44,16 @@ body {
       grid-template: {
         areas:
           '. profile__headline profile__headline .'
-          '. profile__info    profile__photo   .'
-          '. education        education        .'
-          '. experience       experience       .'
-          '. award            award            .'
-          '. publication      publication      .'
-          '. patent           patent           .'
-          '. transfer         transfer         .'
-          '. project          project          .'
-          '. student          student          .';
+          '. profile__info     profile__photo    .'
+          '. education         education         .'
+          '. experience        experience        .'
+          '. award             award             .'
+          '. publication       publication       .'
+          '. patent            patent            .'
+          '. transfer          transfer          .'
+          '. project           project           .'
+          '. student           student           .'
+          '. conference        conference        .';
         columns: 1fr 5fr 3fr 1fr;
       };
     }
@@ -61,15 +61,16 @@ body {
       grid-template: {
         areas:
           '. profile__headline profile__headline .'
-          '. profile__info    profile__photo   .'
-          '. education        education        .'
-          '. experience       experience       .'
-          '. award            award            .'
-          '. publication      publication      .'
-          '. patent           patent           .'
-          '. transfer         transfer         .'
-          '. project          project          .'
-          '. student          student          .';
+          '. profile__info     profile__photo    .'
+          '. education         education         .'
+          '. experience        experience        .'
+          '. award             award             .'
+          '. publication       publication       .'
+          '. patent            patent            .'
+          '. transfer          transfer          .'
+          '. project           project           .'
+          '. student           student           .'
+          '. conference        conference        .';
         columns: 5fr 8fr 6fr 5fr;
       };
     }
@@ -82,7 +83,7 @@ body {
 
       > .headline__name {
         display: flex;
-        justify-content: left;
+        justify-content: center;
         margin: {
           left: 10%;
           right: .5rem;
@@ -137,7 +138,7 @@ body {
       grid-area: profile__info;
       display: flex;
       flex-direction: column;
-      text-align: left;
+      text-align: center;
       color: #000000;
       font-size: .5rem;
 
@@ -325,14 +326,45 @@ body {
     .award {
       grid-area: award;
       margin: 1.5rem 0;
+      background-color: rgba( 196, 196, 196, .2 );
 
-      > .award__content {
-        font-size: .5rem;
-        background-color: #ffffff;
-        padding: .5rem;
-        border-radius: .2rem;
-        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
-        margin: .25rem 0;
+      > .award__title {
+        height: 2rem;
+        font-size: .75rem;
+        border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
+        margin-bottom: 1rem;
+      }
+
+      > .award__list {
+        > .eachList {
+          font-size: .5rem;
+          background-color: rgba( 196, 196, 196, .2 );
+          padding: .5rem;
+          border-radius: .2rem;
+          box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+          margin: .25rem 0;
+
+          > .award__name {
+            &::before {
+              @include icon__award ();
+
+              // [layout]
+              display: inline-block;
+              align-self: center;
+              background: {
+                position: center;
+                size: cover;
+                repeat: no-repeat;
+              }
+
+              // [skin]
+              content: '';
+              margin-right: .59rem;
+              height: .5rem;
+              width: .5rem;
+            }
+          }
+        }
       }
     }
 
@@ -342,12 +374,14 @@ body {
       background-color: rgba( 196, 196, 196, .2 );
 
       > .publication__title {
-        width: 10%;
-        border-bottom: solid black 2px;
+        height: 2rem;
+        font-size: .75rem;
+        border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
+        margin-bottom: 1rem;
       }
 
       > .publication__paper {
-        margin-top: 1.5rem;
+        font-size: .75rem;
         text-align: left;
       }
 
@@ -357,6 +391,25 @@ body {
         border-radius: .2rem;
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .25rem 0;
+
+        &::before {
+          @include icon__paper ();
+
+          // [layout]
+          display: inline-block;
+          align-self: center;
+          background: {
+            position: center;
+            size: cover;
+            repeat: no-repeat;
+          }
+
+          // [skin]
+          content: '';
+          margin-right: .59rem;
+          height: .7rem;
+          width: .7rem;
+        }
 
         > .paperList__data {
           display: inline;
@@ -368,51 +421,40 @@ body {
       grid-area: patent;
       margin: 1.5rem 0;
       font-size: .5rem;
+      background-color: rgba( 196, 196, 196, .2 );
+
+      > .patent__title {
+        height: 2rem;
+        font-size: .75rem;
+        border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
+        margin-bottom: 1rem;
+      }
 
       > .patent__table.table {
+        margin-top: 2rem;
         border-collapse: collapse;
         text-align: center;
-        border: solid .01rem #757575;
+        border: solid .02rem #757575;
         width: 100%;
         height: 3rem;
 
-        > .table__body.body {
-          > .body__titles.titles {
-            > .titles__title {
-              border: solid .01rem #757575;
-              padding: .5rem;
-            }
+        > .table__head.head {
+          > .head__row.row {
+            border: solid .01rem #757575;
+            padding: .5rem;
           }
+        }
 
-          > .body__details.details {
-            > .details__detail {
-              border: solid .01rem #757575;
+        > .table__body.body {
+          > .body__row.row {
+            padding: .5rem;
+            border: solid .02rem #757575;
 
-              > .detail__date.date {
-                > .date__begin {
-                  border-radius: .5rem;
-                  border: solid .02rem #757575;
-                  display: block;
-                  margin: {
-                    top: .5rem;
-                    left: .3rem;
-                    right: .3rem;
-                  }
-                  padding: .1rem;
-                }
+            > .row__type, .row__name, .row__nation, .row__owner, .row__inventor, .row__number, .row__date {
+              border: solid .02rem #757575;
 
-                > .date__end {
-                  border-radius: .5rem;
-                  border: solid .02rem #757575;
-                  display: block;
-                  margin: {
-                    bottom: .5rem;
-                    left: .3rem;
-                    right: .3rem;
-                  }
-                  padding: .1rem;
-                }
-              }
+              // margin: .2rem 1.3rem;
+              padding: .5rem;
             }
           }
         }
@@ -421,8 +463,16 @@ body {
 
     .transfer {
       grid-area: transfer;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
       font-size: .5rem;
+      background-color: rgba( 196, 196, 196, .2 );
+
+      > .transfer__title {
+        height: 2rem;
+        font-size: .75rem;
+        border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
+        margin-bottom: 1rem;
+      }
 
       > .transfer__table.table {
         border-collapse: collapse;
@@ -431,43 +481,21 @@ body {
         width: 100%;
         height: 3rem;
 
+        > .table__head.head {
+          > .head__row.row {
+            border: solid .01rem #757575;
+            padding: .5rem;
+          }
+        }
+
         > .table__body.body {
-          > .body__titles.titles {
-            > .titles__title {
+          > .body__row.row {
+            padding: .5rem;
+            border: solid .02rem #757575;
+
+            > .row__index, .row__technologyName, .row__patentName, .row__authorizingParty, .row__authorizedParty, .row__period {
               border: solid .02rem #757575;
               padding: .5rem;
-            }
-          }
-
-          > .body__details.details {
-            > .details__detail {
-              border: solid .02rem #757575;
-
-              > .detail__date.date {
-                > .date__begin {
-                  border-radius: .5rem;
-                  border: solid .02rem #757575;
-                  display: block;
-                  margin: {
-                    top: .5rem;
-                    left: .3rem;
-                    right: .3rem;
-                  }
-                  padding: .1rem;
-                }
-
-                > .date__end {
-                  border-radius: .5rem;
-                  border: solid .02rem #757575;
-                  display: block;
-                  margin: {
-                    bottom: .5rem;
-                    left: .3rem;
-                    right: .3rem;
-                  }
-                  padding: .1rem;
-                }
-              }
             }
           }
         }
@@ -716,6 +744,59 @@ body {
 
     .conference {
       grid-area: conference;
+      font-size: .5rem;
+      background-color: rgba( 196, 196, 196, .2 );
+      margin-bottom: 3rem;
+
+      > .conference.title {
+        height: 2rem;
+        font-size: .75rem;
+        border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
+        margin-bottom: 1rem;
+      }
+
+      > .conference__list.list {
+        font-size: .5rem;
+        padding: .5rem;
+        border-radius: .2rem;
+        box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
+        margin: .25rem 0;
+
+        &::before {
+          @include icon__conference ();
+
+          // [layout]
+          display: inline-block;
+          align-self: center;
+          background: {
+            position: center;
+            size: cover;
+            repeat: no-repeat;
+          }
+
+          // [skin]
+          content: '';
+          margin-right: .59rem;
+          height: .7rem;
+          width: .7rem;
+        }
+
+        > .list__data__year {
+          display: inline-block;
+          text-align: center;
+          padding-top: .2rem;
+          width: 4rem;
+          height: 1rem;
+          border-radius: .5rem;
+          border: .02rem solid #757575;
+          background-color: #ffffff;
+          margin: 0 .1rem;
+        }
+
+        > .list__data {
+          display: inline-block;
+        }
+      }
     }
   }
 }
