@@ -13,6 +13,23 @@ import faculty from 'apis/faculty.js';
 
 const apis = express.Router();
 
+/**
+ * Make sure HTTP request header `Accept` include json,
+ * because all routes for api should return json only.
+ */
+
+apis.use( ( req, res, next ) => {
+    if ( !req.accepts( 'json' ) ) {
+        res.sendStatus( 406 );
+        return;
+    }
+    next();
+} );
+
+/**
+ * Parse HTTP request body into json.
+ */
+
 apis.use( express.json() );
 
 /**

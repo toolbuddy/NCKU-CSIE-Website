@@ -559,9 +559,6 @@ module.exports = {
         // when using `__dirname` and `__filename`.
         'no-path-concat': 'error',
 
-        // Disallow `process.env`.
-        'no-process-env': 'error',
-
         // Disallow `process.exit()`.
         'no-process-exit': 'error',
 

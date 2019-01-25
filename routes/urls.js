@@ -15,6 +15,7 @@ import express from 'express';
 
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
+import auth from 'routes/auth.js';
 import home from 'routes/home.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
@@ -61,6 +62,12 @@ router.use( '/about', about );
  */
 
 router.use( '/announcement', announcement );
+
+/**
+ * Resolve URL `/auth`.
+ */
+
+router.use( '/auth', auth );
 
 /**
  * Resolve URL `/research`.

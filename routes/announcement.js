@@ -10,11 +10,9 @@
  * - `/announcement/staff`
  */
 
-import path from 'path';
-
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
 const router = express.Router();
 
@@ -22,40 +20,40 @@ const router = express.Router();
  * Resolve URL `/announcement`.
  */
 
-router.get( '/', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/index.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'announcement/index' ) );
 
 /**
  * Resolve URL `/announcement/activity`.
  */
 
-router.get( '/activity', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/activity.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/activity' )
+.get( staticHtml( 'announcement/activity' ) );
 
 /**
  * Resolve URL `/announcement/all`.
  */
 
-router.get( '/all', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/all.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/all' )
+.get( staticHtml( 'announcement/all' ) );
 
 /**
  * Resolve URL `/announcement/recruitment`.
  */
 
-router.get( '/recruitment', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/recruitment.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/recruitment' )
+.get( staticHtml( 'announcement/recruitment' ) );
 
 /**
  * Resolve URL `/announcement/[id]`.
  */
 
-router.get( '/:announcementId', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/announcement.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/:announcementId' )
+.get( staticHtml( 'announcement/announcement' ) );
 
 export default router;

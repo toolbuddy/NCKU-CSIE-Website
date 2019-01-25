@@ -1,14 +1,17 @@
 import path from 'path';
 
 import express from 'express';
-
+import helmet from 'helmet';
 import compression from 'compression';
 
-import { port, projectRoot, } from 'settings/server/config.js';
+import {
+    port,
+    projectRoot,
+} from 'settings/server/config.js';
+import contentSecurityPolicy from 'settings/server/content-security-policy';
 import language from 'routes/utils/language.js';
-
-import apis from 'apis/urls';
 import routes from 'routes/urls';
+import apis from 'apis/urls';
 
 /**
  * Create HTTP server instance.
@@ -29,6 +32,21 @@ server.listen( port );
 server.locals.basedir = path.join( projectRoot, '/static/src/pug' );
 server.set( 'view engine', 'pug' );
 server.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
+
+/**
+ * Set HTTP response header.
+ */
+
+server.set( 'x-powered-by', false );
+server.use( ( {}, res, next ) => {
+    res.set( 'x-powered-by', 'toolbuddy' );
+    next();
+} );
+server.use( helmet.contentSecurityPolicy( {
+    directives: contentSecurityPolicy(),
+    loose:      false,
+    reportOnly: true,
+} ) );
 
 /**
  * Setup utils middleware.

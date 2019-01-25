@@ -11,11 +11,11 @@
  * - `/about/staff`
  */
 
-import path from 'path';
-
 import express from 'express';
+import helmet from 'helmet';
 
-import { projectRoot, } from 'settings/server/config.js';
+import contentSecurityPolicy from 'settings/server/content-security-policy';
+import staticHtml from 'routes/utils/static-html.js';
 import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
 import DegreeUtils from 'models/faculty/utils/degree';
 import DepartmentUtils from 'models/faculty/utils/department';
@@ -30,47 +30,59 @@ const router = express.Router();
  * Resolve URL `/about`.
  */
 
-router.get( '/', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/index.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'about/index' ) );
 
 /**
  * Resolve URL `/about/award`.
  */
 
-router.get( '/award', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/award.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/award' )
+.get( staticHtml( 'about/award' ) );
 
 /**
  * Resolve URL `/about/contact`.
  */
 
-router.get( '/contact', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/contact.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/contact' )
+.get(
+    helmet.contentSecurityPolicy( {
+        directives: contentSecurityPolicy( {
+            styleSrc:  [ "'unsafe-inline'", ],
+            scriptSrc: [ "'unsafe-inline'", ],
+        } ),
+        loose:      false,
+        reportOnly: true,
+    } ),
+    staticHtml( 'about/contact' )
+);
 
 /**
  * Resolve URL `/about/intro`.
  */
 
-router.get( '/intro', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/intro.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/intro' )
+.get( staticHtml( 'about/intro' ) );
 
 /**
  * Resolve URL `/about/faculty`.
  */
 
-router.get( '/faculty', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/faculty.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/faculty' )
+.get( staticHtml( 'about/faculty' ) );
 
 /**
  * Resolve URL `/about/faculty/[id]`.
  */
 
-router.get( '/faculty/:profileId', async ( req, res, next ) => {
+router
+.route( '/faculty/:profileId' )
+.get( async ( req, res, next ) => {
     try {
         const profileId = Number( req.params.profileId );
         const languageId = req.query.languageId;
@@ -154,8 +166,8 @@ router.get( '/faculty/:profileId', async ( req, res, next ) => {
  * Resolve URL `/about/staff`.
  */
 
-router.get( '/staff', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/about/staff.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/staff' )
+.get( staticHtml( 'about/staff' ) );
 
 export default router;

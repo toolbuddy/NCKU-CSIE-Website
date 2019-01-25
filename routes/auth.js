@@ -1,10 +1,10 @@
 /**
- * Router module for route `/research`.
+ * Router module for route `/auth`.
  *
  * Including following sub-routes:
- * - `/research`
- * - `/research/labs`
- * - `/research/publications`
+ * - `/auth/login`
+ * - `/auth/logout`
+ * - `/auth/report`
  */
 
 import express from 'express';
@@ -14,11 +14,11 @@ import staticHtml from 'routes/utils/static-html.js';
 const router = express.Router();
 
 /**
- * Resolve URL `/research`.
+ * Resolve URL `/auto/login`.
  */
 
 router
-.route( '/' )
+.route( '/login' )
 .get( staticHtml( 'research/index' ) );
 
 /**
@@ -26,7 +26,7 @@ router
  */
 
 router
-.route( '/labs' )
+.route( '/logout' )
 .get( staticHtml( 'research/labs' ) );
 
 /**
@@ -34,7 +34,14 @@ router
  */
 
 router
-.route( '/publications' )
-.get( staticHtml( 'research/publications' ) );
+.route( '/report' )
+.all( ( {}, {}, next ) => {
+    console.error( 'here' );
+    next();
+} )
+.post( ( req, res ) => {
+    console.error( req.body );
+    res.sendStatus( 204 );
+} );
 
 export default router;
