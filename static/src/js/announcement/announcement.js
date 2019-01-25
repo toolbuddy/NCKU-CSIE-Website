@@ -17,12 +17,12 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/ann
     const content = document.getElementById( 'content' );
     content.innerHTML = announcement(
         {
-            title:       data.title,
-            tags:        data.tags.map( tag => tag.name ),
+            title:       data.announcementI18n[0].title,
+            tags:        data.tag.map( tag => tag.typeId ),
             author:      data.author,
             time:        timeFormating( data.updateTime ),
-            content:     data.content,
-            attachments: data.files,
+            content:     data.announcementI18n[0].content,
+            attachments: data.file.map(file => file.fileI18n[0].name),
         }
     );
 } )();

@@ -1,6 +1,12 @@
-import associations from 'models/announcement/operation/associations.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import {
+    Announcement,
+    AnnouncementI18n,
+    File,
+    FileI18n,
+    Tag,
+} from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -22,39 +28,52 @@ import LanguageUtils from 'models/common/utils/language.js';
  *
  */
 
-export default async ( { language = LanguageUtils.getLanguageId( defaultValue.language ), announcementId = 1, } = {} ) => {
-    const table = await associations();
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        languageId = LanguageUtils.defaultLanguageId,
+        announcementId = null,
+    } = opt;
 
-    const data = await table.announcement.findOne( {
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
+        return { error: 'invalid language id', };
+    if ( !ValidateUtils.isValidNumber( announcementId ) )
+        return { error: 'invalid announcement id', };
+
+    const data = await Announcement.findOne( {
         include: [
             {
-                model:      table.announcementI18n,
+                model:      AnnouncementI18n,
                 as:         'announcementI18n',
                 attributes: [
                     'title',
                     'content',
                 ],
                 where: {
-                    language,
+                    languageId,
                 },
             },
             {
-                model:   table.tag,
-                as:      'tag',
+                model:      Tag,
+                as:         'tag',
+                attributes: [
+                    'typeId',
+                ],
             },
             {
-                model:   table.announcementFile,
-                as:      'announcementFile',
-                include: [
+                model:      File,
+                as:         'file',
+                attributes: [ 'fileId', ],
+                include:    [
                     {
-                        model:      table.announcementFileI18n,
-                        as:         'announcementFileI18n',
+                        model:      FileI18n,
+                        as:         'fileI18n',
                         attributes: [
                             'filepath',
                             'name',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -71,32 +90,7 @@ export default async ( { language = LanguageUtils.getLanguageId( defaultValue.la
         where: {
             announcementId,
         },
-    } )
-    .then(
-        announcement => ( {
-            id:          announcement.announcementId,
-            title:       announcement.announcementI18n[ 0 ].title,
-            content:     announcement.announcementI18n[ 0 ].content,
-            author:      announcement.author,
-            publishTime: announcement.publishTime,
-            updateTime:  announcement.updateTime,
-            views:       announcement.views,
-            isPinned:    announcement.isPinned,
-            files:       announcement.announcementFile.map(
-                announcementFile => ( {
-                    url:        announcementFile.announcementFileI18n[ 0 ].filepath,
-                    name:       announcementFile.announcementFileI18n[ 0 ].name,
-                } ),
-            ),
-            tags:        announcement.tag.map(
-                tag => ( {
-                    type: tag.type,
-                } )
-            ),
-        } )
-    );
-
-    table.database.close();
+    } );
 
     return data;
 };

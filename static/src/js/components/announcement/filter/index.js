@@ -1,19 +1,20 @@
 import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
-import tagUtils from 'settings/components/tags/utils.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
+import TagUtils from 'models/announcement/utils/tag.js';
+import LanguageUtils from 'models/common/utils/language.js';
+
 
 // Single default tag filter constructor.
 export function singleDefaultTagFilter (
         tag = null,
         briefingTopObj = null,
         briefingObj = null,
-        briefingTopNum = defaultValue.announcementsPerPage,
-        briefingNum = defaultValue.announcementsPerPage
+        briefingTopNum = 1,
+        briefingNum = 1
 ) {
     // Set default tag for query functions.
-    const tagNum = tagUtils.tagNameToNum( tag, 'en-US' );
+    const tagNum = TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')});
     singleDefaultTag.defaultTag = tagNum;
     singleDefaultTag.announcementBriefingTop = briefingTopObj;
     singleDefaultTag.announcementBriefing = briefingObj;
@@ -57,13 +58,13 @@ export function multipleDefaultTagsFilter (
         tags = [],
         briefingTopObj = null,
         briefingObj = null,
-        briefingTopNum = defaultValue.announcementsPerPage,
-        briefingNum = defaultValue.announcementsPerPage
+        briefingTopNum = 1,
+        briefingNum = 1
 ) {
     // Set default tags for query functions.
     const tagsNum = [];
     tags.forEach( ( tag ) => {
-        tagsNum.push( tagUtils.tagNameToNum( tag, 'en-US' ) );
+        tagsNum.push( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')}) );
     } );
     multipleDefaultTags.defaultTags = tagsNum;
     multipleDefaultTags.announcementBriefingTop = briefingTopObj;

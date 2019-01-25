@@ -8,7 +8,7 @@
 
 import express from 'express';
 
-// Import announcement from 'apis/announcement.js';
+import announcement from 'apis/announcement.js';
 import faculty from 'apis/faculty.js';
 
 const apis = express.Router();
@@ -19,7 +19,7 @@ apis.use( express.json() );
  * Resolve URL `/api/announcement`.
  */
 
-// apis.use( '/announcement', announcement );
+apis.use( '/announcement', announcement );
 
 /**
  * Resolve URL `/api/faculty`.
