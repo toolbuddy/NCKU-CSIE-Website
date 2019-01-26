@@ -1,77 +1,45 @@
-import path from 'path';
-import config from 'settings/server/config.js';
-import connect from 'settings/database/connect.js';
+import Announcement from 'models/announcement/schemas/announcement.js';
+import AnnouncementI18n from 'models/announcement/schemas/announcement-i18n.js';
+import File from 'models/announcement/schemas/file.js';
+import FileI18n from 'models/announcement/schemas/file-i18n.js';
+import Tag from 'models/announcement/schemas/tag.js';
 
-export default async () => {
-    const announcementDatabase = await connect( 'announcement' );
-    const tablesRoot = path.join( config.projectRoot, 'models/announcement/tables' );
-    const table = {
-        announcementFileI18n: announcementDatabase.import( path.join( tablesRoot, 'announcement_file_i18n' ) ),
-        announcementFile:     announcementDatabase.import( path.join( tablesRoot, 'announcement_file' ) ),
-        announcementI18n:     announcementDatabase.import( path.join( tablesRoot, 'announcement_i18n' ) ),
-        announcement:         announcementDatabase.import( path.join( tablesRoot, 'announcement' ) ),
-        tag:                  announcementDatabase.import( path.join( tablesRoot, 'tag' ) ),
+Announcement.hasMany( AnnouncementI18n, {
+    as:         'announcementI18n',
+    foreignKey: 'announcementId',
+    sourceKey:  'announcementId',
+} );
 
-        // AnnouncementTag:      announcementDatabase.import( path.join( tablesRoot, 'announcement_tag' ) ),
-        // tagI18n:              announcementDatabase.import( path.join( tablesRoot, 'tag_i18n' ) ),
-    };
+File.hasMany( FileI18n, {
+    as:         'fileI18n',
+    foreignKey: 'fileId',
+    sourceKey:  'fileId',
+} );
 
-    // Translation relationship.
-    // `announcement` has many translations.
-    table.announcement.hasMany( table.announcementI18n, {
-        as:         'announcementI18n',
-        foreignKey: 'announcementId',
-        sourceKey:  'announcementId',
-        onDelete:   'CASCADE',
-    } );
+Announcement.hasMany( File, {
+    as:         'file',
+    foreignKey: 'announcementId',
+    sourceKey:  'announcementId',
+} );
 
-    // `announcementFile` has many translations.
-    table.announcementFile.hasMany( table.announcementFileI18n, {
-        as:         'announcementFileI18n',
-        foreignKey: 'fileId',
-        sourceKey:  'fileId',
-        onDelete:   'CASCADE',
-    } );
+Announcement.hasMany( Tag, {
+    as:         'tag',
+    foreignKey: 'announcementId',
+    sourceKey:  'announcementId',
+} );
 
-    // `tag` has many translations.
-    /*
-    table.tag.hasMany( table.tagI18n, {
-        as:         'tagI18n',
-        foreignKey: 'tagId',
-        sourceKey:  'tagId',
-        onDelete:   'CASCADE',
-    } );
-    */
+export {
+    Announcement,
+    AnnouncementI18n,
+    File,
+    FileI18n,
+    Tag,
+};
 
-    // Announcement relationship.
-    // `announcement` has many `file`.
-    table.announcement.hasMany( table.announcementFile, {
-        as:         'announcementFile',
-        foreignKey: 'announcementId',
-        sourceKey:  'announcementId',
-        onDelete:   'CASCADE',
-    } );
-
-    // `announcement` has many `announcementTag`.
-    table.announcement.hasMany( table.tag, {
-        as:         'tag',
-        foreignKey: 'announcementId',
-        sourceKey:  'announcementId',
-        onDelete:   'CASCADE',
-    } );
-
-    /*
-    // `announcementTag` has many `tagI18n`.
-    table.announcementTag.hasMany( table.tagI18n, {
-        as:         'tagI18n',
-        foreignKey: 'tagId',
-        sourceKey:  'tagId',
-        onDelete:   'CASCADE',
-    } );
-    */
-    // Any one who use this module should remember to close connection,
-    // like `table.database.close()`.
-    table.database = announcementDatabase;
-
-    return table;
+export default {
+    Announcement,
+    AnnouncementI18n,
+    File,
+    FileI18n,
+    Tag,
 };

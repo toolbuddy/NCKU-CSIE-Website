@@ -1,11 +1,13 @@
 import { Op, } from 'sequelize';
-import associations from 'models/announcement/operation/associations.js';
-import validate from 'test/models/announcement/operation/validate.js';
-import { defaultValue, } from 'settings/default-value/announcement/config.js';
-
+import {
+    Announcement,
+    AnnouncementI18n,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import LanguageUtils from 'models/common/utils/language.js';
-
-// Import tagUtils from 'settings/components/tags/utils.js';
+import ValidateUtils from 'models/announcement/utils/validate.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 
 /**
  * A function for getting all announcements.
@@ -29,141 +31,84 @@ import LanguageUtils from 'models/common/utils/language.js';
  */
 
 
-export default async ( {
-    tags = [],
-    startTime = defaultValue.startTime,
-    endTime = defaultValue.endTime,
-    page = defaultValue.page,
-    language = LanguageUtils.getLanugageId( defaultValue.language ),
-} = {} ) => {
-    tags = [ ...new Set( tags ), ];
-    startTime = new Date( startTime );
-    endTime = new Date( endTime );
+export default async ( opt ) => {
+    opt = opt || {};
+    const {
+        tags = [],
+        page = 1,
+        amount = 1,
+        from = AnnouncementUtils.defaultFromTime,
+        to = AnnouncementUtils.defaultToTime,
+        languageId = LanguageUtils.defaultLanguageId,
+    } = opt;
 
-    // If ( !tagUtils.isValidTagNums( tags ) )
-    //    return { error: 'invalid tag num', };
+    let tagIds = [];
+    if ( tags.length === 0 )
+        tagIds = TagUtils.supportedTagId;
+    else
+        tagIds = tags.map( Number );
 
-    if ( !validate.isValidDate( startTime ) )
-        return { error: 'invalid start time', };
-
-    if ( !validate.isValidDate( endTime ) )
-        return { error: 'invalid end time', };
-
-    if ( !validate.isValidPage( page ) )
+    if ( !tagIds.every( TagUtils.isSupportedTagId ) )
+        return { error: 'invalid tag id', };
+    if ( !ValidateUtils.isValidNumber( page ) )
         return { error: 'invalid page', };
-    const table = await associations();
-    let data = [];
-    if ( tags.length === 0 ) {
-        data = await table.announcement.findAll( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-            ],
-            where: {
-                updateTime: {
-                    [ Op.between ]: [
-                        startTime,
-                        endTime,
-                    ],
-                },
-                isPublished: 1,
+    if ( !ValidateUtils.isValidNumber( amount ) )
+        return { error: 'invalid amount', };
+    if ( !ValidateUtils.isValidDate( new Date( from ) ) )
+        return { error: 'invalid time - from', };
+    if ( !ValidateUtils.isValidDate( new Date( to ) ) )
+        return { error: 'invalid time - to', };
+    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
+        return { error: 'invalid language id', };
+
+
+    const fromTime = new Date( from ).toISOString();
+    const toTime = new Date( to ).toISOString();
+    const offset = Number( amount * ( page - 1 ) );
+    const limit = Number( amount );
+
+    const data = await Announcement.findAll( {
+        attributes: [
+            'announcementId',
+            'updateTime',
+            'views',
+            'author',
+        ],
+        where: {
+            updateTime: {
+                [ Op.between ]: [
+                    fromTime,
+                    toTime,
+                ],
             },
-            include: [
-                {
-                    model:      table.announcementI18n,
-                    as:         'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        language,
+            isPublished: 1,
+        },
+        limit,
+        offset,
+        include: [
+            {
+                model:      AnnouncementI18n,
+                as:         'announcementI18n',
+                attributes: [
+                    'title',
+                    'content',
+                ],
+                where: {
+                    languageId,
+                },
+            },
+            {
+                model:      Tag,
+                as:         'tag',
+                attributes: [ 'typeId', ],
+                where:      {
+                    TypeId: {
+                        [ Op.in ]: tagIds,
                     },
                 },
-                {
-                    model:      table.tag,
-                    as:         'tag',
-                    attributes: [ 'type', ],
-                },
-            ],
-            offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
-            limit:   defaultValue.announcementsPerPage,
-        } )
-        .then( announcements => announcements.map( announcement => ( {
-            id:         announcement.announcementId,
-            title:      announcement.announcementI18n[ 0 ].title,
-            content:    announcement.announcementI18n[ 0 ].content,
-            updateTime: announcement.updateTime,
-            tags:       announcement.tag.map( tag => ( {
-                type: tag.type,
-            } ) ),
-        } ) ) );
-    }
-    else {
-        data = await table.announcement.findAll( {
-            attributes: [ 'announcementId', ],
-            where:      {
-                '$tag.type$': {
-                    [ Op.in ]: tags,
-                },
-                'updateTime':                       {
-                    [ Op.between ]: [
-                        startTime,
-                        endTime,
-                    ],
-                },
-                'isPublished': 1,
             },
-            include: [
-                {
-                    model:      table.tag,
-                    attributes: [],
-                    as:         'tag',
-                },
-            ],
-        } )
-        .then( ids => table.announcement.findAll( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-            ],
-            where: {
-                announcementId: {
-                    [ Op.in ]: ids.map( id => id.announcementId ),
-                },
-            },
-            offset:  ( page - 1 ) * defaultValue.announcementsPerPage,
-            limit:   defaultValue.announcementsPerPage,
-            include: [
-                {
-                    model:      table.announcementI18n,
-                    as:         'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        language,
-                    },
-                },
-                {
-                    model:      table.tag,
-                    as:         'tag',
-                    attributes: [ 'type', ],
-                },
-            ],
-        } ) )
-        .then( announcements => announcements.map( announcement => ( {
-            id:         announcement.announcementId,
-            title:      announcement.announcementI18n[ 0 ].title,
-            content:    announcement.announcementI18n[ 0 ].content,
-            updateTime: announcement.updateTime,
-            tags:       announcement.tag.map( tag => ( {
-                type: tag.type,
-            } ) ),
-        } ) ) );
-    }
-    table.database.close();
+        ],
+    } );
 
     return data;
 };

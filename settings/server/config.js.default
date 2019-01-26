@@ -3,36 +3,49 @@
  * @namespace
  * @readonly
  * @property {string} domainName  - Web server domain name/IP.
- * @property {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @property {string} host        - Web server host.
+ * @property {number} maxAge      - Client maximum time to cache result.
  * @property {number} port        - Web server binding port.
  * @property {string} projectRoot - This very project's root path.
- * @property {string} host        - Web server host.
+ * @property {string} protocol    - Web server protocol, can be either 'http' or 'https'.
+ * @property {string} secret      - secret key used to sign cookie.
  * @property {string} staticHost  - Static file server host.
+ * @property {string[]} whiteList - Acceptable host list for Content Security Policy.
  */
 
 const config = {
-    'domainName': 'localhost',
-    'protocol': 'http',
-    'port': 3000,
-    'projectRoot': '',
-    get 'host' () {
+    domainName:  'localhost',
+    get host () {
         return `${ config.protocol }://${ config.domainName }${
             config.port === '80' || config.port === '443' ?
                 '' :
                 `:${ config.port }`
         }`;
     },
-    get 'staticHost' () {
-        return config.host;
+    maxAge:      1000 * 60 * 60 * 24 * 7,
+    port:        3000,
+    projectRoot: '',
+    protocol:    'http',
+    secret:      'deepest darkest secret of ncku csie',
+    get staticHost () {
+        return `${ config.host }/static`;
     },
+    whiteList: [
+        'localhost:3000',
+        'localhost:3001',
+        'www.csie.ncku.edu.tw',
+    ],
 };
 
 Object.freeze( config );
 
 export const domainName = config.domainName;
-export const protocol = config.protocol;
+export const host = config.host;
+export const maxAge = config.maxAge;
 export const port = config.port;
 export const projectRoot = config.projectRoot;
-export const host = config.host;
+export const protocol = config.protocol;
+export const secret = config.secret;
 export const staticHost = config.staticHost;
+export const whiteList = config.whiteList;
 export default config;

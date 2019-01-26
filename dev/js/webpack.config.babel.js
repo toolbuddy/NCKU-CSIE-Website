@@ -6,6 +6,8 @@ const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
 const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
 const staticRoot = path.join( projectRoot, 'static' );
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
 export default {
     /**
      * Webpack built-in develop tools.
@@ -16,7 +18,7 @@ export default {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -25,7 +27,7 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
@@ -148,13 +150,13 @@ export default {
                     {
                         loader:    'style-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                         },
                     },
                     {
                         loader:  'css-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                         },
                     },
                 ],

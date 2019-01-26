@@ -9,52 +9,54 @@
  * - `/user/announcement/edit/[id]`
  */
 
-import path from 'path';
-
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/user`.
  */
 
-router.get( '/', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/user/index.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/profile`.
  */
 
-router.get( '/profile', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/user/index.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/profile' )
+.get( staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/announcement`.
  */
 
-router.get( '/announcement', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/index.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/announcement' )
+.get( staticHtml( 'user/announcement/index' ) );
 
 /**
  * Resolve URL `/user/announcement/add`.
  */
 
-router.get( '/announcement/add', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/add.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/announcement/add' )
+.get( staticHtml( 'user/announcement/add' ) );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
  */
 
-router.get( '/announcement/edit/:announcementId', ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/user/announcement/edit.${ req.query.languageId }.html` ) );
-} );
+router
+.route( '/announcement/edit/:announcementId' )
+.get( staticHtml( 'user/announcement/edit' ) );
 
 export default router;

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import { announcement, } from 'models/utils/connect.js';
+import { announcement, } from 'models/common/utils/connect.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
 const AnnouncementI18n = announcement.define( 'announcementI18n', {
@@ -8,7 +8,7 @@ const AnnouncementI18n = announcement.define( 'announcementI18n', {
         allowNull:  false,
         primaryKey: true,
     },
-    language: {
+    languageId: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         defaultValue: LanguageUtils.defaultLanguageId,

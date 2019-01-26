@@ -7,6 +7,7 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 
 import getFaculty from 'models/faculty/operations/get-faculty.js';
 import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
@@ -17,19 +18,17 @@ const apis = express.Router();
  * Resolve URL `/api/faculty`.
  */
 
-apis.get( '/', async ( req, res ) => {
+apis.get( '/', cors(), async ( req, res ) => {
     try {
         const data = await getFaculty( req.query.languageId );
-        if ( data.error )
+        if ( data.error ) {
             res.status( 400 ).json( data );
+            return;
+        }
         res.json( data );
     }
     catch ( error ) {
-        res.status( 500 ).json( {
-            error: {
-                message: 'server error',
-            },
-        } );
+        res.sendStatus( 500 );
     }
 } );
 
@@ -37,7 +36,7 @@ apis.get( '/', async ( req, res ) => {
  * Resolve URL `/api/faculty/[id]`.
  */
 
-apis.get( '/:profileId', async ( req, res ) => {
+apis.get( '/:profileId', cors(), async ( req, res ) => {
     try {
         const profileId = Number( req.params.profileId );
 
@@ -67,11 +66,7 @@ apis.get( '/:profileId', async ( req, res ) => {
         res.json( data );
     }
     catch ( error ) {
-        res.status( 500 ).json( {
-            error: {
-                message: 'server error',
-            },
-        } );
+        res.sendStatus( 500 );
     }
 } );
 

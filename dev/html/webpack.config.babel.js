@@ -7,6 +7,8 @@ import { projectRoot, host, staticHost, } from '../../settings/server/config.js'
 const pugRoot = path.join( projectRoot, 'static/src/pug' );
 const htmlRoot = path.join( projectRoot, 'static/dist/html' );
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
 /**
  * Build different language version HTML for each `.pug` file.
  *
@@ -38,7 +40,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -47,7 +49,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.

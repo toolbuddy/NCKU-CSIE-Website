@@ -15,6 +15,7 @@ import express from 'express';
 
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
+import auth from 'routes/auth.js';
 import home from 'routes/home.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
@@ -25,7 +26,11 @@ import { host, staticHost, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 router.use( ( req, res, next ) => {
     res.locals = {
@@ -61,6 +66,12 @@ router.use( '/about', about );
  */
 
 router.use( '/announcement', announcement );
+
+/**
+ * Resolve URL `/auth`.
+ */
+
+router.use( '/auth', auth );
 
 /**
  * Resolve URL `/research`.
