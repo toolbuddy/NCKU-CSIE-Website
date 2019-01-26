@@ -1,4 +1,5 @@
 import LanguageUtils from 'models/common/utils/language.js';
+import Sequelize from 'sequelize';
 import {
     Department,
     Profile,
@@ -30,7 +31,11 @@ export default async ( languageId = null ) => {
                 'officeTel',
                 'photo',
                 'profileId',
+                'order',
             ],
+            where: {
+                order: { [ Sequelize.Op.gt ]: 0, },
+            },
             include: [
                 {
                     model:      Department,
@@ -92,6 +97,7 @@ export default async ( languageId = null ) => {
             officeAddress: profile.profileI18n[ 0 ].officeAddress,
             researchGroup: profile.researchGroup.map( researchGroup => researchGroup.type ),
             title:         profile.title.map( title => title.titleI18n[ 0 ].title ),
+            order:         profile.order,
         } ) );
     }
 

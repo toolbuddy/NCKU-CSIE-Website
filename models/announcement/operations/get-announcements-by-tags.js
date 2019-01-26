@@ -62,8 +62,6 @@ export default async ( opt ) => {
 
     const fromTime = new Date( from ).toISOString();
     const toTime = new Date( to ).toISOString();
-    const offset = Number( amount * ( page - 1 ) );
-    const limit = Number( amount );
 
     const data = await Announcement.findAll( {
         attributes: [

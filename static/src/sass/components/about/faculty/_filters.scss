@@ -31,13 +31,11 @@
         left: .5rem;
         right: .5rem;
       }
-      border: solid .03rem #f67057;
-      border-radius: .47rem;
+      border-radius: .69rem;
       min: {
         width: 3.03rem;
         height: .94rem;
       }
-      color: #f67057;
       background-color: #eff3f9;
 
       // [ interaction ]
@@ -45,32 +43,48 @@
         // [ skin ]
         cursor: pointer;
         color: #ffffff;
-        background-color: lighten( $color: #f67057, $amount: 10% );
-      }
-
-      // modifier
-      // `> .filters > .filters__filter--active`
-      &--active {
-        // [ skin ]
-        color: #ffffff;
-        background-color: #f67057;
       }
 
       &.filters__filter--research {
         border: solid .03rem #8caae2;
         color: #8caae2;
+        @media screen and ( min-width: 1130px ) {
+          width: calc( 90% / 4 );
+          min-height: 1.38rem;
+          font-size: .58rem;
+        }
 
         &:hover {
           // [ skin ]
-          cursor: pointer;
-          color: #ffffff;
           background-color: lighten( $color: #8caae2, $amount: 10% );
         }
 
-        &--active {
+        &.filters__filter--active {
           // [ skin ]
           color: #ffffff;
           background-color: #8caae2;
+        }
+      }
+
+      &.filters__filter--dept {
+        border: solid .03rem #f67057;
+        color: #f67057;
+        width: calc( 80% / 2 );
+        @media screen and ( min-width: 1130px ) {
+          width: calc( 90% / 4 );
+          min-height: 1.38rem;
+          font-size: .58rem;
+        }
+
+        &:hover {
+          // [ skin ]
+          background-color: lighten( $color: #f67057, $amount: 10% );
+        }
+
+        &.filters__filter--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #f67057;
         }
       }
     }

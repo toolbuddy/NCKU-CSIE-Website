@@ -6,55 +6,19 @@ mixin cards__card( profile = {} )
         'more':   'Read more',
         'email':  'Email',
         'office': 'Office',
-        'tel':    'Tel',
-        'ext':    'ext.',
+        'tel':    `Tel: : ${ profile.officeTel.split(',').join( ' ext. ' ) }`,
         'lab':    'Lab',
-        'department': {
-          '0': 'Department of CSIE',
-          '1': 'Institute of CSIE',
-          '2': 'Joint Appointment',
-          '3': 'Adjunct Professor',
-        },
-        'researchGruops': {
-          '0': 'E-life Digital Technology and Software Technology',
-          '1': 'Computation, Communication and Network',
-          '2': 'Data and Knowledge Engineering',
-          '3': 'Multimedia',
-          '4': 'Architecture and Embedded System',
-          '5': 'Biomedical Engineering',
-          '6': 'Manufacturing Engineering',
-        }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'more':   '更多資訊',
         'email':  '信箱',
         'office': '辦公室',
-        'ext':    '分機',
-        'tel':    '電話',
+        'tel':    `電話: ${ profile.officeTel.split(',').join( ' 分機 ' ) }`,
         'lab':    '實驗室',
-        'department': {
-          '0': '資訊系',
-          '1': '資訊所',
-          '2': '合聘師資',
-          '3': '兼任師資',
-        },
-        'researchGruops': {
-          '0': '數位生活科技與軟體技術',
-          '1': '計算通訊與網路',
-          '2': '資料與知識工程',
-          '3': '多媒體',
-          '4': '架構與嵌入式系統',
-          '5': '生醫工程',
-          '6': '製造工程',
-        }
       },
     } );
-    let researchGroupType = '';
-    profile.researchGroup.forEach( element => {
-      researchGroupType += Object.values( i18n[ LANG.id ].researchGruops ).indexOf( element );
-    } )
 
-  section.cards__card.card( research-group = `${ researchGroupType }` )
+  section.cards__card.card( data-research-gruop = `${ profile.researchGroup.join() }` )
     //- Faculty's photo.
     img.card__photo(
       src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
@@ -68,18 +32,17 @@ mixin cards__card( profile = {} )
       if profile.department
         aside.intro__departments.departments
           each department in profile.department
-            - const departmentType = Object.values( i18n[ LANG.id ].department ).indexOf( department );
-            span.departments__department( data = `${ departmentType }` )= department
+            span.departments__department( data = `${ department.departmentId }` )= department.department
 
       //- Faculty's name.
       if profile.name
         h1.intro__name= profile.name
 
       //- Faculty has some titles.
-      if profile.titles
+      if profile.title
         aside.intro__titles.titles
-          each title in profile.titles
-            span( class = 'titles__title' )= title.title
+          each title in profile.title
+            span( class = 'titles__title' )= title
 
       //- Faculty's email.
       if profile.email
@@ -92,8 +55,7 @@ mixin cards__card( profile = {} )
       if profile.officeAddress
         address.intro__address= `${ i18n[ LANG.id ].office }: ${ profile.officeAddress }`
       if profile.officeTel
-        - const officeTel = `${ i18n[ LANG.id ].tel }: ${ profile.officeTel.split(',').join( ` ${ i18n[ LANG.id ].ext } ` ) }`
-        a.intro__phone( href = `tel:${ profile.officeTel }` )= officeTel
+        a.intro__phone( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].tel
 
       //- Faculty run some labs.
       if profile.labName
@@ -113,6 +75,6 @@ mixin cards__card( profile = {} )
 //- main
     Construct all faculty information with `cards__card`.
 //- Sort faculty based on their showing order.
-- faculty.sort( ( facultyA, facultyB ) => facultyA.profile_id - facultyB.profile_id )
+- faculty.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
 each profile in faculty
   +cards__card( profile )
