@@ -112,13 +112,13 @@ server.use( express.json( {
 server.use( language );
 
 /**
- * Setup web page routes.
- */
-
-server.use( '/', routes );
-
-/**
  * Setup web api routes.
  */
 
 server.use( '/api', apis );
+
+/**
+ * Setup web page routes.
+ */
+
+server.use( '/', routes );

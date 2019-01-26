@@ -16,6 +16,7 @@ import express from 'express';
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
+import error from 'routes/error.js';
 import home from 'routes/home.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
@@ -96,5 +97,8 @@ router.use( '/student', student );
  */
 
 router.use( '/user', user );
+
+
+router.use( error );
 
 export default router;
