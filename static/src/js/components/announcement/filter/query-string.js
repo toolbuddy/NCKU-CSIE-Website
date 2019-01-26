@@ -4,7 +4,7 @@ import ValidateUtils  from 'models/announcement/utils/validate.js';
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 export default class QueryString {
-    static getFilters ( defaultTags ) {
+    static getFilters () {
         const query = new URLSearchParams( window.location.search );
         const tags = [ ...new Set( query.getAll( 'tags' ) ), ];
 

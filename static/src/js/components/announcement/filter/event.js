@@ -14,9 +14,6 @@ export function setURLOnChange (
         getAllPinnedAnnouncements,
         getAllAnnouncements,
         getAllPageNumber,
-        getPinnedAnnouncementsByTags,
-        getAnnouncementsByTags,
-        getPageNumberByTags
 ) {
     pageOnChange = () => {
         // If ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
@@ -50,25 +47,7 @@ export function setURLOnChange (
         // }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
-        /*
-        else {
-            new Promise( ( res, rej ) => {
-                try {
-                    getPageNumberByTags();
-                    res();
-                }
-                catch ( err ) {
-                    rej();
-                }
-            } )
-            .then( () => {
-                getPinnedAnnouncementsByTags();
-            } )
-            .then( () => {
-                getAnnouncementsByTags();
-            } );
-        }
-        */
+
     };
     return filterOnChange;
 }
