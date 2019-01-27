@@ -171,8 +171,8 @@ window.addEventListener( 'load', () => {
         } );
         ctx.drawImage(
             img404,
-            canvas.width > img404.size ? (canvas.width - img404.size) / 2 : 0,
-            canvas.height > img404.size ? (canvas.height - img404.size) / 2 : 0,
+            canvas.width > img404.size ? ( canvas.width - img404.size ) / 2 : 0,
+            canvas.height > img404.size ? ( canvas.height - img404.size ) / 2 : 0,
             canvas.width > img404.size ? img404.size : canvas.width,
             canvas.width > img404.size ? img404.size : canvas.width
         );
