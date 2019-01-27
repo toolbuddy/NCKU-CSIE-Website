@@ -1,4 +1,4 @@
-import { renderFilter, } from 'static/src/js/components/announcement/filter/render.js';
+import { initializeRenderFilter, } from 'static/src/js/components/announcement/filter/render.js';
 import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcement/filter/event.js';
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 import TagUtils from 'models/announcement/utils/tag.js';
@@ -11,10 +11,12 @@ export function singleDefaultTagFilter (
         briefingTopObj = null,
         briefingObj = null,
         briefingTopNum = 1,
-        briefingNum = 1
+        briefingNum = 1,
+        filterObj,
+        filterNames,
 ) {
     // Set default tag for query functions.
-    const tagNum = TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')});
+    const tagNum = TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
     singleDefaultTag.defaultTag = tagNum;
     singleDefaultTag.announcementBriefingTop = briefingTopObj;
     singleDefaultTag.announcementBriefing = briefingObj;
@@ -22,16 +24,18 @@ export function singleDefaultTagFilter (
     singleDefaultTag.briefingNum = briefingNum;
 
     // Render filter.
-    renderFilter( tag );
+    initializeRenderFilter( filterObj, filterNames );
 
     const urlOnChange = setURLOnChange(
-        tag,
+        tagNum,
         singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
         singleDefaultTag.getPinnedAnnouncementsByTags,
         singleDefaultTag.getAnnouncementsByTags,
-        singleDefaultTag.getPageNumberByTags
+        singleDefaultTag.getPageNumberByTags,
+        filterObj,
+        filterNames,
     );
 
     window.addEventListener( 'popstate', urlOnChange );
@@ -49,7 +53,7 @@ export function singleDefaultTagFilter (
     // * When `page__button` is clicked, using previous events queried result to:
     //     * Construct announcements on requested page.
     //     * Change page number.
-    filterEvent( tag );
+    filterEvent( tagNum );
 }
 
 
@@ -59,12 +63,14 @@ export function multipleDefaultTagsFilter (
         briefingTopObj = null,
         briefingObj = null,
         briefingTopNum = 1,
-        briefingNum = 1
+        briefingNum = 1,
+        filterObj,
+        filterNames,
 ) {
     // Set default tags for query functions.
     const tagsNum = [];
     tags.forEach( ( tag ) => {
-        tagsNum.push( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')}) );
+        tagsNum.push( TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } ) );
     } );
     multipleDefaultTags.defaultTags = tagsNum;
     multipleDefaultTags.announcementBriefingTop = briefingTopObj;
@@ -73,7 +79,7 @@ export function multipleDefaultTagsFilter (
     multipleDefaultTags.briefingNum = briefingNum;
 
     // Render filter, must be `tags__tag--all`.
-    renderFilter( 'all' );
+    initializeRenderFilter( filterObj, filterNames );
 
     const urlOnChange = setURLOnChange(
         'all',
@@ -82,7 +88,9 @@ export function multipleDefaultTagsFilter (
         multipleDefaultTags.getAllPageNumber,
         multipleDefaultTags.getPinnedAnnouncementsByTags,
         multipleDefaultTags.getAnnouncementsByTags,
-        multipleDefaultTags.getPageNumberByTags
+        multipleDefaultTags.getPageNumberByTags,
+        filterObj,
+        filterNames,
     );
 
     window.addEventListener( 'popstate', urlOnChange );

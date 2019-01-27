@@ -1,10 +1,8 @@
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
-import TagUtils from 'models/announcement/utils/tag.js';
 import {
     renderFilter,
     renderLoading,
 } from 'static/src/js/components/announcement/filter/render.js';
-import LanguageUtils from 'models/common/utils/language.js';
 
 let filterOnChange = null;
 let pageOnChange = null;
@@ -16,41 +14,38 @@ export function setURLOnChange (
         getAllPageNumber,
         getPinnedAnnouncementsByTags,
         getAnnouncementsByTags,
-        getPageNumberByTags
+        getPageNumberByTags,
+        filterObj,
 ) {
     pageOnChange = () => {
-        // If ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
-        getAllAnnouncements();
-
-        // Else
-        //    getAnnouncementsByTags();
+        if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
+            getAllAnnouncements();
+        else
+            getAnnouncementsByTags();
     };
     filterOnChange = () => {
         renderLoading();
-        renderFilter( defaultTagName );
+        renderFilter( defaultTagName, filterObj );
 
-        // If ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
-        new Promise( ( res, rej ) => {
-            try {
-                getAllPageNumber();
-                res();
-            }
-            catch ( err ) {
-                rej();
-            }
-        } )
-
-        // .then( () => {
-        //    getAllPinnedAnnouncements();
-        // } )
-        .then( () => {
-            getAllAnnouncements();
-        } );
-
-        // }
+        if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ) {
+            new Promise( ( res, rej ) => {
+                try {
+                    getAllPageNumber();
+                    res();
+                }
+                catch ( err ) {
+                    rej();
+                }
+            } )
+            .then( () => {
+                getAllPinnedAnnouncements();
+            } )
+            .then( () => {
+                getAllAnnouncements();
+            } );
+        }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
-        /*
         else {
             new Promise( ( res, rej ) => {
                 try {
@@ -68,7 +63,6 @@ export function setURLOnChange (
                 getAnnouncementsByTags();
             } );
         }
-        */
     };
     return filterOnChange;
 }
@@ -115,8 +109,7 @@ function defaultTagOnClick () {
 
 function tagOnClick ( event ) {
     // Get event triggered tag's name.
-    const targetTagName = /tags__tag--([a-zA-Z0-9]+)/.exec( event.target.id )[ 1 ];
-    const targetTagNum = TagUtils.getTagId( { tag: targetTagName, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
+    const targetTagNum = event.target.id.split( '--' ).pop();
     const query = new URLSearchParams( window.location.search );
     const currentTags = query.getAll( 'tags' );
 

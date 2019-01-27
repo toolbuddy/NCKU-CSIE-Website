@@ -8,8 +8,7 @@ import getAnnouncementsByTags from 'models/announcement/operations/get-announcem
 import getPagesByTags from '../models/announcement/operations/get-pages-by-tags';
 import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pinned-announcements-by-tags.js';
 
-// Import getPagesByTags from 'models/announcement/operations/get-pages-by-tags.js';
-// import getAnnouncementAllLanguages from 'models/announcement/operations/get-announcement-all-languages.js';
+// Import getAnnouncementAllLanguages from 'models/announcement/operations/get-announcement-all-languages.js';
 
 // import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 // import postAnnouncementTags from 'models/announcement/operations/post-announcementTags.js';
@@ -25,10 +24,15 @@ const apis = express.Router();
 
 apis.get( '/all-announcement', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getAllAnnouncements( {
         languageId: req.query.languageId,
         amount:     req.query.amount,
-        tags:       [ ...tags, ],
+        tags:       tagsToSend,
         from:       req.query.from,
         to:         req.query.to,
         page:       req.query.page,
@@ -37,9 +41,14 @@ apis.get( '/all-announcement', async ( req, res ) => {
 
 apis.get( '/all-pages', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getAllPages( {
         amount: req.query.amount,
-        tags:   [ ...tags, ],
+        tags:   tagsToSend,
         from:   req.query.from,
         to:     req.query.to,
     } ) );
@@ -54,8 +63,13 @@ apis.get( /^\/(\d+)$/, async ( req, res ) => {
 
 apis.get( '/all-pinned', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getAllPinnedAnnouncements( {
-        tags:       [ ...tags, ],
+        tags:       tagsToSend,
         from:       req.query.from,
         to:         req.query.to,
         languageId:  req.query.languageId,
@@ -64,10 +78,15 @@ apis.get( '/all-pinned', async ( req, res ) => {
 
 apis.get( '/tags-announcement', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getAnnouncementsByTags( {
         languageId: req.query.languageId,
         amount:     req.query.amount,
-        tags:       [ ...tags, ],
+        tags:       tagsToSend,
         from:       req.query.from,
         to:         req.query.to,
         page:       req.query.page,
@@ -76,9 +95,14 @@ apis.get( '/tags-announcement', async ( req, res ) => {
 
 apis.get( '/tags-pages', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getPagesByTags( {
         amount: req.query.amount,
-        tags:   [ ...tags, ],
+        tags:   tagsToSend,
         from:   req.query.from,
         to:     req.query.to,
     } ) );
@@ -86,8 +110,13 @@ apis.get( '/tags-pages', async ( req, res ) => {
 
 apis.get( '/tags-pinned', async ( req, res ) => {
     const tags = req.query.tags || [];
+    let tagsToSend = [];
+    if ( Array.isArray( tags ) )
+        tagsToSend = [ ...tags, ];
+    else
+        tagsToSend = [ tags, ];
     res.json( await getPinnedAnnouncementsByTags( {
-        tags:       [ ...tags, ],
+        tags:       tagsToSend,
         from:       req.query.from,
         to:         req.query.to,
         languageId:  req.query.languageId,

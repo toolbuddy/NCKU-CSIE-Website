@@ -21,6 +21,7 @@ const tagMap = {
             '榮譽',
         ],
         'default': '教職人員',
+        'all':     '全部',
     },
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
         'support': [
@@ -41,6 +42,7 @@ const tagMap = {
             'award',
         ],
         'default': 'faculty',
+        'all':     'all',
     },
 };
 

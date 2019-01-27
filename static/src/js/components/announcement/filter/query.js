@@ -50,7 +50,12 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( singleDefaultTag.announcementBriefingTop, data ) )
+        .then( ( data ) => {
+            if ( data.length === 0 )
+                renderBriefingsError( singleDefaultTag.announcementBriefingTop, data );
+            else
+                renderBriefings( singleDefaultTag.announcementBriefingTop, data );
+        } )
         .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefingTop, err ) );
     },
 
@@ -88,7 +93,10 @@ export const singleDefaultTag = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( singleDefaultTag.announcementBriefing, data );
+            if ( data.length === 0 )
+                renderBriefingsError( singleDefaultTag.announcementBriefing, data );
+            else
+                renderBriefings( singleDefaultTag.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
@@ -119,7 +127,12 @@ export const singleDefaultTag = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( singleDefaultTag.announcementBriefingTop, data ) )
+        .then( ( data ) => {
+            if ( data.length === 0 )
+                renderBriefingsError( singleDefaultTag.announcementBriefingTop, data );
+            else
+                renderBriefings( singleDefaultTag.announcementBriefingTop, data );
+        } )
         .catch( err => renderBriefingsError( singleDefaultTag.announcementBriefingTop, err ) );
     },
 
@@ -133,7 +146,7 @@ export const singleDefaultTag = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, from, to, page, languageId, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, from, to, page, languageId, amount, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -143,6 +156,7 @@ export const singleDefaultTag = {
             to,
             page,
             languageId,
+            amount,
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -157,7 +171,10 @@ export const singleDefaultTag = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( singleDefaultTag.announcementBriefing, data );
+            if ( data.length === 0 )
+                renderBriefingsError( singleDefaultTag.announcementBriefing, data );
+            else
+                renderBriefings( singleDefaultTag.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
@@ -177,11 +194,12 @@ export const singleDefaultTag = {
      */
 
     getAllPageNumber () {
-        const { from, to, } = QueryString.getFilters( null );
+        const { from, to, amount, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags: singleDefaultTag.defaultTag,
             from,
             to,
+            amount,
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
@@ -209,7 +227,7 @@ export const singleDefaultTag = {
      */
 
     getPageNumberByTags () {
-        const { tags, from, to, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, from, to, amount, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -217,6 +235,7 @@ export const singleDefaultTag = {
             ],
             from,
             to,
+            amount,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
@@ -263,7 +282,6 @@ export const multipleDefaultTags = {
             to,
             languageId,
         } );
-
         fetch( `${ apiURL }/all-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -275,7 +293,12 @@ export const multipleDefaultTags = {
             else
                 return res.json();
         } )
-        .then( data => renderBriefings( multipleDefaultTags.announcementBriefingTop, data ) )
+        .then( ( data ) => {
+            if ( data.length === 0 )
+                renderBriefingsError( multipleDefaultTags.announcementBriefingTop, data );
+            else
+                renderBriefings( multipleDefaultTags.announcementBriefingTop, data );
+        } )
         .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefingTop, err ) );
     },
 
@@ -291,17 +314,15 @@ export const multipleDefaultTags = {
      */
 
     getAllAnnouncements () {
-        const { from, to, page, languageId, } = QueryString.getFilters( null );
+        const { from, to, page, languageId, amount, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            //tags:     multipleDefaultTags.defaultTag,
-            tags: [],
+            tags:     multipleDefaultTags.defaultTags,
             from,
             to,
             page,
             languageId,
-            amount: 6,
+            amount,
         } );
-
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -314,7 +335,10 @@ export const multipleDefaultTags = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( multipleDefaultTags.announcementBriefing, data );
+            if ( data.length === 0 )
+                renderBriefingsError( multipleDefaultTags.announcementBriefing, data );
+            else
+                renderBriefings( multipleDefaultTags.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
@@ -330,7 +354,6 @@ export const multipleDefaultTags = {
             to,
             languageId,
         } );
-
         fetch( `${ apiURL }/tags-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -341,7 +364,12 @@ export const multipleDefaultTags = {
                 throw res.status;
             return res.json();
         } )
-        .then( data => renderBriefings( multipleDefaultTags.announcementBriefingTop, data ) )
+        .then( ( data ) => {
+            if ( data.length === 0 )
+                renderBriefingsError( multipleDefaultTags.announcementBriefingTop, data );
+            else
+                renderBriefings( multipleDefaultTags.announcementBriefingTop, data );
+        } )
         .catch( err => renderBriefingsError( multipleDefaultTags.announcementBriefingTop, err ) );
     },
 
@@ -355,15 +383,15 @@ export const multipleDefaultTags = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, from, to, page, languageId, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, from, to, page, languageId, amount, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             from,
             to,
             page,
             languageId,
+            amount,
         } );
-
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -376,7 +404,10 @@ export const multipleDefaultTags = {
                 return res.json();
         } )
         .then( ( data ) => {
-            renderBriefings( multipleDefaultTags.announcementBriefing, data );
+            if ( data.length === 0 )
+                renderBriefingsError( multipleDefaultTags.announcementBriefing, data );
+            else
+                renderBriefings( multipleDefaultTags.announcementBriefing, data );
         } )
         .then( () => {
             renderPage();
@@ -396,7 +427,7 @@ export const multipleDefaultTags = {
      */
 
     getAllPageNumber () {
-        const { from, to, amount,} = QueryString.getFilters( null );
+        const { from, to, amount, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags: multipleDefaultTags.defaultTags,
             from,
@@ -429,11 +460,12 @@ export const multipleDefaultTags = {
      */
 
     getPageNumberByTags () {
-        const { tags, from, to, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, from, to, amount, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             from,
             to,
+            amount,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )

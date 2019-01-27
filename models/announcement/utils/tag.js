@@ -88,6 +88,11 @@ class TagUtils {
         if ( TagUtils.isSupportedTagId( tagId ) && LanguageUtils.isSupportedLanguageId( languageId ) )
             return tagMap[ languageId ].support[ tagId ];
     }
+
+    static getTagAll ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return tagMap[ languageId ].all;
+    }
 }
 
 export default TagUtils;

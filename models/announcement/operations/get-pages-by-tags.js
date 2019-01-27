@@ -24,87 +24,102 @@ const op = Sequelize.Op;
  */
 
 export default async ( opt ) => {
-    opt = opt || {};
-    const {
-        tags = [],
-        from = AnnouncementUtils.defaultFromTime,
-        to = AnnouncementUtils.defaultToTime,
-        amount = 1,
-    } = opt;
+    try {
+        opt = opt || {};
+        const {
+            tags = [],
+            from = AnnouncementUtils.defaultFromTime,
+            to = AnnouncementUtils.defaultToTime,
+            amount = 1,
+        } = opt;
 
-    let tagIds = [];
-    tagIds = tags.map( Number );
+        let tagIds = [];
+        tagIds = tags.map( Number );
 
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid tag id',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidNumber( amount ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid amount',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - from',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - to',
-            },
-        };
-    }
+        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid tag id',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidNumber( amount ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid amount',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - from',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - to',
+                },
+            };
+        }
 
-    const fromTime = new Date( from ).toISOString();
-    const toTime = new Date( to ).toISOString();
+        const fromTime = new Date( from ).toISOString();
+        const toTime = new Date( to ).toISOString();
 
-    const count = await Announcement.count( {
-        attributes: [
-            'announcementId',
-            [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-                'tagsCount', ],
-        ],
-        where: {
-            updateTime: {
-                [ op.between ]: [
-                    fromTime,
-                    toTime,
-                ],
+        const count = await Announcement.count( {
+            attributes: [
+                'announcementId',
+                [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+                    'tagsCount', ],
+            ],
+            where: {
+                updateTime: {
+                    [ op.between ]: [
+                        fromTime,
+                        toTime,
+                    ],
+                },
+                isPublished: 1,
             },
-            isPublished: 1,
-        },
-        include: [
-            {
-                model:      Tag,
-                as:         'tag',
-                attributes: [],
-                where:      {
-                    TypeId: {
-                        [ op.in ]: tagIds,
+            include: [
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [],
+                    where:      {
+                        TypeId: {
+                            [ op.in ]: tagIds,
+                        },
                     },
                 },
+            ],
+            group:  [ 'announcementId', ],
+            having: {
+                tagsCount: {
+                    [ op.gte ]: tagIds.length,
+                },
             },
-        ],
-        group:  [ 'announcementId', ],
-        having: {
-            tagsCount: {
-                [ op.gte ]: tagIds.length,
-            },
-        },
-    } );
+        } );
 
-    return Math.ceil( count.length / amount );
+        return Math.ceil( count.length / amount );
+    }
+
+    /**
+     * Something wrong, must be a server error.
+     */
+
+    catch ( error ) {
+        return {
+            status: 500,
+            error:  {
+                message: 'server internal error',
+            },
+        };
+    }
 };

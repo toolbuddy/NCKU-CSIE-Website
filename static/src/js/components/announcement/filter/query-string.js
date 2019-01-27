@@ -1,17 +1,17 @@
 import config from 'static/src/js/components/announcement/filter/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils  from 'models/announcement/utils/validate.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 import { dateFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 
 export default class QueryString {
     static getFilters ( defaultTags ) {
         const query = new URLSearchParams( window.location.search );
-        const tags = [ ...new Set( query.getAll( 'tags' ) ), ];
 
-        /*
-        If ( !isValidTags( tags ) )
+        let tags = [ ...new Set( query.getAll( 'tags' ) ), ];
+        tags = tags.map( Number );
+        if ( !tags.every( TagUtils.isSupportedTagId ) )
             tags = defaultTags;
-        */
 
         let from = new Date( query.get( 'from' ) || config.defaultStartTime );
         if ( !ValidateUtils.isValidDate( from ) )
@@ -24,10 +24,12 @@ export default class QueryString {
         to = dateFormating( to );
 
         let page = query.get( 'page' ) || config.defaultPage;
-        if ( !ValidateUtils.isValidPage( page ) )
+        if ( !ValidateUtils.isValidNumber( page ) )
             page = config.defaultPage;
 
-        let amount = query.get( 'amount' ) || 1;
+        let amount = query.get( 'amount' ) || 6;
+        if ( !ValidateUtils.isValidNumber( amount ) )
+            amount = 6;
 
         let languageId = query.get( 'languageId' ) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )

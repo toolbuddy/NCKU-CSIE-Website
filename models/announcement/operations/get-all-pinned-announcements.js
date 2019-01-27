@@ -30,97 +30,136 @@ import TagUtils from 'models/announcement/utils/tag.js';
  */
 
 export default async ( opt ) => {
-    opt = opt || {};
-    const {
-        tags = [],
-        from = AnnouncementUtils.defaultFromTime,
-        to = AnnouncementUtils.defaultToTime,
-        languageId = LanguageUtils.defaultLanguageId,
-    } = opt;
+    try {
+        opt = opt || {};
+        const {
+            tags = [],
+            from = AnnouncementUtils.defaultFromTime,
+            to = AnnouncementUtils.defaultToTime,
+            languageId = LanguageUtils.defaultLanguageId,
+        } = opt;
 
-    let tagIds = [];
-    if ( tags.length === 0 )
-        tagIds = TagUtils.supportedTagId;
-    else
-        tagIds = tags.map( Number );
+        let tagIds = [];
+        if ( tags.length === 0 )
+            tagIds = TagUtils.supportedTagId;
+        else
+            tagIds = tags.map( Number );
 
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid tag id',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - from',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - to',
-            },
-        };
-    }
-    if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid language id',
-            },
-        };
-    }
-
-    const fromTime = new Date( from ).toISOString();
-    const toTime = new Date( to ).toISOString();
-
-    const data = await Announcement.findAll( {
-        attributes: [
-            'announcementId',
-            'updateTime',
-            'views',
-            'author',
-        ],
-        where: {
-            updateTime: {
-                [ Op.between ]: [
-                    fromTime,
-                    toTime,
-                ],
-            },
-            isPublished: 1,
-            isPinned:    1,
-        },
-        include: [
-            {
-                model:      AnnouncementI18n,
-                as:         'announcementI18n',
-                attributes: [
-                    'title',
-                    'content',
-                ],
-                where: {
-                    languageId,
+        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid tag id',
                 },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - from',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - to',
+                },
+            };
+        }
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid language id',
+                },
+            };
+        }
+
+        const fromTime = new Date( from ).toISOString();
+        const toTime = new Date( to ).toISOString();
+
+        const data = await Announcement.findAll( {
+            attributes: [
+                'announcementId',
+            ],
+            where: {
+                updateTime: {
+                    [ Op.between ]: [
+                        fromTime,
+                        toTime,
+                    ],
+                },
+                isPublished: 1,
+                isPinned:    1,
             },
-            {
-                model:      Tag,
-                as:         'tag',
-                attributes: [ 'typeId', ],
-                where:      {
-                    TypeId: {
-                        [ Op.in ]: tagIds,
+            include: [
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [],
+                    where:      {
+                        TypeId: {
+                            [ Op.in ]: tagIds,
+                        },
                     },
                 },
+            ],
+        } ).then( announcementData => Announcement.findAll( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+                'views',
+                'author',
+            ],
+            where: {
+                announcementId: {
+                    [ Op.in ]: announcementData.map( d => d.announcementId ),
+                },
             },
-        ],
-    } );
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
+                    },
+                },
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [ 'typeId', ],
+                },
+            ],
+        } ) );
 
-    return data;
+        return data.map( announcement => ( {
+            announcementId: announcement.announcementId,
+            updateTime:     announcement.updateTime,
+            views:          announcement.views,
+            author:         announcement.author,
+            title:          announcement.announcementI18n[ 0 ].title,
+            content:        announcement.announcementI18n[ 0 ].content,
+            tags:           announcement.tag.map( tag => tag.typeId ),
+        } ) );
+    }
+
+    /**
+     * Something wrong, must be a server error.
+     */
+
+    catch ( error ) {
+        return {
+            status: 500,
+            error:  {
+                message: 'server internal error',
+            },
+        };
+    }
 };

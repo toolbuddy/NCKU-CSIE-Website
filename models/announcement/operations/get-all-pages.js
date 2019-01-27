@@ -22,77 +22,92 @@ import ValidateUtils from 'models/announcement/utils/validate.js';
  */
 
 export default async ( opt ) => {
-    opt = opt || {};
-    const {
-        tags = [],
-        from = AnnouncementUtils.defaultFromTime,
-        to = AnnouncementUtils.defaultToTime,
-        amount = 1,
-    } = opt;
+    try {
+        opt = opt || {};
+        const {
+            tags = [],
+            from = AnnouncementUtils.defaultFromTime,
+            to = AnnouncementUtils.defaultToTime,
+            amount = 1,
+        } = opt;
 
-    let tagIds = [];
-    if ( tags.length === 0 )
-        tagIds = TagUtils.supportedTagId;
-    else
-        tagIds = tags.map( Number );
+        let tagIds = [];
+        if ( tags.length === 0 )
+            tagIds = TagUtils.supportedTagId;
+        else
+            tagIds = tags.map( Number );
 
-    if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid tag id',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidNumber( amount ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid amount',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - from',
-            },
-        };
-    }
-    if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-        return {
-            status: 400,
-            error:  {
-                message: 'invalid time - to',
-            },
-        };
-    }
-
-    const fromTime = new Date( from ).toISOString();
-    const toTime = new Date( to ).toISOString();
-
-    const count = await Announcement.count( {
-        where: {
-            updateTime: {
-                [ Op.between ]: [
-                    fromTime,
-                    toTime,
-                ],
-            },
-            isPublished: 1,
-        },
-        include: [ {
-            model:      Tag,
-            as:         'tag',
-            attributes: [ 'typeId', ],
-            where:      {
-                TypeId: {
-                    [ Op.in ]: tagIds,
+        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid tag id',
                 },
+            };
+        }
+        if ( !ValidateUtils.isValidNumber( amount ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid amount',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - from',
+                },
+            };
+        }
+        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
+            return {
+                status: 400,
+                error:  {
+                    message: 'invalid time - to',
+                },
+            };
+        }
+
+        const fromTime = new Date( from ).toISOString();
+        const toTime = new Date( to ).toISOString();
+
+        const count = await Announcement.count( {
+            where: {
+                updateTime: {
+                    [ Op.between ]: [
+                        fromTime,
+                        toTime,
+                    ],
+                },
+                isPublished: 1,
             },
-        }, ],
-        distinct: true,
-    } );
-    return Math.ceil( count / amount );
+            include: [ {
+                model:      Tag,
+                as:         'tag',
+                attributes: [ 'typeId', ],
+                where:      {
+                    TypeId: {
+                        [ Op.in ]: tagIds,
+                    },
+                },
+            }, ],
+            distinct: true,
+        } );
+        return Math.ceil( count / amount );
+    }
+
+    /**
+     * Something wrong, must be a server error.
+     */
+
+    catch ( error ) {
+        return {
+            status: 500,
+            error:  {
+                message: 'server internal error',
+            },
+        };
+    }
 };

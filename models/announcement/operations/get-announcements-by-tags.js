@@ -47,7 +47,6 @@ export default async ( opt ) => {
         let tagIds = [];
         tagIds = tags.map( Number );
 
-
         if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
             return {
                 status: 400,
@@ -169,7 +168,15 @@ export default async ( opt ) => {
             ],
         } ) );
 
-        return data;
+        return data.map( announcement => ( {
+            announcementId: announcement.announcementId,
+            updateTime:     announcement.updateTime,
+            views:          announcement.views,
+            author:         announcement.author,
+            title:          announcement.announcementI18n[ 0 ].title,
+            content:        announcement.announcementI18n[ 0 ].content,
+            tags:           announcement.tag.map( tag => tag.typeId ),
+        } ) );
     }
 
     /**

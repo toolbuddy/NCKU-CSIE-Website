@@ -1,6 +1,7 @@
 import header from 'static/src/js/components/common/header/index.js';
 import announcement from 'static/src/pug/components/announcement/announcement.pug';
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 
 header( document.getElementById( 'header' ) );
 
@@ -17,12 +18,19 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/ann
     const content = document.getElementById( 'content' );
     content.innerHTML = announcement(
         {
-            title:       data.announcementI18n[0].title,
-            tags:        data.tag.map( tag => tag.typeId ),
+            title:       data.title,
+            tags:        data.tags.map( tag => ( {
+                id:   tag,
+                name: TagUtils.getTagById( {
+                    tagId:      Number( tag ),
+                    languageId: Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ),
+                } ),
+            }
+            ) ),
             author:      data.author,
             time:        timeFormating( data.updateTime ),
-            content:     data.announcementI18n[0].content,
-            attachments: data.file.map(file => file.fileI18n[0].name),
+            content:     data.content,
+            attachments: data.files.map( file => file.name ),
         }
     );
 } )();

@@ -7,6 +7,8 @@ import {
 import { timeFormating, }  from 'static/src/js/components/announcement/filter/format.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import UrlUtils from 'static/src/js/utils/url.js';
+import { host, } from 'settings/server/config.js';
 
 
 /**
@@ -16,11 +18,6 @@ import LanguageUtils from 'models/common/utils/language.js';
  *
  * Tags can be validated through `allTags`, consisted of existing tag's DOM obj
  */
-
-const allTags = {};
-document.getElementById( 'filter__tags' ).childNodes.forEach( ( tag ) => {
-    allTags[ /tags__tag--([a-zA-Z0-9]+)/.exec( tag.id )[ 1 ] ] = tag;
-} );
 
 /* Making sure there is no `className` class on the element before adding the `className` class to the classlist.*/
 
@@ -36,13 +33,42 @@ function classRemove ( element, className ) {
         element.classList.remove( className );
 }
 
-export function renderFilter ( defaultTagName = 'all' ) {
+export function initializeRenderFilter ( filterObj, filterNames ) {
+    filterObj.innerHTML = '';
+    filterNames.forEach( ( name ) => {
+        if ( name === 'all' ) {
+            filterObj.innerHTML += (
+                `<button class="tags__tag--${ name } tags__tag" id="tags__tag--${ name }">${
+                    TagUtils.getTagAll( Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ) )
+                }</button>`
+            );
+        }
+        else {
+            const id = TagUtils.getTagId( {
+                tag:        name,
+                languageId: LanguageUtils.getLanguageId( 'en-US' ),
+            } );
+            filterObj.innerHTML += (
+                `<button class="tags__tag--${ id } tags__tag" id="tags__tag--${ id }">${
+                    TagUtils.getTagById( { tagId: id, languageId: Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ), } )
+                }</button>`
+            );
+        }
+    } );
+}
+
+export function renderFilter ( defaultTagName = 'all', filterObj ) {
+    const allTags = {};
+    filterObj.childNodes.forEach( ( tag ) => {
+        allTags[ tag.id.split( '--' ).pop() ] = tag;
+    } );
+
     const defaultTag = document.getElementById( `tags__tag--${ defaultTagName }` );
     const currentTags = new URLSearchParams( window.location.search ).getAll( 'tags' );
     let activeTagCount = 0;
 
     Reflect.ownKeys( allTags ).forEach( ( tag ) => {
-        if ( currentTags.indexOf( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')} ) ) !== -1 ) {
+        if ( currentTags.indexOf( tag ) !== -1 ) {
             activeTagCount += 1;
             classAdd( allTags[ tag ], 'tags__tag--active' );
         }
@@ -171,18 +197,25 @@ export function renderBriefings ( container, announcements ) {
 
     /* Render briefings */
 
+    const languageId = Number( new URLSearchParams( window.location.search ).get( 'languageId' ) );
     announcements.forEach( ( announcement ) => {
         container.innerHTML += briefing( {
             id:      announcement.announcementId,
-            title:   announcement.announcementI18n[0].title,
+            title:   announcement.title,
             time:    timeFormating( announcement.updateTime ),
-            content: announcement.announcementI18n[0].content,
-            tags:    announcement.tag.map( 
-                tag => 
-                TagUtils.getTagById( {
-                    tagId: Number(tag.typeId), 
-                    languageId: Number(new URLSearchParams( window.location.search ).get( 'languageId' ))
-            } ) ),
+            content: announcement.content,
+            tags:    announcement.tags.map(
+                tag => ( {
+                    name:   TagUtils.getTagById( {
+                        tagId: Number( tag ),
+                        languageId,
+                    } ),
+                    id: tag,
+                } )
+            ),
+            UTILS: {
+                url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+            },
         } );
     } );
 }
