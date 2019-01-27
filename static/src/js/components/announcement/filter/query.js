@@ -293,8 +293,8 @@ export const multipleDefaultTags = {
     getAllAnnouncements () {
         const { from, to, page, languageId, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
-            //tags:     multipleDefaultTags.defaultTag,
-            tags: [],
+            // Tags:     multipleDefaultTags.defaultTag,
+            tags:   [],
             from,
             to,
             page,
@@ -396,7 +396,7 @@ export const multipleDefaultTags = {
      */
 
     getAllPageNumber () {
-        const { from, to, amount,} = QueryString.getFilters( null );
+        const { from, to, amount, } = QueryString.getFilters( null );
         const query = QueryString.generate( {
             tags: multipleDefaultTags.defaultTags,
             from,

@@ -14,7 +14,7 @@ export function singleDefaultTagFilter (
         briefingNum = 1
 ) {
     // Set default tag for query functions.
-    const tagNum = TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')});
+    const tagNum = TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
     singleDefaultTag.defaultTag = tagNum;
     singleDefaultTag.announcementBriefingTop = briefingTopObj;
     singleDefaultTag.announcementBriefing = briefingObj;
@@ -64,7 +64,7 @@ export function multipleDefaultTagsFilter (
     // Set default tags for query functions.
     const tagsNum = [];
     tags.forEach( ( tag ) => {
-        tagsNum.push( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')}) );
+        tagsNum.push( TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } ) );
     } );
     multipleDefaultTags.defaultTags = tagsNum;
     multipleDefaultTags.announcementBriefingTop = briefingTopObj;

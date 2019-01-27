@@ -42,7 +42,7 @@ export function renderFilter ( defaultTagName = 'all' ) {
     let activeTagCount = 0;
 
     Reflect.ownKeys( allTags ).forEach( ( tag ) => {
-        if ( currentTags.indexOf( TagUtils.getTagId( {tag: tag, languageId: LanguageUtils.getLanguageId('en-US')} ) ) !== -1 ) {
+        if ( currentTags.indexOf( TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } ) ) !== -1 ) {
             activeTagCount += 1;
             classAdd( allTags[ tag ], 'tags__tag--active' );
         }
@@ -174,15 +174,15 @@ export function renderBriefings ( container, announcements ) {
     announcements.forEach( ( announcement ) => {
         container.innerHTML += briefing( {
             id:      announcement.announcementId,
-            title:   announcement.announcementI18n[0].title,
+            title:   announcement.announcementI18n[ 0 ].title,
             time:    timeFormating( announcement.updateTime ),
-            content: announcement.announcementI18n[0].content,
-            tags:    announcement.tag.map( 
-                tag => 
-                TagUtils.getTagById( {
-                    tagId: Number(tag.typeId), 
-                    languageId: Number(new URLSearchParams( window.location.search ).get( 'languageId' ))
-            } ) ),
+            content: announcement.announcementI18n[ 0 ].content,
+            tags:    announcement.tag.map(
+                tag => TagUtils.getTagById( {
+                    tagId:      Number( tag.typeId ),
+                    languageId: Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ),
+                } )
+            ),
         } );
     } );
 }

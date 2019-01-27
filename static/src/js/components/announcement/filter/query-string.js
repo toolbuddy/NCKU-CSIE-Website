@@ -27,7 +27,7 @@ export default class QueryString {
         if ( !ValidateUtils.isValidPage( page ) )
             page = config.defaultPage;
 
-        let amount = query.get( 'amount' ) || 1;
+        const amount = query.get( 'amount' ) || 1;
 
         let languageId = query.get( 'languageId' ) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )

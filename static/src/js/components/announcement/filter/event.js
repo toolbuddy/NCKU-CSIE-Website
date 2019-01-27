@@ -47,7 +47,6 @@ export function setURLOnChange (
         // }
 
         // If query with selected tags, use default tag(s) and selected tags to count page number and get announcements.
-
     };
     return filterOnChange;
 }

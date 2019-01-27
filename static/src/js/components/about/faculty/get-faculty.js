@@ -18,11 +18,10 @@ const languageId = WebLanguageUtils.currentLanguageId;
 const reqURL = `${ host }/api/faculty?languageId=${ languageId }`;
 
 export default ( cards, filters, noResult ) => fetch( reqURL )
-.then( res => {
-    if (res.ok)
+.then( ( res ) => {
+    if ( res.ok )
         return res.json();
-    else
-        throw new Error();
+    throw new Error();
 } )
 .then( ( faculty ) => {
     faculty = faculty.map( ( profile ) => {
@@ -48,7 +47,7 @@ export default ( cards, filters, noResult ) => fetch( reqURL )
     } );
 
     filters.innerHTML = showFilters( {
-        department: DepartmentUtils.supportedDepartment( languageId ),
+        department:    DepartmentUtils.supportedDepartment( languageId ),
         researchGroup: ResearchUtils.supportedResearchGroup( languageId ),
     } );
 
