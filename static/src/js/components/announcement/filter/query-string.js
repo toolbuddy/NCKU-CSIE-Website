@@ -23,20 +23,17 @@ export default class QueryString {
             to = new Date( config.defaultEndTime );
         to = dateFormating( to );
 
-        let page = query.get( 'page' ) || config.defaultPage;
+        let page = Number(query.get( 'page' )) || config.defaultPage;
         if ( !ValidateUtils.isValidNumber( page ) )
             page = config.defaultPage;
-        page = Number( page );
 
-        let amount = query.get( 'amount' ) || 6;
+        let amount = Number(query.get( 'amount' )) || config.defaultAmount;
         if ( !ValidateUtils.isValidNumber( amount ) )
-            amount = 6;
-        amount = Number( amount );
+            amount = config.defaultAmount;
 
-        let languageId = query.get( 'languageId' ) || LanguageUtils.defaultLanguageId;
+        let languageId = Number(query.get( 'languageId' )) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
             languageId = LanguageUtils.defaultLanguageId;
-        languageId = Number( languageId );
 
         return { tags, from, to, page, languageId, amount, };
     }

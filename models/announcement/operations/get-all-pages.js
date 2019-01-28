@@ -3,7 +3,6 @@ import {
     Announcement,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import ValidateUtils from 'models/announcement/utils/validate.js';
 
@@ -26,16 +25,12 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             tags = [],
-            from = AnnouncementUtils.defaultFromTime,
-            to = AnnouncementUtils.defaultToTime,
-            amount = 1,
+            from = null,
+            to = null,
+            amount = null,
         } = opt;
 
-        let tagIds = tags.slice();
-        if ( tagIds.length === 0 )
-            tagIds = TagUtils.supportedTagId;
-
-        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
             return {
                 status: 400,
                 error:  {
@@ -79,15 +74,15 @@ export default async ( opt ) => {
                         toTime,
                     ],
                 },
-                isPublished: 1,
+                isPublished: true,
             },
             include: [ {
                 model:      Tag,
                 as:         'tag',
                 attributes: [ 'typeId', ],
                 where:      {
-                    TypeId: {
-                        [ Op.in ]: tagIds,
+                    typeId: {
+                        [ Op.in ]: tags,
                     },
                 },
             }, ],

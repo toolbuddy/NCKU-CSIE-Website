@@ -1,12 +1,12 @@
+import validate from 'validate.js';
 class ValidateUtils {
     static isValidDate ( date ) {
-        return date instanceof Date && !Number.isNaN( date );
+        return validate.isDate( date );
     }
 
     static isValidNumber ( page ) {
-        return !Number.isNaN( Number( page ) ) &&
-            Number.isInteger( Number( page ) ) &&
-            Number( page ) > 0 &&
+        return validate.isInteger( page ) &&
+            page > 0 &&
             page < Number.MAX_SAFE_INTEGER;
     }
 }

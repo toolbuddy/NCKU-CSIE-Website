@@ -3,7 +3,6 @@ import {
     Announcement,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import ValidateUtils from 'models/announcement/utils/validate.js';
 
@@ -28,9 +27,9 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             tags = [],
-            from = AnnouncementUtils.defaultFromTime,
-            to = AnnouncementUtils.defaultToTime,
-            amount = 1,
+            from = null,
+            to = null,
+            amount = null,
         } = opt;
 
         if ( !tags.every( TagUtils.isSupportedTagId ) ) {
@@ -82,7 +81,7 @@ export default async ( opt ) => {
                         toTime,
                     ],
                 },
-                isPublished: 1,
+                isPublished: true,
             },
             include: [
                 {
@@ -90,7 +89,7 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [],
                     where:      {
-                        TypeId: {
+                        typeId: {
                             [ op.in ]: tags,
                         },
                     },

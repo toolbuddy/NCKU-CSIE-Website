@@ -58,13 +58,6 @@ apis.get( '/all-pages', async ( req, res ) => {
     } ) );
 } );
 
-apis.get( /^\/(\d+)$/, async ( req, res ) => {
-    res.json( await getAnnouncement( {
-        announcementId: Number( req.params[ 0 ] ),
-        languageId:     Number( req.query.languageId ),
-    } ) );
-} );
-
 apis.get( '/all-pinned', async ( req, res ) => {
     const tags = req.query.tags || [];
     let tagsToSend = [];
@@ -132,6 +125,13 @@ apis.get( '/tags-pinned', async ( req, res ) => {
         from:       req.query.from,
         to:         req.query.to,
         languageId:  Number( req.query.languageId ),
+    } ) );
+} );
+
+apis.get( '/:id', async ( req, res ) => {
+    res.json( await getAnnouncement( {
+        announcementId: Number( req.params.id ),
+        languageId:     Number( req.query.languageId ),
     } ) );
 } );
 

@@ -4,7 +4,6 @@ import {
     AnnouncementI18n,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import AnnouncementUtils from 'models/announcement/utils/announcement.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/announcement/utils/validate.js';
 import TagUtils from 'models/announcement/utils/tag.js';
@@ -36,9 +35,9 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             tags = [],
-            from = AnnouncementUtils.defaultFromTime,
-            to = AnnouncementUtils.defaultToTime,
-            languageId = LanguageUtils.defaultLanguageId,
+            from = null,
+            to = null,
+            languageId = null,
         } = opt;
 
         if ( !tags.every( TagUtils.isSupportedTagId ) ) {
@@ -90,8 +89,8 @@ export default async ( opt ) => {
                         toTime,
                     ],
                 },
-                isPublished: 1,
-                isPinned:    1,
+                isPublished: true,
+                isPinned:    true,
             },
             include: [
                 {
@@ -99,7 +98,7 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [],
                     where:      {
-                        TypeId: {
+                        typeId: {
                             [ op.in ]: tags,
                         },
                     },

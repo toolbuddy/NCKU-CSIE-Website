@@ -1,4 +1,5 @@
 import QueryString from 'static/src/js/components/announcement/filter/query-string.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 import {
     renderBriefings,
     renderBriefingsError,
@@ -32,8 +33,13 @@ export const singleDefaultTag = {
 
     getAllPinnedAnnouncements () {
         const { from, to, languageId, } = QueryString.getFilters( null );
+
+        let tagsToSend = singleDefaultTag.defaultTag;
+        if (singleDefaultTag.defaultTag.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags:     singleDefaultTag.defaultTag,
+            tags:     tagsToSend,
             from,
             to,
             languageId,
@@ -72,8 +78,13 @@ export const singleDefaultTag = {
 
     getAllAnnouncements () {
         const { from, to, page, languageId, amount, } = QueryString.getFilters( null );
+
+        let tagsToSend = singleDefaultTag.defaultTag;
+        if (singleDefaultTag.defaultTag.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags:     singleDefaultTag.defaultTag,
+            tags:     tagsToSend,
             from,
             to,
             page,
@@ -195,8 +206,13 @@ export const singleDefaultTag = {
 
     getAllPageNumber () {
         const { from, to, amount, } = QueryString.getFilters( null );
+
+        let tagsToSend = singleDefaultTag.defaultTag;
+        if (singleDefaultTag.defaultTag.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags: singleDefaultTag.defaultTag,
+            tags: tagsToSend,
             from,
             to,
             amount,
@@ -276,12 +292,18 @@ export const multipleDefaultTags = {
 
     getAllPinnedAnnouncements () {
         const { from, to, languageId, } = QueryString.getFilters( null );
+
+        let tagsToSend = multipleDefaultTags.defaultTags;
+        if (multipleDefaultTags.defaultTags.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags:     multipleDefaultTags.defaultTags,
+            tags:     tagsToSend,
             from,
             to,
             languageId,
         } );
+
         fetch( `${ apiURL }/all-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -315,14 +337,20 @@ export const multipleDefaultTags = {
 
     getAllAnnouncements () {
         const { from, to, page, languageId, amount, } = QueryString.getFilters( null );
+
+        let tagsToSend = multipleDefaultTags.defaultTags;
+        if (multipleDefaultTags.defaultTags.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags:     multipleDefaultTags.defaultTags,
+            tags:     tagsToSend,
             from,
             to,
             page,
             languageId,
             amount,
         } );
+
         fetch( `${ apiURL }/all-announcement?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -354,6 +382,7 @@ export const multipleDefaultTags = {
             to,
             languageId,
         } );
+        
         fetch( `${ apiURL }/tags-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -428,8 +457,13 @@ export const multipleDefaultTags = {
 
     getAllPageNumber () {
         const { from, to, amount, } = QueryString.getFilters( null );
+
+        let tagsToSend = multipleDefaultTags.defaultTags;
+        if (multipleDefaultTags.defaultTags.length === 0)
+            tagsToSend = TagUtils.supportedTagId;
+
         const query = QueryString.generate( {
-            tags: multipleDefaultTags.defaultTags,
+            tags: tagsToSend,
             from,
             to,
             amount,

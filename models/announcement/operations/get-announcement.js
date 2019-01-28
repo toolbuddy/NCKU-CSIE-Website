@@ -32,7 +32,7 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            languageId = LanguageUtils.defaultLanguageId,
+            languageId = null,
             announcementId = null,
         } = opt;
 
