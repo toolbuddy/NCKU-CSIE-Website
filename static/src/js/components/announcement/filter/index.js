@@ -3,6 +3,7 @@ import { filterEvent, setURLOnChange, } from 'static/src/js/components/announcem
 import { singleDefaultTag, multipleDefaultTags, } from 'static/src/js/components/announcement/filter/query.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import config from 'static/src/js/components/announcement/filter/config.js';
 
 
 // Single default tag filter constructor.
@@ -10,24 +11,22 @@ export function singleDefaultTagFilter (
         tag = null,
         briefingTopObj = null,
         briefingObj = null,
-        briefingTopNum = 1,
-        briefingNum = 1,
-        filterObj,
-        filterNames,
+        briefingNum = config.defaultAmount,
+        filterObj = null,
+        filterNames = [],
 ) {
     // Set default tag for query functions.
-    const tagNum = TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
-    singleDefaultTag.defaultTag = tagNum;
+    const tagId = TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
+    singleDefaultTag.defaultTag = tagId;
     singleDefaultTag.announcementBriefingTop = briefingTopObj;
     singleDefaultTag.announcementBriefing = briefingObj;
-    singleDefaultTag.briefingTopNum = briefingTopNum;
     singleDefaultTag.briefingNum = briefingNum;
 
     // Render filter.
     initializeRenderFilter( filterObj, filterNames );
 
     const urlOnChange = setURLOnChange(
-        tagNum,
+        tagId,
         singleDefaultTag.getAllPinnedAnnouncements,
         singleDefaultTag.getAllAnnouncements,
         singleDefaultTag.getAllPageNumber,
@@ -53,7 +52,7 @@ export function singleDefaultTagFilter (
     // * When `page__button` is clicked, using previous events queried result to:
     //     * Construct announcements on requested page.
     //     * Change page number.
-    filterEvent( tagNum );
+    filterEvent( tagId );
 }
 
 
@@ -62,20 +61,18 @@ export function multipleDefaultTagsFilter (
         tags = [],
         briefingTopObj = null,
         briefingObj = null,
-        briefingTopNum = 1,
-        briefingNum = 1,
+        briefingNum = config.defaultAmount,
         filterObj,
         filterNames,
 ) {
     // Set default tags for query functions.
-    const tagsNum = [];
+    const tagsId = [];
     tags.forEach( ( tag ) => {
-        tagsNum.push( TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } ) );
+        tagsId.push( TagUtils.getTagId( { tag, languageId: LanguageUtils.getLanguageId( 'en-US' ), } ) );
     } );
-    multipleDefaultTags.defaultTags = tagsNum;
+    multipleDefaultTags.defaultTags = tagsId;
     multipleDefaultTags.announcementBriefingTop = briefingTopObj;
     multipleDefaultTags.announcementBriefing = briefingObj;
-    multipleDefaultTags.briefingTopNum = briefingTopNum;
     multipleDefaultTags.briefingNum = briefingNum;
 
     // Render filter, must be `tags__tag--all`.

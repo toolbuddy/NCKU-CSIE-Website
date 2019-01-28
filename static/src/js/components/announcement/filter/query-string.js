@@ -27,15 +27,11 @@ export default class QueryString {
         if ( !ValidateUtils.isValidNumber( page ) )
             page = config.defaultPage;
 
-        let amount = Number(query.get( 'amount' )) || config.defaultAmount;
-        if ( !ValidateUtils.isValidNumber( amount ) )
-            amount = config.defaultAmount;
-
         let languageId = Number(query.get( 'languageId' )) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
             languageId = LanguageUtils.defaultLanguageId;
 
-        return { tags, from, to, page, languageId, amount, };
+        return { tags, from, to, page, languageId, };
     }
 
     static generate ( obj = null ) {

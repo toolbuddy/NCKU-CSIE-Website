@@ -1,5 +1,6 @@
 import QueryString from 'static/src/js/components/announcement/filter/query-string.js';
 import TagUtils from 'models/announcement/utils/tag.js';
+import { host, protocol,} from 'settings/server/config.js';
 import {
     renderBriefings,
     renderBriefingsError,
@@ -9,7 +10,7 @@ import {
 } from 'static/src/js/components/announcement/filter/render.js';
 
 // Announcement api URL prefix.
-const apiURL = `${ window.location.protocol }//${ window.location.host }/api/announcement`;
+const apiURL = `${ protocol }//${ host }/api/announcement`;
 
 /**
  * Construct single default tag.
@@ -28,7 +29,6 @@ export const singleDefaultTag = {
     defaultTag:              null,
     announcementBriefingTop: null,
     announcementBriefing:    null,
-    briefingTopNum:          null,
     briefingNum:             null,
 
     getAllPinnedAnnouncements () {
@@ -77,7 +77,7 @@ export const singleDefaultTag = {
      */
 
     getAllAnnouncements () {
-        const { from, to, page, languageId, amount, } = QueryString.getFilters( null );
+        const { from, to, page, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = singleDefaultTag.defaultTag;
         if (singleDefaultTag.defaultTag.length === 0)
@@ -89,7 +89,7 @@ export const singleDefaultTag = {
             to,
             page,
             languageId,
-            amount,
+            amount: singleDefaultTag.briefingNum,
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -157,7 +157,7 @@ export const singleDefaultTag = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, from, to, page, languageId, amount, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, from, to, page, languageId, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -167,7 +167,7 @@ export const singleDefaultTag = {
             to,
             page,
             languageId,
-            amount,
+            amount: singleDefaultTag.briefingNum,
         } );
 
         fetch( `${ apiURL }/tags-announcement?${ query }` )
@@ -205,7 +205,7 @@ export const singleDefaultTag = {
      */
 
     getAllPageNumber () {
-        const { from, to, amount, } = QueryString.getFilters( null );
+        const { from, to, } = QueryString.getFilters( null );
 
         let tagsToSend = singleDefaultTag.defaultTag;
         if (singleDefaultTag.defaultTag.length === 0)
@@ -215,7 +215,7 @@ export const singleDefaultTag = {
             tags: tagsToSend,
             from,
             to,
-            amount,
+            amount: singleDefaultTag.briefingNum,
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
@@ -243,7 +243,7 @@ export const singleDefaultTag = {
      */
 
     getPageNumberByTags () {
-        const { tags, from, to, amount, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
+        const { tags, from, to, } = QueryString.getFilters( [ singleDefaultTag.defaultTag, ] );
         const query = QueryString.generate( {
             tags: [
                 singleDefaultTag.defaultTag,
@@ -251,7 +251,7 @@ export const singleDefaultTag = {
             ],
             from,
             to,
-            amount,
+            amount: singleDefaultTag.briefingNum,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
@@ -287,7 +287,6 @@ export const multipleDefaultTags = {
     defaultTags:             [],
     announcementBriefingTop: null,
     announcementBriefing:    null,
-    briefingTopNum:          null,
     briefingNum:             null,
 
     getAllPinnedAnnouncements () {
@@ -336,7 +335,7 @@ export const multipleDefaultTags = {
      */
 
     getAllAnnouncements () {
-        const { from, to, page, languageId, amount, } = QueryString.getFilters( null );
+        const { from, to, page, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = multipleDefaultTags.defaultTags;
         if (multipleDefaultTags.defaultTags.length === 0)
@@ -348,7 +347,7 @@ export const multipleDefaultTags = {
             to,
             page,
             languageId,
-            amount,
+            amount: multipleDefaultTags.briefingNum,
         } );
 
         fetch( `${ apiURL }/all-announcement?${ query }` )
@@ -412,14 +411,14 @@ export const multipleDefaultTags = {
      */
 
     getAnnouncementsByTags () {
-        const { tags, from, to, page, languageId, amount, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, from, to, page, languageId, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             from,
             to,
             page,
             languageId,
-            amount,
+            amount: multipleDefaultTags.briefingNum,
         } );
         fetch( `${ apiURL }/tags-announcement?${ query }` )
         .then( ( res ) => {
@@ -456,7 +455,7 @@ export const multipleDefaultTags = {
      */
 
     getAllPageNumber () {
-        const { from, to, amount, } = QueryString.getFilters( null );
+        const { from, to, } = QueryString.getFilters( null );
 
         let tagsToSend = multipleDefaultTags.defaultTags;
         if (multipleDefaultTags.defaultTags.length === 0)
@@ -466,7 +465,7 @@ export const multipleDefaultTags = {
             tags: tagsToSend,
             from,
             to,
-            amount,
+            amount: multipleDefaultTags.briefingNum,
         } );
 
         fetch( `${ apiURL }/all-pages?${ query }` )
@@ -494,12 +493,12 @@ export const multipleDefaultTags = {
      */
 
     getPageNumberByTags () {
-        const { tags, from, to, amount, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
+        const { tags, from, to, } = QueryString.getFilters( multipleDefaultTags.defaultTags );
         const query = QueryString.generate( {
             tags,
             from,
             to,
-            amount,
+            amount: multipleDefaultTags.briefingNum,
         } );
 
         fetch( `${ apiURL }/tags-pages?${ query }` )
