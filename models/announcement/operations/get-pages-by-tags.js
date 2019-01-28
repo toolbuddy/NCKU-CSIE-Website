@@ -33,10 +33,7 @@ export default async ( opt ) => {
             amount = 1,
         } = opt;
 
-        let tagIds = [];
-        tagIds = tags.map( Number );
-
-        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
             return {
                 status: 400,
                 error:  {
@@ -94,7 +91,7 @@ export default async ( opt ) => {
                     attributes: [],
                     where:      {
                         TypeId: {
-                            [ op.in ]: tagIds,
+                            [ op.in ]: tags,
                         },
                     },
                 },
@@ -102,7 +99,7 @@ export default async ( opt ) => {
             group:  [ 'announcementId', ],
             having: {
                 tagsCount: {
-                    [ op.gte ]: tagIds.length,
+                    [ op.gte ]: tags.length,
                 },
             },
         } );

@@ -15,13 +15,6 @@ export function renderFilter ( filter ) {
         filter.classList.add( 'filters__filter--active' );
 }
 
-export function renderFilterResearch ( filter ) {
-    if ( filter.classList.contains( 'filters__filter--research--active' ) )
-        filter.classList.remove( 'filters__filter--research--active' );
-    else
-        filter.classList.add( 'filters__filter--research--active' );
-}
-
 /**
  * Render when click on DOM element with class name `filters__filter`.
  *
@@ -43,19 +36,16 @@ export function renderFilterResearch ( filter ) {
 
 export function renderCards ( filters, cards, noResult ) {
     // Get filter's conditions.
-    const selectedFilters = filters
-    .filter( filter => filter.classList.contains( 'filters__filter--active' ) )
-    .map( filter => filter.getAttribute( 'data' ) );
-
-    /* eslint no-console: 0 */
-    console.log( selectedFilters );
+    const selectedFiltersDept = filters
+    .filter( filter => filter.classList.contains( 'filters__filter--active' ) && filter.classList.contains( 'filters__filter--dept' ) )
+    .map( filter => filter.getAttribute( 'data-department' ) );
 
     const selectedFiltersResearch = filters
-    .filter( filter => filter.classList.contains( 'filters__filter--research--active' ) )
-    .map( filter => filter.getAttribute( 'research-group' ) );
+    .filter( filter => filter.classList.contains( 'filters__filter--active' ) && filter.classList.contains( 'filters__filter--research' ) )
+    .map( filter => filter.getAttribute( 'data-research-gruop' ) );
 
     // If no filter condition is presented.
-    if ( selectedFilters.length === 0 && selectedFiltersResearch.length === 0 ) {
+    if ( selectedFiltersDept.length === 0 && selectedFiltersResearch.length === 0 ) {
         // Show all `cards__card`.
         Array.from( cards.getElementsByClassName( 'cards__card' ) )
         .forEach( ( card ) => {
@@ -81,46 +71,29 @@ export function renderCards ( filters, cards, noResult ) {
         .map( department => department.getAttribute( 'data' ) )
         .filter( data => data !== null );
 
-        const researchGroup = Array.from( card.getAttribute( 'research-group' ) )
+        const researchGroup = Array.from( card.getAttribute( 'data-research-gruop' ) )
         .filter( data => data !== null );
 
-        let ifTestPass = true;
+        // Assuming that card pass on test.
+        let ifTestPass = !selectedFiltersDept.some( filter => departments.indexOf( filter ) < 0 );
 
-        // Filter on test target.
-        if ( departments.length ) {
-            // Test failed.
-            if ( selectedFilters.some( filter => departments.indexOf( filter ) < 0 ) ) {
-                if ( !card.classList.contains( 'card--hide' ) )
-                    card.classList.add( 'card--hide' );
-                ifTestPass = false;
-            }
+        // Test ResearchGroup.
+        if ( ifTestPass )
+            ifTestPass = !selectedFiltersResearch.some( filter => researchGroup.indexOf( filter ) < 0 );
 
-            // Test passed.
-            else if ( card.classList.contains( 'card--hide' ) )
+
+        // Test pass.
+        if ( ifTestPass ) {
+            if ( card.classList.contains( 'card--hide' ) )
                 card.classList.remove( 'card--hide' );
         }
-        else if ( selectedFilters.length !== 0 )
-            ifTestPass = false;
-
-        // Filter on test target.
-        if ( ifTestPass && researchGroup.length ) {
-            // Test failed.
-            if ( selectedFiltersResearch.some( filter => researchGroup.indexOf( filter ) < 0 ) ) {
-                if ( !card.classList.contains( 'card--hide' ) )
-                    card.classList.add( 'card--hide' );
-            }
-
-            // Test passed.
-            else if ( card.classList.contains( 'card--hide' ) )
-                card.classList.remove( 'card--hide' );
-        }
-        else if ( selectedFiltersResearch.length !== 0 )
-            ifTestPass = false;
 
         // Test failed.
-        if ( !ifTestPass && !card.classList.contains( 'card--hide' ) )
+        else if ( !card.classList.contains( 'card--hide' ) )
             card.classList.add( 'card--hide' );
-        if ( !card.classList.contains( 'card--hide' ) )
+
+
+        if ( noShowedCard && !card.classList.contains( 'card--hide' ) )
             noShowedCard = false;
     } );
 

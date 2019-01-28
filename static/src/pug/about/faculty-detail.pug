@@ -205,7 +205,6 @@ append content
                 th.row__patentName= patentObj.patent
               th.row__authorizingParty= technologyTransferObj.authorizingParty
               th.row__authorizedParty= technologyTransferObj.authorizedParty
-              th.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
     if data.project.length !== 0
       h2.project__title= i18n[ LANG.id ].project.name

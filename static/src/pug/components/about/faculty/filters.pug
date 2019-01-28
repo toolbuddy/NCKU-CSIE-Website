@@ -2,36 +2,8 @@
 //-
 //- Filter based on their belonging departments.
 //- @todo add resaerch group filter.
-mixin filters()
-  -
-    const i18n = Object.freeze( {
-      [ LANG.getLanguageId( 'en-US' ) ]: {
-        'departments': [ 'dept. CSIE', 'inst. CSIE', 'Joint Appointment', 'Adjunct Professor' ],
-        'researchGroup': [
-          '數位生活科技與軟體技術',
-          '計算通訊與網路',
-          '資料與知識工程',
-          '多媒體',
-          '架構與嵌入式系統',
-          '生醫工程',
-          '製造工程',
-        ],
-      },
-      [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'departments': [ '資訊系', '資訊所', '合併師資', '兼任師資' ],
-        'researchGroup': [
-          '數位生活科技與軟體技術',
-          '計算通訊與網路',
-          '資料與知識工程',
-          '多媒體',
-          '架構與嵌入式系統',
-          '生醫工程',
-          '製造工程',
-        ],
-      },
-    } );
-  section#filters.filters
-    each value, index in i18n[ LANG.id ].departments
-      button.filters__filter.filters__filter--dept( data = index )= value
-    each value, index in i18n[ LANG.id ].researchGroup
-      button.filters__filter.filters__filter--research( research-group = index )= value
+
+each value, index in department
+  button.filters__filter.filters__filter--dept( data-department = index )= value
+each value, index in researchGroup
+  button.filters__filter.filters__filter--research( data-research-gruop = index )= value

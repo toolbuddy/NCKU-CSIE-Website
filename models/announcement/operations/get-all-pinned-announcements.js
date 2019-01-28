@@ -39,11 +39,9 @@ export default async ( opt ) => {
             languageId = LanguageUtils.defaultLanguageId,
         } = opt;
 
-        let tagIds = [];
-        if ( tags.length === 0 )
+        let tagIds = tags.slice();
+        if ( tagIds.length === 0 )
             tagIds = TagUtils.supportedTagId;
-        else
-            tagIds = tags.map( Number );
 
         if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
             return {
@@ -136,6 +134,10 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [ 'typeId', ],
                 },
+            ],
+            order: [
+                [ 'updateTime',
+                    'DESC', ],
             ],
         } ) );
 

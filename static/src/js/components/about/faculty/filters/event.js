@@ -1,4 +1,4 @@
-import { renderFilter, renderFilterResearch, renderCards, } from 'static/src/js/components/about/faculty/filters/render.js';
+import { renderFilter, renderCards, } from 'static/src/js/components/about/faculty/filters/render.js';
 
 /**
  * Execute `renderFilter` when click on `filter`.
@@ -12,12 +12,6 @@ import { renderFilter, renderFilterResearch, renderCards, } from 'static/src/js/
 export function registClick ( filter ) {
     filter.addEventListener( 'click', () => {
         renderFilter( filter );
-    } );
-}
-
-export function registClickResearch ( filter ) {
-    filter.addEventListener( 'click', () => {
-        renderFilterResearch( filter );
     } );
 }
 

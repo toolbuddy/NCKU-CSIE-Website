@@ -62,9 +62,11 @@ export default {
         'announcement/announcement': path.join( sassRoot, 'announcement/announcement.scss' ),
         'announcement/recruitment':  path.join( sassRoot, 'announcement/recruitment.scss' ),
 
+        // Route `error`
+        'error/404': path.join( sassRoot, 'error/404.scss' ),
+
         // Route `home`
         'home/index': path.join( sassRoot, 'home/index.scss' ),
-        'home/error': path.join( sassRoot, 'home/error.scss' ),
 
         // Route `research`
         'research/index':        path.join( sassRoot, 'research/index.scss' ),

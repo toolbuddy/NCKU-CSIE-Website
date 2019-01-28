@@ -1,17 +1,12 @@
-import path from 'path';
+import http from 'http';
 
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 
-import {
-    port,
-    projectRoot,
-} from 'settings/server/config.js';
+import { port, } from 'settings/server/config.js';
 import contentSecurityPolicy from 'settings/server/content-security-policy.js';
-import staticFile from 'routes/static.js';
-import language from 'routes/utils/language.js';
-import routes from 'routes/urls.js';
+import csie from 'routes/urls.js';
 import apis from 'apis/urls.js';
 
 /**
@@ -19,20 +14,13 @@ import apis from 'apis/urls.js';
  */
 
 const server = express();
+const httpServer = http.createServer( server );
 
 /**
  * Start HTTP server.
  */
 
-server.listen( port );
-
-/**
- * Set HTML template engine.
- */
-
-server.locals.basedir = path.join( projectRoot, '/static/src/pug' );
-server.set( 'view engine', 'pug' );
-server.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
+httpServer.listen( port );
 
 /**
  * Remove default express HTTP response header `x-powered-by`.
@@ -70,55 +58,25 @@ server.use( helmet.contentSecurityPolicy( {
 server.use( compression() );
 
 /**
- * Setup static files routes.
+ * Setup web api routes.
  */
 
-server.use( '/static', staticFile );
-
-/**
- * Url-encoded parser for HTTP request body.
- * Request header `Content-Type` can only be one of the supported types.
- * Mainly used by `<form method='POST' enctype='x-www-form-urlencoded'>`.
- */
-
-server.use( express.urlencoded( {
-    extended: true,
-    limit:    '5GB',
-    type:     [
-        'application/x-www-form-urlencoded',
-        'multipart/form-data',
-        'text/*',
-        '*/json',
-        'application/xhtml+xml',
-        'application/xml',
-    ],
-} ) );
-
-/**
- * JSON parser for HTTP request body.
- * Request header `Content-Type` can only be JSON related MIME types.
- * Maximum supported JSON size is 5GB.
- */
-
-server.use( express.json( {
-    limit: '5GB',
-    type:  '*/json',
-} ) );
-
-/**
- * Setup language option.
- */
-
-server.use( language );
+server.use( '/api', apis );
 
 /**
  * Setup web page routes.
  */
 
-server.use( '/', routes );
+server.use( '/', csie );
 
 /**
- * Setup web api routes.
+ * Setup error handler.
  */
 
-server.use( '/api', apis );
+server.use(
+    ( err, {}, res, {} ) => {
+        const status = err.status || 500;
+        res.sendStatus( status );
+        console.error( 'still get fuck' );
+    }
+);

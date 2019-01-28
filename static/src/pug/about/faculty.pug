@@ -40,12 +40,12 @@ append header
 
 append content
   include /components/common/topic.pug
-  include /components/about/faculty/filters.pug
 
   +topic( i18n[ LANG.id ].topic )
 
   //- Filter component for faculty selection.
-  +filters()
+  section#filters.filters
+    h1 Loading
 
   //- Faculty data display section.
   //-

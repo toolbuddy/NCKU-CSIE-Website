@@ -44,10 +44,7 @@ export default async ( opt ) => {
             languageId = LanguageUtils.defaultLanguageId,
         } = opt;
 
-        let tagIds = [];
-        tagIds = tags.map( Number );
-
-        if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
             return {
                 status: 400,
                 error:  {
@@ -98,8 +95,8 @@ export default async ( opt ) => {
 
         const fromTime = new Date( from ).toISOString();
         const toTime = new Date( to ).toISOString();
-        const offset = Number( amount * ( page - 1 ) );
-        const limit = Number( amount );
+        const offset = amount * ( page - 1 );
+        const limit = amount;
 
         const data = await Announcement.findAll( {
             attributes: [
@@ -123,7 +120,7 @@ export default async ( opt ) => {
                     attributes: [],
                     where:      {
                         TypeId: {
-                            [ op.in ]: tagIds,
+                            [ op.in ]: tags,
                         },
                     },
                 },
@@ -131,7 +128,7 @@ export default async ( opt ) => {
             group:  [ 'announcementId', ],
             having: {
                 tagsCount: {
-                    [ op.gte ]: tagIds.length,
+                    [ op.gte ]: tags.length,
                 },
             },
         } ).then( announcementData => Announcement.findAll( {
@@ -165,6 +162,10 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [ 'typeId', ],
                 },
+            ],
+            order: [
+                [ 'updateTime',
+                    'DESC', ],
             ],
         } ) );
 

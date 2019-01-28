@@ -33,9 +33,10 @@ export default function ( req, res, next ) {
 
     /**
      * If invalid language id query is provided, response with 400.
-     * @todo use 400 page to present.
      */
 
-    else
-        res.status( 400 ).send( 'invalid language option' );
+    else {
+        res.status( 400 );
+        next( 'invalid language option' );
+    }
 }

@@ -43,11 +43,9 @@ export default async ( opt ) => {
             languageId = LanguageUtils.defaultLanguageId,
         } = opt;
 
-        let tagIds = [];
-        if ( tags.length === 0 )
+        let tagIds = tags.slice();
+        if ( tagIds.length === 0 )
             tagIds = TagUtils.supportedTagId;
-        else
-            tagIds = tags.map( Number );
 
         if ( !tagIds.every( TagUtils.isSupportedTagId ) ) {
             return {
@@ -101,8 +99,8 @@ export default async ( opt ) => {
 
         const fromTime = new Date( from ).toISOString();
         const toTime = new Date( to ).toISOString();
-        const offset = Number( amount * ( page - 1 ) );
-        const limit = Number( amount );
+        const offset = amount * ( page - 1 );
+        const limit = amount;
 
         const data = await Announcement.findAll( {
             attributes: [
@@ -158,6 +156,10 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [ 'typeId', ],
                 },
+            ],
+            order: [
+                [ 'updateTime',
+                    'DESC', ],
             ],
             limit,
             offset,

@@ -26,14 +26,17 @@ export default class QueryString {
         let page = query.get( 'page' ) || config.defaultPage;
         if ( !ValidateUtils.isValidNumber( page ) )
             page = config.defaultPage;
+        page = Number( page );
 
         let amount = query.get( 'amount' ) || 6;
         if ( !ValidateUtils.isValidNumber( amount ) )
             amount = 6;
+        amount = Number( amount );
 
         let languageId = query.get( 'languageId' ) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
             languageId = LanguageUtils.defaultLanguageId;
+        languageId = Number( languageId );
 
         return { tags, from, to, page, languageId, amount, };
     }

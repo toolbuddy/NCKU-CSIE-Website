@@ -1,4 +1,5 @@
 import briefing from 'static/src/pug/components/announcement/briefing.pug';
+import filterTags from 'static/src/pug/components/announcement/filter-tags.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import {
     pageOnClick,
@@ -35,25 +36,25 @@ function classRemove ( element, className ) {
 
 export function initializeRenderFilter ( filterObj, filterNames ) {
     filterObj.innerHTML = '';
-    filterNames.forEach( ( name ) => {
-        if ( name === 'all' ) {
-            filterObj.innerHTML += (
-                `<button class="tags__tag--${ name } tags__tag" id="tags__tag--${ name }">${
-                    TagUtils.getTagAll( Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ) )
-                }</button>`
-            );
-        }
-        else {
+    const languageId = Number( new URLSearchParams( window.location.search ).get( 'languageId' ) );
+    filterObj.innerHTML += filterTags( {
+        tags: filterNames.map( ( name ) => {
+            if ( name === 'all' ) {
+                return {
+                    id:      name,
+                    content: TagUtils.getTagAll( languageId ),
+                };
+            }
+
             const id = TagUtils.getTagId( {
                 tag:        name,
                 languageId: LanguageUtils.getLanguageId( 'en-US' ),
             } );
-            filterObj.innerHTML += (
-                `<button class="tags__tag--${ id } tags__tag" id="tags__tag--${ id }">${
-                    TagUtils.getTagById( { tagId: id, languageId: Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ), } )
-                }</button>`
-            );
-        }
+            return {
+                id,
+                content: TagUtils.getTagById( { tagId: id, languageId, } ),
+            };
+        } ),
     } );
 }
 

@@ -3,7 +3,6 @@
  *
  * Including following sub-routes:
  * - `/`
- * - `/login`
  * - `/search`
  * - `/calendar`
  */
@@ -27,14 +26,6 @@ router
 .get( staticHtml( 'home/index' ) );
 
 /**
- * Resolve URL `/login`.
- */
-
-router
-.route( '/login' )
-.get( staticHtml( 'home/index' ) );
-
-/**
  * Resolve URL `/search`.
  */
 
@@ -48,14 +39,6 @@ router
 
 router
 .route( '/calendar' )
-.get( staticHtml( 'home/index' ) );
-
-/**
- * Resolve URL `/error`.
- */
-
-router
-.route( '/error' )
 .get( staticHtml( 'home/index' ) );
 
 export default router;
