@@ -69,7 +69,7 @@ body > {
 
     // block
     // `body > .content > .filter.filter--college`
-    @include filter--college() {
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {

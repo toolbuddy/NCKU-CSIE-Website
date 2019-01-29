@@ -55,14 +55,14 @@ export default class SingleDefaultTagFilter {
         this.DOM = {
             filter: {
                 from: {
-                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__year' ),
-                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__month' ),
-                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__date' ),
+                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__year' ),
+                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__month' ),
+                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__date' ),
                 },
                 to:   {
-                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__year' ),
-                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__month' ),
-                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__date' ),
+                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__year' ),
+                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__month' ),
+                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__date' ),
                 },
                 tags: opt.filterDOM.querySelector( '.filter__tags.tags' ),
             },
@@ -210,24 +210,55 @@ export default class SingleDefaultTagFilter {
     }
 
     renderPages ( pages ) {
+        this.state.page = config.page;
         this.DOM.pages.innerHTML = pagesHTML( { pages, } );
+        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
 
         /* Add eventListener to all the `pages__page` element,when rendering pages. */
 
-        Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) ).forEach( ( pageDOM ) => {
+        pageDOMArr.forEach( ( pageDOM ) => {
             pageDOM.addEventListener( 'click', () => {
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
                 this.state.page = Number( pageDOM.getAttribute( 'data-page' ) );
+                classAdd( pageDOM, 'pages__page--active' );
                 this.getNormalAnnouncement();
             } );
         } );
 
+        /* Set default active page */
+
+        let activeDOM = document.querySelector('[data-page="'+this.state.page+'"]');
+        classAdd(activeDOM, 'pages__page--active');
+
         /* Add eventListener to all the `pages__control` element,when rendering pages. */
 
-        Array.from( this.DOM.pages.querySelectorAll( '.pages__control' ) ).forEach( ( controlDOM ) => {
-            controlDOM.addEventListener( 'click', () => {
-                this.state.page = Number( controlDOM.getAttribute( 'data-page' ) );
-                this.getNormalAnnouncement();
+        this.DOM.pages.querySelector( '.pages__control--forward' ).addEventListener( 'click', () => {
+            pageDOMArr.forEach( ( pageDOM ) => {
+                classRemove( pageDOM, 'pages__page--active' );
             } );
+
+            this.state.page -= 1;
+            if ( this.state.page < 1 )
+                this.state.page = 1;
+
+            const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
+            classAdd( activeDOM, 'pages__page--active' );
+            this.getNormalAnnouncement();
+        } );
+        this.DOM.pages.querySelector( '.pages__control--backward' ).addEventListener( 'click', () => {
+            pageDOMArr.forEach( ( pageDOM ) => {
+                classRemove( pageDOM, 'pages__page--active' );
+            } );
+
+            this.state.page += 1;
+            if ( this.state.page > this.state.maxPage )
+                this.state.page = this.state.maxPage;
+                
+            const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
+            classAdd( activeDOM, 'pages__page--active' );
+            this.getNormalAnnouncement();
         } );
     }
 
@@ -254,6 +285,7 @@ export default class SingleDefaultTagFilter {
                 throw new Error( 'failed to get all pages' );
             const { pages, } = await res.json();
             if ( pages ) {
+                this.state.maxPage = pages;
                 this.renderPages( pages );
                 this.getPinnedAnnouncement();
                 this.getNormalAnnouncement();

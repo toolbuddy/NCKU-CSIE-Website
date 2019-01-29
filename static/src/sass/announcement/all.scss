@@ -75,7 +75,7 @@ body {
 
     // block
     // `body > .content > .filter.filter--all`
-    @include filter--all() {
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {

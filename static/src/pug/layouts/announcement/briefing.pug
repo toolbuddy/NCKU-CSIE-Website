@@ -10,14 +10,16 @@ append content
     article.filter__time.time
       aside.time__from.from
         label.from__text.from__text--year= i18n[ LANG.id ].time.from
-        input.from__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
-        input.from__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
-        input.from__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
+        span.from__input.input
+          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
+          input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
+          input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
       aside.time__to.to
         label.to__text.to__text--year= i18n[ LANG.id ].time.to
-        input.to__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
-        input.to__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
-        input.to__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
+        span.to__input.input
+          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
+          input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
+          input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
     article.filter__tags.tags
 
   section#announcement--pinned.announcement.announcement--pinned

@@ -11,120 +11,28 @@
     $small: 425px;
     $large: 850px;
 
+    // [ skin ]
+    min-height: 4rem;
+
     // [ layout ]
-    display: grid;
-    grid-template-areas:
-      'filter__button'
-      'filter__time'
-      'filter__tags';
-    justify-items: center;
+    display: flex;
+    flex-flow: row wrap;
 
-    // [ customization ]
-    @content;
+    // grid-template-areas: 'filter__time' 'filter__tags';
 
-    // element
-    // `> .filter > .filter__button`
-    // block
-    // `> .filter > .button`
-
-    > .filter__button.button {
-      // [ position ]
-      grid-area: filter__button;
-
+    // [ RWD: $x-small ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
-      display: flex;
-      justify-self: end;
-
-      // [ skin ]
-      width: 3rem;
-      cursor: pointer;
-      color: #757575;
-      background: none;
-      font-size: .5rem;
-
-      // [ RWD: $x-large ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .filter > .button > .button__icon`
-
-      > .button__icon {
-        // [ position ]
-        // Set `position: relative` so `::before` can use `position: absolute`.
-        position: relative;
-
-        // [ skin ]
-        margin: {
-          top: .1rem;
-          left: .5rem;
-        }
-        width: .375rem;
-        height: .4687rem;
-        background: none;
-        cursor: pointer;
-
-        // [ before ]
-        &::before {
-          // [ position ]
-          position: absolute;
-          left: -.094rem;
-          top: .1875rem;
-
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          content: '';
-          width: .343rem;
-          height: .0625rem;
-          background: none repeat scroll 0 0 #757575;
-          transform: rotate( 45deg );
-
-          // [ animation ]
-          transition: all 300ms ease 0s;
-        }
-
-        // [ after ]
-        &::after {
-          // [ position ]
-          position: absolute;
-          right: -.094rem;
-          top: .1875rem;
-
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          content: '';
-          width: .343rem;
-          height: .0625rem;
-          background: none repeat scroll 0 0 #757575;
-          transform: rotate( -45deg );
-
-          // [ animation ]
-          transition: all 300ms ease 0s;
-        }
-
-        // modifier
-        // `> .filter > .button > .button__icon.button__icon--active`
-        &--active {
-          // [ before ]
-          &::before {
-            // [ skin ]
-            transform: rotate( -45deg ) translateX( 0 ) translateY( 0 );
-          }
-
-          // [ after ]
-          &::after {
-            // [ skin ]
-            transform: rotate( 45deg ) translateX( 0 ) translateY( 0 );
-          }
-        }
+      display: grid;
+      grid-column-gap: 20%;
+      grid-template: {
+        areas: 'filter__tags filter__time';
+        columns: 45% 35%;
+        rows: none;
       }
     }
+
+    @content;
 
     // element
     // `> .filter > .filter__time`
@@ -132,20 +40,27 @@
     // `> .filter > .time`
     > .filter__time.time {
       // [ position ]
-      grid-area: filter__time;
+      grid: {
+        area: filter__time;
+        template-columns: repeat( auto-fill, 4.8rem );
+      }
 
       // [ layout ]
       display: flex;
-      flex-direction: column;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: end;
+      margin-bottom: .8rem;
 
       // [ skin ]
-      margin-bottom: 1rem;
       font-size: .4375rem;
+      min-width: 100%;
 
       // [ RWD: $x-small ]
-      @media screen and ( min-width: $small ) {
+      @media screen and ( min-width: $large ) {
         // [ layout ]
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: auto auto;
       }
 
       // modifier
@@ -162,15 +77,24 @@
         }
       }
 
+      .time__from, .time__to {
+        justify-self: center;
+      }
+
       // element
       // `> .filter > .time .time__date`
 
-      .time__date {
+      .from__input, .to__input {
         // [ position ]
         align-self: center;
 
         // [ layout ]
-        text-align: center;
+        display: grid;
+        grid: {
+          column-start: auto;
+          row-start: auto;
+          template-columns: 40% 30% 30%;
+        }
 
         // [ skin ]
         margin: .3rem .6rem .2rem .2rem;
@@ -179,9 +103,22 @@
         padding: {
           top: .15rem;
           bottom: .15rem;
+          left: .25rem;
+          right: .05rem;
         }
-        width: auto;
+        width: 4.2rem;
+        height: 1rem;
         background: none;
+
+        .input {
+          text-align: center;
+        }
+      }
+
+      .from__text, .to__text {
+        text-align: left;
+        grid-column: 1 / span 3;
+        padding-left: .5rem;
       }
     }
 
@@ -190,10 +127,18 @@
     > .filter__tags {
       // [ position ]
       grid-area: filter__tags;
-      align-self: center;
+      align-self: flex-start;
 
       // [ layout ]
-      display: grid;
+      display: flex;
+      flex-flow: row wrap;
+      @media screen and ( min-width: $large ) {
+        display: grid;
+        grid-template: {
+          rows: repeat( 4, auto );
+          columns: repeat( 5, auto );
+        }
+      }
 
       // [ skin ]
       font-size: .4375rem;
@@ -219,6 +164,7 @@
   }
 }
 
+/*
 // component
 // `> .filter.filter--all`
 @mixin filter--all () {
@@ -927,3 +873,4 @@
     }
   }
 }
+*/
