@@ -26,15 +26,11 @@ body {
     $large: 992px;
 
     // [ layout ]
-    display: grid;
-    grid: {
-      gap: 1.2rem 0;
-      template: {
-        columns: 1fr;
-        areas:
-          'filter'
-          'topic';
-      }
+    display: flex;
+    flex-flow: column;
+    padding: {
+      bottom: .5rem;
+      top: .5rem;
     }
 
     // [skin]
@@ -46,15 +42,11 @@ body {
     }
 
     // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
-      // [ layout ]
-      grid-template-areas:
-        'topic'
-        'filter';
-    }
-
-    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: flex;
+      flex-flow: column;
+
       // [ skin ]
       padding: 2.2rem 0;
     }
@@ -68,16 +60,31 @@ body {
         start: 1;
         end: 11;
       }
+
+      // [ layout ]
+      margin: {
+        top: 1rem;
+        bottom: 1rem;
+      }
+      order: 0;
+      @media screen and ( min-width: $large ) {
+        order: -1;
+      }
     }
 
     // block
     // `body > .content > .filter.filter--all`
-    @include filter--award() {
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {
         start: 1;
         end: 11;
+      }
+      margin-bottom: 1rem;
+      order: -1;
+      @media screen and ( min-width: $large ) {
+        order: 0;
       }
     }
 
@@ -89,6 +96,13 @@ body {
         start: 1;
         end: 11;
       }
+
+      // [ layout ]
+      margin-bottom: 1rem;
+      order: 2;
+      @media screen and ( min-width: $large ) {
+        order: 2;
+      }
     }
 
     // block
@@ -98,6 +112,11 @@ body {
       grid-column: {
         start: 1;
         end: 11;
+      }
+      align-self: center;
+      order: 3;
+      @media screen and ( min-width: $large ) {
+        order: 3;
       }
     }
   }

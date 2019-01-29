@@ -67,7 +67,7 @@ body > {
 
     // block
     // `body > .content > .filter.filter--activity`
-    @include filter--activity() {
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {

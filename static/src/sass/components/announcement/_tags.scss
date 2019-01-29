@@ -35,7 +35,14 @@
       }
       border-radius: 1rem;
       padding: .1rem .2rem;
-      width: 3.6rem;
+      height: 1rem;
+      width: 2.6rem;
+
+      // [ layout ]
+      grid: {
+        column-start: auto;
+        row-start: auto;
+      }
 
       // [ interaction ]
       &:hover {
