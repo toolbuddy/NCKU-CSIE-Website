@@ -213,6 +213,7 @@ export default class SingleDefaultTagFilter {
         this.state.page = config.page;
         this.DOM.pages.innerHTML = pagesHTML( { pages, } );
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
+        console.log(pageDOMArr);
 
         /* Add eventListener to all the `pages__page` element,when rendering pages. */
 
@@ -230,6 +231,7 @@ export default class SingleDefaultTagFilter {
         /* Set default active page */
 
         let activeDOM = document.querySelector('[data-page="'+this.state.page+'"]');
+        console.log(activeDOM);
         classAdd(activeDOM, 'pages__page--active');
 
         /* Add eventListener to all the `pages__control` element,when rendering pages. */
