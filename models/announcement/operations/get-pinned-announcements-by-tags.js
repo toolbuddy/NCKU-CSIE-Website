@@ -97,8 +97,7 @@ export default async ( opt ) => {
 
         data = await Promise.all(
             data
-            .map( ( { announcementId, } ) => announcementId )
-            .map( announcementId => Announcement.findOne( {
+            .map( ( { announcementId, } ) => Announcement.findOne( {
                 attributes: [
                     'announcementId',
                     'updateTime',
@@ -139,10 +138,6 @@ export default async ( opt ) => {
 
         return data;
     }
-
-    /**
-     * Something wrong, must be a server error.
-     */
 
     catch ( err ) {
         if ( err.status )

@@ -68,9 +68,9 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    attributes: [],
                     model:      Tag,
                     as:         'tag',
+                    attributes: [],
                     where:      {
                         typeId: {
                             [ op.in ]: tags,
@@ -80,11 +80,10 @@ export default async ( opt ) => {
             ],
 
             group:  'announcement.announcementId',
-            having:
-                Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
+            having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
         } );
 
-        if ( !data ) {
+        if ( !data.length ) {
             const error = new Error( 'no result' );
             error.status = 404;
             throw error;
@@ -94,12 +93,7 @@ export default async ( opt ) => {
         };
     }
 
-    /**
-     * Something wrong, must be a server error.
-     */
-
     catch ( err ) {
-        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();
