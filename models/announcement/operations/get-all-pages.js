@@ -31,47 +31,32 @@ export default async ( opt ) => {
         } = opt;
 
         if ( !tags.every( TagUtils.isSupportedTagId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid tag id',
-                },
-            };
+            const error = new Error( 'invalid tag id' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidNumber( amount ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid amount',
-                },
-            };
+            const error = new Error( 'invalid amount' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - from',
-                },
-            };
+            const error = new Error( 'invalid time - from' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - to',
-                },
-            };
+            const error = new Error( 'invalid time - to' );
+            error.status = 400;
+            throw error;
         }
-
-        const fromTime = new Date( from ).toISOString();
-        const toTime = new Date( to ).toISOString();
 
         const count = await Announcement.count( {
             where: {
                 updateTime: {
                     [ Op.between ]: [
-                        fromTime,
-                        toTime,
+                        from,
+                        to,
                     ],
                 },
                 isPublished: true,
@@ -88,19 +73,20 @@ export default async ( opt ) => {
             }, ],
             distinct: true,
         } );
-        return Math.ceil( count / amount );
+        return {
+            pages: Math.ceil( count / amount ),
+        };
     }
 
     /**
      * Something wrong, must be a server error.
      */
 
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

@@ -26,43 +26,31 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            tags = [],
-            from = null,
-            to = null,
             amount = null,
+            from = null,
+            tags = [],
+            to = null,
         } = opt;
 
         if ( !tags.every( TagUtils.isSupportedTagId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid tag id',
-                },
-            };
+            const error = new Error( 'invalid tag id' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidNumber( amount ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid amount',
-                },
-            };
+            const error = new Error( 'invalid amount' );
+            error.status = 400;
+            throw error;
         }
-        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - from',
-                },
-            };
+        if ( !ValidateUtils.isValidDate( from ) ) {
+            const error = new Error( 'invalid time - from' );
+            error.status = 400;
+            throw error;
         }
-        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - to',
-                },
-            };
+        if ( !ValidateUtils.isValidDate( to ) ) {
+            const error = new Error( 'invalid time - to' );
+            error.status = 400;
+            throw error;
         }
 
         const fromTime = new Date( from ).toISOString();
@@ -71,8 +59,10 @@ export default async ( opt ) => {
         const count = await Announcement.count( {
             attributes: [
                 'announcementId',
-                [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-                    'tagsCount', ],
+                [
+                    Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
+                    'tagsCount',
+                ],
             ],
             where: {
                 updateTime: {
@@ -103,19 +93,20 @@ export default async ( opt ) => {
             },
         } );
 
-        return Math.ceil( count.length / amount );
+        return {
+            pages: Math.ceil( count.length / amount ),
+        };
     }
 
     /**
      * Something wrong, must be a server error.
      */
 
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

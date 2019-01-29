@@ -23,11 +23,11 @@ export default class QueryString {
             to = new Date( config.defaultEndTime );
         to = dateFormating( to );
 
-        let page = Number(query.get( 'page' )) || config.defaultPage;
+        let page = Number( query.get( 'page' ) ) || config.defaultPage;
         if ( !ValidateUtils.isValidNumber( page ) )
             page = config.defaultPage;
 
-        let languageId = Number(query.get( 'languageId' )) || LanguageUtils.defaultLanguageId;
+        let languageId = Number( query.get( 'languageId' ) ) || LanguageUtils.defaultLanguageId;
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
             languageId = LanguageUtils.defaultLanguageId;
 

@@ -93,6 +93,23 @@ class TagUtils {
         if ( LanguageUtils.isSupportedLanguageId( languageId ) )
             return tagMap[ languageId ].all;
     }
+
+    static getTagColorById ( tagId ) {
+        if ( !TagUtils.isSupportedTagId( tagId ) )
+            return;
+
+        const tag = TagUtils.getTagById( { tagId, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
+        if ( tag === 'course' || tag === 'faculty' )
+            return 'yellow';
+        else if ( tag === 'college' || tag === 'master' || tag === 'phd' )
+            return 'blue';
+        else if ( tag === 'internship' || tag === 'scholarship' || tag === 'international' || tag === 'award' )
+            return 'red';
+        else if ( tag === 'speech' || tag === 'conference' || tag === 'exhibition' || tag === 'competition' )
+            return 'purple';
+        else if ( tag === 'recruitment' || tag === 'rule' )
+            return 'green';
+    }
 }
 
 export default TagUtils;

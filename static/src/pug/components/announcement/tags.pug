@@ -1,0 +1,3 @@
+//- @todo validate
+each tagObj in tags
+  button.tags__tag( class=`tags__tag--${ tagObj.color }`, data-tag-id = tagObj.tagId )= tagObj.tag

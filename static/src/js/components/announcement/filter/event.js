@@ -18,11 +18,11 @@ export function setURLOnChange (
         filterObj,
 ) {
     pageOnChange = () => {
-        if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length ){
+        if ( !new URLSearchParams( window.location.search ).getAll( 'tags' ).length )
             getAllAnnouncements();
-        }else{
+
+        else
             getAnnouncementsByTags();
-        }
     };
     filterOnChange = () => {
         renderLoading();

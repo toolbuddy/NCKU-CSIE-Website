@@ -43,56 +43,36 @@ export default async ( opt ) => {
         } = opt;
 
         if ( !tags.every( TagUtils.isSupportedTagId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid tag id',
-                },
-            };
+            const error = new Error( 'invalid tag id' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidNumber( page ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid page',
-                },
-            };
+            const error = new Error( 'invalid page' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidNumber( amount ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid amount',
-                },
-            };
+            const error = new Error( 'invalid amount' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - from',
-                },
-            };
+            const error = new Error( 'invalid time - from' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid time - to',
-                },
-            };
+            const error = new Error( 'invalid time - to' );
+            error.status = 400;
+            throw error;
         }
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid language id',
-                },
-            };
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
         }
 
-        const fromTime = new Date( from ).toISOString();
-        const toTime = new Date( to ).toISOString();
         const offset = amount * ( page - 1 );
         const limit = amount;
 
@@ -103,8 +83,8 @@ export default async ( opt ) => {
             where: {
                 updateTime: {
                     [ Op.between ]: [
-                        fromTime,
-                        toTime,
+                        from,
+                        to,
                     ],
                 },
                 isPublished: true,
@@ -174,12 +154,11 @@ export default async ( opt ) => {
      * Something wrong, must be a server error.
      */
 
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

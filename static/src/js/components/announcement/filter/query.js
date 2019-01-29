@@ -1,6 +1,6 @@
 import QueryString from 'static/src/js/components/announcement/filter/query-string.js';
 import TagUtils from 'models/announcement/utils/tag.js';
-import { host, protocol,} from 'settings/server/config.js';
+import { host, protocol, } from 'settings/server/config.js';
 import {
     renderBriefings,
     renderBriefingsError,
@@ -35,7 +35,7 @@ export const singleDefaultTag = {
         const { from, to, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = singleDefaultTag.defaultTag;
-        if (singleDefaultTag.defaultTag.length === 0)
+        if ( singleDefaultTag.defaultTag.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
@@ -80,7 +80,7 @@ export const singleDefaultTag = {
         const { from, to, page, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = singleDefaultTag.defaultTag;
-        if (singleDefaultTag.defaultTag.length === 0)
+        if ( singleDefaultTag.defaultTag.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
@@ -208,11 +208,11 @@ export const singleDefaultTag = {
         const { from, to, } = QueryString.getFilters( null );
 
         let tagsToSend = singleDefaultTag.defaultTag;
-        if (singleDefaultTag.defaultTag.length === 0)
+        if ( singleDefaultTag.defaultTag.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
-            tags: tagsToSend,
+            tags:   tagsToSend,
             from,
             to,
             amount: singleDefaultTag.briefingNum,
@@ -293,7 +293,7 @@ export const multipleDefaultTags = {
         const { from, to, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = multipleDefaultTags.defaultTags;
-        if (multipleDefaultTags.defaultTags.length === 0)
+        if ( multipleDefaultTags.defaultTags.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
@@ -338,7 +338,7 @@ export const multipleDefaultTags = {
         const { from, to, page, languageId, } = QueryString.getFilters( null );
 
         let tagsToSend = multipleDefaultTags.defaultTags;
-        if (multipleDefaultTags.defaultTags.length === 0)
+        if ( multipleDefaultTags.defaultTags.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
@@ -381,7 +381,7 @@ export const multipleDefaultTags = {
             to,
             languageId,
         } );
-        
+
         fetch( `${ apiURL }/tags-pinned?${ query }` )
         .then( ( res ) => {
             /* eslint no-magic-numbers: 'off' */
@@ -458,11 +458,11 @@ export const multipleDefaultTags = {
         const { from, to, } = QueryString.getFilters( null );
 
         let tagsToSend = multipleDefaultTags.defaultTags;
-        if (multipleDefaultTags.defaultTags.length === 0)
+        if ( multipleDefaultTags.defaultTags.length === 0 )
             tagsToSend = TagUtils.supportedTagId;
 
         const query = QueryString.generate( {
-            tags: tagsToSend,
+            tags:   tagsToSend,
             from,
             to,
             amount: multipleDefaultTags.briefingNum,

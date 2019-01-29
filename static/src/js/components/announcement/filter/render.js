@@ -35,24 +35,23 @@ function classRemove ( element, className ) {
 }
 
 export function initializeRenderFilter ( filterObj, filterNames ) {
-    filterObj.innerHTML = '';
     const languageId = Number( new URLSearchParams( window.location.search ).get( 'languageId' ) );
-    filterObj.innerHTML += filterTags( {
+    filterObj.innerHTML = filterTags( {
         tags: filterNames.map( ( name ) => {
             if ( name === 'all' ) {
                 return {
-                    id:      name,
-                    content: TagUtils.getTagAll( languageId ),
+                    tagId:   name,
+                    tag:   TagUtils.getTagAll( languageId ),
                 };
             }
 
-            const id = TagUtils.getTagId( {
+            const tagId = TagUtils.getTagId( {
                 tag:        name,
                 languageId: LanguageUtils.getLanguageId( 'en-US' ),
             } );
             return {
-                id,
-                content: TagUtils.getTagById( { tagId: id, languageId, } ),
+                tagId,
+                tag: TagUtils.getTagById( { tagId, languageId, } ),
             };
         } ),
     } );

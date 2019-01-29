@@ -37,20 +37,14 @@ export default async ( opt ) => {
         } = opt;
 
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid language id',
-                },
-            };
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
         }
         if ( !ValidateUtils.isValidNumber( announcementId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid announcement id',
-                },
-            };
+            const error = new Error( 'invalid announcement id' );
+            error.status = 400;
+            throw error;
         }
 
         const data = await Announcement.findOne( {
@@ -126,12 +120,11 @@ export default async ( opt ) => {
      * Something wrong, must be a server error.
      */
 
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };
