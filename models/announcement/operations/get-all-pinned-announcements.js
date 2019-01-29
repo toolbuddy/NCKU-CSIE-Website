@@ -59,7 +59,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Announcement.findAll( {
+        let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
             ],
@@ -85,17 +85,22 @@ export default async ( opt ) => {
                     },
                 },
             ],
-        } ).then( announcementData => Announcement.findAll( {
+            group: '`announcement`.`announcementId`',
+        } );
+
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
             attributes: [
                 'announcementId',
                 'updateTime',
-                'views',
-                'author',
             ],
             where: {
-                announcementId: {
-                    [ Op.in ]: announcementData.map( d => d.announcementId ),
-                },
+                announcementId,
             },
             include: [
                 {
@@ -115,27 +120,20 @@ export default async ( opt ) => {
                     attributes: [ 'typeId', ],
                 },
             ],
-            order: [
-                [ 'updateTime',
-                    'DESC', ],
-            ],
-        } ) );
+        } ) ) );
 
-        return data.map( announcement => ( {
+        data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     announcement.updateTime,
-            views:          announcement.views,
-            author:         announcement.author,
+            updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tag.map( tag => tag.typeId ),
         } ) );
+
+        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
+
+        return data;
     }
-
-    /**
-     * Something wrong, must be a server error.
-     */
-
     catch ( err ) {
         if ( err.status )
             throw err;

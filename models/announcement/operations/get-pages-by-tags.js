@@ -79,8 +79,8 @@ export default async ( opt ) => {
                 },
             ],
 
-            group:  'announcement.announcementId',
-            having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
+            group:  '`announcement`.`announcementId`',
+            having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
         } );
 
         if ( !data.length ) {

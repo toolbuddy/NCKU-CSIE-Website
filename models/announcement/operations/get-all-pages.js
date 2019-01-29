@@ -51,8 +51,9 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const count = await Announcement.count( {
-            where: {
+        const data = await Announcement.findAll( {
+            attributes: [ 'announcementId', ],
+            where:      {
                 updateTime: {
                     [ Op.between ]: [
                         from,
@@ -64,24 +65,26 @@ export default async ( opt ) => {
             include: [ {
                 model:      Tag,
                 as:         'tag',
-                attributes: [ 'typeId', ],
+                attributes: [],
                 where:      {
                     typeId: {
                         [ Op.in ]: tags,
                     },
                 },
             }, ],
-            distinct: true,
+            group: '`announcement`.`announcementId`',
         } );
+
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
         return {
-            pages: Math.ceil( count / amount ),
+            pages: Math.ceil( data.length / amount ),
         };
     }
-
-    /**
-     * Something wrong, must be a server error.
-     */
-
     catch ( err ) {
         if ( err.status )
             throw err;

@@ -99,8 +99,8 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            group:    'announcement.announcementId',
-            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
+            group:    '`announcement`.`announcementId`',
+            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
             offset:   amount * ( page - 1 ),
             limit:    amount,
 
@@ -117,44 +117,45 @@ export default async ( opt ) => {
             throw error;
         }
 
-        data = await Promise.all(
-            data
-            .map( ( { announcementId, } ) => Announcement.findOne( {
-                attributes: [
-                    'announcementId',
-                    'updateTime',
-                ],
-                where: {
-                    announcementId,
+        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+            ],
+            where: {
+                announcementId,
+            },
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
+                    },
                 },
-                include: [
-                    {
-                        model:      AnnouncementI18n,
-                        as:         'announcementI18n',
-                        attributes: [
-                            'title',
-                            'content',
-                        ],
-                        where: {
-                            languageId,
-                        },
-                    },
-                    {
-                        model:      Tag,
-                        as:         'tag',
-                        attributes: [ 'typeId', ],
-                    },
-                ],
-            } ) )
-        );
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [ 'typeId', ],
+                },
+            ],
+        } ) ) );
 
-        return data.map( announcement => ( {
+        data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
             updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tag.map( tag => tag.typeId ),
         } ) );
+
+        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
+
+        return data;
     }
 
     catch ( err ) {

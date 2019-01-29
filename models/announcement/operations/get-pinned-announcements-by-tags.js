@@ -95,36 +95,33 @@ export default async ( opt ) => {
             throw error;
         }
 
-        data = await Promise.all(
-            data
-            .map( ( { announcementId, } ) => Announcement.findOne( {
-                attributes: [
-                    'announcementId',
-                    'updateTime',
-                ],
-                where: {
-                    announcementId,
+        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+            ],
+            where: {
+                announcementId,
+            },
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
+                    },
                 },
-                include: [
-                    {
-                        model:      AnnouncementI18n,
-                        as:         'announcementI18n',
-                        attributes: [
-                            'title',
-                            'content',
-                        ],
-                        where: {
-                            languageId,
-                        },
-                    },
-                    {
-                        model:      Tag,
-                        as:         'tag',
-                        attributes: [ 'typeId', ],
-                    },
-                ],
-            } ) )
-        );
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [ 'typeId', ],
+                },
+            ],
+        } ) ) );
 
         data = data.map( announcement => ( {
             announcementId: announcement.announcementId,

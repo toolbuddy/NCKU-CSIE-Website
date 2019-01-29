@@ -48,6 +48,17 @@ export default async ( opt ) => {
         }
 
         const data = await Announcement.findOne( {
+            attributes: [
+                'announcementId',
+                'author',
+                'publishTime',
+                'updateTime',
+                'views',
+                'isPinned',
+            ],
+            where: {
+                announcementId,
+            },
             include: [
                 {
                     model:      AnnouncementI18n,
@@ -86,24 +97,19 @@ export default async ( opt ) => {
                     ],
                 },
             ],
-            attributes: [
-                'announcementId',
-                'author',
-                'publishTime',
-                'updateTime',
-                'views',
-                'isPinned',
-            ],
-            where: {
-                announcementId,
-            },
         } );
+
+        if ( !data ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
 
         return {
             announcementId: data.announcementId,
             author:         data.author,
-            publishTime:    data.publishTime,
-            updateTime:     data.updateTime,
+            publishTime:    Number( data.publishTime ),
+            updateTime:     Number( data.updateTime ),
             views:          data.views,
             isPinned:       data.isPinned,
             title:          data.announcementI18n[ 0 ].title,
@@ -115,11 +121,6 @@ export default async ( opt ) => {
             } ) ),
         };
     }
-
-    /**
-     * Something wrong, must be a server error.
-     */
-
     catch ( err ) {
         if ( err.status )
             throw err;
