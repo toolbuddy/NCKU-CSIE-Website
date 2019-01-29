@@ -229,37 +229,39 @@ export default class SingleDefaultTagFilter {
 
         /* Set default active page */
 
-        let activeDOM = document.querySelector('[data-page="'+this.state.page+'"]');
-        classAdd(activeDOM, 'pages__page--active');
+        const activeDOM = this.DOM.pages.querySelector( `[data-page="${ this.state.page }"]` );
+        classAdd( activeDOM, 'pages__page--active' );
 
         /* Add eventListener to all the `pages__control` element,when rendering pages. */
 
-        this.DOM.pages.querySelector( '.pages__control--forward' ).addEventListener( 'click', () => {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                classRemove( pageDOM, 'pages__page--active' );
+        if ( pages !== 1 ) {
+            this.DOM.pages.querySelector( '.pages__control--forward' ).addEventListener( 'click', () => {
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
+
+                this.state.page -= 1;
+                if ( this.state.page < 1 )
+                    this.state.page = 1;
+
+                const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
+                classAdd( activeDOM, 'pages__page--active' );
+                this.getNormalAnnouncement();
             } );
+            this.DOM.pages.querySelector( '.pages__control--backward' ).addEventListener( 'click', () => {
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
 
-            this.state.page -= 1;
-            if ( this.state.page < 1 )
-                this.state.page = 1;
+                this.state.page += 1;
+                if ( this.state.page > this.state.maxPage )
+                    this.state.page = this.state.maxPage;
 
-            const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
-            classAdd( activeDOM, 'pages__page--active' );
-            this.getNormalAnnouncement();
-        } );
-        this.DOM.pages.querySelector( '.pages__control--backward' ).addEventListener( 'click', () => {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                classRemove( pageDOM, 'pages__page--active' );
+                const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
+                classAdd( activeDOM, 'pages__page--active' );
+                this.getNormalAnnouncement();
             } );
-
-            this.state.page += 1;
-            if ( this.state.page > this.state.maxPage )
-                this.state.page = this.state.maxPage;
-
-            const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
-            classAdd( activeDOM, 'pages__page--active' );
-            this.getNormalAnnouncement();
-        } );
+        }
     }
 
     async getPage () {
@@ -284,18 +286,10 @@ export default class SingleDefaultTagFilter {
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
             const { pages, } = await res.json();
-            if ( pages ) {
-                this.state.maxPage = pages;
-                this.renderPages( pages );
-                this.getPinnedAnnouncement();
-                this.getNormalAnnouncement();
-            }
-            else {
-                classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
-                classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
-                classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
-                classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
-            }
+            this.state.maxPage = pages;
+            this.renderPages( pages );
+            this.getPinnedAnnouncement();
+            this.getNormalAnnouncement();
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';

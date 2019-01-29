@@ -1,7 +1,7 @@
 //- If only one page exists, generating one button.
 //- Else generating 'forward button', 'backward button', and the other page button.
 if pages === 1
-  button.pages__page.pages__page--active 1
+  button.pages__page.pages__page--active( data-page = '1' ) 1
 else
   button.pages__control.pages__control--forward ‹
   button.pages__page( data-page = '1' ) 1
