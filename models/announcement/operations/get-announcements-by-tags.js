@@ -74,16 +74,9 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const offset = amount * ( page - 1 );
-        const limit = amount;
-
-        const data = await Announcement.findAll( {
+        let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
-                [
-                    Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-                    'tagsCount',
-                ],
             ],
             where: {
                 updateTime: {
@@ -106,65 +99,63 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            group:  [ 'announcementId', ],
-            having: {
-                tagsCount: {
-                    [ op.gte ]: tags.length,
+            group:    'announcement.announcementId',
+            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
+            offset:   amount * ( page - 1 ),
+            limit:    amount,
+
+            /**
+             * Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
+             */
+
+            subQuery: false,
+        } );
+
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        data = await Promise.all(
+            data
+            .map( ( { announcementId, } ) => Announcement.findOne( {
+                attributes: [
+                    'announcementId',
+                    'updateTime',
+                ],
+                where: {
+                    announcementId,
                 },
-            },
-        } ).then( announcementData => Announcement.findAll( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-                'views',
-                'author',
-            ],
-            where: {
-                announcementId: {
-                    [ op.in ]: announcementData.map( d => d.announcementId ),
-                },
-            },
-            limit,
-            offset,
-            include: [
-                {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        languageId,
+                include: [
+                    {
+                        model:      AnnouncementI18n,
+                        as:         'announcementI18n',
+                        attributes: [
+                            'title',
+                            'content',
+                        ],
+                        where: {
+                            languageId,
+                        },
                     },
-                },
-                {
-                    model:      Tag,
-                    as:         'tag',
-                    attributes: [ 'typeId', ],
-                },
-            ],
-            order: [
-                [ 'updateTime',
-                    'DESC', ],
-            ],
-        } ) );
+                    {
+                        model:      Tag,
+                        as:         'tag',
+                        attributes: [ 'typeId', ],
+                    },
+                ],
+            } ) )
+        );
 
         return data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     announcement.updateTime,
-            views:          announcement.views,
-            author:         announcement.author,
+            updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tag.map( tag => tag.typeId ),
         } ) );
     }
-
-    /**
-     * Something wrong, must be a server error.
-     * Handle with 500 internal server error.
-     */
 
     catch ( err ) {
         if ( err.status )
