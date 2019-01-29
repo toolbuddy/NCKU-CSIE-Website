@@ -5,7 +5,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 
 /**
@@ -48,12 +48,12 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidNumber( page ) ) {
+        if ( !ValidateUtils.isPositiveInteger( page ) ) {
             const error = new Error( 'invalid page' );
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidNumber( amount ) ) {
+        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
             const error = new Error( 'invalid amount' );
             error.status = 400;
             throw error;

@@ -4,7 +4,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import TagUtils from 'models/announcement/utils/tag.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
  * A function for getting the number of pages to display all requested announcements.
@@ -35,7 +35,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidNumber( amount ) ) {
+        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
             const error = new Error( 'invalid amount' );
             error.status = 400;
             throw error;

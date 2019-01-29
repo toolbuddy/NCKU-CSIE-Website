@@ -5,7 +5,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 
 const op = Sequelize.Op;
@@ -61,13 +61,9 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Announcement.findAll( {
-            attributes: [
-                'announcementId',
-                [ Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-                    'tagsCount', ],
-            ],
-            where: {
+        let data = await Announcement.findAll( {
+            attributes: [ 'announcementId', ],
+            where:      {
                 updateTime: {
                     [ op.between ]: [
                         from,
@@ -90,56 +86,58 @@ export default async ( opt ) => {
                 },
             ],
             group:  [ 'announcementId', ],
-            having: {
-                tagsCount: {
-                    [ op.gte ]: tags.length,
-                },
-            },
-        } ).then( announcementData => Announcement.findAll( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-                'views',
-                'author',
-            ],
-            where: {
-                announcementId: {
-                    [ op.in ]: announcementData.map( d => d.announcementId ),
-                },
-            },
-            include: [
-                {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        languageId,
-                    },
-                },
-                {
-                    model:      Tag,
-                    as:         'tag',
-                    attributes: [ 'typeId', ],
-                },
-            ],
-            order: [
-                [ 'updateTime',
-                    'DESC', ],
-            ],
-        } ) );
+            having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
+        } );
 
-        return data.map( announcement => ( {
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        data = await Promise.all(
+            data
+            .map( ( { announcementId, } ) => announcementId )
+            .map( announcementId => Announcement.findOne( {
+                attributes: [
+                    'announcementId',
+                    'updateTime',
+                ],
+                where: {
+                    announcementId,
+                },
+                include: [
+                    {
+                        model:      AnnouncementI18n,
+                        as:         'announcementI18n',
+                        attributes: [
+                            'title',
+                            'content',
+                        ],
+                        where: {
+                            languageId,
+                        },
+                    },
+                    {
+                        model:      Tag,
+                        as:         'tag',
+                        attributes: [ 'typeId', ],
+                    },
+                ],
+            } ) )
+        );
+
+        data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     announcement.updateTime,
-            views:          announcement.views,
-            author:         announcement.author,
+            updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tag.map( tag => tag.typeId ),
         } ) );
+
+        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
+
+        return data;
     }
 
     /**

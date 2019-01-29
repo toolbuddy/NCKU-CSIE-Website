@@ -4,7 +4,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import TagUtils from 'models/announcement/utils/tag.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 const op = Sequelize.Op;
 
@@ -37,7 +37,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidNumber( amount ) ) {
+        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
             const error = new Error( 'invalid amount' );
             error.status = 400;
             throw error;
@@ -53,31 +53,24 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const fromTime = new Date( from ).toISOString();
-        const toTime = new Date( to ).toISOString();
-
-        const count = await Announcement.count( {
+        const data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
-                [
-                    Sequelize.fn( 'COUNT', Sequelize.col( 'tag.typeId' ) ),
-                    'tagsCount',
-                ],
             ],
             where: {
                 updateTime: {
                     [ op.between ]: [
-                        fromTime,
-                        toTime,
+                        from,
+                        to,
                     ],
                 },
                 isPublished: true,
             },
             include: [
                 {
+                    attributes: [],
                     model:      Tag,
                     as:         'tag',
-                    attributes: [],
                     where:      {
                         typeId: {
                             [ op.in ]: tags,
@@ -85,16 +78,19 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            group:  [ 'announcementId', ],
-            having: {
-                tagsCount: {
-                    [ op.gte ]: tags.length,
-                },
-            },
+
+            group:  'announcement.announcementId',
+            having:
+                Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
         } );
 
+        if ( !data ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
         return {
-            pages: Math.ceil( count.length / amount ),
+            pages: Math.ceil( data.length / amount ),
         };
     }
 
@@ -103,6 +99,7 @@ export default async ( opt ) => {
      */
 
     catch ( err ) {
+        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();

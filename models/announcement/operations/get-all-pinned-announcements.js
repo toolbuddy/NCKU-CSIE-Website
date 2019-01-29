@@ -5,7 +5,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 
 /**
