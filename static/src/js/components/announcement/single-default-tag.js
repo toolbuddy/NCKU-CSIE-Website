@@ -255,7 +255,7 @@ export default class SingleDefaultTagFilter {
             this.state.page += 1;
             if ( this.state.page > this.state.maxPage )
                 this.state.page = this.state.maxPage;
-                
+
             const activeDOM = document.querySelector( `[data-page="${ this.state.page }"]` );
             classAdd( activeDOM, 'pages__page--active' );
             this.getNormalAnnouncement();
