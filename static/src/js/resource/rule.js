@@ -1,21 +1,19 @@
 import header from 'static/src/js/components/common/header/index.js';
-
-// Import { singleDefaultTagFilter, } from 'static/src/js/components/announcement/filter/index.js';
+import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag.js';
 
 header( document.getElementById( 'header' ) );
 
-// SingleDefaultTagFilter(
-//     'rule',
-//     document.getElementById( 'announcement__brefings--top' ),
-//     document.getElementById( 'announcement__brefings' ),
-//     6,
-//     6,
-//     document.getElementById( 'filter__tags' ),
-//     [
-//         'college',
-//         'faculty',
-//         'master',
-//         'phd',
-//         'rule',
-//     ]
-// );
+const filter = new SingleDefaultTagFilter( {
+    defaultTag:   ['rule'],
+    supportedTag: [
+        'college',
+        'faculty',
+        'master',
+        'phd',
+    ],
+    filterDOM:             document.getElementById( 'filter' ),
+    announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
+    announcementNormalDOM: document.getElementById( 'announcement--normal' ),
+    pagesDOM:              document.getElementById( 'pages' ),
+    amount:                6,
+} );
