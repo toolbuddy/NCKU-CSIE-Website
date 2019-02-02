@@ -56,11 +56,11 @@ export default {
         'about/staff':          path.join( sassRoot, 'about/staff.scss' ),
 
         // Route `announcement`
-        'announcement/activity':     path.join( sassRoot, 'announcement/activity.scss' ),
-        'announcement/all':          path.join( sassRoot, 'announcement/all.scss' ),
-        'announcement/index':        path.join( sassRoot, 'announcement/index.scss' ),
-        'announcement/announcement': path.join( sassRoot, 'announcement/announcement.scss' ),
-        'announcement/recruitment':  path.join( sassRoot, 'announcement/recruitment.scss' ),
+        'announcement/activity':    path.join( sassRoot, 'announcement/activity.scss' ),
+        'announcement/all':         path.join( sassRoot, 'announcement/all.scss' ),
+        'announcement/index':       path.join( sassRoot, 'announcement/index.scss' ),
+        'announcement/detail':      path.join( sassRoot, 'announcement/detail.scss' ),
+        'announcement/recruitment': path.join( sassRoot, 'announcement/recruitment.scss' ),
 
         // Route `error`
         'error/404': path.join( sassRoot, 'error/404.scss' ),

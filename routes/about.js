@@ -95,13 +95,18 @@ router
             }, ( err, html ) => {
                 if ( err )
                     reject( err );
-                res.send( html );
-                resolve();
+                else {
+                    res.send( html );
+                    resolve();
+                }
             } );
         } );
     }
     catch ( err ) {
-        next( err );
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
     }
 } );
 

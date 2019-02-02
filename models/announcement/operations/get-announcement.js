@@ -87,7 +87,7 @@ export default async ( opt ) => {
                             model:      FileI18n,
                             as:         'fileI18n',
                             attributes: [
-                                'filepath',
+                                'filePath',
                                 'name',
                             ],
                             where: {
@@ -116,8 +116,9 @@ export default async ( opt ) => {
             content:        data.announcementI18n[ 0 ].content,
             tags:           data.tag.map( tag => tag.typeId ),
             files:          data.file.map( file => ( {
-                path: file.fileI18n[ 0 ].filepath,
-                name: file.fileI18n[ 0 ].name,
+                fileId: file.fileId,
+                path:   file.fileI18n[ 0 ].filePath,
+                name:   file.fileI18n[ 0 ].name,
             } ) ),
         };
     }

@@ -129,10 +129,10 @@ apis.get( '/tags-pinned', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/:id', cors(), async ( req, res, next ) => {
+apis.get( '/:announcementId', cors(), async ( req, res, next ) => {
     try {
         res.json( await getAnnouncement( {
-            announcementId: Number( req.params.id ),
+            announcementId: Number( req.params.announcementId ),
             languageId:     Number( req.query.languageId ),
         } ) );
     }

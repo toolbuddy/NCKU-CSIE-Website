@@ -57,7 +57,10 @@ router
  */
 
 router
-.use( '/image', express.static(
+.use( [
+    '/image',
+    '/src/image',
+], express.static(
     path.join( projectRoot, '/static/src/image' ),
     {
         extensions: [

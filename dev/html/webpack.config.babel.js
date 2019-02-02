@@ -68,7 +68,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'announcement/activity':     path.join( pugRoot, 'announcement/activity.pug' ),
         'announcement/all':          path.join( pugRoot, 'announcement/all.pug' ),
         'announcement/index':        path.join( pugRoot, 'announcement/index.pug' ),
-        'announcement/announcement': path.join( pugRoot, 'announcement/announcement.pug' ),
         'announcement/recruitment':  path.join( pugRoot, 'announcement/recruitment.pug' ),
 
         // Route `error`
