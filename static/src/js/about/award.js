@@ -1,14 +1,11 @@
 import header from 'static/src/js/components/common/header/index.js';
-
 import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag.js';
-
 
 header( document.getElementById( 'header' ) );
 
 const filter = new SingleDefaultTagFilter( {
-    defaultTag:   'award',
+    defaultTag:   ['award'],
     supportedTag: [
-        'award',
         'faculty',
         'college',
         'master',
@@ -20,5 +17,3 @@ const filter = new SingleDefaultTagFilter( {
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 } );
-
-filter.getPage();

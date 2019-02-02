@@ -4,7 +4,7 @@ import config from 'static/src/js/components/announcement/filter/default-value.j
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
 
-export default class SingleDefaultTagFilter extends DefaultTagFilter{
+export default class MultipleDefaultTagFilter extends DefaultTagFilter{
     constructTagHTML(){
         let tags = [{
             color: 'yellow',
@@ -18,12 +18,19 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                 tag:   TagUtils.getTagById( { tagId, languageId: this.state.languageId, } ),
             });
         });
+        this.tagId.default.forEach(tagId => {
+            tags.push({
+                color: TagUtils.getTagColorById( tagId ),
+                tagId,
+                tag:   TagUtils.getTagById( { tagId, languageId: this.state.languageId, } ),
+            });
+        });
 
         this.DOM.filter.tags.innerHTML = tagsHTML( {
             tags,
         } );
     }
-    
+
     subscribeTimeFromEvent(){
         [
             'year',
@@ -48,10 +55,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                         this.getNormalAnnouncement(this.tagId.default);
                     });
                 }else{
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
+                    this.getPage(this.state.tags).then(() => {
+                        this.getPinnedAnnouncement(this.state.tags);
                     }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
+                        this.getNormalAnnouncement(this.state.tags);
                     });
                 }
             } );
@@ -82,10 +89,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                         this.getNormalAnnouncement(this.tagId.default);
                     });
                 }else{
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
+                    this.getPage(this.state.tags).then(() => {
+                        this.getPinnedAnnouncement(this.state.tags);
                     }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
+                        this.getNormalAnnouncement(this.state.tags);
                     });
                 }
             } );
@@ -129,10 +136,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                     }
                     this.state.selectAll = false;
                     this.state.page = config.page;
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
+                    this.getPage(this.state.tags).then(() => {
+                        this.getPinnedAnnouncement(this.state.tags);
                     }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
+                        this.getNormalAnnouncement(this.state.tags);
                     });
                 } );
             }
