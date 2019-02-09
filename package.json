@@ -79,7 +79,8 @@
     "node-sass": "^4.10.0",
     "npm": "^6.4.1",
     "pug": "^2.0.3",
-    "sequelize": "^4.41.2"
+    "sequelize": "^4.41.2",
+    "tinymce": "^4.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

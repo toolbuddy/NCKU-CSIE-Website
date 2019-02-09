@@ -22,7 +22,7 @@ body > .content {
       ' . edit__tags . '
       ' . edit__editor . '
       ' . edit__submit . ';
-    columns: 0 100% 0;
+    columns: 0 100vw 0;
   }
 
   // [ RWD: $small ]
