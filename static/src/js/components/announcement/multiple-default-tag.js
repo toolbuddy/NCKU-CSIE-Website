@@ -1,8 +1,8 @@
 import TagUtils from 'models/announcement/utils/tag.js';
 import tagsHTML from 'static/src/pug/components/announcement/tags.pug';
-import config from 'static/src/js/components/announcement/filter/default-value.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter{
     constructTagHTML(){
@@ -25,13 +25,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                 tag:   TagUtils.getTagById( { tagId, languageId: this.state.languageId, } ),
             });
         });
-
         this.DOM.filter.tags.innerHTML = tagsHTML( {
             tags,
         } );
     }
 
-    subscribeTimeFromEvent(){
+    subscribeTimeEvent(){
         [
             'year',
             'month',
@@ -41,13 +40,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                 const year  = this.DOM.filter.from.year.value;
                 const month = this.DOM.filter.from.month.value;
                 const date  = this.DOM.filter.from.date.value;
-                this.state.page = config.page;
-
-                /**
-                 * @todo add date validation.
-                 */
-
+                this.state.page = this.config.page;
                 this.state.from = new Date( `${ year }/${ month }/${ date }` );
+
+                if(!ValidateUtils.isValidDate(this.state.from) || !Number.isNaN(this.state.from))
+                    throw new TypeError('invalid arguments');
+
                 if (this.state.selectAll){
                     this.getPage(this.tagId.default).then(()=>{
                         this.getPinnedAnnouncement(this.tagId.default);
@@ -63,9 +61,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                 }
             } );
         } );
-    }
-
-    subscribeTimeToEvent(){
+        
         [
             'year',
             'month',
@@ -75,13 +71,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                 const year  = this.DOM.filter.to.year.value;
                 const month = this.DOM.filter.to.month.value;
                 const date  = this.DOM.filter.to.date.value;
-                this.state.page = config.page;
-
-                /**
-                 * @todo add date validation.
-                 */
-
+                this.state.page = this.config.page;
                 this.state.to = new Date( `${ year }/${ month }/${ date }` );
+
+                if(!ValidateUtils.isValidDate(this.state.to) || !Number.isNaN(this.state.to))
+                    throw new TypeError('invalid arguments');
+
                 if (this.state.selectAll){
                     this.getPage(this.tagId.default).then(()=>{
                         this.getPinnedAnnouncement(this.tagId.default);
@@ -116,7 +111,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                     this.state.selectAll = true;
                     this.state.tags = [];
                     this.state.tags.push(tagId);
-                    this.state.page = config.page;
+                    this.state.page = this.config.page;
                     this.getPage(this.tagId.default).then(()=>{
                         this.getPinnedAnnouncement(this.tagId.default);
                     }).then(()=>{
@@ -135,7 +130,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                         classAdd( tagDOM, 'tags__tag--active' );
                     }
                     this.state.selectAll = false;
-                    this.state.page = config.page;
+                    this.state.page = this.config.page;
                     this.getPage(this.state.tags).then(() => {
                         this.getPinnedAnnouncement(this.state.tags);
                     }).then(() => {
@@ -144,10 +139,5 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter{
                 } );
             }
         } );
-        this.getPage(this.tagId.default).then(()=>{
-            this.getPinnedAnnouncement(this.tagId.default);
-        }).then(()=>{
-            this.getNormalAnnouncement(this.tagId.default);
-        });
     }
 }

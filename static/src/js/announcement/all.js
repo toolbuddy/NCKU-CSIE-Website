@@ -6,20 +6,20 @@ header( document.getElementById( 'header' ) );
 const filter = new MultipleDefaultTagFilter({
     defaultTag: [
         'award',
+        'international',
+        'scholarship',
+        'internship',
         'college',
         'competition',
         'conference',
-        'course',
         'exhibition',
-        'faculty',
-        'international',
-        'internship',
+        'speech',
         'master',
-        'phd',
+        'course',
+        'faculty',
         'recruitment',
         'rule',
-        'scholarship',
-        'speech',
+        'phd',
     ],
     supportedTag: [],
     filterDOM:             document.getElementById( 'filter' ),
@@ -28,3 +28,4 @@ const filter = new MultipleDefaultTagFilter({
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 });
+filter.getAll();

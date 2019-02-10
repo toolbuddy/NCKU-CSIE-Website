@@ -6,8 +6,8 @@ header( document.getElementById( 'header' ) );
 const filter = new SingleDefaultTagFilter( {
     defaultTag:   ['rule'],
     supportedTag: [
-        'college',
         'faculty',
+        'college',
         'master',
         'phd',
     ],
@@ -17,3 +17,4 @@ const filter = new SingleDefaultTagFilter( {
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 } );
+filter.getAll();

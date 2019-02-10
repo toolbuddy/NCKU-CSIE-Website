@@ -18,3 +18,4 @@ const filter = new MultipleDefaultTagFilter( {
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 } );
+filter.getAll();

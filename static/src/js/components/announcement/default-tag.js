@@ -3,23 +3,35 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
-import config from 'static/src/js/components/announcement/filter/default-value.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import { host, } from 'settings/server/config.js';
-import validate from 'validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
     constructor ( opt ) {
+        this.config = {
+            from: new Date('2018/01/01'),
+            to: new Date( Date.now()),
+            page: 1,
+        }
+
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
         if ( !opt.defaultTag ||
+            !Array.isArray( opt.defaultTag ) ||
             !opt.supportedTag ||
+            !Array.isArray( opt.supportedTag ) ||
             !opt.filterDOM ||
+            !ValidateUtils.isDomElement( opt.filterDOM ) ||
             !opt.announcementPinnedDOM ||
+            !ValidateUtils.isDomElement( opt.announcementPinnedDOM ) ||
             !opt.announcementNormalDOM ||
+            !ValidateUtils.isDomElement( opt.announcementNormalDOM ) ||
             !opt.pagesDOM ||
-            !opt.amount )
+            !ValidateUtils.isDomElement( opt.pagesDOM ) ||
+            !opt.amount ||
+            !ValidateUtils.isPositiveInteger( opt.amount ) )
             throw new TypeError( 'invalid arguments' );
 
         if ( !opt.supportedTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) ||
@@ -32,14 +44,6 @@ export default class DefaultTagFilter {
             if ( opt.supportedTag.includes( tag ) && opt.defaultTag.includes( tag ) )
                 throw new TypeError( 'invalid arguments' );
         } );
-
-        /**
-         * @todo amount validation
-         */
-        if( ! validate.isInteger( opt.amount ) ||
-            opt.amount < 0 ||
-            ! (opt.amount <= Number.MAX_SAFE_INTEGER) )
-            throw TypeError('invalid arguments');
 
         this.tagId = {
             default: opt.defaultTag.map( tag => TagUtils.getTagId( {
@@ -55,9 +59,9 @@ export default class DefaultTagFilter {
         this.state = {
             amount:     opt.amount,
             languageId: WebLanguageUtils.currentLanguageId,
-            from:       config.from,
-            to:         config.to,
-            page:       config.page,
+            from:       this.config.from,
+            to:         this.config.to,
+            page:       this.config.page,
             tags:       [],
             selectAll:  true,
         };
@@ -91,7 +95,23 @@ export default class DefaultTagFilter {
             pages: opt.pagesDOM,
         };
 
-        this.abstractMessage = 'Abstract method not implemented.';
+        if(
+            !ValidateUtils.isDomElement(this.DOM.filter.from.year) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.from.month) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.from.date) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.to.year) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.to.month) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.to.date) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.tags) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.noResult) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.loading) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.briefings) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.normal.noResult) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.normal.loading) ||
+            !ValidateUtils.isDomElement(this.DOM.announcement.normal.briefings) ||
+            !ValidateUtils.isDomElement(this.DOM.pages) )
+            throw new Error( 'DOM not found.' );
+
         /**
          * Construct innerHTML for filter tags
          */
@@ -110,16 +130,10 @@ export default class DefaultTagFilter {
         this.DOM.filter.to.date.value = this.state.to.getDate();
 
         /**
-         * DOM elements `.time__from` click event subscribe.
+         * DOM elements `.time__from` and `.time__to` click event subscribe.
          */
 
-        this.subscribeTimeFromEvent();
-
-        /**
-         * DOM elements `.time__to` click event subscribe.
-         */
-
-        this.subscribeTimeToEvent();
+        this.subscribeTimeEvent();
 
         /**
          * DOM elements `.tags__tag` click event subscribe.
@@ -129,19 +143,23 @@ export default class DefaultTagFilter {
     }
 
     constructTagHTML () {
-        throw new Error( this.abstractMessage );
+        throw new Error( 'Abstract method not implemented.' );
     }
 
-    subscribeTimeFromEvent () {
-        throw new Error( this.abstractMessage );
-    }
-
-    subscribeTimeToEvent () {
-        throw new Error( this.abstractMessage );
+    subscribeTimeEvent () {
+        throw new Error( 'Abstract method not implemented.' );
     }
 
     subscribeTagEvent () {
-        throw new Error( this.abstractMessage );
+        throw new Error( 'Abstract method not implemented.' );
+    }
+
+    getAll(){
+        this.getPage(this.tagId.default).then(()=>{
+            this.getPinnedAnnouncement(this.tagId.default);
+        }).then(()=>{
+            this.getNormalAnnouncement(this.tagId.default);
+        });
     }
 
     static formatUpdateTime ( time ) {
@@ -166,7 +184,7 @@ export default class DefaultTagFilter {
     }
 
     renderPages ( pages, tags ) {
-        this.state.page = config.page;
+        this.state.page = this.config.page;
         this.DOM.pages.innerHTML = pagesHTML( { pages, } );
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
 
@@ -280,7 +298,7 @@ export default class DefaultTagFilter {
 
             const index = tags.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( tags.indexOf( -1 ), 1 );
+                tags.splice( index, 1 );
 
             const queryString = [
                 `amount=${ this.state.amount }`,
@@ -314,7 +332,8 @@ export default class DefaultTagFilter {
 
             const index = tags.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( tags.indexOf( -1 ), 1 );
+                tags.splice( index, 1 );
+            
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
@@ -368,7 +387,8 @@ export default class DefaultTagFilter {
 
             const index = tags.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( tags.indexOf( -1 ), 1 );
+                tags.splice( index, 1 );
+            
             const queryString = [
                 `amount=${ this.state.amount }`,
                 `languageId=${ this.state.languageId }`,

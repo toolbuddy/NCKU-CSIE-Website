@@ -6,15 +6,15 @@ header( document.getElementById( 'header' ) );
 const filter = new SingleDefaultTagFilter( {
     defaultTag:   ['college'],
     supportedTag: [
-        'award',
-        'competition',
+        'speech',
         'conference',
         'exhibition',
-        'international',
+        'competition',
+        'award',
         'internship',
-        'rule',
         'scholarship',
-        'speech',
+        'international',
+        'rule',
     ],
     filterDOM:             document.getElementById( 'filter' ),
     announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
@@ -22,3 +22,4 @@ const filter = new SingleDefaultTagFilter( {
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 } );
+filter.getAll();

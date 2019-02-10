@@ -10,6 +10,10 @@ class ValidateUtils {
             number > 0 &&
             number <= Number.MAX_SAFE_INTEGER;
     }
+
+    static isDomElement ( element ) {
+        return validate.isDomElement( element );
+    }
 }
 
 export default ValidateUtils;

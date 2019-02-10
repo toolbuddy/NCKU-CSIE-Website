@@ -17,3 +17,4 @@ const filter = new SingleDefaultTagFilter( {
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
 } );
+filter.getAll();
