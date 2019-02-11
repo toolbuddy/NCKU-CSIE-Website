@@ -2,7 +2,6 @@ extends /layouts/announcement/briefing.pug
 
 append data
   -
-    //import TagUtils from 'models/announcement/utils/tag.js';
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Recruitments',
@@ -33,14 +32,19 @@ append data
         },
       },
     } );
-    /*
-    const tags = 
-          [{
-            color: 'green',
-            tagId: -1,
+    const tags = [{
+        color: UTILS.getTagColorById(UTILS.getTagId({
             tag: 'recruitment',
-        }];
-    */
+            languageId: LANG.getLanguageId( 'en-US' ),
+        })),
+        tag: UTILS.getTagById({
+            tagId: UTILS.getTagId({
+                tag: 'recruitment',
+                languageId: LANG.getLanguageId( 'en-US' ),
+                }),
+            languageId: LANG.id,
+        }),
+    }];
     const filterModifier = 'recruitment';
     const currentRoute = 'announcement/recruitment';
 

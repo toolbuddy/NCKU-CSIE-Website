@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import tagMap from 'models/announcement/maps/tag.js';
+import LanguageUtils from '../../common/utils/language.js';
+import tagMap from '../maps/tag.js';
 
 class TagUtils {
     static defaultTag ( languageId = LanguageUtils.defaultLanguageId ) {

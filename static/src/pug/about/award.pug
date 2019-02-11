@@ -32,6 +32,69 @@ append data
         },
       },
     } );
+    const tags = [
+        {
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'award',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'award',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'college',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'college',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'master',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'master',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'phd',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'phd',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'faculty',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'faculty',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },
+    ];
     const filterModifier = 'award';
     const currentRoute = 'about/award';
 

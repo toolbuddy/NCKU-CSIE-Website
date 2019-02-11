@@ -4,8 +4,8 @@ import SingleDefaultTagFilter from 'static/src/js/components/announcement/single
 header( document.getElementById( 'header' ) );
 
 const filter = new SingleDefaultTagFilter( {
-    defaultTag:   ['recruitment'], // no need
-    supportedTag: [], // no need
+    defaultTag:   ['recruitment'],
+    supportedTag: [],
     filterDOM:             document.getElementById( 'filter' ),
     announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
     announcementNormalDOM: document.getElementById( 'announcement--normal' ),

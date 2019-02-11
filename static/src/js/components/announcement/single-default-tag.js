@@ -1,32 +1,41 @@
 import TagUtils from 'models/announcement/utils/tag.js';
-import tagsHTML from 'static/src/pug/components/announcement/tags.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
 import ValidateUtils from 'models/common/utils/validate.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
-export default class SingleDefaultTagFilter extends DefaultTagFilter{
-    constructTagHTML(){
-        let tags = [{
-            color: TagUtils.getTagColorById(this.tagId.default[0]),
-            tagId: -1,
-            tag: TagUtils.getTagById({
-                tagId: this.tagId.default[0],
-                languageId: this.state.languageId,
-            }),
-        }];
-        this.tagId.supported.forEach(tagId => {
-            tags.push({
-                color: TagUtils.getTagColorById( tagId ),
-                tagId,
-                tag:   TagUtils.getTagById( { tagId, languageId: this.state.languageId, } ),
-            });
-        });
-        this.DOM.filter.tags.innerHTML = tagsHTML( {
-            tags,
+export default class SingleDefaultTagFilter extends DefaultTagFilter {
+    constructTagHTML () {
+        const defaultTagEng = TagUtils.getTagById( {
+            tagId:      this.tagId.default[ 0 ],
+            languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
+        } );
+        Array.from( this.DOM.filter.tags.childNodes ).forEach( ( tag ) => {
+            if ( typeof ( tag ) !== 'undefined' ) {
+                const tagId = TagUtils.getTagId( {
+                    tag:        tag.innerHTML,
+                    languageId: WebLanguageUtils.currentLanguageId,
+                } );
+                const tagEng = TagUtils.getTagById( {
+                    tagId,
+                    languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
+                } );
+
+                if ( TagUtils.isSupportedTag( {
+                    tag:        tagEng,
+                    languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
+                } ) && defaultTagEng === tagEng )
+                    tag.setAttribute( 'data-tag-id', -1 );
+
+                else if ( TagUtils.isSupportedTagId( tagId ) )
+                    tag.setAttribute( 'data-tag-id', tagId );
+                else if ( tag.innerHTML === TagUtils.getTagAll( WebLanguageUtils.currentLanguageId ) )
+                    tag.setAttribute( 'data-tag-id', -1 );
+            }
         } );
     }
-    
-    subscribeTimeEvent(){
+
+    subscribeTimeEvent () {
         [
             'year',
             'month',
@@ -39,21 +48,22 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                 this.state.page = this.config.page;
                 this.state.from = new Date( `${ year }/${ month }/${ date }` );
 
-                if(!ValidateUtils.isValidDate(this.state.from) || !Number.isNaN(this.state.from))
-                    throw new TypeError('invalid arguments');
-                
-                if (this.state.selectAll){
-                    this.getPage(this.tagId.default).then(()=>{
-                        this.getPinnedAnnouncement(this.tagId.default);
-                    }).then(()=>{
-                        this.getNormalAnnouncement(this.tagId.default);
-                    });
-                }else{
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
-                    }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
-                    });
+                if ( !ValidateUtils.isValidDate( this.state.from ) ) // || !Number.isNaN( this.state.from )
+                    throw new TypeError( 'invalid arguments' );
+
+                if ( this.state.selectAll ) {
+                    this.getPage( this.tagId.default ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default );
+                    } );
+                }
+                else {
+                    this.getPage( this.tagId.default.concat( this.state.tags ) ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } );
                 }
             } );
         } );
@@ -70,34 +80,37 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                 this.state.page = this.config.page;
                 this.state.to = new Date( `${ year }/${ month }/${ date }` );
 
-                if(!ValidateUtils.isValidDate(this.state.to) || !Number.isNaN(this.state.to))
-                    throw new TypeError('invalid arguments');
+                if ( !ValidateUtils.isValidDate( this.state.to ) ) // || !Number.isNaN( this.state.to )
+                    throw new TypeError( 'invalid arguments' );
 
-                if (this.state.selectAll){
-                    this.getPage(this.tagId.default).then(()=>{
-                        this.getPinnedAnnouncement(this.tagId.default);
-                    }).then(()=>{
-                        this.getNormalAnnouncement(this.tagId.default);
-                    });
-                }else{
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
-                    }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
-                    });
+                if ( this.state.selectAll ) {
+                    this.getPage( this.tagId.default ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default );
+                    } );
+                }
+                else {
+                    this.getPage( this.tagId.default.concat( this.state.tags ) ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } );
                 }
             } );
         } );
     }
 
-    subscribeTagEvent(){
+    subscribeTagEvent () {
         const tagDOMArr = Array.from( this.DOM.filter.tags.querySelectorAll( '.tags__tag' ) );
         tagDOMArr.forEach( ( tagDOM ) => {
             const tagId = Number( tagDOM.getAttribute( 'data-tag-id' ) );
 
             /* Default tag event subscribe */
-            if(tagId === -1){
+
+            if ( tagId === -1 ) {
                 /* Default tag should be always active. */
+
                 classAdd( tagDOM, 'tags__tag--active' );
                 tagDOM.addEventListener( 'click', () => {
                     tagDOMArr.forEach( ( tagDOM ) => {
@@ -106,15 +119,16 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                     classAdd( tagDOM, 'tags__tag--active' );
                     this.state.selectAll = true;
                     this.state.tags = [];
-                    this.state.tags.push(tagId);
+                    this.state.tags.push( tagId );
                     this.state.page = this.config.page;
-                    this.getPage(this.tagId.default).then(()=>{
-                        this.getPinnedAnnouncement(this.tagId.default);
-                    }).then(()=>{
-                        this.getNormalAnnouncement(this.tagId.default);
-                    });
+                    this.getPage( this.tagId.default ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default );
+                    } );
                 } );
-            }else{
+            }
+            else {
                 tagDOM.addEventListener( 'click', () => {
                     const index = this.state.tags.indexOf( tagId );
                     if ( index >= 0 ) {
@@ -127,11 +141,11 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter{
                     }
                     this.state.selectAll = false;
                     this.state.page = this.config.page;
-                    this.getPage(this.tagId.default.concat(this.state.tags)).then(() => {
-                        this.getPinnedAnnouncement(this.tagId.default.concat(this.state.tags));
-                    }).then(() => {
-                        this.getNormalAnnouncement(this.tagId.default.concat(this.state.tags));
-                    });
+                    this.getPage( this.tagId.default.concat( this.state.tags ) ).then( () => {
+                        this.getPinnedAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } ).then( () => {
+                        this.getNormalAnnouncement( this.tagId.default.concat( this.state.tags ) );
+                    } );
                 } );
             }
         } );

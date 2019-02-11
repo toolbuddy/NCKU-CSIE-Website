@@ -32,6 +32,60 @@ append data
         },
       },
     } );
+    const tags = [
+        {
+            color: 'purple',
+            tag: UTILS.getTagAll(LANG.id)
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'competition',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'competition',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'conference',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'conference',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'exhibition',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'exhibition',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'speech',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'speech',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+        },
+    ];
     const filterModifier = 'activity';
     const currentRoute = 'announcement/activity';
 
