@@ -3,7 +3,6 @@ import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class SingleDefaultTagFilter extends DefaultTagFilter {
-
     subscribeTimeEvent () {
         [
             'year',
@@ -17,20 +16,29 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 this.state.page = this.config.page;
                 this.state.from = new Date( `${ year }/${ month }/${ date }` );
 
-                if ( !ValidateUtils.isValidDate( this.state.from ) ) // || !Number.isNaN( this.state.from )
+                /**
+                 * @todo
+                 * Should also show no-result.
+                 */
+
+                if ( !ValidateUtils.isValidDate( this.state.from ) )
                     throw new TypeError( 'invalid arguments' );
 
                 if ( this.state.selectAll ) {
-                    this.getPage( this.tagId.default ).then( () => {
+                    this.getPage( this.tagId.default )
+                    .then( () => {
                         this.getPinnedAnnouncement( this.tagId.default );
-                    } ).then( () => {
+                    } )
+                    .then( () => {
                         this.getNormalAnnouncement( this.tagId.default );
                     } );
                 }
                 else {
-                    this.getPage( this.tagId.default.concat( this.state.tags ) ).then( () => {
+                    this.getPage( this.tagId.default.concat( this.state.tags ) )
+                    .then( () => {
                         this.getPinnedAnnouncement( this.tagId.default.concat( this.state.tags ) );
-                    } ).then( () => {
+                    } )
+                    .then( () => {
                         this.getNormalAnnouncement( this.tagId.default.concat( this.state.tags ) );
                     } );
                 }

@@ -3,7 +3,6 @@ import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter {
-
     subscribeTimeEvent () {
         [
             'year',
