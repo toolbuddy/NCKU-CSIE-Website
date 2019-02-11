@@ -147,15 +147,16 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                     }
                     this.state.selectAll = false;
                     this.state.page = this.config.page;
-                    
-                    if(this.state.tags.length === 0){
+
+                    if ( this.state.tags.length === 0 ) {
                         this.state.selectAll = true;
                         this.getPage( this.tagId.default ).then( () => {
                             this.getPinnedAnnouncement( this.tagId.default );
                         } ).then( () => {
                             this.getNormalAnnouncement( this.tagId.default );
                         } );
-                    }else{
+                    }
+                    else {
                         this.getPage( this.state.tags ).then( () => {
                             this.getPinnedAnnouncement( this.state.tags );
                         } ).then( () => {

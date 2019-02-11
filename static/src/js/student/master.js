@@ -4,7 +4,7 @@ import SingleDefaultTagFilter from 'static/src/js/components/announcement/single
 header( document.getElementById( 'header' ) );
 
 const filter = new SingleDefaultTagFilter( {
-    defaultTag:   ['master'],
+    defaultTag:   [ 'master', ],
     supportedTag: [
         'speech',
         'conference',

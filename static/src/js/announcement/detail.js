@@ -25,7 +25,7 @@ const reqURL = `${ window.location.protocol }//${ window.location.host }/api/ann
                     tagId:      Number( tag ),
                     languageId: Number( new URLSearchParams( window.location.search ).get( 'languageId' ) ),
                 } ),
-                color:  TagUtils.getTagColorById(Number(tag)),
+                color:  TagUtils.getTagColorById( Number( tag ) ),
             }
             ) ),
             author:      data.author,

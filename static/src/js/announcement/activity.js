@@ -11,7 +11,7 @@ const filter = new MultipleDefaultTagFilter( {
         'exhibition',
         'speech',
     ],
-    supportedTag: [],
+    supportedTag:          [],
     filterDOM:             document.getElementById( 'filter' ),
     announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
     announcementNormalDOM: document.getElementById( 'announcement--normal' ),

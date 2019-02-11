@@ -10,10 +10,10 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from: new Date('2018/01/01'),
-            to: new Date( Date.now()),
+            from: new Date( '2019/01/01' ),
+            to:   new Date( Date.now() ),
             page: 1,
-        }
+        };
 
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
@@ -66,54 +66,57 @@ export default class DefaultTagFilter {
             selectAll:  true,
         };
 
+        const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
+        const announcementQuerySelector = block => `.announcement__${ block }.${ block }`;
         this.DOM = {
             filter: {
                 from: {
-                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__year' ),
-                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__month' ),
-                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__from.from>.from__input.input>.input__date' ),
+                    year:  opt.filterDOM.querySelector( timeQuerySelector( 'from', 'year' ) ),
+                    month: opt.filterDOM.querySelector( timeQuerySelector( 'from', 'month' ) ),
+                    date:  opt.filterDOM.querySelector( timeQuerySelector( 'from', 'date' ) ),
                 },
                 to:   {
-                    year:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__year' ),
-                    month: opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__month' ),
-                    date:  opt.filterDOM.querySelector( '.filter__time.time>.time__to.to>.to__input.input>.input__date' ),
+                    year:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'year' ) ),
+                    month: opt.filterDOM.querySelector( timeQuerySelector( 'to', 'month' ) ),
+                    date:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'date' ) ),
                 },
                 tags: opt.filterDOM.querySelector( '.filter__tags.tags' ),
             },
             announcement: {
                 pinned: {
-                    noResult:  opt.announcementPinnedDOM.querySelector( '.announcement__no-result.no-result' ),
-                    loading:   opt.announcementPinnedDOM.querySelector( '.announcement__loading.loading' ),
-                    briefings: opt.announcementPinnedDOM.querySelector( '.announcement__briefings.briefings' ),
+                    noResult:  opt.announcementPinnedDOM.querySelector( announcementQuerySelector( 'no-result' ) ),
+                    loading:   opt.announcementPinnedDOM.querySelector( announcementQuerySelector( 'loading' ) ),
+                    briefings: opt.announcementPinnedDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
                 normal: {
-                    noResult:  opt.announcementNormalDOM.querySelector( '.announcement__no-result.no-result' ),
-                    loading:   opt.announcementNormalDOM.querySelector( '.announcement__loading.loading' ),
-                    briefings: opt.announcementNormalDOM.querySelector( '.announcement__briefings.briefings' ),
+                    noResult:  opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'no-result' ) ),
+                    loading:   opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'loading' ) ),
+                    briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
             pages: opt.pagesDOM,
         };
 
-        if(
-            !ValidateUtils.isDomElement(this.DOM.filter.from.year) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.from.month) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.from.date) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.to.year) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.to.month) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.to.date) ||
-            !ValidateUtils.isDomElement(this.DOM.filter.tags) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.noResult) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.loading) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.pinned.briefings) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.normal.noResult) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.normal.loading) ||
-            !ValidateUtils.isDomElement(this.DOM.announcement.normal.briefings) ||
-            !ValidateUtils.isDomElement(this.DOM.pages) )
+        if (
+            !ValidateUtils.isDomElement( this.DOM.filter.from.year ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.from.month ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.from.date ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
+            !ValidateUtils.isDomElement( this.DOM.filter.tags ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.pinned.briefings ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.normal.noResult ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.normal.loading ) ||
+            !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings ) ||
+            !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
 
         /**
-         * Construct innerHTML for filter tags
+         * @abstract
+         * Construct innerHTML for filter tags.
          */
 
         this.constructTagHTML();
@@ -130,45 +133,36 @@ export default class DefaultTagFilter {
         this.DOM.filter.to.date.value = this.state.to.getDate();
 
         /**
+         * @abstract
          * DOM elements `.time__from` and `.time__to` click event subscribe.
          */
 
         this.subscribeTimeEvent();
 
         /**
+         * @abstract
          * DOM elements `.tags__tag` click event subscribe.
          */
 
         this.subscribeTagEvent();
     }
 
-    constructTagHTML () {
-        throw new Error( 'Abstract method not implemented.' );
-    }
-
-    subscribeTimeEvent () {
-        throw new Error( 'Abstract method not implemented.' );
-    }
-
-    subscribeTagEvent () {
-        throw new Error( 'Abstract method not implemented.' );
-    }
-
-    getAll(){
-        this.getPage(this.tagId.default).then(()=>{
-            this.getPinnedAnnouncement(this.tagId.default);
-        }).then(()=>{
-            this.getNormalAnnouncement(this.tagId.default);
-        });
+    getAll () {
+        this.getPage( this.tagId.default ).then( () => {
+            this.getPinnedAnnouncement( this.tagId.default );
+        } ).then( () => {
+            this.getNormalAnnouncement( this.tagId.default );
+        } );
     }
 
     static formatUpdateTime ( time ) {
         /**
          * @todo add time validation.
          */
-        if (! time instanceof Date)
+
+        if ( !( time instanceof Date ) )
             throw new TypeError( 'invalid arguments' );
-            
+
         return [
             [
                 `${ time.getFullYear() }`,
@@ -333,7 +327,7 @@ export default class DefaultTagFilter {
             const index = tags.indexOf( -1 );
             if ( index >= 0 )
                 tags.splice( index, 1 );
-            
+
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
@@ -388,7 +382,7 @@ export default class DefaultTagFilter {
             const index = tags.indexOf( -1 );
             if ( index >= 0 )
                 tags.splice( index, 1 );
-            
+
             const queryString = [
                 `amount=${ this.state.amount }`,
                 `languageId=${ this.state.languageId }`,
