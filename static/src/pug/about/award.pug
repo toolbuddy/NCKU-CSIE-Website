@@ -45,6 +45,7 @@ append data
                     }),
                 languageId: LANG.id,
             }),
+            id: -1
         },
         {
             color: UTILS.getTagColorById(UTILS.getTagId({
@@ -58,7 +59,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'college',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'master',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -70,7 +76,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'master',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'phd',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -82,7 +93,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'phd',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'faculty',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -93,6 +109,10 @@ append data
                     languageId: LANG.getLanguageId( 'en-US' ),
                     }),
                 languageId: LANG.id,
+            }),
+            id: UTILS.getTagId({
+                tag: 'faculty',
+                languageId: LANG.getLanguageId( 'en-US' ),
             }),
         },
     ];

@@ -41,7 +41,7 @@ export default class DefaultTagFilter {
         /* Check if default & supported tags has the same tag */
 
         TagUtils.supportedTag( languageId ).forEach( ( tag ) => {
-            if ( opt.supportedTag.includes( tag ) && opt.defaultTag.includes( tag ) )
+            if ( opt.supportedTag.indexOf( tag ) >= 0 && opt.defaultTag.indexOf( tag ) >= 0 )
                 throw new TypeError( 'invalid arguments' );
         } );
 
@@ -113,13 +113,6 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings ) ||
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
-
-        /**
-         * @abstract
-         * Construct innerHTML for filter tags.
-         */
-
-        this.constructTagHTML();
 
         /**
          * DOM element `.filter__time` initialization.

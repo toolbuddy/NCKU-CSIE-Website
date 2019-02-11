@@ -32,7 +32,6 @@ append data
         },
       },
     } );
-    const filterModifier = 'rule';
     const tags = [
         {
             color: UTILS.getTagColorById(UTILS.getTagId({
@@ -46,7 +45,9 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: -1,
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'college',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -58,7 +59,8 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'master',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -70,7 +72,8 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'phd',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -82,7 +85,8 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'faculty',
                 languageId: LANG.getLanguageId( 'en-US' ),

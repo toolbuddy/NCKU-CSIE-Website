@@ -1,45 +1,8 @@
-import TagUtils from 'models/announcement/utils/tag.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter {
-    constructTagHTML () {
-        const allTagEng = [];
-        this.tagId.default.forEach( ( tagId ) => {
-            allTagEng.push( TagUtils.getTagById( {
-                tagId,
-                languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
-            } ) );
-        } );
-        this.tagId.supported.forEach( ( tagId ) => {
-            allTagEng.push( TagUtils.getTagById( {
-                tagId,
-                languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
-            } ) );
-        } );
-        Array.from( this.DOM.filter.tags.childNodes ).forEach( ( tag ) => {
-            if ( typeof ( tag ) !== 'undefined' ) {
-                const tagId = TagUtils.getTagId( {
-                    tag:        tag.innerHTML,
-                    languageId: WebLanguageUtils.currentLanguageId,
-                } );
-                const tagEng = TagUtils.getTagById( {
-                    tagId,
-                    languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
-                } );
-                if ( TagUtils.isSupportedTag( {
-                    tag:        tagEng,
-                    languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
-                } ) && allTagEng.includes( tagEng ) )
-                    tag.setAttribute( 'data-tag-id', tagId );
-
-                else if ( tag.innerHTML === TagUtils.getTagAll( WebLanguageUtils.currentLanguageId ) )
-                    tag.setAttribute( 'data-tag-id', -1 );
-            }
-        } );
-    }
 
     subscribeTimeEvent () {
         [

@@ -34,9 +34,20 @@ append data
     } );
     const tags = [
         {
-            color: 'purple',
-            tag: UTILS.getTagAll(LANG.id)
-        },{
+            color: UTILS.getTagColorById(UTILS.getTagId({
+                tag: 'college',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            })),
+            tag: UTILS.getTagById({
+                tagId: UTILS.getTagId({
+                    tag: 'college',
+                    languageId: LANG.getLanguageId( 'en-US' ),
+                    }),
+                languageId: LANG.id,
+            }),
+            id: -1,
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'competition',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -48,7 +59,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'competition',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'conference',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -60,7 +76,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'conference',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'exhibition',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -72,7 +93,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'exhibition',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'speech',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -84,7 +110,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'speech',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'award',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -96,7 +127,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'award',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'international',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -108,7 +144,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'international',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'scholarship',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -120,7 +161,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'scholarship',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'internship',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -132,7 +178,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
-        },{
+            id: UTILS.getTagId({
+                tag: 'internship',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
+        },
+        {
             color: UTILS.getTagColorById(UTILS.getTagId({
                 tag: 'rule',
                 languageId: LANG.getLanguageId( 'en-US' ),
@@ -144,9 +195,12 @@ append data
                     }),
                 languageId: LANG.id,
             }),
+            id: UTILS.getTagId({
+                tag: 'rule',
+                languageId: LANG.getLanguageId( 'en-US' ),
+            }),
         },
     ];
-    const filterModifier = 'college';
     const currentRoute = 'student/college';
 
 append title
