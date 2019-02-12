@@ -72,7 +72,10 @@ router
 
         res.locals.UTILS.getTagById = TagUtils.getTagById;
         res.locals.UTILS.getTagColorById = TagUtils.getTagColorById;
-        res.locals.UTILS.md = new MarkdownIt();
+        res.locals.UTILS.md = new MarkdownIt( {
+            breaks:  true,
+            linkify: true,
+        } );
 
         await new Promise( ( resolve, reject ) => {
             res.render( 'announcement/detail.pug', {

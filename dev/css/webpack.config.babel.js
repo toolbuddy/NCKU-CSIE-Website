@@ -10,6 +10,7 @@ import { projectRoot, } from '../../settings/server/config.js';
 const sassRoot = path.join( projectRoot, 'static/src/sass' );
 const imageRoot = path.join( projectRoot, 'static/src/image' );
 const cssRoot = path.join( projectRoot, 'static/dist/css' );
+const nodeModulesRoot = path.join( projectRoot, 'node_modules' );
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
@@ -124,7 +125,8 @@ export default {
 
     resolve: {
         alias: {
-            image: imageRoot,
+            image:         imageRoot,
+            thirdPartyLib: nodeModulesRoot,
         },
     },
 
