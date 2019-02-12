@@ -12,8 +12,8 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 'year',
                 'month',
                 'date',
-            ].forEach( ( key ) => {
-                this.DOM.filter[ timeFilter ][ key ].addEventListener( 'change', () => {
+            ].forEach( ( timePart ) => {
+                this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
                     const year  = this.DOM.filter[ timeFilter ].year.value;
                     const month = this.DOM.filter[ timeFilter ].month.value;
                     const date  = this.DOM.filter[ timeFilter ].date.value;
@@ -44,8 +44,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
     }
 
     subscribeTagEvent () {
-        const tagDOMArr = Array.from( this.DOM.filter.tags.querySelectorAll( '.tags__tag' ) );
-        tagDOMArr.forEach( ( tagDOM ) => {
+        this.DOM.filter.tags.forEach( ( tagDOM ) => {
             const tagId = Number( tagDOM.getAttribute( 'data-tag-id' ) );
 
             /* Default tag event subscribe */
@@ -55,7 +54,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
 
                 classAdd( tagDOM, 'tags__tag--active' );
                 tagDOM.addEventListener( 'click', () => {
-                    tagDOMArr.forEach( ( tagDOM ) => {
+                    this.DOM.filter.tags.forEach( ( tagDOM ) => {
                         classRemove( tagDOM, 'tags__tag--active' );
                     } );
                     classAdd( tagDOM, 'tags__tag--active' );

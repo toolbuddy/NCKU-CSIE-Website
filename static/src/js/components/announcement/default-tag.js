@@ -39,12 +39,11 @@ export default class DefaultTagFilter {
             throw new TypeError( 'tag is not supported' );
 
         /**
-         * !!!overkill
          * Check if default & supported tags has the same tag
          */
 
-        TagUtils.supportedTag( languageId ).forEach( ( tag ) => {
-            if ( opt.supportedTag.indexOf( tag ) >= 0 && opt.defaultTag.indexOf( tag ) >= 0 )
+        opt.supportedTag.forEach( ( tag ) => {
+            if ( opt.defaultTag.indexOf( tag ) >= 0 )
                 throw new TypeError( 'invalid arguments' );
         } );
 
@@ -84,7 +83,7 @@ export default class DefaultTagFilter {
                     month: opt.filterDOM.querySelector( timeQuerySelector( 'to', 'month' ) ),
                     date:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'date' ) ),
                 },
-                tags: opt.filterDOM.querySelector( '.filter__tags.tags' ),
+                tags: opt.filterDOM.querySelectorAll( '.tags__tag' ),
             },
             announcement: {
                 pinned: {
@@ -108,7 +107,7 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
-            !ValidateUtils.isDomElement( this.DOM.filter.tags ) ||
+            !Array.from( this.DOM.filter.tags ).every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.briefings ) ||
@@ -117,6 +116,14 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings ) ||
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
+
+        this.DOM.filter.tags.forEach((tagDOM) => {
+            const tagId = tagDOM.getAttribute( 'data-tag-id' );
+            if(tagId === null)
+                throw new Error( 'Invalid Tag DOM attribute.' );
+            if( !(Number(tagId) === -1) && !TagUtils.isSupportedTagId(Number(tagId)) )
+                throw new Error( 'Invalid Tag DOM attribute.' );
+        });
 
         /**
          * DOM element `.filter__time` initialization.
@@ -190,13 +197,17 @@ export default class DefaultTagFilter {
                 pageDOMArr.forEach( ( pageDOM ) => {
                     classRemove( pageDOM, 'pages__page--active' );
                 } );
-                this.state.page = Number( pageDOM.getAttribute( 'data-page' ) );
-                classAdd( pageDOM, 'pages__page--active' );
 
-                /* Render `pages__extra` */
+                const page = pageDOM.getAttribute( 'data-page' );
+                if( page !== null && ValidateUtils.isPositiveInteger( Number( page ) ) ){
+                    this.state.page = Number( page );
+                    classAdd( pageDOM, 'pages__page--active' );
 
-                this.renderPageExtra( pages );
-                this.getNormalAnnouncement();
+                    /* Render `pages__extra` */
+
+                    this.renderPageExtra( pages );
+                    this.getNormalAnnouncement();
+                }
             } );
         } );
 
@@ -254,11 +265,13 @@ export default class DefaultTagFilter {
         if ( pages > 4 ) {
             pageDOMArr.forEach( ( pageDOM ) => {
                 classRemove( pageDOM, 'pages__page--hidden' );
-                const page = Number( pageDOM.getAttribute( 'data-page' ) );
-                if ( page !== 1 &&
-                    page !== pages &&
-                    Math.abs( page - this.state.page ) > 2 )
+                if(pageDOM.getAttribute('data-page') !== null){
+                    const page = Number( pageDOM.getAttribute( 'data-page' ) );
+                    if ( page !== 1 &&
+                        page !== pages &&
+                        Math.abs( page - this.state.page ) > 2 )
                     classAdd( pageDOM, 'pages__page--hidden' );
+                }
             } );
             if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
                 classRemove( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
