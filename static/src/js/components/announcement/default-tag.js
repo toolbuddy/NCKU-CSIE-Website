@@ -10,9 +10,11 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from: new Date( '2019/01/01' ),
-            to:   new Date( Date.now() ),
-            page: 1,
+            from:           new Date( '2019/01/01' ),
+            to:             new Date( Date.now() ),
+            page:           1,
+            sidePageNum:    2,
+            pageExtraLimit: 4,
         };
 
         opt = opt || {};
@@ -39,12 +41,11 @@ export default class DefaultTagFilter {
             throw new TypeError( 'tag is not supported' );
 
         /**
-         * !!!overkill
          * Check if default & supported tags has the same tag
          */
 
-        TagUtils.supportedTag( languageId ).forEach( ( tag ) => {
-            if ( opt.supportedTag.indexOf( tag ) >= 0 && opt.defaultTag.indexOf( tag ) >= 0 )
+        opt.supportedTag.forEach( ( tag ) => {
+            if ( opt.defaultTag.indexOf( tag ) >= 0 )
                 throw new TypeError( 'invalid arguments' );
         } );
 
@@ -84,7 +85,17 @@ export default class DefaultTagFilter {
                     month: opt.filterDOM.querySelector( timeQuerySelector( 'to', 'month' ) ),
                     date:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'date' ) ),
                 },
-                tags: opt.filterDOM.querySelector( '.filter__tags.tags' ),
+                tags: Array.from( opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ) ).map( ( node ) => {
+                    const tagId = node.getAttribute( 'data-tag-id' );
+                    if ( tagId === null )
+                        throw new Error( 'Invalid Tag DOM attribute.' );
+                    if ( !( Number( tagId ) === -1 ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
+                        throw new Error( 'Invalid Tag DOM attribute.' );
+                    return {
+                        node,
+                        id:   Number( tagId ),
+                    };
+                } ),
             },
             announcement: {
                 pinned: {
@@ -108,7 +119,7 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
-            !ValidateUtils.isDomElement( this.DOM.filter.tags ) ||
+            !Array.from( this.DOM.filter.tags.map( tag => tag.node ) ).every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.briefings ) ||
@@ -144,14 +155,16 @@ export default class DefaultTagFilter {
         this.subscribeTagEvent();
     }
 
-    getAll () {
-        this.getPage()
-        .then( () => {
-            this.getPinnedAnnouncement();
-        } )
-        .then( () => {
-            this.getNormalAnnouncement();
-        } );
+    async getAll () {
+        try {
+            await this.getPage();
+            await this.getPinnedAnnouncement();
+            await this.getNormalAnnouncement();
+        }
+
+        /* Silence */
+
+        catch ( {} ) {}
     }
 
     static formatUpdateTime ( time ) {
@@ -172,9 +185,42 @@ export default class DefaultTagFilter {
         ].join( ' | ' );
     }
 
+    renderPageExtra ( pages ) {
+        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
+        if ( pages > this.config.pageExtraLimit ) {
+            pageDOMArr.forEach( ( pageDOM ) => {
+                classRemove( pageDOM, 'pages__page--hidden' );
+                if ( pageDOM.getAttribute( 'data-page' ) !== null ) {
+                    const page = Number( pageDOM.getAttribute( 'data-page' ) );
+                    if ( page !== 1 &&
+                        page !== pages &&
+                        Math.abs( page - this.state.page ) > this.config.sidePageNum )
+                        classAdd( pageDOM, 'pages__page--hidden' );
+                }
+            } );
+            if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
+
+            else
+                classAdd( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
+
+
+            if ( this.DOM.pages.querySelector( `[data-page="${ pages - 1 }"]` ).classList.contains( 'pages__page--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
+
+            else
+                classAdd( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
+        }
+    }
+
     renderPages ( pages ) {
         this.state.page = this.config.page;
-        this.DOM.pages.innerHTML = pagesHTML( { pages, } );
+        try {
+            this.DOM.pages.innerHTML = pagesHTML( { pages, } );
+        }
+        catch ( err ) {
+            throw new Error( 'failed to render pages' );
+        }
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
 
         /* Render `pages__extra` */
@@ -190,13 +236,17 @@ export default class DefaultTagFilter {
                 pageDOMArr.forEach( ( pageDOM ) => {
                     classRemove( pageDOM, 'pages__page--active' );
                 } );
-                this.state.page = Number( pageDOM.getAttribute( 'data-page' ) );
-                classAdd( pageDOM, 'pages__page--active' );
 
-                /* Render `pages__extra` */
+                const page = pageDOM.getAttribute( 'data-page' );
+                if ( page !== null && ValidateUtils.isPositiveInteger( Number( page ) ) ) {
+                    this.state.page = Number( page );
+                    classAdd( pageDOM, 'pages__page--active' );
 
-                this.renderPageExtra( pages );
-                this.getNormalAnnouncement();
+                    /* Render `pages__extra` */
+
+                    this.renderPageExtra( pages );
+                    this.getNormalAnnouncement();
+                }
             } );
         } );
 
@@ -249,32 +299,6 @@ export default class DefaultTagFilter {
         }
     }
 
-    renderPageExtra ( pages ) {
-        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
-        if ( pages > 4 ) {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                classRemove( pageDOM, 'pages__page--hidden' );
-                const page = Number( pageDOM.getAttribute( 'data-page' ) );
-                if ( page !== 1 &&
-                    page !== pages &&
-                    Math.abs( page - this.state.page ) > 2 )
-                    classAdd( pageDOM, 'pages__page--hidden' );
-            } );
-            if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
-
-            else
-                classAdd( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
-
-
-            if ( this.DOM.pages.querySelector( `[data-page="${ pages - 1 }"]` ).classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
-
-            else
-                classAdd( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
-        }
-    }
-
     async getPage () {
         try {
             this.DOM.pages.innerHTML = '';
@@ -310,6 +334,11 @@ export default class DefaultTagFilter {
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
+            classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+            classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+            classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+            classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 
@@ -365,6 +394,7 @@ export default class DefaultTagFilter {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 
@@ -422,6 +452,7 @@ export default class DefaultTagFilter {
             this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 }

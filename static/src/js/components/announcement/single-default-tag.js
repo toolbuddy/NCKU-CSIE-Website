@@ -12,8 +12,8 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 'year',
                 'month',
                 'date',
-            ].forEach( ( key ) => {
-                this.DOM.filter[ timeFilter ][ key ].addEventListener( 'change', () => {
+            ].forEach( ( timePart ) => {
+                this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
                     const year  = this.DOM.filter[ timeFilter ].year.value;
                     const month = this.DOM.filter[ timeFilter ].month.value;
                     const date  = this.DOM.filter[ timeFilter ].date.value;
@@ -44,45 +44,44 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
     }
 
     subscribeTagEvent () {
-        const tagDOMArr = Array.from( this.DOM.filter.tags.querySelectorAll( '.tags__tag' ) );
-        tagDOMArr.forEach( ( tagDOM ) => {
-            const tagId = Number( tagDOM.getAttribute( 'data-tag-id' ) );
-
+        this.DOM.filter.tags.forEach( ( tagDOM ) => {
             /* Default tag event subscribe */
 
-            if ( tagId === -1 ) {
+            if ( tagDOM.id === this.tagId.default[ 0 ] ) {
                 /* Default tag should be always active. */
 
-                classAdd( tagDOM, 'tags__tag--active' );
-                tagDOM.addEventListener( 'click', () => {
-                    tagDOMArr.forEach( ( tagDOM ) => {
-                        classRemove( tagDOM, 'tags__tag--active' );
+                classAdd( tagDOM.node, 'tags__tag--active' );
+                tagDOM.node.addEventListener( 'click', () => {
+                    this.DOM.filter.tags.forEach( ( tagDOM ) => {
+                        classRemove( tagDOM.node, 'tags__tag--active' );
                     } );
-                    classAdd( tagDOM, 'tags__tag--active' );
-                    this.state.selectDefault = true;
-                    this.state.tags = [];
-                    this.state.tags.push( tagId );
-                    this.state.page = this.config.page;
 
+                    classAdd( tagDOM.node, 'tags__tag--active' );
+
+                    this.state.selectDefault = true;
+                    this.state.tags = [ tagDOM.id, ];
+                    this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
+
                     this.getAll();
                 } );
             }
             else {
-                tagDOM.addEventListener( 'click', () => {
-                    const index = this.state.tags.indexOf( tagId );
+                tagDOM.node.addEventListener( 'click', () => {
+                    const index = this.state.tags.indexOf( tagDOM.id );
                     if ( index >= 0 ) {
                         this.state.tags.splice( index, 1 );
-                        classRemove( tagDOM, 'tags__tag--active' );
+                        classRemove( tagDOM.node, 'tags__tag--active' );
                     }
                     else {
-                        this.state.tags.push( tagId );
-                        classAdd( tagDOM, 'tags__tag--active' );
+                        this.state.tags.push( tagDOM.id );
+                        classAdd( tagDOM.node, 'tags__tag--active' );
                     }
+
                     this.state.selectDefault = false;
                     this.state.page = this.config.page;
-
                     this.state.tagParam = this.tagId.default.concat( this.state.tags );
+
                     this.getAll();
                 } );
             }

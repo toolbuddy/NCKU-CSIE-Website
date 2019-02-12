@@ -44,7 +44,10 @@ append data
                 }),
             languageId: LANG.id,
         }),
-        id: -1,
+        id: UTILS.getTagId({
+            tag: 'recruitment',
+            languageId: LANG.getLanguageId( 'en-US' ),
+        }),
     }];
     const currentRoute = 'announcement/recruitment';
 
