@@ -2,7 +2,7 @@ import validate from 'validate.js';
 
 class ValidateUtils {
     static isValidDate ( date ) {
-        return validate.isDate( date );
+        return validate.isDate( date ) && !Number.isNaN( Number( date ) );
     }
 
     static isPositiveInteger ( number ) {
