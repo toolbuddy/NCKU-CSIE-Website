@@ -16,7 +16,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 this.state.page = this.config.page;
                 this.state.from = new Date( `${ year }/${ month }/${ date }` );
 
-                if ( !ValidateUtils.isValidDate( this.state.from ) ){
+                if ( !ValidateUtils.isValidDate( this.state.from ) ) {
                     this.DOM.announcement.pinned.briefings.innerHTML = '';
                     classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
                     classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
@@ -31,7 +31,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     this.getAll();
                 }
                 else {
-                    this.state.tagParam = this.tagId.default.concat(this.state.tags);
+                    this.state.tagParam = this.tagId.default.concat( this.state.tags );
                     this.getAll();
                 }
             } );
@@ -49,7 +49,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 this.state.page = this.config.page;
                 this.state.to = new Date( `${ year }/${ month }/${ date }` );
 
-                if ( !ValidateUtils.isValidDate( this.state.to ) ){
+                if ( !ValidateUtils.isValidDate( this.state.to ) ) {
                     this.DOM.announcement.pinned.briefings.innerHTML = '';
                     classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
                     classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
@@ -64,7 +64,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     this.getAll();
                 }
                 else {
-                    this.state.tagParam = this.tagId.default.concat(this.state.tags);
+                    this.state.tagParam = this.tagId.default.concat( this.state.tags );
                     this.getAll();
                 }
             } );
@@ -109,8 +109,8 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     }
                     this.state.selectDefault = false;
                     this.state.page = this.config.page;
-                    
-                    this.state.tagParam = this.tagId.default.concat(this.state.tags);
+
+                    this.state.tagParam = this.tagId.default.concat( this.state.tags );
                     this.getAll();
                 } );
             }

@@ -57,14 +57,14 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            amount:     opt.amount,
-            languageId: WebLanguageUtils.currentLanguageId,
-            from:       this.config.from,
-            to:         this.config.to,
-            page:       this.config.page,
-            tags:       [],
+            amount:        opt.amount,
+            languageId:    WebLanguageUtils.currentLanguageId,
+            from:          this.config.from,
+            to:            this.config.to,
+            page:          this.config.page,
+            tags:          [],
             selectDefault:  true,
-            tagParam:   this.tagId.default,
+            tagParam:      this.tagId.default,
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
