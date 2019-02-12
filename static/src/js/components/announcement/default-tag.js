@@ -38,7 +38,10 @@ export default class DefaultTagFilter {
             !opt.defaultTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) )
             throw new TypeError( 'tag is not supported' );
 
-        /* Check if default & supported tags has the same tag */
+        /**
+         * !!!overkill
+         * Check if default & supported tags has the same tag
+         */
 
         TagUtils.supportedTag( languageId ).forEach( ( tag ) => {
             if ( opt.supportedTag.indexOf( tag ) >= 0 && opt.defaultTag.indexOf( tag ) >= 0 )
