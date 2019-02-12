@@ -41,14 +41,6 @@ app.locals.basedir = path.join( projectRoot, '/static/src/pug' );
 app.set( 'view engine', 'pug' );
 app.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
 
-
-/**
- * Setup static files routes.
- */
-
-app.use( '/static', staticFile );
-
-
 /**
  * Url-encoded parser for HTTP request body.
  * Request header `Content-Type` can only be one of the supported types.
@@ -85,6 +77,12 @@ app.use( express.json( {
 
 app.use( language );
 
+/**
+ * Setup static files routes.
+ */
+
+app.use( '/static', staticFile );
+
 app.use( ( req, res, next ) => {
     res.locals.SERVER = {
         host,
@@ -95,7 +93,8 @@ app.use( ( req, res, next ) => {
         getLanguageId: LanguageUtils.getLanguageId,
     };
     res.locals.UTILS = {
-        url: UrlUtils.serverUrl( new UrlUtils( host, req.query.languageId ) ),
+        url:       UrlUtils.serverUrl( new UrlUtils( host, req.query.languageId ) ),
+        staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, req.query.languageId ) ),
     };
     next();
 } );

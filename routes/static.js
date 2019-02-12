@@ -53,14 +53,10 @@ router
 
 /**
  * Resolve URL `/static/image`.
- * @todo solve webpack conflict, server side render did not provide data url conversion.
  */
 
 router
-.use( [
-    '/image',
-    '/src/image',
-], express.static(
+.use( '/image', express.static(
     path.join( projectRoot, '/static/src/image' ),
     {
         extensions: [

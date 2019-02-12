@@ -5,7 +5,7 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
 import browserSupportConditions from './browserlist.js';
-import { projectRoot, } from '../../settings/server/config.js';
+import { staticHost, projectRoot, } from '../../settings/server/config.js';
 
 const sassRoot = path.join( projectRoot, 'static/src/sass' );
 const imageRoot = path.join( projectRoot, 'static/src/image' );
@@ -117,10 +117,11 @@ export default {
     /**
      * Relative url alias.
      *
-     * When writing `url` statement for relative import,
-     * no need to start with `'./'` or `'../'`.
+     * When writing `@import` or `url()` statement to import module,
+     * no need to write relative path such as `'./'` or `'../'`.
      * Only work for following path:
-     * - `url('image/...')`
+     * - `@import '~thirdPartyLib/...'`
+     * - `url('~image/...')`
      */
 
     resolve: {
@@ -195,7 +196,7 @@ export default {
             /**
              * Loader for image files.
              *
-             * Use `url-loader` to convert image file into data url.
+             * Use `file-loader` to convert image file path into public static file url.
              * Image should only appear in `.pug` or `.css` files.
              * Work with following image format:
              * - `.gif`
@@ -208,7 +209,15 @@ export default {
                 // Convert image binary file into data url.
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use:  [
-                    'url-loader',
+                    {
+                        loader:  'file-loader',
+                        options: {
+                            name ( file ) {
+                                return `${ staticHost }/image${ file.split( imageRoot )[ 1 ] }`;
+                            },
+                            emitFile: false,
+                        },
+                    },
                 ],
             },
         ],

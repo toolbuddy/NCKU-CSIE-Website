@@ -162,10 +162,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                     'extract-loader',
                     {
                         loader:  'html-loader',
-                        options: {
-                            // Mainly used by `static/src/pug/components/common/image.pug`.
-                            root: projectRoot,
-                        },
                     },
                     {
                         loader:  'pug-html-loader',
@@ -182,6 +178,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                 },
                                 UTILS: {
                                     url:             UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                    staticUrl:       UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
                                     getTagId:        TagUtils.getTagId,
                                     getTagById:      TagUtils.getTagById,
                                     getTagColorById: TagUtils.getTagColorById,
@@ -190,25 +187,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                             },
                         },
                     },
-                ],
-            },
-
-            /**
-             * Loader for image files.
-             *
-             * Use `url-loader` to convert image file into data url.
-             * Image should only appear in `.pug` or `.css` files.
-             * Work with following image format:
-             * - `.gif`
-             * - `.png`
-             * - `.jpg` or `.jpeg`
-             * - `.svg`
-             */
-
-            {
-                test: /\.(gif|png|jpe?g|svg)$/,
-                use:  [
-                    'url-loader',
                 ],
             },
         ],
