@@ -155,18 +155,6 @@ export default class DefaultTagFilter {
         this.subscribeTagEvent();
     }
 
-    async getAll () {
-        try {
-            await this.getPage();
-            await this.getPinnedAnnouncement();
-            await this.getNormalAnnouncement();
-        }
-
-        /* Silence */
-
-        catch ( {} ) {}
-    }
-
     static formatUpdateTime ( time ) {
         if ( !( time instanceof Date ) )
             throw new TypeError( 'invalid arguments' );
@@ -189,7 +177,8 @@ export default class DefaultTagFilter {
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
         /**
-         * If pages is larger than pageExtraLimit, then pages__extra may show.
+         * If `pages` is larger than `pageExtraLimit`,
+         * then `.pages__extra` is created and need to be rendered.
          */
 
         if ( pages > this.config.pageExtraLimit ) {
@@ -201,7 +190,8 @@ export default class DefaultTagFilter {
 
                     /**
                      * The first page & the last page must show.
-                     * If the distance between a page and the current page is larger than visiblePageNum, then the page should be hidden.
+                     * If the distance between a page and the current page is larger than `this.config.visiblePageNum`,
+                     * then the page should be hidden.
                      */
 
                     if ( page !== this.config.page &&
@@ -215,9 +205,9 @@ export default class DefaultTagFilter {
              * If the page after the first page is hidden, then pages__extra--before should show.
              */
 
-            if ( this.DOM.pages.querySelector( `.pages > [data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
+            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
+            .classList.contains( 'pages__page--hidden' ) )
                 classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
-
             else
                 classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
 
@@ -225,9 +215,9 @@ export default class DefaultTagFilter {
              * If the page before the last page is hidden, then pages__extra--after should show.
              */
 
-            if ( this.DOM.pages.querySelector( `.pages > [data-page="${ pages - 1 }"]` ).classList.contains( 'pages__page--hidden' ) )
+            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
+            .classList.contains( 'pages__page--hidden' ) )
                 classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
-
             else
                 classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
         }
@@ -240,15 +230,21 @@ export default class DefaultTagFilter {
 
             const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
-            /* Render `pages__extra` */
+            /**
+             * Render `.pages__extra`.
+             */
 
             this.renderPageExtra( pages );
 
-            /* Add eventListener to all the `pages__page` element,when rendering pages. */
+            /**
+             * Add eventListener to all the `.pages__page` element after rendering.
+             */
 
             pageDOMArr.forEach( ( pageDOM ) => {
                 pageDOM.addEventListener( 'click', () => {
-                    /* Render `pages__page--active` */
+                    /**
+                     * Render `.pages__page--active`.
+                     */
 
                     pageDOMArr.forEach( ( pageDOM ) => {
                         classRemove( pageDOM, 'pages__page--active' );
@@ -259,7 +255,9 @@ export default class DefaultTagFilter {
                         this.state.page = Number( dataPage );
                         classAdd( pageDOM, 'pages__page--active' );
 
-                        /* Render `pages__extra` */
+                        /**
+                         * Render `.pages__extra`.
+                         */
 
                         this.renderPageExtra( pages );
                         this.getNormalAnnouncement();
@@ -267,26 +265,34 @@ export default class DefaultTagFilter {
                 } );
             } );
 
-            /* Set default active page */
+            /**
+             * Set default active page.
+             */
 
-            const activeDOM = this.DOM.pages.querySelector( `.pages > [data-page="${ this.state.page }"]` );
-            classAdd( activeDOM, 'pages__page--active' );
+            classAdd(
+                this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` ),
+                'pages__page--active'
+            );
 
-            /* Add eventListener to all the `pages__control` element,when rendering pages. */
+            /**
+             * Add eventListener to all the `.pages__control` element after rendering.
+             */
 
-            if ( pages !== 1 ) {
-                this.DOM.pages.querySelector( '.pages > .pages__control--forward' ).addEventListener( 'click', () => {
-                    /* Render `pages__page--active` */
+            if ( pages !== this.config.page ) {
+                this.DOM.pages.querySelector( '.pages > .pages__control.pages__control--forward' ).addEventListener( 'click', () => {
+                    /**
+                     * Render `.pages__page--active`.
+                     */
 
                     pageDOMArr.forEach( ( pageDOM ) => {
                         classRemove( pageDOM, 'pages__page--active' );
                     } );
 
                     this.state.page -= 1;
-                    if ( this.state.page < 1 )
-                        this.state.page = 1;
+                    if ( this.state.page < this.config.page )
+                        this.state.page = this.config.page;
 
-                    const activeDOM = this.DOM.pages.querySelector( `.pages > [data-page="${ this.state.page }"]` );
+                    const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
                     classAdd( activeDOM, 'pages__page--active' );
 
                     /* Render `pages__extra` */
@@ -305,7 +311,7 @@ export default class DefaultTagFilter {
                     if ( this.state.page > pages )
                         this.state.page = pages;
 
-                    const activeDOM = this.DOM.pages.querySelector( `.pages > [data-page="${ this.state.page }"]` );
+                    const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
                     classAdd( activeDOM, 'pages__page--active' );
 
                     /* Render `pages__extra` */
@@ -475,5 +481,17 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             throw err;
         }
+    }
+
+    async getAll () {
+        try {
+            await this.getPage();
+            await this.getPinnedAnnouncement();
+            await this.getNormalAnnouncement();
+        }
+
+        /* Silence */
+
+        catch ( {} ) {}
     }
 }
