@@ -117,13 +117,13 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
 
-        this.DOM.filter.tags.forEach((tagDOM) => {
+        this.DOM.filter.tags.forEach( ( tagDOM ) => {
             const tagId = tagDOM.getAttribute( 'data-tag-id' );
-            if(tagId === null)
+            if ( tagId === null )
                 throw new Error( 'Invalid Tag DOM attribute.' );
-            if( !(Number(tagId) === -1) && !TagUtils.isSupportedTagId(Number(tagId)) )
+            if ( !( Number( tagId ) === -1 ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
                 throw new Error( 'Invalid Tag DOM attribute.' );
-        });
+        } );
 
         /**
          * DOM element `.filter__time` initialization.
@@ -199,7 +199,7 @@ export default class DefaultTagFilter {
                 } );
 
                 const page = pageDOM.getAttribute( 'data-page' );
-                if( page !== null && ValidateUtils.isPositiveInteger( Number( page ) ) ){
+                if ( page !== null && ValidateUtils.isPositiveInteger( Number( page ) ) ) {
                     this.state.page = Number( page );
                     classAdd( pageDOM, 'pages__page--active' );
 
@@ -265,12 +265,12 @@ export default class DefaultTagFilter {
         if ( pages > 4 ) {
             pageDOMArr.forEach( ( pageDOM ) => {
                 classRemove( pageDOM, 'pages__page--hidden' );
-                if(pageDOM.getAttribute('data-page') !== null){
+                if ( pageDOM.getAttribute( 'data-page' ) !== null ) {
                     const page = Number( pageDOM.getAttribute( 'data-page' ) );
                     if ( page !== 1 &&
                         page !== pages &&
                         Math.abs( page - this.state.page ) > 2 )
-                    classAdd( pageDOM, 'pages__page--hidden' );
+                        classAdd( pageDOM, 'pages__page--hidden' );
                 }
             } );
             if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
