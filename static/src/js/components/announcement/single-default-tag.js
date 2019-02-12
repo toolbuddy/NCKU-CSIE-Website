@@ -45,23 +45,21 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
 
     subscribeTagEvent () {
         this.DOM.filter.tags.forEach( ( tagDOM ) => {
-            const tagId = Number( tagDOM.getAttribute( 'data-tag-id' ) );
-
             /* Default tag event subscribe */
 
-            if ( tagId === -1 ) {
+            if ( tagDOM.id === this.tagId.default[ 0 ] ) {
                 /* Default tag should be always active. */
 
-                classAdd( tagDOM, 'tags__tag--active' );
-                tagDOM.addEventListener( 'click', () => {
+                classAdd( tagDOM.node, 'tags__tag--active' );
+                tagDOM.node.addEventListener( 'click', () => {
                     this.DOM.filter.tags.forEach( ( tagDOM ) => {
-                        classRemove( tagDOM, 'tags__tag--active' );
+                        classRemove( tagDOM.node, 'tags__tag--active' );
                     } );
 
-                    classAdd( tagDOM, 'tags__tag--active' );
+                    classAdd( tagDOM.node, 'tags__tag--active' );
 
                     this.state.selectDefault = true;
-                    this.state.tags = [ tagId, ];
+                    this.state.tags = [ tagDOM.id, ];
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
 
@@ -69,15 +67,15 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                 } );
             }
             else {
-                tagDOM.addEventListener( 'click', () => {
-                    const index = this.state.tags.indexOf( tagId );
+                tagDOM.node.addEventListener( 'click', () => {
+                    const index = this.state.tags.indexOf( tagDOM.id );
                     if ( index >= 0 ) {
                         this.state.tags.splice( index, 1 );
-                        classRemove( tagDOM, 'tags__tag--active' );
+                        classRemove( tagDOM.node, 'tags__tag--active' );
                     }
                     else {
-                        this.state.tags.push( tagId );
-                        classAdd( tagDOM, 'tags__tag--active' );
+                        this.state.tags.push( tagDOM.id );
+                        classAdd( tagDOM.node, 'tags__tag--active' );
                     }
 
                     this.state.selectDefault = false;

@@ -10,9 +10,11 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from: new Date( '2019/01/01' ),
-            to:   new Date( Date.now() ),
-            page: 1,
+            from:           new Date( '2019/01/01' ),
+            to:             new Date( Date.now() ),
+            page:           1,
+            sidePageNum:    2,
+            pageExtraLimit: 4,
         };
 
         opt = opt || {};
@@ -83,7 +85,17 @@ export default class DefaultTagFilter {
                     month: opt.filterDOM.querySelector( timeQuerySelector( 'to', 'month' ) ),
                     date:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'date' ) ),
                 },
-                tags: opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ),
+                tags: Array.from( opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ) ).map( ( node ) => {
+                    const tagId = node.getAttribute( 'data-tag-id' );
+                    if ( tagId === null )
+                        throw new Error( 'Invalid Tag DOM attribute.' );
+                    if ( !( Number( tagId ) === -1 ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
+                        throw new Error( 'Invalid Tag DOM attribute.' );
+                    return {
+                        node,
+                        id:   Number( tagId ),
+                    };
+                } ),
             },
             announcement: {
                 pinned: {
@@ -107,7 +119,7 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
-            !Array.from( this.DOM.filter.tags ).every( ValidateUtils.isDomElement ) ||
+            !Array.from( this.DOM.filter.tags.map( tag => tag.node ) ).every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.briefings ) ||
@@ -116,14 +128,6 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings ) ||
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
-
-        this.DOM.filter.tags.forEach( ( tagDOM ) => {
-            const tagId = tagDOM.getAttribute( 'data-tag-id' );
-            if ( tagId === null )
-                throw new Error( 'Invalid Tag DOM attribute.' );
-            if ( !( Number( tagId ) === -1 ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
-                throw new Error( 'Invalid Tag DOM attribute.' );
-        } );
 
         /**
          * DOM element `.filter__time` initialization.
@@ -183,14 +187,14 @@ export default class DefaultTagFilter {
 
     renderPageExtra ( pages ) {
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
-        if ( pages > 4 ) {
+        if ( pages > this.config.pageExtraLimit ) {
             pageDOMArr.forEach( ( pageDOM ) => {
                 classRemove( pageDOM, 'pages__page--hidden' );
                 if ( pageDOM.getAttribute( 'data-page' ) !== null ) {
                     const page = Number( pageDOM.getAttribute( 'data-page' ) );
                     if ( page !== 1 &&
                         page !== pages &&
-                        Math.abs( page - this.state.page ) > 2 )
+                        Math.abs( page - this.state.page ) > this.config.sidePageNum )
                         classAdd( pageDOM, 'pages__page--hidden' );
                 }
             } );
@@ -211,7 +215,12 @@ export default class DefaultTagFilter {
 
     renderPages ( pages ) {
         this.state.page = this.config.page;
-        this.DOM.pages.innerHTML = pagesHTML( { pages, } );
+        try {
+            this.DOM.pages.innerHTML = pagesHTML( { pages, } );
+        }
+        catch ( err ) {
+            throw new Error( 'failed to render pages' );
+        }
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
 
         /* Render `pages__extra` */
@@ -385,6 +394,7 @@ export default class DefaultTagFilter {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 
@@ -442,6 +452,7 @@ export default class DefaultTagFilter {
             this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 }
