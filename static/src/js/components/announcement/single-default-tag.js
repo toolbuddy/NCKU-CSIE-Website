@@ -57,13 +57,14 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     this.DOM.filter.tags.forEach( ( tagDOM ) => {
                         classRemove( tagDOM, 'tags__tag--active' );
                     } );
-                    classAdd( tagDOM, 'tags__tag--active' );
-                    this.state.selectDefault = true;
-                    this.state.tags = [];
-                    this.state.tags.push( tagId );
-                    this.state.page = this.config.page;
 
+                    classAdd( tagDOM, 'tags__tag--active' );
+
+                    this.state.selectDefault = true;
+                    this.state.tags = [ tagId, ];
+                    this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
+
                     this.getAll();
                 } );
             }
@@ -78,10 +79,11 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                         this.state.tags.push( tagId );
                         classAdd( tagDOM, 'tags__tag--active' );
                     }
+
                     this.state.selectDefault = false;
                     this.state.page = this.config.page;
-
                     this.state.tagParam = this.tagId.default.concat( this.state.tags );
+
                     this.getAll();
                 } );
             }

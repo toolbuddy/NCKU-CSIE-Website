@@ -83,7 +83,7 @@ export default class DefaultTagFilter {
                     month: opt.filterDOM.querySelector( timeQuerySelector( 'to', 'month' ) ),
                     date:  opt.filterDOM.querySelector( timeQuerySelector( 'to', 'date' ) ),
                 },
-                tags: opt.filterDOM.querySelectorAll( '.tags__tag' ),
+                tags: opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ),
             },
             announcement: {
                 pinned: {
@@ -151,14 +151,16 @@ export default class DefaultTagFilter {
         this.subscribeTagEvent();
     }
 
-    getAll () {
-        this.getPage()
-        .then( () => {
-            this.getPinnedAnnouncement();
-        } )
-        .then( () => {
-            this.getNormalAnnouncement();
-        } );
+    async getAll () {
+        try {
+            await this.getPage();
+            await this.getPinnedAnnouncement();
+            await this.getNormalAnnouncement();
+        }
+
+        /* Silence */
+
+        catch ( {} ) {}
     }
 
     static formatUpdateTime ( time ) {
@@ -177,6 +179,34 @@ export default class DefaultTagFilter {
                 `${ time.getSeconds() < 10 ? `0${ String( time.getSeconds() ) }` : String( time.getSeconds() ) }`,
             ].join( ':' ),
         ].join( ' | ' );
+    }
+
+    renderPageExtra ( pages ) {
+        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
+        if ( pages > 4 ) {
+            pageDOMArr.forEach( ( pageDOM ) => {
+                classRemove( pageDOM, 'pages__page--hidden' );
+                if ( pageDOM.getAttribute( 'data-page' ) !== null ) {
+                    const page = Number( pageDOM.getAttribute( 'data-page' ) );
+                    if ( page !== 1 &&
+                        page !== pages &&
+                        Math.abs( page - this.state.page ) > 2 )
+                        classAdd( pageDOM, 'pages__page--hidden' );
+                }
+            } );
+            if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
+
+            else
+                classAdd( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
+
+
+            if ( this.DOM.pages.querySelector( `[data-page="${ pages - 1 }"]` ).classList.contains( 'pages__page--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
+
+            else
+                classAdd( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
+        }
     }
 
     renderPages ( pages ) {
@@ -260,34 +290,6 @@ export default class DefaultTagFilter {
         }
     }
 
-    renderPageExtra ( pages ) {
-        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
-        if ( pages > 4 ) {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                classRemove( pageDOM, 'pages__page--hidden' );
-                if ( pageDOM.getAttribute( 'data-page' ) !== null ) {
-                    const page = Number( pageDOM.getAttribute( 'data-page' ) );
-                    if ( page !== 1 &&
-                        page !== pages &&
-                        Math.abs( page - this.state.page ) > 2 )
-                        classAdd( pageDOM, 'pages__page--hidden' );
-                }
-            } );
-            if ( this.DOM.pages.querySelector( `[data-page="2"]` ).classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
-
-            else
-                classAdd( this.DOM.pages.querySelector( '#pages__extra--before' ), 'pages__extra--hidden' );
-
-
-            if ( this.DOM.pages.querySelector( `[data-page="${ pages - 1 }"]` ).classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
-
-            else
-                classAdd( this.DOM.pages.querySelector( '#pages__extra--after' ), 'pages__extra--hidden' );
-        }
-    }
-
     async getPage () {
         try {
             this.DOM.pages.innerHTML = '';
@@ -323,6 +325,11 @@ export default class DefaultTagFilter {
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
+            classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+            classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+            classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+            classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            throw err;
         }
     }
 
