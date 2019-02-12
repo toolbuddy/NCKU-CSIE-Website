@@ -16,22 +16,23 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                 this.state.page = this.config.page;
                 this.state.from = new Date( `${ year }/${ month }/${ date }` );
 
-                if ( !ValidateUtils.isValidDate( this.state.from ) ) // || !Number.isNaN( this.state.from )
+                if ( !ValidateUtils.isValidDate( this.state.from ) ){
+                    this.DOM.announcement.pinned.briefings.innerHTML = '';
+                    classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+                    classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+                    this.DOM.announcement.normal.briefings.innerHTML = '';
+                    classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+                    classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
                     throw new TypeError( 'invalid arguments' );
+                }
 
-                if ( this.state.selectAll ) {
-                    this.getPage( this.tagId.default ).then( () => {
-                        this.getPinnedAnnouncement( this.tagId.default );
-                    } ).then( () => {
-                        this.getNormalAnnouncement( this.tagId.default );
-                    } );
+                if ( this.state.selectDefault ) {
+                    this.state.tagParam = this.tagId.default;
+                    this.getAll();
                 }
                 else {
-                    this.getPage( this.state.tags ).then( () => {
-                        this.getPinnedAnnouncement( this.state.tags );
-                    } ).then( () => {
-                        this.getNormalAnnouncement( this.state.tags );
-                    } );
+                    this.state.tagParam = this.state.tags;
+                    this.getAll();
                 }
             } );
         } );
@@ -48,22 +49,23 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                 this.state.page = this.config.page;
                 this.state.to = new Date( `${ year }/${ month }/${ date }` );
 
-                if ( !ValidateUtils.isValidDate( this.state.to ) ) // || !Number.isNaN( this.state.to )
+                if ( !ValidateUtils.isValidDate( this.state.to ) ){
+                    this.DOM.announcement.pinned.briefings.innerHTML = '';
+                    classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+                    classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+                    this.DOM.announcement.normal.briefings.innerHTML = '';
+                    classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+                    classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
                     throw new TypeError( 'invalid arguments' );
+                }
 
-                if ( this.state.selectAll ) {
-                    this.getPage( this.tagId.default ).then( () => {
-                        this.getPinnedAnnouncement( this.tagId.default );
-                    } ).then( () => {
-                        this.getNormalAnnouncement( this.tagId.default );
-                    } );
+                if ( this.state.selectDefault ) {
+                    this.state.tagParam = this.tagId.default;
+                    this.getAll();
                 }
                 else {
-                    this.getPage( this.state.tags ).then( () => {
-                        this.getPinnedAnnouncement( this.state.tags );
-                    } ).then( () => {
-                        this.getNormalAnnouncement( this.state.tags );
-                    } );
+                    this.state.tagParam = this.state.tags;
+                    this.getAll();
                 }
             } );
         } );
@@ -85,15 +87,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         classRemove( tagDOM, 'tags__tag--active' );
                     } );
                     classAdd( tagDOM, 'tags__tag--active' );
-                    this.state.selectAll = true;
+                    this.state.selectDefault = true;
                     this.state.tags = [];
                     this.state.tags.push( tagId );
                     this.state.page = this.config.page;
-                    this.getPage( this.tagId.default ).then( () => {
-                        this.getPinnedAnnouncement( this.tagId.default );
-                    } ).then( () => {
-                        this.getNormalAnnouncement( this.tagId.default );
-                    } );
+                    this.state.tagParam = this.tagId.default;
+                    this.getAll();
                 } );
             }
             else {
@@ -107,23 +106,17 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         this.state.tags.push( tagId );
                         classAdd( tagDOM, 'tags__tag--active' );
                     }
-                    this.state.selectAll = false;
+                    this.state.selectDefault = false;
                     this.state.page = this.config.page;
 
                     if ( this.state.tags.length === 0 ) {
-                        this.state.selectAll = true;
-                        this.getPage( this.tagId.default ).then( () => {
-                            this.getPinnedAnnouncement( this.tagId.default );
-                        } ).then( () => {
-                            this.getNormalAnnouncement( this.tagId.default );
-                        } );
+                        this.state.selectDefault = true;
+                        this.state.tagParam = this.tagId.default;
+                        this.getAll();
                     }
                     else {
-                        this.getPage( this.state.tags ).then( () => {
-                            this.getPinnedAnnouncement( this.state.tags );
-                        } ).then( () => {
-                            this.getNormalAnnouncement( this.state.tags );
-                        } );
+                        this.state.tagParam = this.state.tags;
+                        this.getAll();
                     }
                 } );
             }

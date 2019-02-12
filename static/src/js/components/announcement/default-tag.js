@@ -63,7 +63,8 @@ export default class DefaultTagFilter {
             to:         this.config.to,
             page:       this.config.page,
             tags:       [],
-            selectAll:  true,
+            selectDefault:  true,
+            tagParam:   this.tagId.default,
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -141,18 +142,16 @@ export default class DefaultTagFilter {
     }
 
     getAll () {
-        this.getPage( this.tagId.default ).then( () => {
-            this.getPinnedAnnouncement( this.tagId.default );
-        } ).then( () => {
-            this.getNormalAnnouncement( this.tagId.default );
+        this.getPage()
+        .then( () => {
+            this.getPinnedAnnouncement();
+        } )
+        .then( () => {
+            this.getNormalAnnouncement();
         } );
     }
 
     static formatUpdateTime ( time ) {
-        /**
-         * @todo add time validation.
-         */
-
         if ( !( time instanceof Date ) )
             throw new TypeError( 'invalid arguments' );
 
@@ -170,7 +169,7 @@ export default class DefaultTagFilter {
         ].join( ' | ' );
     }
 
-    renderPages ( pages, tags ) {
+    renderPages ( pages ) {
         this.state.page = this.config.page;
         this.DOM.pages.innerHTML = pagesHTML( { pages, } );
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages__page' ) );
@@ -194,7 +193,7 @@ export default class DefaultTagFilter {
                 /* Render `pages__extra` */
 
                 this.renderPageExtra( pages );
-                this.getNormalAnnouncement( tags );
+                this.getNormalAnnouncement();
             } );
         } );
 
@@ -223,7 +222,7 @@ export default class DefaultTagFilter {
                 /* Render `pages__extra` */
 
                 this.renderPageExtra( pages );
-                this.getNormalAnnouncement( tags );
+                this.getNormalAnnouncement();
             } );
             this.DOM.pages.querySelector( '.pages__control--backward' ).addEventListener( 'click', () => {
                 /* Render `pages__page--active` */
@@ -242,7 +241,7 @@ export default class DefaultTagFilter {
                 /* Render `pages__extra` */
 
                 this.renderPageExtra( pages );
-                this.getNormalAnnouncement( tags );
+                this.getNormalAnnouncement();
             } );
         }
     }
@@ -273,7 +272,7 @@ export default class DefaultTagFilter {
         }
     }
 
-    async getPage ( tags ) {
+    async getPage () {
         try {
             this.DOM.pages.innerHTML = '';
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -283,19 +282,19 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = tags.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( index, 1 );
+                this.state.tagParam.splice( index, 1 );
 
             const queryString = [
                 `amount=${ this.state.amount }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...tags.map( tagId => `tags=${ tagId }` ),
+                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectAll )
+            if ( this.state.selectDefault )
                 res = await fetch( `${ host }/api/announcement/all-pages?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/tags-pages?${ queryString }` );
@@ -304,32 +303,32 @@ export default class DefaultTagFilter {
                 throw new Error( 'failed to get all pages' );
 
             const { pages, } = await res.json();
-            this.renderPages( pages, tags );
+            this.renderPages( pages );
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
         }
     }
 
-    async getPinnedAnnouncement ( tags ) {
+    async getPinnedAnnouncement () {
         try {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            const index = tags.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( index, 1 );
+                this.state.tagParam.splice( index, 1 );
 
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...tags.map( tagId => `tags=${ tagId }` ),
+                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectAll )
+            if ( this.state.selectDefault )
                 res = await fetch( `${ host }/api/announcement/all-pinned?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/tags-pinned?${ queryString }` );
@@ -366,15 +365,15 @@ export default class DefaultTagFilter {
         }
     }
 
-    async getNormalAnnouncement ( tags ) {
+    async getNormalAnnouncement () {
         try {
             this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = tags.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( -1 );
             if ( index >= 0 )
-                tags.splice( index, 1 );
+                this.state.tagParam.splice( index, 1 );
 
             const queryString = [
                 `amount=${ this.state.amount }`,
@@ -382,11 +381,11 @@ export default class DefaultTagFilter {
                 `from=${ Number( this.state.from ) }`,
                 `page=${ this.state.page }`,
                 `to=${ Number( this.state.to ) }`,
-                ...tags.map( tagId => `tags=${ tagId }` ),
+                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectAll )
+            if ( this.state.selectDefault )
                 res = await fetch( `${ host }/api/announcement/all-announcement?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/tags-announcement?${ queryString }` );
