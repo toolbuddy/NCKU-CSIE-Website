@@ -383,9 +383,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/or-tag-pages?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/and-tag-pages?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
@@ -422,9 +422,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/or-tag-pinned?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/and-tag-pinned?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pinned announcement' );
@@ -479,9 +479,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/or-tag-announcement?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/and-tag-announcement?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );
