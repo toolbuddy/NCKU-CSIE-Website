@@ -41,7 +41,7 @@ export default class DefaultTagFilter {
             throw new TypeError( 'tag is not supported' );
 
         /**
-         * Check if default & supported tags has the same tag
+         * Default & supported tags should not have tags in common.
          */
 
         opt.supportedTag.forEach( ( tag ) => {
@@ -315,7 +315,9 @@ export default class DefaultTagFilter {
                      * Silence.
                      */
 
-                    catch ( {} ) {}
+                    catch ( err ) {
+                        console.error( err );
+                    }
                 } );
                 this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
                     /**
@@ -348,7 +350,9 @@ export default class DefaultTagFilter {
                      * Silence.
                      */
 
-                    catch ( {} ) {}
+                    catch ( err ) {
+                        console.error( err );
+                    }
                 } );
             }
         }
@@ -524,6 +528,8 @@ export default class DefaultTagFilter {
          * Silence.
          */
 
-        catch ( {} ) {}
+        catch ( err ) {
+            console.error( err );
+        }
     }
 }
