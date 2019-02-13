@@ -10,7 +10,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from:           new Date( '2019/01/01' ),
+            from:           new Date( '2018/01/01' ),
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
@@ -207,9 +207,9 @@ export default class DefaultTagFilter {
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
             .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
+                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
             else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
+                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
 
             /**
              * If the page before the last page is hidden, then pages__extra--after should show.
@@ -217,9 +217,10 @@ export default class DefaultTagFilter {
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
             .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
+                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
+
             else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
+                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
         }
     }
 
