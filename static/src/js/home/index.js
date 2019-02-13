@@ -1,6 +1,8 @@
 import header from 'static/src/js/components/common/header/index.js';
 import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
 
+import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+
 // Import briefingHotHTML from 'static/src/pug/components/home/briefing-hot.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import TagUtils from 'models/announcement/utils/tag.js';
@@ -10,19 +12,67 @@ import ValidateUtils from 'models/common/utils/validate.js';
 
 header( document.getElementById( 'header' ) );
 
-const announcement = document.getElementById( 'announcement' ).querySelector( '.announcement__briefings.briefings' );
+class GetAllAnnouncement {
+    constructor ( opt ) {
+        opt = opt || {};
 
-async function allAnnouncement () {
-    const queryString = [
-        `amount=${ 3 }`,
-        `languageId=${ WebLanguageUtils.currentLanguageId }`,
-        `from=${ Number( new Date( '2019/01/01' ) ) }`,
-        `page=${ 1 }`,
-        `to=${ Date.now() }`,
-        ...TagUtils.supportedTagId.map( tagId => `tags=${ tagId }` ),
-    ].join( '&' );
+        if (
+            !opt.amount ||
+            !ValidateUtils.isPositiveInteger( opt.amount ) ||
+            !opt.announcementDOM ||
+            !ValidateUtils.isDomElement( opt.announcementDOM ) ||
+            !opt.from ||
+            !ValidateUtils.isValidDate( opt.from ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
+            !opt.to ||
+            !ValidateUtils.isValidDate( opt.to ) ||
+            !Array.isArray( opt.tags ) ||
+            !opt.tags.every( tag => TagUtils.isSupportedTag( { tag, languageId: WebLanguageUtils.getLanguageId( 'en-US' ), } ) ) ||
+            !opt.page ||
+            !ValidateUtils.isPositiveInteger( opt.page ) )
+            throw new TypeError( 'invalid arguments' );
 
-    function formatUpdateTime ( time ) {
+        const announcementQuerySelector = block => `.announcement__${ block }.${ block }`;
+
+        this.DOM = {
+            noResult:  opt.announcementDOM.querySelector( announcementQuerySelector( 'no-result' ) ),
+            loading:   opt.announcementDOM.querySelector( announcementQuerySelector( 'loading' ) ),
+            briefings: opt.announcementDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
+        };
+
+        if (
+            !ValidateUtils.isDomElement( this.DOM.noResult ) ||
+            !ValidateUtils.isDomElement( this.DOM.loading ) ||
+            !ValidateUtils.isDomElement( this.DOM.briefings ) )
+            throw new Error( 'DOM not found.' );
+
+        this.amount = opt.amount;
+        this.from = opt.from;
+        this.languageId = opt.languageId;
+        this.tags = opt.tags;
+        this.to = opt.to;
+        this.page = opt.page;
+    }
+
+    get queryString () {
+        return [
+            `amount=${ this.amount }`,
+            `languageId=${ this.languageId }`,
+            `from=${ Number( this.from ) }`,
+            `page=${ this.page }`,
+            `to=${ Number( this.to ) }`,
+            ...this.tags.map( tag => `tags=${ TagUtils.getTagId( {
+                tag,
+                languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
+            } ) }` ),
+        ].join( '&' );
+    }
+
+    get queryApi () {
+        return `${ host }/api/announcement/all-announcement?${ this.queryString }`;
+    }
+
+    static formatUpdateTime ( time ) {
         if ( !( ValidateUtils.isValidDate( time ) ) )
             throw new TypeError( 'Invalid time.' );
 
@@ -40,36 +90,55 @@ async function allAnnouncement () {
         ].join( ' | ' );
     }
 
-    fetch( `${ host }/api/announcement/all-announcement?${ queryString }` )
-    .then( ( res ) => {
-        if ( res.ok )
-            return res.json();
-        throw new Error( 'No announcement found' );
-    } )
-    .then( ( data ) => {
-        data.map( ( briefing ) => {
-            briefing.tags = briefing.tags.map( tagId => ( {
-                color: TagUtils.getTagColorById( tagId ),
-                tag:   TagUtils.getTagById( {
-                    tagId,
-                    languageId: WebLanguageUtils.currentLanguageId,
-                } ),
-            } ) );
-            briefing.updateTime = formatUpdateTime( new Date( briefing.updateTime ) );
-            return briefing;
-        } )
-        .forEach( ( briefing ) => {
-            announcement.innerHTML += briefingHTML( {
-                briefing,
-                UTILS: {
-                    url: UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
-                },
+    async exec () {
+        try {
+            this.DOM.briefings.innerHTML = '';
+            classAdd( this.DOM.noResult, 'no-result--hidden' );
+
+            const res = await fetch( this.queryApi );
+
+            if ( !res.ok )
+                throw new Error( 'No announcement found' );
+
+            const data = await res.json();
+
+            data.map( ( briefing ) => {
+                briefing.tags = briefing.tags.map( tagId => ( {
+                    color: TagUtils.getTagColorById( tagId ),
+                    tag:   TagUtils.getTagById( {
+                        tagId,
+                        languageId: this.languageId,
+                    } ),
+                } ) );
+                briefing.updateTime = GetAllAnnouncement.formatUpdateTime( new Date( briefing.updateTime ) );
+                return briefing;
+            } )
+            .forEach( ( briefing ) => {
+                this.DOM.briefings.innerHTML += briefingHTML( {
+                    briefing,
+                    UTILS: {
+                        url: UrlUtils.serverUrl( new UrlUtils( host, this.languageId ) ),
+                    },
+                } );
             } );
-        } );
-    } )
-    .catch( ( err ) => {
-        console.error( err );
-    } );
+            classAdd( this.DOM.loading, 'loading--hidden' );
+        }
+        catch ( err ) {
+            classAdd( this.DOM.loading, 'loading--hidden' );
+            classRemove( this.DOM.noResult, 'no-result--hidden' );
+            console.error( err );
+        }
+    }
 }
 
-allAnnouncement();
+const getAllAnnouncement = new GetAllAnnouncement( {
+    amount:          3,
+    announcementDOM: document.getElementById( 'announcement' ),
+    from:            new Date( '2019/01/01' ),
+    languageId:      WebLanguageUtils.currentLanguageId,
+    tags:            TagUtils.supportedTag( WebLanguageUtils.getLanguageId( 'en-US' ) ),
+    to:              new Date( Date.now() ),
+    page:            1,
+} );
+
+getAllAnnouncement.exec();
