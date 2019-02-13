@@ -4,7 +4,7 @@ import {
     submitButtonClick,
     delayOptoinChange,
 } from 'static/src/js/components/user/announcement/event.js';
-import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
+import DefaultTagFilter from 'static/src/js/components/announcement/default-tag-filter.js';
 
 function initTimeSelector ( timeSelector ) {
     const now = new Date( Date.now() );

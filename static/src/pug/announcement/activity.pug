@@ -33,12 +33,12 @@ append data
       },
     } );
     const tags = [
-        allTags['all'],
-        allTags['competition'],
-        allTags['conference'],
-        allTags['exhibition'],
-        allTags['speech'],
-    ];
+        'all',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech'
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'announcement/activity';
 
 append title

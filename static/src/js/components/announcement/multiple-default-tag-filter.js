@@ -1,7 +1,7 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
-import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
+import DefaultTagFilter from 'static/src/js/components/announcement/default-tag-filter.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import TagUtils from '../../../../../models/announcement/utils/tag';
+import TagUtils from 'models/announcement/utils/tag';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter {
     subscribeTimeEvent () {

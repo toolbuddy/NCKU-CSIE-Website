@@ -33,12 +33,12 @@ append data
       },
     } );
     const tags = [
-        allTags['rule'],
-        allTags['college'],
-        allTags['master'],
-        allTags['phd'],
-        allTags['faculty'],
-    ];
+        'rule',
+        'college',
+        'master',
+        'phd',
+        'faculty',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'resource/rule';
 
 append title

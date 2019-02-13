@@ -33,17 +33,17 @@ append data
       },
     } );
     const tags = [
-        allTags['college'],
-        allTags['competition'],
-        allTags['conference'],
-        allTags['exhibition'],
-        allTags['speech'],
-        allTags['award'],
-        allTags['international'],
-        allTags['scholarship'],
-        allTags['internship'],
-        allTags['rule'],
-    ];
+        'college',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech',
+        'award',
+        'international',
+        'scholarship',
+        'internship',
+        'rule',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/college';
 
 append title

@@ -10,11 +10,10 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from:           new Date( '2019/01/01' ),
+            from:           new Date( '2018/01/01' ),
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
-            pageLimit:      4,
         };
 
         opt = opt || {};
@@ -177,13 +176,12 @@ export default class DefaultTagFilter {
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
         /**
-         * If `pages` is larger than `pageExtraLimit`,
+         * If `pages` is larger than `visiblePageNum * 2 + 1`,
          * then `.pages__extra` is created and need to be rendered.
          */
 
-        if ( pages > this.config.pageLimit ) {
+        if ( pages > this.config.visiblePageNum * 2 + 1 ) {
             pageDOMArr.forEach( ( pageDOM ) => {
-                classRemove( pageDOM, 'pages__page--hidden' );
                 const dataPage = pageDOM.getAttribute( 'data-page' );
                 if ( dataPage !== null ) {
                     const page = Number( dataPage );
@@ -198,6 +196,8 @@ export default class DefaultTagFilter {
                         page !== pages &&
                         Math.abs( page - this.state.page ) > this.config.visiblePageNum )
                         classAdd( pageDOM, 'pages__page--hidden' );
+                    else
+                        classRemove( pageDOM, 'pages__page--hidden' );
                 }
             } );
 
