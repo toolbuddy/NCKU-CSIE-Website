@@ -156,8 +156,8 @@ export default class DefaultTagFilter {
     }
 
     static formatUpdateTime ( time ) {
-        if ( !( time instanceof Date ) )
-            throw new TypeError( 'invalid arguments' );
+        if ( !( ValidateUtils.isValidDate( time ) ) )
+            throw new TypeError( 'Invalid time.' );
 
         return [
             [
@@ -246,21 +246,26 @@ export default class DefaultTagFilter {
                      * Render `.pages__page--active`.
                      */
 
-                    pageDOMArr.forEach( ( pageDOM ) => {
-                        classRemove( pageDOM, 'pages__page--active' );
-                    } );
+                    try {
+                        pageDOMArr.forEach( ( pageDOM ) => {
+                            classRemove( pageDOM, 'pages__page--active' );
+                        } );
 
-                    const dataPage = pageDOM.getAttribute( 'data-page' );
-                    if ( dataPage !== null && ValidateUtils.isPositiveInteger( Number( dataPage ) ) ) {
-                        this.state.page = Number( dataPage );
-                        classAdd( pageDOM, 'pages__page--active' );
+                        const dataPage = pageDOM.getAttribute( 'data-page' );
+                        if ( dataPage !== null && ValidateUtils.isPositiveInteger( Number( dataPage ) ) ) {
+                            this.state.page = Number( dataPage );
+                            classAdd( pageDOM, 'pages__page--active' );
 
-                        /**
-                         * Render `.pages__extra`.
-                         */
+                            /**
+                             * Render `.pages__extra`.
+                             */
 
-                        this.renderPageExtra( pages );
-                        this.getNormalAnnouncement();
+                            this.renderPageExtra( pages );
+                            this.getNormalAnnouncement();
+                        }
+                    }
+                    catch ( err ) {
+                        throw new Error( 'Failed in addEventListener.' );
                     }
                 } );
             } );
@@ -284,40 +289,52 @@ export default class DefaultTagFilter {
                      * Render `.pages__page--active`.
                      */
 
-                    pageDOMArr.forEach( ( pageDOM ) => {
-                        classRemove( pageDOM, 'pages__page--active' );
-                    } );
+                    try {
+                        pageDOMArr.forEach( ( pageDOM ) => {
+                            classRemove( pageDOM, 'pages__page--active' );
+                        } );
 
-                    this.state.page -= 1;
-                    if ( this.state.page < this.config.page )
-                        this.state.page = this.config.page;
+                        this.state.page -= 1;
+                        if ( this.state.page < this.config.page )
+                            this.state.page = this.config.page;
 
-                    const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                    classAdd( activeDOM, 'pages__page--active' );
+                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                        if ( ValidateUtils.isDomElement( activeDOM ) )
+                            classAdd( activeDOM, 'pages__page--active' );
 
-                    /* Render `pages__extra` */
+                        /* Render `pages__extra` */
 
-                    this.renderPageExtra( pages );
-                    this.getNormalAnnouncement();
+                        this.renderPageExtra( pages );
+                        this.getNormalAnnouncement();
+                    }
+                    catch ( err ) {
+                        throw new Error( 'Failed in addEventListener.' );
+                    }
                 } );
                 this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
                     /* Render `pages__page--active` */
 
-                    pageDOMArr.forEach( ( pageDOM ) => {
-                        classRemove( pageDOM, 'pages__page--active' );
-                    } );
+                    try {
+                        pageDOMArr.forEach( ( pageDOM ) => {
+                            classRemove( pageDOM, 'pages__page--active' );
+                        } );
 
-                    this.state.page += 1;
-                    if ( this.state.page > pages )
-                        this.state.page = pages;
+                        this.state.page += 1;
+                        if ( this.state.page > pages )
+                            this.state.page = pages;
 
-                    const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                    classAdd( activeDOM, 'pages__page--active' );
+                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                        if ( ValidateUtils.isDomElement( activeDOM ) )
+                            classAdd( activeDOM, 'pages__page--active' );
 
-                    /* Render `pages__extra` */
+                        /* Render `pages__extra` */
 
-                    this.renderPageExtra( pages );
-                    this.getNormalAnnouncement();
+                        this.renderPageExtra( pages );
+                        this.getNormalAnnouncement();
+                    }
+                    catch ( err ) {
+                        throw new Error( 'Failed in addEventListener.' );
+                    }
                 } );
             }
         }
@@ -421,7 +438,6 @@ export default class DefaultTagFilter {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
-            throw err;
         }
     }
 

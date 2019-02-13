@@ -113,6 +113,12 @@
         .input {
           text-align: center;
         }
+
+        > input {
+          background: rgba( 0, 0, 0, 0 );
+          outline: none;
+          border: none;
+        }
       }
 
       .from__text, .to__text {
