@@ -20,7 +20,10 @@
 @mixin tags () {
   // block
   // `> .tags`
-  > .tags {
+  &.tags {
+    // [ customization ]
+    @content;
+
     // [ skin ]
     color: #ffffff;
 

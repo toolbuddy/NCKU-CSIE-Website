@@ -5,14 +5,14 @@ append data
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Home',
-        'topic': 'Latest news',
-        'more':  'more',
-        'hot':   'Hot news',
+        'topic': 'Latest News',
+        'more':  'more...',
+        'hot':   'Hot News',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
-        'more':  '更多資訊',
+        'more':  '更多資訊...',
         'hot':   '最近熱門',
       },
     } );
@@ -37,7 +37,8 @@ append content
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
-    a.announcement__button( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }...`
+    aside.announcement__more.more
+      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
   section#hot-announcement.hot-announcement
     header.hot-announcement__title.title= i18n[ LANG.id ].hot
     +noResult( 'hot-announcement' )

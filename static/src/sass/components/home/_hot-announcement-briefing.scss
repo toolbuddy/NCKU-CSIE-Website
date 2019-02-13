@@ -49,11 +49,19 @@
 
     // element
     // `> .hot-announcement > .hot-announcement__no-result`
-    @include no-result();
+    // block
+    // `> .hot-announcement > .no-result`
+    > .hot-announcement__no-result {
+      @include no-result();
+    }
 
     // element
     // `> .hot-announcement > .hot-announcement__loading`
-    @include loading();
+    // block
+    // `> .hot-announcement > .loading`
+    > .hot-announcement__loading {
+      @include loading();
+    }
 
     // element
     // `> .hot-announcement > .announcement__briefings`

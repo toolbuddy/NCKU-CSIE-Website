@@ -1,6 +1,6 @@
 // block
 @mixin no-result {
-  > .no-result {
+  &.no-result {
     // [ layout ]
     text-align: center;
     margin-top: 2rem;

@@ -67,23 +67,23 @@
 
       // element
       // `> .announcement > .headline > .headline__tags`
-      > .headline__tags {
-        // [ position ]
-        grid-area: headline__tags;
-
-        // [ layout ]
-        display: block;
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ skin ]
-          font-size: .4375rem;
-        }
-      }
-
       // block
       // `> .announcement > .headline > .tags`
-      @include tags();
+      > .headline__tags {
+        @include tags() {
+          // [ position ]
+          grid-area: headline__tags;
+
+          // [ layout ]
+          display: block;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ skin ]
+            font-size: .4375rem;
+          }
+        }
+      }
 
       // element
       // `> .announcement > .headline > .headline__title`
