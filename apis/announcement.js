@@ -11,7 +11,7 @@ import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pin
 
 const apis = express.Router();
 
-apis.get( '/all-announcement', cors(), async ( req, res, next ) => {
+apis.get( '/or-tag-announcement', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -32,7 +32,7 @@ apis.get( '/all-announcement', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/all-pages', cors(), async ( req, res, next ) => {
+apis.get( '/or-tag-pages', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -51,7 +51,7 @@ apis.get( '/all-pages', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/all-pinned', cors(), async ( req, res, next ) => {
+apis.get( '/or-tag-pinned', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -70,7 +70,7 @@ apis.get( '/all-pinned', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-announcement', cors(), async ( req, res, next ) => {
+apis.get( '/and-tag-announcement', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -91,7 +91,7 @@ apis.get( '/tags-announcement', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-pages', cors(), async ( req, res, next ) => {
+apis.get( '/and-tag-pages', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -110,7 +110,7 @@ apis.get( '/tags-pages', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-pinned', cors(), async ( req, res, next ) => {
+apis.get( '/and-tag-pinned', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
