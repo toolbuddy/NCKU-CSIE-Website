@@ -34,10 +34,12 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                         if ( this.state.selectDefault ) {
                             this.state.tagParam = this.tagId.default;
                             this.getAll();
+                            this.pushState();
                         }
                         else {
                             this.state.tagParam = this.tagId.default.concat( this.state.tags );
                             this.getAll();
+                            this.pushState();
                         }
                     }
                     catch ( err ) {
@@ -73,6 +75,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     this.state.tagParam = this.tagId.default;
 
                     this.getAll();
+                    this.pushState();
                 } );
             }
             else {
@@ -92,6 +95,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     this.state.tagParam = this.tagId.default.concat( this.state.tags );
 
                     this.getAll();
+                    this.pushState();
                 } );
             }
         } );

@@ -35,10 +35,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         if ( this.state.selectDefault ) {
                             this.state.tagParam = this.tagId.default;
                             this.getAll();
+                            this.pushState();
                         }
                         else {
                             this.state.tagParam = this.state.tags;
                             this.getAll();
+                            this.pushState();
                         }
                     }
                     catch ( err ) {
@@ -72,6 +74,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
                     this.getAll();
+                    this.pushState();
                 } );
             }
             else {
@@ -92,10 +95,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         this.state.selectDefault = true;
                         this.state.tagParam = this.tagId.default;
                         this.getAll();
+                        this.pushState();
                     }
                     else {
                         this.state.tagParam = this.state.tags;
                         this.getAll();
+                        this.pushState();
                     }
                 } );
             }

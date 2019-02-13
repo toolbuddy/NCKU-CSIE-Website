@@ -10,7 +10,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from:           new Date( '2018/01/01' ),
+            from:           new Date( '2019/01/01' ),
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
@@ -152,6 +152,59 @@ export default class DefaultTagFilter {
          */
 
         this.subscribeTagEvent();
+
+        /**
+         * Subscribe popstate event.
+         */
+
+        window.addEventListener( 'popstate', ( history ) => {
+            this.state = history.state;
+            if ( this.state === null ) {
+                this.state = {
+                    amount:        opt.amount,
+                    languageId:    WebLanguageUtils.currentLanguageId,
+                    from:          this.config.from,
+                    to:            this.config.to,
+                    page:          this.config.page,
+                    tags:          [],
+                    selectDefault: true,
+                    tagParam:      this.tagId.default,
+                };
+            }
+
+
+            /**
+             * Render filter-tag.
+             */
+
+            this.DOM.filter.tags.forEach( ( tagObj ) => {
+                if ( tagObj.id === -1 || this.state.tags.indexOf( tagObj.id ) >= 0 )
+                    classAdd( tagObj.node, 'tags__tag--active' );
+                else
+                    classRemove( tagObj.node, 'tags__tag--active' );
+            } );
+
+            /**
+             * Render filter-time.
+             */
+
+            [
+                'from',
+                'to',
+            ].forEach( ( timeFilter ) => {
+                this.DOM.filter[ timeFilter ].year.value = this.state[ timeFilter ].getFullYear();
+                this.DOM.filter[ timeFilter ].month.value = this.state[ timeFilter ].getMonth() + 1;
+                this.DOM.filter[ timeFilter ].date.value = this.state[ timeFilter ].getDate();
+            } );
+
+            this.getAll();
+        } );
+
+        this.pushState();
+    }
+
+    pushState () {
+        window.history.pushState( this.state, 'query string', '' );
     }
 
     static formatUpdateTime ( time ) {
@@ -226,7 +279,6 @@ export default class DefaultTagFilter {
 
     renderPages ( pages ) {
         try {
-            this.state.page = this.config.page;
             this.DOM.pages.innerHTML = pagesHTML( { pages, } );
 
             const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
@@ -263,6 +315,7 @@ export default class DefaultTagFilter {
 
                             this.renderPageExtra( pages );
                             this.getNormalAnnouncement();
+                            this.pushState();
                         }
                     }
                     catch ( err ) {
@@ -310,6 +363,7 @@ export default class DefaultTagFilter {
 
                         this.renderPageExtra( pages );
                         this.getNormalAnnouncement();
+                        this.pushState();
                     }
 
                     /**
@@ -345,6 +399,7 @@ export default class DefaultTagFilter {
 
                         this.renderPageExtra( pages );
                         this.getNormalAnnouncement();
+                        this.pushState();
                     }
 
                     /**
