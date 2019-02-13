@@ -1,188 +1,75 @@
 import header from 'static/src/js/components/common/header/index.js';
-import briefing from 'static/src/pug/components/announcement/briefing.pug';
-import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
+import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
+
+// Import briefingHotHTML from 'static/src/pug/components/home/briefing-hot.pug';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 import TagUtils from 'models/announcement/utils/tag.js';
-import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import { host, } from 'settings/server/config.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 header( document.getElementById( 'header' ) );
 
-// Normal briefings
-const announcementBriefing = document.getElementById( 'announcement__briefings' );
-const languageId = Number( new URLSearchParams( window.location.search ).get( 'languageId' ) );
-announcementBriefing.innerHTML += briefing( {
-    id:      1,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [
-        {
-            id: TagUtils.getTagId( {
-                tag:        'college',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'college',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'speech',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'speech',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'phd',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'phd',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-    ],
-    UTILS: {
-        url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-    },
-} );
-announcementBriefing.innerHTML += briefing( {
-    id:      2,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '兩小段內文',
-    tags:    [
-        {
-            id: TagUtils.getTagId( {
-                tag:        'recruitment',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'recruitment',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'faculty',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'faculty',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'exhibition',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'exhibition',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-    ],
-    UTILS: {
-        url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-    },
-} );
-announcementBriefing.innerHTML += briefing( {
-    id:      3,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [
-        {
-            id: TagUtils.getTagId( {
-                tag:        'college',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'college',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'speech',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'speech',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-        {
-            id: TagUtils.getTagId( {
-                tag:        'phd',
-                languageId: LanguageUtils.getLanguageId( 'en-US' ),
-            } ),
-            name: TagUtils.getTagById( {
-                tagId: TagUtils.getTagId( {
-                    tag:        'phd',
-                    languageId: LanguageUtils.getLanguageId( 'en-US' ),
-                } ),
-                languageId,
-            } ),
-        },
-    ],
-    UTILS: {
-        url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-    },
-} );
+const announcement = document.getElementById( 'announcement' ).querySelector( '.announcement__briefings.briefings' );
 
-// Hot news briefings
-const announcementBriefingHot = document.getElementById( 'announcement__briefings--hot-news' );
-announcementBriefingHot.innerHTML += briefingHot( {
-    briefings: [
-        {
-            id:      0,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-        },
-        {
-            id:      1,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-        },
-        {
-            id:      2,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-        },
-    ],
-} );
+async function allAnnouncement () {
+    const queryString = [
+        `amount=${ 3 }`,
+        `languageId=${ WebLanguageUtils.currentLanguageId }`,
+        `from=${ Number( new Date( '2019/01/01' ) ) }`,
+        `page=${ 1 }`,
+        `to=${ Date.now() }`,
+        ...TagUtils.supportedTagId.map( tagId => `tags=${ tagId }` ),
+    ].join( '&' );
+
+    function formatUpdateTime ( time ) {
+        if ( !( ValidateUtils.isValidDate( time ) ) )
+            throw new TypeError( 'Invalid time.' );
+
+        return [
+            [
+                `${ time.getFullYear() }`,
+                `${ time.getMonth() < 9 ? `0${ String( time.getMonth() + 1 ) }` : String( time.getMonth() + 1 ) }`,
+                `${ time.getDate() < 10 ? `0${ String( time.getDate() ) }` : String( time.getDate() ) }`,
+            ].join( '-' ),
+            [
+                `${ time.getHours() < 10 ? `0${ String( time.getHours() ) }` : String( time.getHours() ) }`,
+                `${ time.getMinutes() < 10 ? `0${ String( time.getMinutes() ) }` : String( time.getMinutes() ) }`,
+                `${ time.getSeconds() < 10 ? `0${ String( time.getSeconds() ) }` : String( time.getSeconds() ) }`,
+            ].join( ':' ),
+        ].join( ' | ' );
+    }
+
+    fetch( `${ host }/api/announcement/all-announcement?${ queryString }` )
+    .then( ( res ) => {
+        if ( res.ok )
+            return res.json();
+        throw new Error( 'No announcement found' );
+    } )
+    .then( ( data ) => {
+        data.map( ( briefing ) => {
+            briefing.tags = briefing.tags.map( tagId => ( {
+                color: TagUtils.getTagColorById( tagId ),
+                tag:   TagUtils.getTagById( {
+                    tagId,
+                    languageId: WebLanguageUtils.currentLanguageId,
+                } ),
+            } ) );
+            briefing.updateTime = formatUpdateTime( new Date( briefing.updateTime ) );
+            return briefing;
+        } )
+        .forEach( ( briefing ) => {
+            announcement.innerHTML += briefingHTML( {
+                briefing,
+                UTILS: {
+                    url: UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                },
+            } );
+        } );
+    } )
+    .catch( ( err ) => {
+        console.error( err );
+    } );
+}
+
+allAnnouncement();
