@@ -77,6 +77,7 @@ export default async ( opt ) => {
         let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
+                'views',
             ],
             where: {
                 updateTime: {
@@ -99,12 +100,10 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            group:    '`announcement`.`announcementId`',
-            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
             offset:   amount * ( page - 1 ),
             order:  [
                 [
-                    '`announcement`.`views`',
+                    'views',
                     'DESC',
                 ],
             ],
@@ -127,6 +126,7 @@ export default async ( opt ) => {
             attributes: [
                 'announcementId',
                 'updateTime',
+                'views',
             ],
             where: {
                 announcementId,
@@ -143,23 +143,16 @@ export default async ( opt ) => {
                         languageId,
                     },
                 },
-                {
-                    model:      Tag,
-                    as:         'tag',
-                    attributes: [ 'typeId', ],
-                },
             ],
         } ) ) );
 
         data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     Number( announcement.updateTime ),
-            title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tag.map( tag => tag.typeId ),
+            title:          announcement.announcementI18n[ 0 ].title,
+            updateTime:     Number( announcement.updateTime ),
+            views:          announcement.views,
         } ) );
-
-        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
 
         return data;
     }

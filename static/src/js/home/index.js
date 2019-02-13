@@ -1,9 +1,7 @@
 import header from 'static/src/js/components/common/header/index.js';
 import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
-
+import hotAnnouncementBriefingHTML from 'static/src/pug/components/home/hot-announcement-briefing.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
-
-// Import briefingHotHTML from 'static/src/pug/components/home/briefing-hot.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
@@ -32,7 +30,7 @@ class GetAllAnnouncement {
             !ValidateUtils.isPositiveInteger( opt.page ) )
             throw new TypeError( 'invalid arguments' );
 
-        const announcementQuerySelector = block => `.announcement__${ block }.${ block }`;
+        const announcementQuerySelector = block => `.${ opt.announcementDOM.id }__${ block }.${ block }`;
 
         this.DOM = {
             noResult:  opt.announcementDOM.querySelector( announcementQuerySelector( 'no-result' ) ),
@@ -90,6 +88,31 @@ class GetAllAnnouncement {
         ].join( ' | ' );
     }
 
+    static formatData ( { data, languageId, } ) {
+        return data.map( ( briefing ) => {
+            briefing.tags = briefing.tags.map( tagId => ( {
+                color: TagUtils.getTagColorById( tagId ),
+                tag:   TagUtils.getTagById( {
+                    tagId,
+                    languageId,
+                } ),
+            } ) );
+            briefing.updateTime = GetAllAnnouncement.formatUpdateTime( new Date( briefing.updateTime ) );
+            return briefing;
+        } );
+    }
+
+    render ( data ) {
+        data.forEach( ( briefing ) => {
+            this.DOM.briefings.innerHTML += briefingHTML( {
+                briefing,
+                UTILS: {
+                    url: UrlUtils.serverUrl( new UrlUtils( host, this.languageId ) ),
+                },
+            } );
+        } );
+    }
+
     async exec () {
         try {
             this.DOM.briefings.innerHTML = '';
@@ -102,25 +125,11 @@ class GetAllAnnouncement {
 
             const data = await res.json();
 
-            data.map( ( briefing ) => {
-                briefing.tags = briefing.tags.map( tagId => ( {
-                    color: TagUtils.getTagColorById( tagId ),
-                    tag:   TagUtils.getTagById( {
-                        tagId,
-                        languageId: this.languageId,
-                    } ),
-                } ) );
-                briefing.updateTime = GetAllAnnouncement.formatUpdateTime( new Date( briefing.updateTime ) );
-                return briefing;
-            } )
-            .forEach( ( briefing ) => {
-                this.DOM.briefings.innerHTML += briefingHTML( {
-                    briefing,
-                    UTILS: {
-                        url: UrlUtils.serverUrl( new UrlUtils( host, this.languageId ) ),
-                    },
-                } );
-            } );
+            this.render( this.constructor.formatData( {
+                data,
+                languageId: this.languageId,
+            } ) );
+
             classAdd( this.DOM.loading, 'loading--hidden' );
         }
         catch ( err ) {
@@ -128,6 +137,42 @@ class GetAllAnnouncement {
             classRemove( this.DOM.noResult, 'no-result--hidden' );
             console.error( err );
         }
+    }
+}
+
+class GetHotAnnouncement extends GetAllAnnouncement {
+    get queryApi () {
+        return `${ host }/api/announcement/get-hot-announcements?${ this.queryString }`;
+    }
+
+    static formatData ( { data, } ) {
+        return data.map( ( briefing ) => {
+            briefing.updateTime = GetAllAnnouncement.formatUpdateTime( new Date( briefing.updateTime ) );
+            return briefing;
+        } );
+    }
+
+    static formatIndex ( index ) {
+        if ( typeof index !== 'number' )
+            throw new TypeError( 'Invalid number.' );
+
+        return index + 1 >= 10 ? `${ index + 1 }` : `0${ index + 1 }`;
+    }
+
+    render ( data ) {
+        data.forEach( ( briefing, index ) => {
+            this.DOM.briefings.innerHTML += hotAnnouncementBriefingHTML( {
+                briefing,
+                UTILS: {
+                    url:   UrlUtils.serverUrl( new UrlUtils( host, this.languageId ) ),
+                    index: GetHotAnnouncement.formatIndex( index ),
+                },
+                LANG: {
+                    getLanguageId: WebLanguageUtils.getLanguageId,
+                    id:            this.languageId,
+                },
+            } );
+        } );
     }
 }
 
@@ -142,3 +187,15 @@ const getAllAnnouncement = new GetAllAnnouncement( {
 } );
 
 getAllAnnouncement.exec();
+
+const getHotAnnouncement = new GetHotAnnouncement( {
+    amount:          3,
+    announcementDOM: document.getElementById( 'hot-announcement' ),
+    from:            new Date( '2019/01/01' ),
+    languageId:      WebLanguageUtils.currentLanguageId,
+    tags:            TagUtils.supportedTag( WebLanguageUtils.getLanguageId( 'en-US' ) ),
+    to:              new Date( Date.now() ),
+    page:            1,
+} );
+
+getHotAnnouncement.exec();

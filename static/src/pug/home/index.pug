@@ -38,10 +38,11 @@ append content
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
     a.announcement__button( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }...`
-  section#announcement--hot-news.announcement.announcement--hot-news
-    header.announcement__title.title
-      h1.title__text= i18n[ LANG.id ].hot
-    nav.announcement__briefings.briefings
+  section#hot-announcement.hot-announcement
+    header.hot-announcement__title.title= i18n[ LANG.id ].hot
+    +noResult( 'hot-announcement' )
+    +loading( 'hot-announcement' )
+    nav.hot-announcement__briefings.briefings
 
 append footer
 
