@@ -1,5 +1,5 @@
 import header from 'static/src/js/components/common/header/index.js';
-import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
+import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import hotAnnouncementBriefingHTML from 'static/src/pug/components/home/hot-announcement-briefing.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
