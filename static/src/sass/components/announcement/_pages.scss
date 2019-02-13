@@ -15,9 +15,6 @@
     // [ layout ]
     display: inline-block;
 
-    // [ customization ]
-    @content;
-
     // element
     // `> .pages > .pages__control`
     > .pages__control {
@@ -135,5 +132,8 @@
         display: none;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

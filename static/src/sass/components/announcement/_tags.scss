@@ -21,15 +21,11 @@
   // block
   // `> .tags`
   &.tags {
-    // [ customization ]
-    @content;
-
     // [ skin ]
     color: #ffffff;
 
     // element
     // `> .tags > .tags__tag`
-
     > .tags__tag {
       // [ skin ]
       margin: {
@@ -94,5 +90,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

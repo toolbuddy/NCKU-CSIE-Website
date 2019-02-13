@@ -27,9 +27,6 @@
     // [ skin ]
     font-size: .5rem;
 
-    // [ customization ]
-    @content;
-
     // element
     // `> .announcement > .announcement__headline`
     // block
@@ -214,5 +211,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

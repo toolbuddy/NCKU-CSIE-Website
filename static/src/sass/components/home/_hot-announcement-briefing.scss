@@ -12,9 +12,6 @@
     // [ variable ]
     $large: 520px;
 
-    // [ customization ]
-    @content;
-
     // [ skin ]
     border-radius: .1875rem;
     padding: {
@@ -203,5 +200,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

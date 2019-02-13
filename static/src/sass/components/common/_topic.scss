@@ -14,9 +14,6 @@
     // [ skin ]
     color: #000000;
 
-    // [ customization ]
-    @content;
-
     // [ RWD: $tablet ]
     @media screen and ( min-width: $tablet ) {
       // [ position ]
@@ -39,5 +36,8 @@
         size: .75rem;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

@@ -7,9 +7,6 @@
     // [ variables ]
     $large: 475px;
 
-    // [ customization ]
-    @content;
-
     // [ layout ]
     display: block;
 
@@ -181,5 +178,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

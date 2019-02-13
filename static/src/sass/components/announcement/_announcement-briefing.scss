@@ -11,9 +11,6 @@
     // [ variable ]
     $large: 768px;
 
-    // [ customization ]
-    @content;
-
     // element
     // `> .announcement > .announcement__title`
     > .announcement__title {
@@ -197,5 +194,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

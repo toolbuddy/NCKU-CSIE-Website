@@ -32,8 +32,6 @@
       }
     }
 
-    @content;
-
     // element
     // `> .filter > .filter__time`
     // block
@@ -167,5 +165,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }
