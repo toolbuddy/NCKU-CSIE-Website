@@ -33,12 +33,12 @@ append data
       },
     } );
     const tags = [
-        allTags['award'],
-        allTags['college'],
-        allTags['master'],
-        allTags['phd'],
-        allTags['faculty'],
-    ];
+        'award',
+        'college',
+        'master',
+        'phd',
+        'faculty',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'about/award';
 
 append title

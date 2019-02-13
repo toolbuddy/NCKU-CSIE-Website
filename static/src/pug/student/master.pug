@@ -33,17 +33,17 @@ append data
       },
     } );
     const tags = [
-        allTags['master'],
-        allTags['competition'],
-        allTags['conference'],
-        allTags['exhibition'],
-        allTags['speech'],
-        allTags['award'],
-        allTags['international'],
-        allTags['scholarship'],
-        allTags['internship'],
-        allTags['rule'],
-    ];
+        'master',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech',
+        'award',
+        'international',
+        'scholarship',
+        'internship',
+        'rule',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/master';
 
 append title
