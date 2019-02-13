@@ -10,7 +10,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from:           new Date( '2018/01/01' ),
+            from:           new Date( '2019/01/01' ),
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
@@ -383,9 +383,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
@@ -422,9 +422,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pinned announcement' );
@@ -479,9 +479,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );

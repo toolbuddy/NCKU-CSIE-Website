@@ -1,25 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 
-import getAllAnnouncements from 'models/announcement/operations/get-all-announcements.js';
-import getAllPages from 'models/announcement/operations/get-all-pages.js';
+import getAnnouncementsByOrTags from 'models/announcement/operations/get-announcements-by-or-tags.js';
+import getPagesByOrTags from 'models/announcement/operations/get-pages-by-or-tags.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
-import getAllPinnedAnnouncements from 'models/announcement/operations/get-all-pinned-announcements.js';
-import getAnnouncementsByTags from 'models/announcement/operations/get-announcements-by-tags.js';
+import getPinnedAnnouncementsByOrTags from 'models/announcement/operations/get-pinned-announcements-by-or-tags.js';
+import getAnnouncementsByAndTags from 'models/announcement/operations/get-announcements-by-and-tags.js';
 import getHotAnnouncements from 'models/announcement/operations/get-hot-announcements.js';
-import getPagesByTags from '../models/announcement/operations/get-pages-by-tags';
-import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pinned-announcements-by-tags.js';
+import getPagesByAndTags from '../models/announcement/operations/get-pages-by-and-tags';
+import getPinnedAnnouncementsByAndTags from 'models/announcement/operations/get-pinned-announcements-by-and-tags.js';
 
 const apis = express.Router();
 
-apis.get( '/get-announcements-by-or-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-announcements-by-or-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getAllAnnouncements( {
+        res.json( await getAnnouncementsByOrTags( {
             amount:     Number( req.query.amount ),
             from:       new Date( Number( req.query.from ) ),
             languageId: Number( req.query.languageId ),
@@ -33,14 +33,14 @@ apis.get( '/get-announcements-by-or-tag', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pages-by-or-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-pages-by-or-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getAllPages( {
+        res.json( await getPagesByOrTags( {
             amount: Number( req.query.amount ),
             from:   new Date( Number( req.query.from ) ),
             tags,
@@ -52,14 +52,14 @@ apis.get( '/get-pages-by-or-tag', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pinned-announcements-by-or-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-pinned-announcements-by-or-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getAllPinnedAnnouncements( {
+        res.json( await getPinnedAnnouncementsByOrTags( {
             from:       new Date( Number( req.query.from ) ),
             languageId: Number( req.query.languageId ),
             tags,
@@ -71,14 +71,14 @@ apis.get( '/get-pinned-announcements-by-or-tag', cors(), async ( req, res, next 
     }
 } );
 
-apis.get( '/get-announcements-by-and-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-announcements-by-and-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getAnnouncementsByTags( {
+        res.json( await getAnnouncementsByAndTags( {
             amount:     Number( req.query.amount ),
             from:       new Date( Number( req.query.from ) ),
             languageId: Number( req.query.languageId ),
@@ -92,14 +92,14 @@ apis.get( '/get-announcements-by-and-tag', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pages-by-and-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-pages-by-and-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getPagesByTags( {
+        res.json( await getPagesByAndTags( {
             amount: Number( req.query.amount ),
             from:   new Date( Number( req.query.from ) ),
             tags,
@@ -111,14 +111,14 @@ apis.get( '/get-pages-by-and-tag', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pinned-announcements-by-and-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-pinned-announcements-by-and-tags', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
             tags = [ tags, ];
         tags = tags.map( Number );
 
-        res.json( await getPinnedAnnouncementsByTags( {
+        res.json( await getPinnedAnnouncementsByAndTags( {
             from:       new Date( Number( req.query.from ) ),
             languageId: Number( req.query.languageId ),
             tags,
