@@ -101,7 +101,21 @@ module.exports = {
         ],
 
         // Disallow the use of `console`.
-        'no-console': 'error',
+        'no-console': [
+            'error',
+            {
+
+                // Allowed methods of the `console` object.
+                'allow': [
+
+                    // Allowed method `console.warn`.
+                    'warn',
+
+                    // Allowed method `console.error`.
+                    'error',
+                ],
+            },
+        ],
 
         // Disallow constant expressions in conditions.
         'no-constant-condition': [
