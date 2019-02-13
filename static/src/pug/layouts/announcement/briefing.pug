@@ -6,22 +6,22 @@ append data
         'all':
         {
             color: 'yellow',
-            tag: UTILS.getTagAll(LANG.id),
-            id: UTILS.tagAllId,
+            tag:   UTILS.getTagAll( LANG.id ),
+            id:    UTILS.tagAllId,
         },
     };
     UTILS.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach( tag => {
         const tagId = UTILS.getTagId( {
-            tag: tag,
+            tag:        tag,
             languageId: LANG.getLanguageId( 'en-US' ),
         } );
         allTags[ tag ] = {
             color: UTILS.getTagColorById( tagId ),
-            tag: UTILS.getTagById( {
+            tag:   UTILS.getTagById( {
                 tagId: tagId,
                 languageId: LANG.id,
             } ),
-            id: tagId,
+            id:    tagId,
         };
     } );
 
