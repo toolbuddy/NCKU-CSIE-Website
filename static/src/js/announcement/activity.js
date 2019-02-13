@@ -1,5 +1,5 @@
 import header from 'static/src/js/components/common/header/index.js';
-import MultipleDefaultTagFilter from 'static/src/js/components/announcement/multiple-default-tag.js';
+import MultipleDefaultTagFilter from 'static/src/js/components/announcement/multiple-default-tag-filter.js';
 
 
 header( document.getElementById( 'header' ) );

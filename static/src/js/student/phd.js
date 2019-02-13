@@ -1,5 +1,5 @@
 import header from 'static/src/js/components/common/header/index.js';
-import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag.js';
+import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
 
 header( document.getElementById( 'header' ) );
 

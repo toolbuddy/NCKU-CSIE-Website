@@ -1,5 +1,5 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
-import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
+import DefaultTagFilter from 'static/src/js/components/announcement/default-tag-filter.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class SingleDefaultTagFilter extends DefaultTagFilter {
