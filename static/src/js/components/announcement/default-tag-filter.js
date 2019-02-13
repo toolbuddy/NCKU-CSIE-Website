@@ -479,9 +479,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-or-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-and-tag?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );

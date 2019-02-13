@@ -12,7 +12,7 @@ import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pin
 
 const apis = express.Router();
 
-apis.get( '/get-normal-announcements-by-or-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-announcements-by-or-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -71,7 +71,7 @@ apis.get( '/get-pinned-announcements-by-or-tag', cors(), async ( req, res, next 
     }
 } );
 
-apis.get( '/get-normal-announcements-by-and-tag', cors(), async ( req, res, next ) => {
+apis.get( '/get-announcements-by-and-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
