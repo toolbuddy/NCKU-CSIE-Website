@@ -175,13 +175,14 @@ export default class DefaultTagFilter {
     }
 
     loadState () {
-        const tempAmount = new URLSearchParams( window.location.search ).get( 'amount' );
-        const tempTagParam = new URLSearchParams( window.location.search ).getAll( 'tags' );
-        const tempLanguageId = new URLSearchParams( window.location.search ).get( 'languageId' );
-        const tempFrom = new URLSearchParams( window.location.search ).get( 'from' );
-        const tempTo = new URLSearchParams( window.location.search ).get( 'to' );
-        const tempPage = new URLSearchParams( window.location.search ).get( 'page' );
-        const tempSelectDefault = new URLSearchParams( window.location.search ).get( 'selectDefault' );
+        const urlParams = new URLSearchParams( window.location.search );
+        const tempAmount = urlParams.get( 'amount' );
+        const tempTagParam = urlParams.getAll( 'tags' );
+        const tempLanguageId = urlParams.get( 'languageId' );
+        const tempFrom = urlParams.get( 'from' );
+        const tempTo = urlParams.get( 'to' );
+        const tempPage = urlParams.get( 'page' );
+        const tempSelectDefault = urlParams.get( 'selectDefault' );
 
         if ( tempAmount !== null )
             this.state.amount = Number( tempAmount );
