@@ -383,9 +383,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/all-pages?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/tags-pages?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
@@ -422,9 +422,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/all-pinned?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/tags-pinned?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pinned announcement' );
@@ -479,9 +479,9 @@ export default class DefaultTagFilter {
 
             let res = null;
             if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/all-announcement?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-or-tag?${ queryString }` );
             else
-                res = await fetch( `${ host }/api/announcement/tags-announcement?${ queryString }` );
+                res = await fetch( `${ host }/api/announcement/get-normal-announcements-by-and-tag?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );

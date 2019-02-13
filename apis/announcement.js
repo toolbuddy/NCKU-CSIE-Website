@@ -12,7 +12,7 @@ import getPinnedAnnouncementsByTags from 'models/announcement/operations/get-pin
 
 const apis = express.Router();
 
-apis.get( '/all-announcement', cors(), async ( req, res, next ) => {
+apis.get( '/get-normal-announcements-by-or-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -33,7 +33,7 @@ apis.get( '/all-announcement', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/all-pages', cors(), async ( req, res, next ) => {
+apis.get( '/get-pages-by-or-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -52,7 +52,7 @@ apis.get( '/all-pages', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/all-pinned', cors(), async ( req, res, next ) => {
+apis.get( '/get-pinned-announcements-by-or-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -71,7 +71,7 @@ apis.get( '/all-pinned', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-announcement', cors(), async ( req, res, next ) => {
+apis.get( '/get-normal-announcements-by-and-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -92,7 +92,7 @@ apis.get( '/tags-announcement', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-pages', cors(), async ( req, res, next ) => {
+apis.get( '/get-pages-by-and-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -111,7 +111,7 @@ apis.get( '/tags-pages', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/tags-pinned', cors(), async ( req, res, next ) => {
+apis.get( '/get-pinned-announcements-by-and-tag', cors(), async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
