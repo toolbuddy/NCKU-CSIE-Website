@@ -299,20 +299,28 @@ export default class DefaultTagFilter {
                             this.state.page = this.config.page;
 
                         const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( ValidateUtils.isDomElement( activeDOM ) )
-                            classAdd( activeDOM, 'pages__page--active' );
+                        if ( !ValidateUtils.isDomElement( activeDOM ) )
+                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                        classAdd( activeDOM, 'pages__page--active' );
 
-                        /* Render `pages__extra` */
+                        /**
+                         * Render `.pages__extra`.
+                         */
 
                         this.renderPageExtra( pages );
                         this.getNormalAnnouncement();
                     }
-                    catch ( err ) {
-                        throw new Error( 'Failed in addEventListener.' );
-                    }
+
+                    /**
+                     * Silence.
+                     */
+
+                    catch ( {} ) {}
                 } );
                 this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
-                    /* Render `pages__page--active` */
+                    /**
+                     * Render `.pages__page--active`.
+                     */
 
                     try {
                         pageDOMArr.forEach( ( pageDOM ) => {
@@ -324,17 +332,23 @@ export default class DefaultTagFilter {
                             this.state.page = pages;
 
                         const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( ValidateUtils.isDomElement( activeDOM ) )
-                            classAdd( activeDOM, 'pages__page--active' );
+                        if ( !ValidateUtils.isDomElement( activeDOM ) )
+                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                        classAdd( activeDOM, 'pages__page--active' );
 
-                        /* Render `pages__extra` */
+                        /**
+                         * Render `.pages__extra`.
+                         */
 
                         this.renderPageExtra( pages );
                         this.getNormalAnnouncement();
                     }
-                    catch ( err ) {
-                        throw new Error( 'Failed in addEventListener.' );
-                    }
+
+                    /**
+                     * Silence.
+                     */
+
+                    catch ( {} ) {}
                 } );
             }
         }
@@ -506,7 +520,9 @@ export default class DefaultTagFilter {
             await this.getNormalAnnouncement();
         }
 
-        /* Silence */
+        /**
+         * Silence.
+         */
 
         catch ( {} ) {}
     }
