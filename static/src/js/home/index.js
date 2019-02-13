@@ -69,7 +69,7 @@ class GetAllAnnouncement {
     }
 
     get queryApi () {
-        return `${ host }/api/announcement/get-announcements-by-or-tag?${ this.queryString }`;
+        return `${ host }/api/announcement/get-announcements-by-or-tags?${ this.queryString }`;
     }
 
     static formatUpdateTime ( time ) {
