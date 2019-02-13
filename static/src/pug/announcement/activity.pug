@@ -33,79 +33,11 @@ append data
       },
     } );
     const tags = [
-        {
-            color: 'yellow',
-            tag: UTILS.getTagAll(LANG.id),
-            id: -1,
-        },
-        {
-            color: UTILS.getTagColorById(UTILS.getTagId({
-                tag: 'competition',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            })),
-            tag: UTILS.getTagById({
-                tagId: UTILS.getTagId({
-                    tag: 'competition',
-                    languageId: LANG.getLanguageId( 'en-US' ),
-                    }),
-                languageId: LANG.id,
-            }),
-            id: UTILS.getTagId({
-                tag: 'competition',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            }),
-        },
-        {
-            color: UTILS.getTagColorById(UTILS.getTagId({
-                tag: 'conference',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            })),
-            tag: UTILS.getTagById({
-                tagId: UTILS.getTagId({
-                    tag: 'conference',
-                    languageId: LANG.getLanguageId( 'en-US' ),
-                    }),
-                languageId: LANG.id,
-            }),
-            id: UTILS.getTagId({
-                tag: 'conference',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            }),
-        },
-        {
-            color: UTILS.getTagColorById(UTILS.getTagId({
-                tag: 'exhibition',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            })),
-            tag: UTILS.getTagById({
-                tagId: UTILS.getTagId({
-                    tag: 'exhibition',
-                    languageId: LANG.getLanguageId( 'en-US' ),
-                    }),
-                languageId: LANG.id,
-            }),
-            id: UTILS.getTagId({
-                tag: 'exhibition',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            }),
-        },
-        {
-            color: UTILS.getTagColorById(UTILS.getTagId({
-                tag: 'speech',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            })),
-            tag: UTILS.getTagById({
-                tagId: UTILS.getTagId({
-                    tag: 'speech',
-                    languageId: LANG.getLanguageId( 'en-US' ),
-                    }),
-                languageId: LANG.id,
-            }),
-            id: UTILS.getTagId({
-                tag: 'speech',
-                languageId: LANG.getLanguageId( 'en-US' ),
-            }),
-        },
+        allTags['all'],
+        allTags['competition'],
+        allTags['conference'],
+        allTags['exhibition'],
+        allTags['speech'],
     ];
     const currentRoute = 'announcement/activity';
 

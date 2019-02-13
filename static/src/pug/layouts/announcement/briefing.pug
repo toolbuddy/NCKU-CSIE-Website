@@ -1,5 +1,30 @@
 extends /layouts/base.pug
 
+append data
+  -
+    const allTags = {
+        'all':
+        {
+            color: 'yellow',
+            tag: UTILS.getTagAll(LANG.id),
+            id: UTILS.tagAllId,
+        },
+    };
+    UTILS.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach(tag => {
+        const tagId = UTILS.getTagId({
+            tag: tag,
+            languageId: LANG.getLanguageId( 'en-US' ),
+        });
+        allTags[ tag ] = {
+            color: UTILS.getTagColorById( tagId ),
+            tag: UTILS.getTagById({
+                tagId: tagId,
+                languageId: LANG.id,
+            }),
+            id: tagId,
+        };
+    });
+
 append content
   include /components/common/topic.pug
   include /components/common/loading.pug

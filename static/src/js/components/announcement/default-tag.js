@@ -14,7 +14,7 @@ export default class DefaultTagFilter {
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
-            pageExtraLimit: 4,
+            pageLimit:      4,
         };
 
         opt = opt || {};
@@ -181,7 +181,7 @@ export default class DefaultTagFilter {
          * then `.pages__extra` is created and need to be rendered.
          */
 
-        if ( pages > this.config.pageExtraLimit ) {
+        if ( pages > this.config.pageLimit ) {
             pageDOMArr.forEach( ( pageDOM ) => {
                 classRemove( pageDOM, 'pages__page--hidden' );
                 const dataPage = pageDOM.getAttribute( 'data-page' );
@@ -374,7 +374,6 @@ export default class DefaultTagFilter {
             const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
             if ( index >= 0 )
                 this.state.tagParam.splice( index, 1 );
-
             const queryString = [
                 `amount=${ this.state.amount }`,
                 `from=${ Number( this.state.from ) }`,

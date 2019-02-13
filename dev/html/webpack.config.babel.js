@@ -183,6 +183,8 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                     getTagById:      TagUtils.getTagById,
                                     getTagColorById: TagUtils.getTagColorById,
                                     getTagAll:       TagUtils.getTagAll,
+                                    tagAllId:        TagUtils.tagAllId,
+                                    supportedTag:    TagUtils.supportedTag,
                                 },
                             },
                         },

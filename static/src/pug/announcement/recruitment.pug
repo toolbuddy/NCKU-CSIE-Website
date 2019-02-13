@@ -32,23 +32,9 @@ append data
         },
       },
     } );
-    const tags = [{
-        color: UTILS.getTagColorById(UTILS.getTagId({
-            tag: 'recruitment',
-            languageId: LANG.getLanguageId( 'en-US' ),
-        })),
-        tag: UTILS.getTagById({
-            tagId: UTILS.getTagId({
-                tag: 'recruitment',
-                languageId: LANG.getLanguageId( 'en-US' ),
-                }),
-            languageId: LANG.id,
-        }),
-        id: UTILS.getTagId({
-            tag: 'recruitment',
-            languageId: LANG.getLanguageId( 'en-US' ),
-        }),
-    }];
+    const tags = [
+        allTags['recruitment'],
+    ];
     const currentRoute = 'announcement/recruitment';
 
 append title
