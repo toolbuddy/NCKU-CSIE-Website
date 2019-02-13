@@ -47,7 +47,7 @@ append content
           input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
     article.filter__tags.tags
       each tagObj in tags
-        button.tags__tag( class=`tags__tag--${ tagObj.color }`, data-tag-id=`${tagObj.id}` )= tagObj.tag
+        button.tags__tag( class=`tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }` )= tagObj.tag
 
   section#announcement--pinned.announcement.announcement--pinned
     header.announcement__title= i18n[ LANG.id ].pinned
