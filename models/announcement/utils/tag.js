@@ -94,6 +94,10 @@ class TagUtils {
             return tagMap[ languageId ].all;
     }
 
+    static get tagAllId () {
+        return -1;
+    }
+
     static getTagColorById ( tagId ) {
         if ( !TagUtils.isSupportedTagId( tagId ) )
             return;

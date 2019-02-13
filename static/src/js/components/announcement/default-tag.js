@@ -10,7 +10,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         this.config = {
-            from:           new Date( '2018/01/01' ),
+            from:           new Date( '2019/01/01' ),
             to:             new Date( Date.now() ),
             page:           1,
             visiblePageNum: 2,
@@ -89,7 +89,7 @@ export default class DefaultTagFilter {
                     const tagId = node.getAttribute( 'data-tag-id' );
                     if ( tagId === null )
                         throw new Error( 'Invalid Tag DOM attribute.' );
-                    if ( !( Number( tagId ) === -1 ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
+                    if ( !( Number( tagId ) === TagUtils.tagAllId ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
                         throw new Error( 'Invalid Tag DOM attribute.' );
                     return {
                         node,
@@ -371,7 +371,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
             if ( index >= 0 )
                 this.state.tagParam.splice( index, 1 );
 
@@ -410,7 +410,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
             if ( index >= 0 )
                 this.state.tagParam.splice( index, 1 );
 
@@ -465,7 +465,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( -1 );
+            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
             if ( index >= 0 )
                 this.state.tagParam.splice( index, 1 );
 

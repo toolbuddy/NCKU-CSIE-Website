@@ -1,20 +1,21 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag.js';
 import ValidateUtils from 'models/common/utils/validate.js';
+import TagUtils from '../../../../../models/announcement/utils/tag';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter {
     subscribeTimeEvent () {
-        try {
+        [
+            'from',
+            'to',
+        ].forEach( ( timeFilter ) => {
             [
-                'from',
-                'to',
-            ].forEach( ( timeFilter ) => {
-                [
-                    'year',
-                    'month',
-                    'date',
-                ].forEach( ( timePart ) => {
-                    this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
+                'year',
+                'month',
+                'date',
+            ].forEach( ( timePart ) => {
+                this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
+                    try {
                         const year  = this.DOM.filter[ timeFilter ].year.value;
                         const month = this.DOM.filter[ timeFilter ].month.value;
                         const date  = this.DOM.filter[ timeFilter ].date.value;
@@ -39,50 +40,50 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                             this.state.tagParam = this.state.tags;
                             this.getAll();
                         }
-                    } );
+                    }
+                    catch ( err ) {
+                        console.error( err );
+                    }
                 } );
             } );
-        }
-        catch ( err ) {
-            console.error( err );
-        }
+        } );
     }
 
     subscribeTagEvent () {
-        this.DOM.filter.tags.forEach( ( tagDOM ) => {
+        this.DOM.filter.tags.forEach( ( tagObj ) => {
             /**
              * Default tag event subscribe.
              */
 
-            if ( tagDOM.id === -1 ) {
+            if ( tagObj.id === TagUtils.tagAllId ) {
                 /**
                  * Default tag should be always active.
                  */
 
-                classAdd( tagDOM.node, 'tags__tag--active' );
-                tagDOM.node.addEventListener( 'click', () => {
-                    this.DOM.filter.tags.forEach( ( tagDOM ) => {
-                        classRemove( tagDOM.node, 'tags__tag--active' );
+                classAdd( tagObj.node, 'tags__tag--active' );
+                tagObj.node.addEventListener( 'click', () => {
+                    this.DOM.filter.tags.forEach( ( tagObj ) => {
+                        classRemove( tagObj.node, 'tags__tag--active' );
                     } );
-                    classAdd( tagDOM.node, 'tags__tag--active' );
+                    classAdd( tagObj.node, 'tags__tag--active' );
                     this.state.selectDefault = true;
                     this.state.tags = [];
-                    this.state.tags.push( tagDOM.id );
+                    this.state.tags.push( tagObj.id );
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
                     this.getAll();
                 } );
             }
             else {
-                tagDOM.node.addEventListener( 'click', () => {
-                    const index = this.state.tags.indexOf( tagDOM.id );
+                tagObj.node.addEventListener( 'click', () => {
+                    const index = this.state.tags.indexOf( tagObj.id );
                     if ( index >= 0 ) {
                         this.state.tags.splice( index, 1 );
-                        classRemove( tagDOM.node, 'tags__tag--active' );
+                        classRemove( tagObj.node, 'tags__tag--active' );
                     }
                     else {
-                        this.state.tags.push( tagDOM.id );
-                        classAdd( tagDOM.node, 'tags__tag--active' );
+                        this.state.tags.push( tagObj.id );
+                        classAdd( tagObj.node, 'tags__tag--active' );
                     }
                     this.state.selectDefault = false;
                     this.state.page = this.config.page;
