@@ -50,8 +50,8 @@ body {
       }
 
       // modifier
-      // `body > .content > .announcement.announcement--hot-news`
-      &.announcement--hot-news {
+      // `body > .content > .announcement.announcement--hot`
+      &.announcement--hot {
         // [ position ]
         margin-top: 4rem;
         grid-column: {
@@ -72,8 +72,8 @@ body {
         }
 
         // modifier
-        // `body > .content > .announcement.announcement--hot-news`
-        &.announcement--hot-news {
+        // `body > .content > .announcement.announcement--hot`
+        &.announcement--hot {
           margin-top: 0;
           grid-column: {
             start: 8;

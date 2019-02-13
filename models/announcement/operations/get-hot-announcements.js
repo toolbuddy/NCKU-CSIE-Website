@@ -77,6 +77,7 @@ export default async ( opt ) => {
         let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
+                'views',
             ],
             where: {
                 updateTime: {
@@ -99,12 +100,10 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            group:    '`announcement`.`announcementId`',
-            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
             offset:   amount * ( page - 1 ),
             order:  [
                 [
-                    '`announcement`.`views`',
+                    'views',
                     'DESC',
                 ],
             ],
@@ -158,8 +157,6 @@ export default async ( opt ) => {
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tag.map( tag => tag.typeId ),
         } ) );
-
-        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
 
         return data;
     }

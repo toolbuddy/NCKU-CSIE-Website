@@ -1,9 +1,7 @@
 import header from 'static/src/js/components/common/header/index.js';
 import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
-
+import briefingHotHTML from 'static/src/pug/components/home/briefing-hot.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
-
-// Import briefingHotHTML from 'static/src/pug/components/home/briefing-hot.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import TagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
@@ -131,6 +129,12 @@ class GetAllAnnouncement {
     }
 }
 
+class GetHotAnnouncement extends GetAllAnnouncement {
+    get queryApi () {
+        return `${ host }/api/announcement/get-hot-announcements?${ this.queryString }`;
+    }
+}
+
 const getAllAnnouncement = new GetAllAnnouncement( {
     amount:          3,
     announcementDOM: document.getElementById( 'announcement' ),
@@ -142,3 +146,15 @@ const getAllAnnouncement = new GetAllAnnouncement( {
 } );
 
 getAllAnnouncement.exec();
+
+const getHotAnnouncement = new GetAllAnnouncement( {
+    amount:          3,
+    announcementDOM: document.getElementById( 'announcement--hot' ),
+    from:            new Date( '2019/01/01' ),
+    languageId:      WebLanguageUtils.currentLanguageId,
+    tags:            TagUtils.supportedTag( WebLanguageUtils.getLanguageId( 'en-US' ) ),
+    to:              new Date( Date.now() ),
+    page:            1,
+} );
+
+getHotAnnouncement.exec();
