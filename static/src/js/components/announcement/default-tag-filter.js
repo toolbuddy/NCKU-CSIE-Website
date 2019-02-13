@@ -1,7 +1,7 @@
 import TagUtils from 'models/announcement/utils/tag.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
-import briefingHTML from 'static/src/pug/components/announcement/briefing.pug';
+import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import { host, } from 'settings/server/config.js';
