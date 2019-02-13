@@ -67,7 +67,7 @@ export default class DefaultTagFilter {
             to:            this.config.to,
             page:          this.config.page,
             tags:          [],
-            selectDefault:  true,
+            selectDefault: true,
             tagParam:      this.tagId.default,
         };
 

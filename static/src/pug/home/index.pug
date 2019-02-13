@@ -29,15 +29,19 @@ append header
 
 append content
   include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
 
   +topic( i18n[ LANG.id ].topic )
-  section.announcement
-    nav#announcement__briefings.announcement__briefings.briefings
+  section#announcement.announcement
+    +noResult( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
     a.announcement__button( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }...`
-  section.announcement.announcement--hot-news
+  section#announcement--hot-news.announcement.announcement--hot-news
     header.announcement__title.title
       h1.title__text= i18n[ LANG.id ].hot
-    nav#announcement__briefings--hot-news.announcement__briefings.briefings
+    nav.announcement__briefings.briefings
 
 append footer
 

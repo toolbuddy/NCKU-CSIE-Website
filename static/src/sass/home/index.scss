@@ -4,9 +4,8 @@
 @import 'components/common/footer';
 @import 'components/announcement/briefing';
 @import 'components/common/banner';
-@import 'components/common/breadcrumb';
 
-body > {
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
