@@ -128,16 +128,13 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
 
+
         /**
-         * DOM element `.filter__time` initialization.
+         * Load state from url
          */
 
-        this.DOM.filter.from.year.value = this.state.from.getFullYear();
-        this.DOM.filter.from.month.value = this.state.from.getMonth() + 1;
-        this.DOM.filter.from.date.value = this.state.from.getDate();
-        this.DOM.filter.to.year.value = this.state.to.getFullYear();
-        this.DOM.filter.to.month.value = this.state.to.getMonth() + 1;
-        this.DOM.filter.to.date.value = this.state.to.getDate();
+        this.loadState();
+        this.pushState();
 
         /**
          * @abstract
@@ -157,54 +154,78 @@ export default class DefaultTagFilter {
          * Subscribe popstate event.
          */
 
-        window.addEventListener( 'popstate', ( history ) => {
-            this.state = history.state;
-            if ( this.state === null ) {
-                this.state = {
-                    amount:        opt.amount,
-                    languageId:    WebLanguageUtils.currentLanguageId,
-                    from:          this.config.from,
-                    to:            this.config.to,
-                    page:          this.config.page,
-                    tags:          [],
-                    selectDefault: true,
-                    tagParam:      this.tagId.default,
-                };
-            }
-
-
-            /**
-             * Render filter-tag.
-             */
-
-            this.DOM.filter.tags.forEach( ( tagObj ) => {
-                if ( tagObj.id === -1 || this.state.tags.indexOf( tagObj.id ) >= 0 )
-                    classAdd( tagObj.node, 'tags__tag--active' );
-                else
-                    classRemove( tagObj.node, 'tags__tag--active' );
-            } );
-
-            /**
-             * Render filter-time.
-             */
-
-            [
-                'from',
-                'to',
-            ].forEach( ( timeFilter ) => {
-                this.DOM.filter[ timeFilter ].year.value = this.state[ timeFilter ].getFullYear();
-                this.DOM.filter[ timeFilter ].month.value = this.state[ timeFilter ].getMonth() + 1;
-                this.DOM.filter[ timeFilter ].date.value = this.state[ timeFilter ].getDate();
-            } );
-
+        window.addEventListener( 'popstate', () => {
+            this.loadState();
             this.getAll();
         } );
-
-        this.pushState();
     }
 
     pushState () {
-        window.history.pushState( this.state, 'query string', '' );
+        const urlString = [
+            `languageId=${ this.state.languageId }`,
+            `amount=${ this.state.amount }`,
+            `from=${ Number( this.state.from ) }`,
+            `to=${ Number( this.state.to ) }`,
+            ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+            `page=${ this.state.page }`,
+            `selectDefault=${ this.state.selectDefault }`,
+        ].join( '&' );
+
+        window.history.pushState( this.state, 'query string', `${ window.location.pathname }?${ urlString }` );
+    }
+
+    loadState () {
+        const tempAmount = new URLSearchParams( window.location.search ).get( 'amount' );
+        const tempTagParam = new URLSearchParams( window.location.search ).getAll( 'tags' );
+        const tempLanguageId = new URLSearchParams( window.location.search ).get( 'languageId' );
+        const tempFrom = new URLSearchParams( window.location.search ).get( 'from' );
+        const tempTo = new URLSearchParams( window.location.search ).get( 'to' );
+        const tempPage = new URLSearchParams( window.location.search ).get( 'page' );
+        const tempSelectDefault = new URLSearchParams( window.location.search ).get( 'selectDefault' );
+
+        if ( tempAmount !== null )
+            this.state.amount = Number( tempAmount );
+        if ( tempTagParam.length !== 0 )
+            this.state.tagParam = tempTagParam.map( tagId => Number( tagId ) );
+        if ( tempLanguageId !== null )
+            this.state.languageId = Number( tempLanguageId );
+        if ( tempPage !== null )
+            this.state.page = Number( tempPage );
+        if ( tempSelectDefault !== null )
+            this.state.selectDefault = ( tempSelectDefault === 'true' );
+        if ( tempFrom !== null )
+            this.state.from = new Date( Number( tempFrom ) );
+        if ( tempTo !== null )
+            this.state.to = new Date( Number( tempTo ) );
+
+        if ( this.state.selectDefault === true )
+            this.state.tags = [];
+        else
+            this.state.tags = this.state.tagParam;
+
+        /**
+         * Render filter-tag.
+         */
+
+        this.DOM.filter.tags.forEach( ( tagObj ) => {
+            if ( tagObj.id === -1 || this.state.tags.indexOf( tagObj.id ) >= 0 )
+                classAdd( tagObj.node, 'tags__tag--active' );
+            else
+                classRemove( tagObj.node, 'tags__tag--active' );
+        } );
+
+        /**
+         * Render filter-time.
+         */
+
+        [
+            'from',
+            'to',
+        ].forEach( ( timeFilter ) => {
+            this.DOM.filter[ timeFilter ].year.value = this.state[ timeFilter ].getFullYear();
+            this.DOM.filter[ timeFilter ].month.value = this.state[ timeFilter ].getMonth() + 1;
+            this.DOM.filter[ timeFilter ].date.value = this.state[ timeFilter ].getDate();
+        } );
     }
 
     static formatUpdateTime ( time ) {
