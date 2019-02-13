@@ -3,6 +3,7 @@
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/announcement/briefing';
+@import 'components/home/hot-announcement-briefing';
 @import 'components/common/banner';
 
 body {
@@ -38,6 +39,14 @@ body {
         start: 1;
         end: 11;
       }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        grid-column: {
+          start: 1;
+          end: 6;
+        }
+      }
     }
 
     // block
@@ -49,46 +58,31 @@ body {
         end: 11;
       }
 
-      // modifier
-      // `body > .content > .announcement.announcement--hot`
-      &.announcement--hot {
-        // [ position ]
-        margin-top: 4rem;
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
         grid-column: {
           start: 1;
-          end: 11;
+          end: 6;
         }
       }
     }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // block
-      // `body > .content > .announcement`
-      @include announcement() {
-        grid-column: {
-          start: 1;
-          end: 7;
-        }
-
-        // modifier
-        // `body > .content > .announcement.announcement--hot`
-        &.announcement--hot {
-          margin-top: 0;
-          grid-column: {
-            start: 8;
-            end: 11;
-          }
-        }
+    // element
+    // `body > .content > .hot-announcement`
+    @include hot-announcement () {
+      // [ position ]
+      margin-top: 4rem;
+      grid-column: {
+        start: 1;
+        end: 11;
       }
 
-      // block
-      // `body > .content > .topic`
-      @include topic() {
-        // [ position ]
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        margin-top: 0;
         grid-column: {
-          start: 1;
-          end: 7;
+          start: 7;
+          end: 11;
         }
       }
     }

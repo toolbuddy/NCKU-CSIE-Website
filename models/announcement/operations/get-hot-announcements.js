@@ -126,6 +126,7 @@ export default async ( opt ) => {
             attributes: [
                 'announcementId',
                 'updateTime',
+                'views',
             ],
             where: {
                 announcementId,
@@ -142,20 +143,15 @@ export default async ( opt ) => {
                         languageId,
                     },
                 },
-                {
-                    model:      Tag,
-                    as:         'tag',
-                    attributes: [ 'typeId', ],
-                },
             ],
         } ) ) );
 
         data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     Number( announcement.updateTime ),
-            title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tag.map( tag => tag.typeId ),
+            title:          announcement.announcementI18n[ 0 ].title,
+            updateTime:     Number( announcement.updateTime ),
+            views:          announcement.views,
         } ) );
 
         return data;
