@@ -31,16 +31,8 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                             throw new TypeError( 'invalid arguments' );
                         }
 
-                        if ( this.state.tags.length === 1 && this.state.tags[0] === this.tagId.default[0] ) {
-                            this.state.tagParam = this.tagId.default;
-                            this.pushState();
-                            this.getAll();
-                        }
-                        else {
-                            this.state.tagParam = this.tagId.default.concat( this.state.tags );
-                            this.pushState();
-                            this.getAll();
-                        }
+                        this.pushState();
+                        this.getAll();
                     }
                     catch ( err ) {
                         console.error( err );
@@ -69,9 +61,8 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
 
                     classAdd( tagObj.node, 'tags__tag--active' );
 
-                    this.state.tags = [ tagObj.id, ];
                     this.state.page = this.config.page;
-                    this.state.tagParam = this.tagId.default;
+                    this.state.tagParam = [];
 
                     this.pushState();
                     this.getAll();
@@ -79,18 +70,21 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
             }
             else {
                 tagObj.node.addEventListener( 'click', () => {
-                    const index = this.state.tags.indexOf( tagObj.id );
+                    const index = this.state.tagParam.indexOf( tagObj.id );
                     if ( index >= 0 ) {
-                        this.state.tags.splice( index, 1 );
+                        this.state.tagParam.splice( index, 1 );
                         classRemove( tagObj.node, 'tags__tag--active' );
                     }
                     else {
-                        this.state.tags.push( tagObj.id );
+                        this.state.tagParam.push( tagObj.id );
                         classAdd( tagObj.node, 'tags__tag--active' );
                     }
 
                     this.state.page = this.config.page;
-                    this.state.tagParam = this.tagId.default.concat( this.state.tags );
+
+                    if ( this.state.tagParam.length === 0 )
+                        this.state.tagParam = [];
+
 
                     this.pushState();
                     this.getAll();
