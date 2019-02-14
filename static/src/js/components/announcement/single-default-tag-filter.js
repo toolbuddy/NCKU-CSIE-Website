@@ -31,15 +31,15 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                             throw new TypeError( 'invalid arguments' );
                         }
 
-                        if ( this.state.selectDefault ) {
+                        if ( this.state.tags.length === 1 && this.state.tags[0] === this.tagId.default[0] ) {
                             this.state.tagParam = this.tagId.default;
-                            this.getAll();
                             this.pushState();
+                            this.getAll();
                         }
                         else {
                             this.state.tagParam = this.tagId.default.concat( this.state.tags );
-                            this.getAll();
                             this.pushState();
+                            this.getAll();
                         }
                     }
                     catch ( err ) {
@@ -69,13 +69,12 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
 
                     classAdd( tagObj.node, 'tags__tag--active' );
 
-                    this.state.selectDefault = true;
                     this.state.tags = [ tagObj.id, ];
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
 
-                    this.getAll();
                     this.pushState();
+                    this.getAll();
                 } );
             }
             else {
@@ -90,12 +89,11 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                         classAdd( tagObj.node, 'tags__tag--active' );
                     }
 
-                    this.state.selectDefault = false;
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default.concat( this.state.tags );
 
-                    this.getAll();
                     this.pushState();
+                    this.getAll();
                 } );
             }
         } );

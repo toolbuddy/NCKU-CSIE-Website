@@ -32,15 +32,15 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                             throw new TypeError( 'invalid arguments' );
                         }
 
-                        if ( this.state.selectDefault ) {
+                        if ( this.state.tags.length === 1 && this.state.tags[0] === TagUtils.tagAllId ) {
                             this.state.tagParam = this.tagId.default;
-                            this.getAll();
                             this.pushState();
+                            this.getAll();
                         }
                         else {
                             this.state.tagParam = this.state.tags;
-                            this.getAll();
                             this.pushState();
+                            this.getAll();
                         }
                     }
                     catch ( err ) {
@@ -68,13 +68,12 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         classRemove( tagObj.node, 'tags__tag--active' );
                     } );
                     classAdd( tagObj.node, 'tags__tag--active' );
-                    this.state.selectDefault = true;
                     this.state.tags = [];
                     this.state.tags.push( tagObj.id );
                     this.state.page = this.config.page;
                     this.state.tagParam = this.tagId.default;
-                    this.getAll();
                     this.pushState();
+                    this.getAll();
                 } );
             }
             else {
@@ -88,19 +87,17 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                         this.state.tags.push( tagObj.id );
                         classAdd( tagObj.node, 'tags__tag--active' );
                     }
-                    this.state.selectDefault = false;
                     this.state.page = this.config.page;
 
                     if ( this.state.tags.length === 0 ) {
-                        this.state.selectDefault = true;
                         this.state.tagParam = this.tagId.default;
-                        this.getAll();
                         this.pushState();
+                        this.getAll();
                     }
                     else {
                         this.state.tagParam = this.state.tags;
-                        this.getAll();
                         this.pushState();
+                        this.getAll();
                     }
                 } );
             }
