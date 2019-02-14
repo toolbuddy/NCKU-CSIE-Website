@@ -85,7 +85,7 @@ body {
         display: flex;
         justify-content: center;
         margin: {
-          left: 10%;
+          left: 1%;
           right: .5rem;
         }
         width: max-content;
@@ -154,7 +154,7 @@ body {
         > .departments__department {
           padding: .2rem .8rem;
           border-radius: .5rem;
-          width: 3rem;
+          width: 3.5rem;
           font-size: .45rem;
           text-align: center;
           color: #8caae2;
@@ -275,14 +275,16 @@ body {
 
       > .profile__website {
         display: flex;
-        justify-content: center;
-        align-self: center;
-        margin-top: .41rem;
         width: 85%;
         word-break: break-all;
         font: {
           size: .5rem;
           style: normal;
+        }
+        align-self: flex-start;
+        margin: {
+          top: .41rem;
+          left: 5%;
         }
 
         &::before {
@@ -441,20 +443,36 @@ body {
         > .table__head.head {
           > .head__row.row {
             border: solid .01rem #757575;
-            padding: .5rem;
+            padding: 0;
+            @media screen and ( min-width: $small ) {
+              padding: .5rem;
+            }
+            @media screen and ( min-width: $large ) {
+              padding: .5rem;
+            }
           }
         }
 
         > .table__body.body {
           > .body__row.row {
-            padding: .5rem;
+            padding: 0;
+            @media screen and ( min-width: $small ) {
+              padding: .5rem;
+            }
+            @media screen and ( min-width: $large ) {
+              padding: .5rem;
+            }
             border: solid .02rem #757575;
 
             > .row__type, .row__name, .row__nation, .row__owner, .row__inventor, .row__number, .row__date {
               border: solid .02rem #757575;
-
-              // margin: .2rem 1.3rem;
-              padding: .5rem;
+              padding: 0;
+              @media screen and ( min-width: $small ) {
+                padding: .5rem;
+              }
+              @media screen and ( min-width: $large ) {
+                padding: .5rem;
+              }
             }
           }
         }
@@ -483,19 +501,48 @@ body {
 
         > .table__head.head {
           > .head__row.row {
-            border: solid .01rem #757575;
-            padding: .5rem;
+            border: solid .02rem #757575;
+            padding: 0;
+            @media screen and ( min-width: $small ) {
+              padding: .5rem;
+            }
+            @media screen and ( min-width: $large ) {
+              padding: .5rem;
+            }
+
+            > .row__index, .row__technologyName, .row__patentName, .row__authorizingParty, .row__authorizedParty, .row__period {
+              border: solid .02rem #757575;
+              padding: 0;
+              @media screen and ( min-width: $small ) {
+                padding: .5rem;
+              }
+              @media screen and ( min-width: $large ) {
+                padding: .5rem;
+              }
+            }
           }
         }
 
         > .table__body.body {
           > .body__row.row {
-            padding: .5rem;
+            padding: 0;
             border: solid .02rem #757575;
+            @media screen and ( min-width: $small ) {
+              padding: .5rem;
+            }
+            @media screen and ( min-width: $large ) {
+              padding: .5rem;
+            }
 
             > .row__index, .row__technologyName, .row__patentName, .row__authorizingParty, .row__authorizedParty, .row__period {
               border: solid .02rem #757575;
-              padding: .5rem;
+              padding: 0;
+              @media screen and ( min-width: $small ) {
+                padding: .5rem;
+              }
+              @media screen and ( min-width: $large ) {
+                padding: .5rem;
+              }
             }
           }
         }
@@ -655,8 +702,12 @@ body {
         border-bottom: solid rgba( 196, 196, 196, .9 ) 2px;
       }
 
+      > .project__category {
+        margin-top: .8rem;
+      }
+
       > .project__table.table {
-        margin-top: 2rem;
+        margin-top: .5rem;
         border-collapse: collapse;
         text-align: center;
         border: solid .02rem #757575;

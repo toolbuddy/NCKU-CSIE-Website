@@ -31,6 +31,14 @@ append data
           'number':    'Patent Number',
           'period':    'Period',
         },
+        'project': {
+          'name':    '計畫名稱',
+          'period':  '起訖日期',
+          'support': '補助單位',
+          'category':'category',
+          'general':'General Projects',
+          'national':'National Science Council Projects',
+        }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':       '詳細資料',
@@ -67,14 +75,16 @@ append data
           'technologyName':   '技術名稱',
           'patentName':       '專利名稱',
           'authorizingParty': '授權單位',
-          'authorizedParty:': '接受單位',
+          'authorizedParty': '接受單位',
           'period':           '合約期間',
         },
         'project': {
-          'name':    '計畫名稱',
+          'name':    '研究計畫',
           'period':  '起訖日期',
           'support': '補助單位',
           'category':'種類',
+          'general':'一般建教案',
+          'national':'國科會計劃',
         }
       },
     } );
@@ -138,21 +148,19 @@ append content
         li.list__from= experience.from
         li.list__period= '-'
         li.list__to= experience.to
-        li.list__organization= experience.organization
-        li.list__department= experience.department
-        li.list__title= experience.title
+        if(experience.organization)
+          li.list__organization= experience.organization
+        if(experience.department)
+          li.list__department= experience.department
+        if(experience.title)
+          li.list__title= experience.title
   section.award
     h2.award__title= i18n[ LANG.id ].award
     - data.award.sort( ( awardA, awardB ) => awardA.receivedYear - awardB.receivedYear )
     ul.award__list
       each awardObj in data.award
         li.eachList
-          h2.award__name= awardObj.award
-          h3.award__year= awardObj.receivedYear
-          if awardObj.receivedMonth
-            h3.award__year= awardObj.receivedMonth
-          if awardObj.receivedDay
-            h3.award__year= awardObj.receivedDay
+          h2.award__name= `${awardObj.award} , ${awardObj.receivedYear}${awardObj.receivedMonth?awardObj.receivedMonth:''}${awardObj.receivedDay?awardObj.receivedDay:''}`
   section.publication
     h2.publication__title= i18n[ LANG.id ].publication
     h3.publication__paper Papers
@@ -193,39 +201,50 @@ append content
       table.transfer__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__index= i18n[ LANG.id ].technologyTransfer.index
-            th.row__technologyName= i18n[ LANG.id ].technologyTransfer.technologyName
-            th.row__patentName= i18n[ LANG.id ].technologyTransfer.patentName
-            th.row__authorizingParty= i18n[ LANG.id ].technologyTransfer.authorizingParty
-            th.row__authorizedParty= i18n[ LANG.id ].technologyTransfer.authorizedParty
-            th.row__period= i18n[ LANG.id ].technologyTransfer.period
+            td.row__index= i18n[ LANG.id ].technologyTransfer.index
+            td.row__technologyName= i18n[ LANG.id ].technologyTransfer.technologyName
+            td.row__authorizingParty= i18n[ LANG.id ].technologyTransfer.authorizingParty
+            td.row__authorizedParty= i18n[ LANG.id ].technologyTransfer.authorizedParty
+            td.row__period= i18n[ LANG.id ].technologyTransfer.period
         tbody.table__body.body
           each technologyTransferObj, index in data.technologyTransfer
             tr.body__row.row
-              th.row__index= index+1
-              th.row__technologyName= technologyTransferObj.technology
-              each patentObj in technologyTransferObj.patent
-                th.row__patentName= patentObj.patent
-              th.row__authorizingParty= technologyTransferObj.authorizingParty
-              th.row__authorizedParty= technologyTransferObj.authorizingParty
-              th.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
+              td.row__index= index+1
+              td.row__technologyName= technologyTransferObj.technology
+              td.row__authorizingParty= technologyTransferObj.authorizingParty
+              td.row__authorizedParty= technologyTransferObj.authorizedParty
+              td.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
     if data.project.length !== 0
       h2.project__title= i18n[ LANG.id ].project.name
+      h2.project__category= i18n[ LANG.id ].project.general
       table.project__table.table
         thead.table__head.head
           tr.head__row.row
             th.row__name= i18n[ LANG.id ].project.name
             th.row__period= i18n[ LANG.id ].project.period
             th.row__support= i18n[ LANG.id ].project.support
-            th.row__category= i18n[ LANG.id ].project.category
         tbody.table__body.body
           each projectObj in data.project
-            tr.body__row.row
-              td.row__name= projectObj.name
-              td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
-              td.row__support= projectObj.support
-              td.row__category= projectObj.category
+            if(projectObj.category==i18n[ LANG.id ].project.general)
+              tr.body__row.row
+                td.row__name= projectObj.name
+                td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
+                td.row__support= projectObj.support
+      h2.project__category= i18n[ LANG.id ].project.national
+      table.project__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__name= i18n[ LANG.id ].project.name
+            th.row__period= i18n[ LANG.id ].project.period
+            th.row__support= i18n[ LANG.id ].project.support
+        tbody.table__body.body
+          each projectObj in data.project
+            if(projectObj.category==i18n[ LANG.id ].project.national)
+              tr.body__row.row
+                td.row__name= projectObj.name
+                td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
+                td.row__support= projectObj.support
   section.conference
     h2.conference.title Conference
     each conferenceObj in data.conference
