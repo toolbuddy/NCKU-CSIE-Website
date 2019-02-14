@@ -32,7 +32,10 @@ body {
         columns: 1fr;
         areas:
           'filter'
-          'topic';
+          'topic'
+          'announcement--pinned'
+          'announcement--normal'
+          'pages';
       }
     }
 
@@ -49,7 +52,10 @@ body {
       // [ layout ]
       grid-template-areas:
         'topic'
-        'filter';
+        'filter'
+        'announcement--pinned'
+        'announcement--normal'
+        'pages';
     }
 
     // [ RWD: $large ]
@@ -66,10 +72,6 @@ body {
     @include topic() {
       // [ position ]
       grid-area: topic;
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
     }
 
     // block
@@ -77,10 +79,6 @@ body {
     @include filter() {
       // [ position ]
       grid-area: filter;
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
 
       // element
       // `body > .content > .filter > .filter__tags`
@@ -275,22 +273,27 @@ body {
 
     // block
     // `body > .content > .announcement`
-    @include announcement() {
+    @include announcement() ;
+
+    // block
+    // `body > .content > .announcement.announcement--pinned`
+    > .announcement.announcement--pinned {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: announcement--pinned;
+    }
+
+    // block
+    // `body > .content > .announcement.announcement--normal`
+    > .announcement.announcement--normal {
+      // [ position ]
+      grid-area: announcement--normal;
     }
 
     // block
     // `body > .content > .pages`
     @include pages () {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: pages;
       justify-self: center;
     }
   }
