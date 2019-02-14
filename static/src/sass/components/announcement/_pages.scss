@@ -1,3 +1,17 @@
+// template
+// `> .pages > .pages__?`
+%pages__template {
+  // [ variable ]
+  $size: 1.41rem;
+
+  // [ skin ]
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: transparent;
+  vertical-align: middle;
+}
+
 // component
 // `> .pages`
 @mixin pages () {
@@ -5,64 +19,51 @@
   // `> .pages`
   > .pages {
     // [ variable ]
-    $small: 576px;
-    $medium: 620px;
+    $small: 650px;
     $large: 850px;
-
-    // [ position ]
-    justify-self: center;
-
-    // [ layout ]
-    display: inline-block;
 
     // element
     // `> .pages > .pages__control`
     > .pages__control {
-      // [ position ]
-      vertical-align: middle;
+      // [ template ]
+      @extend %pages__template;
 
       // [ skin ]
-      border-radius: 1.41rem;
-      width: 1.41rem;
-      height: 1.41rem;
       border: .0312rem solid #32477d;
+      padding-bottom: .05rem;
       color: #32477d;
-      background: none;
       font-size: .9375rem;
       cursor: pointer;
 
       // modifier
       // `> .pages > pages__control.pages__control--hidden`
-      &--hidden {
+      &.pages__control--hidden {
+        // [ skin ]
         visibility: hidden;
       }
 
-      // [ selector: first-child ]
-      &:first-child {
-        // [ skin ]
+      // modifier
+      // `> .pages > pages__control.pages__control--forward`
+      &.pages__control--forward {
+        // [ layout ]
         margin-right: 1rem;
-        padding: {
-          right: .05rem;
-          bottom: .1rem;
-        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ layout ]
           margin-right: 3rem;
         }
       }
 
-      // [ selector: last-child ]
-      &:last-child {
-        // [ skin ]
+      // modifier
+      // `> .pages > pages__control.pages__control--backward`
+      &.pages__control--backward {
+        // [ layout ]
         margin-left: 1rem;
-        padding: {
-          bottom: .1rem;
-          left: .05rem;
-        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ layout ]
           margin-left: 3rem;
         }
       }
@@ -70,22 +71,18 @@
 
     // element
     // `> .pages > .pages__page`
-    // `> .pages > .pages__extra`
-    > .pages__page, .pages__extra {
+    > .pages__page {
+      // [ template ]
+      @extend %pages__template;
+
       // [ layout ]
       display: none;
 
-      // [ position ]
-      vertical-align: middle;
-
       // [ skin ]
-      border-radius: 1.41rem;
-      color: #999999;
-      background: none;
-      width: 1.41rem;
-      height: 1.41rem;
       font-size: .625rem;
-      text-decoration: none;
+      color: #999999;
+
+      // [ interaction ]
       transition: background-color .3s;
 
       // [ RWD: $small ]
@@ -93,11 +90,7 @@
         // [ layout ]
         display: inline-block;
       }
-    }
 
-    // element
-    // `> .pages > .pages__page`
-    > .pages__page {
       // [ interaction ]
       &:hover:not( .pages__page--active ) {
         // [ skin ]
@@ -105,8 +98,8 @@
       }
 
       // modifier
-      // `> .pages > .pages__page--active`
-      &--active {
+      // `> .pages > .pages__page.pages__page--active`
+      &.pages__page--active {
         // [ layout ]
         display: inline-block;
 
@@ -117,8 +110,8 @@
       }
 
       // modifier
-      // `> .pages > .pages__page--hidden`
-      &--hidden {
+      // `> .pages > .pages__page.pages__page--hidden`
+      &.pages__page--hidden {
         display: none;
       }
     }
@@ -126,9 +119,25 @@
     // element
     // `> .pages > .pages__extra`
     > .pages__extra {
+      // [ template ]
+      @extend %pages__template;
+
+      // [ layout ]
+      display: none;
+
+      // [ skin ]
+      font-size: .625rem;
+      color: #999999;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
+
       // modifier
-      // `> .pages > .pages__extra--hidden`
-      &--hidden {
+      // `> .pages > .pages__extra.pages__extra--hidden`
+      &.pages__extra--hidden {
         display: none;
       }
     }
