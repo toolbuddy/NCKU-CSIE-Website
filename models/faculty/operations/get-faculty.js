@@ -17,12 +17,9 @@ export default async ( languageId = null ) => {
          */
 
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid language id',
-                },
-            };
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
         }
         const data = await Profile.findAll( {
             attributes: [
@@ -100,18 +97,11 @@ export default async ( languageId = null ) => {
             order:         profile.order,
         } ) );
     }
-
-    /**
-     * Something wrong, must be a server error.
-     * Handle with 500 internal server error.
-     */
-
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

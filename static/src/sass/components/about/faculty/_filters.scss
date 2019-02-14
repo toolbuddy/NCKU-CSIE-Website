@@ -10,9 +10,6 @@
     // [ skin ]
     font-size: .44rem;
 
-    // [ customization ]
-    @content;
-
     // element
     // `> .filters > .filters__filter`
     > .filters__filter {
@@ -88,5 +85,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

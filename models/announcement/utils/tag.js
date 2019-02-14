@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import tagMap from 'models/announcement/maps/tag.js';
+import LanguageUtils from '../../common/utils/language.js';
+import tagMap from '../maps/tag.js';
 
 class TagUtils {
     static defaultTag ( languageId = LanguageUtils.defaultLanguageId ) {
@@ -87,6 +87,32 @@ class TagUtils {
         } = opt;
         if ( TagUtils.isSupportedTagId( tagId ) && LanguageUtils.isSupportedLanguageId( languageId ) )
             return tagMap[ languageId ].support[ tagId ];
+    }
+
+    static getTagAll ( languageId = LanguageUtils.defaultLanguageId ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return tagMap[ languageId ].all;
+    }
+
+    static get tagAllId () {
+        return -1;
+    }
+
+    static getTagColorById ( tagId ) {
+        if ( !TagUtils.isSupportedTagId( tagId ) )
+            return;
+
+        const tag = TagUtils.getTagById( { tagId, languageId: LanguageUtils.getLanguageId( 'en-US' ), } );
+        if ( tag === 'course' || tag === 'faculty' )
+            return 'yellow';
+        else if ( tag === 'college' || tag === 'master' || tag === 'phd' )
+            return 'blue';
+        else if ( tag === 'internship' || tag === 'scholarship' || tag === 'international' || tag === 'award' )
+            return 'red';
+        else if ( tag === 'speech' || tag === 'conference' || tag === 'exhibition' || tag === 'competition' )
+            return 'purple';
+        else if ( tag === 'recruitment' || tag === 'rule' )
+            return 'green';
     }
 }
 

@@ -2,14 +2,13 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/announcement/title';
 @import 'components/announcement/filter';
-@import 'components/announcement/briefing';
+@import 'components/announcement/announcement-briefing';
 @import 'components/announcement/pages';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body > {
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );

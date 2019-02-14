@@ -75,12 +75,13 @@ export function renderCards ( filters, cards, noResult ) {
         .filter( data => data !== null );
 
         // Assuming that card pass on test.
-        let ifTestPass = !selectedFiltersDept.some( filter => departments.indexOf( filter ) < 0 )
+        let ifTestPass = !selectedFiltersDept.some( filter => departments.indexOf( filter ) < 0 );
 
         // Test ResearchGroup.
-        if ( ifTestPass ) {
-            ifTestPass = !selectedFiltersResearch.some( filter => researchGroup.indexOf( filter ) < 0 )
-        }
+        if ( ifTestPass )
+            ifTestPass = !selectedFiltersResearch.some( filter => researchGroup.indexOf( filter ) < 0 );
+
+
         // Test pass.
         if ( ifTestPass ) {
             if ( card.classList.contains( 'card--hide' ) )
@@ -88,9 +89,9 @@ export function renderCards ( filters, cards, noResult ) {
         }
 
         // Test failed.
-        else if ( !card.classList.contains( 'card--hide' ) ) {
+        else if ( !card.classList.contains( 'card--hide' ) )
             card.classList.add( 'card--hide' );
-        }
+
 
         if ( noShowedCard && !card.classList.contains( 'card--hide' ) )
             noShowedCard = false;

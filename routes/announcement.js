@@ -11,8 +11,13 @@
  */
 
 import express from 'express';
+import MarkdownIt from 'markdown-it';
 
+import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+import getFileInfo from 'models/announcement/operations/get-file-info.js';
+import TagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
+import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -58,6 +63,70 @@ router
 
 router
 .route( '/:announcementId' )
-.get( staticHtml( 'announcement/announcement' ) );
+.get( async ( req, res, next ) => {
+    try {
+        const data = await getAnnouncement( {
+            announcementId: Number( req.params.announcementId ),
+            languageId:     req.query.languageId,
+        } );
+
+        res.locals.UTILS.getTagById = TagUtils.getTagById;
+        res.locals.UTILS.getTagColorById = TagUtils.getTagColorById;
+        res.locals.UTILS.md = new MarkdownIt( {
+            breaks:  true,
+            linkify: true,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'announcement/detail.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                res.send( html );
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
+
+router
+.route( '/:announcementId/file/:fileId' )
+.get( async ( req, res, next ) => {
+    try {
+        const announcementId = Number( req.params.announcementId );
+        const fileId = Number( req.params.fileId );
+        const languageId = req.query.languageId;
+        const data = await getFileInfo( {
+            announcementId,
+            fileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.download( `${ projectRoot }/static/dist/file/${ data.filePath }`, data.name, ( err ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 export default router;

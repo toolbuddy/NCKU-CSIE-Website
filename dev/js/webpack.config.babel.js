@@ -46,15 +46,17 @@ export default {
         'about/staff':          path.join( jsSrcRoot, 'about/staff.js' ),
 
         // Route `announcement`
-        'announcement/activity':     path.join( jsSrcRoot, 'announcement/activity.js' ),
-        'announcement/all':          path.join( jsSrcRoot, 'announcement/all.js' ),
-        'announcement/index':        path.join( jsSrcRoot, 'announcement/index.js' ),
-        'announcement/announcement': path.join( jsSrcRoot, 'announcement/announcement.js' ),
-        'announcement/recruitment':  path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+        'announcement/activity':    path.join( jsSrcRoot, 'announcement/activity.js' ),
+        'announcement/all':         path.join( jsSrcRoot, 'announcement/all.js' ),
+        'announcement/index':       path.join( jsSrcRoot, 'announcement/index.js' ),
+        'announcement/detail':      path.join( jsSrcRoot, 'announcement/detail.js' ),
+        'announcement/recruitment': path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+
+        // Route `error`
+        'error/404': path.join( jsSrcRoot, 'error/404.js' ),
 
         // Route `home`
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
-        'home/error': path.join( jsSrcRoot, 'home/error.js' ),
 
         // Route `research`
         'research/index':        path.join( jsSrcRoot, 'research/index.js' ),

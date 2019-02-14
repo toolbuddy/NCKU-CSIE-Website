@@ -1,16 +1,13 @@
-mixin pages__page( totalPages )
-  - for( let pageNo = 2; pageNo < totalPages; ++pageNo )
-  button.pages__page= pageNo
-
 //- If only one page exists, generating one button.
 //- Else generating 'forward button', 'backward button', and the other page button.
-if totalPages === 1
-  button.pages__page 1
+if pages === 1
+  button.pages__page.pages__page--active( data-page = '1' ) 1
 else
   button.pages__control.pages__control--forward ‹
-  button.pages__page 1
-  button#pages__extra--before.pages__extra.pages__extra--hidden ...
-  +pages__page( totalPages )
-  button#pages__extra--after.pages__extra.pages__extra--hidden ...
-  button.pages__page= totalPages
+  button.pages__page( data-page = '1' ) 1
+  button.pages__extra.pages__extra--before.pages__page--hidden ...
+  - for( let pageNo = 2; pageNo < pages; ++pageNo )
+    button.pages__page( data-page = `${ pageNo }` )= pageNo
+  button.pages__extra.pages__extra--after.pages__page--hidden ...
+  button.pages__page( data-page = `${ pages }`)= pages
   button.pages__control.pages__control--backward ›

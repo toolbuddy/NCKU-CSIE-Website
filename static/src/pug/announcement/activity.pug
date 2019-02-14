@@ -6,6 +6,10 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Activities',
         'topic':    'Activities',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':   'Pinned Announcement',
         'normal':   'Announcement',
         'breadcrumb': {
@@ -16,6 +20,10 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '活動公告',
         'topic':    '活動公告',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':   '置頂貼文',
         'normal':   '一般公告',
         'breadcrumb': {
@@ -24,14 +32,13 @@ append data
         },
       },
     } );
-    const filterModifier = 'activity';
-    const filterTags = [
-      'all',
-      'competition',
-      'conference',
-      'exhibition',
-      'speech',
-    ];
+    const tags = [
+        'all',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech'
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'announcement/activity';
 
 append title
@@ -44,7 +51,7 @@ append header
   +banner( i18n[ LANG.id ].title )
   +breadcrumb( [
     { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+    { text: i18n[ LANG.id ].breadcrumb.announcement, url: 'announcement' },
     { text: i18n[ LANG.id ].title },
   ] )
 

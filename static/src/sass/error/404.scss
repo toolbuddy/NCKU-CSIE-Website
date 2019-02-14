@@ -1,0 +1,12 @@
+@import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/footer';
+
+body > .content {
+  width: 100%;
+  height: 100%;
+
+  > .banner {
+    background: #213262;
+  }
+}

@@ -6,9 +6,6 @@
     $small: 550px;
     $large: 768px;
 
-    // [ customization ]
-    @content;
-
     // [ layout ]
     display: grid;
     grid-template: {
@@ -84,5 +81,8 @@
       font-size: 1.125rem;
       color: #399dff;
     }
+
+    // [ customization ]
+    @content;
   }
 }

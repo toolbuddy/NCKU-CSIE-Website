@@ -1,4 +1,4 @@
-extends /layouts/announcement/announcement.pug
+extends /layouts/base.pug
 
 append data
   -
@@ -36,7 +36,7 @@ append data
         },
         'entries': [
           {
-            title: '所有公告',
+            title: '全部公告',
             detail: '系所及學校重要資訊公告，不分類別',
             modifier: 'red',
             href: UTILS.url( { href: 'announcement/all', } ),

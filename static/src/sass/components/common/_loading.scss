@@ -7,8 +7,9 @@
 }
 @mixin loading () {
   // block
-  > .loading {
+  &.loading {
     // [ layout ]
+    margin-top: 2rem;
     text-align: center;
 
     // [ skin ]

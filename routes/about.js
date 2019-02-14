@@ -17,12 +17,6 @@ import helmet from 'helmet';
 import contentSecurityPolicy from 'settings/server/content-security-policy';
 import staticHtml from 'routes/utils/static-html.js';
 import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
-import DegreeUtils from 'models/faculty/utils/degree';
-import DepartmentUtils from 'models/faculty/utils/department';
-import NationUtils from 'models/faculty/utils/nation';
-import ProjectUtils from 'models/faculty/utils/project';
-import PublicationUtils from 'models/faculty/utils/publication';
-import ResearchGroupUtils from 'models/faculty/utils/research-group';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -90,79 +84,29 @@ router
     try {
         const profileId = Number( req.params.profileId );
         const languageId = req.query.languageId;
-
-        /**
-         * Invalid profileId.
-         * Handle with 400 bad request.
-         *
-         * @todo use profile util or validator to check `profileId`.
-         */
-
-        if ( !Number.isInteger( profileId ) ) {
-            res.status( 400 );
-            next();
-            return;
-        }
         const data = await getFacultyDetail( {
             profileId,
             languageId,
         } );
-        if ( data.error ) {
-            res.status( data.status );
-            next();
-            return;
-        }
 
-        data.department = data.department.map( departmentId => DepartmentUtils.getDepartmentById( {
-            departmentId,
-            languageId,
-        } ) );
-        data.education = data.education.map( ( education ) => {
-            education.degree = DegreeUtils.getDegreeById( {
-                degreeId: education.degree,
-                languageId,
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'about/faculty-detail.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
             } );
-            education.nation = NationUtils.getNationById( {
-                nationId: education.nation,
-                languageId,
-            } );
-            return education;
-        } );
-        data.project = data.project.map( ( project ) => {
-            project.category = ProjectUtils.getProjectCategoryById( {
-                projectCategoryId: project.category,
-                languageId,
-            } );
-            return project;
-        } );
-        data.publication = data.publication.map( ( publication ) => {
-            publication.category = PublicationUtils.getPublicationCategoryById( {
-                publicationCategoryId: publication.category,
-                languageId,
-            } );
-            return publication;
-        } );
-        data.researchGroup = data.researchGroup.map( researchGroup => ResearchGroupUtils.getResearchGroupById( {
-            researchGroupId: researchGroup,
-            languageId,
-        } ) );
-        data.studentAward = data.studentAward.map( ( studentAward ) => {
-            studentAward.student = studentAward.student.map( ( student ) => {
-                student.degree = DegreeUtils.getDegreeById( {
-                    degreeId: student.degree,
-                    languageId,
-                } );
-                return student;
-            } );
-            return studentAward;
-        } );
-
-        res.render( 'about/faculty-detail.pug', {
-            data,
         } );
     }
-    catch ( error ) {
-        next( error );
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
     }
 } );
 

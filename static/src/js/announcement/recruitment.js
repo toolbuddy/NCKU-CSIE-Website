@@ -1,11 +1,15 @@
 import header from 'static/src/js/components/common/header/index.js';
-
-// Import { singleDefaultTagFilter, } from 'static/src/js/components/announcement/filter/index.js';
+import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
 
 header( document.getElementById( 'header' ) );
 
-// SingleDefaultTagFilter(
-//     'recruitment',
-//     document.getElementById( 'announcement__brefings--top' ),
-//     document.getElementById( 'announcement__brefings' )
-// );
+const filter = new SingleDefaultTagFilter( {
+    defaultTag:            [ 'recruitment', ],
+    supportedTag:          [],
+    filterDOM:             document.getElementById( 'filter' ),
+    announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
+    announcementNormalDOM: document.getElementById( 'announcement--normal' ),
+    pagesDOM:              document.getElementById( 'pages' ),
+    amount:                6,
+} );
+filter.getAll();

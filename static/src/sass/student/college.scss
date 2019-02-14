@@ -2,14 +2,13 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/announcement/briefing';
+@import 'components/announcement/announcement-briefing';
 @import 'components/announcement/filter';
-@import 'components/announcement/title';
 @import 'components/announcement/pages';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body > {
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
@@ -68,13 +67,147 @@ body > {
     }
 
     // block
-    // `body > .content > .filter.filter--college`
-    @include filter--college() {
+    // `body > .content > .filter`
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {
         start: 1;
         end: 11;
+      }
+
+      // element
+      // `body > .content > .filter > .filter__tags`
+      // block
+      // `body > .content > .filter > .tags`
+      > .filter__tags.tags {
+        // [ variable ]
+        $x-small: 200px;
+        $small: 320px;
+        $large: 420px;
+        $x-large: 550px;
+
+        // [ layout ]
+        display: grid;
+        grid-template-areas:
+          'college'
+          'internship'
+          'scholarship'
+          'international'
+          'award'
+          'speech'
+          'conference'
+          'exhibition'
+          'competition'
+          'rule';
+
+        // [ RWD: $x-small ]
+        @media screen and ( min-width: $x-small ) {
+          // [ layout ]
+          grid-template-areas:
+            'college       speech'
+            'internship    conference'
+            'international exhibition'
+            'scholarship   competition'
+            'award         rule';
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          grid-template-areas:
+            'college    rule        international'
+            'exhibition competition internship'
+            'speech     conference  scholarship'
+            '.          .           award';
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid-template-areas:
+            'college     rule          speech        conference'
+            'internship  international competition   exhibition'
+            'scholarship award         .             .';
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $x-large ) {
+          // [ layout ]
+          grid-template-areas:
+            'college speech     conference    exhibition  competition'
+            'award   internship international scholarship rule';
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
+        > .tags__tag[ data-tag-name = 'award' ] {
+          // [ position ]
+          grid-area: award;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
+        > .tags__tag[ data-tag-name = 'college' ] {
+          // [ position ]
+          grid-area: college;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'competition' ]`
+        > .tags__tag[ data-tag-name = 'competition' ] {
+          // [ position ]
+          grid-area: competition;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
+        > .tags__tag[ data-tag-name = 'conference' ] {
+          // [ position ]
+          grid-area: conference;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'exhibition' ]`
+        > .tags__tag[ data-tag-name = 'exhibition' ] {
+          // [ position ]
+          grid-area: exhibition;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
+        > .tags__tag[ data-tag-name = 'international' ] {
+          // [ position ]
+          grid-area: international;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'internship' ]`
+        > .tags__tag[ data-tag-name = 'internship' ] {
+          // [ position ]
+          grid-area: internship;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'rule' ]`
+        > .tags__tag[ data-tag-name = 'rule' ] {
+          // [ position ]
+          grid-area: rule;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'scholarship' ]`
+        > .tags__tag[ data-tag-name = 'scholarship' ] {
+          // [ position ]
+          grid-area: scholarship;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'speech' ]`
+        > .tags__tag[ data-tag-name = 'speech' ] {
+          // [ position ]
+          grid-area: speech;
+        }
       }
     }
 

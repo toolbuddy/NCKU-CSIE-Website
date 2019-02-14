@@ -6,6 +6,10 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':      'Rule',
         'topic':      'Rule',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':     'Pinned Announcement',
         'normal':     'Announcement',
         'breadcrumb': {
@@ -16,6 +20,10 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':      '法規彙編',
         'topic':      '法規彙編',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':     '置頂貼文',
         'normal':     '一般公告',
         'breadcrumb': {
@@ -24,14 +32,13 @@ append data
         },
       },
     } );
-    const filterModifier = 'rule';
-    const filterTags = [
-      'college',
-      'faculty',
-      'master',
-      'phd',
-      'rule',
-    ];
+    const tags = [
+        'rule',
+        'college',
+        'master',
+        'phd',
+        'faculty',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'resource/rule';
 
 append title

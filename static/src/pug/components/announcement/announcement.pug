@@ -4,7 +4,7 @@ section.announcement
   header.announcement__headline.headline
     aside.headline__tags.tags
       each tag in tags
-        button.tags__tag( class=`tags__tag--${ tag }` )= tag
+        button.tags__tag( class=`tags__tag--${ tag.id } tags__tag--${ tag.color }` )= tag.name
     h1.headline__title= title
     a.headline__announcer= `公告人員 : ${ author }`
     time.headline__time= time

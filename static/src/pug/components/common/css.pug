@@ -9,5 +9,5 @@ mixin css( href )
     rel = 'stylesheet',
     type = 'text/css',
     media = 'screen',
-    href = `${ SERVER.staticHost }/css/${ href }.min.css`
+    href = UTILS.staticUrl( { href: `css/${ href }.min.css` } )
   )

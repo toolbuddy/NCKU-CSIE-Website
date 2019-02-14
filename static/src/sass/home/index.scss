@@ -2,11 +2,11 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/announcement/briefing';
+@import 'components/announcement/announcement-briefing';
+@import 'components/home/hot-announcement-briefing';
 @import 'components/common/banner';
-@import 'components/common/breadcrumb';
 
-body > {
+body {
   // block
   // `body > .banner`
   @include banner( 'https://via.placeholder.com/1920x500' );
@@ -15,82 +15,99 @@ body > {
   // `body > .content`
   > .content {
     // [ variable ]
-    $small: 768px;
     $large: 992px;
 
     // [ layout ]
     display: grid;
-    grid-template-columns: repeat( 10, 1fr );
-
-    // [ skin ]
-    padding: 2.2rem .5rem;
+    grid-template: {
+      areas:
+        '. .                .'
+        '. topic            .'
+        '. announcement     .'
+        '. hot-announcement .'
+        '. .                .';
+      rows: 2.2rem repeat( 3, min-content ) 2.2rem;
+      columns: .5rem 1fr .5rem;
+    }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
-      // [ skin ]
-      padding: 4.6rem 3.6rem;
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. .            . .                .'
+          '. topic        . hot-announcement .'
+          '. announcement . hot-announcement .'
+          '. .            . .                .';
+        rows: 4.6rem repeat( 2, min-content ) 4.6rem;
+        columns: 1fr 12fr 4rem 6fr 1fr;
+      }
     }
 
     // block
     // `body > .content > .topic`
     @include topic() {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: topic;
     }
 
     // block
     // `body > .content > .announcement`
     @include announcement() {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: announcement;
 
-      // modifier
-      // `body > .content > .announcement.announcement--hot-news`
-      &.announcement--hot-news {
-        // [ position ]
-        margin-top: 4rem;
-        grid-column: {
-          start: 1;
-          end: 11;
+      // element
+      // `> .announcement > .announcement__more`
+      // block
+      // `> .announcement > .more`
+      > .announcement__more.more {
+        display: flex;
+        justify-content: center;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          justify-content: flex-end;
+        }
+
+        // element
+        // `> .announcement > .more > .more__link`
+        > .more__link {
+          // [ layout ]
+          margin-top: .5rem;
+
+          // [ skin ]
+          width: 4rem;
+          border-radius: .094rem;
+          padding: .375rem .9375rem;
+          color: white;
+          background-color: #f94970;
+          font-size: .4375rem;
+          text-align: center;
+          box-shadow: 0 .0625rem .0625rem 0 rgba( 244, 67, 54, .14 );
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            padding: {
+              top: .53rem;
+              bottom: .53rem;
+            }
+            width: 5rem;
+          }
         }
       }
     }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // block
-      // `body > .content > .announcement`
-      @include announcement() {
-        grid-column: {
-          start: 1;
-          end: 7;
-        }
+    // element
+    // `body > .content > .hot-announcement`
+    @include hot-announcement () {
+      // [ position ]
+      margin-top: 2rem;
+      grid-area: hot-announcement;
 
-        // modifier
-        // `body > .content > .announcement.announcement--hot-news`
-        &.announcement--hot-news {
-          margin-top: 0;
-          grid-column: {
-            start: 8;
-            end: 11;
-          }
-        }
-      }
-
-      // block
-      // `body > .content > .topic`
-      @include topic() {
-        // [ position ]
-        grid-column: {
-          start: 1;
-          end: 7;
-        }
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        margin-top: 0;
       }
     }
   }

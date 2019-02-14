@@ -15,9 +15,6 @@
     // [ layout ]
     display: inline-block;
 
-    // [ customization ]
-    @content;
-
     // element
     // `> .pages > .pages__control`
     > .pages__control {
@@ -30,6 +27,7 @@
       height: 1.41rem;
       border: .0312rem solid #32477d;
       color: #32477d;
+      background: none;
       font-size: .9375rem;
       cursor: pointer;
 
@@ -83,6 +81,7 @@
       // [ skin ]
       border-radius: 1.41rem;
       color: #999999;
+      background: none;
       width: 1.41rem;
       height: 1.41rem;
       font-size: .625rem;
@@ -133,5 +132,8 @@
         display: none;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

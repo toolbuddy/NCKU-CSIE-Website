@@ -1,5 +1,5 @@
 //- No result content template module.
-mixin noResult()
+mixin noResult( belongingBlock )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -10,7 +10,7 @@ mixin noResult()
       }
     } );
 
-  section.no-result.no-result--hidden
+  section.no-result.no-result--hidden( class = `${ belongingBlock }__no-result` )
     h2.no-result__caption= i18n[ LANG.id ].noResult
 
 //- No result content template module.

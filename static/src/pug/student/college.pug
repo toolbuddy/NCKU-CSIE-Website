@@ -6,6 +6,10 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':     'College',
         'topic':     'College',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':    'Pinned Announcement',
         'normal':    'Announcement',
         'breadcrumb': {
@@ -16,6 +20,10 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':     '大學部',
         'topic':     '大學部',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':    '置頂貼文',
         'normal':    '一般公告',
         'breadcrumb': {
@@ -24,19 +32,18 @@ append data
         },
       },
     } );
-    const filterModifier = 'college';
-    const filterTags = [
-      'award',
-      'college',
-      'competition',
-      'conference',
-      'exhibition',
-      'international',
-      'internship',
-      'rule',
-      'scholarship',
-      'speech',
-    ];
+    const tags = [
+        'college',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech',
+        'award',
+        'international',
+        'scholarship',
+        'internship',
+        'rule',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/college';
 
 append title

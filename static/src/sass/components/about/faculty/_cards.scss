@@ -54,9 +54,6 @@
       justify-content: center;
     }
 
-    // [customization]
-    @content;
-
     // element
     // `> .cards > .cards__card`
     // block
@@ -375,5 +372,8 @@
         }
       }
     }
+
+    // [customization]
+    @content;
   }
 }

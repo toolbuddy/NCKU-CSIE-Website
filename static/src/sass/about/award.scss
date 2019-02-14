@@ -2,9 +2,8 @@
 @import 'components/common/header';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/announcement/briefing';
+@import 'components/announcement/announcement-briefing';
 @import 'components/announcement/filter';
-@import 'components/announcement/title';
 @import 'components/announcement/pages';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
@@ -26,7 +25,6 @@ body {
     $large: 992px;
 
     // [ layout ]
-    display: grid;
     grid: {
       gap: 1.2rem 0;
       template: {
@@ -38,15 +36,15 @@ body {
     }
 
     // [skin]
-    padding: 2.2rem .5rem;
-    max-width: 26rem;
     margin: {
       right: auto;
       left: auto;
     }
+    padding: 2.2rem .5rem;
+    max-width: 26rem;
 
     // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       grid-template-areas:
         'topic'
@@ -56,7 +54,10 @@ body {
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ skin ]
-      padding: 2.2rem 0;
+      padding: {
+        top: 2.2rem;
+        bottom: 2.2rem;
+      }
     }
 
     // block
@@ -71,13 +72,100 @@ body {
     }
 
     // block
-    // `body > .content > .filter.filter--all`
-    @include filter--award() {
+    // `body > .content > .filter`
+    @include filter() {
       // [ position ]
       grid-area: filter;
       grid-column: {
         start: 1;
         end: 11;
+      }
+
+      // element
+      // `body > .content > .filter > .filter__tags`
+      // block
+      // `body > .content > .filter > .tags`
+      > .filter__tags.tags {
+        // [ variable ]
+        $x-small: 200px;
+        $small: 320px;
+        $large: 420px;
+        $x-large: 550px;
+
+        // [ layout ]
+        display: grid;
+        grid-template-areas:
+          'award'
+          'faculty'
+          'college'
+          'master'
+          'phd';
+
+        // [ RWD: $x-small ]
+        @media screen and ( min-width: $x-small ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   college'
+            'faculty master'
+            '.       phd';
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   faculty .'
+            'college master  phd';
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   college master phd'
+            'faculty .       .      .';
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $x-large ) {
+          // [ layout ]
+          grid-template-areas: 'award faculty college master phd';
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
+        > .tags__tag[ data-tag-name = 'award' ] {
+          // [ position ]
+          grid-area: award;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
+        > .tags__tag[ data-tag-name = 'college' ] {
+          // [ position ]
+          grid-area: college;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'faculty' ]`
+        > .tags__tag[ data-tag-name = 'faculty' ] {
+          // [ position ]
+          grid-area: faculty;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'master' ]`
+        > .tags__tag[ data-tag-name = 'master' ] {
+          // [ position ]
+          grid-area: master;
+        }
+
+        // element
+        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'phd' ]`
+        > .tags__tag[ data-tag-name = 'phd' ] {
+          // [ position ]
+          grid-area: phd;
+        }
       }
     }
 

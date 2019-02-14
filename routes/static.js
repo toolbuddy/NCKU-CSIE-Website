@@ -53,7 +53,6 @@ router
 
 /**
  * Resolve URL `/static/image`.
- * @todo solve webpack conflict, server side render did not provide data url conversion.
  */
 
 router
