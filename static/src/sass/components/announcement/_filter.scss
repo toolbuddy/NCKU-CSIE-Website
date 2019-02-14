@@ -8,19 +8,13 @@
   // `> .filter`
   > .filter {
     // [ variable ]
-    $small: 425px;
     $large: 850px;
-
-    // [ skin ]
-    min-height: 4rem;
 
     // [ layout ]
     display: flex;
     flex-flow: row wrap;
 
-    // grid-template-areas: 'filter__time' 'filter__tags';
-
-    // [ RWD: $x-small ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       display: grid;
@@ -54,7 +48,7 @@
       font-size: .4375rem;
       min-width: 100%;
 
-      // [ RWD: $x-small ]
+      // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
         display: grid;

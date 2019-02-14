@@ -136,14 +136,11 @@
           word-wrap: break-word;
 
           // [ skin ]
-          min-width: 3rem;
           color: #000000;
           font: {
             size: .5rem;
             weight: normal;
           }
-          overflow: hidden;
-          text-overflow: ellipsis;
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
@@ -160,10 +157,10 @@
 
           // [ layout ]
           display: none;
+          white-space: nowrap;
 
           // [ skin ]
           margin-bottom: .3rem;
-          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: .4375rem;

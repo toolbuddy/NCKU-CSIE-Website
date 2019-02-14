@@ -27,21 +27,21 @@
     // element
     // `> .tags > .tags__tag`
     > .tags__tag {
+      // [ layout ]
+      grid: {
+        column-start: auto;
+        row-start: auto;
+      }
+
       // [ skin ]
+      width: 2.6rem;
+      height: 1rem;
       margin: {
         right: .2rem;
         bottom: .6rem;
       }
       border-radius: 1rem;
       padding: .1rem .2rem;
-      height: 1rem;
-      width: 2.6rem;
-
-      // [ layout ]
-      grid: {
-        column-start: auto;
-        row-start: auto;
-      }
 
       // [ interaction ]
       &:hover {
