@@ -74,7 +74,11 @@ export default async ( opt ) => {
             }, ],
             group: '`announcement`.`announcementId`',
         } );
-
+        if ( !data ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
         return {
             pages: Math.ceil( data.length / amount ),
         };

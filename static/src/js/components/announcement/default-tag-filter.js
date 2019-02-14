@@ -482,8 +482,6 @@ export default class DefaultTagFilter {
 
             const { pages, } = await res.json();
             this.renderPages( pages );
-            if ( pages === 0 )
-                throw new Error( 'zero page' );
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
@@ -492,7 +490,6 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
 
-            // If(err.message !== 'zero page')
             throw err;
         }
     }
@@ -628,8 +625,7 @@ export default class DefaultTagFilter {
          */
 
         catch ( err ) {
-            if ( err.message !== 'zero page' )
-                console.error( err );
+            console.error( err );
         }
     }
 }
