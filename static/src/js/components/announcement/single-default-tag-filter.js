@@ -62,7 +62,7 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     classAdd( tagObj.node, 'tags__tag--active' );
 
                     this.state.page = this.config.page;
-                    this.state.tagParam = [];
+                    this.state.tags = [];
 
                     this.pushState();
                     this.getAll();
@@ -70,20 +70,20 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
             }
             else {
                 tagObj.node.addEventListener( 'click', () => {
-                    const index = this.state.tagParam.indexOf( tagObj.id );
+                    const index = this.state.tags.indexOf( tagObj.id );
                     if ( index >= 0 ) {
-                        this.state.tagParam.splice( index, 1 );
+                        this.state.tags.splice( index, 1 );
                         classRemove( tagObj.node, 'tags__tag--active' );
                     }
                     else {
-                        this.state.tagParam.push( tagObj.id );
+                        this.state.tags.push( tagObj.id );
                         classAdd( tagObj.node, 'tags__tag--active' );
                     }
 
                     this.state.page = this.config.page;
 
-                    if ( this.state.tagParam.length === 0 )
-                        this.state.tagParam = [];
+                    if ( this.state.tags.length === 0 )
+                        this.state.tags = [];
 
 
                     this.pushState();

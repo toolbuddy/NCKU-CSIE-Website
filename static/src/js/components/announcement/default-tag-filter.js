@@ -65,7 +65,7 @@ export default class DefaultTagFilter {
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
-            tagParam:      [],
+            tags:      [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -159,13 +159,13 @@ export default class DefaultTagFilter {
     }
 
     pushState () {
-        this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
+        this.state.tags = [ ...new Set( this.state.tags ), ];
         const urlString = [
             `languageId=${ this.state.languageId }`,
             `amount=${ this.state.amount }`,
             `from=${ Number( this.state.from ) }`,
             `to=${ Number( this.state.to ) }`,
-            ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+            ...this.state.tags.map( tagId => `tags=${ tagId }` ),
             `page=${ this.state.page }`,
         ].join( '&' );
         window.history.pushState( null, 'query string', `${ window.location.pathname }?${ urlString }` );
@@ -198,7 +198,7 @@ export default class DefaultTagFilter {
 
         if ( tempAmount !== null )
             this.state.amount = Number( tempAmount );
-        this.state.tagParam = tempTagParam.map( tagId => Number( tagId ) );
+        this.state.tags = tempTagParam.map( tagId => Number( tagId ) );
         if ( tempLanguageId !== null )
             this.state.languageId = Number( tempLanguageId );
         if ( tempPage !== null )
@@ -215,7 +215,7 @@ export default class DefaultTagFilter {
         this.DOM.filter.tags.forEach( ( tagObj ) => {
             if ( tagObj.id === TagUtils.tagAllId ||
                 ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
-                this.state.tagParam.indexOf( tagObj.id ) >= 0
+                this.state.tags.indexOf( tagObj.id ) >= 0
             )
                 classAdd( tagObj.node, 'tags__tag--active' );
             else
@@ -456,11 +456,11 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
-            let tags = this.state.tagParam;
+            this.state.tags = [ ...new Set( this.state.tags ), ];
+            let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
-            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+            if ( this.tagId.default.length === 1 && this.state.tags.length !== 0 )
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
@@ -471,7 +471,7 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
-            if ( this.state.tagParam.length === 0 )
+            if ( this.state.tags.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
 
             else
@@ -503,11 +503,11 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
-            let tags = this.state.tagParam;
+            this.state.tags = [ ...new Set( this.state.tags ), ];
+            let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
-            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+            if ( this.tagId.default.length === 1 && this.state.tags.length !== 0 )
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
@@ -518,7 +518,7 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
-            if ( this.state.tagParam.length === 0 )
+            if ( this.state.tags.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
@@ -561,11 +561,11 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
-            let tags = this.state.tagParam;
+            this.state.tags = [ ...new Set( this.state.tags ), ];
+            let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
-            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+            if ( this.tagId.default.length === 1 && this.state.tags.length !== 0 )
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
@@ -578,7 +578,7 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
-            if ( this.state.tagParam.length === 0 )
+            if ( this.state.tags.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
