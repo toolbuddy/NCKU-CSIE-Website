@@ -288,7 +288,7 @@ export default class DefaultTagFilter {
              */
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
-            .classList.contains( 'pages__extra--hidden' ) )
+            .classList.contains( 'pages__page--hidden' ) )
                 classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
             else
                 classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
@@ -298,7 +298,7 @@ export default class DefaultTagFilter {
              */
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
-            .classList.contains( 'pages__extra--hidden' ) )
+            .classList.contains( 'pages__page--hidden' ) )
                 classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
 
             else
@@ -482,8 +482,8 @@ export default class DefaultTagFilter {
 
             const { pages, } = await res.json();
             this.renderPages( pages );
-            if(pages === 0)
-                throw new Error('zero page');
+            if ( pages === 0 )
+                throw new Error( 'zero page' );
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
@@ -491,7 +491,8 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
-            //if(err.message !== 'zero page')
+
+            // If(err.message !== 'zero page')
             throw err;
         }
     }
@@ -627,7 +628,8 @@ export default class DefaultTagFilter {
          */
 
         catch ( err ) {
-            console.error( err );
+            if ( err.message !== 'zero page' )
+                console.error( err );
         }
     }
 }
