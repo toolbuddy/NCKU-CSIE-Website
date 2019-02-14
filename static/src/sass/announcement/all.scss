@@ -81,6 +81,137 @@ body {
         start: 1;
         end: 11;
       }
+
+      > .filter__tags.tags {
+        $x-small: 200px;
+        $small: 320px;
+        $large: 420px;
+        $x-large: 550px;
+        display: grid;
+        grid-template-areas:
+          'all'
+          'course'
+          'faculty'
+          'college'
+          'master'
+          'phd'
+          'internship'
+          'scholarship'
+          'international'
+          'award'
+          'speech'
+          'conference'
+          'exhibition'
+          'competition'
+          'recruitment'
+          'rule';
+
+        // [ RWD: $x-small ]
+        @media screen and ( min-width: $x-small ) {
+          grid-template-areas:
+            'all           college'
+            'course        master'
+            'faculty       phd'
+            'internship    speech'
+            'scholarship   conference'
+            'international exhibition'
+            'award         competition'
+            'recruitment   rule';
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          grid-template-areas:
+            'all     internship    speech'
+            'course  scholarship   conference'
+            'faculty international exhibition'
+            'college award         competition'
+            'master  recruitment   rule'
+            'phd     .             .';
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $large ) {
+          grid-template-areas:
+            'all         college internship    speech'
+            'course      master  scholarship   conference'
+            'faculty     phd     international exhibition'
+            'recruitment rule    award         competition';
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $x-large ) {
+          grid-template-areas:
+            'all     college internship    speech      rule'
+            'course  master  scholarship   conference  recruitment'
+            'faculty phd     international exhibition  .'
+            '.       .       award         competition .';
+        }
+
+        > .tags__tag[ data-tag-name = 'all' ] {
+          grid-area: all;
+        }
+
+        > .tags__tag[ data-tag-name = 'award' ] {
+          grid-area: award;
+        }
+
+        > .tags__tag[ data-tag-name = 'college' ] {
+          grid-area: college;
+        }
+
+        > .tags__tag[ data-tag-name = 'competition' ] {
+          grid-area: competition;
+        }
+
+        > .tags__tag[ data-tag-name = 'conference' ] {
+          grid-area: conference;
+        }
+
+        > .tags__tag[ data-tag-name = 'course' ] {
+          grid-area: course;
+        }
+
+        > .tags__tag[ data-tag-name = 'exhibition' ] {
+          grid-area: exhibition;
+        }
+
+        > .tags__tag[ data-tag-name = 'faculty' ] {
+          grid-area: faculty;
+        }
+
+        > .tags__tag[ data-tag-name = 'international' ] {
+          grid-area: international;
+        }
+
+        > .tags__tag[ data-tag-name = 'internship' ] {
+          grid-area: internship;
+        }
+
+        > .tags__tag[ data-tag-name = 'master' ] {
+          grid-area: master;
+        }
+
+        > .tags__tag[ data-tag-name = 'phd' ] {
+          grid-area: phd;
+        }
+
+        > .tags__tag[ data-tag-name = 'recruitment' ] {
+          grid-area: recruitment;
+        }
+
+        > .tags__tag[ data-tag-name = 'rule' ] {
+          grid-area: rule;
+        }
+
+        > .tags__tag[ data-tag-name = 'scholarship' ] {
+          grid-area: scholarship;
+        }
+
+        > .tags__tag[ data-tag-name = 'speech' ] {
+          grid-area: speech;
+        }
+      }
     }
 
     // block

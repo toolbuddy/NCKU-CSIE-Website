@@ -1,28 +1,79 @@
 @import 'components/announcement/tags';
 
 // template
-// `> .filter`
+// `> .filter > .time > .time__?
 // This mixin should not be used outside this file.
+@mixin time__template ( $element ) {
+  > .time__#{ $element }.#{ $element } {
+    .#{ $element }__text {
+      text-align: left;
+      padding-left: .5rem;
+    }
+
+    .#{ $element }__input.input {
+      // [ layout ]
+      display: grid;
+      grid-template: {
+        areas: 'input__year input__month input__date';
+        columns: 40% 30% 30%;
+      }
+
+      // [ skin ]
+      width: 4.2rem;
+      height: 1rem;
+      margin: .3rem .6rem .2rem .2rem;
+      border: .016rem solid #757575;
+      border-radius: 1rem;
+      padding: {
+        left: .25rem;
+        right: .1rem;
+      }
+
+      > .input__year {
+        grid-area: input__year;
+        background-color: transparent;
+      }
+
+      > .input__month {
+        grid-area: input__month;
+        background-color: transparent;
+      }
+
+      > .input__date {
+        grid-area: input__date;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// `> .filter`
 @mixin filter () {
   // block
   // `> .filter`
   > .filter {
     // [ variable ]
+    $small: 350px;
     $large: 850px;
 
     // [ layout ]
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template: {
+      areas:
+        'filter__time'
+        'filter__tags';
+      columns: 1fr;
+      rows: auto;
+    }
+    justify-content: center;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       display: grid;
-      grid-column-gap: 20%;
       grid-template: {
-        areas: 'filter__tags filter__time';
-        columns: 45% 35%;
-        rows: none;
+        areas: 'filter__tags . filter__time';
+        columns: min-content 1fr min-content;
       }
     }
 
@@ -38,86 +89,38 @@
       }
 
       // [ layout ]
-      display: flex;
-      flex-flow: row wrap;
+      display: grid;
       justify-content: center;
-      align-items: end;
       margin-bottom: .8rem;
 
       // [ skin ]
       font-size: .4375rem;
-      min-width: 100%;
+      width: 100%;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        grid-template-columns: repeat( 2, 4.8rem );
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
-        display: grid;
-        grid-template-columns: auto auto;
-      }
-
-      // modifier
-      // `> .filter > .time.filter__time--hidden`
-
-      &.filter__time--hidden {
-        // [ layout ]
-        display: none;
-
-        // [ RWD: $x-large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          display: flex;
-        }
-      }
-
-      .time__from, .time__to {
-        justify-self: center;
+        align-items: end;
+        margin-bottom: 0;
       }
 
       // element
-      // `> .filter > .time .time__date`
+      // `> .filter > .time > .time__from`
+      // block
+      // `> .filter > .time > .from`
+      @include time__template ( 'from' );
 
-      .from__input, .to__input {
-        // [ position ]
-        align-self: center;
-
-        // [ layout ]
-        display: grid;
-        grid: {
-          column-start: auto;
-          row-start: auto;
-          template-columns: 40% 30% 30%;
-        }
-
-        // [ skin ]
-        margin: .3rem .6rem .2rem .2rem;
-        border: .016rem solid #757575;
-        border-radius: 1rem;
-        padding: {
-          top: .15rem;
-          bottom: .15rem;
-          left: .25rem;
-          right: .05rem;
-        }
-        width: 4.2rem;
-        height: 1rem;
-        background: none;
-
-        .input {
-          text-align: center;
-        }
-
-        > input {
-          background: rgba( 0, 0, 0, 0 );
-          outline: none;
-          border: none;
-        }
-      }
-
-      .from__text, .to__text {
-        text-align: left;
-        grid-column: 1 / span 3;
-        padding-left: .5rem;
-      }
+      // element
+      // `> .filter > .time > .time__to`
+      // block
+      // `> .filter > .time > .to`
+      @include time__template ( 'to' );
     }
 
     // element
@@ -128,33 +131,21 @@
       @include tags() {
         // [ position ]
         grid-area: filter__tags;
-        align-self: flex-start;
 
         // [ layout ]
         display: flex;
         flex-flow: row wrap;
+        justify-content: center;
+
+        // [ skin ]
+        font-size: .4375rem;
+
+        // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           display: grid;
           grid-template: {
             rows: repeat( 4, auto );
             columns: repeat( 5, auto );
-          }
-        }
-
-        // [ skin ]
-        font-size: .4375rem;
-
-        // modifier
-        // `> .filter > .filter__tags.filter__tags--hidden`
-
-        &.filter__tags--hidden {
-          // [ layout ]
-          display: none;
-
-          // [ RWD: $x-large ]
-          @media screen and ( min-width: $large ) {
-            // [ layout ]
-            display: grid;
           }
         }
       }
