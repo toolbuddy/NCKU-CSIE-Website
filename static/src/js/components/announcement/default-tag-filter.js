@@ -65,9 +65,7 @@ export default class DefaultTagFilter {
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
-            tags:          [],
-            selectDefault: true,
-            tagParam:      this.tagId.default,
+            tagParam:      [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -161,6 +159,7 @@ export default class DefaultTagFilter {
     }
 
     pushState () {
+        this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
         const urlString = [
             `languageId=${ this.state.languageId }`,
             `amount=${ this.state.amount }`,
@@ -168,10 +167,8 @@ export default class DefaultTagFilter {
             `to=${ Number( this.state.to ) }`,
             ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
             `page=${ this.state.page }`,
-            `selectDefault=${ this.state.selectDefault }`,
         ].join( '&' );
-
-        window.history.pushState( this.state, 'query string', `${ window.location.pathname }?${ urlString }` );
+        window.history.pushState( null, 'query string', `${ window.location.pathname }?${ urlString }` );
     }
 
     loadState () {
@@ -182,34 +179,44 @@ export default class DefaultTagFilter {
         const tempFrom = urlParams.get( 'from' );
         const tempTo = urlParams.get( 'to' );
         const tempPage = urlParams.get( 'page' );
-        const tempSelectDefault = urlParams.get( 'selectDefault' );
+
+        if (
+            ( tempAmount !== null && !ValidateUtils.isPositiveInteger( Number( tempAmount ) ) ) ||
+            ( tempTagParam !== null && !Array.isArray( tempTagParam ) ) ||
+            ( tempTagParam !== null && !tempTagParam.every( ( tagId ) => {
+                const id = Number( tagId );
+                if ( !TagUtils.isSupportedTagId( id ) )
+                    return false;
+                return true;
+            } ) ) ||
+            ( tempLanguageId !== null && !WebLanguageUtils.isSupportedLanguageId( Number( tempLanguageId ) ) ) ||
+            ( tempFrom !== null && !ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) ) ||
+            ( tempTo !== null && !ValidateUtils.isValidDate( new Date( Number( tempTo ) ) ) ) ||
+            ( tempPage !== null && !ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
+        )
+            throw new TypeError( 'Invalid arguments.' );
 
         if ( tempAmount !== null )
             this.state.amount = Number( tempAmount );
-        if ( tempTagParam.length !== 0 )
-            this.state.tagParam = tempTagParam.map( tagId => Number( tagId ) );
+        this.state.tagParam = tempTagParam.map( tagId => Number( tagId ) );
         if ( tempLanguageId !== null )
             this.state.languageId = Number( tempLanguageId );
         if ( tempPage !== null )
             this.state.page = Number( tempPage );
-        if ( tempSelectDefault !== null )
-            this.state.selectDefault = ( tempSelectDefault === 'true' );
         if ( tempFrom !== null )
             this.state.from = new Date( Number( tempFrom ) );
         if ( tempTo !== null )
             this.state.to = new Date( Number( tempTo ) );
-
-        if ( this.state.selectDefault === true )
-            this.state.tags = [];
-        else
-            this.state.tags = this.state.tagParam;
 
         /**
          * Render filter-tag.
          */
 
         this.DOM.filter.tags.forEach( ( tagObj ) => {
-            if ( tagObj.id === -1 || this.state.tags.indexOf( tagObj.id ) >= 0 )
+            if ( tagObj.id === TagUtils.tagAllId ||
+                ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
+                this.state.tagParam.indexOf( tagObj.id ) >= 0
+            )
                 classAdd( tagObj.node, 'tags__tag--active' );
             else
                 classRemove( tagObj.node, 'tags__tag--active' );
@@ -281,21 +288,21 @@ export default class DefaultTagFilter {
              */
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
+            .classList.contains( 'pages__extra--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
             else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
+                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
 
             /**
              * If the page before the last page is hidden, then pages__extra--after should show.
              */
 
             if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
+            .classList.contains( 'pages__extra--hidden' ) )
+                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
 
             else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
+                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
         }
     }
 
@@ -341,7 +348,7 @@ export default class DefaultTagFilter {
                         }
                     }
                     catch ( err ) {
-                        throw new Error( 'Failed in addEventListener.' );
+                        throw new Error( err );
                     }
                 } );
             } );
@@ -449,19 +456,24 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
+            let tags = this.state.tagParam;
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+                tags = tags.concat( this.tagId.default );
+
             const queryString = [
                 `amount=${ this.state.amount }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
+            if ( this.state.tagParam.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
+
             else
                 res = await fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
 
@@ -470,6 +482,8 @@ export default class DefaultTagFilter {
 
             const { pages, } = await res.json();
             this.renderPages( pages );
+            if(pages === 0)
+                throw new Error('zero page');
         }
         catch ( err ) {
             this.DOM.pages.innerHTML = '';
@@ -477,6 +491,7 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            //if(err.message !== 'zero page')
             throw err;
         }
     }
@@ -487,19 +502,22 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
+            let tags = this.state.tagParam;
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+                tags = tags.concat( this.tagId.default );
 
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
+            if ( this.state.tagParam.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
@@ -542,9 +560,12 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            this.state.tagParam = [ ...new Set( this.state.tagParam ), ];
+            let tags = this.state.tagParam;
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+            if ( this.tagId.default.length === 1 && this.state.tagParam.length !== 0 )
+                tags = tags.concat( this.tagId.default );
 
             const queryString = [
                 `amount=${ this.state.amount }`,
@@ -552,11 +573,11 @@ export default class DefaultTagFilter {
                 `from=${ Number( this.state.from ) }`,
                 `page=${ this.state.page }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
+            if ( this.state.tagParam.length === 0 )
                 res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
             else
                 res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
