@@ -32,7 +32,24 @@ append data
         },
       },
     } );
-    const tags = allTags;
+    const tags = [
+        'all',
+        'award',
+        'college',
+        'competition',
+        'conference',
+        'course',
+        'exhibition',
+        'faculty',
+        'international',
+        'internship',
+        'master',
+        'phd',
+        'scholarship',
+        'speech',
+        'rule',
+        'recruitment',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'announcement/all';
 
 append title

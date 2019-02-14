@@ -5,9 +5,10 @@ append data
     const allTags = {
         'all':
         {
-            color: 'yellow',
-            tag:   UTILS.getTagAll( LANG.id ),
-            id:    UTILS.tagAllId,
+            color:   'yellow',
+            id:      UTILS.tagAllId,
+            tag:     UTILS.getTagAll( LANG.id ),
+            tagName: 'all',
         },
     };
     UTILS.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach( tag => {
@@ -17,11 +18,12 @@ append data
         } );
         allTags[ tag ] = {
             color: UTILS.getTagColorById( tagId ),
+            id:    tagId,
             tag:   UTILS.getTagById( {
                 tagId: tagId,
                 languageId: LANG.id,
             } ),
-            id:    tagId,
+            tagName: tag,
         };
     } );
 
@@ -47,7 +49,7 @@ append content
           input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
     article.filter__tags.tags
       each tagObj, tagName in tags
-        button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagName )= tagObj.tag
+        button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
 
   section#announcement--pinned.announcement.announcement--pinned
     header.announcement__title= i18n[ LANG.id ].pinned
