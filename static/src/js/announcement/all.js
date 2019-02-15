@@ -28,12 +28,11 @@ const filter = new MultipleDefaultTagFilter( {
     announcementNormalDOM: document.getElementById( 'announcement--normal' ),
     pagesDOM:              document.getElementById( 'pages' ),
     amount:                6,
-    config:                {
-        from:              new Date( '2019/01/01' ),
-        to:                new Date( Date.now() ),
-        page:              1,
-        visiblePageNum:    2,
-        currentLanguageId: WebLanguageUtils.currentLanguageId,
-    },
+    from:                  new Date( '2019/01/01' ),
+    to:                    new Date( Date.now() ),
+    page:                  1,
+    visiblePageNum:        2,
+    currentLanguageId:     WebLanguageUtils.currentLanguageId,
+    scrollTop:             document.getElementById( 'content' ).offsetTop,
 } );
 filter.getAll();

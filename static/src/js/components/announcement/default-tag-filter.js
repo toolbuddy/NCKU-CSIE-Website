@@ -26,15 +26,17 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( opt.pagesDOM ) ||
             !opt.amount ||
             !ValidateUtils.isPositiveInteger( opt.amount ) ||
-            !opt.config.from ||
-            !ValidateUtils.isValidDate( opt.config.from ) ||
-            !opt.config.to ||
-            !ValidateUtils.isValidDate( opt.config.to ) ||
-            !opt.config.page ||
-            !ValidateUtils.isPositiveInteger( opt.config.page ) ||
-            !opt.config.visiblePageNum ||
-            !ValidateUtils.isPositiveInteger( opt.config.visiblePageNum ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.config.currentLanguageId )
+            !opt.from ||
+            !ValidateUtils.isValidDate( opt.from ) ||
+            !opt.to ||
+            !ValidateUtils.isValidDate( opt.to ) ||
+            !opt.page ||
+            !ValidateUtils.isPositiveInteger( opt.page ) ||
+            !opt.visiblePageNum ||
+            !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId ) ||
+            !opt.scrollTop ||
+            Number.isNaN( opt.scrollTop )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -53,10 +55,11 @@ export default class DefaultTagFilter {
 
         this.config = {
             amount:         opt.amount,
-            from:           opt.config.from,
-            to:             opt.config.to,
-            page:           opt.config.page,
-            visiblePageNum: opt.config.visiblePageNum,
+            from:           opt.from,
+            to:             opt.to,
+            page:           opt.page,
+            visiblePageNum: opt.visiblePageNum,
+            scrollTop:      opt.scrollTop,
         };
 
         this.tagId = {
@@ -71,7 +74,7 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            languageId:    opt.config.currentLanguageId,
+            languageId:    opt.currentLanguageId,
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
@@ -326,6 +329,7 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
+                window.scrollTo( window.scrollX, this.config.scrollTop );
             }
             catch ( err ) {
                 console.error( err );
@@ -357,6 +361,7 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
+                window.scrollTo( window.scrollX, this.config.scrollTop );
             }
 
             /**
@@ -408,6 +413,7 @@ export default class DefaultTagFilter {
                             this.renderPageExtra( pages );
                             this.getNormalAnnouncement();
                             this.pushState();
+                            window.scrollTo( window.scrollX, this.config.scrollTop );
                         }
                     }
                     catch ( err ) {
