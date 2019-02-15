@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import departmentMap from 'models/faculty/maps/department.js';
+import LanguageUtils from '../../common/utils/language.js';
+import departmentMap from '../maps/department.js';
 
 class DepartmentUtils {
     static defaultDepartment ( languageId = LanguageUtils.defaultLanguageId ) {

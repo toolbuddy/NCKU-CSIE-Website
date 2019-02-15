@@ -10,7 +10,6 @@ append data
           'home':   'Home',
           'about':  'About',
         },
-        'noResult': 'No Result',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '師資陣容',
@@ -19,7 +18,6 @@ append data
           'home':   '首頁',
           'about':  '關於本系',
         },
-        'noResult': '無結果',
       },
     } );
     const currentRoute = 'about/faculty';
@@ -43,20 +41,26 @@ append header
 
 append content
   include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
 
   +topic( 'content', i18n[ LANG.id ].topic )
 
-  //- Filter component for faculty selection.
-  section#filters.content__filters.filters
-    h1 Loading
-
-  //- Faculty data display section.
-  //-
-  //- Use card outfit to display faculty information.
-  //- @todo add loading screen.
-  section#cards.content__cards.cards
-  section#no-result.content__no-result.no-result.no-result--hide
-    p.no-result__text= i18n[ LANG.id ].noResult
+  section#faculty.content__faculty.faculty
+    article.faculty__filter.filter
+      section.filter__department.department
+        each departmentId in UTILS.DepartmentUtils.supportedDepartmentId
+          button.department__tag(
+            data-department-id = `${ departmentId }`
+          )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
+      section.filter__research-group.research-group
+        each researchGroupId in UTILS.ResearchGroupUtils.supportedResearchGroupId
+          button.research-group__tag(
+            data-research-group-id = `${ researchGroupId }`,
+          )= UTILS.ResearchGroupUtils.getResearchGroupById( { researchGroupId, languageId: LANG.id } )
+    +noResult( 'faculty' )
+    +loading( 'faculty' )
+    article.faculty__cards.cards
 
 append footer
 

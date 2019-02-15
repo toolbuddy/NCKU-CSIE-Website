@@ -18,7 +18,10 @@ mixin cards__card( profile = {} )
       },
     } );
 
-  section.cards__card.card( data-research-gruop = `${ profile.researchGroup.join() }` )
+  section.cards__card.card(
+    data-department-ids = `${ profile.department.join() }`,
+    data-research-group-ids = `${ profile.researchGroup.join() }`
+  )
     //- Faculty's photo.
     img.card__photo(
       src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
@@ -31,8 +34,8 @@ mixin cards__card( profile = {} )
       //- Faculty belongs to some departments.
       if profile.department
         aside.intro__departments.departments
-          each department in profile.department
-            span.departments__department( data = `${ department.departmentId }` )= department.department
+          each departmentId in profile.department
+            span.departments__department( data = `${ departmentId }` )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
 
       //- Faculty's name.
       if profile.name
@@ -75,6 +78,6 @@ mixin cards__card( profile = {} )
 //- main
     Construct all faculty information with `cards__card`.
 //- Sort faculty based on their showing order.
-- faculty.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
-each profile in faculty
+- data.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
+each profile in data
   +cards__card( profile )

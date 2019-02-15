@@ -1,11 +1,13 @@
 import header from 'static/src/js/components/common/header/index.js';
-import getFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import GetFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 window.addEventListener( 'load', () => {
     header( document.getElementById( 'header' ) );
-    getFactuly(
-        document.getElementById( 'cards' ),
-        document.getElementById( 'filters' ),
-        document.getElementById( 'no-result' )
-    );
+
+    const getFaculty = new GetFactuly( {
+        facultyDOM: document.getElementById( 'faculty' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+    } );
+    getFaculty.exec();
 } );

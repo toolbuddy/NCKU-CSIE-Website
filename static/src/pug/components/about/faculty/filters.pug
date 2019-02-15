@@ -1,9 +1,0 @@
-//- Filter component for faculty selection.
-//-
-//- Filter based on their belonging departments.
-//- @todo add resaerch group filter.
-
-each value, index in department
-  button.filters__filter.filters__filter--dept( data-department = index )= value
-each value, index in researchGroup
-  button.filters__filter.filters__filter--research( data-research-gruop = index )= value

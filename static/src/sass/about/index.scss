@@ -12,13 +12,21 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
+  @include
+    banner(
+      $block: 'body',
+      $image: 'https://via.placeholder.com/1920x500'
+    );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include breadcrumb( 'body', #ffffff );
+  @include
+    breadcrumb(
+      $block: 'body',
+      $bg-color: #ffffff
+    );
 
   // element
   // `.body > .body__content`
@@ -64,7 +72,7 @@
     // `.body > .content > .content__entries`
     // block
     // `.body > .content > .entries`
-    @include entries( 'content' ) {
+    @include entries( $block: 'content' ) {
       // [ position ]
       grid-area: entries;
     }

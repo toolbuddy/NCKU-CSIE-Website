@@ -1,0 +1,130 @@
+// template
+// `> .#{ $block } > .filter > .? > .?__tag`
+%block__tag {
+  // [ variable ]
+  $large: 1130px;
+
+  // [ layout ]
+  display: inline-block;
+  text-align: center;
+  word: {
+    wrap: break-word;
+    break: break-all;
+  }
+  white-space: normal;
+  margin: .14rem;
+
+  // [ skin ]
+  min: {
+    width: 3.03rem;
+    height: .94rem;
+  }
+  border: {
+    style: solid;
+    width: .03rem;
+    radius: .69rem;
+  }
+  padding: {
+    left: .5rem;
+    right: .5rem;
+  }
+  background-color: #eff3f9;
+  font-size: .44rem;
+
+  // [ interaction ]
+  &:hover {
+    // [ skin ]
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  // [ RWD: $large ]
+  @media screen and ( min-width: $large ) {
+    // [ skin ]
+    width: 90% / 4;
+    min-height: 1.38rem;
+    font-size: .58rem;
+  }
+}
+
+// component
+// `> .#{ $block } > .#{ $block }__filter.filter`
+@mixin filter ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__filter`
+  // block
+  // `> .#{ $block } > .filter`
+  > .#{ $block }__filter.filter {
+    // element
+    // `> .#{ $block } > .filter > .filter__department`
+    // block
+    // `> .#{ $block } > .filter > .department`
+    > .filter__department.department {
+      // [ layout ]
+      text-align: center;
+
+      // element
+      // `> .#{ $block } > .filter > .department > .department__tag`
+      > .department__tag {
+        // [ template ]
+        @extend %block__tag;
+
+        // [ skin ]
+        width: 80% / 2;
+        border-color: #f67057;
+        color: #f67057;
+
+        // [ interaction ]
+        &:hover {
+          // [ skin ]
+          background-color: lighten( $color: #f67057, $amount: 10% );
+        }
+
+        // modifier
+        // `> .#{ $block } > .filter > .department > .department__tag.department__tag--active`
+        &.department__tag--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #f67057;
+        }
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .filter > .filter__research-group`
+    // block
+    // `> .#{ $block } > .filter > .research-group`
+    > .filter__research-group.research-group {
+      // [ layout ]
+      text-align: center;
+
+      // element
+      // `> .#{ $block } > .filter > .research-group > .research-group__tag`
+      > .research-group__tag {
+        // [ template ]
+        @extend %block__tag;
+
+        // [ skin ]
+        border-color: #8caae2;
+        color: #8caae2;
+
+        // [ interaction ]
+        &:hover {
+          // [ skin ]
+          background-color: lighten( $color: #8caae2, $amount: 10% );
+        }
+
+        // modifier
+        // `> .#{ $block } > .filter > .research-group > .research-group__tag.research-group__tag--active`
+        &.research-group__tag--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #8caae2;
+        }
+      }
+    }
+  }
+
+  // [ customization ]
+  @content;
+}
