@@ -65,7 +65,7 @@ export default class DefaultTagFilter {
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
-            tags:      [],
+            tags:       [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -162,33 +162,26 @@ export default class DefaultTagFilter {
         const urlParams = new URLSearchParams( window.location.search );
         const tempAmount = urlParams.get( 'amount' );
         const tempTags = urlParams.getAll( 'tags' );
-        const tempLanguageId = urlParams.get( 'languageId' );
         const tempFrom = urlParams.get( 'from' );
         const tempTo = urlParams.get( 'to' );
         const tempPage = urlParams.get( 'page' );
 
-        if (
-            ( tempAmount !== null && !ValidateUtils.isPositiveInteger( Number( tempAmount ) ) ) ||
-            ( tempTags !== null &&
-              !Array.isArray( tempTags ) &&
-              !tempTags.every( ( tagId ) => TagUtils.isSupportedTagId( Number( tagId ) ) ) ) ||
-            ( tempLanguageId !== null && !WebLanguageUtils.isSupportedLanguageId( Number( tempLanguageId ) ) ) ||
-            ( tempFrom !== null && !ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) ) ||
-            ( tempTo !== null && !ValidateUtils.isValidDate( new Date( Number( tempTo ) ) ) ) ||
-            ( tempPage !== null && !ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
-        )
-            throw new TypeError( 'Invalid arguments.' );
-
-        if ( tempAmount !== null )
+        if ( Array.isArray( tempTags ) ) {
+            this.state.tags = [];
+            tempTags.forEach( ( tagId ) => {
+                const id = Number( tagId );
+                if ( this.tagId.default.includes( id ) || this.tagId.supported.includes( id ) )
+                    this.state.tags.push( id );
+            } );
+            this.state.tags = [ ...new Set( this.state.tags ), ];
+        }
+        if ( tempAmount !== null && ValidateUtils.isPositiveInteger( Number( tempAmount ) ) )
             this.state.amount = Number( tempAmount );
-        this.state.tags = tempTags.map( tagId => Number( tagId ) );
-        if ( tempLanguageId !== null )
-            this.state.languageId = Number( tempLanguageId );
-        if ( tempPage !== null )
+        if ( tempPage !== null && ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
             this.state.page = Number( tempPage );
-        if ( tempFrom !== null )
+        if ( tempFrom !== null && ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) )
             this.state.from = new Date( Number( tempFrom ) );
-        if ( tempTo !== null )
+        if ( tempTo !== null && ValidateUtils.isValidDate( new Date( Number( tempTo ) ) ) )
             this.state.to = new Date( Number( tempTo ) );
 
         /**
@@ -220,7 +213,6 @@ export default class DefaultTagFilter {
     }
 
     pushState () {
-        this.state.tags = [ ...new Set( this.state.tags ), ];
         const urlString = [
             `languageId=${ this.state.languageId }`,
             `amount=${ this.state.amount }`,
@@ -302,6 +294,81 @@ export default class DefaultTagFilter {
         }
     }
 
+    subscribePageControlEvent ( pages, pageDOMArr ) {
+        this.DOM.pages.querySelector( '.pages > .pages__control.pages__control--forward' ).addEventListener( 'click', () => {
+            /**
+             * Render `.pages__page--active`.
+             */
+
+            try {
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
+
+                this.state.page -= 1;
+                if ( this.state.page < this.config.page )
+                    this.state.page = this.config.page;
+
+                const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                if ( !ValidateUtils.isDomElement( activeDOM ) )
+                    throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                classAdd( activeDOM, 'pages__page--active' );
+
+                /**
+                 * Render `.pages__extra`.
+                 */
+
+                this.renderPageExtra( pages );
+                this.getNormalAnnouncement();
+                this.pushState();
+            }
+
+            /**
+             * Silence.
+             */
+
+            catch ( err ) {
+                console.error( err );
+            }
+        } );
+        this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
+            /**
+             * Render `.pages__page--active`.
+             */
+
+            try {
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
+
+                this.state.page += 1;
+                if ( this.state.page > pages )
+                    this.state.page = pages;
+
+                const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                if ( !ValidateUtils.isDomElement( activeDOM ) )
+                    throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                classAdd( activeDOM, 'pages__page--active' );
+
+                /**
+                 * Render `.pages__extra`.
+                 */
+
+                this.renderPageExtra( pages );
+                this.getNormalAnnouncement();
+                this.pushState();
+            }
+
+            /**
+             * Silence.
+             */
+
+            catch ( err ) {
+                console.error( err );
+            }
+        } );
+    }
+
     renderPages ( pages ) {
         try {
             this.DOM.pages.innerHTML = pagesHTML( { pages, } );
@@ -362,80 +429,8 @@ export default class DefaultTagFilter {
              * Add eventListener to all the `.pages__control` element after rendering.
              */
 
-            if ( pages !== this.config.page ) {
-                this.DOM.pages.querySelector( '.pages > .pages__control.pages__control--forward' ).addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
-                    try {
-                        pageDOMArr.forEach( ( pageDOM ) => {
-                            classRemove( pageDOM, 'pages__page--active' );
-                        } );
-
-                        this.state.page -= 1;
-                        if ( this.state.page < this.config.page )
-                            this.state.page = this.config.page;
-
-                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( !ValidateUtils.isDomElement( activeDOM ) )
-                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        classAdd( activeDOM, 'pages__page--active' );
-
-                        /**
-                         * Render `.pages__extra`.
-                         */
-
-                        this.renderPageExtra( pages );
-                        this.getNormalAnnouncement();
-                        this.pushState();
-                    }
-
-                    /**
-                     * Silence.
-                     */
-
-                    catch ( err ) {
-                        console.error( err );
-                    }
-                } );
-                this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
-                    try {
-                        pageDOMArr.forEach( ( pageDOM ) => {
-                            classRemove( pageDOM, 'pages__page--active' );
-                        } );
-
-                        this.state.page += 1;
-                        if ( this.state.page > pages )
-                            this.state.page = pages;
-
-                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( !ValidateUtils.isDomElement( activeDOM ) )
-                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        classAdd( activeDOM, 'pages__page--active' );
-
-                        /**
-                         * Render `.pages__extra`.
-                         */
-
-                        this.renderPageExtra( pages );
-                        this.getNormalAnnouncement();
-                        this.pushState();
-                    }
-
-                    /**
-                     * Silence.
-                     */
-
-                    catch ( err ) {
-                        console.error( err );
-                    }
-                } );
-            }
+            if ( pages !== this.config.page )
+                this.subscribePageControlEvent( pages, pageDOMArr );
         }
         catch ( err ) {
             throw new Error( 'failed to render pages' );
@@ -452,7 +447,6 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            this.state.tags = [ ...new Set( this.state.tags ), ];
             let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
@@ -484,7 +478,6 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
-
             throw err;
         }
     }
@@ -495,7 +488,6 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            this.state.tags = [ ...new Set( this.state.tags ), ];
             let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
@@ -553,7 +545,6 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            this.state.tags = [ ...new Set( this.state.tags ), ];
             let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;

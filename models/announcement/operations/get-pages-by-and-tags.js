@@ -82,11 +82,13 @@ export default async ( opt ) => {
             group:  '`announcement`.`announcementId`',
             having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
         } );
-        if ( !data ) {
+
+        if ( !data.length ) {
             const error = new Error( 'no result' );
             error.status = 404;
             throw error;
         }
+
         return {
             pages: Math.ceil( data.length / amount ),
         };
