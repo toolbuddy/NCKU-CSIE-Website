@@ -11,12 +11,12 @@ const filter = new SingleDefaultTagFilter( {
     announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
     announcementNormalDOM: document.getElementById( 'announcement--normal' ),
     pagesDOM:              document.getElementById( 'pages' ),
+    scrollTopDOM:          document.getElementById( 'announcement--normal' ),
     amount:                6,
     from:                  new Date( '2019/01/01' ),
     to:                    new Date( Date.now() ),
     page:                  1,
     visiblePageNum:        2,
     currentLanguageId:     WebLanguageUtils.currentLanguageId,
-    scrollTop:             document.getElementById( 'content' ).offsetTop,
 } );
 filter.getAll();
