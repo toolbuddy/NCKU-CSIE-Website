@@ -30,11 +30,13 @@
 }
 
 // component
-// `> .cards`
-@mixin cards () {
+// `.#{ $block } > .#{ $block }__cards.cards`
+@mixin cards ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__cards`
   // block
-  // `> .cards`
-  > .cards {
+  // `.#{ $block } > .cards`
+  > .#{ $block }__cards.cards {
     // [variable]
     $large: 545px;
     $cards__card--width: 15.97rem;

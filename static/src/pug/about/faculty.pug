@@ -31,28 +31,31 @@ append stylesheets
   +css( 'about/faculty' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/topic.pug
 
-  +topic( i18n[ LANG.id ].topic )
+  +topic( 'content', i18n[ LANG.id ].topic )
 
   //- Filter component for faculty selection.
-  section#filters.filters
+  section#filters.content__filters.filters
     h1 Loading
 
   //- Faculty data display section.
   //-
   //- Use card outfit to display faculty information.
   //- @todo add loading screen.
-  section#cards.cards
-  section#no-result.no-result.no-result--hide
+  section#cards.content__cards.cards
+  section#no-result.content__no-result.no-result.no-result--hide
     p.no-result__text= i18n[ LANG.id ].noResult
 
 append footer

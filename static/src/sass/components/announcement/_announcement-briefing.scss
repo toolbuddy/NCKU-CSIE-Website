@@ -3,11 +3,13 @@
 @import 'components/announcement/tags';
 
 // component
-// `.announcement`
-@mixin announcement () {
+// `#{ $block } > #{ $block }__announcement.announcement`
+@mixin announcement ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__announcement`
   // block
-  // `> .announcement`
-  > .announcement {
+  // `.#{ $block } > .announcement`
+  > .#{ $block }__announcement.announcement {
     // [ variable ]
     $large: 768px;
 
@@ -46,17 +48,13 @@
     // `> .announcement > .announcement__no-result`
     // block
     // `> .announcement > .no-result`
-    > .announcement__no-result {
-      @include no-result();
-    }
+    @include no-result( 'announcement' );
 
     // element
     // `> .announcement > .announcement__loading`
     // block
     // `> .announcement > .loading`
-    > .announcement__loading {
-      @include loading();
-    }
+    @include loading( 'announcement' );
 
     // element
     // `> .announcement > .announcement__briefings`
@@ -111,17 +109,15 @@
         // `> .announcement > .briefings > briefing > .briefing__tags`
         // block
         // `> .announcement > .briefings > briefing > .tags`
-        > .briefing__tags {
-          @include tags() {
-            // [ position ]
-            grid-area: briefing__tags;
+        @include tags( 'briefing' ) {
+          // [ position ]
+          grid-area: briefing__tags;
 
-            // [ layout ]
-            display: block;
+          // [ layout ]
+          display: block;
 
-            // [ skin ]
-            font-size: .4375rem;
-          }
+          // [ skin ]
+          font-size: .4375rem;
         }
 
         // element

@@ -8,18 +8,26 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .breadcrumb`
+  @include breadcrumb( 'body', #ffffff );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 850px;
     $large: 992px;
@@ -61,23 +69,27 @@ body {
       padding: 2.2rem 0;
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( 'content' ) {
       // [ position ]
       grid-area: topic;
     }
 
+    // element
+    // `.body > .content > .content__filter`
     // block
-    // `body > .content > .filter`
-    @include filter() {
+    // `.body > .content > .filter`
+    @include filter( 'content' ) {
       // [ position ]
       grid-area: filter;
 
       // element
-      // `body > .content > .filter > .filter__tags`
+      // `.body > .content > .filter > .filter__tags`
       // block
-      // `body > .content > .filter > .tags`
+      // `.body > .content > .filter > .tags`
       > .filter__tags.tags {
         // [ variable ]
         $x-small: 200px;
@@ -120,7 +132,7 @@ body {
             '.          .           award';
         }
 
-        // [ RWD: $medium ]
+        // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
@@ -129,7 +141,7 @@ body {
             'scholarship award         .             .';
         }
 
-        // [ RWD: $large ]
+        // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
           grid-template-areas:
@@ -138,70 +150,70 @@ body {
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
         > .tags__tag[ data-tag-name = 'award' ] {
           // [ position ]
           grid-area: award;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'competition' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'competition' ]`
         > .tags__tag[ data-tag-name = 'competition' ] {
           // [ position ]
           grid-area: competition;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
         > .tags__tag[ data-tag-name = 'conference' ] {
           // [ position ]
           grid-area: conference;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'exhibition' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'exhibition' ]`
         > .tags__tag[ data-tag-name = 'exhibition' ] {
           // [ position ]
           grid-area: exhibition;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
         > .tags__tag[ data-tag-name = 'international' ] {
           // [ position ]
           grid-area: international;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'internship' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'internship' ]`
         > .tags__tag[ data-tag-name = 'internship' ] {
           // [ position ]
           grid-area: internship;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'master' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'master' ]`
         > .tags__tag[ data-tag-name = 'master' ] {
           // [ position ]
           grid-area: master;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'rule' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'rule' ]`
         > .tags__tag[ data-tag-name = 'rule' ] {
           // [ position ]
           grid-area: rule;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'scholarship' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'scholarship' ]`
         > .tags__tag[ data-tag-name = 'scholarship' ] {
           // [ position ]
           grid-area: scholarship;
         }
 
         // element
-        // `body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'speech' ]`
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'speech' ]`
         > .tags__tag[ data-tag-name = 'speech' ] {
           // [ position ]
           grid-area: speech;
@@ -209,27 +221,35 @@ body {
       }
     }
 
+    // element
+    // `.body > .content > .content__announcement`
     // block
-    // `body > .content > .announcement`
-    @include announcement();
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
+      // template
+      // `.body > .content > .announcement.announcement--?`
+      &.announcement-- {
+        // modifier
+        // `.body > .content > .announcement.announcement--pinned`
+        &pinned {
+          // [ position ]
+          grid-area: announcement--pinned;
+        }
 
-    // block
-    // `body > .content > .announcement.announcement--pinned`
-    > .announcement.announcement--pinned {
-      // [ position ]
-      grid-area: announcement--pinned;
+        // modifier
+        // `.body > .content > .announcement.announcement--normal`
+        &normal {
+          // [ position ]
+          grid-area: announcement--normal;
+        }
+      }
     }
 
+    // element
+    // `.body > .content > .content__pages`
     // block
-    // `body > .content > .announcement.announcement--normal`
-    > .announcement.announcement--normal {
-      // [ position ]
-      grid-area: announcement--normal;
-    }
-
-    // block
-    // `body > .content > .pages`
-    @include pages () {
+    // `.body > .content > .pages`
+    @include pages ( 'content' ) {
       // [ position ]
       grid-area: pages;
       justify-self: center;

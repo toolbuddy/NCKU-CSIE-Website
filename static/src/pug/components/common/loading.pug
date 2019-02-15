@@ -1,6 +1,6 @@
 //- Loading content template module.
 
-mixin loading( belongingBlock )
+mixin loading( belongBlock )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -11,7 +11,7 @@ mixin loading( belongingBlock )
       }
     } );
 
-  figure.loading( class = `${ belongingBlock }__loading` )
+  figure.loading( class = `${ belongBlock }__loading` )
     svg.loading__image.image
       polygon.image__a( points = '0,86.424 100,86.424 50,0' )
       polygon.image__b( points = '0,86.424 100,86.424 66,28.865' )

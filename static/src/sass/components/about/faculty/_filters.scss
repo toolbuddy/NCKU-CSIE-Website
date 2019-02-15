@@ -1,8 +1,10 @@
 // component
-// `> .filters`
-@mixin filters () {
+// `.#{ $block } > .#{ $block }__filters.filters`
+@mixin filters ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__filters`
   // block
-  // `> .filters`
+  // `.#{ $block } > .filters`
   > .filters {
     // [ layout ]
     text-align: center;
@@ -53,6 +55,7 @@
 
         &:hover {
           // [ skin ]
+          color: #ffffff;
           background-color: lighten( $color: #8caae2, $amount: 10% );
         }
 
@@ -75,6 +78,7 @@
 
         &:hover {
           // [ skin ]
+          color: #ffffff;
           background-color: lighten( $color: #f67057, $amount: 10% );
         }
 

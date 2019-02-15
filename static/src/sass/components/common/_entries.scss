@@ -1,9 +1,11 @@
 // component
-// `> .entries`
-@mixin entries () {
+// `.#{ $block } > .#{ $block }__entries.entries`
+@mixin entries ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__entries`
   // block
-  // `> .entries`
-  > .entries {
+  // `.#{ $block } > .entries`
+  > .#{ $block }__entries.entries {
     // [ variables ]
     $large: 475px;
 

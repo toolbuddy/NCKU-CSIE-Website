@@ -1,16 +1,16 @@
 @import 'components/announcement/tags';
 
-// template
-// `> .filter > .time > .time__?`
+// component
+// `> .filter > .time > .time__#{ $element }`
 // This mixin should not be used outside this file.
 @mixin time__template ( $element ) {
   // element
-  // `> .filter > .time > .time__?`
+  // `> .filter > .time > .time__#{ $element }`
   // block
-  // `> .filter > .time > .?`
+  // `> .filter > .time > .#{ $element }`
   > .time__#{ $element }.#{ $element } {
     // element
-    // `> .filter > .time > .? > .?__text`
+    // `> .filter > .time > .#{ $element } > .#{ $element }__text`
     .#{ $element }__text {
       // [ skin ]
       text-align: left;
@@ -18,9 +18,9 @@
     }
 
     // element
-    // `> .filter > .time > .? > .?__input`
+    // `> .filter > .time > .#{ $element } > .#{ $element }__input`
     // block
-    // `> .filter > .time > .? > .input`
+    // `> .filter > .time > .#{ $element } > .input`
     .#{ $element }__input.input {
       // [ layout ]
       display: grid;
@@ -41,7 +41,7 @@
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__year`
+      // `> .filter > .time > .#{ $element } > .input > .input__year`
       > .input__year {
         // [ position ]
         grid-area: input__year;
@@ -51,7 +51,7 @@
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__month`
+      // `> .filter > .time > .#{ $element } > .input > .input__month`
       > .input__month {
         // [ position ]
         grid-area: input__month;
@@ -61,7 +61,7 @@
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__date`
+      // `> .filter > .time > .#{ $element } > .input > .input__date`
       > .input__date {
         // [ position ]
         grid-area: input__date;
@@ -74,11 +74,13 @@
 }
 
 // component
-// `> .filter`
-@mixin filter () {
+// `.#{ $block } > .#{ $block }__filter.filter`
+@mixin filter ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__filter`
   // block
-  // `> .filter`
-  > .filter {
+  // `.#{ $block } > .filter`
+  > .#{ $block }__filter.filter {
     // [ variable ]
     $small: 350px;
     $large: 850px;
@@ -154,27 +156,25 @@
     // `> .filter > .filter__tags`
     // block
     // `> .filter > .tags`
-    > .filter__tags {
-      @include tags() {
-        // [ position ]
-        grid-area: filter__tags;
+    @include tags( 'filter' ) {
+      // [ position ]
+      grid-area: filter__tags;
 
+      // [ layout ]
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      // [ skin ]
+      font-size: .4375rem;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
         // [ layout ]
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-
-        // [ skin ]
-        font-size: .4375rem;
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          display: grid;
-          grid-template: {
-            rows: repeat( 4, auto );
-            columns: repeat( 5, auto );
-          }
+        display: grid;
+        grid-template: {
+          rows: repeat( 4, auto );
+          columns: repeat( 5, auto );
         }
       }
     }

@@ -5,9 +5,15 @@
     timing-function: linear;
   }
 }
-@mixin loading () {
+
+// component
+// `.#{ $block } > .#{ $block }__loading.loading`
+@mixin loading ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__loading`
   // block
-  &.loading {
+  // `.#{ $block } > .loading`
+  > .#{ $block }__loading.loading {
     // [ layout ]
     margin-top: 2rem;
     text-align: center;

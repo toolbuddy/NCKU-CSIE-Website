@@ -7,22 +7,31 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .breadcrumb`
+  @include breadcrumb( 'body', #ffffff );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
     $small: 650px;
     $large: 860px;
-    width: 100%;
-    background-color: #ffffff;
+
+    // [ layout ]
     display: grid;
     grid-template: {
       areas:
@@ -40,7 +49,14 @@ body {
         '. conference        .';
       columns: 1fr 90% 1fr;
     }
+
+    // [ skin ]
+    width: 100%;
+    background-color: #ffffff;
+
+    // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'
@@ -55,7 +71,10 @@ body {
         columns: 1fr 5fr 3fr 1fr;
       };
     }
+
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'

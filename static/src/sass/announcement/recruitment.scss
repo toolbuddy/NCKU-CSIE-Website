@@ -8,18 +8,26 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .breadcrumb`
+  @include breadcrumb( 'body', #ffffff );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 850px;
     $large: 992px;
@@ -38,9 +46,9 @@ body {
           'pages';
       }
     }
+    margin: 0 auto;
 
     // [ skin ]
-    margin: 0 auto;
     padding: 2.2rem .5rem;
     max-width: 26rem;
 
@@ -61,41 +69,53 @@ body {
       padding: 2.2rem 0;
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( 'content' ) {
       // [ position ]
       grid-area: topic;
     }
 
+    // element
+    // `.body > .content > .content__filter`
     // block
-    // `body > .content > .filter`
-    @include filter() {
+    // `.body > .content > .filter`
+    @include filter( 'content' ) {
       // [ position ]
       grid-area: filter;
     }
 
+    // element
+    // `.body > .content > .content__announcement`
     // block
-    // `body > .content > .announcement`
-    @include announcement() ;
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
+      // template
+      // `.body > .content > .announcement.announcement--?`
+      &.announcement-- {
+        // modifier
+        // `.body > .content > .announcement.announcement--pinned`
+        &pinned {
+          // [ position ]
+          grid-area: announcement--pinned;
+        }
 
-    // block
-    // `body > .content > .announcement.announcement--pinned`
-    > .announcement.announcement--pinned {
-      // [ position ]
-      grid-area: announcement--pinned;
+        // modifier
+        // `.body > .content > .announcement.announcement--normal`
+        &normal {
+          // [ position ]
+          grid-area: announcement--normal;
+        }
+      }
     }
 
+    // element
+    // `.body > .content > .content__pages`
     // block
-    // `body > .content > .announcement.announcement--normal`
-    > .announcement.announcement--normal {
-      // [ position ]
-      grid-area: announcement--normal;
-    }
-
-    // block
-    // `body > .content > .pages`
-    @include pages () {
+    // `.body > .content > .pages`
+    @include pages ( 'content' ) {
       // [ position ]
       grid-area: pages;
       justify-self: center;

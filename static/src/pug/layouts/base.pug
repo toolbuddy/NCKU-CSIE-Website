@@ -30,7 +30,7 @@ html
     block stylesheets
       include /components/common/css.pug
 
-  body
+  body.body
 
     //- Image template module.
     //-
@@ -54,7 +54,7 @@ html
     //-
     //- Each page has there own content.
     //- All specific content go to this block.
-    main#content.content
+    main#content.body__content.content
       block content
 
     //- Footer block.
