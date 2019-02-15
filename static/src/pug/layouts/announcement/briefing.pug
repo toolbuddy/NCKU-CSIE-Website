@@ -32,8 +32,8 @@ append content
   include /components/common/loading.pug
   include /components/common/no-result.pug
 
-  +topic( i18n[ LANG.id ].topic )
-  section#filter.filter
+  +topic( 'content', i18n[ LANG.id ].topic )
+  section#filter.content__filter.filter
     article.filter__time.time
       aside.time__from.from
         label.from__text= i18n[ LANG.id ].time.from
@@ -51,16 +51,16 @@ append content
       each tagObj, tagName in tags
         button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
 
-  section#announcement--pinned.announcement.announcement--pinned
+  section#announcement--pinned.content__announcement.announcement.announcement--pinned
     header.announcement__title= i18n[ LANG.id ].pinned
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
 
-  section#announcement--normal.announcement.announcement--normal
+  section#announcement--normal.content__announcement.announcement.announcement--normal
     header.announcement__title= i18n[ LANG.id ].normal
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
 
-  section#pages.pages
+  section#pages.content__pages.pages

@@ -1,5 +1,5 @@
-mixin breadcrumb( breadcrumbList )
-  nav.breadcrumb
+mixin breadcrumb( belongBlock, breadcrumbList )
+  nav.breadcrumb( class = `${ belongBlock }__breadcrumb` )
     each value, index in breadcrumbList
       if ( index !== 0 )
         +image( {

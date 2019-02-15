@@ -13,11 +13,13 @@
 }
 
 // component
-// `> .pages`
-@mixin pages () {
+// `.#{ $block } > .#{ $block }__pages.pages`
+@mixin pages ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__pages`
   // block
-  // `> .pages`
-  > .pages {
+  // `.#{ $block } > .pages`
+  > .#{ $block }__pages.pages {
     // [ variable ]
     $small: 650px;
     $large: 850px;

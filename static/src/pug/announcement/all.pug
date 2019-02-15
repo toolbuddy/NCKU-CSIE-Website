@@ -59,12 +59,17 @@ append stylesheets
   +css( 'announcement/all' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.announcement, url: 'announcement' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.announcement, url: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

@@ -1,12 +1,13 @@
 @import 'components/common/icon';
 
 // component
-// `> .announcement`
-@mixin announcement () {
+// `.#{ $block } > .#{ $block }__announcement.announcement`
+@mixin announcement ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__announcement`
   // block
-  // `> .announcement`
-
-  > .announcement {
+  // `.#{ $block } > .announcement`
+  > .#{ $block }__announcement.announcement {
     // [ variable ]
     $small: 768px;
     $large: 992px;
@@ -66,19 +67,17 @@
       // `> .announcement > .headline > .headline__tags`
       // block
       // `> .announcement > .headline > .tags`
-      > .headline__tags {
-        @include tags() {
-          // [ position ]
-          grid-area: headline__tags;
+      @include tags( 'headline' ) {
+        // [ position ]
+        grid-area: headline__tags;
 
-          // [ layout ]
-          display: block;
+        // [ layout ]
+        display: block;
 
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            // [ skin ]
-            font-size: .4375rem;
-          }
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ skin ]
+          font-size: .4375rem;
         }
       }
 

@@ -1,9 +1,11 @@
 // component
-// `> .topic`
-@mixin topic () {
+// `.#{ $block } > .topic`
+@mixin topic ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__topic`
   // block
-  // `> .topic`
-  > .topic {
+  // `.#{ $block } > .topic`
+  > .#{ $block }__topic.topic {
     // [ variable ]
     $tablet: 850px;
 

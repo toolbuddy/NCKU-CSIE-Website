@@ -6,14 +6,20 @@
 @import 'components/home/hot-announcement-briefing';
 @import 'components/common/banner';
 
-body {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $large: 992px;
 
@@ -44,16 +50,18 @@ body {
       }
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( 'content' ) {
       // [ position ]
       grid-area: topic;
     }
 
     // block
-    // `body > .content > .announcement`
-    @include announcement() {
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
       // [ position ]
       grid-area: announcement;
 
@@ -99,8 +107,8 @@ body {
     }
 
     // element
-    // `body > .content > .hot-announcement`
-    @include hot-announcement () {
+    // `.body > .content > .hot-announcement`
+    @include hot-announcement ( 'content' ) {
       // [ position ]
       margin-top: 2rem;
       grid-area: hot-announcement;

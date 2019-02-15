@@ -1,7 +1,11 @@
-@mixin banner ( $image ) {
+// component
+// `.#{ $block } > .#{ $block }__banner.banner`
+@mixin banner ( $block, $image ) {
+  // element
+  // `.#{ $block } > .#{ $block }__banner`
   // block
-  // `> .banner`
-  > .banner {
+  // `.#{ $block } > .banner`
+  > .#{ $block }__banner.banner {
     // [ variable ]
     $large: 1120px;
 

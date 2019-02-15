@@ -3,12 +3,13 @@
 @import 'components/announcement/tags';
 
 // component
-// `.hot-announcement`
-@mixin hot-announcement () {
+// `.#{ $block } > .#{ $block }__hot-announcement.hot-announcement`
+@mixin hot-announcement ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__hot-announcement`
   // block
-  // `> .hot-announcement`
-
-  > .hot-announcement {
+  // `.#{ $block } > .hot-announcement`
+  > .#{ $block }__hot-announcement.hot-announcement {
     // [ variable ]
     $large: 520px;
 
@@ -48,17 +49,13 @@
     // `> .hot-announcement > .hot-announcement__no-result`
     // block
     // `> .hot-announcement > .no-result`
-    > .hot-announcement__no-result {
-      @include no-result();
-    }
+    @include no-result( 'hot-announcement' );
 
     // element
     // `> .hot-announcement > .hot-announcement__loading`
     // block
     // `> .hot-announcement > .loading`
-    > .hot-announcement__loading {
-      @include loading();
-    }
+    @include loading( 'hot-announcement' );
 
     // element
     // `> .hot-announcement > .announcement__briefings`

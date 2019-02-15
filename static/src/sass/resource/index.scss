@@ -5,18 +5,26 @@
 @import 'components/common/breadcrumb';
 @import 'components/common/entries';
 
-body > {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .breadcrumb`
+  @include breadcrumb( 'body', #ffffff );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $large: 475px;
 
@@ -52,9 +60,11 @@ body > {
       };
     }
 
+    // element
+    // `.body > .content > .content__entries`
     // block
-    // `body > .content > .entries`
-    @include entries() {
+    // `.body > .content > .entries`
+    @include entries( 'content' ) {
       // [ position ]
       grid-area: entries;
     }

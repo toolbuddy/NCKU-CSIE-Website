@@ -7,22 +7,30 @@
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
-body > {
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  // `.body > .breadcrumb`
+  @include breadcrumb( 'body', #eff3f9 );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
-    // [variable]
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
     $large: 475px;
 
-    // [layout]
+    // [ layout ]
     display: grid;
     grid: {
       template: {
@@ -37,12 +45,13 @@ body > {
       row-gap: 2rem;
     };
 
-    // [skin]
+    // [ skin ]
     width: 100%;
     background-color: #eff3f9;
 
     // [RWD: $large]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
       grid: {
         template: {
           areas:
@@ -57,42 +66,51 @@ body > {
       };
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( 'content' ) {
+      // [ position ]
       grid-area: topic;
     }
 
+    // element
+    // `.body > .content > .content__filters`
     // block
-    // `body > .content > .filters`
-    @include filters() {
-      // [position]
+    // `.body > .content > .filters`
+    @include filters( 'content' ) {
+      // [ position ]
       grid-area: filters;
     }
 
+    // element
+    // `.body > .content > .content__cards`
     // block
-    // `body > .content > .cards`
-    @include cards() {
-      // [position]
+    // `.body > .content > .cards`
+    @include cards ( 'content' ) {
+      // [ position ]
       grid-area: cards;
     }
 
+    // element
+    // `.body > .content > .content__no-result`
     // block
-    // `body > .content > .no-result`
-    > .no-result {
-      // [position]
+    // `.body > .content > .no-result`
+    > .content__no-result.no-result {
+      // [ position ]
       grid-area: noResult;
 
-      // [layout]
+      // [ layout ]
       text-align: center;
 
-      // [skin]
+      // [ skin ]
       min-height: 100%;
 
       // modifier
-      // `body > .content > .no-result--hide`
+      // `.body > .content > .no-result--hide`
       &--hide {
-        // [layout]
+        // [ layout ]
         display: none;
       }
     }

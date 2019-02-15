@@ -16,11 +16,13 @@
 }
 
 // component
-// `> .tags`
-@mixin tags () {
+// `.#{ $block } > .#{ $block }__tags.tags`
+@mixin tags ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__tags`
   // block
-  // `> .tags`
-  &.tags {
+  // `.#{ $block } > .tags`
+  > .#{ $block }__tags.tags {
     // [ skin ]
     color: #ffffff;
 

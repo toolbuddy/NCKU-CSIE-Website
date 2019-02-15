@@ -1,7 +1,11 @@
-@mixin breadcrumb ( $background-color ) {
+// component
+// `.#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
+@mixin breadcrumb ( $block, $background-color ) {
+  // element
+  // `.#{ $block } > .#{ $block }__breadcrumb`
   // block
-  // `> .breadcrumb`
-  > .breadcrumb {
+  // `.#{ $block } > .breadcrumb`
+  > .#{ $block }__breadcrumb.breadcrumb {
     // [ variable ]
     $large: 1120px;
 

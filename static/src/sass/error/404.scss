@@ -2,11 +2,19 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 
-body > .content {
-  width: 100%;
-  height: 100%;
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    width: 100%;
+    height: 100%;
 
-  > .banner {
-    background: #213262;
+    > .banner {
+      background: #213262;
+    }
   }
 }

@@ -1,6 +1,11 @@
-// block
-@mixin no-result {
-  &.no-result {
+// components
+// `.#{ $block } > .#{ $block }__no-result.no-result`
+@mixin no-result ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__no-result`
+  // block
+  // `.#{ $block } > .no-result`
+  > .#{ $block }__no-result.no-result {
     // [ layout ]
     text-align: center;
     margin-top: 2rem;
