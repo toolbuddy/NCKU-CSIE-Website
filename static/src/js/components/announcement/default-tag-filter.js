@@ -497,6 +497,9 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            this.DOM.announcement.pinned.briefings.style.height = '0px';
+            this.DOM.announcement.normal.briefings.style.height = '0px';
+
             throw err;
         }
     }
