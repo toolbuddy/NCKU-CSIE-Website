@@ -9,13 +9,6 @@ import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
     constructor ( opt ) {
-        this.config = {
-            from:           new Date( '2019/01/01' ),
-            to:             new Date( Date.now() ),
-            page:           1,
-            visiblePageNum: 2,
-        };
-
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
@@ -31,8 +24,20 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( opt.announcementNormalDOM ) ||
             !opt.pagesDOM ||
             !ValidateUtils.isDomElement( opt.pagesDOM ) ||
+            !opt.scrollTopDOM ||
+            !ValidateUtils.isDomElement( opt.scrollTopDOM ) ||
             !opt.amount ||
-            !ValidateUtils.isPositiveInteger( opt.amount ) )
+            !ValidateUtils.isPositiveInteger( opt.amount ) ||
+            !opt.from ||
+            !ValidateUtils.isValidDate( opt.from ) ||
+            !opt.to ||
+            !ValidateUtils.isValidDate( opt.to ) ||
+            !opt.page ||
+            !ValidateUtils.isPositiveInteger( opt.page ) ||
+            !opt.visiblePageNum ||
+            !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
+        )
             throw new TypeError( 'invalid arguments' );
 
         if ( !opt.supportedTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) ||
@@ -48,6 +53,15 @@ export default class DefaultTagFilter {
                 throw new TypeError( 'invalid arguments' );
         } );
 
+        this.config = {
+            amount:         opt.amount,
+            from:           opt.from,
+            to:             opt.to,
+            page:           opt.page,
+            visiblePageNum: opt.visiblePageNum,
+            transitionMs:   300,
+        };
+
         this.tagId = {
             default: opt.defaultTag.map( tag => TagUtils.getTagId( {
                 tag,
@@ -60,12 +74,11 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            amount:        opt.amount,
-            languageId:    WebLanguageUtils.currentLanguageId,
+            languageId:    opt.currentLanguageId,
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
-            tags:       [],
+            tags:          [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -106,7 +119,8 @@ export default class DefaultTagFilter {
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
-            pages: opt.pagesDOM,
+            pages:     opt.pagesDOM,
+            scrollTop: opt.scrollTopDOM,
         };
 
         if (
@@ -126,6 +140,18 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.pages ) )
             throw new Error( 'DOM not found.' );
 
+        /**
+         * Set transition of `.briefings`
+         */
+
+        [
+            'pinned',
+            'normal',
+        ].forEach( ( announcement ) => {
+            this.DOM.announcement[ announcement ].briefings.style.transition = `height ${ this.config.transitionMs / 1000 }s ease`;
+            this.DOM.announcement[ announcement ].briefings.style.overflow = 'hidden';
+            this.DOM.announcement[ announcement ].briefings.style.height = '0px';
+        } );
 
         /**
          * Load state from url.
@@ -160,7 +186,6 @@ export default class DefaultTagFilter {
 
     loadState () {
         const urlParams = new URLSearchParams( window.location.search );
-        const tempAmount = urlParams.get( 'amount' );
         const tempTags = urlParams.getAll( 'tags' );
         const tempFrom = urlParams.get( 'from' );
         const tempTo = urlParams.get( 'to' );
@@ -174,8 +199,6 @@ export default class DefaultTagFilter {
         } );
         this.state.tags = [ ...new Set( this.state.tags ), ];
 
-        if ( tempAmount !== null && ValidateUtils.isPositiveInteger( Number( tempAmount ) ) )
-            this.state.amount = Number( tempAmount );
         if ( tempPage !== null && ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
             this.state.page = Number( tempPage );
         if ( tempFrom !== null && ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) )
@@ -214,7 +237,6 @@ export default class DefaultTagFilter {
     pushState () {
         const urlString = [
             `languageId=${ this.state.languageId }`,
-            `amount=${ this.state.amount }`,
             `from=${ Number( this.state.from ) }`,
             `to=${ Number( this.state.to ) }`,
             ...this.state.tags.map( tagId => `tags=${ tagId }` ),
@@ -320,6 +342,7 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
+                window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
             }
             catch ( err ) {
                 console.error( err );
@@ -351,6 +374,7 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
+                window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
             }
 
             /**
@@ -402,6 +426,7 @@ export default class DefaultTagFilter {
                             this.renderPageExtra( pages );
                             this.getNormalAnnouncement();
                             this.pushState();
+                            window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
                         }
                     }
                     catch ( err ) {
@@ -448,7 +473,7 @@ export default class DefaultTagFilter {
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
                 ...tags.map( tagId => `tags=${ tagId }` ),
@@ -472,8 +497,18 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            this.DOM.announcement.pinned.briefings.style.height = '0px';
+            this.DOM.announcement.normal.briefings.style.height = '0px';
+
             throw err;
         }
+    }
+
+    static async delay ( ms ) {
+        try {
+            return new Promise( res => setTimeout( res, ms ) );
+        }
+        catch ( {} ) {}
     }
 
     async getPinnedAnnouncement () {
@@ -481,6 +516,9 @@ export default class DefaultTagFilter {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+
+            this.DOM.announcement.pinned.briefings.style.overflow = 'hidden';
+            this.DOM.announcement.pinned.briefings.style.height = '0px';
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -525,6 +563,15 @@ export default class DefaultTagFilter {
                 } );
             } );
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+
+            /**
+             * Activate announcement transition.
+             */
+
+            await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.pinned.briefings.style.height = `${ this.DOM.announcement.pinned.briefings.scrollHeight }px`;
+            await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.pinned.briefings.style.overflow = 'visible';
         }
         catch ( err ) {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -539,6 +586,9 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
+            this.DOM.announcement.normal.briefings.style.overflow = 'hidden';
+            this.DOM.announcement.normal.briefings.style.height = '0px';
+
             let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
@@ -546,7 +596,7 @@ export default class DefaultTagFilter {
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `page=${ this.state.page }`,
@@ -584,6 +634,15 @@ export default class DefaultTagFilter {
                 } );
             } );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
+            /**
+             * Activate announcement transition.
+             */
+
+            await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.normal.briefings.style.height = `${ this.DOM.announcement.normal.briefings.scrollHeight }px`;
+            await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.normal.briefings.style.overflow = 'visible';
         }
         catch ( err ) {
             this.DOM.announcement.normal.briefings.innerHTML = '';
