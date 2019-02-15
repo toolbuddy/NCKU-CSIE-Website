@@ -9,13 +9,6 @@ import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
     constructor ( opt ) {
-        this.config = {
-            from:           new Date( '2019/01/01' ),
-            to:             new Date( Date.now() ),
-            page:           1,
-            visiblePageNum: 2,
-        };
-
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
@@ -32,7 +25,17 @@ export default class DefaultTagFilter {
             !opt.pagesDOM ||
             !ValidateUtils.isDomElement( opt.pagesDOM ) ||
             !opt.amount ||
-            !ValidateUtils.isPositiveInteger( opt.amount ) )
+            !ValidateUtils.isPositiveInteger( opt.amount ) ||
+            !opt.config.from ||
+            !ValidateUtils.isValidDate( opt.config.from ) ||
+            !opt.config.to ||
+            !ValidateUtils.isValidDate( opt.config.to ) ||
+            !opt.config.page ||
+            !ValidateUtils.isPositiveInteger( opt.config.page ) ||
+            !opt.config.visiblePageNum ||
+            !ValidateUtils.isPositiveInteger( opt.config.visiblePageNum ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.config.currentLanguageId )
+        )
             throw new TypeError( 'invalid arguments' );
 
         if ( !opt.supportedTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) ||
@@ -48,6 +51,14 @@ export default class DefaultTagFilter {
                 throw new TypeError( 'invalid arguments' );
         } );
 
+        this.config = {
+            amount:         opt.amount,
+            from:           opt.config.from,
+            to:             opt.config.to,
+            page:           opt.config.page,
+            visiblePageNum: opt.config.visiblePageNum,
+        };
+
         this.tagId = {
             default: opt.defaultTag.map( tag => TagUtils.getTagId( {
                 tag,
@@ -60,12 +71,11 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            amount:        opt.amount,
-            languageId:    WebLanguageUtils.currentLanguageId,
+            languageId:    opt.config.currentLanguageId,
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
-            tags:       [],
+            tags:          [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -160,7 +170,6 @@ export default class DefaultTagFilter {
 
     loadState () {
         const urlParams = new URLSearchParams( window.location.search );
-        const tempAmount = urlParams.get( 'amount' );
         const tempTags = urlParams.getAll( 'tags' );
         const tempFrom = urlParams.get( 'from' );
         const tempTo = urlParams.get( 'to' );
@@ -174,8 +183,6 @@ export default class DefaultTagFilter {
         } );
         this.state.tags = [ ...new Set( this.state.tags ), ];
 
-        if ( tempAmount !== null && ValidateUtils.isPositiveInteger( Number( tempAmount ) ) )
-            this.state.amount = Number( tempAmount );
         if ( tempPage !== null && ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
             this.state.page = Number( tempPage );
         if ( tempFrom !== null && ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) )
@@ -214,7 +221,6 @@ export default class DefaultTagFilter {
     pushState () {
         const urlString = [
             `languageId=${ this.state.languageId }`,
-            `amount=${ this.state.amount }`,
             `from=${ Number( this.state.from ) }`,
             `to=${ Number( this.state.to ) }`,
             ...this.state.tags.map( tagId => `tags=${ tagId }` ),
@@ -448,7 +454,7 @@ export default class DefaultTagFilter {
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
                 ...tags.map( tagId => `tags=${ tagId }` ),
@@ -546,7 +552,7 @@ export default class DefaultTagFilter {
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `page=${ this.state.page }`,
