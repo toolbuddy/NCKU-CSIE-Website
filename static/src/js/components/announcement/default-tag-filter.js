@@ -514,6 +514,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
+            this.DOM.announcement.pinned.briefings.style.overflow = 'hidden';
             this.DOM.announcement.pinned.briefings.style.height = '0px';
 
             let tags = this.state.tags;
@@ -567,6 +568,7 @@ export default class DefaultTagFilter {
             await DefaultTagFilter.delay( this.config.transitionMs );
             this.DOM.announcement.pinned.briefings.style.height = `${ this.DOM.announcement.pinned.briefings.scrollHeight }px`;
             await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.pinned.briefings.style.overflow = 'visible';
         }
         catch ( err ) {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -581,6 +583,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
+            this.DOM.announcement.normal.briefings.style.overflow = 'hidden';
             this.DOM.announcement.normal.briefings.style.height = '0px';
 
             let tags = this.state.tags;
@@ -636,6 +639,7 @@ export default class DefaultTagFilter {
             await DefaultTagFilter.delay( this.config.transitionMs );
             this.DOM.announcement.normal.briefings.style.height = `${ this.DOM.announcement.normal.briefings.scrollHeight }px`;
             await DefaultTagFilter.delay( this.config.transitionMs );
+            this.DOM.announcement.normal.briefings.style.overflow = 'visible';
         }
         catch ( err ) {
             this.DOM.announcement.normal.briefings.innerHTML = '';
