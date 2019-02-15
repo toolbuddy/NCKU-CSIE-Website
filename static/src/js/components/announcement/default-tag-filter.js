@@ -85,9 +85,9 @@ export default class DefaultTagFilter {
                 tags: Array.from( opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ) ).map( ( node ) => {
                     const tagId = node.getAttribute( 'data-tag-id' );
                     if ( tagId === null )
-                        throw new Error( 'Invalid Tag DOM attribute.' );
+                        throw new Error( 'DOM attribute `data-tag-id` not found.' );
                     if ( !( Number( tagId ) === TagUtils.tagAllId ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
-                        throw new Error( 'Invalid Tag DOM attribute.' );
+                        throw new Error( 'Invalid DOM attribute `data-tag-id`.' );
                     return {
                         node,
                         id:   Number( tagId ),
@@ -166,15 +166,14 @@ export default class DefaultTagFilter {
         const tempTo = urlParams.get( 'to' );
         const tempPage = urlParams.get( 'page' );
 
-        if ( Array.isArray( tempTags ) ) {
-            this.state.tags = [];
-            tempTags.forEach( ( tagId ) => {
-                const id = Number( tagId );
-                if ( this.tagId.default.includes( id ) || this.tagId.supported.includes( id ) )
-                    this.state.tags.push( id );
-            } );
-            this.state.tags = [ ...new Set( this.state.tags ), ];
-        }
+        this.state.tags = [];
+        tempTags.forEach( ( tagId ) => {
+            tagId = Number( tagId );
+            if ( this.tagId.default.includes( tagId ) || this.tagId.supported.includes( tagId ) )
+                this.state.tags.push( tagId );
+        } );
+        this.state.tags = [ ...new Set( this.state.tags ), ];
+
         if ( tempAmount !== null && ValidateUtils.isPositiveInteger( Number( tempAmount ) ) )
             this.state.amount = Number( tempAmount );
         if ( tempPage !== null && ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
@@ -322,11 +321,6 @@ export default class DefaultTagFilter {
                 this.getNormalAnnouncement();
                 this.pushState();
             }
-
-            /**
-             * Silence.
-             */
-
             catch ( err ) {
                 console.error( err );
             }

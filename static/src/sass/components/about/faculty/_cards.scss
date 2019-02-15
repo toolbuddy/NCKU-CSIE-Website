@@ -37,15 +37,15 @@
   // block
   // `.#{ $block } > .cards`
   > .#{ $block }__cards.cards {
-    // [variable]
+    // [ variable ]
     $large: 545px;
     $cards__card--width: 15.97rem;
     $cards__card--height: 23.38rem;
 
-    // [layout]
+    // [ layout ]
     display: block;
 
-    // [RWD: $large]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [layout]
       display: grid;

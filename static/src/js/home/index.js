@@ -1,7 +1,7 @@
 import header from 'static/src/js/components/common/header/index.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import TagUtils from 'models/announcement/utils/tag.js';
-import { GetAllAnnouncement, GetHotAnnouncement } from 'static/src/js/components/home/get-announcement.js';
+import { GetAllAnnouncement, GetHotAnnouncement, } from 'static/src/js/components/home/get-announcement.js';
 
 header( document.getElementById( 'header' ) );
 
