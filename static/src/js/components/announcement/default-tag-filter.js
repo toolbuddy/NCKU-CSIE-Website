@@ -59,7 +59,7 @@ export default class DefaultTagFilter {
             to:             opt.to,
             page:           opt.page,
             visiblePageNum: opt.visiblePageNum,
-            transitionMs:   500,
+            transitionMs:   1000,
             scrollStep:     5,
         };
 
@@ -178,6 +178,34 @@ export default class DefaultTagFilter {
         } );
     }
 
+    static async delay ( ms ) {
+        try {
+            return new Promise( res => setTimeout( res, ms ) );
+        }
+        catch ( {} ) {}
+    }
+
+    async renderTransitionShow ( dom ) {
+        dom.style.height = `${ dom.scrollHeight }px`;
+        await this.constructor.delay( this.config.transitionMs );
+        classRemove( dom, 'briefings__briefing--hide-overflow' );
+    }
+
+    static renderTransitionHide ( dom ) {
+        classAdd( dom, 'briefings__briefing--hide-overflow' );
+        dom.style.height = '0px';
+    }
+
+    renderTransitionInit () {
+        [
+            'pinned',
+            'normal',
+        ].forEach( ( which ) => {
+            this.DOM.announcement[ which ].briefings.style.transition = `height ${ this.config.transitionMs / 1000 }s ease`;
+            this.constructor.renderTransitionHide( this.DOM.announcement[ which ].briefings );
+        } );
+    }
+
     loadState () {
         const urlParams = new URLSearchParams( window.location.search );
         const tempTags = urlParams.getAll( 'tags' );
@@ -272,28 +300,6 @@ export default class DefaultTagFilter {
         ].join( ' | ' );
     }
 
-    renderTransitionInit () {
-        [
-            'pinned',
-            'normal',
-        ].forEach( ( announcement ) => {
-            this.DOM.announcement[ announcement ].briefings.style.transition = `height ${ this.config.transitionMs / 1000 }s ease`;
-            this.DOM.announcement[ announcement ].briefings.style.height = '0px';
-            classAdd( this.DOM.announcement[ announcement ].briefings, 'briefings__briefing--hideOverflow' );
-        } );
-    }
-
-    async renderTransitionShow ( dom ) {
-        dom.style.height = `${ dom.scrollHeight }px`;
-        await DefaultTagFilter.delay( this.config.transitionMs );
-        classRemove( dom, 'briefings__briefing--hideOverflow' );
-    }
-
-    static renderTransitionHide ( dom ) {
-        classAdd( dom, 'briefings__briefing--hideOverflow' );
-        dom.style.height = '0px';
-    }
-
     renderPageExtra ( pages ) {
         const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
@@ -373,8 +379,6 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
-
-                // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
                 this.smoothScrollTo( window.scrollY );
             }
             catch ( err ) {
@@ -461,8 +465,6 @@ export default class DefaultTagFilter {
                             this.renderPageExtra( pages );
                             this.getNormalAnnouncement();
                             this.pushState();
-
-                            // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
                             this.smoothScrollTo( window.scrollY );
                         }
                     }
@@ -511,8 +513,8 @@ export default class DefaultTagFilter {
              * Fold `.announcement__briefings.briefings`.
              */
 
-            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.pinned.briefings );
-            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.normal.briefings );
+            this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+            this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -547,13 +549,6 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             throw err;
         }
-    }
-
-    static async delay ( ms ) {
-        try {
-            return new Promise( res => setTimeout( res, ms ) );
-        }
-        catch ( {} ) {}
     }
 
     async getPinnedAnnouncement () {

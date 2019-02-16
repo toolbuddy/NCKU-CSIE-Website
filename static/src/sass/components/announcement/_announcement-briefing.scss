@@ -65,8 +65,8 @@
       margin-top: .7rem;
       overflow: visible;
 
-      &.briefings__briefing--hideOverflow {
-        overflow: hidden;
+      &.briefings__briefing--hide-overflow {
+        overflow-y: hidden;
       }
 
       // element
