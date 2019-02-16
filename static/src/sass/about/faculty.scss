@@ -38,7 +38,7 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $large: 475px;
+    $small: 475px;
 
     // [ layout ]
     display: grid;
@@ -56,15 +56,15 @@
     width: 100%;
     background-color: #eff3f9;
 
-    // [RWD: $large]
-    @media screen and ( min-width: $large ) {
+    // [RWD: $small]
+    @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template: {
         areas:
           '. topic   .'
           '. faculty .'
           '. .       .';
-        columns: 1fr 95% 1fr;
+        columns: 1fr 75% 1fr;
       };
     }
 

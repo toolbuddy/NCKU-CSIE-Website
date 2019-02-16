@@ -3,22 +3,12 @@ mixin cards__card( profile = {} )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'more':      'Read more',
-        'email':     'Email',
-        'office':    'Office',
-        'officeTel': typeof profile.officeTel !== 'undefined' ?
-          `Tel: ${ profile.officeTel.split(',').join( ' ext. ' ) }` :
-          '',
-        'lab':       'Lab',
+        more: 'Read more',
+        officeTel: typeof profile.officeTel !== 'undefined' ? profile.officeTel.split(',').join( ' ext. ' ) : '',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'more':      '更多資訊',
-        'email':     '信箱',
-        'office':    '辦公室',
-        'officeTel': typeof profile.officeTel !== 'undefined' ?
-          `電話: ${ profile.officeTel.split(',').join( ' 分機 ' ) }` :
-          '',
-        'lab':       '實驗室',
+        more: '更多資訊',
+        officeTel: typeof profile.officeTel !== 'undefined' ? profile.officeTel.split(',').join( ' 分機 ' ) : '',
       },
     } );
 
@@ -47,42 +37,38 @@ mixin cards__card( profile = {} )
 
       //- Faculty's name.
       if typeof profile.name !== 'undefined'
-        h1.intro__name= profile.name
+        header.intro__name= profile.name
 
       //- Faculty has some titles.
       if typeof profile.title !== 'undefined'
         aside.intro__titles.titles
           each title in profile.title
-            span( class = 'titles__title' )= title
+            span.titles__title= title
 
       //- Faculty's email.
       if typeof profile.email !== 'undefined'
-        aside.intro__email.email
-          span.email__text.text= `${ i18n[ LANG.id ].email }: `
-            a.text__link( href = `mailto:${ profile.email }` )= profile.email
+        a.intro__email( href = `mailto:${ profile.email }` )= profile.email
 
       //- Faculty owns some offices, including address and phone.
       if typeof profile.officeAddress !== 'undefined'
-        address.intro__office-address= `${ i18n[ LANG.id ].office }: ${ profile.officeAddress }`
+        address.intro__office-address= profile.officeAddress
       if typeof profile.officeTel !== 'undefined'
-        a.intro__office-phone( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
+        a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
 
-      //- Faculty run some labs.
-      if typeof profile.labName !== 'undefined' && typeof profile.labAddress !== 'undefined'
-        aside.intro__lab.lab
-          span.lab__text.text= `${ i18n[ LANG.id ].lab }: `
-            a.text__link( href = profile.labWeb )= profile.labName
-        //- @todo add style and remove text dependencies
-          span.lab__address= profile.labAddress
+      //- Faculty run some labs, including name, web and address.
+      if typeof profile.labName !== 'undefined' && typeof profile.labWeb !== 'undefined'
+        a.intro__lab-name.lab-name( href = profile.labWeb )= profile.labName
+      if typeof profile.labAddress !== 'undefined'
+        address.intro__lab-address= profile.labAddress
 
-      //- Faculty's detail information link.
-      p.intro__more
-        a( href = UTILS.url( {
-          href: `about/faculty/${ profile.profileId }`,
-          query: {
-            languageId: LANG.id
-          },
-        } ) )= i18n[ LANG.id ].more
+    //- Faculty's detail information link.
+    if typeof profile.profileId !== 'undefined'
+      a.card__more( href = UTILS.url( {
+        href: `about/faculty/${ profile.profileId }`,
+        query: {
+          languageId: LANG.id
+        },
+      } ) )= i18n[ LANG.id ].more
 
 //- main
     Construct all faculty information with `cards__card`.

@@ -89,18 +89,33 @@ export default class GetFaculty {
             },
         } );
 
-        this.DOM.cards = Array.from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
+        this.DOM.cards = Array
+        .from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
         .map( ( node ) => {
-            const department = [ ...new Set( ( node.getAttribute( 'data-department-ids' ) || '-1' )
-            .split( ',' ).map( Number ).filter( DepartmentUtils.isSupportedDepartmentId ) ), ];
-            const researchGroup = [ ...new Set( ( node.getAttribute( 'data-research-group-ids' ) || '-1' )
-            .split( ',' ).map( Number ).filter( ResearchGroupUtils.isSupportedResearchGroupId ) ), ];
+            const department = [
+                ...new Set( ( node.getAttribute( 'data-department-ids' ) || '-1' )
+                .split( ',' )
+                .map( Number )
+                .filter( DepartmentUtils.isSupportedDepartmentId ) ),
+            ];
+
+            const researchGroup = [
+                ...new Set( ( node.getAttribute( 'data-research-group-ids' ) || '-1' )
+                .split( ',' )
+                .map( Number )
+                .filter( ResearchGroupUtils.isSupportedResearchGroupId ) ),
+            ];
+
             return {
                 node,
                 department,
                 researchGroup,
             };
         } );
+    }
+
+    static delay ( ms ) {
+        return new Promise( res => setTimeout( res, ms ) );
     }
 
     subscribeFilterEvent () {
@@ -137,10 +152,16 @@ export default class GetFaculty {
                                 .length === this.state.researchGroup.length
                             ) {
                                 classRemove( cardObj.node, 'card--hide' );
+                                this.constructor.delay( 100 ).then( () => {
+                                    classRemove( cardObj.node, 'card--fade-out' );
+                                } );
                                 return true;
                             }
 
-                            classAdd( cardObj.node, 'card--hide' );
+                            classAdd( cardObj.node, 'card--fade-out' );
+                            this.constructor.delay( 500 ).then( () => {
+                                classAdd( cardObj.node, 'card--hide' );
+                            } );
                             return false;
                         } ).length === 0 )
                             classRemove( this.DOM.noResult, 'no-result--hidden' );
