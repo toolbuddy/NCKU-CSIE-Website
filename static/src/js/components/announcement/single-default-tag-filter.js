@@ -85,7 +85,6 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                     if ( this.state.tags.length === 0 )
                         this.state.tags = [];
 
-
                     this.pushState();
                     this.getAll();
                 } );
