@@ -15,13 +15,21 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
+  @include
+    banner(
+      $block: 'body',
+      $image: 'https://via.placeholder.com/1920x500'
+    );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include breadcrumb( 'body', #ffffff );
+  @include
+    breadcrumb(
+      $block: 'body',
+      $bg-color: #ffffff
+    );
 
   // element
   // `.body > .body__content`
@@ -76,7 +84,7 @@
     // `.body > .content > .content__topic`
     // block
     // `.body > .content > .topic`
-    @include topic( 'content' ) {
+    @include topic( $block: 'content' ) {
       // [ position ]
       grid-area: topic;
     }
@@ -85,7 +93,7 @@
     // `.body > .content > .content__filter`
     // block
     // `.body > .content > .filter`
-    @include filter( 'content' ) {
+    @include filter( $block: 'content' ) {
       // [ position ]
       grid-area: filter;
 
@@ -284,7 +292,7 @@
     // `.body > .content > .content__announcement`
     // block
     // `.body > .content > .announcement`
-    @include announcement( 'content' ) {
+    @include announcement( $block: 'content' ) {
       // template
       // `.body > .content > .announcement.announcement--?`
       &.announcement-- {
@@ -308,7 +316,7 @@
     // `.body > .content > .content__pages`
     // block
     // `.body > .content > .pages`
-    @include pages ( 'content' ) {
+    @include pages ( $block: 'content' ) {
       // [ position ]
       grid-area: pages;
       justify-self: center;

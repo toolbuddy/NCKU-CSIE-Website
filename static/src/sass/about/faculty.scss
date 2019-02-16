@@ -1,11 +1,13 @@
 @import 'components/common/reset';
 @import 'components/common/header';
 @import 'components/about/faculty/cards';
-@import 'components/about/faculty/filters';
+@import 'components/about/faculty/filter';
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/no-result';
+@import 'components/common/loading';
 
 // block
 // `.body`
@@ -14,13 +16,21 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( 'body', 'https://via.placeholder.com/1920x500' );
+  @include
+    banner(
+      $block: 'body',
+      $image: 'https://via.placeholder.com/1920x500'
+    );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include breadcrumb( 'body', #eff3f9 );
+  @include
+    breadcrumb(
+      $block: 'body',
+      $bg-color: #eff3f9
+    );
 
   // element
   // `.body > .body__content`
@@ -35,14 +45,11 @@
     grid: {
       template: {
         areas:
-          '.'
-          'topic   '
-          'filters '
-          'cards   '
-          'noResult';
+          'topic'
+          'faculty';
         columns: 100%;
       }
-      row-gap: 2rem;
+      row-gap: 1rem;
     };
 
     // [ skin ]
@@ -52,17 +59,12 @@
     // [RWD: $large]
     @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. .        .'
-            '. topic    .'
-            '. filters  .'
-            '. cards    .'
-            '. noResult .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 2rem;
+      grid-template: {
+        areas:
+          '. topic   .'
+          '. faculty .'
+          '. .       .';
+        columns: 1fr 95% 1fr;
       };
     }
 
@@ -70,49 +72,42 @@
     // `.body > .content > .content__topic`
     // block
     // `.body > .content > .topic`
-    @include topic( 'content' ) {
+    @include topic( $block: 'content' ) {
       // [ position ]
       grid-area: topic;
     }
 
     // element
-    // `.body > .content > .content__filters`
+    // `.body > .content > .content__faculty`
     // block
-    // `.body > .content > .filters`
-    @include filters( 'content' ) {
+    // `.body > .content > .faculty`
+    > .content__faculty.faculty {
       // [ position ]
-      grid-area: filters;
-    }
+      grid-area: faculty;
 
-    // element
-    // `.body > .content > .content__cards`
-    // block
-    // `.body > .content > .cards`
-    @include cards ( 'content' ) {
-      // [ position ]
-      grid-area: cards;
-    }
+      // element
+      // `.body > .content > .faculty > .faculty__filter`
+      // block
+      // `.body > .content > .faculty > .filter`
+      @include filter( $block: 'faculty' );
 
-    // element
-    // `.body > .content > .content__no-result`
-    // block
-    // `.body > .content > .no-result`
-    > .content__no-result.no-result {
-      // [ position ]
-      grid-area: noResult;
+      // element
+      // `.body > .content > .faculty > .faculty__no-result`
+      // block
+      // `.body > .content > .faculty > .no-result`
+      @include no-result( $block: 'faculty' );
 
-      // [ layout ]
-      text-align: center;
+      // element
+      // `.body > .content > .faculty > .faculty__loading`
+      // block
+      // `.body > .content > .faculty > .loading`
+      @include loading( $block: 'faculty' );
 
-      // [ skin ]
-      min-height: 100%;
-
-      // modifier
-      // `.body > .content > .no-result--hide`
-      &--hide {
-        // [ layout ]
-        display: none;
-      }
+      // element
+      // `.body > .content > .faculty > .faculty__cards`
+      // block
+      // `.body > .content > .faculty > .cards`
+      @include cards ( $block: 'faculty' );
     }
   }
 }

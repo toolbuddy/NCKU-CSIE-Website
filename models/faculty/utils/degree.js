@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import degreeMap from 'models/faculty/maps/degree.js';
+import LanguageUtils from '../../common/utils/language.js';
+import degreeMap from '../maps/degree.js';
 
 class DegreeUtils {
     static defaultDegree ( languageId = LanguageUtils.defaultLanguageId ) {

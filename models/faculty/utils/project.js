@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import projectCategoryMap from 'models/faculty/maps/project-category.js';
+import LanguageUtils from '../../common/utils/language.js';
+import projectCategoryMap from '../maps/project-category.js';
 
 class ProjectUtils {
     static defaultProjectCategory ( languageId = LanguageUtils.defaultLanguageId ) {

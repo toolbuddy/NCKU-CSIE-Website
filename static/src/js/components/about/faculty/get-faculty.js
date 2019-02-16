@@ -6,57 +6,175 @@
  */
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
 import { host, } from 'settings/server/config.js';
 import DepartmentUtils from 'models/faculty/utils/department.js';
+import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
 import UrlUtils from 'static/src/js/utils/url.js';
-import card from 'static/src/pug/components/about/faculty/cards.pug';
-import showFilters from 'static/src/pug/components/about/faculty/filters.pug';
-import ResearchUtils from 'models/faculty/utils/research-group.js';
-import filterEvent from 'static/src/js/components/about/faculty/filters/index.js';
+import cardHTML from 'static/src/pug/components/about/faculty/cards.pug';
 
-const languageId = WebLanguageUtils.currentLanguageId;
-const reqURL = `${ host }/api/faculty?languageId=${ languageId }`;
+// Import filterEvent from 'static/src/js/components/about/faculty/filters/index.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
-export default ( cards, filters, noResult ) => fetch( reqURL )
-.then( ( res ) => {
-    if ( res.ok )
-        return res.json();
-    throw new Error();
-} )
-.then( ( faculty ) => {
-    faculty = faculty.map( ( profile ) => {
-        profile.department = profile.department.map( departmentId => ( {
-            departmentId,
-            department: DepartmentUtils.getDepartmentById( {
-                departmentId,
-                languageId,
-            } ),
-        } ) );
-        return profile;
-    } );
+export default class GetFaculty {
+    constructor ( opt ) {
+        opt = opt || {};
 
-    cards.innerHTML = card( {
-        faculty,
-        LANG: {
-            id:            languageId,
-            getLanguageId: WebLanguageUtils.getLanguageId,
-        },
-        UTILS: {
-            url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-        },
-    } );
+        if (
+            !opt.facultyDOM ||
+            !ValidateUtils.isDomElement( opt.facultyDOM ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) )
+            throw new TypeError( 'invalid arguments' );
 
-    filters.innerHTML = showFilters( {
-        department:    DepartmentUtils.supportedDepartment( languageId ),
-        researchGroup: ResearchUtils.supportedResearchGroup( languageId ),
-    } );
+        const facultyQuerySelector = block => `.faculty__${ block }.${ block }`;
+        const filterQuerySelector = element => `${ facultyQuerySelector( 'filter' ) } > .filter__${ element }.${ element } > .${ element }__tag`;
 
-    filterEvent(
-        filters,
-        cards,
-        noResult,
-    );
-} )
-.catch( () => {
-    filters.innerHTML = 'error';
-} );
+        this.DOM = {
+            filter: {
+                department: Array.from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'department' ) ) )
+                .map( node => ( {
+                    node,
+                    id: node.getAttribute( 'data-department-id' ),
+                } ) ),
+                researchGroup: Array.from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'research-group' ) ) )
+                .map( node => ( {
+                    node,
+                    id: node.getAttribute( 'data-research-group-id' ),
+                } ) ),
+            },
+            noResult: opt.facultyDOM.querySelector( facultyQuerySelector( 'no-result' ) ),
+            loading:  opt.facultyDOM.querySelector( facultyQuerySelector( 'loading' ) ),
+            cards:    opt.facultyDOM.querySelector( facultyQuerySelector( 'cards' ) ),
+        };
+
+        if (
+            !this.DOM.filter.department.every( ( element ) => {
+                if ( element.id !== null )
+                    element.id = Number( element.id );
+                return DepartmentUtils.isSupportedDepartmentId( element.id ) && ValidateUtils.isDomElement( element.node );
+            } ) ||
+            !this.DOM.filter.researchGroup.every( ( element ) => {
+                if ( element.id !== null )
+                    element.id = Number( element.id );
+                return ResearchGroupUtils.isSupportedResearchGroupId( element.id ) && ValidateUtils.isDomElement( element.node );
+            } ) ||
+            !ValidateUtils.isDomElement( this.DOM.noResult ) ||
+            !ValidateUtils.isDomElement( this.DOM.loading ) ||
+            !ValidateUtils.isDomElement( this.DOM.cards ) )
+            throw new Error( 'DOM not found.' );
+
+        this.state = {
+            languageId:    opt.languageId,
+            department:    [],
+            researchGroup: [],
+        };
+
+        return this;
+    }
+
+    get queryApi () {
+        return `${ host }/api/faculty?languageId=${ this.state.languageId }`;
+    }
+
+    render ( data ) {
+        this.DOM.cards.innerHTML = cardHTML( {
+            data,
+            LANG: {
+                id:            this.state.languageId,
+                getLanguageId: WebLanguageUtils.getLanguageId,
+            },
+            UTILS: {
+                url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                DepartmentUtils,
+            },
+        } );
+
+        this.DOM.cards = Array.from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
+        .map( ( node ) => {
+            const department = [ ...new Set( ( node.getAttribute( 'data-department-ids' ) || '-1' )
+            .split( ',' ).map( Number ).filter( DepartmentUtils.isSupportedDepartmentId ) ), ];
+            const researchGroup = [ ...new Set( ( node.getAttribute( 'data-research-group-ids' ) || '-1' )
+            .split( ',' ).map( Number ).filter( ResearchGroupUtils.isSupportedResearchGroupId ) ), ];
+            return {
+                node,
+                department,
+                researchGroup,
+            };
+        } );
+    }
+
+    subscribeFilterEvent () {
+        [
+            { jsName: 'department', dataName: 'department', },
+            { jsName: 'researchGroup', dataName: 'research-group', },
+        ].forEach( ( which ) => {
+            this.DOM.filter[ which.jsName ].forEach( ( filterObj ) => {
+                filterObj.node.addEventListener( 'click', () => {
+                    try {
+                        classAdd( this.DOM.noResult, 'no-result--hidden' );
+                        classRemove( this.DOM.loading, 'loading--hidden' );
+                        const index = this.state[ which.jsName ].indexOf( filterObj.id );
+
+                        /**
+                         * `.${ filter.which }__tag` not click before.
+                         */
+
+                        if ( index < 0 ) {
+                            classAdd( filterObj.node, `${ which.dataName }__tag--active` );
+                            this.state[ which.jsName ].push( filterObj.id );
+                        }
+                        else {
+                            classRemove( filterObj.node, `${ which.dataName }__tag--active` );
+                            this.state[ which.jsName ].splice( index, 1 );
+                        }
+                        if ( this.DOM.cards.filter( ( cardObj ) => {
+                            if (
+                                cardObj.department
+                                .filter( departmentId => this.state.department.indexOf( departmentId ) >= 0 )
+                                .length === this.state.department.length &&
+                                cardObj.researchGroup
+                                .filter( researchGroupId => this.state.researchGroup.indexOf( researchGroupId ) >= 0 )
+                                .length === this.state.researchGroup.length
+                            ) {
+                                classRemove( cardObj.node, 'card--hide' );
+                                return true;
+                            }
+
+                            classAdd( cardObj.node, 'card--hide' );
+                            return false;
+                        } ).length === 0 )
+                            classRemove( this.DOM.noResult, 'no-result--hidden' );
+                        classAdd( this.DOM.loading, 'loading--hidden' );
+                    }
+                    catch ( err ) {
+                        classAdd( this.DOM.loading, 'loading--hidden' );
+                        classRemove( this.DOM.noResult, 'no-result--hidden' );
+                        console.error( err );
+                    }
+                } );
+            } );
+        } );
+    }
+
+    async exec () {
+        try {
+            this.DOM.cards.innerHTML = '';
+            classAdd( this.DOM.noResult, 'no-result--hidden' );
+
+            const res = await fetch( this.queryApi );
+
+            if ( !res.ok )
+                throw new Error( 'No faculty found' );
+
+            const data = await res.json();
+            this.render( data );
+            this.subscribeFilterEvent();
+            classAdd( this.DOM.loading, 'loading--hidden' );
+        }
+        catch ( err ) {
+            classAdd( this.DOM.loading, 'loading--hidden' );
+            classRemove( this.DOM.noResult, 'no-result--hidden' );
+            console.error( err );
+        }
+    }
+}

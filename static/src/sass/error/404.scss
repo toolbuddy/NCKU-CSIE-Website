@@ -10,10 +10,16 @@
   // block
   // `.body > .content`
   > .body__content.content {
+    // [ skin ]
     width: 100%;
     height: 100%;
 
-    > .banner {
+    // element
+    // `.body > .content > .content__banner`
+    // block
+    // `.body > .content > .banner`
+    > .content__banner.banner {
+      // [ skin ]
       background: #213262;
     }
   }
