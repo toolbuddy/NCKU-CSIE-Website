@@ -47,6 +47,9 @@
       }
       line-height: normal;
       letter-spacing: normal;
+      @media screen and ( max-width: $small ) {
+        font-size: .42rem;
+      }
 
       // [ interaction ]
       &:hover {

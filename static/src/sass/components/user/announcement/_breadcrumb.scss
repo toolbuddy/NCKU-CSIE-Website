@@ -31,6 +31,9 @@
       font-size: .63rem;
       color: #757575;
       text-decoration: unset;
+      @media screen and ( max-width: $medium ) {
+        display: none;
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $medium ) {
@@ -75,6 +78,9 @@
           left: .94rem;
           right: .94rem;
         }
+      }
+      @media screen and ( max-width: $medium ) {
+        display: none;
       }
     }
   }

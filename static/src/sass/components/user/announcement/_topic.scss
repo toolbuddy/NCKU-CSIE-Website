@@ -55,10 +55,7 @@ $bgcolor: #eff1f4;
     > .topic {
       // [ position ]
       grid-area: edit__top;
-
-      // [ status: hidden ]
-      visibility: hidden;
-      z-index: -1;
+      display: none;
     }
 
     // .content > .content--return
@@ -68,8 +65,13 @@ $bgcolor: #eff1f4;
 
       // [ skin ]
       border-bottom: .156rem solid $bgcolor;
-      margin-bottom: .7rem;
-      font-size: .8rem;
+      padding: {
+        bottom: .5rem;
+        left: .5rem;
+      }
+      display: block;
+      margin-bottom: .3rem;
+      font-size: .7rem;
       color: #8caae2;
     }
   }

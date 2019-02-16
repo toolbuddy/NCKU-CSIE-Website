@@ -22,7 +22,12 @@ body > .content {
       ' . edit__tags . '
       ' . edit__editor . '
       ' . edit__submit . ';
-    columns: 0 100vw 0;
+    columns: 5 100vw 0;
+  }
+
+  // [ RWD: $small ]
+  @media screen and ( max-width: $small ) {
+    background-color: rgba( 224, 224, 224, .1 );
   }
 
   // [ RWD: $small ]
