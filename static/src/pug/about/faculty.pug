@@ -47,20 +47,20 @@ append content
   +topic( 'content', i18n[ LANG.id ].topic )
 
   section#faculty.content__faculty.faculty
-    article.faculty__filter.filter
-      section.filter__department.department
+    section.faculty__filter.filter
+      article.filter__department.department
         each departmentId in UTILS.DepartmentUtils.supportedDepartmentId
           button.department__tag(
             data-department-id = `${ departmentId }`
           )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
-      section.filter__research-group.research-group
+      article.filter__research-group.research-group
         each researchGroupId in UTILS.ResearchGroupUtils.supportedResearchGroupId
           button.research-group__tag(
             data-research-group-id = `${ researchGroupId }`,
           )= UTILS.ResearchGroupUtils.getResearchGroupById( { researchGroupId, languageId: LANG.id } )
     +noResult( 'faculty' )
     +loading( 'faculty' )
-    article.faculty__cards.cards
+    section.faculty__cards.cards
 
 append footer
 

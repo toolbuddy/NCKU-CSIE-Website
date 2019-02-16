@@ -3,68 +3,77 @@ mixin cards__card( profile = {} )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'more':   'Read more',
-        'email':  'Email',
-        'office': 'Office',
-        'tel':    `Tel: : ${ profile.officeTel.split(',').join( ' ext. ' ) }`,
-        'lab':    'Lab',
+        'more':      'Read more',
+        'email':     'Email',
+        'office':    'Office',
+        'officeTel': typeof profile.officeTel !== 'undefined' ?
+          `Tel: ${ profile.officeTel.split(',').join( ' ext. ' ) }` :
+          '',
+        'lab':       'Lab',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'more':   '更多資訊',
-        'email':  '信箱',
-        'office': '辦公室',
-        'tel':    `電話: ${ profile.officeTel.split(',').join( ' 分機 ' ) }`,
-        'lab':    '實驗室',
+        'more':      '更多資訊',
+        'email':     '信箱',
+        'office':    '辦公室',
+        'officeTel': typeof profile.officeTel !== 'undefined' ?
+          `電話: ${ profile.officeTel.split(',').join( ' 分機 ' ) }` :
+          '',
+        'lab':       '實驗室',
       },
     } );
 
+  //- Faculty's department id and research-group id.
   section.cards__card.card(
     data-department-ids = `${ profile.department.join() }`,
     data-research-group-ids = `${ profile.researchGroup.join() }`
   )
     //- Faculty's photo.
-    img.card__photo(
-      src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
-      alt = profile.name
-    )
+    if typeof profile.profileId !== 'undefined' && typeof profile.name !== 'undefined'
+      img.card__photo(
+        src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
+        alt = profile.name
+      )
 
     //- Faculty's intro.
     article.card__intro.intro
 
       //- Faculty belongs to some departments.
-      if profile.department
+      if typeof profile.department !== 'undefined'
         aside.intro__departments.departments
           each departmentId in profile.department
-            span.departments__department( data = `${ departmentId }` )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
+            span.departments__department(
+              data = `${ departmentId }`
+            )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
 
       //- Faculty's name.
-      if profile.name
+      if typeof profile.name !== 'undefined'
         h1.intro__name= profile.name
 
       //- Faculty has some titles.
-      if profile.title
+      if typeof profile.title !== 'undefined'
         aside.intro__titles.titles
           each title in profile.title
             span( class = 'titles__title' )= title
 
       //- Faculty's email.
-      if profile.email
+      if typeof profile.email !== 'undefined'
         aside.intro__email.email
           span.email__text.text= `${ i18n[ LANG.id ].email }: `
             a.text__link( href = `mailto:${ profile.email }` )= profile.email
 
       //- Faculty owns some offices, including address and phone.
-
-      if profile.officeAddress
-        address.intro__address= `${ i18n[ LANG.id ].office }: ${ profile.officeAddress }`
-      if profile.officeTel
-        a.intro__phone( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].tel
+      if typeof profile.officeAddress !== 'undefined'
+        address.intro__office-address= `${ i18n[ LANG.id ].office }: ${ profile.officeAddress }`
+      if typeof profile.officeTel !== 'undefined'
+        a.intro__office-phone( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
 
       //- Faculty run some labs.
-      if profile.labName
+      if typeof profile.labName !== 'undefined' && typeof profile.labAddress !== 'undefined'
         aside.intro__lab.lab
           span.lab__text.text= `${ i18n[ LANG.id ].lab }: `
-            a.text__link( href = profile.labWeb )= `${ profile.labName }`
+            a.text__link( href = profile.labWeb )= profile.labName
+        //- @todo add style and remove text dependencies
+          span.lab__address= profile.labAddress
 
       //- Faculty's detail information link.
       p.intro__more

@@ -2,23 +2,20 @@
 // `> .#{ $block } > .filter > .? > .?__tag`
 %block__tag {
   // [ variable ]
-  $large: 1130px;
+  $large: 600px;
 
   // [ layout ]
   display: inline-block;
-  text-align: center;
-  word: {
-    wrap: break-word;
-    break: break-all;
-  }
-  white-space: normal;
   margin: .14rem;
+  text-align: center;
+  white-space: normal;
+  word: {
+    wrap: normal;
+    break: normal;
+  }
 
   // [ skin ]
-  min: {
-    width: 3.03rem;
-    height: .94rem;
-  }
+  min-height: 1rem;
   border: {
     style: solid;
     width: .03rem;
@@ -41,8 +38,7 @@
   // [ RWD: $large ]
   @media screen and ( min-width: $large ) {
     // [ skin ]
-    width: 90% / 4;
-    min-height: 1.38rem;
+    min-height: 1.4rem;
     font-size: .58rem;
   }
 }
@@ -55,6 +51,9 @@
   // block
   // `> .#{ $block } > .filter`
   > .#{ $block }__filter.filter {
+    // [ layout ]
+    margin-bottom: 1rem;
+
     // element
     // `> .#{ $block } > .filter > .filter__department`
     // block
@@ -69,8 +68,12 @@
         // [ template ]
         @extend %block__tag;
 
+        // [ variable ]
+        $small: 450px;
+        $large: 1100px;
+
         // [ skin ]
-        width: 80% / 2;
+        min-width: 90%;
         border-color: #f67057;
         color: #f67057;
 
@@ -78,6 +81,18 @@
         &:hover {
           // [ skin ]
           background-color: lighten( $color: #f67057, $amount: 10% );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          min-width: 90 / 2 * 1%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          min-width: 90 / 4 * 1%;
         }
 
         // modifier
@@ -104,7 +119,12 @@
         // [ template ]
         @extend %block__tag;
 
+        // [ variable ]
+        $small: 500px;
+        $large: 1270px;
+
         // [ skin ]
+        width: 90%;
         border-color: #8caae2;
         color: #8caae2;
 
@@ -112,6 +132,19 @@
         &:hover {
           // [ skin ]
           background-color: lighten( $color: #8caae2, $amount: 10% );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          width: auto;
+          min-width: 90 / 2 * 1%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          min-width: $large / 5px * 1px;
         }
 
         // modifier

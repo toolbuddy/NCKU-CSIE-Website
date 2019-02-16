@@ -45,13 +45,11 @@
     grid: {
       template: {
         areas:
-          '.'
           'topic'
-          'faculty'
-          '.';
+          'faculty';
         columns: 100%;
       }
-      row-gap: 2rem;
+      row-gap: 1rem;
     };
 
     // [ skin ]
@@ -61,16 +59,12 @@
     // [RWD: $large]
     @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. .       .'
-            '. topic   .'
-            '. faculty .'
-            '. .       .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 2rem;
+      grid-template: {
+        areas:
+          '. topic   .'
+          '. faculty .'
+          '. .       .';
+        columns: 1fr 95% 1fr;
       };
     }
 
