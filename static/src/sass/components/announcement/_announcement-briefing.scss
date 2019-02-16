@@ -63,6 +63,11 @@
     > .announcement__briefings.briefings {
       // [ skin ]
       margin-top: .7rem;
+      overflow: visible;
+
+      &.briefings__briefing--hideOverflow {
+        overflow: hidden;
+      }
 
       // element
       // `> .announcement .briefings > briefings__briefing`

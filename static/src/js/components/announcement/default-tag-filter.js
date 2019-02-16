@@ -59,7 +59,8 @@ export default class DefaultTagFilter {
             to:             opt.to,
             page:           opt.page,
             visiblePageNum: opt.visiblePageNum,
-            transitionMs:   300,
+            transitionMs:   500,
+            scrollStep:     3,
         };
 
         this.tagId = {
@@ -144,14 +145,7 @@ export default class DefaultTagFilter {
          * Set transition of `.briefings`
          */
 
-        [
-            'pinned',
-            'normal',
-        ].forEach( ( announcement ) => {
-            this.DOM.announcement[ announcement ].briefings.style.transition = `height ${ this.config.transitionMs / 1000 }s ease`;
-            this.DOM.announcement[ announcement ].briefings.style.overflow = 'hidden';
-            this.DOM.announcement[ announcement ].briefings.style.height = '0px';
-        } );
+        this.renderTransitionInit();
 
         /**
          * Load state from url.
@@ -245,6 +239,21 @@ export default class DefaultTagFilter {
         window.history.pushState( null, 'query string', `${ window.location.pathname }?${ urlString }` );
     }
 
+    smoothScrollTo ( yPos ) {
+        if ( this.DOM.scrollTop.offsetTop - yPos > this.config.scrollStep ) {
+            setTimeout( () => {
+                window.scrollTo( window.scrollX, yPos );
+                this.smoothScrollTo( yPos + this.config.scrollStep );
+            }, 1 );
+        }
+        else if ( yPos - this.DOM.scrollTop.offsetTop > this.config.scrollStep ) {
+            setTimeout( () => {
+                window.scrollTo( window.scrollX, yPos );
+                this.smoothScrollTo( yPos - this.config.scrollStep );
+            }, 1 );
+        }
+    }
+
     static formatUpdateTime ( time ) {
         if ( !( ValidateUtils.isValidDate( time ) ) )
             throw new TypeError( 'Invalid time.' );
@@ -261,6 +270,28 @@ export default class DefaultTagFilter {
                 `${ time.getSeconds() < 10 ? `0${ String( time.getSeconds() ) }` : String( time.getSeconds() ) }`,
             ].join( ':' ),
         ].join( ' | ' );
+    }
+
+    renderTransitionInit () {
+        [
+            'pinned',
+            'normal',
+        ].forEach( ( announcement ) => {
+            this.DOM.announcement[ announcement ].briefings.style.transition = `height ${ this.config.transitionMs / 1000 }s ease`;
+            this.DOM.announcement[ announcement ].briefings.style.height = '0px';
+            classAdd( this.DOM.announcement[ announcement ].briefings, 'briefings__briefing--hideOverflow' );
+        } );
+    }
+
+    async renderTransitionShow ( dom ) {
+        dom.style.height = `${ dom.scrollHeight }px`;
+        await DefaultTagFilter.delay( this.config.transitionMs );
+        classRemove( dom, 'briefings__briefing--hideOverflow' );
+    }
+
+    static renderTransitionHide ( dom ) {
+        classAdd( dom, 'briefings__briefing--hideOverflow' );
+        dom.style.height = '0px';
     }
 
     renderPageExtra ( pages ) {
@@ -342,7 +373,9 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
-                window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+
+                // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+                this.smoothScrollTo( window.scrollY );
             }
             catch ( err ) {
                 console.error( err );
@@ -374,7 +407,9 @@ export default class DefaultTagFilter {
                 this.renderPageExtra( pages );
                 this.getNormalAnnouncement();
                 this.pushState();
-                window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+
+                // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+                this.smoothScrollTo( window.scrollY );
             }
 
             /**
@@ -426,7 +461,9 @@ export default class DefaultTagFilter {
                             this.renderPageExtra( pages );
                             this.getNormalAnnouncement();
                             this.pushState();
-                            window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+
+                            // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
+                            this.smoothScrollTo( window.scrollY );
                         }
                     }
                     catch ( err ) {
@@ -466,6 +503,9 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
+            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.normal.briefings );
+
             let tags = this.state.tags;
             if ( tags.length === 0 )
                 tags = this.tagId.default;
@@ -497,9 +537,6 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
             classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
-            this.DOM.announcement.pinned.briefings.style.height = '0px';
-            this.DOM.announcement.normal.briefings.style.height = '0px';
-
             throw err;
         }
     }
@@ -517,8 +554,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            this.DOM.announcement.pinned.briefings.style.overflow = 'hidden';
-            this.DOM.announcement.pinned.briefings.style.height = '0px';
+            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.pinned.briefings );
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -569,9 +605,7 @@ export default class DefaultTagFilter {
              */
 
             await DefaultTagFilter.delay( this.config.transitionMs );
-            this.DOM.announcement.pinned.briefings.style.height = `${ this.DOM.announcement.pinned.briefings.scrollHeight }px`;
-            await DefaultTagFilter.delay( this.config.transitionMs );
-            this.DOM.announcement.pinned.briefings.style.overflow = 'visible';
+            this.renderTransitionShow( this.DOM.announcement.pinned.briefings );
         }
         catch ( err ) {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -586,8 +620,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            this.DOM.announcement.normal.briefings.style.overflow = 'hidden';
-            this.DOM.announcement.normal.briefings.style.height = '0px';
+            DefaultTagFilter.renderTransitionHide( this.DOM.announcement.normal.briefings );
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -640,9 +673,7 @@ export default class DefaultTagFilter {
              */
 
             await DefaultTagFilter.delay( this.config.transitionMs );
-            this.DOM.announcement.normal.briefings.style.height = `${ this.DOM.announcement.normal.briefings.scrollHeight }px`;
-            await DefaultTagFilter.delay( this.config.transitionMs );
-            this.DOM.announcement.normal.briefings.style.overflow = 'visible';
+            this.renderTransitionShow( this.DOM.announcement.normal.briefings );
         }
         catch ( err ) {
             this.DOM.announcement.normal.briefings.innerHTML = '';
