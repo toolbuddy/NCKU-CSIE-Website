@@ -60,7 +60,7 @@ export default class DefaultTagFilter {
             page:           opt.page,
             visiblePageNum: opt.visiblePageNum,
             transitionMs:   500,
-            scrollStep:     3,
+            scrollStep:     5,
         };
 
         this.tagId = {
@@ -239,17 +239,17 @@ export default class DefaultTagFilter {
         window.history.pushState( null, 'query string', `${ window.location.pathname }?${ urlString }` );
     }
 
-    smoothScrollTo ( yPos ) {
-        if ( this.DOM.scrollTop.offsetTop - yPos > this.config.scrollStep ) {
+    smoothScrollTo ( currentY ) {
+        if ( this.DOM.scrollTop.offsetTop - currentY > this.config.scrollStep ) {
             setTimeout( () => {
-                window.scrollTo( window.scrollX, yPos );
-                this.smoothScrollTo( yPos + this.config.scrollStep );
+                window.scrollTo( window.scrollX, currentY );
+                this.smoothScrollTo( currentY + this.config.scrollStep );
             }, 1 );
         }
-        else if ( yPos - this.DOM.scrollTop.offsetTop > this.config.scrollStep ) {
+        else if ( currentY - this.DOM.scrollTop.offsetTop > this.config.scrollStep ) {
             setTimeout( () => {
-                window.scrollTo( window.scrollX, yPos );
-                this.smoothScrollTo( yPos - this.config.scrollStep );
+                window.scrollTo( window.scrollX, currentY );
+                this.smoothScrollTo( currentY - this.config.scrollStep );
             }, 1 );
         }
     }
@@ -495,6 +495,10 @@ export default class DefaultTagFilter {
 
     async getPage () {
         try {
+            /**
+             * Clear `#pages` & `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             */
+
             this.DOM.pages.innerHTML = '';
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             this.DOM.announcement.normal.briefings.innerHTML = '';
@@ -502,6 +506,10 @@ export default class DefaultTagFilter {
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
 
             DefaultTagFilter.renderTransitionHide( this.DOM.announcement.pinned.briefings );
             DefaultTagFilter.renderTransitionHide( this.DOM.announcement.normal.briefings );
@@ -550,9 +558,17 @@ export default class DefaultTagFilter {
 
     async getPinnedAnnouncement () {
         try {
+            /**
+             * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             */
+
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
 
             DefaultTagFilter.renderTransitionHide( this.DOM.announcement.pinned.briefings );
 
@@ -601,7 +617,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
             /**
-             * Activate announcement transition.
+             * Unfold `.announcement__briefings.briefings`.
              */
 
             await DefaultTagFilter.delay( this.config.transitionMs );
@@ -616,9 +632,17 @@ export default class DefaultTagFilter {
 
     async getNormalAnnouncement () {
         try {
+            /**
+             * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             */
+
             this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
 
             DefaultTagFilter.renderTransitionHide( this.DOM.announcement.normal.briefings );
 
@@ -669,7 +693,7 @@ export default class DefaultTagFilter {
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
             /**
-             * Activate announcement transition.
+             * Unfold `.announcement__briefings.briefings`.
              */
 
             await DefaultTagFilter.delay( this.config.transitionMs );
