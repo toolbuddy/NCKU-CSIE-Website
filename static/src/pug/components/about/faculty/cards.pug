@@ -1,5 +1,6 @@
-//- Each `cards__card` contains one faculty
-mixin cards__card( profile = {} )
+//- Sort faculty based on their showing order.
+- data.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
+each profile in data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -69,10 +70,3 @@ mixin cards__card( profile = {} )
           languageId: LANG.id
         },
       } ) )= i18n[ LANG.id ].more
-
-//- main
-    Construct all faculty information with `cards__card`.
-//- Sort faculty based on their showing order.
-- data.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
-each profile in data
-  +cards__card( profile )

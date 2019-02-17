@@ -6,7 +6,7 @@
  */
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, delay, } from 'static/src/js/utils/class-name.js';
 import { host, } from 'settings/server/config.js';
 import DepartmentUtils from 'models/faculty/utils/department.js';
 import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
@@ -90,11 +90,39 @@ export default class GetFaculty {
         return `${ host }/api/faculty?languageId=${ this.state.languageId }`;
     }
 
+    async fetchData () {
+        try {
+            const res = await fetch( this.queryApi );
+
+            if ( !res.ok )
+                throw new Error( 'No faculty found' );
+
+            return res.json();
+        }
+        catch ( err ) {
+            throw err;
+        }
+    }
+
+    renderLoading () {
+        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classRemove( this.DOM.loading, 'loading--hidden' );
+    }
+
+    renderLoadingSucceed () {
+        classAdd( this.DOM.loading, 'loading--hidden' );
+    }
+
+    renderLoadingFailed () {
+        classAdd( this.DOM.loading, 'loading--hidden' );
+        classRemove( this.DOM.noResult, 'no-result--hidden' );
+    }
+
     /**
      * @param {object[]} data
      */
 
-    render ( data ) {
+    renderCard ( data ) {
         this.DOM.cards.innerHTML = cardHTML( {
             data,
             LANG: {
@@ -132,92 +160,74 @@ export default class GetFaculty {
         } );
     }
 
-    /**
-     * @param {number} ms
-     * @return {Promise}
-     */
+    filterClickEvent ( which, filterObj ) {
+        return () => {
+            try {
+                this.renderLoading();
+                const index = this.state[ which.jsName ].indexOf( filterObj.id );
 
-    static delay ( ms ) {
-        return new Promise( res => setTimeout( res, ms ) );
+                /**
+                 * `.${ filter.which }__tag` not click before.
+                 */
+
+                if ( index < 0 ) {
+                    classAdd( filterObj.node, `${ which.dataName }__tag--active` );
+                    this.state[ which.jsName ].push( filterObj.id );
+                }
+                else {
+                    classRemove( filterObj.node, `${ which.dataName }__tag--active` );
+                    this.state[ which.jsName ].splice( index, 1 );
+                }
+                if ( this.DOM.cards.filter( ( cardObj ) => {
+                    if (
+                        cardObj.department
+                        .filter( departmentId => this.state.department.indexOf( departmentId ) >= 0 )
+                        .length === this.state.department.length &&
+                        cardObj.researchGroup
+                        .filter( researchGroupId => this.state.researchGroup.indexOf( researchGroupId ) >= 0 )
+                        .length === this.state.researchGroup.length
+                    ) {
+                        classRemove( cardObj.node, 'card--hide' );
+                        delay( 100 ).then( () => {
+                            classRemove( cardObj.node, 'card--fade-out' );
+                        } );
+                        return true;
+                    }
+
+                    classAdd( cardObj.node, 'card--fade-out' );
+                    delay( 500 ).then( () => {
+                        classAdd( cardObj.node, 'card--hide' );
+                    } );
+                    return false;
+                } ).length === 0 )
+                    classRemove( this.DOM.noResult, 'no-result--hidden' );
+                classAdd( this.DOM.loading, 'loading--hidden' );
+            }
+            catch ( err ) {
+                this.renderLoadingFailed();
+                console.error( err );
+            }
+        };
     }
 
     subscribeFilterEvent () {
         [
             { jsName: 'department', dataName: 'department', },
             { jsName: 'researchGroup', dataName: 'research-group', },
-        ].forEach( ( which ) => {
-            this.DOM.filter[ which.jsName ].forEach( ( filterObj ) => {
-                filterObj.node.addEventListener( 'click', () => {
-                    try {
-                        classAdd( this.DOM.noResult, 'no-result--hidden' );
-                        classRemove( this.DOM.loading, 'loading--hidden' );
-                        const index = this.state[ which.jsName ].indexOf( filterObj.id );
-
-                        /**
-                         * `.${ filter.which }__tag` not click before.
-                         */
-
-                        if ( index < 0 ) {
-                            classAdd( filterObj.node, `${ which.dataName }__tag--active` );
-                            this.state[ which.jsName ].push( filterObj.id );
-                        }
-                        else {
-                            classRemove( filterObj.node, `${ which.dataName }__tag--active` );
-                            this.state[ which.jsName ].splice( index, 1 );
-                        }
-                        if ( this.DOM.cards.filter( ( cardObj ) => {
-                            if (
-                                cardObj.department
-                                .filter( departmentId => this.state.department.indexOf( departmentId ) >= 0 )
-                                .length === this.state.department.length &&
-                                cardObj.researchGroup
-                                .filter( researchGroupId => this.state.researchGroup.indexOf( researchGroupId ) >= 0 )
-                                .length === this.state.researchGroup.length
-                            ) {
-                                classRemove( cardObj.node, 'card--hide' );
-                                this.constructor.delay( 100 ).then( () => {
-                                    classRemove( cardObj.node, 'card--fade-out' );
-                                } );
-                                return true;
-                            }
-
-                            classAdd( cardObj.node, 'card--fade-out' );
-                            this.constructor.delay( 500 ).then( () => {
-                                classAdd( cardObj.node, 'card--hide' );
-                            } );
-                            return false;
-                        } ).length === 0 )
-                            classRemove( this.DOM.noResult, 'no-result--hidden' );
-                        classAdd( this.DOM.loading, 'loading--hidden' );
-                    }
-                    catch ( err ) {
-                        classAdd( this.DOM.loading, 'loading--hidden' );
-                        classRemove( this.DOM.noResult, 'no-result--hidden' );
-                        console.error( err );
-                    }
-                } );
-            } );
-        } );
+        ].forEach( which => this.DOM.filter[ which.jsName ].forEach( ( filterObj ) => {
+            filterObj.node.addEventListener( 'click', this.filterClickEvent( which, filterObj ) );
+        } ) );
     }
 
     async exec () {
         try {
-            this.DOM.cards.innerHTML = '';
-            classAdd( this.DOM.noResult, 'no-result--hidden' );
-
-            const res = await fetch( this.queryApi );
-
-            if ( !res.ok )
-                throw new Error( 'No faculty found' );
-
-            const data = await res.json();
-            this.render( data );
+            this.renderLoading();
+            this.renderCard( await this.fetchData() );
             this.subscribeFilterEvent();
-            classAdd( this.DOM.loading, 'loading--hidden' );
+            this.renderLoadingSucceed();
         }
         catch ( err ) {
-            classAdd( this.DOM.loading, 'loading--hidden' );
-            classRemove( this.DOM.noResult, 'no-result--hidden' );
+            this.renderLoadingFailed();
             console.error( err );
         }
     }
