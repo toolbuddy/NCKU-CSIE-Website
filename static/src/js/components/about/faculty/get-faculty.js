@@ -1,8 +1,8 @@
 /**
- * Data loading module for loading faculty data.
- *
- * @todo add loading fail handler
- * @todo disable faculty filter before data is completely loaded.
+ * @file Faculty data fetch and filter module.
+ * @author ProFatXuanAll <ProFatXuanAll@gmail.com>
+ * @version 1.0.0
+ * @since 1.0.0
  */
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
@@ -12,18 +12,23 @@ import DepartmentUtils from 'models/faculty/utils/department.js';
 import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import cardHTML from 'static/src/pug/components/about/faculty/cards.pug';
-
-// Import filterEvent from 'static/src/js/components/about/faculty/filters/index.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class GetFaculty {
+    /**
+     * @param {object} opt
+     * @param {HTMLElement} opt.facultyDOM
+     * @param {number} opt.languageId
+     */
+
     constructor ( opt ) {
         opt = opt || {};
 
         if (
             !opt.facultyDOM ||
             !ValidateUtils.isDomElement( opt.facultyDOM ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) )
+            !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
+        )
             throw new TypeError( 'invalid arguments' );
 
         const facultyQuerySelector = block => `.faculty__${ block }.${ block }`;
@@ -31,12 +36,14 @@ export default class GetFaculty {
 
         this.DOM = {
             filter: {
-                department: Array.from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'department' ) ) )
+                department: Array
+                .from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'department' ) ) )
                 .map( node => ( {
                     node,
                     id: node.getAttribute( 'data-department-id' ),
                 } ) ),
-                researchGroup: Array.from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'research-group' ) ) )
+                researchGroup: Array
+                .from( opt.facultyDOM.querySelectorAll( filterQuerySelector( 'research-group' ) ) )
                 .map( node => ( {
                     node,
                     id: node.getAttribute( 'data-research-group-id' ),
@@ -48,11 +55,13 @@ export default class GetFaculty {
         };
 
         if (
+            !this.DOM.filter.department.length ||
             !this.DOM.filter.department.every( ( element ) => {
                 if ( element.id !== null )
                     element.id = Number( element.id );
                 return DepartmentUtils.isSupportedDepartmentId( element.id ) && ValidateUtils.isDomElement( element.node );
             } ) ||
+            !this.DOM.filter.researchGroup.length ||
             !this.DOM.filter.researchGroup.every( ( element ) => {
                 if ( element.id !== null )
                     element.id = Number( element.id );
@@ -60,7 +69,8 @@ export default class GetFaculty {
             } ) ||
             !ValidateUtils.isDomElement( this.DOM.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.loading ) ||
-            !ValidateUtils.isDomElement( this.DOM.cards ) )
+            !ValidateUtils.isDomElement( this.DOM.cards )
+        )
             throw new Error( 'DOM not found.' );
 
         this.state = {
@@ -72,9 +82,17 @@ export default class GetFaculty {
         return this;
     }
 
+    /**
+     * @returns {string}
+     */
+
     get queryApi () {
         return `${ host }/api/faculty?languageId=${ this.state.languageId }`;
     }
+
+    /**
+     * @param {object[]} data
+     */
 
     render ( data ) {
         this.DOM.cards.innerHTML = cardHTML( {
@@ -113,6 +131,11 @@ export default class GetFaculty {
             };
         } );
     }
+
+    /**
+     * @param {number} ms
+     * @return {Promise}
+     */
 
     static delay ( ms ) {
         return new Promise( res => setTimeout( res, ms ) );
