@@ -130,7 +130,7 @@
         // `> .#{ $block } > .cards > .card:hover > .card__photo`
         > .card__photo {
           // [ skin ]
-          transform: rotate( 360deg );
+          transform: rotate( 10deg );
 
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {

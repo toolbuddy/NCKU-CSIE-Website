@@ -77,9 +77,41 @@ export default class GetFaculty {
             languageId:    opt.languageId,
             department:    [],
             researchGroup: [],
+            DOM:           {
+                show: [],
+                hide: [],
+            },
         };
 
+        /**
+         * ONLY USE `this.execLock` and `this.eventLock` WITH FOLLOWING FUNCTIONS:
+         * - `this.constructor.acquireLock()`
+         * - `this.constructor.releaseLock()`
+         * - `this.constructor.isLocked()`
+         */
+
+        this.eventLock = false;
+
         return this;
+    }
+
+    static acquireLock ( lock ) {
+        if ( lock )
+            return;
+        lock = true;
+    }
+
+    static releaseLock ( lock ) {
+        if ( lock )
+            lock = false;
+    }
+
+    /**
+     * @returns {boolean}
+     */
+
+    static isLocked ( lock ) {
+        return lock;
     }
 
     /**
@@ -111,6 +143,7 @@ export default class GetFaculty {
 
     renderLoadingSucceed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
+        classAdd( this.DOM.noResult, 'no-result--hidden' );
     }
 
     renderLoadingFailed () {
@@ -123,91 +156,46 @@ export default class GetFaculty {
      */
 
     renderCard ( data ) {
-        this.DOM.cards.innerHTML = cardHTML( {
-            data,
-            LANG: {
-                id:            this.state.languageId,
-                getLanguageId: WebLanguageUtils.getLanguageId,
-            },
-            UTILS: {
-                url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
-                DepartmentUtils,
-            },
-        } );
+        try {
+            this.DOM.cards.innerHTML = cardHTML( {
+                data,
+                LANG: {
+                    id:            this.state.languageId,
+                    getLanguageId: WebLanguageUtils.getLanguageId,
+                },
+                UTILS: {
+                    url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                    DepartmentUtils,
+                },
+            } );
 
-        this.DOM.cards = Array
-        .from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
-        .map( ( node ) => {
-            const department = [
-                ...new Set( ( node.getAttribute( 'data-department-ids' ) || '-1' )
-                .split( ',' )
-                .map( Number )
-                .filter( DepartmentUtils.isSupportedDepartmentId ) ),
-            ];
+            this.state.DOM.show = Array
+            .from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
+            .map( ( node ) => {
+                const department = [ ...new Set(
+                    String( node.getAttribute( 'data-department-ids' ) || NaN )
+                    .split( ',' )
+                    .map( Number )
+                    .filter( DepartmentUtils.isSupportedDepartmentId )
+                ), ];
 
-            const researchGroup = [
-                ...new Set( ( node.getAttribute( 'data-research-group-ids' ) || '-1' )
-                .split( ',' )
-                .map( Number )
-                .filter( ResearchGroupUtils.isSupportedResearchGroupId ) ),
-            ];
+                const researchGroup = [ ...new Set(
+                    String( node.getAttribute( 'data-research-group-ids' ) || NaN )
+                    .split( ',' )
+                    .map( Number )
+                    .filter( ResearchGroupUtils.isSupportedResearchGroupId )
+                ), ];
 
-            return {
-                node,
-                department,
-                researchGroup,
-            };
-        } );
-    }
-
-    filterClickEvent ( which, filterObj ) {
-        return () => {
-            try {
-                this.renderLoading();
-                const index = this.state[ which.jsName ].indexOf( filterObj.id );
-
-                /**
-                 * `.${ filter.which }__tag` not click before.
-                 */
-
-                if ( index < 0 ) {
-                    classAdd( filterObj.node, `${ which.dataName }__tag--active` );
-                    this.state[ which.jsName ].push( filterObj.id );
-                }
-                else {
-                    classRemove( filterObj.node, `${ which.dataName }__tag--active` );
-                    this.state[ which.jsName ].splice( index, 1 );
-                }
-                if ( this.DOM.cards.filter( ( cardObj ) => {
-                    if (
-                        cardObj.department
-                        .filter( departmentId => this.state.department.indexOf( departmentId ) >= 0 )
-                        .length === this.state.department.length &&
-                        cardObj.researchGroup
-                        .filter( researchGroupId => this.state.researchGroup.indexOf( researchGroupId ) >= 0 )
-                        .length === this.state.researchGroup.length
-                    ) {
-                        classRemove( cardObj.node, 'card--hide' );
-                        delay( 100 ).then( () => {
-                            classRemove( cardObj.node, 'card--fade-out' );
-                        } );
-                        return true;
-                    }
-
-                    classAdd( cardObj.node, 'card--fade-out' );
-                    delay( 500 ).then( () => {
-                        classAdd( cardObj.node, 'card--hide' );
-                    } );
-                    return false;
-                } ).length === 0 )
-                    classRemove( this.DOM.noResult, 'no-result--hidden' );
-                classAdd( this.DOM.loading, 'loading--hidden' );
-            }
-            catch ( err ) {
-                this.renderLoadingFailed();
-                console.error( err );
-            }
-        };
+                return {
+                    node,
+                    department,
+                    researchGroup,
+                };
+            } );
+        }
+        catch ( err ) {
+            throw err;
+        }
     }
 
     subscribeFilterEvent () {
@@ -215,7 +203,75 @@ export default class GetFaculty {
             { jsName: 'department', dataName: 'department', },
             { jsName: 'researchGroup', dataName: 'research-group', },
         ].forEach( which => this.DOM.filter[ which.jsName ].forEach( ( filterObj ) => {
-            filterObj.node.addEventListener( 'click', this.filterClickEvent( which, filterObj ) );
+            filterObj.node.addEventListener( 'click', async () => {
+                if ( this.constructor.isLocked( this.eventLock ) )
+                    return;
+
+                try {
+                    this.constructor.acquireLock( this.eventLock );
+
+                    this.renderLoading();
+
+                    const index = this.state[ which.jsName ].indexOf( filterObj.id );
+
+                    /**
+                     * `.${ filter.which }__tag` is not clicked before.
+                     */
+
+                    if ( index < 0 ) {
+                        classAdd( filterObj.node, `${ which.dataName }__tag--active` );
+                        this.state[ which.jsName ].push( filterObj.id );
+                        this.state.DOM.show = this.state.DOM.show.filter( ( cardObj ) => {
+                            if ( cardObj[ which.jsName ].indexOf( filterObj.id ) < 0 ) {
+                                this.state.DOM.hide.push( cardObj );
+                                classAdd( cardObj.node, 'card--fade-out' );
+                                delay( 500 ).then( () => {
+                                    classAdd( cardObj.node, 'card--hide' );
+                                } );
+                                return false;
+                            }
+                            return true;
+                        } );
+                    }
+
+                    /**
+                     * `.${ filter.which }__tag` is clicked before.
+                     */
+
+                    else {
+                        classRemove( filterObj.node, `${ which.dataName }__tag--active` );
+                        this.state[ which.jsName ].splice( index, 1 );
+                        this.state.DOM.hide = this.state.DOM.hide.filter( ( cardObj ) => {
+                            if (
+                                this.state.department.some( departmentId => cardObj.department.indexOf( departmentId ) < 0 ) ||
+                                this.state.researchGroup.some( researchGroupId => cardObj.researchGroup.indexOf( researchGroupId ) < 0 )
+                            )
+                                return true;
+
+                            this.state.DOM.show.push( cardObj );
+                            classRemove( cardObj.node, 'card--hide' );
+                            delay( 100 ).then( () => {
+                                classRemove( cardObj.node, 'card--fade-out' );
+                            } );
+                            return false;
+                        } );
+                    }
+
+                    await delay( 600 );
+                    if ( this.state.DOM.show.length )
+                        this.renderLoadingSucceed();
+
+                    else
+                        this.renderLoadingFailed();
+                }
+                catch ( err ) {
+                    this.renderLoadingFailed();
+                    console.error( err );
+                }
+                finally {
+                    this.constructor.releaseLock( this.eventLock );
+                }
+            } );
         } ) );
     }
 
