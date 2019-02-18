@@ -71,13 +71,13 @@
       &.briefings__briefing--disappear {
         animation: {
           name: collapse;
-          duration: 3s;
+          duration: .5s;
           fill-mode: forwards;
         }
       }
 
       &.briefings__briefing--show {
-        animation: expand 2s ease;
+        animation: expand .5s ease;
         transform: scaleY( 1 );
       }
       @keyframes collapse {

@@ -1,5 +1,5 @@
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
-import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import hotAnnouncementBriefingHTML from 'static/src/pug/components/home/hot-announcement-briefing.pug';
 import TagUtils from 'models/announcement/utils/tag.js';

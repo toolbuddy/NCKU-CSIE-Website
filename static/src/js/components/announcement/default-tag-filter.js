@@ -3,7 +3,7 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
-import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, delay} from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
@@ -60,7 +60,7 @@ export default class DefaultTagFilter {
             to:             opt.to,
             page:           opt.page,
             visiblePageNum: opt.visiblePageNum,
-            transitionSec:  2,
+            transitionSec:  0.5,
             scrollPx:     5,
         };
 
@@ -180,25 +180,19 @@ export default class DefaultTagFilter {
         } );
     }
 
-    static delay ( ms ) {
-        try {
-            return new Promise( res => setTimeout( res, ms ) );
-        }
-        catch ( {} ) {}
-    }
-
     async renderTransitionShow ( dom ) {
-        console.log(dom.scrollHeight);
         classRemove( dom, 'briefings__briefing--collapse' );
         classAdd( dom, 'briefings__briefing--show' );
         dom.style.height = `${ dom.scrollHeight }px`;
-        await this.constructor.delay( this.config.transitionSec * 1000 );
+        await delay( this.config.transitionSec * 1000 );
     }
 
     static renderTransitionHide ( dom ) {
-        classRemove( dom, 'briefings__briefing--show' );
-        classAdd( dom, 'briefings__briefing--collapse' );
-        dom.style.height = '0px';
+        if(dom.style.height !== '0px'){
+            classRemove( dom, 'briefings__briefing--show' );
+            classAdd( dom, 'briefings__briefing--collapse' );
+            dom.style.height = '0px';
+        }
     }
 
     renderTransitionInit () {
@@ -503,24 +497,25 @@ export default class DefaultTagFilter {
     async getPage () {
         try {
 
-            /**
-             * Fold `.announcement__briefings.briefings`.
-             */
-
-            this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
-            this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
-
-            /**
-             * Clear `#pages` & `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
-             */
-
-            this.DOM.pages.innerHTML = '';
-            this.DOM.announcement.pinned.briefings.innerHTML = '';
-            this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
+            this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+            this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
+            await delay( this.config.transitionSec * 1000 );
+
+            /**
+             * Clear `#pages` & `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             */
+            this.DOM.pages.innerHTML = '';
+            this.DOM.announcement.pinned.briefings.innerHTML = '';
+            this.DOM.announcement.normal.briefings.innerHTML = '';
+            
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -559,19 +554,22 @@ export default class DefaultTagFilter {
 
     async getPinnedAnnouncement () {
         try {
+
+            classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+            classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+
             /**
              * Fold `.announcement__briefings.briefings`.
              */
-
-            this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+            if(this.DOM.announcement.pinned.briefings.innerHTML !== ''){
+                this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+                await delay( this.config.transitionSec * 1000 );
+            }
 
             /**
              * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
              */
-
             this.DOM.announcement.pinned.briefings.innerHTML = '';
-            classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
-            classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -620,7 +618,6 @@ export default class DefaultTagFilter {
             /**
              * Unfold `.announcement__briefings.briefings`.
              */
-
             await this.renderTransitionShow( this.DOM.announcement.pinned.briefings );
         }
         catch ( err ) {
@@ -633,19 +630,21 @@ export default class DefaultTagFilter {
     async getNormalAnnouncement () {
         try {
 
+            classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+            classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
             /**
              * Fold `.announcement__briefings.briefings`.
              */
-
-            await this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
+            if(this.DOM.announcement.normal.briefings.innerHTML !== ''){
+                this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
+                await delay( this.config.transitionSec * 1000 );
+            }
 
             /**
              * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
              */
-
             this.DOM.announcement.normal.briefings.innerHTML = '';
-            classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
-            classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
             let tags = this.state.tags;
             if ( tags.length === 0 )
@@ -696,7 +695,6 @@ export default class DefaultTagFilter {
             /**
              * Unfold `.announcement__briefings.briefings`.
              */
-
             await this.renderTransitionShow( this.DOM.announcement.normal.briefings );
         }
         catch ( err ) {
