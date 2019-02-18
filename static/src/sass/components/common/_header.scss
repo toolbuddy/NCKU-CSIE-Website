@@ -4,6 +4,7 @@
 // `body > .header`
 body > .header {
   // [ variable ]
+  $tiny: 260px;
   $small: 375px;
   $large: 1120px;
 
@@ -585,11 +586,22 @@ body > .header {
     transition: right .5s;
     background-color: #213262;
 
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      grid-template-columns: 16fr 3fr;
+    }
+
     // modifier
     // `body > .header > .header__navigation > .header__navigation--active`
     &.header__navigation--active {
       // [ layout ]
-      right: -.47rem;
+      width: 100%;
+      left: 0;
+      @media screen and ( min-width: $small ) {
+        right: -.47rem;
+        left: auto;
+        width: auto;
+      }
     }
 
     // [ RWD: $large ]
@@ -619,7 +631,7 @@ body > .header {
         area: navigation__search;
         template: {
           areas: '. search__input . search__submit .';
-          columns: .37rem auto .37rem .4rem .37rem;
+          columns:  1fr 3rem 1fr .4rem 1fr;
           rows: 1.31rem;
         }
       }
@@ -632,6 +644,12 @@ body > .header {
 
       // [ skin ]
       background-color: #1d2d56;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $tiny ) {
+        // [ layout ]
+        grid-template-columns: .37rem auto .37rem .4rem .37rem;
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
@@ -793,6 +811,7 @@ body > .header {
           color: rgba( 255, 255, 255, .5 );
           font-size: .5rem;
           height: $item-height;
+          width: auto;
 
           // modifier
           // `body > .header > .navigation > .list > .item > .item__link > .item__link--homepage`
@@ -835,6 +854,12 @@ body > .header {
           // [ skin ]
           background-color: transparent;
           height: $item-height;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ layout ]
+            padding-left: 87%;
+          }
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
@@ -1075,12 +1100,17 @@ body > .header {
           areas:
             'language__image    language__text      language__switch'
             'language__dropdown language__dropdown  language__dropdown';
-          columns: .75rem 5rem 1fr;
+          columns: .75rem auto 15%;
           rows: 1.56rem min-content;
         }
         column-gap: .625rem;
       }
       display: grid;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        grid-template-columns: .75rem 5rem 1fr;
+      }
 
       // [ skin ]
       background-color: inherit;
