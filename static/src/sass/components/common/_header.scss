@@ -4,19 +4,26 @@
 // `body > .header`
 body > .header {
   // [ variable ]
+  $small: 375px;
   $large: 1120px;
 
   // [ layout ]
   display: grid;
-  grid-template: {
-    areas: 'header__logo header__menu';
-    columns: 4fr 1fr;
-  }
+  grid-template-areas:
+    'header__logo'
+    'header__menu';
 
   // [ skin ]
   width: 100%;
-  height: 3.2rem;
+  height: auto;
   background: rgba( 255, 255, 255, .95 );
+  @media screen and ( min-width: $small ) {
+    grid-template: {
+      areas: 'header__logo header__menu';
+      columns: 4fr 1fr;
+    }
+    height: 3.2rem;
+  }
 
   // [ RWD: $large ]
   @media screen and ( min-width: $large ) {
@@ -39,7 +46,6 @@ body > .header {
   // `body > .header > .logo`
   > .header__logo.logo {
     // [ layout ]
-    display: flex;
     grid-area: header__logo;
     align: {
       items: center;
@@ -48,6 +54,9 @@ body > .header {
     justify: {
       content: center;
       self: center;
+    }
+    @media screen and ( min-width: $small ) {
+      display: flex;
     }
 
     // [ skin ]
@@ -71,11 +80,21 @@ body > .header {
     // `body > .header > .logo > .logo__image`
     > .logo__image {
       // [ layout ]
-      grid-area: logo__image;
+      // grid-area: logo__image;
 
       // [ skin ]
       width: 1.6rem;
       height: auto;
+      display: block;
+      margin: {
+        top : .5rem;
+        bottom: .5rem;
+        left: auto;
+        right: auto;
+      }
+      @media screen and ( min-width: $small ) {
+        display: inline-block;
+      }
     }
 
     // element
@@ -84,19 +103,13 @@ body > .header {
     // `body > .header > .logo > .caption`
     > .logo__caption.caption {
       // [ layout ]
-      display: grid;
-      grid: {
-        area: logo__caption;
-        template: {
-          areas:
-            'caption__text--large'
-            'caption__text--small';
-          rows: 1fr 1fr;
-        }
-      }
       align-items: center;
       justify-self: start;
       margin-left: .4rem;
+      display: block;
+      @media screen and ( min-width: $small ) {
+        display: inline-block;
+      }
 
       // element
       // `body > .header > .logo > .caption > .caption__text`
@@ -108,10 +121,21 @@ body > .header {
         // `body > .header > .logo > .caption > .caption__text > .caption__text--large`
         &.caption__text--large {
           // [ layout ]
-          grid-area: caption__text--large;
+          // grid-area: caption__text--large;
 
           // [ skin ]
           font-size: .5rem;
+          line-height: .6rem;
+          display: block;
+          text-align: center;
+          @media screen and ( min-width: $small ) {
+            text-align: left;
+          }
+
+          // `body > .header > .logo > .caption > .caption__text > .caption__text--large >. caption__text--large-part`
+          > .caption__text--large-part {
+            display: inline-block;
+          }
         }
 
         // modifier
@@ -122,6 +146,11 @@ body > .header {
 
           // [ skin ]
           font-size: .4rem;
+          text-align: center;
+          @media screen and ( min-width: $small ) {
+            text-align: left;
+            display: block;
+          }
         }
       }
     }
