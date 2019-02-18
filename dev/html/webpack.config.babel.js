@@ -181,12 +181,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                 UTILS: {
                                     url:             UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
                                     staticUrl:       UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
-                                    getTagId:        TagUtils.getTagId,
-                                    getTagById:      TagUtils.getTagById,
-                                    getTagColorById: TagUtils.getTagColorById,
-                                    getTagAll:       TagUtils.getTagAll,
-                                    tagAllId:        TagUtils.tagAllId,
-                                    supportedTag:    TagUtils.supportedTag,
+                                    TagUtils,
                                     ResearchGroupUtils,
                                     DepartmentUtils,
                                 },

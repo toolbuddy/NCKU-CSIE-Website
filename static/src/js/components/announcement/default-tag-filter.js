@@ -16,6 +16,7 @@ export default class DefaultTagFilter {
             !Array.isArray( opt.defaultTag ) ||
             !opt.supportedTag ||
             !Array.isArray( opt.supportedTag ) ||
+            (opt.defaultTag.length === 0 && opt.supportedTag.length === 0 ) ||
             !opt.filterDOM ||
             !ValidateUtils.isDomElement( opt.filterDOM ) ||
             !opt.announcementPinnedDOM ||
@@ -131,6 +132,7 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
+            this.DOM.filter.tags.length === 0 ||
             !Array.from( this.DOM.filter.tags.map( tag => tag.node ) ).every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
