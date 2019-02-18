@@ -133,7 +133,7 @@ body > .header {
           }
 
           // `body > .header > .logo > .caption > .caption__text > .caption__text--large >. caption__text--large-part`
-          > .caption__text--large-part {
+          > .text__item {
             display: inline-block;
           }
         }
@@ -1075,7 +1075,7 @@ body > .header {
           areas:
             'language__image    language__text      language__switch'
             'language__dropdown language__dropdown  language__dropdown';
-          columns: .75rem 4rem 75%;
+          columns: .75rem 5rem 1fr;
           rows: 1.56rem min-content;
         }
         column-gap: .625rem;
@@ -1137,6 +1137,7 @@ body > .header {
         background-color: inherit;
         height: 1.56rem;
         width: 45%;
+        border-top: .01rem solid rgba( 255, 255, 255, .5 );
 
         // element
         // `body > .header > .navigation > .language > .switch > .switch__icon`
