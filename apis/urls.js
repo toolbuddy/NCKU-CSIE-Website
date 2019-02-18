@@ -11,26 +11,22 @@ import express from 'express';
 import announcement from 'apis/announcement.js';
 import faculty from 'apis/faculty.js';
 
-const apis = express.Router();
+const apis = express();
 
 /**
- * Make sure HTTP request header `Accept` include json,
- * because all routes for api should return json only.
+ * Make sure HTTP request header `Accept` include JSON related MIME types,
+ * because all routes for api should return JSON only.
  */
 
-apis.use( ( req, res, next ) => {
+apis.use( ( req, {}, next ) => {
     if ( !req.accepts( 'json' ) ) {
-        res.sendStatus( 406 );
+        const error = new Error();
+        error.status = 406;
+        next( error );
         return;
     }
     next();
 } );
-
-/**
- * Parse HTTP request body into json.
- */
-
-apis.use( express.json() );
 
 /**
  * Resolve URL `/api/announcement`.
@@ -43,5 +39,19 @@ apis.use( '/announcement', announcement );
  */
 
 apis.use( '/faculty', faculty );
+
+apis.use( ( {}, res, {} ) => {
+    res.status( 404 ).json( {
+        error: 'request api not found',
+    } );
+} );
+
+apis.use( ( err, {}, res, {} ) => {
+    const status = err.status || 500;
+    if ( err.message !== '' )
+        res.status( status ).json( { error: err.message, } );
+    else
+        res.sendStatus( status );
+} );
 
 export default apis;

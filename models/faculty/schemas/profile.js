@@ -45,6 +45,11 @@ const Profile = faculty.define( 'profile', {
         type:      Sequelize.STRING( 2083 ),
         allowNull: true,
     },
+    order: {
+        type:         Sequelize.SMALLINT( 5 ),
+        allowNull:    false,
+        defaultValue: 1,
+    },
 } );
 
 export default Profile;

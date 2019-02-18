@@ -6,6 +6,10 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Award',
         'topic':    'Award',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':   'Pinned Announcement',
         'normal':   'Announcement',
         'breadcrumb': {
@@ -16,6 +20,10 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '榮譽事蹟',
         'topic':    '榮譽',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':   '置頂貼文',
         'normal':   '一般公告',
         'breadcrumb': {
@@ -24,14 +32,13 @@ append data
         },
       },
     } );
-    const filterModifier = 'award';
-    const filterTags = [
-      'award',
-      'faculty',
-      'college',
-      'master',
-      'phd',
-    ];
+    const tags = [
+        'award',
+        'college',
+        'master',
+        'phd',
+        'faculty',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'about/award';
 
 append title
@@ -41,12 +48,17 @@ append stylesheets
   +css( 'about/award' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

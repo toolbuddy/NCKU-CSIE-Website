@@ -1,18 +1,6 @@
 $icon-path: '~image/icon';
 
 // [ icon ]
-// Yellow flag
-@mixin icon__flag ( $size ) {
-  // [ skin ]
-  border: {
-    style: solid;
-    color: #f5c150 #f5c150 transparent;
-    radius: ( $size * .1 ) ( $size * .1 ) 0 0;
-    width: ( $size * .8 ) ( $size * .35 ) ( $size * .16 );
-  }
-}
-
-// [ icon ]
 // Download
 @mixin icon__download () {
   // [ skin ]

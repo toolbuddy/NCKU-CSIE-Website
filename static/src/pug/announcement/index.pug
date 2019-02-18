@@ -1,4 +1,4 @@
-extends /layouts/announcement/announcement.pug
+extends /layouts/base.pug
 
 append data
   -
@@ -36,7 +36,7 @@ append data
         },
         'entries': [
           {
-            title: '所有公告',
+            title: '全部公告',
             detail: '系所及學校重要資訊公告，不分類別',
             modifier: 'red',
             href: UTILS.url( { href: 'announcement/all', } ),
@@ -65,15 +65,18 @@ append stylesheets
   +css( 'announcement/index' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ LANG.id ].entries )
+  +entries( 'content', i18n[ LANG.id ].entries )
 
 append footer
 

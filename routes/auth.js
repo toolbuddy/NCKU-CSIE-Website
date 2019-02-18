@@ -11,7 +11,11 @@ import express from 'express';
 
 import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/auto/login`.

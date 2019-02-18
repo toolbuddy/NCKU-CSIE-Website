@@ -6,7 +6,7 @@ import {
     Tag,
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/announcement/utils/validate.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -29,68 +29,104 @@ import ValidateUtils from 'models/announcement/utils/validate.js';
  */
 
 export default async ( opt ) => {
-    opt = opt || {};
-    const {
-        languageId = LanguageUtils.defaultLanguageId,
-        announcementId = null,
-    } = opt;
+    try {
+        opt = opt || {};
+        const {
+            languageId = null,
+            announcementId = null,
+        } = opt;
 
-    if ( !LanguageUtils.isSupportedLanguageId( languageId ) )
-        return { error: 'invalid language id', };
-    if ( !ValidateUtils.isValidNumber( announcementId ) )
-        return { error: 'invalid announcement id', };
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
+        }
+        if ( !ValidateUtils.isPositiveInteger( announcementId ) ) {
+            const error = new Error( 'invalid announcement id' );
+            error.status = 400;
+            throw error;
+        }
 
-    const data = await Announcement.findOne( {
-        include: [
-            {
-                model:      AnnouncementI18n,
-                as:         'announcementI18n',
-                attributes: [
-                    'title',
-                    'content',
-                ],
-                where: {
-                    languageId,
-                },
+        const data = await Announcement.findOne( {
+            attributes: [
+                'announcementId',
+                'author',
+                'publishTime',
+                'updateTime',
+                'views',
+                'isPinned',
+            ],
+            where: {
+                announcementId,
             },
-            {
-                model:      Tag,
-                as:         'tag',
-                attributes: [
-                    'typeId',
-                ],
-            },
-            {
-                model:      File,
-                as:         'file',
-                attributes: [ 'fileId', ],
-                include:    [
-                    {
-                        model:      FileI18n,
-                        as:         'fileI18n',
-                        attributes: [
-                            'filepath',
-                            'name',
-                        ],
-                        where: {
-                            languageId,
-                        },
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
                     },
-                ],
-            },
-        ],
-        attributes: [
-            'announcementId',
-            'author',
-            'publishTime',
-            'updateTime',
-            'views',
-            'isPinned',
-        ],
-        where: {
-            announcementId,
-        },
-    } );
+                },
+                {
+                    model:      Tag,
+                    as:         'tag',
+                    attributes: [
+                        'typeId',
+                    ],
+                },
+                {
+                    model:      File,
+                    as:         'file',
+                    attributes: [ 'fileId', ],
+                    include:    [
+                        {
+                            model:      FileI18n,
+                            as:         'fileI18n',
+                            attributes: [
+                                'filePath',
+                                'name',
+                            ],
+                            where: {
+                                languageId,
+                            },
+                        },
+                    ],
+                },
+            ],
+        } );
 
-    return data;
+        if ( !data ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        return {
+            announcementId: data.announcementId,
+            author:         data.author,
+            publishTime:    Number( data.publishTime ),
+            updateTime:     Number( data.updateTime ),
+            views:          data.views,
+            isPinned:       data.isPinned,
+            title:          data.announcementI18n[ 0 ].title,
+            content:        data.announcementI18n[ 0 ].content,
+            tags:           data.tag.map( tag => tag.typeId ),
+            files:          data.file.map( file => ( {
+                fileId: file.fileId,
+                path:   file.fileI18n[ 0 ].filePath,
+                name:   file.fileI18n[ 0 ].name,
+            } ) ),
+        };
+    }
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
+    }
 };

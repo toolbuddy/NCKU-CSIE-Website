@@ -18,7 +18,7 @@ const FileI18n = announcement.define( 'fileI18n', {
         type:      Sequelize.STRING( 2083 ),
         allowNull: false,
     },
-    filepath: {
+    filePath: {
         type:      Sequelize.STRING( 2083 ),
         allowNull: false,
     },

@@ -1,13 +1,13 @@
 @import 'components/common/icon';
-@import 'components/announcement/title';
 
 // component
-// `> .announcement`
-@mixin announcement () {
+// `.#{ $block } > .#{ $block }__announcement.announcement`
+@mixin announcement ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__announcement`
   // block
-  // `> .announcement`
-
-  > .announcement {
+  // `.#{ $block } > .announcement`
+  > .#{ $block }__announcement.announcement {
     // [ variable ]
     $small: 768px;
     $large: 992px;
@@ -27,9 +27,6 @@
 
     // [ skin ]
     font-size: .5rem;
-
-    // [ customization ]
-    @content;
 
     // element
     // `> .announcement > .announcement__headline`
@@ -68,7 +65,9 @@
 
       // element
       // `> .announcement > .headline > .headline__tags`
-      > .headline__tags {
+      // block
+      // `> .announcement > .headline > .tags`
+      @include tags( 'headline' ) {
         // [ position ]
         grid-area: headline__tags;
 
@@ -81,10 +80,6 @@
           font-size: .4375rem;
         }
       }
-
-      // block
-      // `> .announcement > .headline > .tags`
-      @include tags();
 
       // element
       // `> .announcement > .headline > .headline__title`
@@ -215,5 +210,8 @@
         }
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

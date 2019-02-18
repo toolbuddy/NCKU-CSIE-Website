@@ -40,7 +40,7 @@ const max = {
         statement: 1,
     },
     depth: {
-        callback:    4,
+        callback:    5,
         chainMethod: 2,
     },
 };
@@ -1169,54 +1169,6 @@ module.exports = {
 
         // Disallow `if` statements as the only statement in `else` blocks
         'no-lonely-if': 'error',
-
-        // Disallow mixes of different operators.
-        'no-mixed-operators': [
-            'error',
-            {
-                // Specifies operator groups to be checked.
-                'groups': [
-                    [
-                        '+',
-                        '-',
-                        '*',
-                        '/',
-                        '%',
-                        '**',
-                    ],
-                    [
-                        '&',
-                        '|',
-                        '^',
-                        '~',
-                        '<<',
-                        '>>',
-                        '>>>',
-                    ],
-                    [
-                        '==',
-                        '!=',
-                        '===',
-                        '!==',
-                        '>',
-                        '>=',
-                        '<',
-                        '<=',
-                    ],
-                    [
-                        '&&',
-                        '||',
-                    ],
-                    [
-                        'in',
-                        'instanceof',
-                    ],
-                ],
-
-                // Specifies whether to allow mixed operators if they are of equal precedence.
-                'allowSamePrecedence': true,
-            },
-        ],
 
         // Disallow mixed spaces and tabs for indentation.
         'no-mixed-spaces-and-tabs': 'error',

@@ -37,6 +37,7 @@ export default ( opt ) => {
         ...whiteList,
         'https://fonts.googleapis.com',
         'https://fonts.gstatic.com',
+        'data:',
     );
     config.formAction.push(
         "'self'",

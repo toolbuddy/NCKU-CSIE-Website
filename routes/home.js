@@ -3,7 +3,6 @@
  *
  * Including following sub-routes:
  * - `/`
- * - `/login`
  * - `/search`
  * - `/calendar`
  */
@@ -12,7 +11,11 @@ import express from 'express';
 
 import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/`.
@@ -20,14 +23,6 @@ const router = express.Router();
 
 router
 .route( '/' )
-.get( staticHtml( 'home/index' ) );
-
-/**
- * Resolve URL `/login`.
- */
-
-router
-.route( '/login' )
 .get( staticHtml( 'home/index' ) );
 
 /**
@@ -44,14 +39,6 @@ router
 
 router
 .route( '/calendar' )
-.get( staticHtml( 'home/index' ) );
-
-/**
- * Resolve URL `/error`.
- */
-
-router
-.route( '/error' )
 .get( staticHtml( 'home/index' ) );
 
 export default router;

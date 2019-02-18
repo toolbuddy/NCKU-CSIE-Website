@@ -1,4 +1,4 @@
-extends /layouts/about.pug
+extends /layouts/base.pug
 append data
   -
     const i18n = Object.freeze( {
@@ -88,15 +88,18 @@ append stylesheets
   +css( 'about/index' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ LANG.id ].entries )
+  +entries( 'content', i18n[ LANG.id ].entries )
 
 append footer
 

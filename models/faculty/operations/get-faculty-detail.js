@@ -1,4 +1,10 @@
 import LanguageUtils from 'models/common/utils/language.js';
+import DegreeUtils from 'models/faculty/utils/degree';
+import DepartmentUtils from 'models/faculty/utils/department';
+import NationUtils from 'models/faculty/utils/nation';
+import ProjectUtils from 'models/faculty/utils/project';
+import PublicationUtils from 'models/faculty/utils/publication';
+import ResearchGroupUtils from 'models/faculty/utils/research-group';
 import {
     AwardI18n,
     Award,
@@ -43,16 +49,18 @@ export default async ( opt ) => {
          * Invalid query parameters.
          * Handle with 400 bad request.
          *
-         * @todo use profile util or validator to check `profileId`.
+         * @todo use validator to check `profileId`.
          */
 
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) || typeof ( profileId ) !== 'number' ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid query parameters',
-                },
-            };
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
+        }
+        if ( typeof ( profileId ) !== 'number' || !Number.isInteger( profileId ) ) {
+            const error = new Error( 'invalid profile id' );
+            error.status = 400;
+            throw error;
         }
 
         const [
@@ -395,12 +403,9 @@ export default async ( opt ) => {
          */
 
         if ( !profile ) {
-            return {
-                status: 404,
-                error:  {
-                    message: 'profile not found',
-                },
-            };
+            const error = new Error( 'profile not found' );
+            error.status = 404;
+            throw error;
         }
 
         return {
@@ -415,12 +420,21 @@ export default async ( opt ) => {
                 hostYear:   conference.hostYear,
                 title:      conference.conferenceI18n[ 0 ].title,
             } ) ),
-            department: department.map( department => department.type ),
+            department: department.map( department => DepartmentUtils.getDepartmentById( {
+                departmentId: department.type,
+                languageId,
+            } ) ),
             education:  education.map( education => ( {
-                degree: education.degree,
+                degree: DegreeUtils.getDegreeById( {
+                    degreeId: education.degree,
+                    languageId,
+                } ),
                 from:   education.from,
                 major:  education.educationI18n[ 0 ].major,
-                nation: education.nation,
+                nation: NationUtils.getNationById( {
+                    nationId: education.nation,
+                    languageId,
+                } ),
                 school: education.educationI18n[ 0 ].school,
                 to:     education.to,
             } ) ),
@@ -437,7 +451,10 @@ export default async ( opt ) => {
                 expireDate:          patent.expireDate,
                 inventor:            patent.patentI18n[ 0 ].inventor,
                 issueDate:           patent.issueDate,
-                nation:              patent.nation,
+                nation:              NationUtils.getNationById( {
+                    nationId: patent.nation,
+                    languageId,
+                } ),
                 patent:              patent.patentI18n[ 0 ].patent,
                 patentOwner:         patent.patentI18n[ 0 ].patentOwner,
             } ) ),
@@ -449,14 +466,21 @@ export default async ( opt ) => {
                 labTel:        profile.labTel,
                 labWeb:        profile.labWeb,
                 name:          profileI18n.name,
-                nation:        profile.nation,
+                nation:        NationUtils.getNationById( {
+                    nationId: profile.nation,
+                    languageId,
+                } ),
                 officeAddress: profileI18n.officeAddress,
                 officeTel:     profile.officeTel,
                 personalWeb:   profile.personalWeb,
                 photo:         profile.photo,
+                profileId,
             },
             project: project.map( project => ( {
-                category: project.category,
+                category: ProjectUtils.getProjectCategoryById( {
+                    projectCategoryId: project.category,
+                    languageId,
+                } ),
                 from:     project.from,
                 name:     project.projectI18n[ 0 ].name,
                 support:  project.projectI18n[ 0 ].support,
@@ -464,20 +488,29 @@ export default async ( opt ) => {
             } ) ),
             publication: publication.map( publication => ( {
                 authors:       publication.publicationI18n[ 0 ].authors,
-                category:      publication.category,
+                category:      PublicationUtils.getPublicationCategoryById( {
+                    publicationCategoryId: publication.category,
+                    languageId,
+                } ),
                 international: publication.international,
                 issueMonth:    publication.issueDate,
                 issueYear:     publication.issueYear,
                 refereed:      publication.refereed,
                 title:         publication.publicationI18n[ 0 ].title,
             } ) ),
-            researchGroup: researchGroup.map( researchGroup => researchGroup.type ),
+            researchGroup: researchGroup.map( researchGroup => ResearchGroupUtils.getResearchGroupById( {
+                researchGroupId: researchGroup.type,
+                languageId,
+            } ) ),
             specialty:     specialtyI18n.map( specialty => specialty.specialty ),
             studentAward:  studentAward.map( studentAward => ( {
                 award:        studentAward.studentAwardI18n[ 0 ].award,
                 receivedYear: studentAward.receivedYear,
                 student:      studentAward.student.map( student => ( {
-                    degree: student.degree,
+                    degree: DegreeUtils.getDegreeById( {
+                        degreeId: student.degree,
+                        languageId,
+                    } ),
                     name:   student.studentI18n[ 0 ].name,
                 } ) ),
             } ) ),
@@ -496,17 +529,11 @@ export default async ( opt ) => {
             } ) ),
         };
     }
-
-    /**
-     * Something wrong, must be a server error.
-     */
-
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

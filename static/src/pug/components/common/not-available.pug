@@ -1,4 +1,4 @@
-mixin notAvailable()
+mixin notAvailable( belongBlock )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -10,7 +10,7 @@ mixin notAvailable()
         'home':    '返回首頁'
       }
     } );
-  figure.not-available
+  figure.not-available( class = `${ belongBlock }__not-available` )
     +image( {
       alt:       i18n[ LANG.id ].caption,
       className: 'not-available__image',

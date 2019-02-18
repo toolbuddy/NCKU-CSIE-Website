@@ -1,0 +1,108 @@
+@import 'components/common/reset';
+@import 'components/common/header';
+@import 'components/common/footer';
+@import 'components/announcement/announcement';
+@import 'components/announcement/tags';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import '~thirdPartyLib/github-markdown-css/github-markdown.css';
+
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include
+    banner(
+      $block: 'body',
+      $image: 'https://via.placeholder.com/1920x500'
+    );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include
+    breadcrumb(
+      $block: 'body',
+      $bg-color: #ffffff
+    );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 560px;
+    $medium: 768px;
+    $large: 1080px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+          '. announcement .';
+      columns: 5% 1fr 5%;
+    };
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template-columns: 10% 1fr 10%;
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template-columns: 15% 1fr 15%;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template-columns: 1fr 31.81rem 1fr;
+    }
+
+    // block
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
+      // [ position ]
+      grid-area: announcement;
+    }
+  }
+
+  .markdown-body {
+    ul {
+      list-style: {
+        type: disc;
+        position: inside;
+      }
+    }
+
+    ol {
+      list-style: {
+        type: decimal;
+        position: inside;
+      }
+    }
+
+    ul ul, ol ul {
+      list-style: {
+        type: circle;
+        position: inside;
+      }
+      margin-left: 15px;
+    }
+
+    ol ol, ul ol {
+      list-style: {
+        type: lower-latin;
+        position: inside;
+      }
+      margin-left: 15px;
+    }
+  }
+}

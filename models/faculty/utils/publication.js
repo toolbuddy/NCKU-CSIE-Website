@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import publicationCategoryMap from 'models/faculty/maps/publication-category.js';
+import LanguageUtils from '../../common/utils/language.js';
+import publicationCategoryMap from '../maps/publication-category.js';
 
 class PublicationUtils {
     static defaultPublicationCategory ( languageId = LanguageUtils.defaultLanguageId ) {

@@ -4,12 +4,20 @@
 @import 'components/common/not-available';
 
 // block
-// `body`
-body > {
-  > .content {
-    // block
-    // `body > .content > .not-available`
+// `.body`
+.body {
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ skin ]
     height: 120%;
-    @include not-available();
+
+    // element
+    // `.body > .content > .content__not-available`
+    // block
+    // `.body > .content > .not-available`
+    @include not-available( $block: 'content' );
   }
 }

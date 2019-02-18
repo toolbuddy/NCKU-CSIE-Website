@@ -1,4 +1,4 @@
-extends /layouts/about.pug
+extends /layouts/base.pug
 
 append data
   -
@@ -31,6 +31,20 @@ append data
           'number':    'Patent Number',
           'period':    'Period',
         },
+        'technologyTransfer': {
+          'title':            'Technology Transfer',
+          'index':            'Index',
+          'technologyName':   'Technology',
+          'patentName':       'Patent',
+          'authorizingParty': 'Authorizing Party',
+          'authorizedParty:': 'Authorized Party',
+          'period':           'Period',
+        },
+        'project': {
+          'name':    'Project',
+          'period':  'Period',
+          'support': 'Sponser',
+        }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':       '詳細資料',
@@ -86,13 +100,16 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ LANG.id ].breadcrumb.faculty, url: 'about/faculty' },
-    { text: data.profile.name },
-  ] )
+  +banner( 'body', i18n[ LANG.id ].title )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+      { text: i18n[ LANG.id ].breadcrumb.faculty, url: 'about/faculty' },
+      { text: data.profile.name },
+    ]
+  )
 append content
   include /components/common/topic.pug
   include /components/common/image.pug
@@ -205,7 +222,6 @@ append content
                 th.row__patentName= patentObj.patent
               th.row__authorizingParty= technologyTransferObj.authorizingParty
               th.row__authorizedParty= technologyTransferObj.authorizedParty
-              th.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
     if data.project.length !== 0
       h2.project__title= i18n[ LANG.id ].project.name

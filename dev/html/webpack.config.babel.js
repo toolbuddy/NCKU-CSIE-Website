@@ -1,6 +1,9 @@
 import path from 'path';
 
 import LanguageUtils from '../../models/common/utils/language.js';
+import TagUtils from '../../models/announcement/utils/tag.js';
+import ResearchGroupUtils from '../../models/faculty/utils/research-group';
+import DepartmentUtils from '../../models/faculty/utils/department.js';
 import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
@@ -68,8 +71,10 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'announcement/activity':     path.join( pugRoot, 'announcement/activity.pug' ),
         'announcement/all':          path.join( pugRoot, 'announcement/all.pug' ),
         'announcement/index':        path.join( pugRoot, 'announcement/index.pug' ),
-        'announcement/announcement': path.join( pugRoot, 'announcement/announcement.pug' ),
         'announcement/recruitment':  path.join( pugRoot, 'announcement/recruitment.pug' ),
+
+        // Route `error`
+        'error/404': path.join( pugRoot, 'error/404.pug' ),
 
         // Route `home`
         'home/index': path.join( pugRoot, 'home/index.pug' ),
@@ -159,10 +164,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                     'extract-loader',
                     {
                         loader:  'html-loader',
-                        options: {
-                            // Mainly used by `static/src/pug/components/common/image.pug`.
-                            root: projectRoot,
-                        },
                     },
                     {
                         loader:  'pug-html-loader',
@@ -178,30 +179,20 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                     getLanguageId: LanguageUtils.getLanguageId,
                                 },
                                 UTILS: {
-                                    url: UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                    url:             UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                    staticUrl:       UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
+                                    getTagId:        TagUtils.getTagId,
+                                    getTagById:      TagUtils.getTagById,
+                                    getTagColorById: TagUtils.getTagColorById,
+                                    getTagAll:       TagUtils.getTagAll,
+                                    tagAllId:        TagUtils.tagAllId,
+                                    supportedTag:    TagUtils.supportedTag,
+                                    ResearchGroupUtils,
+                                    DepartmentUtils,
                                 },
                             },
                         },
                     },
-                ],
-            },
-
-            /**
-             * Loader for image files.
-             *
-             * Use `url-loader` to convert image file into data url.
-             * Image should only appear in `.pug` or `.css` files.
-             * Work with following image format:
-             * - `.gif`
-             * - `.png`
-             * - `.jpg` or `.jpeg`
-             * - `.svg`
-             */
-
-            {
-                test: /\.(gif|png|jpe?g|svg)$/,
-                use:  [
-                    'url-loader',
                 ],
             },
         ],

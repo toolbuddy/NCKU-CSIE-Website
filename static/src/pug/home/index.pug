@@ -1,18 +1,18 @@
-extends /layouts/home.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Home',
-        'topic': 'Latest news',
-        'more':  'more',
-        'hot':   'Hot news',
+        'topic': 'Latest News',
+        'more':  'more...',
+        'hot':   'Hot News',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
-        'more':  '更多資訊',
+        'more':  '更多資訊...',
         'hot':   '最近熱門',
       },
     } );
@@ -25,19 +25,25 @@ append stylesheets
   +css( 'home/index' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
+  +banner( 'body', i18n[ LANG.id ].title )
 
 append content
   include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
 
-  +topic( i18n[ LANG.id ].topic )
-  section.announcement
-    nav#announcement__briefings.announcement__briefings.briefings
-    a.announcement__button( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }...`
-  section.announcement.announcement--hot-news
-    header.announcement__title.title
-      h1.title__text= i18n[ LANG.id ].hot
-    nav#announcement__briefings--hot-news.announcement__briefings.briefings
+  +topic( 'content', i18n[ LANG.id ].topic )
+  section#announcement.content__announcement.announcement
+    +noResult( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
+    aside.announcement__more.more
+      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+  section#hot-announcement.content__hot-announcement.hot-announcement
+    header.hot-announcement__title.title= i18n[ LANG.id ].hot
+    +noResult( 'hot-announcement' )
+    +loading( 'hot-announcement' )
+    nav.hot-announcement__briefings.briefings
 
 append footer
 

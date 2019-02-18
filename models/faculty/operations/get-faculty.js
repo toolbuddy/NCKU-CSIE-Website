@@ -1,4 +1,5 @@
 import LanguageUtils from 'models/common/utils/language.js';
+import Sequelize from 'sequelize';
 import {
     Department,
     Profile,
@@ -16,12 +17,9 @@ export default async ( languageId = null ) => {
          */
 
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-            return {
-                status: 400,
-                error:  {
-                    message: 'invalid language id',
-                },
-            };
+            const error = new Error( 'invalid language id' );
+            error.status = 400;
+            throw error;
         }
         const data = await Profile.findAll( {
             attributes: [
@@ -30,7 +28,11 @@ export default async ( languageId = null ) => {
                 'officeTel',
                 'photo',
                 'profileId',
+                'order',
             ],
+            where: {
+                order: { [ Sequelize.Op.gt ]: 0, },
+            },
             include: [
                 {
                     model:      Department,
@@ -92,20 +94,14 @@ export default async ( languageId = null ) => {
             officeAddress: profile.profileI18n[ 0 ].officeAddress,
             researchGroup: profile.researchGroup.map( researchGroup => researchGroup.type ),
             title:         profile.title.map( title => title.titleI18n[ 0 ].title ),
+            order:         profile.order,
         } ) );
     }
-
-    /**
-     * Something wrong, must be a server error.
-     * Handle with 500 internal server error.
-     */
-
-    catch ( error ) {
-        return {
-            status: 500,
-            error:  {
-                message: 'server internal error',
-            },
-        };
+    catch ( err ) {
+        if ( err.status )
+            throw err;
+        const error = new Error();
+        error.status = 500;
+        throw error;
     }
 };

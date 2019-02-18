@@ -1,5 +1,5 @@
-extends /layouts/user.pug
-include /components/announcement/filter-tags.pug
+extends /layouts/base.pug
+//- include /components/announcement/filter-tags.pug
 include /components/user/announcement/time-selector.pug
 include /components/common/topic.pug
 include /components/common/breadcrumb.pug
@@ -34,34 +34,37 @@ append stylesheets
   +css( 'user/announcement/edit' )
 
 append header
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ] 
+  )
 
 append content
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ LANG.id ].title },
-   ] )
-  +topic( '新增公告' )
+  +topic( 'content', '新增公告' )
   a.content--return( href = '/user/announcement' )= '<取消'
   br
-  +filter__tags( [
-    'tags',
-    'award',
-    'college',
-    'competition',
-    'conference',
-    'course',
-    'exhibition',
-    'faculty',
-    'international',
-    'internship',
-    'master',
-    'phd',
-    'recruitment',
-    'rule',
-    'scholarship',
-    'speech',
-  ] )
+  //- +filter__tags( [
+  //-   'tags',
+  //-   'award',
+  //-   'college',
+  //-   'competition',
+  //-   'conference',
+  //-   'course',
+  //-   'exhibition',
+  //-   'faculty',
+  //-   'international',
+  //-   'internship',
+  //-   'master',
+  //-   'phd',
+  //-   'recruitment',
+  //-   'rule',
+  //-   'scholarship',
+  //-   'speech',
+  //- ] )
   article.editor
     button.editor__language.editor__language--zh-TW.editor__language--horizontal 中文
     button.editor__language.editor__language--en-US.editor__language--horizontal English

@@ -1,4 +1,4 @@
-extends /layouts/research.pug
+extends /layouts/base.pug
 
 append data
   -
@@ -22,7 +22,7 @@ append header
 
 append content
   include /components/common/not-available.pug
-  +notAvailable()
+  +notAvailable( 'content' )
 
 append footer
 

@@ -1,40 +1,35 @@
 @charset 'utf-8';
 @import 'components/common/font';
 
-// Global reset setting
-@mixin reset () {
-  // Avoid duplicated import file.
-  @if not variable-exists( reset ) {
-    $reset: true !global;
+*, *::before, *::after {
+  // Box model.
+  margin: 0;
+  outline: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-    * {
-      // Box model.
-      margin: 0;
-      outline: 0;
-      border: 0;
-      padding: 0;
-      box-sizing: border-box;
+  // Inherit style from parent.
+  font-size: inherit;
+  color: inherit;
 
-      // Inherit style from parent.
-      font-size: inherit;
-      color: inherit;
+  // No extra decoration.
+  text-decoration: none;
+}
 
-      // No extra decoration.
-      text-decoration: none;
-      list-style: none;
-    }
+ul {
+  // No extra decoration.
+  list-style-type: none;
+}
 
-    html, body {
-      // Screen size.
-      width: 100%;
-      height: 100%;
+html, body {
+  // Screen size.
+  width: 100%;
+  height: 100%;
 
-      // Default font.
-      font: {
-        family: var( --font__family--default );
-        size: 32px;
-      }
-    }
+  // Default font.
+  font: {
+    family: var( --font__family--default );
+    size: 32px;
   }
 }
-@include reset();

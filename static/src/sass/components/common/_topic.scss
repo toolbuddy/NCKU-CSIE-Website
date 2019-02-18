@@ -1,9 +1,11 @@
 // component
-// `> .topic`
-@mixin topic () {
+// `.#{ $block } > .topic`
+@mixin topic ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__topic`
   // block
-  // `> .topic`
-  > .topic {
+  // `.#{ $block } > .topic`
+  > .#{ $block }__topic.topic {
     // [ variable ]
     $tablet: 850px;
 
@@ -13,9 +15,6 @@
 
     // [ skin ]
     color: #000000;
-
-    // [ customization ]
-    @content;
 
     // [ RWD: $tablet ]
     @media screen and ( min-width: $tablet ) {
@@ -39,5 +38,8 @@
         size: .75rem;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

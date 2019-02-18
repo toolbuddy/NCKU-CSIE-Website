@@ -1,8 +1,0 @@
-each val, index in briefings
-  - let number = index + 1;
-  - number = number < 10 ? '0' + number : number;
-  a.briefings__briefing.briefing( href = val.articleUrl )
-    aside.briefing__number= number
-    h1.briefing__title= val.title
-    p.briefing__article= val.excerpt
-    time.briefing__time= val.time
