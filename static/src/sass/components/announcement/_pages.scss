@@ -38,14 +38,14 @@
       cursor: pointer;
 
       // modifier
-      // `> .pages > pages__control.pages__control--hidden`
+      // `> .pages > .pages__control.pages__control--hidden`
       &.pages__control--hidden {
         // [ skin ]
         visibility: hidden;
       }
 
       // modifier
-      // `> .pages > pages__control.pages__control--forward`
+      // `> .pages > .pages__control.pages__control--forward`
       &.pages__control--forward {
         // [ layout ]
         margin-right: 1rem;
@@ -58,7 +58,7 @@
       }
 
       // modifier
-      // `> .pages > pages__control.pages__control--backward`
+      // `> .pages > .pages__control.pages__control--backward`
       &.pages__control--backward {
         // [ layout ]
         margin-left: 1rem;
