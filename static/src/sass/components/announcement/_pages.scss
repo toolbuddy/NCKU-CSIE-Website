@@ -1,5 +1,5 @@
 // template
-// `> .pages > .pages__?`
+// `> .#{ $block } > .pages > .pages__?`
 %pages__template {
   // [ variable ]
   $size: 1.41rem;
@@ -13,19 +13,19 @@
 }
 
 // component
-// `.#{ $block } > .#{ $block }__pages.pages`
+// `> .#{ $block } > .#{ $block }__pages.pages`
 @mixin pages ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__pages`
+  // `> .#{ $block } > .#{ $block }__pages`
   // block
-  // `.#{ $block } > .pages`
+  // `> .#{ $block } > .pages`
   > .#{ $block }__pages.pages {
     // [ variable ]
     $small: 650px;
     $large: 850px;
 
     // element
-    // `> .pages > .pages__control`
+    // `> .#{ $block } > .pages > .pages__control`
     > .pages__control {
       // [ template ]
       @extend %pages__template;
@@ -38,14 +38,14 @@
       cursor: pointer;
 
       // modifier
-      // `> .pages > pages__control.pages__control--hidden`
+      // `> .#{ $block } > .pages > pages__control.pages__control--hidden`
       &.pages__control--hidden {
         // [ skin ]
         visibility: hidden;
       }
 
       // modifier
-      // `> .pages > pages__control.pages__control--forward`
+      // `> .#{ $block } > .pages > pages__control.pages__control--forward`
       &.pages__control--forward {
         // [ layout ]
         margin-right: 1rem;
@@ -58,7 +58,7 @@
       }
 
       // modifier
-      // `> .pages > pages__control.pages__control--backward`
+      // `> .#{ $block } > .pages > pages__control.pages__control--backward`
       &.pages__control--backward {
         // [ layout ]
         margin-left: 1rem;
@@ -72,7 +72,7 @@
     }
 
     // element
-    // `> .pages > .pages__page`
+    // `> .#{ $block } > .pages > .pages__page`
     > .pages__page {
       // [ template ]
       @extend %pages__template;
@@ -100,7 +100,7 @@
       }
 
       // modifier
-      // `> .pages > .pages__page.pages__page--active`
+      // `> .#{ $block } > .pages > .pages__page.pages__page--active`
       &.pages__page--active {
         // [ layout ]
         display: inline-block;
@@ -112,14 +112,14 @@
       }
 
       // modifier
-      // `> .pages > .pages__page.pages__page--hidden`
+      // `> .#{ $block } > .pages > .pages__page.pages__page--hidden`
       &.pages__page--hidden {
         display: none;
       }
     }
 
     // element
-    // `> .pages > .pages__extra`
+    // `> .#{ $block } > .pages > .pages__extra`
     > .pages__extra {
       // [ template ]
       @extend %pages__template;
@@ -138,7 +138,7 @@
       }
 
       // modifier
-      // `> .pages > .pages__extra.pages__extra--hidden`
+      // `> .#{ $block } > .pages > .pages__extra.pages__extra--hidden`
       &.pages__extra--hidden {
         display: none;
       }

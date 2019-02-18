@@ -15,21 +15,13 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #ffffff
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`

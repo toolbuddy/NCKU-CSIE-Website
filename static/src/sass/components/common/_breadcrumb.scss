@@ -1,96 +1,123 @@
 // component
-// `.#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
-@mixin breadcrumb ( $block, $bg-color ) {
+// `> .#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
+@mixin breadcrumb ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__breadcrumb`
+  // `> .#{ $block } > .#{ $block }__breadcrumb`
   // block
-  // `.#{ $block } > .breadcrumb`
+  // `> .#{ $block } > .breadcrumb`
   > .#{ $block }__breadcrumb.breadcrumb {
     // [ variable ]
-    $large: 1120px;
+    $small: 600px;
+    $medium: 800px;
+    $large: 1000px;
+    $font-size: 20 / 32 * 1rem;
 
     // [ dispaly ]
-    display: flex;
-    padding: {
-      left: 5%;
-      bottom: 3.44rem;
-    }
+    display: block;
 
     // [ skin ]
     width: 100%;
-    height: 1.34rem;
-    background-color: $bg-color;
+    height: auto;
+    border: {
+      style: solid;
+      color: transparent;
+      left-width: 16 / 32 * 1rem;
+      top-width: 16 / 32 * 1rem;
+    }
+    background-color: transparent;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      border: {
+        left-width: 40 / 32 * 1rem;
+        top-width: 50 / 32 * 1rem;
+      }
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ skin ]
+      border-left-width: 60 / 32 * 1rem;
+    }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
-      // [ display ]
-      padding: {
-        left: 20%;
-        bottom: 2.19rem;
-      }
-
       // [ skin ]
-      height: 4.5rem;
+      border-left-width: 20vw;
     }
 
     // element
-    // `> .breadcrumb > .breadcrumb__text`
-    > .breadcrumb__text {
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__link`
+    > .breadcrumb__link {
       // [ layout ]
-      display: flex;
-      margin-top: .59rem;
+      display: inline-block;
 
       // [ skin ]
-      font-size: .63rem;
-      color: #757575;
-      text-decoration: unset;
+      color: #6982c0;
+      font-size: $font-size;
+      text-decoration: underline;
+      background-color: transparent;
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ skin ]
+        color: #213262;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__arrow`
+    > .breadcrumb__arrow {
+      // [ variable ]
+      $image-width: 6 / 32 * 1rem;
+      $image-height: $image-width * 1.6;
+      $vertical-align: $font-size - $image-height;
+
+      // [ layout ]
+      display: inline-block;
+      margin: {
+        top: $vertical-align / 2;
+        bottom: $vertical-align / 2;
+        left: 18 / 32 * 1rem;
+        right: 18 / 32 * 1rem;
+      }
+      vertical-align: middle;
+
+      // [ skin ]
+      width: $image-width;
+      height: $image-height;
+      background-color: transparent;
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
         // [ layout ]
-        margin-top: 1.56rem;
+        margin: {
+          left: 40 / 32 * 1rem;
+          right: 40 / 32 * 1rem;
+        }
+      }
+    }
 
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__text`
+    > .breadcrumb__text {
+      // [ layout ]
+      display: inline-block;
+
+      // [ skin ]
+      color: #757575;
+      font-size: $font-size;
+      background-color: transparent;
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
         // [ skin ]
         color: #adacad;
       }
-
-      // modifier
-      // `> .breadcrumb > .breadcrumb__text > .breadcrumb__text--link`
-      &.breadcrumb__text--link {
-        // [ skin ]
-        color: #6982c0;
-        text-decoration: underline;
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          color: #213262;
-        }
-      }
     }
 
-    // element
-    // `> .breadcrumb > .breadcrumb__arrow`
-    > .breadcrumb__arrow {
-      // [ layout ]
-      margin: {
-        top: .9rem;
-        left: .26rem;
-        right: .26rem;
-      }
-
-      // [ skin ]
-      width: .23rem;
-      height: .375rem;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        margin: {
-          top: 1.85rem;
-          left: .94rem;
-          right: .94rem;
-        }
-      }
-    }
+    // [ customization ]
+    @content;
   }
 }

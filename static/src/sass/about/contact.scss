@@ -9,31 +9,30 @@
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #f2f4f7;
+
   // element
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #eff3f9
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1300px;
+
     // [ layout ]
     display: grid;
     grid: {
@@ -53,16 +52,15 @@
 
     // [ skin ]
     width: 100%;
-    background-color: #f2f4f7;
 
-    // [ RWD: 768px ]
-    @media screen and ( min-width: 768px ) {
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
     }
 
-    // [ RWD: 1300px ]
-    @media screen and ( min-width: 1300px ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: grid;
       grid: {

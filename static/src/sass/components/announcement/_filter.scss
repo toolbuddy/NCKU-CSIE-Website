@@ -1,16 +1,16 @@
 @import 'components/announcement/tags';
 
 // component
-// `> .filter > .time > .time__#{ $element }`
+// `> .#{ $block } > .filter > .time > .time__#{ $element }`
 // This mixin should not be used outside this file.
 @mixin time__template ( $element ) {
   // element
-  // `> .filter > .time > .time__#{ $element }`
+  // `> .#{ $block } > .filter > .time > .time__#{ $element }`
   // block
-  // `> .filter > .time > .#{ $element }`
+  // `> .#{ $block } > .filter > .time > .#{ $element }`
   > .time__#{ $element }.#{ $element } {
     // element
-    // `> .filter > .time > .#{ $element } > .#{ $element }__text`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
     .#{ $element }__text {
       // [ skin ]
       text-align: left;
@@ -18,9 +18,9 @@
     }
 
     // element
-    // `> .filter > .time > .#{ $element } > .#{ $element }__input`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
     // block
-    // `> .filter > .time > .#{ $element } > .input`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
     .#{ $element }__input.input {
       // [ layout ]
       display: grid;
@@ -41,7 +41,7 @@
       }
 
       // element
-      // `> .filter > .time > .#{ $element } > .input > .input__year`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
       > .input__year {
         // [ position ]
         grid-area: input__year;
@@ -51,7 +51,7 @@
       }
 
       // element
-      // `> .filter > .time > .#{ $element } > .input > .input__month`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
       > .input__month {
         // [ position ]
         grid-area: input__month;
@@ -61,7 +61,7 @@
       }
 
       // element
-      // `> .filter > .time > .#{ $element } > .input > .input__date`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
       > .input__date {
         // [ position ]
         grid-area: input__date;
@@ -74,12 +74,12 @@
 }
 
 // component
-// `.#{ $block } > .#{ $block }__filter.filter`
+// `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__filter`
+  // `> .#{ $block } > .#{ $block }__filter`
   // block
-  // `.#{ $block } > .filter`
+  // `> .#{ $block } > .filter`
   > .#{ $block }__filter.filter {
     // [ variable ]
     $small: 350px;
@@ -107,9 +107,9 @@
     }
 
     // element
-    // `> .filter > .filter__time`
+    // `> .#{ $block } > .filter > .filter__time`
     // block
-    // `> .filter > .time`
+    // `> .#{ $block } > .filter > .time`
     > .filter__time.time {
       // [ position ]
       grid: {
@@ -140,22 +140,22 @@
       }
 
       // element
-      // `> .filter > .time > .time__from`
+      // `> .#{ $block } > .filter > .time > .time__from`
       // block
-      // `> .filter > .time > .from`
+      // `> .#{ $block } > .filter > .time > .from`
       @include time__template ( 'from' );
 
       // element
-      // `> .filter > .time > .time__to`
+      // `> .#{ $block } > .filter > .time > .time__to`
       // block
-      // `> .filter > .time > .to`
+      // `> .#{ $block } > .filter > .time > .to`
       @include time__template ( 'to' );
     }
 
     // element
-    // `> .filter > .filter__tags`
+    // `> .#{ $block } > .filter > .filter__tags`
     // block
-    // `> .filter > .tags`
+    // `> .#{ $block } > .filter > .tags`
     @include tags( 'filter' ) {
       // [ position ]
       grid-area: filter__tags;

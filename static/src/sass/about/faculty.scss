@@ -12,25 +12,20 @@
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #eff3f9;
+
   // element
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #eff3f9
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`
@@ -45,6 +40,7 @@
     grid: {
       template: {
         areas:
+          '.'
           'topic'
           'faculty';
         columns: 100%;
@@ -54,13 +50,13 @@
 
     // [ skin ]
     width: 100%;
-    background-color: #eff3f9;
 
     // [RWD: $small]
     @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template: {
         areas:
+          '. .       .'
           '. topic   .'
           '. faculty .'
           '. .       .';

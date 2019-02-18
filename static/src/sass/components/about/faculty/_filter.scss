@@ -144,7 +144,7 @@
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
-          min-width: $large / 5px * 1px;
+          min-width: $large / 5;
         }
 
         // modifier

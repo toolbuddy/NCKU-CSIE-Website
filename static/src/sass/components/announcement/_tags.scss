@@ -16,18 +16,18 @@
 }
 
 // component
-// `.#{ $block } > .#{ $block }__tags.tags`
+// `> .#{ $block } > .#{ $block }__tags.tags`
 @mixin tags ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__tags`
+  // `> .#{ $block } > .#{ $block }__tags`
   // block
-  // `.#{ $block } > .tags`
+  // `> .#{ $block } > .tags`
   > .#{ $block }__tags.tags {
     // [ skin ]
     color: #ffffff;
 
     // element
-    // `> .tags > .tags__tag`
+    // `> .#{ $block } > .tags > .tags__tag`
     > .tags__tag {
       // [ layout ]
       grid: {
@@ -53,14 +53,14 @@
 
       &.tags__tag-- {
         // modifier
-        // `> .tags > .tags__tag.tags__tag--yellow`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--yellow`
         &yellow {
           // [ template ]
           @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--red`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--red`
 
         &red {
           // [ template ]
@@ -68,7 +68,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--blue`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--blue`
 
         &blue {
           // [ template ]
@@ -76,7 +76,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--purple`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--purple`
 
         &purple {
           // [ template ]
@@ -84,7 +84,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--green`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--green`
 
         &green {
           // [ template ]

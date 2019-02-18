@@ -11,6 +11,7 @@
 
     // [ layout ]
     display: block;
+    margin-top: 30 / 32 * 1rem;
 
     // [ skin ]
     background-color: transparent;
@@ -19,6 +20,7 @@
     @media screen and ( min-width: $large ) {
       // [ layout ]
       display: flex;
+      margin-top: 50 / 32 * 1rem;
       flex-wrap: wrap;
       justify-content: center;
     }

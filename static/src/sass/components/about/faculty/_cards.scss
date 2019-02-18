@@ -62,7 +62,7 @@
   > .#{ $block }__cards.cards {
     // [ variable ]
     $small: 300px;
-    $middle: 350px;
+    $medium: 350px;
     $large: 545px;
     $card-width: 463 / 32 * 1rem;
     $transition-time: .5s;
@@ -284,8 +284,8 @@
             weight: bold;
           }
 
-          // [ RWD: $middle ]
-          @media screen and ( min-width: $middle ) {
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
             // [ layout ]
             display: inline-block;
             margin-right: 20 / 32 * 1rem;
@@ -302,8 +302,8 @@
           text-align: center;
           margin-bottom: 6 / 32 * 1rem;
 
-          // [ RWD: $middle ]
-          @media screen and ( min-width: $middle ) {
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
             // [ layout ]
             display: inline-block;
             text-align: left;

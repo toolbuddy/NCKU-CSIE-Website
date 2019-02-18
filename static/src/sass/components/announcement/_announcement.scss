@@ -1,12 +1,12 @@
 @import 'components/common/icon';
 
 // component
-// `.#{ $block } > .#{ $block }__announcement.announcement`
+// `> .#{ $block } > .#{ $block }__announcement.announcement`
 @mixin announcement ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__announcement`
+  // `> .#{ $block } > .#{ $block }__announcement`
   // block
-  // `.#{ $block } > .announcement`
+  // `> .#{ $block } > .announcement`
   > .#{ $block }__announcement.announcement {
     // [ variable ]
     $small: 768px;
@@ -29,9 +29,9 @@
     font-size: .5rem;
 
     // element
-    // `> .announcement > .announcement__headline`
+    // `> .#{ $block } > .announcement > .announcement__headline`
     // block
-    // `> .announcement > .headline`
+    // `> .#{ $block } > .announcement > .headline`
     > .announcement__headline.headline {
       // [ position ]
       grid-area: announcement__headline;
@@ -64,9 +64,9 @@
       }
 
       // element
-      // `> .announcement > .headline > .headline__tags`
+      // `> .#{ $block } > .announcement > .headline > .headline__tags`
       // block
-      // `> .announcement > .headline > .tags`
+      // `> .#{ $block } > .announcement > .headline > .tags`
       @include tags( 'headline' ) {
         // [ position ]
         grid-area: headline__tags;
@@ -82,8 +82,7 @@
       }
 
       // element
-      // `> .announcement > .headline > .headline__title`
-
+      // `> .#{ $block } > .announcement > .headline > .headline__title`
       > .headline__title {
         // [ position ]
         grid-area: headline__title;
@@ -95,8 +94,7 @@
       }
 
       // element
-      // `> .announcement > .headline > .headline__announcer`
-
+      // `> .#{ $block } > .announcement > .headline > .headline__announcer`
       > .headline__announcer {
         // [ position ]
         grid-area: headline__announcer;
@@ -110,8 +108,7 @@
       }
 
       // element
-      // `> .announcement > .headline > .headline__time`
-
+      // `> .#{ $block } > .announcement > .headline > .headline__time`
       > .headline__time {
         // [ position ]
         grid-area: headline__time;
@@ -129,8 +126,7 @@
     }
 
     // element
-    // `> .announcement > .announcement__title`
-
+    // `> .#{ $block } > .announcement > .announcement__title`
     > .announcement__title {
       // [ position ]
       grid-area: announcement__title;
@@ -141,8 +137,7 @@
     }
 
     // element
-    // `> .announcement > .announcement__article`
-
+    // `> .#{ $block } > .announcement > .announcement__article`
     > .announcement__article {
       // [ position ]
       grid-area: announcement__article;
@@ -156,9 +151,9 @@
     }
 
     // element
-    // `announcement .announcement__attachments`
+    // `> .#{ $block } > announcement .announcement__attachments`
     // block
-    // `.announcement .attachments`
+    // `> .#{ $block } > .announcement .attachments`
     > .announcement__attachments.attachments {
       // [ layout ]
       display: grid;
@@ -174,8 +169,7 @@
       color: #f8f8f2;
 
       // element
-      // `> .announcement > .attachments > .attachments__attachment`
-
+      // `> .#{ $block } > .announcement > .attachments > .attachments__attachment`
       > .attachments__attachment {
         // [ position ]
         align-self: start;

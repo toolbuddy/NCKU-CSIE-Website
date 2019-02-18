@@ -8,73 +8,30 @@
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #ffffff;
+
   // element
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #ffffff
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
-    // [ variable ]
-    $large: 475px;
-
-    // [ layout ]
-    display: grid;
-    grid: {
-      template: {
-        areas:
-          '.'
-          'entries'
-          '.';
-        columns: 100%;
-      }
-      row-gap: .6rem;
-    };
-
-    // [ skin ]
-    width: 100%;
-    background-color: #ffffff;
-
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. . .'
-            '. entries .'
-            '. . .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 3.1rem;
-      };
-    }
-
     // element
     // `.body > .content > .content__entries`
     // block
     // `.body > .content > .entries`
-    @include entries( $block: 'content' ) {
-      // [ position ]
-      grid-area: entries;
-    }
+    @include entries( $block: 'content' );
   }
 }
