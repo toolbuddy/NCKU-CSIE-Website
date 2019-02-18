@@ -131,13 +131,6 @@
         > .card__photo {
           // [ skin ]
           transform: rotate( 10deg );
-
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            // [ skin ]
-            width: 280 / 32 * 1rem;
-            height: 280 / 32 * 1rem;
-          }
         }
 
         // element
@@ -190,7 +183,7 @@
         background-color: #c4c4c4;
 
         // [ animation ]
-        transition: width $transition-time, height $transition-time, transform $transition-time;
+        transition: transform .2s;
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {

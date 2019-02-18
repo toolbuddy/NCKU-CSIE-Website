@@ -84,7 +84,7 @@ export default class GetFaculty {
         };
 
         /**
-         * ONLY USE `this.execLock` and `this.eventLock` WITH FOLLOWING FUNCTIONS:
+         * ONLY USE `this.eventLock` WITH FOLLOWING FUNCTIONS:
          * - `this.constructor.acquireLock()`
          * - `this.constructor.releaseLock()`
          * - `this.constructor.isLocked()`
@@ -95,23 +95,23 @@ export default class GetFaculty {
         return this;
     }
 
-    static acquireLock ( lock ) {
-        if ( lock )
+    acquireLock () {
+        if ( this.eventLock )
             return;
-        lock = true;
+        this.eventLock = true;
     }
 
-    static releaseLock ( lock ) {
-        if ( lock )
-            lock = false;
+    releaseLock () {
+        if ( this.eventLock )
+            this.eventLock = false;
     }
 
     /**
      * @returns {boolean}
      */
 
-    static isLocked ( lock ) {
-        return lock;
+    isLocked () {
+        return this.eventLock;
     }
 
     /**
@@ -198,79 +198,90 @@ export default class GetFaculty {
         }
     }
 
+    async filterEvent ( { which, filterObj, } ) {
+        try {
+            this.renderLoading();
+
+            const index = this.state[ which.jsName ].indexOf( filterObj.id );
+            const animateTarget = [];
+
+            /**
+             * `.${ filter.which }__tag` is not clicked before.
+             */
+
+            if ( index < 0 ) {
+                classAdd( filterObj.node, `${ which.dataName }__tag--active` );
+                this.state[ which.jsName ].push( filterObj.id );
+                this.state.DOM.show = this.state.DOM.show.filter( ( cardObj ) => {
+                    if ( cardObj[ which.jsName ].indexOf( filterObj.id ) < 0 ) {
+                        animateTarget.push( cardObj );
+                        this.state.DOM.hide.push( cardObj );
+                        return false;
+                    }
+                    return true;
+                } );
+                animateTarget.forEach( ( cardObj ) => {
+                    classAdd( cardObj.node, 'card--fade-out' );
+                } );
+                await delay( 500 );
+                animateTarget.forEach( ( cardObj ) => {
+                    classAdd( cardObj.node, 'card--hide' );
+                } );
+            }
+
+            /**
+             * `.${ filter.which }__tag` is clicked before.
+             */
+
+            else {
+                classRemove( filterObj.node, `${ which.dataName }__tag--active` );
+                this.state[ which.jsName ].splice( index, 1 );
+                this.state.DOM.hide = this.state.DOM.hide.filter( ( cardObj ) => {
+                    if (
+                        this.state.department.some( departmentId => cardObj.department.indexOf( departmentId ) < 0 ) ||
+                        this.state.researchGroup.some( researchGroupId => cardObj.researchGroup.indexOf( researchGroupId ) < 0 )
+                    )
+                        return true;
+
+                    animateTarget.push( cardObj );
+                    this.state.DOM.show.push( cardObj );
+                    return false;
+                } );
+
+                animateTarget.forEach( ( cardObj ) => {
+                    classRemove( cardObj.node, 'card--hide' );
+                } );
+                await delay( 500 );
+                animateTarget.forEach( ( cardObj ) => {
+                    classRemove( cardObj.node, 'card--fade-out' );
+                } );
+            }
+
+            if ( this.state.DOM.show.length )
+                this.renderLoadingSucceed();
+            else
+                this.renderLoadingFailed();
+        }
+        catch ( err ) {
+            this.renderLoadingFailed();
+            console.error( err );
+        }
+        finally {
+            this.releaseLock();
+        }
+    }
+
     subscribeFilterEvent () {
         [
             { jsName: 'department', dataName: 'department', },
             { jsName: 'researchGroup', dataName: 'research-group', },
         ].forEach( which => this.DOM.filter[ which.jsName ].forEach( ( filterObj ) => {
-            filterObj.node.addEventListener( 'click', async () => {
-                if ( this.constructor.isLocked( this.eventLock ) )
+            filterObj.node.addEventListener( 'click', () => {
+                if ( this.isLocked() )
                     return;
 
-                try {
-                    this.constructor.acquireLock( this.eventLock );
-
-                    this.renderLoading();
-
-                    const index = this.state[ which.jsName ].indexOf( filterObj.id );
-
-                    /**
-                     * `.${ filter.which }__tag` is not clicked before.
-                     */
-
-                    if ( index < 0 ) {
-                        classAdd( filterObj.node, `${ which.dataName }__tag--active` );
-                        this.state[ which.jsName ].push( filterObj.id );
-                        this.state.DOM.show = this.state.DOM.show.filter( ( cardObj ) => {
-                            if ( cardObj[ which.jsName ].indexOf( filterObj.id ) < 0 ) {
-                                this.state.DOM.hide.push( cardObj );
-                                classAdd( cardObj.node, 'card--fade-out' );
-                                delay( 500 ).then( () => {
-                                    classAdd( cardObj.node, 'card--hide' );
-                                } );
-                                return false;
-                            }
-                            return true;
-                        } );
-                    }
-
-                    /**
-                     * `.${ filter.which }__tag` is clicked before.
-                     */
-
-                    else {
-                        classRemove( filterObj.node, `${ which.dataName }__tag--active` );
-                        this.state[ which.jsName ].splice( index, 1 );
-                        this.state.DOM.hide = this.state.DOM.hide.filter( ( cardObj ) => {
-                            if (
-                                this.state.department.some( departmentId => cardObj.department.indexOf( departmentId ) < 0 ) ||
-                                this.state.researchGroup.some( researchGroupId => cardObj.researchGroup.indexOf( researchGroupId ) < 0 )
-                            )
-                                return true;
-
-                            this.state.DOM.show.push( cardObj );
-                            classRemove( cardObj.node, 'card--hide' );
-                            delay( 100 ).then( () => {
-                                classRemove( cardObj.node, 'card--fade-out' );
-                            } );
-                            return false;
-                        } );
-                    }
-
-                    await delay( 600 );
-                    if ( this.state.DOM.show.length )
-                        this.renderLoadingSucceed();
-
-                    else
-                        this.renderLoadingFailed();
-                }
-                catch ( err ) {
-                    this.renderLoadingFailed();
-                    console.error( err );
-                }
-                finally {
-                    this.constructor.releaseLock( this.eventLock );
-                }
+                this.acquireLock();
+                this.filterEvent( { which, filterObj, } );
             } );
         } ) );
     }
