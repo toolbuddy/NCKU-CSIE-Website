@@ -52,7 +52,7 @@
       padding: .4rem;
       background-color: #ffffff;
       color: #b5babf;
-      box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .313rem 0 rgba( 0, 0, 0, .2 );
+      box-shadow: 0 .0625rem .75rem 0 #dbdbdb, 0 .25rem .313rem 0 #cccccc;
       font-size: .4375rem;
 
       // [ RWD: $large ]
@@ -178,7 +178,7 @@
         border-radius: .09rem;
         padding: .625rem .9375rem;
         background-color: #6982c0;
-        box-shadow: 0 .0625rem 0625rem 0 rgba( 244, 67, 54, .14 );
+        box-shadow: 0 .0625rem 0625rem 0 #7c79ad;
 
         // [ before ]
         &::before {

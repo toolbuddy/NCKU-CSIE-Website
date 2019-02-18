@@ -1,10 +1,10 @@
 // component
-// `.#{ $block } > .#{ $block }__entries.entries`
+// `> .#{ $block } > .#{ $block }__entries.entries`
 @mixin entries ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__entries`
+  // `> .#{ $block } > .#{ $block }__entries`
   // block
-  // `.#{ $block } > .entries`
+  // `> .#{ $block } > .entries`
   > .#{ $block }__entries.entries {
     // [ variables ]
     $large: 475px;
@@ -14,117 +14,169 @@
     margin-top: 30 / 32 * 1rem;
 
     // [ skin ]
+    width: 100%;
     background-color: transparent;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       display: flex;
-      margin-top: 50 / 32 * 1rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 50 / 32 * 1rem;
     }
 
     // element
-    // `> .entries > .entries__entry`
+    // `> .#{ $block } > .entries > .entries__entry`
     // block
-    // `> .entries > .entry`
+    // `> .#{ $block } > .entries > .entry`
     > .entries__entry.entry {
       // [ layout ]
       display: block;
-      text-align: center;
       margin: {
         left: auto;
         right: auto;
         bottom: 9 / 32 * 1rem;
       }
+      text-align: center;
 
       // [ skin ]
       width: 95%;
       min-height: 168 / 32 * 1rem;
-      background-color: #ffffff;
       border: {
         top: {
-          width: .2rem;
-          color: rgba( 0, 0, 0, .1 );
+          width: 6 / 32 * 1rem;
+          color: #e6e6e6;
         }
         bottom: {
-          width: 1px;
-          color: rgba( 0, 0, 0, .1 );
+          width: 1 / 32 * 1rem;
+          color: #e6e6e6;
         }
         left: {
-          width: 1px;
-          color: rgba( 0, 0, 0, .1 );
+          width: 1 / 32 * 1rem;
+          color: #e6e6e6;
         }
         right: {
-          width: 1px;
-          color: rgba( 0, 0, 0, .1 );
+          width: 1 / 32 * 1rem;
+          color: #e6e6e6;
         }
         style: solid;
         radius: 6 / 32 * 1rem;
       }
+      background-color: #ffffff;
 
       // [ interaction ]
       &:hover {
         // [ skin ]
-        background-color: rgba( 224, 224, 224, .2 );
+        background-color: #f9f9f9;
         cursor: pointer;
       }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
-        // [ skin ]
-        height: 239 / 32 * 1rem;
-        width: 430 / 32 * 1rem;
+        // [ layout ]
         margin: {
           left: 0;
           right: 25 / 32 * 1rem;
           bottom: 27 / 32 * 1rem;
         }
+
+        // [ skin ]
+        min-height: 239 / 32 * 1rem;
+        width: 430 / 32 * 1rem;
+      }
+
+      // template
+      // `> .#{ $block } > .entries > .entries__entry.entries__entry--?`
+      &.entries__entry-- {
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--red`
+        &red {
+          // [ skin ]
+          border-top-color: #f94970;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--green`
+        &green {
+          // [ skin ]
+          border-top-color: #0dc589;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--yellow`
+        &yellow {
+          // [ skin ]
+          border-top-color: #faad06;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--blue`
+        &blue {
+          // [ skin ]
+          border-top-color: #399dff;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--purple`
+        &purple {
+          // [ skin ]
+          border-top-color: #9053ff;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--gray`
+        &gray {
+          // [ skin ]
+          border-top-color: #999999;
+        }
       }
 
       // element
-      // `> .entries > .entry > .entry__title`
+      // `> .#{ $block } > .entries > .entry > .entry__title`
       > .entry__title {
         // [ layout ]
         display: block;
+        margin-top: 60 / 32 * 1rem;
         text-align: center;
-        margin: {
-          top: 1.9rem;
-          left: auto;
-          right: auto;
-        }
+        white-space: normal;
+        word: {
+          break: normal;
+          wrap: normal;
+        };
 
         // [ skin ]
-        font: {
-          size: .8rem;
-          weight: 700;
-        }
         color: black;
         background-color: transparent;
-        line-height: 1.1rem;
-        white-space: normal;
+        font: {
+          size: 26 / 32 * 1rem;
+          weight: bold;
+        }
       }
 
       // element
-      // `> .entries > .entry > .entry__detail`
+      // `> .#{ $block } > .entries > .entry > .entry__detail`
       > .entry__detail {
         // [ layout ]
         display: block;
         text-align: center;
         margin: {
-          top: .3rem;
-          left: 1rem;
-          right: 1rem;
-          bottom: 1.3rem;
+          top: 20 / 32 * 1rem;
+          left: 32 / 32 * 1rem;
+          right: 32 / 32 * 1rem;
+          bottom: 40 / 32 * 1rem;
         }
+        white-space: normal;
+        word: {
+          break: normal;
+          wrap: normal;
+        };
+        line-height: 26 / 32 * 1rem;
 
         // [ skin ]
         color: #757575;
         background-color: transparent;
-        line-height: .8rem;
-        font-size: .5rem;
-        white-space: normal;
+        font-size: 16 / 32 * 1rem;
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -133,52 +185,6 @@
             left: 2.3rem;
             right: 2.3rem;
           }
-        }
-      }
-
-      // modifier
-      // `> .entries > .entries__entry.entries__entry--color`
-      &.entries__entry-- {
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--red`
-        &red {
-          // [ skin ]
-          border-top-color: #f94970;
-        }
-
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--green`
-        &green {
-          // [ skin ]
-          border-top-color: #0dc589;
-        }
-
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--yellow`
-        &yellow {
-          // [ skin ]
-          border-top-color: #faad06;
-        }
-
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--blue`
-        &blue {
-          // [ skin ]
-          border-top-color: #399dff;
-        }
-
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--purple`
-        &purple {
-          // [ skin ]
-          border-top-color: #9053ff;
-        }
-
-        // modifier
-        // `> .entries > .entries__entry.entries__entry--gray`
-        &gray {
-          // [ skin ]
-          border-top-color: #999999;
         }
       }
     }

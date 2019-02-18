@@ -90,7 +90,7 @@
         border-radius: .188rem;
         padding: .5rem .4rem;
         background-color: #ffffff;
-        box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .312rem 0 rgba( 0, 0, 0, .2 );
+        box-shadow: 0 .0625rem .75rem 0 #dbdbdb, 0 .25rem .312rem 0 #cccccc;
 
         // [ interaction ]
         &:hover {
