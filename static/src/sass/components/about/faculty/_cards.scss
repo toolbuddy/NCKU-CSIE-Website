@@ -2,24 +2,50 @@
 
 // template
 // `> .#{ $block } > .cards > .card > .intro > .intro__?`
-@mixin intro__icon () {
-  // [ before ]
-  &::before {
+@mixin intro__element ( $element ) {
+  > .intro__#{ $element } {
+    // [ variable ]
+    $before-gap: 36 / 32 * 1rem;
+    $icon-size: 24 / 32 * 1rem;
+
+    // [ position ]
+    position: relative;
+
     // [ layout ]
-    display: inline-block;
-    margin-right: 16 / 32 * 1rem;
-    vertical-align: middle;
+    display: block;
+    margin: {
+      bottom: 16 / 32 * 1rem;
+      left: $before-gap;
+    }
+    line-height: $icon-size;
 
     // [ skin ]
-    content: '';
-    min-width: 24 / 32 * 1rem;
-    height: 24 / 32 * 1rem;
-    background: {
-      position: center;
-      size: contain;
-      repeat: no-repeat;
+    font: {
+      size: 16 / 32 * 1rem;
+      style: normal;
     }
-    filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+    // [ before ]
+    &::before {
+      // [ position ]
+      position: absolute;
+      top: 0;
+      left: -1 * $before-gap;
+
+      // [ layout ]
+      display: inline-block;
+
+      // [ skin ]
+      content: '';
+      width: $icon-size;
+      height: $icon-size;
+      background: {
+        position: center;
+        size: contain;
+        repeat: no-repeat;
+      }
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+    }
 
     // [ customization ]
     @content;
@@ -39,6 +65,7 @@
     $middle: 350px;
     $large: 545px;
     $card-width: 463 / 32 * 1rem;
+    $transition-time: .5s;
 
     // [ layout ]
     display: block;
@@ -70,15 +97,22 @@
       display: block;
       margin-bottom: .5rem;
 
+      // [ position ]
+      // This style is set because `.card__more` need to be position at the end of `.card`.
+      position: relative;
+
       // [ skin ]
       width: 100%;
       border: {
         top-width: 1.5rem;
-        bottom-width: .5rem;
+        bottom-width: 50 / 32 * 1rem;
         color: #ffffff;
         style: solid;
       }
       background-color: #ffffff;
+
+      // [ animation ]
+      transition: width $transition-time, opacity $transition-time;
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
@@ -87,12 +121,46 @@
 
         // [ skin ]
         width: $card-width;
-        border-bottom-width: 0;
+      }
+
+      // [ interaction ]
+      // `.card__photo` should grow and `.card__more` should change color
+      &:hover {
+        // element
+        // `> .#{ $block } > .cards > .card:hover > .card__photo`
+        > .card__photo {
+          // [ skin ]
+          transform: rotate( 10deg );
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card:hover > .card__more`
+        > .card__more {
+          // [ skin ]
+          color: #213262;
+
+          // [ after ]
+          &::after {
+            // [ skin ]
+            border: {
+              top-color: #213262;
+              right-color: #213262;
+            }
+          }
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .cards > .card.card--fade-out`
+      &.card--fade-out {
+        // [ skin ]
+        opacity: 0;
       }
 
       // modifier
       // `> .#{ $block } > .cards > .card.card--hide`
       &.card--hide {
+        // [ layout ]
         display: none;
       }
 
@@ -113,6 +181,9 @@
         height: 80vw;
         border-radius: 50%;
         background-color: #c4c4c4;
+
+        // [ animation ]
+        transition: transform .2s;
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
@@ -265,134 +336,125 @@
 
         // element
         // `> .#{ $block } > .cards > .card > .intro > .intro__email`
-        // block
-        // `> .#{ $block } > .cards > .card > .intro > .email`
-        > .intro__email.email {
+        @include intro__element ( $element: 'email' ) {
           // [ layout ]
-          display: flex;
-          margin-bottom: 13 / 32 * 1rem;
+          word-break: break-all;
 
-          // [ icon ]
-          @include intro__icon() {
+          // [ skin ]
+          text-decoration: underline;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
             @include icon__envelope();
-          }
-
-          // element
-          // `> .#{ $block } > .cards > .card > .intro > .email > .email__text`
-          // block
-          // `> .#{ $block } > .cards > .card > .intro > .email > .text`
-          > .email__text.text {
-            // [ layout ]
-            display: inline;
-            word-break: keep-all;
-
-            // [ skin ]
-            font-size: .44rem;
-
-            // element
-            // `> .#{ $block } > .cards > .card > .intro > .email > .text > .text__link`
-            > .text__link {
-              // [ layout ]
-              word-break: break-all;
-
-              // [ skin ]
-              text-decoration: underline;
-            }
           }
         }
 
         // element
         // `> .#{ $block } > .cards > .card > .intro > .intro__office-address`
-        > .intro__office-address {
+        @include intro__element ( $element: 'office-address' ) {
           // [ layout ]
-          display: flex;
-          margin-bottom: 13 / 32 * 1rem;
-          word-break: break-word;
+          word-break: normal;
 
-          // [ skin ]
-          font: {
-            size: .44rem;
-            style: normal;
-          }
-
-          // [ icon ]
-          @include intro__icon() {
+          // [ before ]
+          &::before {
+            // [ icon ]
             @include icon__location();
           }
         }
 
         // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__office-phone`
-        > .intro__office-phone {
+        // `> .#{ $block } > .cards > .card > .intro > .intro__office-tel`
+        @include intro__element ( $element: 'office-tel' ) {
           // [ layout ]
-          display: flex;
-          margin-bottom: 13 / 32 * 1rem;
-          word-break: break-word;
+          word-break: break-all;
 
           // [ skin ]
-          font-size: .44rem;
+          text-decoration: underline;
 
-          // [ icon ]
-          @include intro__icon() {
+          // [ before ]
+          &::before {
+            // [ icon ]
             @include icon__phone();
           }
         }
 
         // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__lab`
-        // block
-        // `> .#{ $block } > .cards > .card > .intro > .lab`
-        > .intro__lab.lab {
+        // `> .#{ $block } > .cards > .card > .intro > .intro__lab-name`
+        @include intro__element ( $element: 'lab-name' ) {
           // [ layout ]
-          display: flex;
-          margin-bottom: 13 / 32 * 1rem;
+          margin-bottom: 0;
+          word-break: break-word;
 
-          // [ icon ]
-          @include intro__icon() {
+          // [ skin ]
+          text-decoration: underline;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
             @include icon__laboratory();
-          }
-
-          // element
-          // `> .#{ $block } > .cards > .card > .intro > .lab > .lab__text`
-          // block
-          // `> .#{ $block } > .cards > .card > .intro > .lab > .text`
-          > .lab__text.text {
-            // [ layout ]
-            display: inline;
-            word-break: keep-all;
-
-            // [ skin ]
-            font-size: .44rem;
-
-            // element
-            // `> .#{ $block } > .cards > .card > .intro > .lab > .text > .text__link`
-            > .text__link {
-              // [ layout ]
-              word-break: break-word;
-
-              // [ skin ]
-              text-decoration: underline;
-            }
           }
         }
 
         // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__more`
-        > .intro__more {
+        // `> .#{ $block } > .cards > .card > .intro > .intro__lab-address`
+        @include intro__element ( $element: 'lab-address' ) {
           // [ layout ]
-          text-align: right;
+          margin-bottom: 0;
+          word-break: normal;
 
           // [ skin ]
-          color: #8caae2;
-          font-size: .44rem;
+          color: #757575;
+          font-size: 14 / 32 * 1rem;
+        }
+      }
 
-          // element
-          // `> .#{ $block } > .cards > .card > .intro > .intro__more::after`
-          &::after {
-            // [ skin ]
-            margin-left: .3rem;
-            content: '>';
+      // element
+      // `> .#{ $block } > .cards > .card > .card__more`
+      > .card__more {
+        // [ variable ]
+        $color: #8caae2;
+        $font-size: 16 / 32 * 1rem;
+
+        // [ position ]
+        position: absolute;
+        top: 102%;
+        right: 5%;
+
+        // [ layout ]
+        display: block;
+        text-align: right;
+
+        // [ skin ]
+        color: $color;
+        font-size: $font-size;
+
+        // [ animation ]
+        transition: color $transition-time;
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__more::after`
+        &::after {
+          // [ layout ]
+          display: inline-block;
+          margin-left: .3rem;
+          transform: rotate( 45deg );
+
+          // [ skin ]
+          width: $font-size / 1.414;
+          height: $font-size / 1.414;
+          border: {
+            style: solid;
+            width: $font-size / 6;
+            top-color: $color;
+            right-color: $color;
+            left-color: transparent;
+            bottom-color: transparent;
           }
+          content: '';
+
+          // [ animation ]
+          transition: border-color $transition-time;
         }
       }
     }

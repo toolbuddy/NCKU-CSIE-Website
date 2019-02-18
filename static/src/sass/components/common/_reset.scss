@@ -1,7 +1,7 @@
 @charset 'utf-8';
 @import 'components/common/font';
 
-* {
+*, *::before, *::after {
   // Box model.
   margin: 0;
   outline: 0;

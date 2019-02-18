@@ -9,5 +9,6 @@ window.addEventListener( 'load', () => {
         facultyDOM: document.getElementById( 'faculty' ),
         languageId: WebLanguageUtils.currentLanguageId,
     } );
+
     getFaculty.exec();
 } );
