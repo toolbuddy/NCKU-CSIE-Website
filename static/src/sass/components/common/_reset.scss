@@ -29,7 +29,8 @@ html, body {
 
   // Default font.
   font: {
-    family: var( --font__family--default );
     size: 32px;
+    family: 'Noto Sans TC', 'Arial', 'Microsoft JhengHei';
+    weight: normal;
   }
 }
