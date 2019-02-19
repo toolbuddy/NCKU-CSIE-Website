@@ -2,7 +2,7 @@ mixin breadcrumb( belongBlock, breadcrumbList = [] )
   nav.breadcrumb( class = `${ belongBlock }__breadcrumb` )
     each value, index in breadcrumbList
       if ( index !== breadcrumbList.length - 1 )
-        a.breadcrumb__link( href = UTILS.url( { href: value.url } ) )= value.text
+        a.breadcrumb__link( href = UTILS.url( { href: value.route } ) )= value.text
         +image( {
           alt:       '>',
           className: 'breadcrumb__arrow',

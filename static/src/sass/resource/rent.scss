@@ -20,4 +20,10 @@
     // `.body > .content > .not-available`
     @include not-available( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

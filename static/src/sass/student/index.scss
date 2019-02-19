@@ -34,4 +34,10 @@
     // `.body > .content > .entries`
     @include entries( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }
