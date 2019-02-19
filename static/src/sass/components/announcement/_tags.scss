@@ -36,14 +36,15 @@
       }
 
       // [ skin ]
-      width: 2.6rem;
-      height: 1rem;
+      width: 78 / 32 * 1rem;
+      height: 30 / 32 * 1rem;
       margin: {
-        right: .2rem;
-        bottom: .6rem;
+        right: 16 / 32 * 1rem;
+        bottom: 10 / 32 * 1rem;
       }
-      border-radius: 1rem;
-      padding: .1rem .2rem;
+      border-radius: 15 / 32 * 1rem;
+      padding: 9 / 32 * 1rem 14 / 32 * 1rem;
+      font-size: 12 / 32 * 1rem;
 
       // [ interaction ]
       &:hover {
