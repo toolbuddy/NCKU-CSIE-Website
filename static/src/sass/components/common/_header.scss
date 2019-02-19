@@ -18,11 +18,16 @@ body > .header {
   width: 100%;
   height: auto;
   background: rgba( 255, 255, 255, .95 );
+
+  // [ RWD: $small ]
   @media screen and ( min-width: $small ) {
+    // [ layout ]
     grid-template: {
       areas: 'header__logo header__menu';
       columns: 4fr 1fr;
     }
+
+    // [ skin ]
     height: 3.2rem;
   }
 
@@ -93,7 +98,10 @@ body > .header {
         left: auto;
         right: auto;
       }
+
+      // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
+        // [ layout ]
         display: inline-block;
       }
     }
@@ -108,7 +116,10 @@ body > .header {
       justify-self: start;
       margin-left: .4rem;
       display: block;
+
+      // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
+        // [ layout ]
         display: inline-block;
       }
 
@@ -122,19 +133,22 @@ body > .header {
         // `body > .header > .logo > .caption > .caption__text > .caption__text--large`
         &.caption__text--large {
           // [ layout ]
-          // grid-area: caption__text--large;
+          display: block;
+          text-align: center;
 
           // [ skin ]
           font-size: .5rem;
           line-height: .6rem;
-          display: block;
-          text-align: center;
+
+          // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
+            // [ skin ]
             text-align: left;
           }
 
           // `body > .header > .logo > .caption > .caption__text > .caption__text--large >. caption__text--large-part`
           > .text__item {
+            // [ layout ]
             display: inline-block;
           }
         }
@@ -148,7 +162,10 @@ body > .header {
           // [ skin ]
           font-size: .4rem;
           text-align: center;
+
+          // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
+            // [ layout ]
             text-align: left;
             display: block;
           }
@@ -631,14 +648,14 @@ body > .header {
         area: navigation__search;
         template: {
           areas: '. search__input . search__submit .';
-          columns:  1fr 3rem 1fr .4rem 1fr;
+          columns:  1fr 2.8rem 1fr .4rem .4rem;
           rows: 1.31rem;
         }
       }
       display: grid;
       margin: {
         top: .37rem;
-        left: .56rem;
+        left: .2rem;
         bottom: .37rem;
       }
 
@@ -648,6 +665,7 @@ body > .header {
       // [ RWD: $small ]
       @media screen and ( min-width: $tiny ) {
         // [ layout ]
+        margin-left: .56rem;
         grid-template-columns: .37rem auto .37rem .4rem .37rem;
       }
 
