@@ -402,51 +402,98 @@ append content
     //- Develop of department.
     each info in i18n[ language ].develop.content
       p.intro__text.intro__text--small= info
-    //- Aspect of teaching.
-    //- section.
+  //- Aspect of teaching.
+  section.develop1
     p.intro__text.intro__text--mediumblue= i18n[ language ].develop.teach.title
     each info, index in i18n[ language ].develop.teach.content
-      if index == 1 || index == 3 || index == 4 || index == 5
+      if index === 1 || index === 3 || index === 4 || index === 5
         p.intro__text.intro__text--circle
-      if index == 2
+      if index === 2
         p.intro__text.intro__text--circlenext= info
       else
         p.intro__text.intro__text--small= info
-    //- Aspect of researching.
+  //- Picture of teaching.
+  section.image1
+    +image({
+      alt: 'Picture of teaching',
+      className: 'picture',
+      src: 'intro/teaching.jpg',
+    })
+  //- Aspect of researching.
+  section.develop2
     p.intro__text.intro__text--mediumblue= i18n[ language ].develop.research.title
     each info, index in i18n[ language ].develop.research.content
-      if index == 1 || index == 2 || index == 3 || index == 4
+      if index === 1 || index === 2 || index === 3 || index === 4
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
-    //- Aspect of internation.
+  //- Picture of researching.
+  section.image2
+    +image({
+      alt: 'Picture of researching',
+      className: 'picture',
+      src: 'intro/researching.jpg',
+    })
+  //- Aspect of internation.
+  section.develop3
     p.intro__text.intro__text--mediumblue= i18n[ language ].develop.internation.title
     each info, index in i18n[ language ].develop.internation.content
-      if index == 1 || index == 3 || index == 5 || index == 7 || index == 8
+      if index === 1 || index === 3 || index === 5 || index === 7 || index === 8
         p.intro__text.intro__text--circle
-      if index == 2 || index == 4 || index == 6
+      if index === 2 || index === 4 || index === 6
         p.intro__text.intro__text--circlenext= info
       else
         p.intro__text.intro__text--small= info
+  //- Picture of internation.
+  section.image3
+    +image({
+      alt: 'Picture of internation',
+      className: 'picture',
+      src: 'intro/internation.jpg',
+    })
 
   section.target
     //- Header.
     section.intro__text.intro__text--underline
       h2.intro__text.intro__text--large= i18n[ language ].subtitle[3]
-    //- Target of teaching by step 1.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].target.step1.title
+  //- Target of teaching by step 1.
+  section.target1
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].target.step1.title
     each info in i18n[ language ].target.step1.content
       p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
-    //- Target of teaching by step 2.
+  //- Picture of target1.
+  section.image4
+    +image({
+      alt: 'Picture of target1',
+      className: 'picture',
+      src: 'intro/target1.jpg',
+    })
+  //- Target of teaching by step 2.
+  section.target2
     p.intro__text.intro__text--mediumblue= i18n[ language ].target.step2.title
     each info in i18n[ language ].target.step2.content
       p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
-    //- Target of teaching by step 3.
+  //- Picture of target2.
+  section.image5
+    +image({
+      alt: 'Picture of target2',
+      className: 'picture',
+      src: 'intro/target2.jpg',
+    })
+  //- Target of teaching by step 3.
+  section.target3
     p.intro__text.intro__text--mediumblue= i18n[ language ].target.step3.title
     each info in i18n[ language ].target.step3.content
       p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
+  //- Picture of target3.
+  section.image6
+    +image({
+      alt: 'Picture of target3',
+      className: 'picture',
+      src: 'intro/target3.jpg',
+    })
 
   section.certi
     //- Header.
@@ -457,26 +504,26 @@ append content
     p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].certi.subtitle1.target1.title
     //- Target of teaching.
     each info, index in i18n[ language ].certi.subtitle1.target1.content
-      if index != 0
+      if index !== 0
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
     p.intro__text.intro__text--interval
     //- Target of ability.
     each info, index in i18n[ language ].certi.subtitle1.ability1.content
-      if index != 0
+      if index !== 0
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
     //- Target of graduate institute.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle1.target2.title
     //- Target of teaching.
     each info, index in i18n[ language ].certi.subtitle1.target2.content
-      if index != 0
+      if index !== 0
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
     p.intro__text.intro__text--interval
     //- Target of ability.
     each info, index in i18n[ language ].certi.subtitle1.ability2.content
-      if index != 0
+      if index !== 0
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
     p.intro__text.intro__text--interval
@@ -485,30 +532,30 @@ append content
     h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle2.title
     p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].certi.subtitle2.composition.title
     each info, index in i18n[ language ].certi.subtitle2.composition.content
-      if index == 0 || index == 1 || index == 14
+      if index === 0 || index === 1 || index === 14
         p.intro__text.intro__text--small= info
-      else if index == 3 || index == 4 || index == 6 || index == 7 || index == 8 || index == 10 || index == 11 || index == 12 || index == 13
+      else if index === 3 || index === 4 || index === 6 || index === 7 || index === 8 || index === 10 || index === 11 || index === 12 || index === 13
         p.intro__text.intro__text--circlenext= info
       else
         p.intro__text.intro__text--circle
         p.intro__text.intro__text--small= info
-      if index == 4 || index == 8
+      if index === 4 || index === 8
         p.intro__text.intro__text--interval
     //- Improvement of flow.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.flow.title
     each info, index in i18n[ language ].certi.subtitle2.flow.content
       p.intro__text.intro__text--small= info
-      if index == 2 || index == 6
+      if index === 2 || index === 6
         p.intro__text.intro__text--interval
     //- Improvement of flowchart.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.flowchart.title
     //- Course feature.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.feature.title
     each info, index in i18n[ language ].certi.subtitle2.feature.content
-      if index == 6 || index == 8 || index == 12
+      if index === 6 || index === 8 || index === 12
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--small= info
-      if index == 5 || index == 7 || index == 11
+      if index === 5 || index === 7 || index === 11
         p.intro__text.intro__text--interval
     p.intro__text.intro__text--interval
     //- Course map.
@@ -518,10 +565,10 @@ append content
     h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle4.title
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle4.activity.title
     each info, index in i18n[ language ].certi.subtitle4.activity.content
-      if index == 0 || index == 4 || index == 8
+      if index === 0 || index === 4 || index === 8
         p.intro__text.intro__text--circle
       p.intro__text.intro__text--circlenext= info
-      if index == 3 || index == 7
+      if index === 3 || index === 7
         p.intro__text.intro__text--interval
     p.intro__text.intro__text--interval
     //- Effectiveness of track.
@@ -529,13 +576,13 @@ append content
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.method.title
     each info, index in i18n[ language ].certi.subtitle5.method.content
       p.intro__text.intro__text--small= info
-      if index == 5 || index == 7
+      if index === 5 || index === 7
         p.intro__text.intro__text--interval
     //- Method of assessment.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.statistic.title
     each info, index in i18n[ language ].certi.subtitle5.statistic.content
       p.intro__text.intro__text--small= info
-      if index == 1 || index == 3 || index == 6
+      if index === 1 || index === 3 || index === 6
         p.intro__text.intro__text--interval
     //- Check of result.
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.improve.title
@@ -547,7 +594,6 @@ append content
     h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle6.title
     p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle6.content
 append footer
-
 
 append scripts
   +js( 'about/intro' )

@@ -25,28 +25,24 @@ body > {
     grid: {
       template: {
         areas:
-          '.   .        .'
-          '.   intro    .'
-          '.   history  .'
-          '.   develop  .'
-          '.   target   .'
-          '.   certi    .'
-          '.   .        .';
-        columns: 3fr 10fr 3fr;
-        rows: auto;
-      }
+          '.   .        .         .'
+          '.   intro    intro     .'
+          '.   history  history   .'
+          '.   develop  develop   .'
+          '.   develop1 image1    .'
+          '.   image2   develop2  .'
+          '.   develop3 image3    .'
+          '.   target   target    .'
+          '.   target1  image4    .'
+          '.   target2  image5    .'
+          '.   target3  image6    .'
+          '.   certi    certi     .'
+          '.   .        .         .';
+        columns: 2fr 4fr 4fr 2fr;
+        rows: .5rem repeat( 11, minmax( min-content, min-content ) ) .5rem
 
-      // areas:
-      // '.   .       .       .'
-      // '.   intro   intro   .'
-      // '.   history history .'
-      // '.   develop develop .'
-      // '.   develop image   .'
-      // '.   develop image   .'
-      // '.   develop image   .'
-      // '.   target  target  .'
-      // '.   certi   certi   .'
-      // '.   .     .         .';
+        // rows: repeat( 4, auto ) repeat( 3, minmax( auto, min-content ) ) auto repeat( 3, minmax( auto, min-content ) ) auto auto;
+      }
       column-gap: 0;
       row-gap: 0;
     };
@@ -70,6 +66,21 @@ body > {
     > .develop {
       // [ position ]
       grid-area: develop;
+
+      &1 {
+        // [ position ]
+        grid-area: develop1;
+      }
+
+      &2 {
+        // [ position ]
+        grid-area: develop2;
+      }
+
+      &3 {
+        // [ position ]
+        grid-area: develop3;
+      }
     }
 
     // block
@@ -77,6 +88,21 @@ body > {
     > .target {
       // [ position ]
       grid-area: target;
+
+      &1 {
+        // [ position ]
+        grid-area: target1;
+      }
+
+      &2 {
+        // [ position ]
+        grid-area: target2;
+      }
+
+      &3 {
+        // [ position ]
+        grid-area: target3;
+      }
     }
 
     // block
@@ -84,6 +110,60 @@ body > {
     > .certi {
       // [ position ]
       grid-area: certi;
+    }
+
+    // block
+    // `body > .content > .image
+    .image {
+      // element
+      // `body > .content > .image1
+      &1 {
+        // [ position ]
+        grid-area: image1;
+      }
+
+      // element
+      // `body > .content > .image2
+      &2 {
+        // [ position ]
+        grid-area: image2;
+      }
+
+      // element
+      // `body > .content > .image3
+      &3 {
+        // [ position ]
+        grid-area: image3;
+      }
+
+      // element
+      // `body > .content > .image4
+      &4 {
+        // [ position ]
+        grid-area: image4;
+      }
+
+      // element
+      // `body > .content > .image5
+      &5 {
+        // [ position ]
+        grid-area: image5;
+      }
+
+      // element
+      // `body > .content > .image6
+      &6 {
+        // [ position ]
+        grid-area: image6;
+      }
+    }
+
+    // block
+    // `body > .content > .picture
+    .picture {
+      // [ skin ]
+      width: 100%;
+      height: 100%;
     }
   }
 }
