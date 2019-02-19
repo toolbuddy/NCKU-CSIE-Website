@@ -1,26 +1,36 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/topic';
-@import 'components/common/footer';
-@import 'components/announcement/briefing';
-@import 'components/announcement/filter';
-@import 'components/announcement/title';
-@import 'components/announcement/pages';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
+@import 'components/announcement/filter';
+@import 'components/announcement/announcement-briefing';
+@import 'components/announcement/pages';
 
-body {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .banner`
+  @include banner( $block: 'body' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 850px;
     $large: 992px;
@@ -33,24 +43,27 @@ body {
         columns: 1fr;
         areas:
           'filter'
-          'topic';
+          'topic'
+          'announcement--pinned'
+          'announcement--normal'
+          'pages';
       }
     }
+    margin: 0 auto;
 
-    // [skin]
+    // [ skin ]
     padding: 2.2rem .5rem;
     max-width: 26rem;
-    margin: {
-      right: auto;
-      left: auto;
-    }
 
     // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       grid-template-areas:
         'topic'
-        'filter';
+        'filter'
+        'announcement--pinned'
+        'announcement--normal'
+        'pages';
     }
 
     // [ RWD: $large ]
@@ -59,46 +72,143 @@ body {
       padding: 2.2rem 0;
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
       // [ position ]
       grid-area: topic;
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
     }
 
+    // element
+    // `.body > .content > .content__filter`
     // block
-    // `body > .content > .filter.filter--all`
-    @include filter--award() {
+    // `.body > .content > .filter`
+    @include filter( $block: 'content' ) {
       // [ position ]
       grid-area: filter;
-      grid-column: {
-        start: 1;
-        end: 11;
+
+      // element
+      // `.body > .content > .filter > .filter__tags`
+      // block
+      // `.body > .content > .filter > .tags`
+      > .filter__tags.tags {
+        // [ variable ]
+        $x-small: 200px;
+        $small: 320px;
+        $large: 420px;
+        $x-large: 550px;
+
+        // [ layout ]
+        display: grid;
+        grid-template-areas:
+          'award'
+          'faculty'
+          'college'
+          'master'
+          'phd';
+
+        // [ RWD: $x-small ]
+        @media screen and ( min-width: $x-small ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   college'
+            'faculty master'
+            '.       phd';
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   faculty .'
+            'college master  phd';
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid-template-areas:
+            'award   college master phd'
+            'faculty .       .      .';
+        }
+
+        // [ RWD: $x-large ]
+        @media screen and ( min-width: $x-large ) {
+          // [ layout ]
+          grid-template-areas: 'award faculty college master phd';
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
+        > .tags__tag[ data-tag-name = 'award' ] {
+          // [ position ]
+          grid-area: award;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
+        > .tags__tag[ data-tag-name = 'college' ] {
+          // [ position ]
+          grid-area: college;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'faculty' ]`
+        > .tags__tag[ data-tag-name = 'faculty' ] {
+          // [ position ]
+          grid-area: faculty;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'master' ]`
+        > .tags__tag[ data-tag-name = 'master' ] {
+          // [ position ]
+          grid-area: master;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'phd' ]`
+        > .tags__tag[ data-tag-name = 'phd' ] {
+          // [ position ]
+          grid-area: phd;
+        }
       }
     }
 
+    // element
+    // `.body > .content > .content__announcement`
     // block
-    // `body > .content > .announcement`
-    @include announcement() {
-      // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
+    // `.body > .content > .announcement`
+    @include announcement( $block: 'content' ) {
+      // template
+      // `.body > .content > .announcement.announcement--?`
+      &.announcement-- {
+        // modifier
+        // `.body > .content > .announcement.announcement--pinned`
+        &pinned {
+          // [ position ]
+          grid-area: announcement--pinned;
+        }
+
+        // modifier
+        // `.body > .content > .announcement.announcement--normal`
+        &normal {
+          // [ position ]
+          grid-area: announcement--normal;
+        }
       }
     }
 
+    // element
+    // `.body > .content > .content__pages`
     // block
-    // `body > .content > .pages`
-    @include pages () {
+    // `.body > .content > .pages`
+    @include pages ( $block: 'content' ) {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: pages;
+      justify-self: center;
     }
   }
 }

@@ -1,16 +1,9 @@
-extends /layouts/about.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n= Object.freeze( {
-      'en-US': {
-        'title':    'Introduction',
-        'breadcrumb': {
-          'home':   'Home',
-          'about':  'About',
-        },
-      },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    '系所介紹',
         'breadcrumb': {
           'home':   '首頁',
@@ -67,23 +60,24 @@ append data
           ],
         },
         'develop' : {
-          'content': [
+          'content1': [
             '第一波的資訊科技在二十世紀末達到最高點，並在網際網路泡沫幻滅後的二十一世紀初，揭開第二波資訊科技的序幕。',
             '第二波的資訊科技重點在哪？ 搜尋技術和引擎 ？ 無所不在的計算和通訊 ？ 嵌入式系統 ？ 生物及醫學資訊 ？ 無人可知',
             '無人可曉。為因應此第二波資訊科技的發展， 本系/所將致力於培育新一代資訊科技人才、積極研究和開發電腦軟/硬體',
             '及資訊應用相關技術，結合國內產官學研之各項資源，並與國際接軌，提升國內之產業技術， 並在政府「五年五百億',
             '邁向頂尖大學」計畫的資助下，邁向國際一流資訊工程系所。',
-            '本系所中長程發展計畫分三方面說明:',
           ],
+          'content2': '本系所中長程發展計畫分三方面說明:',
           'teach': {
             'title': '一、教學方面',
-            'content': [
-              '主要發展重點在於',
-              '提升授課品質，符合並取得 IEET 和華盛頓公約的',
-              '大學工程教育認證。',
+            'content1': '主要發展重點在於',
+            'content2': [
+              '提升授課品質，符合並取得 IEET 和華盛頓公約的大學工程教育認證。',
               '加強師資陣容，提高學生專業領域的深度和廣度。',
               '充實教學研究設備，滿足師生教學研究所需。',
               '修建系館教學和研究空間，提供優良學習環境。',
+            ],
+            'content3': [
               '為提升南台灣地區資訊人才質與量的競爭力，本系將責',
               '無旁貸的擔負起此火車頭的責任。 因此預計在五年內',
               '大學部由二班增至三班，學生總數將達一千人； 而師',
@@ -92,16 +86,18 @@ append data
               '學部教學教室、實驗室、研究生實驗室及新聘教師的辦',
               '公室等空間使用。 由此建立中/南台灣最佳及最具規模',
               '之資訊工程教育環境。',
-            ]
+            ],
           },
           'research': {
             'title': '二、研究方面',
-            'content': [
-              '主要發展重點在於',
+            'content1': '主要發展重點在於',
+            'content2': [
               '加強學術研究能力、提昇研究水準。',
               '積極爭取產官學合作研究計畫，提昇師生研究能力及系譽。',
               '配合南科，提供資訊技術支援及培育產業高級技術人才。',
               '加強學術研究能力、提昇研究水準。',
+            ],
+            'content3': [
               '本系所的研究發展廣佈於資訊工程的主要研究， 包含積體電路',
               '電腦輔助設計、資訊安全、計算機系統、人工智慧、電腦網路、',
               '多媒體系統、軟體工程+物件導向 系統、分散式系統+作業系統',
@@ -111,14 +107,11 @@ append data
           },
           'internation': {
             'title': '三、國際化方面',
-            'content': [
-              '主要發展重點在於',
-              '積極參與及主辦國際學術會議，加強國際交流，提',
-              '昇國際地位。',
-              '爭取美、歐、日國際學術合作計畫及與 國際一流電',
-              '子資訊公司之國際產學合作計畫。',
-              '聘請國外學者專家到本系/所進行短期講學，獲取最',
-              '先進的資訊科技新知和潮流。',
+            'content1': '主要發展重點在於',
+            'content2': [
+              '積極參與及主辦國際學術會議，加強國際交流，提昇國際地位。',
+              '爭取美、歐、日國際學術合作計畫及與 國際一流電子資訊公司之國際產學合作計畫。',
+              '聘請國外學者專家到本系/所進行短期講學，獲取最先進的資訊科技新知和潮流。',
               '實施英語授課，增加學生國際競爭力。',
               '招收外籍學生至本系就讀，提昇本系國際知名度。',
             ],
@@ -155,8 +148,8 @@ append data
             'title': '教育目標與核心能力',
             'target1': {
               'title': '資訊工程學系之教育目標',
-              'content': [
-                '系所教育目標',
+              'content1': '系所教育目標',
+              'content2': [
                 '教育學生基礎專業知識及終身學習之能力',
                 '教育學生運用專業知識解決資訊應用問題之能力',
                 '教育學生優質團隊合作之能力',
@@ -164,16 +157,16 @@ append data
             },
             'target2': {
               'title': '資訊工程所之教育目標',
-              'content': [
-                '系所教育目標',
+              'content1': '系所教育目標',
+              'content2': [
                 '教育學生具備資訊專業知識及終身學習之能力',
                 '教育學生具備獨立研究、設計及創新之能力',
                 '教育學生優質團隊合作及國際觀之能力',
               ],
             },
             'ability1': {
-              'content': [
-                '學生核心能力',
+              'content1': '學生核心能力',
+              'content2': [
                 '畢業生應具備基礎專業數學及資訊理論知識之基本能力',
                 '畢業生應具備資訊理論推導及實驗設計、數據分析歸納之能力',
                 '畢業生應具備培養學習興趣及持續學習之能力',
@@ -186,8 +179,8 @@ append data
               ],
             },
             'ability2': {
-              'content': [
-                '學生核心能力',
+              'content1': '學生核心能力',
+              'content2': [
                 '畢業生應具備資訊專業理論知識',
                 '畢業生應具備資訊專業理論推導、分析、歸納之能力',
                 '畢業生應具備專業簡報及論文撰寫之能力',
@@ -204,22 +197,30 @@ append data
             'title': '課程設計',
             'composition': {
               'title': '資訊系課程之組成',
-              'content': [
+              'content1': [
                 '本學系之成立乃為培養資訊工業人才，因此課程設計之原則，除了配合目前工商業界人力需求外，更考慮中長期資訊',
                 '工業發展之趨勢，本學系課程規劃原則如下：',
-                '理論與實務課程相配合',
+              ],
+              'content2': '理論與實務課程相配合',
+              'content3': [
                 '大學教育為通才教育，故於低年級課程特別加強各項基礎理論之紮根工作，以培養學生之基本學能；高年級逐次',
                 '加強資訊技術與實用課程，俾能滿足資訊工業發展之需要。',
-                '資訊技術與資訊應用課程並重',
+              ],
+              'content4': '資訊技術與資訊應用課程並重',
+              'content5': [
                 '本系課程教育即在於培育學生開發之能力。因此，一、二年級以重視資訊技術與應用課程之均衡性為主。而三、四',
                 '年級則再依學生性向及本系發展方向，分成十二項主題，分別設計資訊技術與應用兩系列之核心及專題課程，此外',
                 '並配合研究所開設之特色課程，俾利學生能循專精方向發展。',
-                '著重實作實習課程',
+              ],
+              'content6': '著重實作實習課程',
+              'content7': [
                 '本系中各項資訊課程均設計適當之實作教材，並提供各類型軟、硬體設備，使學生充份有效地從實作中學習，並可',
                 '將理論與實用作一印證。三年級（三下）的學生並可選修專題製作，以培養學生獨立研究並完成一作品之經驗，俾',
                 '利於畢業後迅速投入工商業界或繼續深造。本學系教學與課程委員會依據目前資訊科技發展之重要項目，將課程作',
                 '有系統之整合，而提出以下面十二項資訊技術為目標之建議課程。',
-                '十二項資訊技術',
+              ],
+              'content8': '十二項資訊技術',
+              'content9': [
                 '積體電路電腦輔助設計',
                 '資訊安全',
                 '計算機系統',
@@ -236,14 +237,18 @@ append data
             },
             'flow': {
               'title': '課程發展與改進之流程',
-              'content': [
+              'content1': [
                 '資訊系的課程發展機制是先訂立本系課程規劃委員會設置辦法，組成「課程規劃委員會」，由課程委員討論並擬定資',
                 '訊系課程，擬定每門課所應培養之學生核心能力以提供給授課教師作為其教學目標，並定期執行在課程安排上的修正',
                 '作業。',
+              ],
+              'content2': [
                 '為了要持續檢討教學方式及改進課程內容，在學期的每一個階段都會進行教學活動的評量（於第3章介紹）以及對學生',
                 '的學習成效進行追蹤 (於第4章介紹)。在每一學期結束時，便由系辦收集並整理本學期的課程資料，並將召開諮詢委員',
                 '會議。諮詢委員根據各項數據所呈現的結果，對課程的內容及安排提出建議，同時審視每門課程的實行是否確實達成',
                 '規定的教育目標及學生核心能力，判斷是否有需要調整的地方。',
+              ],
+              'content3': [
                 '在課程規劃委員會會議中，便可參考諮詢委員提出的建議，修正下一學期(年)課程安排的順序、授課的內容和方式、以',
                 '及與教育目標之間的關連性。經由系務會議討論通過後，一方面將決議結果交予各教師，作為往後教學改進上的參',
                 '考；另一方面則交由系辦的課務負責人，排定下學期的開課課表。',
@@ -254,19 +259,25 @@ append data
             },
             'feature': {
               'title': '課程介紹與課程特色',
-              'content': [
+              'content1': [
                 '表2-2-2課程開課狀況統計表為資訊系開課狀況統計表，為契合本系教育目標1，低年級課程設計的理念主要是建立學',
                 '生的基礎知識，以資訊入門課程（例如程式設計與計算機概論）給予學生初步概念，引導學生逐步進入資訊領域。同',
                 '時學校方面也安排了許多通識教育(如國文、歷史、以及各領域的通識課程)和數學及基礎科學課程(如微積分、線性代',
                 '數及普通物理學)供低年級的學生修習，讓其在接受專業訓練之餘，也能多方涉獵各領域的新知以增廣見聞。學生有了',
                 '基礎知識之後，在二年級之後的課程，強調的是資訊技術的專研與應用，一方面提供進階的數學課程；另一方面提供',
                 '多樣性的資訊工程專業課程：',
+              ],
+              'content2': [
                 '由於資訊領域和數學可說是息息相關，為培養學生的專業數學能力，相關的數學類科目均列為必修課程(例如離散',
                 '數學、工程數學及機率與統計等)。',
+              ],
+              'content3': [
                 '在工程專業課程部分，可分為軟體和硬體兩部份。資訊系學生程式設計的技巧與開發軟體的能力一向為外界所器',
                 '重，為建立學生對於軟體技術的了解與實作能力，系上開授許多軟體相關課程 (如程式語言、演算法、資料結構及',
                 '計算理論等)。同時我們也期許資訊系學生具備硬體相關知識和實際操作的訓練，故提供硬體相關課程 (如數位系',
                 '統導論與實驗、計算機組織及微算機原理與應用等)。',
+              ],
+              'content4': [
                 '除了必修的軟硬體課程，因應學生對於不同資訊領域的興趣不一，在選修課程部分，授課教師會根據其專精的研',
                 '究領域當作授課內容，讓學生吸收各方面的知識 (如三維繪圖與遊戲設計、人工智慧、視窗程式設計及無線通訊網',
                 '路等)。當學生擁有數學及基礎科學能力且建立專業的資訊工程背景之後，我們希望學生能應用其所學的知識來解',
@@ -290,16 +301,20 @@ append data
             'title': '教學活動評量',
             'activity': {
               'title': '教學活動及評量機制',
-              'content': [
-                '培養方式',
+              'content1': '培養方式',
+              'content2': [
                 '本系經由多次委員會對學生核心能力之培養方式進行討論修正，有直接教學法、討論教學法、協同教學法、合作',
                 '學習法、發表教學法、欣賞教學法等共六種方式，往後期望能以這六種方式繼續培養學生在畢業時須具備之學生',
                 '核心能力養成方法說明及其與欲養成之核心能力關聯性。',
-                '評量方法',
+              ],
+              'content3': '評量方法',
+              'content4': [
                 '經由多次會議對學生核心能力之評量方式進行討論修正，有紙筆測驗、課堂問答、個別晤談、指定作業、實作表',
                 '現、專題研究、書面報告、口頭報告、學生自評、同儕互評、行為觀察、檔案評量、上課表現、課堂出席、其他',
                 '等共八種方式，往後期望以這十五種方式之評量結果，評量培養之成效。',
-                '評量結果',
+              ],
+              'content5': '評量結果',
+              'content6': [
                 '本系目前將陸續蒐集每門課程之各項教學及學習成果紀錄，如講義、考卷、作業、報告…等等，可充分顯現本系',
                 '學生之學習成果。在持續改善方面，本系除蒐集教學及學習成果紀錄，並輔以教師自評表、學生期中問卷調查',
                 '表、學生期末問卷調查表、應屆畢業生學習滿意度問卷調查表、系友學習滿意度問卷調查表、業界對本系畢業生',
@@ -311,29 +326,417 @@ append data
             'title': '學習成效追蹤',
             'method': {
               'title': '教師評量方法',
-              'content': [
+              'content1': [
                 '本校為提昇本校教學、研究與服務品質，維持本校教育水準，因此在教學評量的教師方面本校專任教師評量要點任教',
                 '授或副教授滿五年者，接受第一次評量；任助理教授或講師滿三年者，接受第一次評量。而本系的教師評量方面則是',
                 '在每學期結束前將會發送ㄧ份「教師自評表」，調查對象為本系之專任教師實施調查時間為每學期一次且每項課程之',
                 '授課老師皆須接受自我評量調查，實施方式本系為了確保問卷回收率則是採用紙筆填寫之方式，而此問卷內容則是朝',
                 '老師的無奈來思考，站在老師的角度，老師會想從這份問卷中表達哪些想法，盼授課教師能藉此機會瞭解自己的教學',
                 '狀況及與學生互動關係之情形。',
+              ],
+              'content2': [
                 '因此這份問卷的實施結果是希望讓本系教師針對所教授課程能自我參考且能持續有效的進行檢討與改善教學、輔導及',
                 '評量，提高教學成效。',
+              ],
+              'content3': [
                 '此外，本系工程認證推動委員會及課程委員會於定期的會議中，將對各門課程之教學級規劃所遭遇之問題提出修正及',
                 '檢討，並將彙整結果提供給諮詢委員會，作為在修訂系教育目標時之參考。',
               ],
             },
             'statistic': {
               'title': '學生學習成果統計與檢討',
-              'content': [
+              'content1': [
                 '本系利用教學問卷調查之方式收集學生對於學習的成果，藉由此方式可讓本系教師更瞭解學生的學習成果為何，也讓',
                 '教師暸解何種課程是現在學生最想學、學生最需要具備的相關知識。',
+              ],
+              'content2': [
                 '例如透過A類問卷實際調查的結果，我們可以知道學生對於老師的教學表現、課程安排、教學是否有效、這門課是否值',
                 '得學習及學生的建議都將清楚的知道，本系也可藉由此資料的收集而持續改進缺點。',
+              ],
+              'content3': [
                 '而本系除了有大一學生至大三學生A類問卷學生期中問卷調查表調查成果之外，還包含了B類學生期末問卷調查表之調',
                 '查成果、C類應屆畢業生學習滿意度問卷調查表之調查成果及D類系友學習滿意度問卷調查表之統計結果，從各類問卷',
                 '中可發現學生的要求及所需要的教學資訊為何。',
+              ],
+              'content4': [
+                '本系工程認證推動委員會及課程委員也會於定期的會議中，將針對各門課程之學生學習成果統計表做教學檢討且將所',
+                '遭遇之問題提出修正及檢討規劃，本系在瞭解之後，將針對學生的教學及評量方式持續改進，以持續而有效的執行學',
+                '生之指導與評量。'
+              ],
+            },
+            'improve': {
+              'title': '學習成效持續改善機制',
+              'content': [
+                '本系教授教師則需在工程認證推動委員會及課程委員的定期會議中，除了將各門課程之學生學習成果做檢討之外也需',
+                '將所遭遇之問題提出修正及檢討規劃，而且針對教學品質不定期舉辦討論會議，藉以鼓勵相關人士持續參與改善機制',
+                '且必須持續的改善，以改進教學品質，進而達到一流大學之要求。',
+              ],
+            },
+            'improvechart': {
+              'title': '教學改善機制流程圖',
+            },
+          },
+          'subtitle6': {
+            'title': '中華工程教育學會',
+            'content': '中華工程教育學會連結',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '系所介紹',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
+        'subtitle' : [
+          '系所介紹', '本系歷史', '發展方向', '教育目標', '工程認證',
+        ],
+        'intro' : [
+          '本系歷史', '發展方向', '教育目標', '工程認證',
+        ],
+        'history': {
+          'icons': [
+            '歷屆所長/系主任',
+            '系所歷史與沿革',
+          ],
+          'events': [
+            '高宏宇教授',
+            '謝孫源教授',
+            '陳培殷教授',
+            '鄭憲宗教授',
+            '製造資訊與系統研究所整合至本系',
+            '黃崇明教授',
+            '九十五學年度增設醫學資訊研究所',
+            '李　強教授',
+            '朱治平教授',
+            '擴增大學部為兩班',
+            '吳宗憲教授',
+            '孫永年教授',
+            '成立大學部',
+            '王駿發教授',
+            '成立博士班',
+            '孔令洋教授',
+            '成立碩士班',
+          ],
+          'years': [
+            '2017.8 -',
+            '2015.8 - 2017,8',
+            '2012.8 - 2015.7',
+            '2009.8 - 2012.7',
+            '2011.8',
+            '2006.8 - 2009.7',
+            '2006',
+            '2005.8 - 2006.7',
+            '2002.8 - 2005.7',
+            '2002.8',
+            '1999.8 - 2002.7',
+            '1996.8 - 1999.8',
+            '1997.8',
+            '1990.8 - 1996.8',
+            '1992.8',
+            '1987.8 - 1990.7',
+            '1987.8',
+          ],
+        },
+        'develop' : {
+          'content1': [
+            '第一波的資訊科技在二十世紀末達到最高點，並在網際網路泡沫幻滅後的二十一世紀初，揭開第二波資訊科技的序幕。',
+            '第二波的資訊科技重點在哪？ 搜尋技術和引擎 ？ 無所不在的計算和通訊 ？ 嵌入式系統 ？ 生物及醫學資訊 ？ 無人可知',
+            '無人可曉。為因應此第二波資訊科技的發展， 本系/所將致力於培育新一代資訊科技人才、積極研究和開發電腦軟/硬體',
+            '及資訊應用相關技術，結合國內產官學研之各項資源，並與國際接軌，提升國內之產業技術， 並在政府「五年五百億',
+            '邁向頂尖大學」計畫的資助下，邁向國際一流資訊工程系所。',
+          ],
+          'content2': '本系所中長程發展計畫分三方面說明:',
+          'teach': {
+            'title': '一、教學方面',
+            'content1': '主要發展重點在於',
+            'content2': [
+              '提升授課品質，符合並取得 IEET 和華盛頓公約的大學工程教育認證。',
+              '加強師資陣容，提高學生專業領域的深度和廣度。',
+              '充實教學研究設備，滿足師生教學研究所需。',
+              '修建系館教學和研究空間，提供優良學習環境。',
+            ],
+            'content3': [
+              '為提升南台灣地區資訊人才質與量的競爭力，本系將責',
+              '無旁貸的擔負起此火車頭的責任。 因此預計在五年內',
+              '大學部由二班增至三班，學生總數將達一千人； 而師',
+              '資方面，亦將師資員額增聘至40名以上；而在空間方',
+              '面，在五年內將完成新系館的增建， 以供應新增的大',
+              '學部教學教室、實驗室、研究生實驗室及新聘教師的辦',
+              '公室等空間使用。 由此建立中/南台灣最佳及最具規模',
+              '之資訊工程教育環境。',
+            ],
+          },
+          'research': {
+            'title': '二、研究方面',
+            'content1': '主要發展重點在於',
+            'content2': [
+              '加強學術研究能力、提昇研究水準。',
+              '積極爭取產官學合作研究計畫，提昇師生研究能力及系譽。',
+              '配合南科，提供資訊技術支援及培育產業高級技術人才。',
+              '加強學術研究能力、提昇研究水準。',
+            ],
+            'content3': [
+              '本系所的研究發展廣佈於資訊工程的主要研究， 包含積體電路',
+              '電腦輔助設計、資訊安全、計算機系統、人工智慧、電腦網路、',
+              '多媒體系統、軟體工程+物件導向 系統、分散式系統+作業系統',
+              '設計、編譯系統、 資料庫系統、語音處理、影像與圖像技術。',
+              '在這些領域中均深受肯定，成效良好。',
+            ],
+          },
+          'internation': {
+            'title': '三、國際化方面',
+            'content1': '主要發展重點在於',
+            'content2': [
+              '積極參與及主辦國際學術會議，加強國際交流，提昇國際地位。',
+              '爭取美、歐、日國際學術合作計畫及與 國際一流電子資訊公司之國際產學合作計畫。',
+              '聘請國外學者專家到本系/所進行短期講學，獲取最先進的資訊科技新知和潮流。',
+              '實施英語授課，增加學生國際競爭力。',
+              '招收外籍學生至本系就讀，提昇本系國際知名度。',
+            ],
+          },
+        },
+        'target': {
+          'step1': {
+            'title': '1. 教育學生基礎專業知識及終身學習之能力',
+            'content': [
+              '畢業生應具備基礎專業數學及資訊理論知識之基本能力',
+              '畢業生應具備理論推導及實驗數據分析歸納之能力',
+              '畢業生應具備終身學習之能力',
+            ],
+          },
+          'step2': {
+            'title': '2. 教育學生運用專業知識解決資訊應用問題之能力',
+            'content': [
+              '畢業生應具備發掘、分析及解決資訊應用問題之能力',
+              '畢業生應具備資訊工程設計、創新、測試及驗證之能力',
+              '畢業生應具備系統整合之能力',
+            ],
+          },
+          'step3': {
+            'title': '3. 教育學生優質團隊合作之能力',
+            'content': [
+              '畢業生應具備科技人文素養及資訊工程倫理之精神',
+              '畢業生應具備良好溝通技巧及國際觀',
+              '畢業生應具備負責之工作態度及團隊合作之能力',
+            ],
+          },
+        },
+        'certi': {
+          'subtitle1': {
+            'title': '教育目標與核心能力',
+            'target1': {
+              'title': '資訊工程學系之教育目標',
+              'content1': '系所教育目標',
+              'content2': [
+                '教育學生基礎專業知識及終身學習之能力',
+                '教育學生運用專業知識解決資訊應用問題之能力',
+                '教育學生優質團隊合作之能力',
+              ],
+            },
+            'target2': {
+              'title': '資訊工程所之教育目標',
+              'content1': '系所教育目標',
+              'content2': [
+                '教育學生具備資訊專業知識及終身學習之能力',
+                '教育學生具備獨立研究、設計及創新之能力',
+                '教育學生優質團隊合作及國際觀之能力',
+              ],
+            },
+            'ability1': {
+              'content1': '學生核心能力',
+              'content2': [
+                '畢業生應具備基礎專業數學及資訊理論知識之基本能力',
+                '畢業生應具備資訊理論推導及實驗設計、數據分析歸納之能力',
+                '畢業生應具備培養學習興趣及持續學習之能力',
+                '畢業生應具備獨立、創新思維及發掘、分析、解決資訊相關問題之能力',
+                '畢業生應具備資訊系統設計、測試及驗證之能力',
+                '畢業生應具備資訊系統整合之能力',
+                '畢業生應具備科技人文素養及資訊工程倫理之精神',
+                '畢業生應具備良好溝通技巧及國際觀',
+                '畢業生應具備負責之工作態度及有效團隊合作之能力',
+              ],
+            },
+            'ability2': {
+              'content1': '學生核心能力',
+              'content2': [
+                '畢業生應具備資訊專業理論知識',
+                '畢業生應具備資訊專業理論推導、分析、歸納之能力',
+                '畢業生應具備專業簡報及論文撰寫之能力',
+                '畢業生應具備資訊領域獨立發掘問題、策劃實驗、解決問題之能力',
+                '畢業生應具備資訊領域設計、驗證及實作整合之能力',
+                '畢業生應具備資訊領域創新思考之能力',
+                '畢業生應具備科技人文素養、資訊工程倫理與終身學習的態度',
+                '畢業生應具備專業外語能力及良好國際觀',
+                '畢業生應具備良好溝通協調與團隊合作之能力',
+              ],
+            },
+          },
+          'subtitle2': {
+            'title': '課程設計',
+            'composition': {
+              'title': '資訊系課程之組成',
+              'content1': [
+                '本學系之成立乃為培養資訊工業人才，因此課程設計之原則，除了配合目前工商業界人力需求外，更考慮中長期資訊',
+                '工業發展之趨勢，本學系課程規劃原則如下：',
+              ],
+              'content2': '理論與實務課程相配合',
+              'content3': [
+                '大學教育為通才教育，故於低年級課程特別加強各項基礎理論之紮根工作，以培養學生之基本學能；高年級逐次',
+                '加強資訊技術與實用課程，俾能滿足資訊工業發展之需要。',
+              ],
+              'content4': '資訊技術與資訊應用課程並重',
+              'content5': [
+                '本系課程教育即在於培育學生開發之能力。因此，一、二年級以重視資訊技術與應用課程之均衡性為主。而三、四',
+                '年級則再依學生性向及本系發展方向，分成十二項主題，分別設計資訊技術與應用兩系列之核心及專題課程，此外',
+                '並配合研究所開設之特色課程，俾利學生能循專精方向發展。',
+              ],
+              'content6': '著重實作實習課程',
+              'content7': [
+                '本系中各項資訊課程均設計適當之實作教材，並提供各類型軟、硬體設備，使學生充份有效地從實作中學習，並可',
+                '將理論與實用作一印證。三年級（三下）的學生並可選修專題製作，以培養學生獨立研究並完成一作品之經驗，俾',
+                '利於畢業後迅速投入工商業界或繼續深造。本學系教學與課程委員會依據目前資訊科技發展之重要項目，將課程作',
+                '有系統之整合，而提出以下面十二項資訊技術為目標之建議課程。',
+              ],
+              'content8': '十二項資訊技術',
+              'content9': [
+                '積體電路電腦輔助設計',
+                '資訊安全',
+                '計算機系統',
+                '人工智慧',
+                '電腦網路',
+                '多媒體系統',
+                '軟體工程+物件導向系統',
+                '分散式系統+作業系統設計',
+                '編譯系統',
+                '資料庫系統',
+                '語音處理',
+                '影像與圖像技術',
+              ],
+            },
+            'flow': {
+              'title': '課程發展與改進之流程',
+              'content1': [
+                '資訊系的課程發展機制是先訂立本系課程規劃委員會設置辦法，組成「課程規劃委員會」，由課程委員討論並擬定資',
+                '訊系課程，擬定每門課所應培養之學生核心能力以提供給授課教師作為其教學目標，並定期執行在課程安排上的修正作業。',
+              ],
+              'content2': [
+                '為了要持續檢討教學方式及改進課程內容，在學期的每一個階段都會進行教學活動的評量（於第3章介紹）以及對學生',
+                '的學習成效進行追蹤 (於第4章介紹)。在每一學期結束時，便由系辦收集並整理本學期的課程資料，並將召開諮詢委員',
+                '會議。諮詢委員根據各項數據所呈現的結果，對課程的內容及安排提出建議，同時審視每門課程的實行是否確實達成',
+                '規定的教育目標及學生核心能力，判斷是否有需要調整的地方。',
+              ],
+              'content3': [
+                '在課程規劃委員會會議中，便可參考諮詢委員提出的建議，修正下一學期(年)課程安排的順序、授課的內容和方式、以',
+                '及與教育目標之間的關連性。經由系務會議討論通過後，一方面將決議結果交予各教師，作為往後教學改進上的參',
+                '考；另一方面則交由系辦的課務負責人，排定下學期的開課課表。',
+              ],
+            },
+            'flowchart': {
+              'title': '本系課程發展與改進流程圖',
+            },
+            'feature': {
+              'title': '課程介紹與課程特色',
+              'content1': [
+                '表2-2-2課程開課狀況統計表為資訊系開課狀況統計表，為契合本系教育目標1，低年級課程設計的理念主要是建立學',
+                '生的基礎知識，以資訊入門課程（例如程式設計與計算機概論）給予學生初步概念，引導學生逐步進入資訊領域。同',
+                '時學校方面也安排了許多通識教育(如國文、歷史、以及各領域的通識課程)和數學及基礎科學課程(如微積分、線性代',
+                '數及普通物理學)供低年級的學生修習，讓其在接受專業訓練之餘，也能多方涉獵各領域的新知以增廣見聞。學生有了',
+                '基礎知識之後，在二年級之後的課程，強調的是資訊技術的專研與應用，一方面提供進階的數學課程；另一方面提供',
+                '多樣性的資訊工程專業課程：',
+              ],
+              'content2': [
+                '由於資訊領域和數學可說是息息相關，為培養學生的專業數學能力，相關的數學類科目均列為必修課程(例如離散',
+                '數學、工程數學及機率與統計等)。',
+              ],
+              'content3': [
+                '在工程專業課程部分，可分為軟體和硬體兩部份。資訊系學生程式設計的技巧與開發軟體的能力一向為外界所器',
+                '重，為建立學生對於軟體技術的了解與實作能力，系上開授許多軟體相關課程 (如程式語言、演算法、資料結構及',
+                '計算理論等)。同時我們也期許資訊系學生具備硬體相關知識和實際操作的訓練，故提供硬體相關課程 (如數位系',
+                '統導論與實驗、計算機組織及微算機原理與應用等)。',
+              ],
+              'content4': [
+                '除了必修的軟硬體課程，因應學生對於不同資訊領域的興趣不一，在選修課程部分，授課教師會根據其專精的研',
+                '究領域當作授課內容，讓學生吸收各方面的知識 (如三維繪圖與遊戲設計、人工智慧、視窗程式設計及無線通訊網',
+                '路等)。當學生擁有數學及基礎科學能力且建立專業的資訊工程背景之後，我們希望學生能應用其所學的知識來解',
+                '決資訊類別的問題，這也是教育目標2所期許的重點。因此三年級（三下）的學生需修習專題製作，學生按照其興',
+                '趣選擇某一個議題深入研究，不論是演算法的開發或是軟硬體系統的實作等，在其獨立學習、研究直到完成作品',
+                '所經歷的過程中，學生可培養出發現並分析問題的能力，並訓練其運用本身知識來著手解決問題的能力。在學習',
+                '的過程中，除了奠定每位學生本身專業知識的基礎之外，教育目標3所著重的是將個人的優秀才能融入團隊合作',
+                '裡，並訓練良好的溝通技巧。這是因為資訊類別的工作往往是需要結合眾人的力量才能完成，光憑一己之力是不',
+                '足夠的。為了訓練學生表達意見以及和他人共同合作的技巧，許多課程的期中或期末project都是以分組方式進',
+                '行。小組裡的成員對負責的project要進行多次討論、詳細分工、並整合成最後的作品和撰寫科技報告，並在課堂',
+                '上作簡報呈現。在團隊合作的過程中，每位學生都能學習到組織能力、表達能力和與他人的溝通能力，並訓練其',
+                '敬業的工作態度與合作精神。',
+              ],
+            },
+          },
+          'subtitle3': {
+            'title': '課程地圖',
+            'content': '課程介紹與課程特色',
+          },
+          'subtitle4': {
+            'title': '教學活動評量',
+            'activity': {
+              'title': '教學活動及評量機制',
+              'content1': '培養方式',
+              'content2': [
+                '本系經由多次委員會對學生核心能力之培養方式進行討論修正，有直接教學法、討論教學法、協同教學法、合作',
+                '學習法、發表教學法、欣賞教學法等共六種方式，往後期望能以這六種方式繼續培養學生在畢業時須具備之學生',
+                '核心能力養成方法說明及其與欲養成之核心能力關聯性。',
+              ],
+              'content3': '評量方法',
+              'content4': [
+                '經由多次會議對學生核心能力之評量方式進行討論修正，有紙筆測驗、課堂問答、個別晤談、指定作業、實作表',
+                '現、專題研究、書面報告、口頭報告、學生自評、同儕互評、行為觀察、檔案評量、上課表現、課堂出席、其他',
+                '等共八種方式，往後期望以這十五種方式之評量結果，評量培養之成效。',
+              ],
+              'content5': '評量結果',
+              'content6': [
+                '本系目前將陸續蒐集每門課程之各項教學及學習成果紀錄，如講義、考卷、作業、報告…等等，可充分顯現本系',
+                '學生之學習成果。在持續改善方面，本系除蒐集教學及學習成果紀錄，並輔以教師自評表、學生期中問卷調查',
+                '表、學生期末問卷調查表、應屆畢業生學習滿意度問卷調查表、系友學習滿意度問卷調查表、業界對本系畢業生',
+                '滿意度調查表，作為本系持續改善教學工作之依據，以利檢視教學設計和教學成效評量的方法與結果。',
+              ],
+            },
+          },
+          'subtitle5': {
+            'title': '學習成效追蹤',
+            'method': {
+              'title': '教師評量方法',
+              'content1': [
+                '本校為提昇本校教學、研究與服務品質，維持本校教育水準，因此在教學評量的教師方面本校專任教師評量要點任教',
+                '授或副教授滿五年者，接受第一次評量；任助理教授或講師滿三年者，接受第一次評量。而本系的教師評量方面則是',
+                '在每學期結束前將會發送ㄧ份「教師自評表」，調查對象為本系之專任教師實施調查時間為每學期一次且每項課程之',
+                '授課老師皆須接受自我評量調查，實施方式本系為了確保問卷回收率則是採用紙筆填寫之方式，而此問卷內容則是朝',
+                '老師的無奈來思考，站在老師的角度，老師會想從這份問卷中表達哪些想法，盼授課教師能藉此機會瞭解自己的教學',
+                '狀況及與學生互動關係之情形。',
+              ],
+              'content2': [
+                '因此這份問卷的實施結果是希望讓本系教師針對所教授課程能自我參考且能持續有效的進行檢討與改善教學、輔導及',
+                '評量，提高教學成效。',
+              ],
+              'content3': [
+                '此外，本系工程認證推動委員會及課程委員會於定期的會議中，將對各門課程之教學級規劃所遭遇之問題提出修正及',
+                '檢討，並將彙整結果提供給諮詢委員會，作為在修訂系教育目標時之參考。',
+              ],
+            },
+            'statistic': {
+              'title': '學生學習成果統計與檢討',
+              'content1': [
+                '本系利用教學問卷調查之方式收集學生對於學習的成果，藉由此方式可讓本系教師更瞭解學生的學習成果為何，也讓',
+                '教師暸解何種課程是現在學生最想學、學生最需要具備的相關知識。',
+              ],
+              'content2': [
+                '例如透過A類問卷實際調查的結果，我們可以知道學生對於老師的教學表現、課程安排、教學是否有效、這門課是否值',
+                '得學習及學生的建議都將清楚的知道，本系也可藉由此資料的收集而持續改進缺點。',
+              ],
+              'content3': [
+                '而本系除了有大一學生至大三學生A類問卷學生期中問卷調查表調查成果之外，還包含了B類學生期末問卷調查表之調',
+                '查成果、C類應屆畢業生學習滿意度問卷調查表之調查成果及D類系友學習滿意度問卷調查表之統計結果，從各類問卷',
+                '中可發現學生的要求及所需要的教學資訊為何。',
+              ],
+              'content4': [
                 '本系工程認證推動委員會及課程委員也會於定期的會議中，將針對各門課程之學生學習成果統計表做教學檢討且將所',
                 '遭遇之問題提出修正及檢討規劃，本系在瞭解之後，將針對學生的教學及評量方式持續改進，以持續而有效的執行學',
                 '生之指導與評量。'
@@ -361,57 +764,60 @@ append data
     const currentRoute = 'about/intro';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'about/intro' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.about, url: 'about' },
-    { text: i18n[ language ].title },
-  ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   section.intro
     //- Header.
     section.intro__text.intro__text--underline
-      h2.intro__text.intro__text--large= i18n[ language ].subtitle[0]
-    each info in i18n[ language ].intro
+      h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[0]
+    each info in i18n[ LANG.id ].intro
       p.intro__text.intro__text--smallblue= info
   section.history
     //- Header.
     section.intro__text.intro__text--underline
-      h2.intro__text.intro__text--large= i18n[ language ].subtitle[1]
+      h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[1]
     //- History of department.
     //- The caption of icon.
-    p.intro__text.intro__text--circleblue
-    p.intro__text.intro__text--spikeblueright
-    p.intro__text.intro__text--smallinhistoryicon= i18n[ language ].history.icons[0]
-    p.intro__text.intro__text--circleorange
-    p.intro__text.intro__text--spikeorangeright
-    p.intro__text.intro__text--smallinhistoryicon= i18n[ language ].history.icons[1]
-    //- each info in i18n[ language ].history.events
-      p.intro__text.intro__text--small= info
+    //- p.intro__text.intro__text--circleblue
+    //- p.intro__text.intro__text--spikeblueright
+    //- p.intro__text.intro__text--smallinhistoryicon= i18n[ LANG.id ].history.icons[0]
+    //- p.intro__text.intro__text--circleorange
+    //- p.intro__text.intro__text--spikeorangeright
+    //- p.intro__text.intro__text--smallinhistoryicon= i18n[ LANG.id ].history.icons[1]
+    //- each info in i18n[ LANG.id ].history.events
+    //-   p.intro__text.intro__text--small= info
   section.develop
     //- Header.
     section.intro__text.intro__text--underline
-      h2.intro__text.intro__text--large= i18n[ language ].subtitle[2]
+      h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[2]
     //- Develop of department.
-    each info in i18n[ language ].develop.content
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.content1.join()
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.content2
   //- Aspect of teaching.
   section.develop1
-    p.intro__text.intro__text--mediumblue= i18n[ language ].develop.teach.title
-    each info, index in i18n[ language ].develop.teach.content
-      if index === 1 || index === 3 || index === 4 || index === 5
-        p.intro__text.intro__text--circle
-      if index === 2
-        p.intro__text.intro__text--circlenext= info
-      else
-        p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].develop.teach.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.teach.content1
+    each info in i18n[ LANG.id ].develop.teach.content2
+      p.intro__text.intro__text--circle= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.teach.content3.join()
   //- Picture of teaching.
   section.image1
     +image({
@@ -421,11 +827,11 @@ append content
     })
   //- Aspect of researching.
   section.develop2
-    p.intro__text.intro__text--mediumblue= i18n[ language ].develop.research.title
-    each info, index in i18n[ language ].develop.research.content
-      if index === 1 || index === 2 || index === 3 || index === 4
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].develop.research.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.research.content1
+    each info in i18n[ LANG.id ].develop.research.content2
+      p.intro__text.intro__text--circle= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.research.content3.join()
   //- Picture of researching.
   section.image2
     +image({
@@ -435,14 +841,10 @@ append content
     })
   //- Aspect of internation.
   section.develop3
-    p.intro__text.intro__text--mediumblue= i18n[ language ].develop.internation.title
-    each info, index in i18n[ language ].develop.internation.content
-      if index === 1 || index === 3 || index === 5 || index === 7 || index === 8
-        p.intro__text.intro__text--circle
-      if index === 2 || index === 4 || index === 6
-        p.intro__text.intro__text--circlenext= info
-      else
-        p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].develop.internation.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].develop.internation.content1
+    each info in i18n[ LANG.id ].develop.internation.content2
+      p.intro__text.intro__text--circle= info
   //- Picture of internation.
   section.image3
     +image({
@@ -454,13 +856,12 @@ append content
   section.target
     //- Header.
     section.intro__text.intro__text--underline
-      h2.intro__text.intro__text--large= i18n[ language ].subtitle[3]
+      h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[3]
   //- Target of teaching by step 1.
   section.target1
-    p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].target.step1.title
-    each info in i18n[ language ].target.step1.content
-      p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ LANG.id ].target.step1.title
+    each info in i18n[ LANG.id ].target.step1.content
+      p.intro__text.intro__text--circle= info
   //- Picture of target1.
   section.image4
     +image({
@@ -470,10 +871,9 @@ append content
     })
   //- Target of teaching by step 2.
   section.target2
-    p.intro__text.intro__text--mediumblue= i18n[ language ].target.step2.title
-    each info in i18n[ language ].target.step2.content
-      p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ LANG.id ].target.step2.title
+    each info in i18n[ LANG.id ].target.step2.content
+      p.intro__text.intro__text--circle= info
   //- Picture of target2.
   section.image5
     +image({
@@ -483,11 +883,10 @@ append content
     })
   //- Target of teaching by step 3.
   section.target3
-    p.intro__text.intro__text--mediumblue= i18n[ language ].target.step3.title
-    each info in i18n[ language ].target.step3.content
-      p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
-  //- Picture of target3.
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ LANG.id ].target.step3.title
+    each info in i18n[ LANG.id ].target.step3.content
+      p.intro__text.intro__text--circle= info
+  //- //- Picture of target3.
   section.image6
     +image({
       alt: 'Picture of target3',
@@ -498,101 +897,109 @@ append content
   section.certi
     //- Header.
     section.intro__text.intro__text--underline
-      h2.intro__text.intro__text--large= i18n[ language ].subtitle[4]
+      h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[4]
     //- Target of college.
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle1.title
-    p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].certi.subtitle1.target1.title
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle1.title
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ LANG.id ].certi.subtitle1.target1.title
     //- Target of teaching.
-    each info, index in i18n[ language ].certi.subtitle1.target1.content
-      if index !== 0
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle1.target1.content1
+    each info in i18n[ LANG.id ].certi.subtitle1.target1.content2
+      p.intro__text.intro__text--circle= info
     p.intro__text.intro__text--interval
     //- Target of ability.
-    each info, index in i18n[ language ].certi.subtitle1.ability1.content
-      if index !== 0
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle1.ability1.content1
+    each info in i18n[ LANG.id ].certi.subtitle1.ability1.content2
+      p.intro__text.intro__text--circle= info
     //- Target of graduate institute.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle1.target2.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle1.target2.title
     //- Target of teaching.
-    each info, index in i18n[ language ].certi.subtitle1.target2.content
-      if index !== 0
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle1.target2.content1
+    each info in i18n[ LANG.id ].certi.subtitle1.target2.content2
+      p.intro__text.intro__text--circle= info
     p.intro__text.intro__text--interval
     //- Target of ability.
-    each info, index in i18n[ language ].certi.subtitle1.ability2.content
-      if index !== 0
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle1.ability2.content1
+    each info in i18n[ LANG.id ].certi.subtitle1.ability2.content2
+      p.intro__text.intro__text--circle= info
     p.intro__text.intro__text--interval
     p.intro__text.intro__text--interval
     //- Course design.
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle2.title
-    p.intro__text.intro__text--mediumbluenarrow= i18n[ language ].certi.subtitle2.composition.title
-    each info, index in i18n[ language ].certi.subtitle2.composition.content
-      if index === 0 || index === 1 || index === 14
-        p.intro__text.intro__text--small= info
-      else if index === 3 || index === 4 || index === 6 || index === 7 || index === 8 || index === 10 || index === 11 || index === 12 || index === 13
-        p.intro__text.intro__text--circlenext= info
-      else
-        p.intro__text.intro__text--circle
-        p.intro__text.intro__text--small= info
-      if index === 4 || index === 8
-        p.intro__text.intro__text--interval
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle2.title
+    p.intro__text.intro__text--mediumbluenarrow= i18n[ LANG.id ].certi.subtitle2.composition.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.composition.content1.join()
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.composition.content2
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle2.composition.content3.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.composition.content4
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle2.composition.content5.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.composition.content6
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle2.composition.content7.join()
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.composition.content8
+    each info in i18n[ LANG.id ].certi.subtitle2.composition.content9
+      p.intro__text.intro__text--circle= info
     //- Improvement of flow.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.flow.title
-    each info, index in i18n[ language ].certi.subtitle2.flow.content
-      p.intro__text.intro__text--small= info
-      if index === 2 || index === 6
-        p.intro__text.intro__text--interval
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle2.flow.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.flow.content1.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.flow.content2.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.flow.content3.join()
     //- Improvement of flowchart.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.flowchart.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle2.flowchart.title
     //- Course feature.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle2.feature.title
-    each info, index in i18n[ language ].certi.subtitle2.feature.content
-      if index === 6 || index === 8 || index === 12
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--small= info
-      if index === 5 || index === 7 || index === 11
-        p.intro__text.intro__text--interval
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle2.feature.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle2.feature.content1.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.feature.content2.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.feature.content3.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle2.feature.content4.join()
     p.intro__text.intro__text--interval
     //- Course map.
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle3.title
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle3.content
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle3.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle3.content
     //- Assessment of teaching
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle4.title
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle4.activity.title
-    each info, index in i18n[ language ].certi.subtitle4.activity.content
-      if index === 0 || index === 4 || index === 8
-        p.intro__text.intro__text--circle
-      p.intro__text.intro__text--circlenext= info
-      if index === 3 || index === 7
-        p.intro__text.intro__text--interval
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle4.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle4.activity.title
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle4.activity.content1
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle4.activity.content2.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle4.activity.content3
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle4.activity.content4.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--circle= i18n[ LANG.id ].certi.subtitle4.activity.content5
+    p.intro__text.intro__text--circlenext= i18n[ LANG.id ].certi.subtitle4.activity.content6.join()
     p.intro__text.intro__text--interval
     //- Effectiveness of track.
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle5.title
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.method.title
-    each info, index in i18n[ language ].certi.subtitle5.method.content
-      p.intro__text.intro__text--small= info
-      if index === 5 || index === 7
-        p.intro__text.intro__text--interval
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle5.title
     //- Method of assessment.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.statistic.title
-    each info, index in i18n[ language ].certi.subtitle5.statistic.content
-      p.intro__text.intro__text--small= info
-      if index === 1 || index === 3 || index === 6
-        p.intro__text.intro__text--interval
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle5.method.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.method.content1.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.method.content2.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.method.content3.join()
+    p.intro__text.intro__text--interval
     //- Check of result.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.improve.title
-    each info, index in i18n[ language ].certi.subtitle5.improve.content
-      p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle5.statistic.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.statistic.content1.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.statistic.content2.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.statistic.content3.join()
+    p.intro__text.intro__text--interval
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.statistic.content4.join()
+    p.intro__text.intro__text--interval
+    //- Keeping improving.
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle5.improve.title
+    p.intro__text.intro__text--small= i18n[ LANG.id ].certi.subtitle5.improve.content.join()
     //- Improvement of flowchart.
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle5.improvechart.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle5.improvechart.title
     //- Institute of teaching.
-    h2.intro__text.intro__text--largeblue= i18n[ language ].certi.subtitle6.title
-    p.intro__text.intro__text--mediumblue= i18n[ language ].certi.subtitle6.content
+    h2.intro__text.intro__text--largeblue= i18n[ LANG.id ].certi.subtitle6.title
+    p.intro__text.intro__text--mediumblue= i18n[ LANG.id ].certi.subtitle6.content
 append footer
 
 append scripts

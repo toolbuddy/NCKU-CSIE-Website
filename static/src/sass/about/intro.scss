@@ -1,21 +1,23 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/font';
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 
 // block
-// `body`
-body > {
+// `.body`
+.body > {
+  // [ skin ]
+  background-color: #ffffff;
+
   // block
   // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  @include banner( $block: 'body' );
 
   // block
   // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  @include breadcrumb( $block: 'body' );
 
   // block
   // `body > .content`
@@ -39,9 +41,8 @@ body > {
           '.   certi    certi     .'
           '.   .        .         .';
         columns: 2fr 4fr 4fr 2fr;
-        rows: .5rem repeat( 11, minmax( min-content, min-content ) ) .5rem
 
-        // rows: repeat( 4, auto ) repeat( 3, minmax( auto, min-content ) ) auto repeat( 3, minmax( auto, min-content ) ) auto auto;
+        // rows: .5rem repeat( 11, minmax( auto, min-content ) ) .5rem
       }
       column-gap: 0;
       row-gap: 0;
@@ -188,7 +189,7 @@ body > {
   }
 
   // modifier
-  // .intro__text > .intro__text--largeblue`
+  // .intro__text > .intro__text--large-blue`
   &largeblue {
     // [ layout ]
     display: inline;
@@ -203,7 +204,7 @@ body > {
   }
 
   // modifier
-  // `.intro__text > .intro__text--mediumblue`
+  // `.intro__text > .intro__text--medium-blue`
   &mediumblue {
     // [ skin ]
     color: #399dff;
@@ -216,8 +217,8 @@ body > {
     font-size: .8125rem;
   }
 
-  // modifier
-  // `.intro__text > .intro__text--mediumbluenarrow`
+  // // modifier
+  // // `.intro__text > .intro__text--medium-blue-narrow`
   &mediumbluenarrow {
     // [ skin ]
     color: #399dff;
@@ -235,9 +236,9 @@ body > {
   // `.intro__text > .intro__text--small`
   &small {
     // [ skin ]
+    line-height: 2;
     color: #757575;
     margin-left: 1.3125rem;
-    padding-bottom: .32rem;
     font-size: .625rem;
   }
 
@@ -250,7 +251,7 @@ body > {
   }
 
   // modifier
-  // `.intro__text > .intro__text--smallblue`
+  // `.intro__text > .intro__text--small-blue`
   &smallblue {
     // [ skin ]
     color: #399dff;
@@ -274,19 +275,39 @@ body > {
   // modifier
   // `.intro__text > .intro__text--circle`
   &circle {
-    // [ layout ]
-    float: left;
+    // [ position ]
+    position: relative;
 
     // [ skin ]
-    width: .5rem;
-    height: .5rem;
-    background-color: #ffcc22;
-    border-radius: 100%;
-    margin: {
-      right: .6rem;
-      left: 1.5125rem;
-      top: .25rem;
+    line-height: 2;
+    color: #757575;
+    margin-left: 2.3rem;
+    font-size: .625rem;
+
+    // [ before ]
+    &::before {
+      // [ position ]
+      position: absolute;
+      left: -.9rem;
+
+      // [ skin ]
+      content: '';
+      width: .5rem;
+      height: .5rem;
+      background-color: #ffcc22;
+      border-radius: 100%;
+      margin-top: .4rem;
     }
+  }
+
+  // modifier
+  // `.intro__text > .intro__text--circlenext
+  &circlenext {
+    // [ skin ]
+    line-height: 2;
+    color: #757575;
+    margin-left: 2.3rem;
+    font-size: .625rem;
   }
 
   // modifier
@@ -313,16 +334,6 @@ body > {
     height: .8125rem;
     background-color: #ea6d55;
     border-radius: 100%;
-  }
-
-  // modifier
-  // `.intro__text > .intro__text--circlenext`
-  &circlenext {
-    // [ skin ]
-    color: #757575;
-    margin-left: 2.6125rem;
-    padding-bottom: .2rem;
-    font-size: .625rem;
   }
 
   // modifier

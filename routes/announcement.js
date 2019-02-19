@@ -10,52 +10,123 @@
  * - `/announcement/staff`
  */
 
-import path from 'path';
-
 import express from 'express';
+import MarkdownIt from 'markdown-it';
 
+import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+import getFileInfo from 'models/announcement/operations/get-file-info.js';
+import TagUtils from 'models/announcement/utils/tag.js';
+import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, } from 'settings/server/config.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/announcement`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'announcement/index' ) );
 
 /**
  * Resolve URL `/announcement/activity`.
  */
 
-router.get( /^\/activity$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/activity.${ req.query.language }.html` ) );
-} );
+router
+.route( '/activity' )
+.get( staticHtml( 'announcement/activity' ) );
 
 /**
  * Resolve URL `/announcement/all`.
  */
 
-router.get( /^\/all$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/all.${ req.query.language }.html` ) );
-} );
+router
+.route( '/all' )
+.get( staticHtml( 'announcement/all' ) );
 
 /**
  * Resolve URL `/announcement/recruitment`.
  */
 
-router.get( /^\/recruitment$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/recruitment.${ req.query.language }.html` ) );
-} );
+router
+.route( '/recruitment' )
+.get( staticHtml( 'announcement/recruitment' ) );
 
 /**
  * Resolve URL `/announcement/[id]`.
  */
 
-router.get( /^\/\d+$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/announcement/announcement.${ req.query.language }.html` ) );
+router
+.route( '/:announcementId' )
+.get( async ( req, res, next ) => {
+    try {
+        const data = await getAnnouncement( {
+            announcementId: Number( req.params.announcementId ),
+            languageId:     req.query.languageId,
+        } );
+
+        res.locals.UTILS.getTagById = TagUtils.getTagById;
+        res.locals.UTILS.getTagColorById = TagUtils.getTagColorById;
+        res.locals.UTILS.md = new MarkdownIt( {
+            breaks:  true,
+            linkify: true,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'announcement/detail.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                res.send( html );
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
+
+router
+.route( '/:announcementId/file/:fileId' )
+.get( async ( req, res, next ) => {
+    try {
+        const announcementId = Number( req.params.announcementId );
+        const fileId = Number( req.params.fileId );
+        const languageId = req.query.languageId;
+        const data = await getFileInfo( {
+            announcementId,
+            fileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.download( `${ projectRoot }/static/dist/file/${ data.filePath }`, data.name, ( err ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
 } );
 
 export default router;

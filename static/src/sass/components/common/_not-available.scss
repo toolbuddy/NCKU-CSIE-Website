@@ -1,13 +1,14 @@
-@mixin not-available () {
+// component
+// `.#{ $block } > .#{ $block }__not-available.not-available`
+@mixin not-available ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__not-available`
   // block
-  // `> .not-available`
-  > .not-available {
+  // `.#{ $block } > .not-available`
+  > .#{ $block }__not-available.not-available {
     // [ variable ]
     $small: 550px;
     $large: 768px;
-
-    // [ customization ]
-    @content;
 
     // [ layout ]
     display: grid;
@@ -84,5 +85,8 @@
       font-size: 1.125rem;
       color: #399dff;
     }
+
+    // [ customization ]
+    @content;
   }
 }

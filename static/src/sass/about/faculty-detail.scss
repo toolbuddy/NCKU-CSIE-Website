@@ -1,45 +1,64 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/font';
-@import 'components/common/topic';
 @import 'components/common/icon';
-@import 'components/common/footer';
+@import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
 
-body {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .banner`
+  @include banner( $block: 'body' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
     $small: 650px;
     $large: 860px;
-    width: 100%;
-    background-color: #ffffff;
+
+    // [ layout ]
     display: grid;
     grid-template: {
       areas:
-        'profile__headline'
-        'profile__photo   '
-        'profile__info    '
-        'education        '
-        'experience       '
-        'award            '
-        'publication      '
-        'patent           '
-        'transfer         '
-        'research         '
-        'student          ';
-      columns: 100%;
+        '. profile__headline .'
+        '. profile__photo    .'
+        '. profile__info     .'
+        '. education         .'
+        '. experience        .'
+        '. award             .'
+        '. publication       .'
+        '. patent            .'
+        '. transfer          .'
+        '. project           .'
+        '. student           .'
+        '. conference        .';
+      columns: 1fr 90% 1fr;
     }
+
+    // [ skin ]
+    width: 100%;
+    background-color: #ffffff;
+
+    // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'
@@ -49,12 +68,15 @@ body {
           '. publication      publication      .'
           '. patent           patent           .'
           '. transfer         transfer         .'
-          '. research         research         .'
+          '. project          project          .'
           '. student          student          .';
         columns: 1fr 5fr 3fr 1fr;
       };
     }
+
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'
@@ -64,7 +86,7 @@ body {
           '. publication      publication      .'
           '. patent           patent           .'
           '. transfer         transfer         .'
-          '. research         research         .'
+          '. project          project          .'
           '. student          student          .';
         columns: 5fr 8fr 6fr 5fr;
       };
@@ -74,12 +96,15 @@ body {
       grid-area: profile__headline;
       display: flex;
       margin-top: 2rem;
-      justify-content: center;
+      justify-content: flex-start;
 
       > .headline__name {
         display: flex;
         justify-content: center;
-        margin-right: .5rem;
+        margin: {
+          left: 10%;
+          right: .5rem;
+        }
         width: max-content;
         font: {
           size: .8rem;
@@ -136,6 +161,7 @@ body {
 
       > .profile__departments.departments {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         margin: {
           top: 1rem;
@@ -157,10 +183,11 @@ body {
       > .profile__offices.offices {
         display: flex;
         flex-direction: column;
+        margin-left: 5%;
 
         > .offices__address {
           display: flex;
-          align-self: center;
+          align-self: flex-start;
           font: {
             size: .5rem;
             style: normal;
@@ -174,7 +201,7 @@ body {
 
         > .offices__phone {
           display: flex;
-          align-self: center;
+          align-self: flex-start;
           margin-top: .41rem;
           font-size: .5rem;
 
@@ -187,8 +214,11 @@ body {
 
       > .profile__email {
         display: flex;
-        align-self: center;
-        margin-top: .41rem;
+        align-self: flex-start;
+        margin: {
+          top: .41rem;
+          left: 5%;
+        }
         font-size: .5rem;
 
         &::before {
@@ -199,8 +229,11 @@ body {
 
       > .profile__phone {
         display: flex;
-        align-self: center;
-        margin-top: .41rem;
+        align-self: flex-start;
+        margin: {
+          top: .41rem;
+          left: 5%;
+        }
         font-size: .5rem;
 
         &::before {
@@ -212,10 +245,11 @@ body {
       > .profile__labs.labs {
         display: flex;
         flex-direction: column;
+        margin-left: 5%;
 
         > .labs__lab {
           display: flex;
-          align-self: center;
+          align-self: flex-start;
           margin-top: .41rem;
           font-size: .5rem;
 
@@ -227,7 +261,7 @@ body {
 
         > .labs__address {
           display: flex;
-          align-self: center;
+          align-self: flex-start;
           margin-top: .41rem;
           font: {
             size: .5rem;
@@ -242,7 +276,7 @@ body {
 
         > .labs__tel {
           display: flex;
-          align-self: center;
+          align-self: flex-start;
           margin-top: .41rem;
           font: {
             size: .5rem;
@@ -296,13 +330,14 @@ body {
     .photo {
       grid-area: profile__photo;
       border-radius: 4rem;
-      height: 8.5rem;
-      width: 8.5rem;
       margin: {
         top: 1.56rem;
         left: auto;
         right: auto;
       }
+      object-fit: cover;
+      height: 8.5rem;
+      width: 8.5rem;
     }
 
     .award {
@@ -514,70 +549,18 @@ body {
       margin: 1.5rem 0;
       font-size: .45rem;
 
-      > .experience__detail.detail {
-        margin: .6rem  0;
-        padding: .1rem .25rem;
-        border-radius: .5rem;
-        text-align: center;
-        color: rgba( 0, 0, 0, .87 );
-        display: flex;
-        flex-wrap: wrap;
-
-        > .detail__begin {
-          padding-top: .2rem;
-          width: 4rem;
-          height: 1rem;
-          border-radius: .5rem;
-          border: solid .02rem #757575;
-          background-color: #ffffff;
-          margin: 0 .1rem;
-        }
-
-        > .detail__untill {
-          font-size: .8rem;
-          color: #757575;
-          vertical-align: middle;
-          margin: 0 .5rem;
-        }
-
-        > .detail__end {
-          padding-top: .2rem;
-          width: 4rem;
-          height: 1rem;
-          border-radius: .5rem;
-          border: solid .02rem #757575;
-          background-color: #ffffff;
-          margin: 0 .1rem;
-          margin-right: 2rem;
-        }
-
-        > .detail__school, .detail__department {
-          margin: 0 .1rem;
-          padding: .15rem .6rem;
-          border-radius: .5rem;
-          text-align: center;
-          color: #adacad;
-          background-color: #ededed;
-        }
-
-        > .detail__degree {
-          margin: 0 .1rem;
-          padding: .15rem .6rem;
-          border-radius: .5rem;
-          text-align: center;
-          color: #8caae2;
-          background-color: #eaeff7;
-          margin-right: .2rem;
-        }
+      > .experience__list {
+        display: inline-flex;
+        width: 100%;
       }
     }
 
-    .research {
-      grid-area: research;
+    .project {
+      grid-area: project;
       margin: 1.5rem 0;
       font-size: .5rem;
 
-      > .research__table.table {
+      > .project__table.table {
         border-collapse: collapse;
         text-align: center;
         border: solid .02rem #757575;
@@ -673,6 +656,10 @@ body {
         box-shadow: 0 .05rem .6rem 0 rgba( 0 , 0 , 0 , .14 ), 0 .2rem .25rem 0 rgba( 0, 0, 0, .2 );
         margin: .5rem 0;
       }
+    }
+
+    .conference {
+      grid-area: conference;
     }
   }
 }

@@ -1,100 +1,109 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/about/faculty/cards';
-@import 'components/about/faculty/filters';
-@import 'components/common/topic';
-@import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/loading';
+@import 'components/common/no-result';
+@import 'components/common/footer';
+@import 'components/about/faculty/filter';
+@import 'components/about/faculty/cards';
 
-body > {
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #eff3f9;
+
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .banner`
+  @include banner( $block: 'body' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
-    // [variable]
-    $large: 475px;
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 475px;
 
-    // [layout]
+    // [ layout ]
     display: grid;
     grid: {
       template: {
         areas:
           '.'
-          'topic   '
-          'filters '
-          'cards   '
-          'noResult';
+          'topic'
+          'faculty';
         columns: 100%;
       }
-      row-gap: 2rem;
+      row-gap: 1rem;
     };
 
-    // [skin]
+    // [ skin ]
     width: 100%;
-    background-color: #eff3f9;
 
-    // [RWD: $large]
-    @media screen and ( min-width: $large ) {
-      grid: {
-        template: {
-          areas:
-            '. .        .'
-            '. topic    .'
-            '. filters  .'
-            '. cards    .'
-            '. noResult .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 2rem;
+    // [RWD: $small]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. .       .'
+          '. topic   .'
+          '. faculty .'
+          '. .       .';
+        columns: 1fr 75% 1fr;
       };
     }
 
+    // element
+    // `.body > .content > .content__topic`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
+      // [ position ]
       grid-area: topic;
     }
 
+    // element
+    // `.body > .content > .content__faculty`
     // block
-    // `body > .content > .filters`
-    @include filters() {
-      // [position]
-      grid-area: filters;
-    }
+    // `.body > .content > .faculty`
+    > .content__faculty.faculty {
+      // [ position ]
+      grid-area: faculty;
 
-    // block
-    // `body > .content > .cards`
-    @include cards() {
-      // [position]
-      grid-area: cards;
-    }
+      // element
+      // `.body > .content > .faculty > .faculty__filter`
+      // block
+      // `.body > .content > .faculty > .filter`
+      @include filter( $block: 'faculty' );
 
-    // block
-    // `body > .content > .no-result`
-    > .no-result {
-      // [position]
-      grid-area: noResult;
+      // element
+      // `.body > .content > .faculty > .faculty__no-result`
+      // block
+      // `.body > .content > .faculty > .no-result`
+      @include no-result( $block: 'faculty' );
 
-      // [layout]
-      text-align: center;
+      // element
+      // `.body > .content > .faculty > .faculty__loading`
+      // block
+      // `.body > .content > .faculty > .loading`
+      @include loading( $block: 'faculty' );
 
-      // [skin]
-      min-height: 100%;
-
-      // modifier
-      // `body > .content > .no-result--hide`
-      &--hide {
-        // [layout]
-        display: none;
-      }
+      // element
+      // `.body > .content > .faculty > .faculty__cards`
+      // block
+      // `.body > .content > .faculty > .cards`
+      @include cards ( $block: 'faculty' );
     }
   }
 }

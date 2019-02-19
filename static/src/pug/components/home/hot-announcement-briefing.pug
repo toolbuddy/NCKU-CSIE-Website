@@ -1,0 +1,15 @@
+-
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      'views': `${ briefing.views } views`,
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      'views': `瀏覽次數: ${ briefing.views }`,
+    },
+  } );
+a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ briefing.announcementId }` } ) )
+  h1.briefing__index= UTILS.index
+  h1.briefing__title= briefing.title
+  p.briefing__article= briefing.content
+  span.briefing__views= i18n[ LANG.id ].views
+  time.briefing__time= briefing.updateTime

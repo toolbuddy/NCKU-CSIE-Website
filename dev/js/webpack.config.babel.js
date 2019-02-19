@@ -6,6 +6,8 @@ const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
 const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
 const staticRoot = path.join( projectRoot, 'static' );
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
 export default {
     /**
      * Webpack built-in develop tools.
@@ -16,7 +18,7 @@ export default {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: 'inline-sourcemap',
+    devtool: isDevMode ? 'inline-sourcemap' : false,
 
     /**
      * Bundle mode.
@@ -25,7 +27,7 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    'development',
+    mode:    isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
@@ -44,11 +46,14 @@ export default {
         'about/staff':          path.join( jsSrcRoot, 'about/staff.js' ),
 
         // Route `announcement`
-        'announcement/activity':     path.join( jsSrcRoot, 'announcement/activity.js' ),
-        'announcement/all':          path.join( jsSrcRoot, 'announcement/all.js' ),
-        'announcement/index':        path.join( jsSrcRoot, 'announcement/index.js' ),
-        'announcement/announcement': path.join( jsSrcRoot, 'announcement/announcement.js' ),
-        'announcement/recruitment':  path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+        'announcement/activity':    path.join( jsSrcRoot, 'announcement/activity.js' ),
+        'announcement/all':         path.join( jsSrcRoot, 'announcement/all.js' ),
+        'announcement/index':       path.join( jsSrcRoot, 'announcement/index.js' ),
+        'announcement/detail':      path.join( jsSrcRoot, 'announcement/detail.js' ),
+        'announcement/recruitment': path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+
+        // Route `error`
+        'error/404': path.join( jsSrcRoot, 'error/404.js' ),
 
         // Route `home`
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
@@ -107,16 +112,16 @@ export default {
      * When writing `import` statement for relative import,
      * no need to start with `'./'` or `'../'`.
      * Only work for following path:
+     * - `import 'models/.......'`
      * - `import 'settings/...'`
      * - `import 'static/.....'`
-     * - `import 'test/.......'`.
      */
 
     resolve: {
         alias: {
-            settings: path.join( projectRoot, 'settings' ),
+            models:   path.join( projectRoot, 'models' ),
             static:   staticRoot,
-            test:     path.join( projectRoot, 'test' ),
+            settings: path.join( projectRoot, 'settings' ),
         },
     },
 
@@ -147,13 +152,13 @@ export default {
                     {
                         loader:    'style-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                         },
                     },
                     {
                         loader:  'css-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: isDevMode,
                         },
                     },
                 ],

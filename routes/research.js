@@ -7,36 +7,38 @@
  * - `/research/publications`
  */
 
-import path from 'path';
-
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/research`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/index.${ req.query.language }.html` ) );
-} );
+router
+.route( '/' )
+.get( staticHtml( 'research/index' ) );
 
 /**
  * Resolve URL `/research/labs`.
  */
 
-router.get( /^\/labs$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/labs.${ req.query.language }.html` ) );
-} );
+router
+.route( '/labs' )
+.get( staticHtml( 'research/labs' ) );
 
 /**
  * Resolve URL `/research/publications`.
  */
 
-router.get( /^\/publications$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/publications.${ req.query.language }.html` ) );
-} );
+router
+.route( '/publications' )
+.get( staticHtml( 'research/publications' ) );
 
 export default router;

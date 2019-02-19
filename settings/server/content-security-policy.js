@@ -1,0 +1,102 @@
+import deepFreeze from 'deep-freeze';
+import {
+    host,
+    whiteList,
+} from 'settings/server/config.js';
+
+const isDevMode = process.env.NODE_ENV === 'development';
+
+export default ( opt ) => {
+    const config = {
+        baseUri:                 [],
+        connectSrc:              [],
+        defaultSrc:              [],
+        fontSrc:                 [],
+        formAction:              [],
+        frameAncestors:          [],
+        frameSrc:                [],
+        imgSrc:                  [],
+        mediaSrc:                [],
+        reportTo:                `${ host }/auth/report`,
+        reportUri:               `${ host }/auth/report`,
+        scriptSrc:               [],
+        styleSrc:                [],
+        objectSrc:               [],
+        workerSrc:               [],
+        upgradeInsecureRequests: true,
+    };
+
+    config.baseUri.push( "'self'" );
+    config.connectSrc.push(
+        "'self'",
+        ...whiteList
+    );
+    config.defaultSrc.push( "'self'" );
+    config.fontSrc.push(
+        "'self'",
+        ...whiteList,
+        'https://fonts.googleapis.com',
+        'https://fonts.gstatic.com',
+        'data:',
+    );
+    config.formAction.push(
+        "'self'",
+        ...whiteList,
+    );
+    config.frameAncestors.push(
+        "'none'"
+    );
+    config.frameSrc.push(
+        "'none'"
+    );
+    config.imgSrc.push(
+        "'self'",
+        ...whiteList,
+        'https://maps.googleapis.com',
+        'https://maps.gstatic.com',
+        '*.placeholder.com',
+        'data:',
+    );
+    config.mediaSrc.push(
+        "'self'",
+        ...whiteList,
+    );
+    config.styleSrc.push(
+        "'self'",
+        ...whiteList,
+        'https://fonts.googleapis.com',
+    );
+    config.scriptSrc.push(
+        "'self'",
+        ...whiteList,
+        'https://maps.googleapis.com',
+        'https://maps.gstatic.com',
+    );
+
+    config.objectSrc.push( "'none'" );
+    config.workerSrc.push( "'self'" );
+
+    opt = opt || {};
+
+    if ( !( opt instanceof Object ) )
+        throw new TypeError( 'invalid configuration for content security policy: opt should be a object' );
+
+    Reflect.ownKeys( opt ).forEach( ( key ) => {
+        if ( !( opt[ key ] instanceof Array ) )
+            throw new TypeError( 'invalid configuration for content security policy: opt[key] should be an array' );
+        config[ key ].push( ...opt[ key ] );
+    } );
+
+    /**
+     * Relax policy for browser sync when in development mode.
+     */
+
+    if ( isDevMode ) {
+        config.scriptSrc.push( "'unsafe-inline'" );
+        config.styleSrc.push( "'unsafe-inline'" );
+    }
+
+    deepFreeze( config );
+
+    return config;
+};

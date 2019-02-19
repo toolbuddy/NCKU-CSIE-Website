@@ -1,17 +1,14 @@
 import header from 'static/src/js/components/common/header/index.js';
-import filters from 'static/src/js/components/about/faculty/filters/index.js';
-import getFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import GetFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
-header( document.getElementById( 'header' ) );
+window.addEventListener( 'load', () => {
+    header( document.getElementById( 'header' ) );
 
-const cards = document.getElementById( 'cards' );
+    const getFaculty = new GetFactuly( {
+        facultyDOM: document.getElementById( 'faculty' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+    } );
 
-// Construct filter's events on DOM element `#filters`, '#cards`, `#no-result`.
-filters(
-    document.getElementById( 'filters' ),
-    cards,
-    document.getElementById( 'no-result' )
-);
-
-// Get all faculty data from database and append to DOM element `#cards`.
-getFactuly( cards );
+    getFaculty.exec();
+} );

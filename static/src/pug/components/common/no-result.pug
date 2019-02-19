@@ -1,0 +1,42 @@
+//- No result content template module.
+mixin noResult( belongBlock )
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'noResult': 'No result'
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'noResult': '查無結果'
+      }
+    } );
+
+  section.no-result.no-result--hidden( class = `${ belongBlock }__no-result` )
+    h2.no-result__caption= i18n[ LANG.id ].noResult
+
+//- No result content template module.
+mixin noResultWithImage()
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'noResult':  'No result',
+        'suggestion': 'Try changing the filters or return to the ',
+        'homeLink':   'home page.'
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'noResult':   '查無結果',
+        'suggestion': '變更篩選器或回到',
+        'homeLink':   '首頁'
+      }
+    } );
+
+  figure.no-result.no-result--with-image.no-result--hidden
+    +image( {
+      alt:       i18n[ LANG.id ].noResult,
+      className: 'no-result__image',
+      src:       'icon/no-result.png',
+    } )
+    figcaption.no-result__caption.caption
+      h2.caption__text= i18n[ LANG.id ].noResult
+      p.caption__suggestion.suggestion
+        span.suggestion__text= i18n[ LANG.id ].suggestion
+        a.suggestion__text.suggestion__text--link( href = `/?language=${ LANG.id }` )= i18n[ LANG.id ].homeLink

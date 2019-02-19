@@ -3,9 +3,13 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':     'College',
         'topic':     'College',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':    'Pinned Announcement',
         'normal':    'Announcement',
         'breadcrumb': {
@@ -13,9 +17,13 @@ append data
           'student': 'Student',
         },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':     '大學部',
         'topic':     '大學部',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':    '置頂貼文',
         'normal':    '一般公告',
         'breadcrumb': {
@@ -24,34 +32,44 @@ append data
         },
       },
     } );
-    const filterModifier = 'college';
-    const filterTags = [
-      'award',
-      'college',
-      'competition',
-      'conference',
-      'exhibition',
-      'international',
-      'internship',
-      'rule',
-      'scholarship',
-      'speech',
-    ];
+    const tags = [
+        'college',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech',
+        'award',
+        'international',
+        'scholarship',
+        'internship',
+        'rule',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/college';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'student/college' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.student, url: 'student' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.student, url: 'student' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

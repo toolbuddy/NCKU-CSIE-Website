@@ -1,19 +1,19 @@
-extends /layouts/resource.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':      'IEET',
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':      '工程認証',
       },
     } );
     const currentRoute = 'resource/ieet';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'resource/ieet' )
@@ -22,7 +22,7 @@ append header
 
 append content
   include /components/common/not-available.pug
-  +notAvailable()
+  +notAvailable( 'content' )
 
 append footer
 

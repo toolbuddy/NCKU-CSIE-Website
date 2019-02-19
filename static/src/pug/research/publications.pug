@@ -1,19 +1,19 @@
-extends /layouts/research.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Publications',
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '發表著作',
       },
     } );
     const currentRoute = 'research/publications';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'research/publications' )
@@ -22,7 +22,7 @@ append header
 
 append content
   include /components/common/not-available.pug
-  +notAvailable()
+  +notAvailable( 'content' )
 
 append footer
 

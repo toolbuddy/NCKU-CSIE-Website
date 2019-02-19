@@ -1,0 +1,7 @@
+a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ briefing.announcementId }` } ) )
+  aside.briefing__tags.tags
+    each tagObj in briefing.tags
+      button.tags__tag( class=`tags__tag--${ tagObj.color }` )= tagObj.tag
+  h1.briefing__title= briefing.title
+  p.briefing__article= briefing.content
+  time.briefing__time= briefing.updateTime

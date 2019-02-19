@@ -3,29 +3,36 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'All Announcement',
         'topic':    'All Announcement',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':   'Pinned Announcement',
         'normal':   'Announcement',
         'breadcrumb': {
-          'home':   'Home',
-          'normal': 'Announcement',
+          'home':         'Home',
+          'announcement': 'Announcement',
         },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '全部公告',
         'topic':    '全部公告',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':   '置頂貼文',
         'normal':   '一般公告',
         'breadcrumb': {
-          'normal': '系所公告',
-          'home':   '首頁',
+          'home':         '首頁',
+          'announcement': '系所公告',
         },
       },
     } );
-    const filterModifier = 'all';
-    const filterTags = [
+    const tags = [
         'all',
         'award',
         'college',
@@ -38,26 +45,37 @@ append data
         'internship',
         'master',
         'phd',
-        'recruitment',
-        'rule',
         'scholarship',
         'speech',
-    ];
+        'rule',
+        'recruitment',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'announcement/all';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'announcement/all' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.announcement, url: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

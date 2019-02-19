@@ -40,7 +40,7 @@ const max = {
         statement: 1,
     },
     depth: {
-        callback:    4,
+        callback:    5,
         chainMethod: 2,
     },
 };
@@ -237,9 +237,6 @@ module.exports = {
         // Enforce that class methods utilize `this`.
         'class-methods-use-this': 'error',
 
-        // Require `return` statements to either always or never specify values.
-        'consistent-return': 'error',
-
         // Require following curly brace conventions.
         'curly': [
             'error',
@@ -292,8 +289,9 @@ module.exports = {
         // Disallow empty functions.
         'no-empty-function': 'error',
 
-        // Disallow empty destructuring patterns.
-        'no-empty-pattern': 'error',
+        // Allow empty destructuring patterns.
+        // Should only be used when built-in function arguments are not needed.
+        'no-empty-pattern': 'off',
 
         // Disallow `eval()`.
         'no-eval': 'error',
@@ -336,30 +334,6 @@ module.exports = {
 
         // Disallow functions in loops.
         'no-loop-func': 'error',
-
-        // Disallow magic numbers.
-        'no-magic-numbers': [
-            'error',
-            {
-
-                // An array of numbers to ignore.
-                'ignore': [
-                    0,
-                    1,
-                    2,
-                    -1,
-                    -2,
-                    200,
-                    304,
-                    400,
-                    404,
-                    500,
-                ],
-
-                // Array indexes are considered okay.
-                'ignoreArrayIndexes': true,
-            },
-        ],
 
         // Disallow multiple spaces.
         'no-multi-spaces': [
@@ -584,9 +558,6 @@ module.exports = {
         // Disallow string concatenation
         // when using `__dirname` and `__filename`.
         'no-path-concat': 'error',
-
-        // Disallow `process.env`.
-        'no-process-env': 'error',
 
         // Disallow `process.exit()`.
         'no-process-exit': 'error',
@@ -1198,54 +1169,6 @@ module.exports = {
 
         // Disallow `if` statements as the only statement in `else` blocks
         'no-lonely-if': 'error',
-
-        // Disallow mixes of different operators.
-        'no-mixed-operators': [
-            'error',
-            {
-                // Specifies operator groups to be checked.
-                'groups': [
-                    [
-                        '+',
-                        '-',
-                        '*',
-                        '/',
-                        '%',
-                        '**',
-                    ],
-                    [
-                        '&',
-                        '|',
-                        '^',
-                        '~',
-                        '<<',
-                        '>>',
-                        '>>>',
-                    ],
-                    [
-                        '==',
-                        '!=',
-                        '===',
-                        '!==',
-                        '>',
-                        '>=',
-                        '<',
-                        '<=',
-                    ],
-                    [
-                        '&&',
-                        '||',
-                    ],
-                    [
-                        'in',
-                        'instanceof',
-                    ],
-                ],
-
-                // Specifies whether to allow mixed operators if they are of equal precedence.
-                'allowSamePrecedence': true,
-            },
-        ],
 
         // Disallow mixed spaces and tabs for indentation.
         'no-mixed-spaces-and-tabs': 'error',

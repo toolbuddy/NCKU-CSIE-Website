@@ -1,7 +1,7 @@
 mixin header()
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         util: {
           calendar: 'Calendar',
           login:    'Login',
@@ -49,7 +49,7 @@ mixin header()
           },
         },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         util: {
           calendar: '行事曆',
           login:    '登入',
@@ -101,7 +101,7 @@ mixin header()
 
   header#header.header
     //- Logo
-    a.header__logo.logo( href = url( { href : '' } ) )
+    a.header__logo.logo( href = UTILS.url( { href : '' } ) )
       +image( {
         alt:       'csie',
         className: 'logo__image',
@@ -119,12 +119,12 @@ mixin header()
 
       //- Search Column, currently not available
       //- Small screen version
-      form.navigation__search.search( action = url( { href : 'search' } ), method = 'GET' )
-        input.search__hidden( type = 'hidden', value = language, name = 'language' )
-        input.search__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
+      form.navigation__search.search( action = UTILS.url( { href : 'search' } ), method = 'GET' )
+        input.search__hidden( type = 'hidden', value = LANG.id, name = 'language' )
+        input.search__input( type = 'text', placeholder = i18n[ LANG.id ].util.search, name = 'searchText', value = '' )
         button.search__submit.submit
           +image( {
-            alt:       i18n[ language ].util.search,
+            alt:       i18n[ LANG.id ].util.search,
             className: 'submit__image',
             src:       'icon/search.png',
           } )
@@ -135,131 +135,136 @@ mixin header()
       //- All routes
       ul.navigation__list.list
         li.list__item.item
-          a.item__link.item__link--homepage( href = url( { href : '' } ) )= i18n[ language ].route.home.index
+          a.item__link.item__link--homepage( href = UTILS.url( { href : '' } ) )= i18n[ LANG.id ].route.home.index
         li.list__item.item
-          a.item__link( href = url( { href : 'about' } ) )= i18n[ language ].route.about.index
+          a.item__link( href = UTILS.url( { href : 'about' } ) )= i18n[ LANG.id ].route.about.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'about/intro' } ) )= i18n[ language ].route.about.intro
+              a.item__link( href = UTILS.url( { href : 'about/intro' } ) )= i18n[ LANG.id ].route.about.intro
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'about/faculty' } ) )= i18n[ language ].route.about.faculty
+              a.item__link( href = UTILS.url( { href : 'about/faculty' } ) )= i18n[ LANG.id ].route.about.faculty
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'about/staff' } ) )= i18n[ language ].route.about.staff
+              a.item__link( href = UTILS.url( { href : 'about/staff' } ) )= i18n[ LANG.id ].route.about.staff
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'about/award' }) )= i18n[ language ].route.about.award
+              a.item__link( href = UTILS.url( { href : 'about/award' }) )= i18n[ LANG.id ].route.about.award
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'about/contact' } ) )= i18n[ language ].route.about.contact
+              a.item__link( href = UTILS.url( { href : 'about/contact' } ) )= i18n[ LANG.id ].route.about.contact
         li.list__item.item
-          a.item__link( href = url( { href : 'research' } ) )= i18n[ language ].route.research.index
+          a.item__link( href = UTILS.url( { href : 'research' } ) )= i18n[ LANG.id ].route.research.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'research/labs' } ) )= i18n[ language ].route.research.labs
+              a.item__link( href = UTILS.url( { href : 'research/labs' } ) )= i18n[ LANG.id ].route.research.labs
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'research/publications' } ) )= i18n[ language ].route.research.publications
+              a.item__link( href = UTILS.url( { href : 'research/publications' } ) )= i18n[ LANG.id ].route.research.publications
         li.list__item.item
-          a.item__link( href = url( { href : 'student' } ) )= i18n[ language ].route.student.index
+          a.item__link( href = UTILS.url( { href : 'student' } ) )= i18n[ LANG.id ].route.student.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/college' } ) )= i18n[ language ].route.student.college
+              a.item__link( href = UTILS.url( { href : 'student/college' } ) )= i18n[ LANG.id ].route.student.college
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/master' } ) )= i18n[ language ].route.student.master
+              a.item__link( href = UTILS.url( { href : 'student/master' } ) )= i18n[ LANG.id ].route.student.master
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'student/phd' } ) )= i18n[ language ].route.student.phd
+              a.item__link( href = UTILS.url( { href : 'student/phd' } ) )= i18n[ LANG.id ].route.student.phd
         li.list__item.item
-          a.item__link( href = url( { href : 'announcement' } ) )= i18n[ language ].route.announcement.index
+          a.item__link( href = UTILS.url( { href : 'announcement' } ) )= i18n[ LANG.id ].route.announcement.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'announcement/all' } ) )= i18n[ language ].route.announcement.all
+              a.item__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].route.announcement.all
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'announcement/activity' } ) )= i18n[ language ].route.announcement.activity
+              a.item__link( href = UTILS.url( { href : 'announcement/activity' } ) )= i18n[ LANG.id ].route.announcement.activity
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'announcement/recruitment' } ) )= i18n[ language ].route.announcement.recruitment
+              a.item__link( href = UTILS.url( { href : 'announcement/recruitment' } ) )= i18n[ LANG.id ].route.announcement.recruitment
         li.list__item.item
-          a.item__link( href = url( { href : 'resource' } ) )= i18n[ language ].route.resource.index
+          a.item__link( href = UTILS.url( { href : 'resource' } ) )= i18n[ LANG.id ].route.resource.index
           button.item__switch.switch
             span.switch__icon
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/rule' } ) )= i18n[ language ].route.resource.rule
+              a.item__link( href = UTILS.url( { href : 'resource/rule' } ) )= i18n[ LANG.id ].route.resource.rule
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/rent' } ) )= i18n[ language ].route.resource.rent
+              a.item__link( href = UTILS.url( { href : 'resource/rent' } ) )= i18n[ LANG.id ].route.resource.rent
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/fix' } ) )= i18n[ language ].route.resource.fix
+              a.item__link( href = UTILS.url( { href : 'resource/fix' } ) )= i18n[ LANG.id ].route.resource.fix
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/ieet' } ) )= i18n[ language ].route.resource.ieet
+              a.item__link( href = UTILS.url( { href : 'resource/ieet' } ) )= i18n[ LANG.id ].route.resource.ieet
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/sitemap' } ) )= i18n[ language ].route.resource.sitemap
+              a.item__link( href = UTILS.url( { href : 'resource/sitemap' } ) )= i18n[ LANG.id ].route.resource.sitemap
             li.dropdown__item.item
-              a.item__link( href = url( { href : 'resource/alumni' } ) )= i18n[ language ].route.resource.alumni
+              a.item__link( href = UTILS.url( { href : 'resource/alumni' } ) )= i18n[ LANG.id ].route.resource.alumni
 
       //- Login, currently not available
       //- Small screen version
-      a.navigation__login.login( href = url( { href : 'login' } ) )
+      a.navigation__login.login( href = UTILS.url( { href : 'login' } ) )
         +image( {
-          alt:       i18n[ language ].util.login,
+          alt:       i18n[ LANG.id ].util.login,
           className: 'login__image',
           src:       'icon/user.png',
         } )
-        span.login__text= i18n[ language ].util.login
+        span.login__text= i18n[ LANG.id ].util.login
 
       //- Calendar, currently not available
       //- Small screen version
-      a.navigation__calendar.calendar( href = url( { href : 'calendar' } ) )
+      a.navigation__calendar.calendar( href = UTILS.url( { href : 'calendar' } ) )
         +image( {
-          alt:       i18n[ language ].util.calendar,
+          alt:       i18n[ LANG.id ].util.calendar,
           className: 'calendar__image',
           src:       'icon/calendar.png',
         } )
-        span.calnedar__text= i18n[ language ].util.calendar
+        span.calnedar__text= i18n[ LANG.id ].util.calendar
 
       //- Language Choice
       //- Small screen version
       section.navigation__language.language
         +image( {
-          alt:       i18n[ language ].util.language,
+          alt:       i18n[ LANG.id ].util.language,
           className: 'language__image',
-          src:       `icon/flag-${ language }.png`,
+          src:       `icon/flag-${ LANG.id }.png`,
         } )
-        h3.language__text= i18n[ language ].util.language
+        h3.language__text= i18n[ LANG.id ].util.language
         button.language__switch.switch
           span.switch__icon
         ul.language__dropdown.dropdown
           li.dropdown__item.item.item--zh-TW
-            a.item__link.link( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) )
+            a.item__link.link(
+              href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } )
+            )
               +image( {
                 alt:       '臺灣',
                 className: 'link__image',
-                src:       'icon/flag-zh-TW.png',
+                src:       `icon/flag-${ LANG.getLanguageId( 'zh-TW' ) }.png`,
               } )
-              if language === 'zh-TW'
+              if LANG.id === LANG.getLanguageId( 'zh-TW' )
                 span.link__text.link__text--active 臺灣
               else
                 span.link__text 臺灣
           li.dropdown__item.item.item--en-US
-            a.item__link.link( href = url( { href: currentRoute, query : { language : 'en-US' } } ) )
+            a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'en-US' ) } } ) )
               +image( {
                 alt:       'USA',
                 className: 'link__image',
-                src:       'icon/flag-en-US.png',
+                src:       `icon/flag-${ LANG.getLanguageId( 'en-US' ) }.png`,
               } )
-              if language === 'en-US'
+              if LANG.id === LANG.getLanguageId( 'en-US' )
                 span.link__text.link__text--active USA
               else
                 span.link__text USA
 
     //- Calendar, currently not available
     //- Large screen version
-    a.header__calendar.calender( href = url( { href : 'calendar' } ) )
+    a.header__calendar.calender( href = UTILS.url( { href : 'calendar' } ) )
       +image( {
-        alt:       i18n[ language ].util.calendar,
+        alt:       i18n[ LANG.id ].util.calendar,
         className: 'calendar__image',
         src:       'icon/calendar.png',
       } )
@@ -269,30 +274,36 @@ mixin header()
     section.header__language.language
       button.language__button.button
         +image( {
-          alt:       i18n[ language ].util.language,
+          alt:       i18n[ LANG.id ].util.language,
           className: 'button__image',
-          src:       `icon/flag-${ language }.png`,
+          src:       `icon/flag-${ LANG.id }.png`,
         } )
         ul.button__dropdown.dropdown
-          a.dropdown__item.dropdown__item--zh-TW( href = url( { href: currentRoute, query : { language : 'zh-TW' } } ) ) 中文
-          a.dropdown__item.dropdown__item--en-US( href = url( { href: currentRoute, query : { language : 'en-US' } } ) ) English
+          a.dropdown__item.dropdown__item--zh-TW( href = UTILS.url( {
+            href: currentRoute,
+            query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+          } ) ) 中文
+          a.dropdown__item.dropdown__item--en-US( href = UTILS.url( {
+            href: currentRoute,
+            query: { languageId: LANG.getLanguageId( 'en-US' ) }
+          } ) ) English
 
     //- Login, currently not available
     //- Large screen version
-    a.header__login( href = url( { href : 'login' } ) )= i18n[ language ].route.home.login
+    a.header__login( href = UTILS.url( { href : 'login' } ) )= i18n[ LANG.id ].route.home.login
 
     //- Search, currently not available
     //- Large screen version
     scetion.header__search.search
       button.search__button.button
         +image( {
-          alt: i18n[ language ].util.search,
+          alt: i18n[ LANG.id ].util.search,
           className: 'button__image',
           src:       'icon/search.png',
         } )
       section.search__dropdown.dropdown
-        form.dropdown__form.form( action = url( { href : 'search' } ), method = 'GET' )
-          input.form__hidden( type = 'hidden', value = language, name = 'language' )
-          input.form__input( type = 'text', placeholder = i18n[ language ].util.search, name = 'searchText', value = '' )
+        form.dropdown__form.form( action = UTILS.url( { href : 'search' } ), method = 'GET' )
+          input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
+          input.form__input( type = 'text', placeholder = i18n[ LANG.id ].util.search, name = 'searchText', value = '' )
           input.form__submit( type = 'submit', value = '' )
         button.dropdown__cancel ✕

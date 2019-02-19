@@ -2,37 +2,21 @@
  * Database settings module.
  * @namespace
  * @readonly
- * @property {string} username         - Database server user account.
- * @property {string} password         - Database server user password.
- * @property {string} domainName       - Database server domain name/IP.
- * @property {number} port             - Database server port.
- * @property {string} protocol         - Database server protocol.
- * @property {string} connectionString - Database server connection string.
+ * @property {string} username   - Database server user account.
+ * @property {string} password   - Database server user password.
+ * @property {string} domainName - Database server domain name/IP.
+ * @property {number} port       - Database server port.
+ * @property {string} dialce     - Database server protocol.
  */
 
-const config = {};
+const config = {
+    'username':   '',
+    'password':   '',
+    'domainName': 'localhost',
+    'port':       3306,
+    'dialect':    'mysql',
+};
 
-Object.defineProperties( config, {
-    'username': {
-        value: '',
-    },
-    'password': {
-        value: '',
-    },
-    'domainName': {
-        value: 'localhost',
-    },
-    'port': {
-        value: 3306,
-    },
-    'protocol': {
-        value: 'mysql',
-    },
-    'connectionString': {
-        value ( databaseName ) {
-            return `${ this.protocol }://${ this.username }:${ this.password }@${ this.domainName }:${ this.port }/${ databaseName }`;
-        },
-    },
-} );
+Object.freeze( config );
 
 module.exports = config;
