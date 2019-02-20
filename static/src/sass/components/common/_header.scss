@@ -4,19 +4,32 @@
 // `body > .header`
 body > .header {
   // [ variable ]
+  $tiny: 260px;
+  $small: 375px;
   $large: 1120px;
 
   // [ layout ]
   display: grid;
-  grid-template: {
-    areas: 'header__logo header__menu';
-    columns: 4fr 1fr;
-  }
+  grid-template-areas:
+    'header__logo'
+    'header__menu';
 
   // [ skin ]
   width: 100%;
-  height: 3.2rem;
+  height: auto;
   background: rgba( 255, 255, 255, .95 );
+
+  // [ RWD: $small ]
+  @media screen and ( min-width: $small ) {
+    // [ layout ]
+    grid-template: {
+      areas: 'header__logo header__menu';
+      columns: 4fr 1fr;
+    }
+
+    // [ skin ]
+    height: 3.2rem;
+  }
 
   // [ RWD: $large ]
   @media screen and ( min-width: $large ) {
@@ -39,7 +52,6 @@ body > .header {
   // `body > .header > .logo`
   > .header__logo.logo {
     // [ layout ]
-    display: flex;
     grid-area: header__logo;
     align: {
       items: center;
@@ -48,6 +60,9 @@ body > .header {
     justify: {
       content: center;
       self: center;
+    }
+    @media screen and ( min-width: $small ) {
+      display: flex;
     }
 
     // [ skin ]
@@ -71,11 +86,24 @@ body > .header {
     // `body > .header > .logo > .logo__image`
     > .logo__image {
       // [ layout ]
-      grid-area: logo__image;
+      // grid-area: logo__image;
 
       // [ skin ]
       width: 1.6rem;
       height: auto;
+      display: block;
+      margin: {
+        top : .5rem;
+        bottom: .5rem;
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
     }
 
     // element
@@ -84,19 +112,16 @@ body > .header {
     // `body > .header > .logo > .caption`
     > .logo__caption.caption {
       // [ layout ]
-      display: grid;
-      grid: {
-        area: logo__caption;
-        template: {
-          areas:
-            'caption__text--large'
-            'caption__text--small';
-          rows: 1fr 1fr;
-        }
-      }
       align-items: center;
       justify-self: start;
       margin-left: .4rem;
+      display: block;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
 
       // element
       // `body > .header > .logo > .caption > .caption__text`
@@ -108,10 +133,24 @@ body > .header {
         // `body > .header > .logo > .caption > .caption__text > .caption__text--large`
         &.caption__text--large {
           // [ layout ]
-          grid-area: caption__text--large;
+          display: block;
+          text-align: center;
 
           // [ skin ]
           font-size: .5rem;
+          line-height: .6rem;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ skin ]
+            text-align: left;
+          }
+
+          // `body > .header > .logo > .caption > .caption__text > .caption__text--large >. caption__text--large-part`
+          > .text__item {
+            // [ layout ]
+            display: inline-block;
+          }
         }
 
         // modifier
@@ -122,6 +161,14 @@ body > .header {
 
           // [ skin ]
           font-size: .4rem;
+          text-align: center;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ layout ]
+            text-align: left;
+            display: block;
+          }
         }
       }
     }
@@ -556,11 +603,22 @@ body > .header {
     transition: right .5s;
     background-color: #213262;
 
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      grid-template-columns: 16fr 3fr;
+    }
+
     // modifier
     // `body > .header > .header__navigation > .header__navigation--active`
     &.header__navigation--active {
       // [ layout ]
-      right: -.47rem;
+      width: 100%;
+      left: 0;
+      @media screen and ( min-width: $small ) {
+        right: -.47rem;
+        left: auto;
+        width: auto;
+      }
     }
 
     // [ RWD: $large ]
@@ -590,19 +648,26 @@ body > .header {
         area: navigation__search;
         template: {
           areas: '. search__input . search__submit .';
-          columns: .37rem auto .37rem .4rem .37rem;
+          columns:  1fr 2.8rem 1fr .4rem .4rem;
           rows: 1.31rem;
         }
       }
       display: grid;
       margin: {
         top: .37rem;
-        left: .56rem;
+        left: .2rem;
         bottom: .37rem;
       }
 
       // [ skin ]
       background-color: #1d2d56;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $tiny ) {
+        // [ layout ]
+        margin-left: .56rem;
+        grid-template-columns: .37rem auto .37rem .4rem .37rem;
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
@@ -764,6 +829,7 @@ body > .header {
           color: rgba( 255, 255, 255, .5 );
           font-size: .5rem;
           height: $item-height;
+          width: auto;
 
           // modifier
           // `body > .header > .navigation > .list > .item > .item__link > .item__link--homepage`
@@ -806,6 +872,12 @@ body > .header {
           // [ skin ]
           background-color: transparent;
           height: $item-height;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ layout ]
+            padding-left: 87%;
+          }
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
@@ -1046,12 +1118,17 @@ body > .header {
           areas:
             'language__image    language__text      language__switch'
             'language__dropdown language__dropdown  language__dropdown';
-          columns: .75rem 4rem 75%;
+          columns: .75rem auto 15%;
           rows: 1.56rem min-content;
         }
         column-gap: .625rem;
       }
       display: grid;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        grid-template-columns: .75rem 5rem 1fr;
+      }
 
       // [ skin ]
       background-color: inherit;
@@ -1108,6 +1185,7 @@ body > .header {
         background-color: inherit;
         height: 1.56rem;
         width: 45%;
+        border-top: .01rem solid rgba( 255, 255, 255, .5 );
 
         // element
         // `body > .header > .navigation > .language > .switch > .switch__icon`

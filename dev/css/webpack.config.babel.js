@@ -90,7 +90,8 @@ export default {
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
 
         // Route `user`
-        'user/index': path.join( sassRoot, 'user/index.scss' ),
+        'user/index':             path.join( sassRoot, 'user/index.scss' ),
+        'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
     },
 
     /**

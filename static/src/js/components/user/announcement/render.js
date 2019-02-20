@@ -1,9 +1,11 @@
 export function changeEditorLanguage ( editors, language ) {
     Array.from( editors ).forEach( ( editor ) => {
-        if ( editor.classList.contains( `editor__editor--${ language }` ) )
-            editor.style.display = 'block';
-        else
-            editor.style.display = 'none';
+        if ( editor.classList.contains( `editor__editor--${ language }` ) ){
+            editor.classList.add( 'editor__editor--show' );
+        }
+        else{
+            editor.classList.remove( 'editor__editor--show' );
+        }
     } );
 }
 

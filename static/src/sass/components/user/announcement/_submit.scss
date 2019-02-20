@@ -1,0 +1,132 @@
+// [variable]
+$bgcolor: rgba( 224, 224, 224, .1 );
+$bordercolor: rgba( 153, 153, 153, .4 );
+$wordcolor: #7c7f84;
+$buttoncolor: #8caae2;
+$small: 450px;
+$medium: 675px;
+$large: 976px;
+@mixin submit () {
+  // .content > .submit
+  > .submit {
+    // [ position ]
+    grid: {
+      area: edit__submit;
+      gap: .5rem;
+    }
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        '. option . '
+        '. release .';
+      columns: .1rem 1fr .1rem;
+    };
+    @media screen and ( min-width: $medium ) {
+      grid-template: {
+        areas:
+          '. option'
+          '. release';
+        columns: 1.33rem 1fr;
+      };
+    }
+
+    // .content > .submit > .submit__option
+    @include submit__option();
+
+    // .content > .submit > .submit--release
+    @include submit--release();
+  }
+}
+@mixin submit__option () {
+  // .content > .submit > . submit__option
+  > .submit__option {
+    // [ position ]
+    grid-area: option;
+
+    // [ skin ]
+    padding: .5rem 0 .5rem .2rem;
+    background-color: $bgcolor;
+    border: {
+      left: .19rem solid $bordercolor;
+      radius: .071rem;
+    }
+    @media screen and ( max-width: $medium ) {
+      width: 90vw;
+    }
+    @media screen and ( min-width: $medium ) {
+      width: 17rem;
+    }
+    @media screen and ( min-width: $large ) {
+      width: 24.048rem;
+    }
+
+    // .content > .submit > .submit__option
+    > h2 {
+      // [ skin ]
+      font-size: .6rem;
+      padding: .2rem;
+    }
+
+    > .submit__option--options {
+      // [ skin ]
+      padding: 0 0 .2rem .2rem;
+      font-size: .5rem;
+      color: $wordcolor;
+    }
+    @include submit__timeselector();
+
+    // .content > .submit > .submit__option--option > .submit__option--input
+    > .submit__option--input {
+      margin-left: .5rem;
+    }
+  }
+}
+@mixin submit--release () {
+  // .content > .submit > .submit--release
+  > .submit--release {
+    // [ position ]
+    grid-area: release;
+
+    // [ skin ]
+    background-color: #8caae2;
+    height: 1.552rem;
+    width: 4.774rem;
+    border-radius: .071rem;
+    box-shadow: 0 .095rem .095rem 0 rgba( 0, 0, 0, .25 );
+    display: block;
+    @media screen and ( min-width: $medium ) {
+      width: 4.5rem;
+    }
+    font-size: .5rem;
+    color: white;
+    margin-bottom: .5rem;
+  }
+}
+@mixin submit__timeselector () {
+  > .input__time {
+    font-size: .5rem;
+
+    > .input__time--date {
+      margin: {
+        left: 1rem;
+        right: .2rem;
+      }
+      border-radius: 1rem;
+      padding: 0 .1rem;
+    }
+
+    > .input__time--hour {
+      border-radius: 1rem;
+      margin-right: .2rem;
+      background-color: white;
+    }
+
+    > .input__time--minute {
+      border-radius: 1rem;
+      margin-right: .2rem;
+      background-color: white;
+    }
+  }
+}
