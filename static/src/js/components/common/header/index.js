@@ -1,4 +1,4 @@
-// import {
+// Import {
 //     registClickToActive,
 //     registItemSwitch,
 //     registClickToHide,
@@ -45,5 +45,5 @@
 // };
 
 export default function () {
-    return
-};
+    return;
+}

@@ -214,65 +214,65 @@ mixin header( belongBlock )
             li.dropdown__item.item
               a.item__link( href = UTILS.url( { href : 'resource/alumni' } ) )= i18n[ LANG.id ].route.resource.alumni
 
-      //- //- Login,
-      //- //- Small screen version
-      //- a.navigation__login.login( href = UTILS.url( { href : 'login' } ) )
-      //-   +image( {
-      //-     alt:       i18n[ LANG.id ].util.login,
-      //-     className: 'login__image',
-      //-     src:       'icon/user.png',
-      //-   } )
-      //-   span.login__text= i18n[ LANG.id ].util.login
+      //- Login,
+      //- Small screen version
+      a.navigation__login.login( href = UTILS.url( { href : 'auth/login' } ) )
+        +image( {
+          alt:       i18n[ LANG.id ].util.login,
+          className: 'login__image',
+          src:       'icon/user.png',
+        } )
+        span.login__text= i18n[ LANG.id ].util.login
 
-      //- //- Calendar, currently not available
-      //- //- Small screen version
-      //- a.navigation__calendar.calendar( href = UTILS.url( { href : 'calendar' } ) )
-      //-   +image( {
-      //-     alt:       i18n[ LANG.id ].util.calendar,
-      //-     className: 'calendar__image',
-      //-     src:       'icon/calendar.png',
-      //-   } )
-      //-   span.calnedar__text= i18n[ LANG.id ].util.calendar
+      //- Calendar, currently not available
+      //- Small screen version
+      a.navigation__calendar.calendar( href = UTILS.url( { href : 'calendar' } ) )
+        +image( {
+          alt:       i18n[ LANG.id ].util.calendar,
+          className: 'calendar__image',
+          src:       'icon/calendar.png',
+        } )
+        span.calendar__text= i18n[ LANG.id ].util.calendar
 
-      //- //- Language Choice
-      //- //- Small screen version
-      //- section.navigation__language.language
-      //-   +image( {
-      //-     alt:       i18n[ LANG.id ].util.language,
-      //-     className: 'language__image',
-      //-     src:       `icon/flag-${ LANG.id }.png`,
-      //-   } )
-      //-   h3.language__text= i18n[ LANG.id ].util.language
-      //-   button.language__switch.switch
-      //-     span.switch__icon
-      //-   ul.language__dropdown.dropdown
-      //-     li.dropdown__item.item.item--zh-TW
-      //-       a.item__link.link(
-      //-         href = UTILS.url( {
-      //-           href: currentRoute,
-      //-           query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
-      //-         } )
-      //-       )
-      //-         +image( {
-      //-           alt:       '臺灣',
-      //-           className: 'link__image',
-      //-           src:       `icon/flag-${ LANG.getLanguageId( 'zh-TW' ) }.png`,
-      //-         } )
-      //-         if LANG.id === LANG.getLanguageId( 'zh-TW' )
-      //-           span.link__text.link__text--active 臺灣
-      //-         else
-      //-           span.link__text 臺灣
-      //-     li.dropdown__item.item.item--en-US
-      //-       a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'en-US' ) } } ) )
-      //-         +image( {
-      //-           alt:       'USA',
-      //-           className: 'link__image',
-      //-           src:       `icon/flag-${ LANG.getLanguageId( 'en-US' ) }.png`,
-      //-         } )
-      //-         if LANG.id === LANG.getLanguageId( 'en-US' )
-      //-           span.link__text.link__text--active USA
-      //-         else
-      //-           span.link__text USA
+      //- Language Choice
+      //- Small screen version
+      section.navigation__language.language
+        +image( {
+          alt:       i18n[ LANG.id ].util.language,
+          className: 'language__image',
+          src:       `icon/flag-${ LANG.id }.png`,
+        } )
+        span.language__text= i18n[ LANG.id ].util.language
+        button.language__switch.switch.language__switch--active
+          span.switch__icon
+        ul.language__dropdown.dropdown.language__dropdown--open
+          li.dropdown__item.item
+            a.item__link.link(
+              href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } )
+            )
+              +image( {
+                alt:       '臺灣',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'zh-TW' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'zh-TW' )
+                span.link__text.link__text--active 臺灣
+              else
+                span.link__text 臺灣
+          li.dropdown__item.item
+            a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'en-US' ) } } ) )
+              +image( {
+                alt:       'USA',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'en-US' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'en-US' )
+                span.link__text.link__text--active USA
+              else
+                span.link__text USA
 
     //- //- Calendar, currently not available
     //- //- Large screen version
