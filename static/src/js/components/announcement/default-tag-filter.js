@@ -209,7 +209,7 @@ export default class DefaultTagFilter {
     }
 
     async renderTransitionShow ( dom ) {
-        classRemove( dom, 'briefings__briefing--collapse' );
+        classRemove( dom, 'briefings__briefing--disappear' );
         classAdd( dom, 'briefings__briefing--show' );
         dom.style.height = `${ dom.scrollHeight }px`;
         await delay( this.config.transitionSec * 1000 );
@@ -218,7 +218,7 @@ export default class DefaultTagFilter {
     static renderTransitionHide ( dom ) {
         if ( dom.style.height !== '0px' ) {
             classRemove( dom, 'briefings__briefing--show' );
-            classAdd( dom, 'briefings__briefing--collapse' );
+            classAdd( dom, 'briefings__briefing--disappear' );
             dom.style.height = '0px';
         }
     }
