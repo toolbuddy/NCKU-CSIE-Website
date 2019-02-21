@@ -1,11 +1,10 @@
 export function changeEditorLanguage ( editors, language ) {
     Array.from( editors ).forEach( ( editor ) => {
-        if ( editor.classList.contains( `editor__editor--${ language }` ) ){
+        if ( editor.classList.contains( `editor__editor--${ language }` ) )
             editor.classList.add( 'editor__editor--show' );
-        }
-        else{
+
+        else
             editor.classList.remove( 'editor__editor--show' );
-        }
     } );
 }
 

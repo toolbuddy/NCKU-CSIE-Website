@@ -10,6 +10,12 @@
   background-color: #ffffff;
 
   // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header( $block: 'body' );
+
+  // element
   // `.body > .body__content`
   // block
   // `.body > .content`

@@ -26,7 +26,6 @@ append data
     } );
     const currentRoute = 'user/announcement/edit';
 
-
 append title
   +title( i18n[ LANG.id ].title )
 
@@ -40,7 +39,7 @@ append header
       { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
       { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
       { text: i18n[ LANG.id ].title },
-    ] 
+    ]
   )
 
 append content
@@ -73,15 +72,15 @@ append content
     section.editor__editor.editor__editor--zh-TW
       input.editor__input--title( type = 'text', name = 'title', placeholder = '文章標題（最多70字）' )
       textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = '文章內文' )
-      label.editor__input--addfile( for = "editor__input--addfile-input" ) 
+      label.editor__input--addfile( for = 'editor__input--addfile-input' )
         p.editor__input--addfile-content 附加檔案
-      input.editor__input--addfile-input( id = 'editor__input--addfile-input' type = 'file', name = 'file', multiple )
+      input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
     section.editor__editor.editor__editor--en-US
       input.editor__input--title( type = 'text', name = 'title', placeholder = 'title（at most 300 letters）' )
       textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = 'content' )
-      label.editor__input--addfile( for = "editor__input--addfile-input" ) 
+      label.editor__input--addfile( for = 'editor__input--addfile-input' )
         p.editor__input--addfile-content 附加檔案
-      input.editor__input--addfile-input( id = 'editor__input--addfile-input' type = 'file', name = 'file', multiple )
+      input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
   article.submit
     .submit__option
       h2.submit--topic 發佈選項
