@@ -31,6 +31,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
                             throw new TypeError( 'invalid arguments' );
                         }
 
+                        if ( this.isLocked() )
+                            return;
+                        this.acquireLock();
+
                         this.pushState();
                         this.getAll();
                     }
@@ -55,6 +59,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
 
                 classAdd( tagObj.node, 'tags__tag--active' );
                 tagObj.node.addEventListener( 'click', () => {
+                    if ( this.isLocked() )
+                        return;
+                    this.acquireLock();
+
                     this.DOM.filter.tags.forEach( ( tagObj ) => {
                         classRemove( tagObj.node, 'tags__tag--active' );
                     } );
@@ -70,6 +78,10 @@ export default class SingleDefaultTagFilter extends DefaultTagFilter {
             }
             else {
                 tagObj.node.addEventListener( 'click', () => {
+                    if ( this.isLocked() )
+                        return;
+                    this.acquireLock();
+
                     const index = this.state.tags.indexOf( tagObj.id );
                     if ( index >= 0 ) {
                         this.state.tags.splice( index, 1 );
