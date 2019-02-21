@@ -12,31 +12,31 @@ append data
             title: 'Introduction',
             detail: 'Department history, education goals and developing directions',
             modifier: 'red',
-            href: UTILS.url( { href: 'about/intro', } ),
+            route: 'about/intro',
           },
           {
             title: 'Faculty',
             detail: 'Faculty, belonging department and research groups',
             modifier: 'green',
-            href: UTILS.url( { href: 'about/faculty', } ),
+            route: 'about/faculty',
           },
           {
             title: 'Staff',
             detail: 'Administrative support, public relations and finance',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'about/staff', } ),
+            route: 'about/staff',
           },
           {
             title: 'Awards',
             detail: 'Competition results, receiving awards and excellent research publications',
             modifier: 'blue',
-            href: UTILS.url( { href: 'about/award', } ),
+            route: 'about/award',
           },
           {
             title: 'Contact Us',
             detail: 'Providing three different traffic information, including self-driving, train and THSR',
             modifier: 'purple',
-            href: UTILS.url( { href: 'about/contact', } ),
+            route: 'about/contact',
           },
         ],
       },
@@ -50,31 +50,31 @@ append data
             title: '系所介紹',
             detail: '系所的歷史沿革、教育目標與發展方向',
             modifier: 'red',
-            href: UTILS.url( { href: 'about/intro', } ),
+            route: 'about/intro',
           },
           {
             title: '師資陣容',
             detail: '系所的教職人員、隸屬部門與研究類群',
             modifier: 'green',
-            href: UTILS.url( { href: 'about/faculty', } ),
+            route: 'about/faculty',
           },
           {
             title: '行政人員',
             detail: '承辦業務與聯絡的主要人員',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'about/staff', } ),
+            route: 'about/staff',
           },
           {
             title: '榮譽事蹟',
             detail: '包含競賽成績、獲頒獎項與優秀的研究成果等',
             modifier: 'blue',
-            href: UTILS.url( { href: 'about/award', } ),
+            route: 'about/award',
           },
           {
             title: '聯絡我們',
             detail: '提供自行開車、搭乘火車及高鐵三種不同的交通資訊',
             modifier: 'purple',
-            href: UTILS.url( { href: 'about/contact', } ),
+            route: 'about/contact',
           },
         ],
       },
@@ -88,11 +88,17 @@ append stylesheets
   +css( 'about/index' )
 
 append header
-  +banner( 'body', i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
   +breadcrumb(
     'body',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },
     ]
   )

@@ -5,6 +5,9 @@
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #213262;
+
   // element
   // `.body > .body__content`
   // block
@@ -23,4 +26,10 @@
       background: #213262;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

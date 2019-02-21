@@ -20,7 +20,7 @@
       bottom: 2rem;
     }
     background-color: #ffffff;
-    box-shadow: 0 .0625rem .75rem 0 rgba( 0, 0, 0, .14 ), 0 .25rem .3125rem 0 rgba( 0, 0, 0, .2 );
+    box-shadow: 0 .0625rem .75rem 0 #bfbfbf, 0 .25rem .3125rem 0 #cccccc;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
@@ -89,7 +89,7 @@
         // [ interaction ]
         &:hover {
           // [ skin ]
-          background-color: rgba( 51, 50, 94, .05 );
+          background-color: #f5f5f7;
         }
 
         // [ RWD: $large ]

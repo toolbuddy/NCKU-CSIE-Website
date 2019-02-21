@@ -13,19 +13,19 @@ append data
             title: 'All Announcement',
             detail: 'Announcements of department and university',
             modifier: 'red',
-            href: UTILS.url( { href: 'announcement/all', } ),
+            route: 'announcement/all',
           },
           {
             title: 'Activities',
             detail: 'Conference, speech, competitions and exhibition held by department',
             modifier: 'green',
-            href: UTILS.url( { href: 'announcement/activity', } ),
+            route: 'announcement/activity',
           },
           {
             title: 'Recruitment',
             detail: 'Recruitment information',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'announcement/recruitment', } ),
+            route: 'announcement/recruitment',
           },
         ],
       },
@@ -39,19 +39,19 @@ append data
             title: '全部公告',
             detail: '系所及學校重要資訊公告，不分類別',
             modifier: 'red',
-            href: UTILS.url( { href: 'announcement/all', } ),
+            route: 'announcement/all',
           },
           {
             title: '活動訊息',
             detail: '系所舉辦的研討會、演講、競賽及展覽',
             modifier: 'green',
-            href: UTILS.url( { href: 'announcement/activity', } ),
+            route: 'announcement/activity',
           },
           {
             title: '徵人資訊',
             detail: '系所招聘人才資訊',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'announcement/recruitment', } ),
+            route: 'announcement/recruitment',
           },
         ],
       },
@@ -65,11 +65,17 @@ append stylesheets
   +css( 'announcement/index' )
 
 append header
-  +banner( 'body', i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
   +breadcrumb(
     'body',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },
     ]
   )

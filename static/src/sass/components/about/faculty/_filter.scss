@@ -1,48 +1,3 @@
-// template
-// `> .#{ $block } > .filter > .? > .?__tag`
-%block__tag {
-  // [ variable ]
-  $large: 600px;
-
-  // [ layout ]
-  display: inline-block;
-  margin: .14rem;
-  text-align: center;
-  white-space: normal;
-  word: {
-    wrap: normal;
-    break: normal;
-  }
-
-  // [ skin ]
-  min-height: 1rem;
-  border: {
-    style: solid;
-    width: .03rem;
-    radius: .69rem;
-  }
-  padding: {
-    left: .5rem;
-    right: .5rem;
-  }
-  background-color: #eff3f9;
-  font-size: .44rem;
-
-  // [ interaction ]
-  &:hover {
-    // [ skin ]
-    color: #ffffff;
-    cursor: pointer;
-  }
-
-  // [ RWD: $large ]
-  @media screen and ( min-width: $large ) {
-    // [ skin ]
-    min-height: 1.4rem;
-    font-size: .58rem;
-  }
-}
-
 // component
 // `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
@@ -51,6 +6,51 @@
   // block
   // `> .#{ $block } > .filter`
   > .#{ $block }__filter.filter {
+    // template
+    // `> .#{ $block } > .filter > .? > .?__tag`
+    %block__tag {
+      // [ variable ]
+      $large: 600px;
+
+      // [ layout ]
+      display: inline-block;
+      margin: .14rem;
+      text-align: center;
+      white-space: normal;
+      word: {
+        wrap: normal;
+        break: normal;
+      }
+
+      // [ skin ]
+      min-height: 1rem;
+      border: {
+        style: solid;
+        width: .03rem;
+        radius: .69rem;
+      }
+      padding: {
+        left: .5rem;
+        right: .5rem;
+      }
+      background-color: #eff3f9;
+      font-size: .44rem;
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        min-height: 1.4rem;
+        font-size: .58rem;
+      }
+    }
+
     // [ layout ]
     margin-bottom: 1rem;
 
@@ -144,7 +144,7 @@
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
-          min-width: $large / 5px * 1px;
+          min-width: $large / 5;
         }
 
         // modifier

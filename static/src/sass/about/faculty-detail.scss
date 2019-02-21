@@ -1,34 +1,28 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/font';
-@import 'components/common/topic';
 @import 'components/common/icon';
-@import 'components/common/footer';
+@import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #ffffff;
+
   // element
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #ffffff
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`
@@ -668,4 +662,10 @@
       grid-area: conference;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

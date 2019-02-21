@@ -53,12 +53,18 @@ append stylesheets
   +css( 'student/college' )
 
 append header
-  +banner( 'body', i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
   +breadcrumb(
     'body',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-      { text: i18n[ LANG.id ].breadcrumb.student, url: 'student' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },
       { text: i18n[ LANG.id ].title },
     ]
   )

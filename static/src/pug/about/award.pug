@@ -48,12 +48,18 @@ append stylesheets
   +css( 'about/award' )
 
 append header
-  +banner( 'body', i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
   +breadcrumb(
     'body',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-      { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
       { text: i18n[ LANG.id ].title },
     ]
   )

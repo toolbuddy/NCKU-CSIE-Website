@@ -1,11 +1,14 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
 @import 'components/common/not-available';
+@import 'components/common/footer';
 
 // block
 // `.body`
 .body {
+  // [ skin ]
+  background-color: #ffffff;
+
   // element
   // `.body > .body__content`
   // block
@@ -20,4 +23,10 @@
     // `.body > .content > .not-available`
     @include not-available( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

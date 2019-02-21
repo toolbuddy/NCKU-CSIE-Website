@@ -1,10 +1,10 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
-@import 'components/announcement/announcement';
-@import 'components/announcement/tags';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/footer';
+@import 'components/announcement/tags';
+@import 'components/announcement/announcement';
 @import '~thirdPartyLib/github-markdown-css/github-markdown.css';
 
 // block
@@ -14,21 +14,13 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include
-    banner(
-      $block: 'body',
-      $image: 'https://via.placeholder.com/1920x500'
-    );
+  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__breadcrumb`
   // block
   // `.body > .breadcrumb`
-  @include
-    breadcrumb(
-      $block: 'body',
-      $bg-color: #ffffff
-    );
+  @include breadcrumb( $block: 'body' );
 
   // element
   // `.body > .body__content`
@@ -94,7 +86,7 @@
         type: circle;
         position: inside;
       }
-      margin-left: 15px;
+      margin-left: 15 / 32 * 1rem;
     }
 
     ol ol, ul ol {
@@ -102,7 +94,13 @@
         type: lower-latin;
         position: inside;
       }
-      margin-left: 15px;
+      margin-left: 15 / 32 * 1rem;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

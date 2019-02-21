@@ -1,5 +1,15 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/footer';
+
+// block
+// `.body`
+.body {
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

@@ -13,13 +13,13 @@ append data
             title: 'Laboratories',
             detail: 'List of all laboratories of department',
             modifier: 'red',
-            href: UTILS.url( { href: 'research/labs', } ),
+            route: 'research/labs',
           },
           {
             title: 'Publications',
             detail: 'List of all publications of department',
             modifier: 'green',
-            href: UTILS.url( { href: 'research/publications', } ),
+            route: 'research/publications',
           },
         ],
       },
@@ -33,13 +33,13 @@ append data
             title: '實驗室',
             detail: '資訊所研究實驗室列表',
             modifier: 'red',
-            href: UTILS.url( { href: 'research/labs', } ),
+            route: 'research/labs',
           },
           {
             title: '發表論文',
             detail: '已發表的論文總覽',
             modifier: 'green',
-            href: UTILS.url( { href: 'research/publications', } ),
+            route: 'research/publications',
           },
         ],
       },
@@ -53,11 +53,17 @@ append stylesheets
   +css( 'research/index' )
 
 append header
-  +banner( 'body', i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
   +breadcrumb(
     'body',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },
     ]
   )
