@@ -5,7 +5,7 @@
  * @since 1.0.0
  */
 
-import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class GetHeader {
@@ -92,13 +92,13 @@ export default class GetHeader {
                     classRemove( itemObj.switch, 'item__switch--active' );
                 }
                 else {
-                    this.DOM.item.forEach( itemObj => {
+                    this.DOM.item.forEach( ( itemObj ) => {
                         if ( itemObj.active ) {
                             classRemove( itemObj.dropdown, 'item__dropdown--open' );
                             classRemove( itemObj.switch, 'item__switch--active' );
                             itemObj.active = false;
                         }
-                    } )
+                    } );
                     classAdd( itemObj.dropdown, 'item__dropdown--open' );
                     classAdd( itemObj.switch, 'item__switch--active' );
                 }
