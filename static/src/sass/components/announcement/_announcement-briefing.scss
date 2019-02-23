@@ -63,10 +63,43 @@
     > .announcement__briefings.briefings {
       // [ skin ]
       margin-top: .7rem;
-      overflow: visible;
+      transform: scaleY( 0 );
 
-      &.briefings__briefing--hide-overflow {
-        overflow-y: hidden;
+      // [ animation ]
+      transform-origin: top;
+      transition: max-height .5s ease;
+
+      &.briefings__briefing--disappear {
+        animation: {
+          name: collapse;
+          duration: .5s;
+          fill-mode: forwards;
+        }
+        max-height: 0;
+      }
+
+      &.briefings__briefing--show {
+        animation: expand .5s ease;
+        transform: scaleY( 1 );
+        max-height: 3000px;
+      }
+      @keyframes collapse {
+        from {
+          transform: scaleY( 1 );
+        }
+
+        to {
+          transform: scaleY( 0 );
+        }
+      }
+      @keyframes expand {
+        from {
+          transform: scaleY( 0 );
+        }
+
+        to {
+          transform: scaleY( 1 );
+        }
       }
 
       // element

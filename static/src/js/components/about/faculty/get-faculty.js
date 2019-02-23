@@ -6,7 +6,7 @@
  */
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, classRemove, delay, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import DepartmentUtils from 'models/faculty/utils/department.js';
 import ResearchGroupUtils from 'models/faculty/utils/research-group.js';

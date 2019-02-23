@@ -6,20 +6,20 @@ append data
         'all':
         {
             color:   'yellow',
-            id:      UTILS.tagAllId,
-            tag:     UTILS.getTagAll( LANG.id ),
+            id:      UTILS.TagUtils.tagAllId,
+            tag:     UTILS.TagUtils.getTagAll( LANG.id ),
             tagName: 'all',
         },
     };
-    UTILS.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach( tag => {
-        const tagId = UTILS.getTagId( {
+    UTILS.TagUtils.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach( tag => {
+        const tagId = UTILS.TagUtils.getTagId( {
             tag:        tag,
             languageId: LANG.getLanguageId( 'en-US' ),
         } );
         allTags[ tag ] = {
-            color: UTILS.getTagColorById( tagId ),
+            color: UTILS.TagUtils.getTagColorById( tagId ),
             id:    tagId,
-            tag:   UTILS.getTagById( {
+            tag:   UTILS.TagUtils.getTagById( {
                 tagId: tagId,
                 languageId: LANG.id,
             } ),
