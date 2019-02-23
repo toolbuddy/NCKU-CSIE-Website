@@ -1,5 +1,6 @@
 @charset 'utf-8';
 @import 'components/common/font';
+@include font--notosanstc();
 
 *, *::before, *::after {
   // Box model.
@@ -29,7 +30,7 @@ html, body {
 
   // Default font.
   font: {
-    size: 32px;
+    size: font__base-font-size();
     family: 'Noto Sans TC', 'Arial', 'Microsoft JhengHei';
     weight: normal;
   }

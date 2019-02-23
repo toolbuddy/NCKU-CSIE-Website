@@ -1,3 +1,4 @@
+@import 'components/common/font';
 @import 'components/common/icon';
 
 // components
@@ -12,8 +13,6 @@
     $small: 320px;
     $medium: 560px;
     $large: 1120px;
-    $item-height: 50 / 32 * 1rem;
-    $font-size: 16 / 32 * 1rem;
 
     // [ layout ]
     display: flex;
@@ -246,14 +245,19 @@
     // block
     // `> .#{ $block } > .header > .navigation`
     > .header__navigation.navigation {
+      // [ variable ]
+      $border-height: font__px-to-rem( 1 );
+      $item-width: font__px-to-rem( 320 );
+      $item-height: font__px-to-rem( 50 ) + $border-height;
+      $font-size: font__px-to-rem( 16 );
+
       // [ position ]
       position: fixed;
       top: 0;
-      right: -1 * $small;
+      right: -1 * $item-width;
       z-index: 2;
 
       // [ layout ]
-      display: none;
       overflow-y: auto;
 
       // [ skin ]
@@ -267,7 +271,7 @@
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
         // [ skin ]
-        width: $small;
+        width: $item-width;
       }
 
       // [ RWD: $large ]
@@ -301,7 +305,7 @@
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
           // [ skin ]
-          width: $small;
+          width: $item-width;
         }
       }
 
@@ -313,19 +317,18 @@
         // [ layout ]
         display: inline-block;
         margin: {
-          top: 12 / 32 * 1rem;
-          bottom: 12 / 32 * 1rem;
-          left: ( 18 / $small * 1px ) * 100%;
-          right: ( 20 / $small * 1px ) * 100%;
+          top: font__px-to-rem( 12 );
+          bottom: font__px-to-rem( 12 );
+          left: font__px-to-rem( 18 ) / $item-width * 100%;
+          right: font__px-to-rem( 12 ) / $item-width * 100%;
         }
-        white-space: nowrap;
 
         // [ skin ]
-        width: 245 / $small * 1px * 100%;
-        height: 42 / 32 * 1rem;
+        width: font__px-to-rem( 240 ) / $item-width * 100%;
+        height: font__px-to-rem( 42 );
         padding: {
-          left: 10 / $small * 1px * 100%;
-          right: 10 / $small * 1px * 100%;
+          left: font__px-to-rem( 10 ) / $item-width * 100%;
+          right: font__px-to-rem( 10 ) / $item-width * 100%;
         }
         background-color: #1d2d56;
 
@@ -333,15 +336,15 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           margin: {
-            left: 18 / 32 * 1rem;
-            right: 20 / 32 * 1rem;
+            left: font__px-to-rem( 18 );
+            right: font__px-to-rem( 12 );
           }
 
           // [ skin ]
-          width: 245 / 32 * 1rem;
+          width: font__px-to-rem( 240 );
           padding: {
-            left: 10 / 32 * 1rem;
-            right: 10 / 32 * 1rem;
+            left: font__px-to-rem( 10 );
+            right: font__px-to-rem( 10 );
           }
         }
 
@@ -357,28 +360,37 @@
           // [ layout ]
           display: inline-block;
           vertical-align: top;
-          margin-right: 6 / 245 * 100%;
+          margin-right: font__px-to-rem( 6 ) / font__px-to-rem( 240 ) * 100%;
 
           // [ skin ]
-          width: 200 / 245 * 100%;
-          height: 42 / 32 * 1rem;
+          width: font__px-to-rem( 200 ) / font__px-to-rem( 240 ) * 100%;
+          height: 100%;
           color: #ffffff;
           background-color: transparent;
-          font-size: .5rem;
+          font: {
+            size: $font-size;
+            style: normal;
+            weight: normal;
+          }
 
           // [ placeholder ]
           &::placeholder {
-            // [skin ]
+            // [ skin ]
             color: #8e96ab;
+            font: {
+              size: $font-size;
+              style: normal;
+              weight: normal;
+            }
           }
 
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             // [ layout ]
-            margin-right: 6 / 32 * 1rem;
+            margin-right: font__px-to-rem( 6 );
 
             // [ skin ]
-            width: 200 / 32 * 1rem;
+            width: font__px-to-rem( 200 );
           }
         }
 
@@ -390,13 +402,13 @@
           // [ layout ]
           display: inline-block;
           margin: {
-            top: 14 / 32 * 1rem;
-            bottom: 14 / 32 * 1rem;
+            top: font__px-to-rem( 14 );
+            bottom: font__px-to-rem( 14 );
           }
 
           // [ skin ]
-          width: 14 / 32 * 1rem;
-          height: 14 / 32 * 1rem;
+          width: font__px-to-rem( 14 );
+          height: font__px-to-rem( 14 );
           background-color: transparent;
 
           // element
@@ -406,8 +418,8 @@
             vertical-align: top;
 
             // [ skin ]
-            width: 14 / 32 * 1rem;
-            height: 14 / 32 * 1rem;
+            width: 100%;
+            height: 100%;
             filter:
               invert( 100% )
               sepia( 0% )
@@ -421,29 +433,27 @@
 
       // element
       // `> .#{ $block } > .header > .navigation > .navigation__cancel`
-      // block
-      // `> .#{ $block } > .header > .navigation > .cancel`
-      > .navigation__cancel.cancel {
+      > .navigation__cancel {
         // [ position ]
         position: relative;
 
         // [ layout ]
         display: inline-block;
         margin: {
-          top: 21 / 32 * 1rem;
-          bottom: 21 / 32 * 1rem;
+          top: font__px-to-rem( 21 );
+          bottom: font__px-to-rem( 21 );
         }
         vertical-align: top;
 
         // [ skin ]
-        width: 24 / $small * 1px * 100%;
-        height: 24 / 32 * 1rem;
+        width: font__px-to-rem( 24 ) / $item-width * 100%;
+        height: font__px-to-rem( 24 );
         background-color: transparent;
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
           // [ skin ]
-          width: 24 / 32 * 1rem;
+          width: font__px-to-rem( 24 );
         }
 
         // [ RWD: $large ]
@@ -452,34 +462,39 @@
           display: none;
         }
 
-        // element
-        // `> .#{ $block } > .header > .navigation > .cancel > .cancel__line`
-        // The look of this element should be a cross.
-        > .cancel__line {
+        // [ before & after ]
+        // The look of these element should be a cross.
+        &::before, &::after {
           // [ position ]
           // In order to make a cross,
           // elements should be at the same position first.
           position: absolute;
 
+          // Transform should happen at middle,
+          // or it will overflow y otherwise.
+          top: 50%;
+          left: 0;
+
           // [ layout ]
-          display: block;
+          display: inline-block;
 
           // [ skin ]
           width: 100%;
-          height: 3 / 32 * 1rem;
+          height: font__px-to-rem( 3 );
           background-color: #ffffff;
+          content: '';
+        }
 
-          // [ first-child ]
-          &:first-child {
-            // [ skin ]
-            transform: rotate( 45deg );
-          }
+        // [ before ]
+        &::before {
+          // [ skin ]
+          transform: rotate( 45deg );
+        }
 
-          // [ last-child ]
-          &:last-child {
-            // [ skin ]
-            transform: rotate( -45deg );
-          }
+        // [ before ]
+        &::after {
+          // [ skin ]
+          transform: rotate( -45deg );
         }
       }
 
@@ -509,9 +524,18 @@
         // block
         // `> .#{ $block } > .header > .navigation > .list > .item`
         > .list__item.item {
+          // [ position ]
+          // This style is set to make `.item__switch` overlap other elements.
+          position: relative;
+
+          // [ layout ]
+          display: block;
+
           // [ skin ]
+          width: 100%;
           height: auto;
-          border-top: 1 / 32 * 1rem solid #415277;
+          border-top: $border-height solid #415277;
+          background-color: transparent;
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
@@ -562,16 +586,20 @@
             width: auto;
             height: $item-height;
             padding: {
-              top: ( $item-height - $font-size ) / 2;
-              bottom: ( $item-height - $font-size ) / 2;
-              left: 30 / 32 * 1rem;
+              top: ( $item-height - $border-height - $font-size ) / 2;
+              bottom: ( $item-height - $border-height - $font-size ) / 2;
+              left: font__px-to-rem( 30 );
             }
             color: #8f98ae;
-            font-size: $font-size;
+            font: {
+              size: $font-size;
+              style: normal;
+              weight: normal;
+            }
 
             // modifier
-            // `> .#{ $block } > .header > .navigation > .list > .item > .item__link > .item__link--homepage`
-            &.item__link--homepage {
+            // `> .#{ $block } > .header > .navigation > .list > .item > .item__link.item__link--no-dropdown`
+            &.item__link--no-dropdown {
               // [ skin ]
               width: 100%;
             }
@@ -596,24 +624,24 @@
 
           // element
           // `> .#{ $block } > .header > .navigation > .list > .item > .item__switch`
-          // block
-          // `> .#{ $block } > .header > .navigation > .list > .item > .switch`
-          > .item__switch.switch {
+          > .item__switch {
             // [ position ]
             // `z-index` is set to put `.item__switch` beneath `.item__link`.
             position: absolute;
             text-align: right;
             left: 0;
+            top: 0;
             z-index: 0;
 
             // [ layout ]
-            display: inline-block;
+            display: block;
 
             // [ skin ]
             width: 100%;
             height: $item-height;
-            padding-right: 20 / 32 * 1rem;
+            padding-right: font__px-to-rem( 20 );
             background-color: transparent;
+            cursor: pointer;
 
             // [ RWD: $large ]
             @media screen and ( min-width: $large ) {
@@ -621,22 +649,23 @@
               display: none;
             }
 
-            // element
-            // `> .#{ $block } > .header > .navigation > .list > .item > .switch > .switch__icon`
-            > .switch__icon {
+            // [ after ]
+            // The look of this element should look like arrow.
+            &::after {
               // [ layout ]
               display: inline-block;
               vertical-align: middle;
 
               // [ skin ]
-              width: 14 / 32 * 1rem;
-              height: 14 / 32 * 1rem;
+              width: font__px-to-rem( 14 );
+              height: font__px-to-rem( 14 );
               border: {
                 color: #8f98ae;
                 style: solid;
-                top-width: 3 / 32 * 1rem;
-                right-width: 3 / 32 * 1rem;
+                top-width: font__px-to-rem( 3 );
+                right-width: font__px-to-rem( 3 );
               }
+              content: '';
               transform: rotate( 45deg );
 
               // [ animation ]
@@ -646,9 +675,8 @@
             // modifier
             // `> .#{ $block } > .header > .navigation > .list > .item > .item__switch > .item__switch--active`
             &.item__switch--active {
-              // element
-              // `> .#{ $block } > .header > .navigation > .list > .item > .switch > .switch__icon`
-              > .switch__icon {
+              // [ after ]
+              &::after {
                 // [ skin ]
                 transform: rotate( 135deg );
               }
@@ -667,11 +695,13 @@
             // [ skin ]
             // In order to trigger `height` transition without knowing actual elements `height`,
             // `max-height` must be used instead of `height`.
+            width: 100%;
             max-height: 0;
             background-color: #1d2d56;
+            opacity: 0;
 
             // [ animation ]
-            transition: height .5s, padding .5s;
+            transition: height .5s, padding .5s, opacity .5s;
 
             // [ RWD: $large ]
             @media screen and ( min-width: $large ) {
@@ -703,13 +733,24 @@
             // `> .#{ $block } > .header > .navigation > .list > .item > .dropdown > .item`
             > .dropdown__item.item {
               // [ layout ]
-              margin-left: 130 / $small * 1px * 100%;
+              display: block;
+              margin-left: font__px-to-rem( 130 ) / $item-width * 100%;
 
               // [ skin ]
-              border-left: 1 / 32 * 1rem solid #404e6e;
+              width: ( font__px-to-rem( 180 ) - $border-height ) / $item-width * 100%;
+              height: font__px-to-rem( 40 );
+              border-left: $border-height solid #404e6e;
               padding: {
-                top: 13 / 32 * 1rem;
-                bottom: 13 / 32 * 1rem;
+                top: font__px-to-rem( 12 );
+                bottom: font__px-to-rem( 12 );
+                left: font__px-to-rem( 30 ) / $item-width * 100%;
+              }
+
+              // [ RWD: $small ]
+              @media screen and ( min-width: $small ) {
+                // [ skin ]
+                width: font__px-to-rem( 180 ) - $border-height;
+                padding-left: font__px-to-rem( 30 );
               }
 
               // [ RWD: $large ]
@@ -738,21 +779,18 @@
               // `> .#{ $block } > .header > .navigation > .list > .item > .dropdown > .item > .item__link`
               > .item__link {
                 // [ layout ]
-                display: block;
+                display: inline-block;
+                vertical-align: top;
                 line-height: $font-size;
-                letter-spacing: normal;
 
                 // [ skin ]
                 width: 100%;
-                height: $font-size;
-                padding-left: 30 / $small * 1px * 100%;
+                height: 100%;
                 color: #ffffff;
-                font-size: $font-size;
-
-                // [ RWD: $small ]
-                @media screen and ( min-width: $small ) {
-                  // [ skin ]
-                  padding-left: 30 / 32 * 1rem;
+                font: {
+                  size: $font-size;
+                  style: normal;
+                  weight: normal;
                 }
               }
             }
@@ -763,11 +801,12 @@
               // [ skin ]
               // In order to trigger `max-height` transition,
               // `max-height` must be larger than possible height.
-              max-height: 10000 / 32 * 1rem;
+              max-height: font__px-to-rem( 10000 );
               padding: {
-                top: 20 / 32 * 1rem;
-                bottom: 20 / 32 * 1rem;
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
               }
+              opacity: 1;
             }
           }
         }
@@ -780,18 +819,19 @@
       > .navigation__login.login {
         // [ layout ]
         display: block;
-        line-height: $font-size;
 
         // [ skin ]
         width: 100%;
         height: $item-height;
-        border-top: 1 / 32 * 1rem solid #415277;
-        padding: {
-          top: ( $item-height - $font-size ) / 2;
-          bottom: ( $item-height - $font-size ) / 2;
-          left: 30 / 32 * 1rem;
-        }
+        border-top: $border-height solid #415277;
+        padding-left: font__px-to-rem( 30 ) / $item-width * 100%;
         background-color: transparent;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ skin ]
+          padding-left: font__px-to-rem( 30 );
+        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -804,12 +844,15 @@
         > .login__image {
           // [ layout ]
           display: inline-block;
-          margin-right: 20 / $small * 1px * 100%;
-          vertical-align: top;
+          margin-right: font__px-to-rem( 20 ) / $item-width * 100%;
 
           // [ skin ]
-          width: $font-size;
-          height: $font-size;
+          width: font__px-to-rem( 24 );
+          height: $item-height - $border-height;
+          padding: {
+            top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+            bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+          }
           filter:
             invert( 100% )
             opacity( 50% );
@@ -817,7 +860,7 @@
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             // [ layout ]
-            margin-right: 20 / 32 * 1rem;
+            margin-right: font__px-to-rem( 20 );
           }
         }
 
@@ -831,7 +874,11 @@
 
           // [ skin ]
           width: auto;
-          height: $font-size;
+          height: $item-height - $border-height;
+          padding: {
+            top: ( $item-height - $border-height - $font-size ) / 2;
+            bottom: ( $item-height - $border-height - $font-size ) / 2;
+          }
           color: #8f98ae;
           font-size: $font-size;
         }
@@ -844,18 +891,19 @@
       > .navigation__calendar.calendar {
         // [ layout ]
         display: block;
-        line-height: $font-size;
 
         // [ skin ]
         width: 100%;
         height: $item-height;
-        border-top: 1 / 32 * 1rem solid #415277;
-        padding: {
-          top: ( $item-height - $font-size ) / 2;
-          bottom: ( $item-height - $font-size ) / 2;
-          left: 30 / 32 * 1rem;
-        }
+        border-top: $border-height solid #415277;
+        padding-left: font__px-to-rem( 30 ) / $item-width * 100%;
         background-color: transparent;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ skin ]
+          padding-left: font__px-to-rem( 30 );
+        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -868,12 +916,15 @@
         > .calendar__image {
           // [ layout ]
           display: inline-block;
-          margin-right: 20 / $small * 1px * 100%;
-          vertical-align: top;
+          margin-right: font__px-to-rem( 20 ) / $item-width * 100%;
 
           // [ skin ]
-          width: $font-size;
-          height: $font-size;
+          width: font__px-to-rem( 24 );
+          height: $item-height - $border-height;
+          padding: {
+            top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+            bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+          }
           filter:
             invert( 100% )
             opacity( 50% );
@@ -881,7 +932,7 @@
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             // [ layout ]
-            margin-right: 20 / 32 * 1rem;
+            margin-right: font__px-to-rem( 20 );
           }
         }
 
@@ -895,7 +946,11 @@
 
           // [ skin ]
           width: auto;
-          height: $font-size;
+          height: $item-height - $border-height;
+          padding: {
+            top: ( $item-height - $border-height - $font-size ) / 2;
+            bottom: ( $item-height - $border-height - $font-size ) / 2;
+          }
           color: #8f98ae;
           font-size: $font-size;
         }
@@ -907,25 +962,18 @@
       // `> .#{ $block } > .header > .navigation > .language`
       > .navigation__language.language {
         // [ position ]
-        // This style is set to put `.language__text` above `.language__switch`.
+        // This style is set to put `.language__text` beneath `.language__switch`.
         position: relative;
-        z-index: 1;
 
         // [ layout ]
         display: block;
-        line-height: $font-size;
 
         // [ skin ]
         width: 100%;
-        height: $item-height;
+        height: auto;
         border: {
-          top: 1 / 32 * 1rem solid #415277;
-          bottom: 1 / 32 * 1rem solid #415277;
-        }
-        padding: {
-          top: ( $item-height - $font-size ) / 2;
-          bottom: ( $item-height - $font-size ) / 2;
-          left: 30 / 32 * 1rem;
+          top: $border-height solid #415277;
+          bottom: $border-height solid #415277;
         }
         background-color: transparent;
 
@@ -938,42 +986,60 @@
         // element
         // `> .#{ $block } > .header > .navigation > .language > .language__image`
         > .language__image {
+          // [ position ]
+          position: relative;
+          top: 50%;
+          z-index: 0;
+
           // [ layout ]
           display: inline-block;
-          margin-right: 20 / $small * 1px * 100%;
-          vertical-align: top;
+          margin-left: font__px-to-rem( 30 ) / $item-width * 100%;
 
           // [ skin ]
-          width: $font-size;
-          height: $font-size;
+          width: font__px-to-rem( 24 );
+          height: font__px-to-rem( 24 );
 
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             // [ layout ]
-            margin-right: 20 / 32 * 1rem;
+            margin-left: font__px-to-rem( 30 );
           }
         }
 
         // element
         // `> .#{ $block } > .header > .navigation > .language > .language__text`
         > .language__text {
+          // [ position ]
+          position: relative;
+          top: 0;
+          z-index: 0;
+
           // [ layout ]
           display: inline-block;
+          margin-left: font__px-to-rem( 20 ) / $item-width * 100%;
           vertical-align: top;
           line-height: $font-size;
 
           // [ skin ]
           width: auto;
-          height: $font-size;
+          height: font__px-to-rem( 24 );
+          padding: {
+            top: ( $item-height - font__px-to-rem( 24 ) ) / 2;
+            bottom: ( $item-height - font__px-to-rem( 24 ) ) / 2;
+          }
           color: #8f98ae;
           font-size: $font-size;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ layout ]
+            margin-left: font__px-to-rem( 20 );
+          }
         }
 
         // element
         // `> .#{ $block } > .header > .navigation > .language > .language__switch`
-        // block
-        // `> .#{ $block } > .header > .navigation > .language > .switch`
-        > .language__switch.switch {
+        > .language__switch {
           // [ position ]
           // `z-index` is set to put `.language__switch` beneath `.item__text`.
           position: absolute;
@@ -987,26 +1053,25 @@
 
           // [ skin ]
           width: 100%;
-          height: $item-height;
-          padding-right: 20 / 32 * 1rem;
+          height: $item-height - $border-height;
+          padding-right: font__px-to-rem( 20 );
           background-color: transparent;
 
-          // element
-          // `> .#{ $block } > .header > .navigation > .language > .switch > .switch__icon`
-          > .switch__icon {
+          &::after {
             // [ layout ]
             display: inline-block;
             vertical-align: middle;
 
             // [ skin ]
-            width: 14 / 32 * 1rem;
-            height: 14 / 32 * 1rem;
+            width: font__px-to-rem( 14 );
+            height: font__px-to-rem( 14 );
             border: {
               color: #8f98ae;
               style: solid;
-              top-width: 3 / 32 * 1rem;
-              right-width: 3 / 32 * 1rem;
+              top-width: font__px-to-rem( 3 );
+              right-width: font__px-to-rem( 3 );
             }
+            content: '';
             transform: rotate( 45deg );
 
             // [ animation ]
@@ -1018,7 +1083,7 @@
           &.language__switch--active {
             // element
             // `> .#{ $block } > .header > .navigation > .language > .switch > .switch__icon`
-            > .switch__icon {
+            &::after {
               // [ skin ]
               transform: rotate( 135deg );
             }
@@ -1037,21 +1102,31 @@
           // [ skin ]
           // In order to trigger `height` transition without knowing actual elements `height`,
           // `max-height` must be used instead of `height`.
+          width: 100%;
           max-height: 0;
           background-color: #1d2d56;
+          opacity: 0;
 
           // [ animation ]
-          transition: height .5s, padding .5s;
+          transition: height .5s, padding .5s, opacity .5s;
 
           // element
           // `> .#{ $block } > .header > .navigation > .language > .dropdown > .dropdown__item`
           // block
           // `> .#{ $block } > .header > .navigation > .language > .dropdown > .item`
           > .dropdown__item.item {
+            // [ layout ]
+            display: block;
+
             // [ skin ]
-            padding: {
-              top: 13 / 32 * 1rem;
-              bottom: 13 / 32 * 1rem;
+            width: 100%;
+            height: $item-height - $border-height;
+            padding-left: font__px-to-rem( 30 ) / $item-width * 100%;
+
+            // [ RWD: $small ]
+            @media screen and ( min-width: $small ) {
+              // [ skin ]
+              padding-left: font__px-to-rem( 30 );
             }
 
             // element
@@ -1061,37 +1136,45 @@
             > .item__link.link {
               // [ layout ]
               display: block;
-              line-height: $font-size;
               letter-spacing: normal;
 
               // [ skin ]
               width: 100%;
-              height: $font-size;
-              padding-left: 30 / $small * 1px * 100%;
+              height: 100%;
               color: #ffffff;
-              font-size: $font-size;
-
-              // [ RWD: $small ]
-              @media screen and ( min-width: $small ) {
-                // [ skin ]
-                padding-left: 30 / 32 * 1rem;
-              }
 
               // element
               // `> .#{ $block } > .header > .navigation > .language > .dropdown > .item > .link > .link__image`
               > .link__image {
                 // [ layout ]
-                vertical-align: middle;
+                margin-right: font__px-to-rem( 20 );
+                vertical-align: top;
 
                 // [ skin ]
-                width: .75rem;
+                width: font__px-to-rem( 24 );
+                height: 100%;
+                padding: {
+                  top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+                  bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+                }
               }
 
               // element
               // `> .#{ $block } > .header > .navigation > .language > .dropdown > .item > .link > .link__text`
               > .link__text {
                 // [ layout ]
-                margin-left: .625rem;
+                display: inline-block;
+                vertical-align: top;
+                line-height: $font-size;
+
+                // [ skin ]
+                height: 100%;
+                padding: {
+                  top: ( $item-height - $border-height - $font-size ) / 2;
+                  bottom: ( $item-height - $border-height - $font-size ) / 2;
+                }
+                color: #8f98ae;
+                font-size: $font-size;
 
                 // modifier
                 // `> .#{ $block } > .header > .navigation > .language > .dropdown > .item > .link > .link__text > .link__text--active`
@@ -1110,6 +1193,7 @@
             // In order to trigger `max-height` transition,
             // `max-height` must be larger than possible height.
             max-height: 10000 / 32 * 1rem;
+            opacity: 1;
           }
         }
       }
