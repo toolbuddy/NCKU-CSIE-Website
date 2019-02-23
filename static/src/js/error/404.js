@@ -1,8 +1,10 @@
-import header from 'static/src/js/components/common/header/index.js';
+import GetHeader from 'static/src/js/components/common/header.js';
 import img404Src from 'static/src/image/icon/404.png';
 
 window.addEventListener( 'load', () => {
-    header( document.getElementById( 'header' ) );
+    const header = new GetHeader( {
+        headerDOM: document.getElementById( 'header' ),
+    } );
 
     const img404 = new Image();
     img404.src = img404Src;

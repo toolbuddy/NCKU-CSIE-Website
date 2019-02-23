@@ -13,12 +13,20 @@
     $small: 320px;
     $medium: 560px;
     $large: 1120px;
+    $logo-width: font__px-to-rem( 58 );
+    $logo-height: font__px-to-rem( 44 );
+    $caption-title-font-size: font__px-to-rem( 16 );
+    $caption-subtitle-font-size: font__px-to-rem( 12 );
+    $caption-gap: font__px-to-rem( 4 );
+
+    // [ position ]
+    // This style is set to put `.header__menu` on the right of screen.
+    position: relative;
 
     // [ layout ]
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    text-align: center;
+    line-height: 0;
 
     // [ skin ]
     width: 100%;
@@ -26,27 +34,31 @@
     border: {
       color: #ffffff;
       style: solid;
-      top-width: 26 / 32 * 1rem;
-      bottom-width: 26 / 32 * 1rem;
-      left-width: 12 / 32 * 1rem;
-      right-width: 12 / 32 * 1rem;
+      top-width: font__px-to-rem( 26 );
+      bottom-width: font__px-to-rem( 26 );
+      left-width: font__px-to-rem( 12 );
+      right-width: font__px-to-rem( 12 );
     }
     background-color: #ffffff;
 
     // [ RWD: $medium ]
     @media screen and ( min-width: $medium ) {
       // [ layout ]
-      flex-flow: row nowrap;
+      text-align: left;
+
+      // [ skin ]
+      height: font__px-to-rem( 96 );
       border: {
-        left-width: 24 / 32 * 1rem;
-        right-width: 24 / 32 * 1rem;
+        left-width: font__px-to-rem( 24 );
+        right-width: font__px-to-rem( 24 );
       }
     }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ skin ]
-      border-width: 68 / 32 * 1rem 100 / 32 * 1rem 28 / 32 * 1rem 100 / 32 * 1rem;
+      height: font__px-to-rem( 150 );
+      border-width: font__px-to-rem( 68 ) font__px-to-rem( 100 ) font__px-to-rem( 28 );
     }
 
     // element
@@ -56,27 +68,23 @@
     > .header__logo.logo {
       // [ layout ]
       display: inline-block;
+      vertical-align: top;
 
       // [ skin ]
-      width: 58 / 32 * 1rem;
-      height: 44 / 32 * 1rem;
+      width: $logo-width;
+      height: $logo-height;
       background-color: transparent;
-
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
-        // [ layout ]
-        margin-right: 12 / 32 * 1rem;
-      }
 
       // element
       // `> .#{ $block } > .header > .logo > .logo__image`
       > .logo__image {
         // [ layout ]
         display: inline-block;
+        vertical-align: top;
 
         // [ skin ]
-        width: 58 / 32 * 1rem;
-        height: 44 / 32 * 1rem;
+        width: 100%;
+        height: auto;
         background-color: transparent;
       }
     }
@@ -88,17 +96,29 @@
     > .header__caption.caption {
       // [ layout ]
       display: inline-block;
-      line-height: 16 / 32 * 1rem;
+      margin-top: font__px-to-rem( 16 );
+      vertical-align: top;
 
       // [ skin ]
       width: 100%;
+      height: auto;
       background-color: transparent;
 
       // [ RWD: $medium ]
       @media screen and ( min-width: $medium ) {
+        // [ layout ]
+        margin: {
+          top: 0;
+          left: font__px-to-rem( 12 );
+        }
+
         // [ skin ]
-        min-width: 400 / 32 * 1rem;
         width: auto;
+        height: $logo-height;
+        padding: {
+          top: ( $logo-height - $caption-title-font-size - $caption-subtitle-font-size - $caption-gap ) / 2;
+          bottom: ( $logo-height - $caption-title-font-size - $caption-subtitle-font-size - $caption-gap ) / 2;
+        }
       }
 
       // element
@@ -108,11 +128,13 @@
       > .caption__title.title {
         // [ layout ]
         display: block;
+        margin-bottom: $caption-gap;
         text-align: center;
-        line-height: 16 / 32 * 1rem;
+        line-height: $caption-title-font-size;
 
         // [ skin ]
         width: 100%;
+        height: auto;
         color: #212121;
         background-color: transparent;
 
@@ -122,7 +144,8 @@
           text-align: left;
 
           // [ skin ]
-          width: 240 / 32 * 1rem;
+          width: auto;
+          height: $caption-title-font-size;
         }
 
         // element
@@ -130,11 +153,15 @@
         > .title__text {
           // [ layout ]
           display: inline-block;
+          vertical-align: top;
+          line-height: $caption-title-font-size;
 
           // [ skin ]
+          width: auto;
+          height: $caption-title-font-size;
           background-color: transparent;
           font: {
-            size: 16 / 32 * 1rem;
+            size: $caption-title-font-size;
             style: normal;
             weight: bold;
           }
@@ -149,10 +176,11 @@
         // [ layout ]
         display: block;
         text-align: center;
-        line-height: 12 / 32 * 1rem;
+        line-height: $caption-subtitle-font-size;
 
         // [ skin ]
         width: 100%;
+        height: auto;
         color: #212121;
         background-color: transparent;
 
@@ -163,6 +191,7 @@
 
           // [ skin ]
           width: auto;
+          height: $caption-subtitle-font-size;
         }
 
         // element
@@ -170,18 +199,21 @@
         > .subtitle__text {
           // [ layout ]
           display: inline-block;
-          word-spacing: 3 / 32 * 1rem;
+          vertical-align: top;
+          line-height: $caption-subtitle-font-size;
+          word-spacing: font__px-to-rem( 3 );
 
           // [ skin ]
           width: auto;
+          height: $caption-subtitle-font-size;
           border: {
             color: transparent;
             style: solid;
-            right-width: 3 / 32 * 1rem;
+            right-width: font__px-to-rem( 3 );
           }
           background-color: transparent;
           font: {
-            size: 12 / 32 * 1rem;
+            size: $caption-subtitle-font-size;
             style: normal;
             weight: normal;
           }
@@ -191,29 +223,29 @@
 
     // element
     // `> .#{ $block } > .header > .header__menu`
-    // block
-    // `> .#{ $block } > .header > .menu`
-    > .header__menu.menu {
+    > .header__menu {
       // [ layout ]
-      display: block;
-      margin: {
-        top: 28 / 32 * 1rem;
-        left: auto;
-        right: auto;
-      }
+      display: inline-block;
+      margin-top: font__px-to-rem( 26 );
+      line-height: 0;
 
       // [ skin ]
-      width: 28 / 32 * 1rem;
+      width: font__px-to-rem( 28 );
+      height: font__px-to-rem( 17 );
       background-color: transparent;
 
       // [ RWD: $medium ]
       @media screen and ( min-width: $medium ) {
+        // [ position ]
+        position: absolute;
+        right: font__px-to-rem( 20 );
+        top: 0;
+
         // [ layout ]
         display: inline-block;
         margin: {
-          top: 0;
-          left: auto;
-          right: 0;
+          top: ( $logo-height - font__px-to-rem( 17 ) ) / 2;
+          bottom: ( $logo-height - font__px-to-rem( 17 ) ) / 2;
         }
       }
 
@@ -223,20 +255,38 @@
         display: none;
       }
 
-      // element
-      // `> .#{ $block } > .header > .menu > .menu__line`
-      > .menu__line {
+      // [ before & after ]
+      // The look of these elements should be three parallel horizontal lines.
+      &::before, &::after {
         // [ layout ]
-        display: block;
-        margin: {
-          top: 4 / 32 * 1rem;
-          bottom: 4 / 32 * 1rem;
-        }
+        display: inline-block;
+        vertical-align: top;
 
         // [ skin ]
         width: 100%;
-        height: 3 / 32 * 1rem;
-        background-color: #757575;
+        border: {
+          color: #757575;
+          style: solid;
+        }
+        background-color: transparent;
+        content: '';
+      }
+
+      // [ before ]
+      &::before {
+        // [ skin ]
+        height: font__px-to-rem( 10 );
+        border: {
+          top-width: font__px-to-rem( 3 );
+          bottom-width: font__px-to-rem( 3 );
+        }
+      }
+
+      // [ after ]
+      &::after {
+        // [ skin ]
+        height: font__px-to-rem( 7 );
+        border-bottom-width: font__px-to-rem( 3 );
       }
     }
 
@@ -463,7 +513,7 @@
         }
 
         // [ before & after ]
-        // The look of these element should be a cross.
+        // The look of these elements should be a cross.
         &::before, &::after {
           // [ position ]
           // In order to make a cross,
@@ -530,6 +580,7 @@
 
           // [ layout ]
           display: block;
+          text-align: left;
 
           // [ skin ]
           width: 100%;
@@ -819,6 +870,7 @@
       > .navigation__login.login {
         // [ layout ]
         display: block;
+        text-align: left;
 
         // [ skin ]
         width: 100%;
@@ -891,6 +943,7 @@
       > .navigation__calendar.calendar {
         // [ layout ]
         display: block;
+        text-align: left;
 
         // [ skin ]
         width: 100%;
@@ -967,6 +1020,7 @@
 
         // [ layout ]
         display: block;
+        text-align: left;
 
         // [ skin ]
         width: 100%;
@@ -997,7 +1051,11 @@
 
           // [ skin ]
           width: font__px-to-rem( 24 );
-          height: font__px-to-rem( 24 );
+          height: $item-height - $border-height;
+          padding: {
+            top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+            bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+          }
 
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
