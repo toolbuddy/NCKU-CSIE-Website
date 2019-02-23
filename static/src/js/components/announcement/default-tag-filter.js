@@ -211,15 +211,13 @@ export default class DefaultTagFilter {
     async renderTransitionShow ( dom ) {
         classRemove( dom, 'briefings__briefing--disappear' );
         classAdd( dom, 'briefings__briefing--show' );
-        dom.style.height = `${ dom.scrollHeight }px`;
         await delay( this.config.transitionSec * 1000 );
     }
 
     static renderTransitionHide ( dom ) {
-        if ( dom.style.height !== '0px' ) {
+        if ( dom.style.maxHeight !== '0px' ) {
             classRemove( dom, 'briefings__briefing--show' );
             classAdd( dom, 'briefings__briefing--disappear' );
-            dom.style.height = '0px';
         }
     }
 
@@ -228,7 +226,6 @@ export default class DefaultTagFilter {
             'pinned',
             'normal',
         ].forEach( ( which ) => {
-            this.DOM.announcement[ which ].briefings.style.transition = `height ${ this.config.transitionSec }s ease`;
             this.constructor.renderTransitionHide( this.DOM.announcement[ which ].briefings );
         } );
     }

@@ -67,6 +67,7 @@
 
       // [ animation ]
       transform-origin: top;
+      transition: max-height .5s ease;
 
       &.briefings__briefing--disappear {
         animation: {
@@ -74,11 +75,13 @@
           duration: .5s;
           fill-mode: forwards;
         }
+        max-height: 0;
       }
 
       &.briefings__briefing--show {
         animation: expand .5s ease;
         transform: scaleY( 1 );
+        max-height: 3000px;
       }
       @keyframes collapse {
         from {
