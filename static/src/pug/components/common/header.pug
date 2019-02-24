@@ -20,7 +20,7 @@ mixin header( belongBlock )
           announcement: {
             activity:    'Activities',
             all:         'All',
-            index:       'News',
+            index:       'Announcement',
             recruitment: 'Recruitment',
           },
           home: {
@@ -291,22 +291,22 @@ mixin header( belongBlock )
             query: { languageId: LANG.getLanguageId( 'en-US' ) }
           } ) ) English
 
-    //- //- Login
-    //- //- Large screen version
-    //- a.header__login( href = UTILS.url( { href : 'login' } ) )= i18n[ LANG.id ].route.home.login
+    //- Login
+    //- Large screen version
+    a.header__login( href = UTILS.url( { href : 'login' } ) )= i18n[ LANG.id ].route.home.login
 
-    //- //- Search, currently not available
-    //- //- Large screen version
-    //- scetion.header__search.search
-    //-   button.search__button.button
-    //-     +image( {
-    //-       alt: i18n[ LANG.id ].util.search,
-    //-       className: 'button__image',
-    //-       src:       'icon/search.png',
-    //-     } )
-    //-   section.search__dropdown.dropdown
-    //-     form.dropdown__form.form( action = UTILS.url( { href : 'search' } ), method = 'GET' )
-    //-       input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
-    //-       input.form__input( type = 'text', placeholder = i18n[ LANG.id ].util.search, name = 'searchText', value = '' )
-    //-       input.form__submit( type = 'submit', value = '' )
-    //-     button.dropdown__cancel ✕
+    //- Search, currently not available
+    //- Large screen version
+    scetion.header__search.search
+      button.search__button.button
+        +image( {
+          alt: i18n[ LANG.id ].util.search,
+          className: 'button__image',
+          src:       'icon/search.png',
+        } )
+      section.search__dropdown.dropdown
+        form.dropdown__form.form( action = UTILS.url( { href : 'search' } ), method = 'GET' )
+          input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
+          input.form__input( type = 'text', placeholder = i18n[ LANG.id ].util.search, name = 'searchText', value = '' )
+          input.form__submit( type = 'submit', value = '' )
+        button.dropdown__cancel ✕
