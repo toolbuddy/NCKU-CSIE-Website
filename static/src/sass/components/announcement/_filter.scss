@@ -23,11 +23,7 @@
     // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
     .#{ $element }__input.input {
       // [ layout ]
-      display: grid;
-      grid-template: {
-        areas: 'input__year input__month input__date';
-        columns: 40% 30% 30%;
-      }
+      display: block;
 
       // [ skin ]
       width: 4.2rem;
@@ -42,32 +38,40 @@
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
-      > .input__year {
-        // [ position ]
-        grid-area: input__year;
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
+      > .input__year, > .input__month, > .input__date {
+        // [ layout ]
+        display: inline;
+        vertical-align: top;
+        padding: {
+          top: .25rem;
+          bottom: .25rem;
+        }
 
         // [ skin ]
         background-color: transparent;
+      }
+
+      // element
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+      > .input__year {
+        // [ skin ]
+        width: 40%;
       }
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
       > .input__month {
-        // [ position ]
-        grid-area: input__month;
-
         // [ skin ]
-        background-color: transparent;
+        width: 30%;
       }
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
       > .input__date {
-        // [ position ]
-        grid-area: input__date;
-
         // [ skin ]
-        background-color: transparent;
+        width: 30%;
       }
     }
   }
