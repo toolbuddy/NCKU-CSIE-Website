@@ -178,42 +178,42 @@ append content
       table.patent__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__type= i18n[ LANG.id ].patent.type
-            th.row__name= i18n[ LANG.id ].patent.name
-            th.row__nation= i18n[ LANG.id ].patent.nation
-            th.row__owner= i18n[ LANG.id ].patent.owner
-            th.row__inventor= i18n[ LANG.id ].patent.inventor
-            th.row__number= i18n[ LANG.id ].patent.number
-            th.row__date= i18n[ LANG.id ].patent.date
+            th.row__element= i18n[ LANG.id ].patent.type
+            th.row__element= i18n[ LANG.id ].patent.name
+            th.row__element= i18n[ LANG.id ].patent.nation
+            th.row__element= i18n[ LANG.id ].patent.owner
+            th.row__element= i18n[ LANG.id ].patent.inventor
+            th.row__element= i18n[ LANG.id ].patent.number
+            th.row__element= i18n[ LANG.id ].patent.date
         tbody.table__body.body
           each patentObj in data.patent
             tr.body__row.row
-              td.row__type= patentObj.type
-              td.row__name= patentObj.patent
-              td.row__nation= patentObj.nation
-              td.row__owner= patentObj.patentOwner
-              td.row__inventor= patentObj.inventor
-              td.row__number= patentObj.certificationNumber
-              td.row__date= `${ patentObj.issueDate ? patentObj.issueDate : '' } ~ ${ patentObj.expireDate ? patentObj.expireDate : '' }`
+              td.row__element= patentObj.type
+              td.row__element= patentObj.patent
+              td.row__element= patentObj.nation
+              td.row__element= patentObj.patentOwner
+              td.row__element= patentObj.inventor
+              td.row__element= patentObj.certificationNumber
+              td.row__element= `${ patentObj.issueDate ? patentObj.issueDate : '' } ~ ${ patentObj.expireDate ? patentObj.expireDate : '' }`
   if data.technologyTransfer.length !== 0
     section.transfer
       h2.transfer__title= i18n[ LANG.id ].technologyTransfer.title
       table.transfer__table.table
         thead.table__head.head
           tr.head__row.row
-            td.row__index= i18n[ LANG.id ].technologyTransfer.index
-            td.row__technologyName= i18n[ LANG.id ].technologyTransfer.technologyName
-            td.row__authorizingParty= i18n[ LANG.id ].technologyTransfer.authorizingParty
-            td.row__authorizedParty= i18n[ LANG.id ].technologyTransfer.authorizedParty
-            td.row__period= i18n[ LANG.id ].technologyTransfer.period
+            td.row__element= i18n[ LANG.id ].technologyTransfer.index
+            td.row__element= i18n[ LANG.id ].technologyTransfer.technologyName
+            td.row__element= i18n[ LANG.id ].technologyTransfer.authorizingParty
+            td.row__element= i18n[ LANG.id ].technologyTransfer.authorizedParty
+            td.row__element= i18n[ LANG.id ].technologyTransfer.period
         tbody.table__body.body
           each technologyTransferObj, index in data.technologyTransfer
             tr.body__row.row
-              td.row__index= index+1
-              td.row__technologyName= technologyTransferObj.technology
-              td.row__authorizingParty= technologyTransferObj.authorizingParty
-              td.row__authorizedParty= technologyTransferObj.authorizedParty
-              td.row__period= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
+              td.row__element= index+1
+              td.row__element= technologyTransferObj.technology
+              td.row__element= technologyTransferObj.authorizingParty
+              td.row__element= technologyTransferObj.authorizedParty
+              td.row__element= `${ technologyTransferObj.from ? technologyTransferObj.from : '' } ~ ${ technologyTransferObj.to ? technologyTransferObj.to : '' }`
   section.project
     if data.project.length !== 0
       h2.project__title= i18n[ LANG.id ].project.name
@@ -221,16 +221,16 @@ append content
       table.project__table.table
         thead.table__head.head
           tr.head__row.row
-            th.row__name= i18n[ LANG.id ].project.name
-            th.row__period= i18n[ LANG.id ].project.period
-            th.row__support= i18n[ LANG.id ].project.support
+            th.row__element= i18n[ LANG.id ].project.name
+            th.row__element= i18n[ LANG.id ].project.period
+            th.row__element= i18n[ LANG.id ].project.support
         tbody.table__body.body
           each projectObj in data.project
             if(projectObj.category==i18n[ LANG.id ].project.general)
               tr.body__row.row
-                td.row__name= projectObj.name
-                td.row__period= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
-                td.row__support= projectObj.support
+                td.row__element= projectObj.name
+                td.row__element= `${ projectObj.from ? projectObj.from : '' } ~ ${ projectObj.to ? projectObj.to : '' }`
+                td.row__element= projectObj.support
       h2.project__category= i18n[ LANG.id ].project.national
       table.project__table.table
         thead.table__head.head
