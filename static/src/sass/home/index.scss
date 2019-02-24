@@ -3,7 +3,7 @@
 @import 'components/common/banner';
 @import 'components/common/topic';
 @import 'components/common/footer';
-@import 'components/announcement/announcement-briefing';
+@import 'components/announcement/announcement-briefing-no-animation';
 @import 'components/home/hot-announcement-briefing';
 
 // block
@@ -71,7 +71,7 @@
 
     // block
     // `.body > .content > .announcement`
-    @include announcement( $block: 'content' ) {
+    @include announcement-no-animation( $block: 'content' ) {
       // [ position ]
       grid-area: announcement;
 
