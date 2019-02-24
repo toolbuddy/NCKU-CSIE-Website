@@ -68,21 +68,6 @@
       // [ animation ]
       transform-origin: top;
       transition: max-height .5s ease;
-
-      &.briefings__briefing--disappear {
-        animation: {
-          name: collapse;
-          duration: .5s;
-          fill-mode: forwards;
-        }
-        max-height: 0;
-      }
-
-      &.briefings__briefing--show {
-        animation: expand .5s ease;
-        transform: scaleY( 1 );
-        max-height: 3000px;
-      }
       @keyframes collapse {
         from {
           transform: scaleY( 1 );
@@ -100,6 +85,31 @@
         to {
           transform: scaleY( 1 );
         }
+      }
+
+      // modifier
+      // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--hide`
+      &.announcement__briefings--hide {
+        // [ skin ]
+        max-height: 0;
+
+        // [ animation ]
+        animation: {
+          name: collapse;
+          duration: .5s;
+          fill-mode: forwards;
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--show`
+      &.announcement__briefings--show {
+        // [ skin ]
+        max-height: 3000px;
+        transform: scaleY( 1 );
+
+        // [ animation ]
+        animation: expand .5s ease;
       }
 
       // element
