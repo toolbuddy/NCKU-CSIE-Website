@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
@@ -44,7 +45,7 @@
     // [ layout ]
     display: grid;
     grid: {
-      gap: 1.2rem 0;
+      row-gap: font__px-to-rem( 38 );
       template: {
         columns: 1fr;
         areas:
@@ -58,8 +59,13 @@
     margin: 0 auto;
 
     // [ skin ]
-    padding: 2.2rem .5rem;
-    max-width: 26rem;
+    padding: {
+      top: font__px-to-rem( 70 );
+      bottom: font__px-to-rem( 70 );
+      left: font__px-to-rem( 16 );
+      right: font__px-to-rem( 16 );
+    }
+    max-width: font__px-to-rem( 950 );
 
     // [ RWD: $small ]
     @media screen and ( min-width: $large ) {
@@ -75,7 +81,12 @@
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ skin ]
-      padding: 2.2rem 0;
+      padding: {
+        top: font__px-to-rem( 40 );
+        bottom: font__px-to-rem( 70 );
+        left: 0;
+        right: 0;
+      }
     }
 
     // element
@@ -101,10 +112,10 @@
       // `.body > .content > .filter > .tags`
       > .filter__tags.tags {
         // [ variable ]
-        $x-small: 200px;
-        $small: 320px;
-        $large: 420px;
-        $x-large: 550px;
+        $x-small: 280px;
+        $small: 400px;
+        $large: 520px;
+        $x-large: 630px;
 
         // [ layout ]
         display: grid;

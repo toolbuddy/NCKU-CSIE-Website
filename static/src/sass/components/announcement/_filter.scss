@@ -1,3 +1,4 @@
+@import 'components/common/font';
 @import 'components/announcement/tags';
 
 // component
@@ -9,12 +10,24 @@
   // block
   // `> .#{ $block } > .filter > .time > .#{ $element }`
   > .time__#{ $element }.#{ $element } {
+    // [ skin ]
+    width: 100%;
+    height: auto;
+
     // element
     // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
     .#{ $element }__text {
-      // [ skin ]
+      // [ layout ]
+      display: inline-block;
+      margin-left: font__px-to-rem( 16 );
       text-align: left;
-      padding-left: .5rem;
+      vertical-align: bottom;
+      line-height: font__px-to-rem( 14 );
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 14 );
+      font-size: font__px-to-rem( 14 );
     }
 
     // element
@@ -24,54 +37,69 @@
     .#{ $element }__input.input {
       // [ layout ]
       display: block;
-
-      // [ skin ]
-      width: 4.2rem;
-      height: 1rem;
-      margin: .3rem .6rem .2rem .2rem;
-      border: .02rem solid #757575;
-      border-radius: 1rem;
-      padding: {
-        left: .25rem;
-        right: .1rem;
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 6 );
+        left: font__px-to-rem( 6 );
+        right: font__px-to-rem( 20 );
       }
 
-      // element
-      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
-      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
-      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
-      > .input__year, > .input__month, > .input__date {
+      // [ skin ]
+      width: font__px-to-rem( 134 );
+      height: font__px-to-rem( 32 );
+      border: font__px-to-rem( 1 ) solid #757575;
+      border-radius: font__px-to-rem( 32 );
+      padding: {
+        left: font__px-to-rem( 8 );
+        right: font__px-to-rem( 4 );
+      }
+
+      // template
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+      %input__element {
         // [ layout ]
-        display: inline;
+        display: inline-block;
         vertical-align: top;
-        padding: {
-          top: .25rem;
-          bottom: .25rem;
-        }
+        line-height: font__px-to-rem( 14 );
 
         // [ skin ]
+        height: font__px-to-rem( 30 );
+        padding: {
+          top: font__px-to-rem( 8 );
+          bottom: font__px-to-rem( 8 );
+        }
         background-color: transparent;
+        font-size: font__px-to-rem( 14 );
       }
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
       > .input__year {
+        // [ template ]
+        @extend %input__element;
+
         // [ skin ]
-        width: 40%;
+        width: font__px-to-rem( 48 );
       }
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
       > .input__month {
+        // [ template ]
+        @extend %input__element;
+
         // [ skin ]
-        width: 30%;
+        width: font__px-to-rem( 36 );
       }
 
       // element
       // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
       > .input__date {
+        // [ template ]
+        @extend %input__element;
+
         // [ skin ]
-        width: 30%;
+        width: font__px-to-rem( 36 );
       }
     }
   }
@@ -87,7 +115,7 @@
   > .#{ $block }__filter.filter {
     // [ variable ]
     $small: 350px;
-    $large: 850px;
+    $large: 1100px;
 
     // [ layout ]
     display: grid;
@@ -118,22 +146,23 @@
       // [ position ]
       grid: {
         area: filter__time;
-        template-columns: repeat( auto-fill, 4.8rem );
+        template-columns: repeat( auto-fill, font__px-to-rem( 154 ) );
       }
 
       // [ layout ]
       display: grid;
       justify-content: center;
-      margin-bottom: .8rem;
+      margin-bottom: font__px-to-rem( 26 );
 
       // [ skin ]
-      font-size: .4375rem;
       width: 100%;
+      height: auto;
+      font-size: font__px-to-rem( 14 );
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
         // [ layout ]
-        grid-template-columns: repeat( 2, 4.8rem );
+        grid-template-columns: repeat( 2, font__px-to-rem( 154 ) );
       }
 
       // [ RWD: $large ]
@@ -168,9 +197,6 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
-
-      // [ skin ]
-      font-size: .4375rem;
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {

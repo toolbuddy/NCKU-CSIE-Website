@@ -1,6 +1,7 @@
+@import 'components/common/font';
 @import 'components/common/no-result';
 @import 'components/common/loading';
-@import 'components/announcement/tags';
+@import 'components/announcement/briefing';
 
 // component
 // `> .#{ $block } > .#{ $block }__announcement.announcement`
@@ -17,30 +18,50 @@
     // `> .#{ $block } > .announcement > .announcement__title`
     > .announcement__title {
       // [ layout ]
-      display: flex;
+      display: inline-block;
+      text-align: left;
+      line-height: font__px-to-rem( 18 );
 
       // [ skin ]
-      line-height: 1rem;
+      height: font__px-to-rem( 32 );
       font: {
-        size: .55rem;
+        size: font__px-to-rem( 18 );
         weight: bold;
       }
 
       // [ before ]
       // Yellow flag icon.
       &::before {
-        // [ variable ]
-        $size: 1rem;
+        // [ layout ]
+        display: inline-block;
+        margin-right: font__px-to-rem( 12 );
+        vertical-align: middle;
 
         // [ skin ]
-        content: '';
-        margin-right: .4rem;
+        width: font__px-to-rem( 24 );
+        height: font__px-to-rem( 32 );
         border: {
           style: solid;
-          color: #f5c150 #f5c150 transparent;
-          radius: ( $size * .1 ) ( $size * .1 ) 0 0;
-          width: ( $size * .8 ) ( $size * .35 ) ( $size * .16 );
+          top: {
+            color: #f5c150;
+            width: font__px-to-rem( 32 ) * .8;
+            left-radius: font__px-to-rem( 3 );
+            right-radius: font__px-to-rem( 3 );
+          }
+          bottom: {
+            color: transparent;
+            width: font__px-to-rem( 32 ) * .2;
+          }
+          right: {
+            color: #f5c150;
+            width: font__px-to-rem( 24 ) / 2;
+          }
+          left: {
+            color: #f5c150;
+            width: font__px-to-rem( 24 ) / 2;
+          }
         }
+        content: '';
       }
     }
 
@@ -62,11 +83,10 @@
     // `> .#{ $block } > .announcement > .briefings`
     > .announcement__briefings.briefings {
       // [ skin ]
-      margin-top: .7rem;
-      transform: scaleY( 0 );
+      margin-top: font__px-to-rem( 22 );
+      transform-origin: top;
 
       // [ animation ]
-      transform-origin: top;
       transition: max-height .5s ease;
       @keyframes collapse {
         from {
@@ -92,6 +112,7 @@
       &.announcement__briefings--hide {
         // [ skin ]
         max-height: 0;
+        transform: scaleY( 0 );
 
         // [ animation ]
         animation: {
@@ -105,137 +126,17 @@
       // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--show`
       &.announcement__briefings--show {
         // [ skin ]
-        max-height: 3000px;
+        max-height: font__px-to-rem( 30000 );
         transform: scaleY( 1 );
 
         // [ animation ]
-        animation: expand .5s ease;
-      }
-
-      // element
-      // `> .#{ $block } > .announcement .briefings > briefings__briefing`
-      // block
-      // `> .#{ $block } > .announcement .briefings > briefing`
-      > .briefings__briefing.briefing {
-        // [ layout ]
-        display: grid;
-        grid-template: {
-          areas:
-            'briefing__tags  briefing__tags  briefing__tags'
-            'briefing__title briefing__title briefing__title'
-            'briefing__time  briefing__time  .';
-          rows: auto;
-          columns: 13fr 2fr 5fr;
-        }
-
-        // [ skin ]
-        margin-bottom: .4rem;
-        border-radius: .188rem;
-        padding: .5rem .4rem;
-        background-color: #ffffff;
-        box-shadow: 0 .0625rem .75rem 0 #dbdbdb, 0 .25rem .312rem 0 #cccccc;
-
-        // [ interaction ]
-        &:hover {
-          // [ skin ]
-          cursor: pointer;
-        }
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          grid-template-areas:
-            'briefing__tags    briefing__tags  briefing__tags'
-            'briefing__title   briefing__title .'
-            'briefing__article .               briefing__time';
-
-          // [ skin ]
-          padding: .8rem 1rem;
-        }
-
-        // element
-        // `> .#{ $block } > .announcement > .briefings > briefing > .briefing__tags`
-        // block
-        // `> .#{ $block } > .announcement > .briefings > briefing > .tags`
-        @include tags( 'briefing' ) {
-          // [ position ]
-          grid-area: briefing__tags;
-
-          // [ layout ]
-          display: block;
-
-          // [ skin ]
-          font-size: .4375rem;
-        }
-
-        // element
-        // `> .#{ $block } > .announcement > .briefings > .briefong > .briefing__title`
-        > .briefing__title {
-          // [ position ]
-          grid-area: briefing__title;
-
-          // [ layout ]
-          word-wrap: break-word;
-
-          // [ skin ]
-          margin-bottom: .9rem;
-          color: #000000;
-          font: {
-            size: .5rem;
-            weight: normal;
-          }
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            // [ skin ]
-            margin-bottom: 0;
-            font-weight: bold;
-          }
-        }
-
-        // element
-        // `> .#{ $block } > .announcement > .briefings > .briefing > .briefing__article`
-        > .briefing__article {
-          // [ layout ]
-          display: none;
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            // [ position ]
-            grid-area: briefing__article;
-
-            // [ layout ]
-            display: block;
-            white-space: nowrap;
-
-            // [ skin ]
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: .4375rem;
-          }
-        }
-
-        // element
-        // `> .#{ $block } > .announcement > .briefings > .briefing > .briefing__time`
-        > .briefing__time {
-          // [ position ]
-          grid-area: briefing__time;
-
-          // [ skin ]
-          color: #b5babf;
-          font-size: .4375rem;
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            // [ position ]
-            justify-self: end;
-            align-self: end;
-
-            // [ skin ]
-            color: #b5babf;
-          }
+        animation: {
+          name: expand;
+          duration: .5s;
+          timing-function: ease;
         }
       }
+      @include briefing( $block: 'briefings' );
     }
 
     // [ customization ]
