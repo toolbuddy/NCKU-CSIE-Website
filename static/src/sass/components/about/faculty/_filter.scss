@@ -1,0 +1,163 @@
+// component
+// `> .#{ $block } > .#{ $block }__filter.filter`
+@mixin filter ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__filter`
+  // block
+  // `> .#{ $block } > .filter`
+  > .#{ $block }__filter.filter {
+    // template
+    // `> .#{ $block } > .filter > .? > .?__tag`
+    %block__tag {
+      // [ variable ]
+      $large: 600px;
+
+      // [ layout ]
+      display: inline-block;
+      margin: .14rem;
+      text-align: center;
+      white-space: normal;
+      word: {
+        wrap: normal;
+        break: normal;
+      }
+
+      // [ skin ]
+      min-height: 1rem;
+      border: {
+        style: solid;
+        width: .03rem;
+        radius: .69rem;
+      }
+      padding: {
+        left: .5rem;
+        right: .5rem;
+      }
+      background-color: #eff3f9;
+      font-size: .44rem;
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        min-height: 1.4rem;
+        font-size: .58rem;
+      }
+    }
+
+    // [ layout ]
+    margin-bottom: 1rem;
+
+    // element
+    // `> .#{ $block } > .filter > .filter__department`
+    // block
+    // `> .#{ $block } > .filter > .department`
+    > .filter__department.department {
+      // [ layout ]
+      text-align: center;
+
+      // element
+      // `> .#{ $block } > .filter > .department > .department__tag`
+      > .department__tag {
+        // [ template ]
+        @extend %block__tag;
+
+        // [ variable ]
+        $small: 450px;
+        $large: 1100px;
+
+        // [ skin ]
+        min-width: 90%;
+        border-color: #f67057;
+        color: #f67057;
+
+        // [ interaction ]
+        &:hover {
+          // [ skin ]
+          background-color: lighten( $color: #f67057, $amount: 10% );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          min-width: 90 / 2 * 1%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          min-width: 90 / 4 * 1%;
+        }
+
+        // modifier
+        // `> .#{ $block } > .filter > .department > .department__tag.department__tag--active`
+        &.department__tag--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #f67057;
+        }
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .filter > .filter__research-group`
+    // block
+    // `> .#{ $block } > .filter > .research-group`
+    > .filter__research-group.research-group {
+      // [ layout ]
+      text-align: center;
+
+      // element
+      // `> .#{ $block } > .filter > .research-group > .research-group__tag`
+      > .research-group__tag {
+        // [ template ]
+        @extend %block__tag;
+
+        // [ variable ]
+        $small: 500px;
+        $large: 1270px;
+
+        // [ skin ]
+        width: 90%;
+        border-color: #8caae2;
+        color: #8caae2;
+
+        // [ interaction ]
+        &:hover {
+          // [ skin ]
+          background-color: lighten( $color: #8caae2, $amount: 10% );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          width: auto;
+          min-width: 90 / 2 * 1%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          min-width: $large / 5;
+        }
+
+        // modifier
+        // `> .#{ $block } > .filter > .research-group > .research-group__tag.research-group__tag--active`
+        &.research-group__tag--active {
+          // [ skin ]
+          color: #ffffff;
+          background-color: #8caae2;
+        }
+      }
+    }
+  }
+
+  // [ customization ]
+  @content;
+}

@@ -53,6 +53,7 @@ export default {
         'about/faculty-detail': path.join( sassRoot, 'about/faculty-detail.scss' ),
         'about/faculty':        path.join( sassRoot, 'about/faculty.scss' ),
         'about/index':          path.join( sassRoot, 'about/index.scss' ),
+
         'about/intro':          path.join( sassRoot, 'about/intro.scss' ),
         'about/staff':          path.join( sassRoot, 'about/staff.scss' ),
 
@@ -90,7 +91,8 @@ export default {
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
 
         // Route `user`
-        'user/index': path.join( sassRoot, 'user/index.scss' ),
+        'user/index':             path.join( sassRoot, 'user/index.scss' ),
+        'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
     },
 
     /**

@@ -88,6 +88,7 @@ export default async ( opt ) => {
             error.status = 404;
             throw error;
         }
+
         return {
             pages: Math.ceil( data.length / amount ),
         };

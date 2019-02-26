@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import nationMap from 'models/faculty/maps/nation.js';
+import LanguageUtils from '../../common/utils/language.js';
+import nationMap from '../maps/nation.js';
 
 class NationUtils {
     static defaultNation ( languageId = LanguageUtils.defaultLanguageId ) {

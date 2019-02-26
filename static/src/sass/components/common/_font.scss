@@ -1,41 +1,15 @@
-// font [loader]
-// `NotoSansTC`
-@mixin font__load--NotoSansTC () {
-  // Avoid duplicated load file.
-  @if not variable-exists( font__load--NotoSansTC ) {
-    $font__load--NotoSansTC: 'loaded' !global;
-    @import url( 'https://fonts.googleapis.com/earlyaccess/notosanstc.css' );
-  }
+@mixin font--notosanstc () {
+  @import url( 'https://fonts.googleapis.com/earlyaccess/notosanstc.css' );
 }
 
-// font [family]
-// `NotoSansTC`
-@mixin font__family--NotoSansTC () {
-  // Check if font is loaded.
-  @if variable-exists( font__load--NotoSansTC ) {
-    font: {
-      family: 'Noto Sans TC', arial, helvetica, sans-serif;
-      weight: 100;
-    }
-    letter-spacing: .0625rem;
-  }
-  @else {
-    @error 'font NotoSansTC is not load yet, use \`@include font__load--NotoSansTC()\` first.';
-  }
+// function
+// Base font size.
+@function font__base-font-size () {
+  @return 32px;
 }
 
-// font [family]
-// `default`
-@mixin font__family--default () {
-  // Avoid duplicated load file.
-  @if not variable-exists( font__family--default ) {
-    $font__family--default: 'loaded' !global;
-
-    :root {
-      --font__family--default: 'Arial', 'Noto Sans TC', 'Microsoft JhengHei';
-    }
-  }
+// function
+// Convert px into rem.
+@function font__px-to-rem ( $px ) {
+  @return $px * 1px / font__base-font-size() * 1rem;
 }
-
-// Load default font.
-@include font__family--default();

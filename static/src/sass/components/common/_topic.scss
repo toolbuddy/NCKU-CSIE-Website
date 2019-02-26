@@ -1,39 +1,42 @@
 // component
-// `> .topic`
-@mixin topic () {
+// `> .#{ $block } > .#{ $block }__topic.topic`
+@mixin topic ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__topic`
   // block
-  // `> .topic`
-  > .topic {
+  // `> .#{ $block } > .topic`
+  > .#{ $block }__topic.topic {
     // [ variable ]
-    $tablet: 850px;
+    $large: 850px;
 
-    // [ position ]
-    display: flex;
-    justify-content: center;
+    // [ layout ]
+    text-align: center;
 
     // [ skin ]
     color: #000000;
 
-    // [ RWD: $tablet ]
-    @media screen and ( min-width: $tablet ) {
-      // [ position ]
-      justify-content: flex-start;
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      text-align: left;
 
       // [skin ]
-      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+      border-bottom: solid .0156rem #bfbfbf;
     }
 
     // element
-    // `> .topic > .topic__text`
-
+    // `> .#{ $block } > .topic > .topic__text`
     > .topic__text {
-      // [ skin ]
-      border-bottom: solid .0156rem #213262;
-      width: auto;
+      // [ layout ]
+      display: inline-block;
       line-height: 1.4rem;
+
+      // [ skin ]
+      width: auto;
+      border-bottom: solid .0156rem #213262;
       font: {
         weight: bold;
-        size: .75rem;
+        size: 24 / 32 * 1rem;
       }
     }
 

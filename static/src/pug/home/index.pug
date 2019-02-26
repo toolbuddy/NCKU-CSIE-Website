@@ -25,21 +25,27 @@ append stylesheets
   +css( 'home/index' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
 
 append content
   include /components/common/topic.pug
   include /components/common/loading.pug
   include /components/common/no-result.pug
 
-  +topic( i18n[ LANG.id ].topic )
-  section#announcement.announcement
+  +topic( 'content', i18n[ LANG.id ].topic )
+  section#announcement.content__announcement.announcement
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
     aside.announcement__more.more
       a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
-  section#hot-announcement.hot-announcement
+  section#hot-announcement.content__hot-announcement.hot-announcement
     header.hot-announcement__title.title= i18n[ LANG.id ].hot
     +noResult( 'hot-announcement' )
     +loading( 'hot-announcement' )

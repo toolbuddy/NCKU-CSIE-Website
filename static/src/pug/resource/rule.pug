@@ -48,12 +48,23 @@ append stylesheets
   +css( 'resource/rule' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.resource, url: 'resource' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

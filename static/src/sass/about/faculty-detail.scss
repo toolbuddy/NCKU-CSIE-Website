@@ -1,28 +1,45 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/font';
-@import 'components/common/topic';
 @import 'components/common/icon';
-@import 'components/common/footer';
+@import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
 
-body {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .header`
+  @include header( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
     $small: 650px;
     $large: 860px;
-    width: 100%;
-    background-color: #ffffff;
+
+    // [ layout ]
     display: grid;
     grid-template: {
       areas:
@@ -40,7 +57,14 @@ body {
         '. conference        .';
       columns: 1fr 90% 1fr;
     }
+
+    // [ skin ]
+    width: 100%;
+    background-color: #ffffff;
+
+    // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'
@@ -55,7 +79,10 @@ body {
         columns: 1fr 5fr 3fr 1fr;
       };
     }
+
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
       grid-template: {
         areas:
           '. profile__info    profile__photo   .'
@@ -641,4 +668,10 @@ body {
       grid-area: conference;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

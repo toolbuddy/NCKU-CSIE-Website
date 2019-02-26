@@ -1,24 +1,41 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
-@import 'components/announcement/announcement';
-@import 'components/announcement/tags';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/footer';
+@import 'components/announcement/tags';
+@import 'components/announcement/announcement';
 @import '~thirdPartyLib/github-markdown-css/github-markdown.css';
 
-body {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .header`
+  @include header( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 560px;
     $medium: 768px;
@@ -51,8 +68,8 @@ body {
     }
 
     // block
-    // `body > .content > .announcement`
-    @include announcement() {
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
       // [ position ]
       grid-area: announcement;
     }
@@ -78,7 +95,7 @@ body {
         type: circle;
         position: inside;
       }
-      margin-left: 15px;
+      margin-left: 15 / 32 * 1rem;
     }
 
     ol ol, ul ol {
@@ -86,7 +103,13 @@ body {
         type: lower-latin;
         position: inside;
       }
-      margin-left: 15px;
+      margin-left: 15 / 32 * 1rem;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

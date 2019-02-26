@@ -1,91 +1,90 @@
 // component
-// `> .pages`
-@mixin pages () {
+// `> .#{ $block } > .#{ $block }__pages.pages`
+@mixin pages ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__pages`
   // block
-  // `> .pages`
-  > .pages {
+  // `> .#{ $block } > .pages`
+  > .#{ $block }__pages.pages {
     // [ variable ]
-    $small: 576px;
-    $medium: 620px;
+    $small: 650px;
     $large: 850px;
 
-    // [ position ]
-    justify-self: center;
-
-    // [ layout ]
-    display: inline-block;
-
-    // element
-    // `> .pages > .pages__control`
-    > .pages__control {
-      // [ position ]
-      vertical-align: middle;
+    // template
+    // `> .#{ $block } > .pages > .pages__?`
+    %pages__element {
+      // [ variable ]
+      $size: 1.41rem;
 
       // [ skin ]
-      border-radius: 1.41rem;
-      width: 1.41rem;
-      height: 1.41rem;
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      background-color: transparent;
+      vertical-align: middle;
+    }
+
+    // element
+    // `> .#{ $block } > .pages > .pages__control`
+    > .pages__control {
+      // [ template ]
+      @extend %pages__element;
+
+      // [ skin ]
       border: .0312rem solid #32477d;
+      padding-bottom: .05rem;
       color: #32477d;
-      background: none;
       font-size: .9375rem;
       cursor: pointer;
 
       // modifier
-      // `> .pages > pages__control.pages__control--hidden`
-      &--hidden {
+      // `> .#{ $block } > .pages > pages__control.pages__control--hidden`
+      &.pages__control--hidden {
+        // [ skin ]
         visibility: hidden;
       }
 
-      // [ selector: first-child ]
-      &:first-child {
-        // [ skin ]
+      // modifier
+      // `> .#{ $block } > .pages > pages__control.pages__control--forward`
+      &.pages__control--forward {
+        // [ layout ]
         margin-right: 1rem;
-        padding: {
-          right: .05rem;
-          bottom: .1rem;
-        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ layout ]
           margin-right: 3rem;
         }
       }
 
-      // [ selector: last-child ]
-      &:last-child {
-        // [ skin ]
+      // modifier
+      // `> .#{ $block } > .pages > pages__control.pages__control--backward`
+      &.pages__control--backward {
+        // [ layout ]
         margin-left: 1rem;
-        padding: {
-          bottom: .1rem;
-          left: .05rem;
-        }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
+          // [ layout ]
           margin-left: 3rem;
         }
       }
     }
 
     // element
-    // `> .pages > .pages__page`
-    // `> .pages > .pages__extra`
-    > .pages__page, .pages__extra {
+    // `> .#{ $block } > .pages > .pages__page`
+    > .pages__page {
+      // [ template ]
+      @extend %pages__element;
+
       // [ layout ]
       display: none;
 
-      // [ position ]
-      vertical-align: middle;
-
       // [ skin ]
-      border-radius: 1.41rem;
-      color: #999999;
-      background: none;
-      width: 1.41rem;
-      height: 1.41rem;
       font-size: .625rem;
-      text-decoration: none;
+      color: #999999;
+
+      // [ interaction ]
       transition: background-color .3s;
 
       // [ RWD: $small ]
@@ -93,11 +92,7 @@
         // [ layout ]
         display: inline-block;
       }
-    }
 
-    // element
-    // `> .pages > .pages__page`
-    > .pages__page {
       // [ interaction ]
       &:hover:not( .pages__page--active ) {
         // [ skin ]
@@ -105,30 +100,46 @@
       }
 
       // modifier
-      // `> .pages > .pages__page--active`
-      &--active {
+      // `> .#{ $block } > .pages > .pages__page.pages__page--active`
+      &.pages__page--active {
         // [ layout ]
         display: inline-block;
 
         // [ skin ]
         color: #ffffff;
         background-color: #213262;
-        box-shadow: 0 .0937rem .125rem 0 rgba( 33, 50, 98, .25 );
+        box-shadow: 0 .0937rem .125rem 0 #213262;
       }
 
       // modifier
-      // `> .pages > .pages__page--hidden`
-      &--hidden {
+      // `> .#{ $block } > .pages > .pages__page.pages__page--hidden`
+      &.pages__page--hidden {
         display: none;
       }
     }
 
     // element
-    // `> .pages > .pages__extra`
+    // `> .#{ $block } > .pages > .pages__extra`
     > .pages__extra {
+      // [ template ]
+      @extend %pages__element;
+
+      // [ layout ]
+      display: none;
+
+      // [ skin ]
+      font-size: .625rem;
+      color: #999999;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
+
       // modifier
-      // `> .pages > .pages__extra--hidden`
-      &--hidden {
+      // `> .#{ $block } > .pages > .pages__extra.pages__extra--hidden`
+      &.pages__extra--hidden {
         display: none;
       }
     }

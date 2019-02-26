@@ -30,7 +30,7 @@ html
     block stylesheets
       include /components/common/css.pug
 
-  body
+  body.body
 
     //- Image template module.
     //-
@@ -48,13 +48,13 @@ html
     //- Header template module can be found at `static/src/pug/components/common/header.pug`.
     block header
       include /components/common/header.pug
-      +header()
+      +header( 'body' )
 
     //- Content block.
     //-
     //- Each page has there own content.
     //- All specific content go to this block.
-    main#content.content
+    main#content.body__content.content
       block content
 
     //- Footer block.
@@ -64,7 +64,7 @@ html
     //- Footer template module can be found at `static/src/pug/components/common/footer.pug`.
     block footer
       include /components/common/footer.pug
-      +footer()
+      +footer( 'body' )
 
     //- Scripts block.
     //-

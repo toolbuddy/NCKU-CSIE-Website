@@ -19,6 +19,7 @@ package-lock.json
 ## Settings files
 settings/database/config.js
 settings/server/config.js
+settings/server/content-security-policy.js
 
 # executable
 bin/

@@ -1,3 +1,7 @@
-import header from 'static/src/js/components/common/header/index.js';
+import GetHeader from 'static/src/js/components/common/header.js';
 
-header( document.getElementById( 'header' ) );
+window.addEventListener( 'load', () => {
+    const header = new GetHeader( {
+        headerDOM: document.getElementById( 'header' ),
+    } );
+} );

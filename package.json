@@ -1,6 +1,6 @@
 {
   "name": "NCKU-CSIE-Website",
-  "version": "1.1.2",
+  "version": "1.0.0",
   "description": "NCKU CSIE Website",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "browser-sync": "browser-sync --config dev/server/bs-config.js start",
     "pre-build": "npm-run-all pre-build:*",
     "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
-    "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js",
+    "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js && shx cp settings/server/content-security-policy.js.default settings/server/content-security-policy.js",
     "build": "cross-env NODE_ENV=production npm-run-all build:server build:css build:html build:js",
     "build:css": "cross-env NODE_ENV=production webpack --config dev/css/webpack.config.babel.js",
     "build:html": "cross-env NODE_ENV=production webpack --config dev/html/webpack.config.babel.js",
@@ -82,6 +82,7 @@
     "npm": "^6.4.1",
     "pug": "^2.0.3",
     "sequelize": "^4.41.2",
+    "url-loader": "^1.1.2",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {

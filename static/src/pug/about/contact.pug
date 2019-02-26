@@ -102,16 +102,25 @@ append stylesheets
   +css( 'about/contact' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ LANG.id ].title },
-   ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
-  section#map.map
-  section.traffic.traffic--drive
+  section#map.content__map.map
+  section.content__traffic.traffic.traffic--drive
     //- Header.
     h2.traffic__text.traffic__text--title= i18n[ LANG.id ].drive.title
     //- Information of driving from north to south.
@@ -122,13 +131,13 @@ append content
     p.traffic__text.traffic__text--direction= i18n[ LANG.id ].drive.north.title
     each info in i18n[ LANG.id ].drive.north.content
       p.traffic__text.traffic__text--information= info
-  section.traffic.traffic--train
+  section.content__traffic.traffic.traffic--train
     //- Header.
     h2.traffic__text.traffic__text--title= i18n[ LANG.id ].train.title
     //- Metro information.
     each info in i18n[ LANG.id ].train.content
       p.traffic__text.traffic__text--information= info
-  section.traffic.traffic--thsr
+  section.content__traffic.traffic.traffic--thsr
     //- Header.
     h2.traffic__text.traffic__text--title= i18n[ LANG.id ].thsr.title
     //- Metro information.

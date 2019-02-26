@@ -13,37 +13,37 @@ append data
             title: 'Rule',
             detail: 'Rules of department, graduation requirements and documents',
             modifier: 'red',
-            href: UTILS.url( { href: 'resource/rule', } ),
+            route: 'resource/rule',
           },
           {
             title: 'Rent',
             detail: 'Borrow things from department',
             modifier: 'green',
-            href: UTILS.url( { href: 'resource/rent', } ),
+            route: 'resource/rent',
           },
           {
             title: 'Fix',
             detail: 'Reporting broken equipment or classroom',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'resource/fix', } ),
+            route: 'resource/fix',
           },
           {
             title: 'IEET',
             detail: 'Fill in survey form for classes',
             modifier: 'blue',
-            href: UTILS.url( { href: 'resource/ieet', } ),
+            route: 'resource/ieet',
           },
           {
             title: 'Sitemap',
             detail: 'Navigation for the website',
             modifier: 'purple',
-            href: UTILS.url( { href: 'resource/sitemap', } ),
+            route: 'resource/sitemap',
           },
           {
             title: 'Alumni',
             detail: 'Graduation students information',
             modifier: 'gray',
-            href: UTILS.url( { href: 'resource/alumni', } ),
+            route: 'resource/alumni',
           },
         ],
       },
@@ -57,37 +57,37 @@ append data
             title: '法規彙編',
             detail: '系所規範、畢業辦法與表單文件',
             modifier: 'red',
-            href: UTILS.url( { href: 'resource/rule', } ),
+            route: 'resource/rule',
           },
           {
             title: '線上租借',
             detail: '系所租借設備或場地',
             modifier: 'green',
-            href: UTILS.url( { href: 'resource/rent', } ),
+            route: 'resource/rent',
           },
           {
             title: '修繕登記',
             detail: '租借設備維修、報銷與教室場地修繕登記',
             modifier: 'yellow',
-            href: UTILS.url( { href: 'resource/fix', } ),
+            route: 'resource/fix',
           },
           {
             title: 'IEET工程認證',
             detail: '工程認證目標與問卷填寫',
             modifier: 'blue',
-            href: UTILS.url( { href: 'resource/ieet', } ),
+            route: 'resource/ieet',
           },
           {
             title: '網站地圖',
             detail: '網站空間的概觀',
             modifier: 'purple',
-            href: UTILS.url( { href: 'resource/sitemap', } ),
+            route: 'resource/sitemap',
           },
           {
             title: '系友專區',
             detail: '畢業資訊填寫與系友相關資訊',
             modifier: 'gray',
-            href: UTILS.url( { href: 'resource/alumni', } ),
+            route: 'resource/alumni',
           },
         ],
       },
@@ -101,15 +101,24 @@ append stylesheets
   +css( 'resource/index' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ LANG.id ].entries )
+  +entries( 'content', i18n[ LANG.id ].entries )
 
 append footer
 

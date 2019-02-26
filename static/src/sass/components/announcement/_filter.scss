@@ -1,87 +1,121 @@
+@import 'components/common/font';
 @import 'components/announcement/tags';
 
-// template
-// `> .filter > .time > .time__?`
+// component
+// `> .#{ $block } > .filter > .time > .time__#{ $element }`
 // This mixin should not be used outside this file.
 @mixin time__template ( $element ) {
   // element
-  // `> .filter > .time > .time__?`
+  // `> .#{ $block } > .filter > .time > .time__#{ $element }`
   // block
-  // `> .filter > .time > .?`
+  // `> .#{ $block } > .filter > .time > .#{ $element }`
   > .time__#{ $element }.#{ $element } {
+    // [ skin ]
+    width: 100%;
+    height: auto;
+
     // element
-    // `> .filter > .time > .? > .?__text`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
     .#{ $element }__text {
-      // [ skin ]
+      // [ layout ]
+      display: inline-block;
+      margin-left: font__px-to-rem( 16 );
       text-align: left;
-      padding-left: .5rem;
+      vertical-align: bottom;
+      line-height: font__px-to-rem( 14 );
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 14 );
+      font-size: font__px-to-rem( 14 );
     }
 
     // element
-    // `> .filter > .time > .? > .?__input`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
     // block
-    // `> .filter > .time > .? > .input`
+    // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
     .#{ $element }__input.input {
       // [ layout ]
-      display: grid;
-      grid-template: {
-        areas: 'input__year input__month input__date';
-        columns: 40% 30% 30%;
+      display: block;
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 6 );
+        left: font__px-to-rem( 6 );
+        right: font__px-to-rem( 20 );
       }
 
       // [ skin ]
-      width: 4.2rem;
-      height: 1rem;
-      margin: .3rem .6rem .2rem .2rem;
-      border: .016rem solid #757575;
-      border-radius: 1rem;
+      width: font__px-to-rem( 134 );
+      height: font__px-to-rem( 32 );
+      border: font__px-to-rem( 1 ) solid #757575;
+      border-radius: font__px-to-rem( 32 );
       padding: {
-        left: .25rem;
-        right: .1rem;
+        left: font__px-to-rem( 8 );
+        right: font__px-to-rem( 4 );
+      }
+
+      // template
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+      %input__element {
+        // [ layout ]
+        display: inline-block;
+        vertical-align: top;
+        line-height: font__px-to-rem( 14 );
+
+        // [ skin ]
+        height: font__px-to-rem( 30 );
+        padding: {
+          top: font__px-to-rem( 8 );
+          bottom: font__px-to-rem( 8 );
+        }
+        background-color: transparent;
+        font-size: font__px-to-rem( 14 );
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__year`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
       > .input__year {
-        // [ position ]
-        grid-area: input__year;
+        // [ template ]
+        @extend %input__element;
 
         // [ skin ]
-        background-color: transparent;
+        width: font__px-to-rem( 48 );
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__month`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
       > .input__month {
-        // [ position ]
-        grid-area: input__month;
+        // [ template ]
+        @extend %input__element;
 
         // [ skin ]
-        background-color: transparent;
+        width: font__px-to-rem( 36 );
       }
 
       // element
-      // `> .filter > .time > .? > .input > .input__date`
+      // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
       > .input__date {
-        // [ position ]
-        grid-area: input__date;
+        // [ template ]
+        @extend %input__element;
 
         // [ skin ]
-        background-color: transparent;
+        width: font__px-to-rem( 36 );
       }
     }
   }
 }
 
 // component
-// `> .filter`
-@mixin filter () {
+// `> .#{ $block } > .#{ $block }__filter.filter`
+@mixin filter ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__filter`
   // block
-  // `> .filter`
-  > .filter {
+  // `> .#{ $block } > .filter`
+  > .#{ $block }__filter.filter {
     // [ variable ]
     $small: 350px;
-    $large: 850px;
+    $large: 1100px;
 
     // [ layout ]
     display: grid;
@@ -105,29 +139,30 @@
     }
 
     // element
-    // `> .filter > .filter__time`
+    // `> .#{ $block } > .filter > .filter__time`
     // block
-    // `> .filter > .time`
+    // `> .#{ $block } > .filter > .time`
     > .filter__time.time {
       // [ position ]
       grid: {
         area: filter__time;
-        template-columns: repeat( auto-fill, 4.8rem );
+        template-columns: repeat( auto-fill, font__px-to-rem( 154 ) );
       }
 
       // [ layout ]
       display: grid;
       justify-content: center;
-      margin-bottom: .8rem;
+      margin-bottom: font__px-to-rem( 26 );
 
       // [ skin ]
-      font-size: .4375rem;
       width: 100%;
+      height: auto;
+      font-size: font__px-to-rem( 14 );
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
         // [ layout ]
-        grid-template-columns: repeat( 2, 4.8rem );
+        grid-template-columns: repeat( 2, font__px-to-rem( 154 ) );
       }
 
       // [ RWD: $large ]
@@ -138,43 +173,38 @@
       }
 
       // element
-      // `> .filter > .time > .time__from`
+      // `> .#{ $block } > .filter > .time > .time__from`
       // block
-      // `> .filter > .time > .from`
+      // `> .#{ $block } > .filter > .time > .from`
       @include time__template ( 'from' );
 
       // element
-      // `> .filter > .time > .time__to`
+      // `> .#{ $block } > .filter > .time > .time__to`
       // block
-      // `> .filter > .time > .to`
+      // `> .#{ $block } > .filter > .time > .to`
       @include time__template ( 'to' );
     }
 
     // element
-    // `> .filter > .filter__tags`
+    // `> .#{ $block } > .filter > .filter__tags`
     // block
-    // `> .filter > .tags`
-    > .filter__tags {
-      @include tags() {
-        // [ position ]
-        grid-area: filter__tags;
+    // `> .#{ $block } > .filter > .tags`
+    @include tags( 'filter' ) {
+      // [ position ]
+      grid-area: filter__tags;
 
+      // [ layout ]
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
         // [ layout ]
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-
-        // [ skin ]
-        font-size: .4375rem;
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          display: grid;
-          grid-template: {
-            rows: repeat( 4, auto );
-            columns: repeat( 5, auto );
-          }
+        display: grid;
+        grid-template: {
+          rows: repeat( 4, auto );
+          columns: repeat( 5, auto );
         }
       }
     }

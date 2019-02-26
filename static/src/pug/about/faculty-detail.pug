@@ -100,13 +100,22 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.about, url: 'about' },
-    { text: i18n[ LANG.id ].breadcrumb.faculty, url: 'about/faculty' },
-    { text: data.profile.name },
-  ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].breadcrumb.faculty, route: 'about/faculty' },
+      { text: data.profile.name },
+    ]
+  )
 append content
   include /components/common/topic.pug
   include /components/common/image.pug

@@ -109,16 +109,24 @@ append stylesheets
   +css( 'resource/sitemap' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.resource, url: 'resource' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
-
-  figure.logo
+  figure.content__logo.logo
     +image( {
       alt:       'csie',
       className: 'logo__image',
@@ -127,7 +135,7 @@ append content
     figcaption.logo__caption.caption
       h1.caption__text.caption__text--large 成功大學資訊工程學系暨研究所
       h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
-  section.sitemap
+  section.content__sitemap.sitemap
     each val, index in i18n[ LANG.id ].titles
       article.sitemap__title( class = `sitemap__title--${ index }` )= val
     hr.sitemap__hr

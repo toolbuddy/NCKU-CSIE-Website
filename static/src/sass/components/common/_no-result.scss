@@ -1,6 +1,11 @@
-// block
-@mixin no-result {
-  &.no-result {
+// components
+// `.#{ $block } > .#{ $block }__no-result.no-result`
+@mixin no-result ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__no-result`
+  // block
+  // `.#{ $block } > .no-result`
+  > .#{ $block }__no-result.no-result {
     // [ layout ]
     text-align: center;
     margin-top: 2rem;
@@ -8,7 +13,7 @@
     // [ skin ]
     color: #adacad;
     font-family: var( --font__family--NotoSansTC );
-    min-width: 73px;
+    min-width: 73 / 32 * 1rem;
 
     &--hidden {
       display: none;

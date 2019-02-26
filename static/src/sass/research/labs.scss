@@ -1,17 +1,38 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
 @import 'components/common/not-available';
+@import 'components/common/footer';
 
 // block
-// `body`
-body > {
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .content`
-  > .content {
-    // block
-    // `body > .content > .not-available`
+  // `.body > .header`
+  @include header( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ skin ]
     height: 120%;
-    @include not-available();
+
+    // element
+    // `.body > .content > .content__not-available`
+    // block
+    // `.body > .content > .not-available`
+    @include not-available( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

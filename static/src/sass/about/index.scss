@@ -1,62 +1,49 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 @import 'components/common/entries';
+@import 'components/common/footer';
 
-body > {
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .header`
+  @include header( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .banner`
+  @include banner( $block: 'body' );
 
+  // element
+  // `.body > .body__breadcrumb`
   // block
-  // `body > .content`
-  > .content {
-    // [ variable ]
-    $large: 475px;
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
 
-    // [ layout ]
-    display: grid;
-    grid: {
-      template: {
-        areas:
-          '.'
-          'entries'
-          '.';
-        columns: 100%;
-      }
-      row-gap: .6rem;
-    };
-
-    // [ skin ]
-    width: 100%;
-    background-color: #ffffff;
-
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. . .'
-            '. entries .'
-            '. . .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 3.1rem;
-      };
-    }
-
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // element
+    // `.body > .content > .content__entries`
     // block
-    // `body > .content > .entries`
-    @include entries() {
-      // [ position ]
-      grid-area: entries;
-    }
+    // `.body > .content > .entries`
+    @include entries( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

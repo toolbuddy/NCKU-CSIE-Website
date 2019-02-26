@@ -1,10 +1,11 @@
 @charset 'utf-8';
 @import 'components/common/font';
+@include font--notosanstc();
 
-* {
-  // Box model.
+*, *::before, *::after {
+  // Box model: border-box
+  // Width include border, padding and content.
   margin: 0;
-  outline: 0;
   border: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,7 +15,16 @@
   color: inherit;
 
   // No extra decoration.
+  outline: 0;
   text-decoration: none;
+}
+
+:active, :focus {
+  outline: 0;
+}
+
+::-moz-focus-inner {
+  border: 0;
 }
 
 ul {
@@ -29,7 +39,8 @@ html, body {
 
   // Default font.
   font: {
-    family: var( --font__family--default );
-    size: 32px;
+    size: font__base-font-size();
+    family: 'Noto Sans TC', 'Arial', 'Microsoft JhengHei';
+    weight: normal;
   }
 }

@@ -23,7 +23,7 @@ export default ( opt ) => {
         styleSrc:                [],
         objectSrc:               [],
         workerSrc:               [],
-        upgradeInsecureRequests: true,
+        upgradeInsecureRequests: false,
     };
 
     config.baseUri.push( "'self'" );

@@ -1,25 +1,43 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/font';
-@import 'components/common/topic';
-@import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
-// `body`
-body > {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #f2f4f7;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  // `.body > .header`
+  @include header( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1300px;
+
     // [ layout ]
     display: grid;
     grid: {
@@ -39,16 +57,15 @@ body > {
 
     // [ skin ]
     width: 100%;
-    background-color: #f2f4f7;
 
-    // [ RWD: 768px ]
-    @media screen and ( min-width: 768px ) {
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
     }
 
-    // [ RWD: 1300px ]
-    @media screen and ( min-width: 1300px ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: grid;
       grid: {
@@ -68,109 +85,127 @@ body > {
       };
     }
 
+    // element
+    // `.body > .content > .content__map`
     // block
-    // `body > .content > .map`
-    > .map {
+    // `.body > .content > .map`
+    > .content__map.map {
       // [ position ]
       grid-area: map;
     }
 
+    // element
+    // `.body > .content > .content__traffic`
     // block
-    // `body > .content > .traffic`
-    > .traffic {
-      // block
-      // `body > .content > .traffic.traffic--thsr`
-      &.traffic--thsr {
-        // [ position ]
-        grid-area: thsr;
-      }
+    // `.body > .content > .traffic`
+    > .content__traffic.traffic {
+      // template
+      // `.body > .content > .traffic.traffic--?`
+      &.traffic-- {
+        // modifier
+        // `.body > .content > .traffic.traffic--thsr`
+        &thsr {
+          // [ position ]
+          grid-area: thsr;
+        }
 
-      // block
-      // `body > .content > .traffic.traffic--train`
-      &.traffic--train {
-        // [ position ]
-        grid-area: train;
-      }
+        // modifier
+        // `.body > .content > .traffic.traffic--train`
+        &train {
+          // [ position ]
+          grid-area: train;
+        }
 
-      // block
-      // `body > .content > .traffic.traffic--drive`
-      &.traffic--drive {
-        // [ position ]
-        grid-area: drive;
+        // modifier
+        // `.body > .content > .traffic.traffic--drive`
+        &drive {
+          // [ position ]
+          grid-area: drive;
+        }
       }
 
       // element
-      // `> .traffic > .traffic__text.traffic__text--`
-      > .traffic__text.traffic__text-- {
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--information`
-        &information {
-          // [ skin ]
-          font-size: .5rem;
-        }
-
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--title`
-        &title {
-          // [ layout ]
-          display: inline;
-
-          // [ skin ]
-          border-bottom: solid .0156rem #213262;
-          padding-bottom: .3rem;
-          font: {
-            size: .75rem;
-            weight: bold;
+      // `.body > .content > .traffic > .traffic__text.`
+      > .traffic__text {
+        // template
+        // `.body > .content > .traffic > .traffic__text.traffic__text--?`
+        &.traffic__text-- {
+          // modifier
+          // `.body > .content > .traffic > .traffic__text.traffic__text--information`
+          &information {
+            // [ skin ]
+            font-size: .5rem;
           }
 
-          // [ before ]
-          &::before {
+          // modifier
+          // `.body > .content > .traffic > .traffic__text.traffic__text--title`
+          &title {
             // [ layout ]
-            display: block;
+            display: inline;
 
             // [ skin ]
-            content: '';
-            margin-top: 1.5625rem;
+            border-bottom: solid .0156rem #213262;
+            padding-bottom: .3rem;
+            font: {
+              size: .75rem;
+              weight: bold;
+            }
+
+            // [ before ]
+            &::before {
+              // [ layout ]
+              display: block;
+              margin-top: 1.5625rem;
+
+              // [ skin ]
+              content: '';
+            }
+
+            // [ after ]
+            &::after {
+              // [ layout ]
+              display: block;
+              margin-top: 1.5938rem;
+
+              // [ skin ]
+              content: '';
+            }
           }
 
-          // [ after ]
-          &::after {
+          // modifier
+          // `.body > .content > .traffic > .traffic__text.traffic__text--direction`
+          &direction {
             // [ layout ]
-            display: block;
+            display: inline-block;
+            margin: {
+              top: .9688rem;
+              bottom: .4688rem;
+            }
 
             // [ skin ]
-            content: '';
-            margin-top: 1.5938rem;
-          }
-        }
+            border: solid .0313rem #adacad;
+            border-radius: .0938rem;
+            padding: .1rem;
+            color: #adacad;
+            font: {
+              size: .4375rem;
+              weight: bold;
+            }
 
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--direction`
-        &direction {
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          margin: {
-            top: .9688rem;
-            bottom: .4688rem;
-          }
-          border: solid .0313rem #adacad;
-          border-radius: .0938rem;
-          padding: .1rem;
-          color: #adacad;
-          font: {
-            size: .4375rem;
-            weight: bold;
-          }
-
-          // [ first-of-type ]
-          &:first-of-type {
-            // [ skin ]
-            margin-top: 0;
+            // [ first-of-type ]
+            &:first-of-type {
+              // [ layout ]
+              margin-top: 0;
+            }
           }
         }
       }
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

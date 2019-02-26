@@ -1,5 +1,5 @@
+import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
-import LanguageUtils from 'models/common/utils/language.js';
 
 const researchGroupMap = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {

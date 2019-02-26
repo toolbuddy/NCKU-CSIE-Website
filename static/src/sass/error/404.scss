@@ -2,11 +2,40 @@
 @import 'components/common/header';
 @import 'components/common/footer';
 
-body > .content {
-  width: 100%;
-  height: 100%;
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #213262;
 
-  > .banner {
-    background: #213262;
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ skin ]
+    width: 100%;
+    height: 100%;
+
+    // element
+    // `.body > .content > .content__banner`
+    // block
+    // `.body > .content > .banner`
+    > .content__banner.banner {
+      // [ skin ]
+      background: #213262;
+    }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

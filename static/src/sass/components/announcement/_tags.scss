@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // template
 // `.tags > .tags__tag.tags__tag--?`
 // This mixin should not be used outside this file.
@@ -16,32 +18,40 @@
 }
 
 // component
-// `> .tags`
-@mixin tags () {
+// `> .#{ $block } > .#{ $block }__tags.tags`
+@mixin tags ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__tags`
   // block
-  // `> .tags`
-  &.tags {
+  // `> .#{ $block } > .tags`
+  > .#{ $block }__tags.tags {
     // [ skin ]
     color: #ffffff;
 
     // element
-    // `> .tags > .tags__tag`
+    // `> .#{ $block } > .tags > .tags__tag`
     > .tags__tag {
       // [ layout ]
-      grid: {
-        column-start: auto;
-        row-start: auto;
-      }
+      display: inline-block;
+      text-align: center;
+      vertical-align: top;
+      line-height: font__px-to-rem( 14 );
 
       // [ skin ]
-      width: 2.6rem;
-      height: 1rem;
+      min-width: font__px-to-rem( 105 );
+      height: font__px-to-rem( 30 );
       margin: {
-        right: .2rem;
-        bottom: .6rem;
+        right: font__px-to-rem( 16 );
+        bottom: font__px-to-rem( 10 );
       }
-      border-radius: 1rem;
-      padding: .1rem .2rem;
+      border-radius: font__px-to-rem( 15 );
+      padding: {
+        top: font__px-to-rem( 9 );
+        bottom: font__px-to-rem( 9 );
+        left: font__px-to-rem( 14 );
+        right: font__px-to-rem( 14 );
+      }
+      font-size: font__px-to-rem( 14 );
 
       // [ interaction ]
       &:hover {
@@ -51,14 +61,14 @@
 
       &.tags__tag-- {
         // modifier
-        // `> .tags > .tags__tag.tags__tag--yellow`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--yellow`
         &yellow {
           // [ template ]
           @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--red`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--red`
 
         &red {
           // [ template ]
@@ -66,7 +76,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--blue`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--blue`
 
         &blue {
           // [ template ]
@@ -74,7 +84,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--purple`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--purple`
 
         &purple {
           // [ template ]
@@ -82,7 +92,7 @@
         }
 
         // modifier
-        // `> .tags > .tags__tag.tags__tag--green`
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--green`
 
         &green {
           // [ template ]

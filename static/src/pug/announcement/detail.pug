@@ -27,15 +27,24 @@ append stylesheets
   +css( 'announcement/detail' )
 
 append header
-  +banner( i18n[ LANG.id ].title )
-  +breadcrumb( [
-    { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-    { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ LANG.id ].title },
-  ] )
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.normal, route: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
-  section.announcement
+  section.content__announcement.announcement
     header.announcement__headline.headline
       aside.headline__tags.tags
         each tagId in data.tags

@@ -40,7 +40,7 @@ const max = {
         statement: 1,
     },
     depth: {
-        callback:    4,
+        callback:    5,
         chainMethod: 2,
     },
 };

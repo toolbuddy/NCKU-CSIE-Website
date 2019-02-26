@@ -1,22 +1,38 @@
 @import 'components/common/reset';
 @import 'components/common/header';
-@import 'components/common/footer';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/footer';
 
 // block
-// `body > .content`
-body {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// `.body > .content`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .header`
+  @include header( $block: 'body' );
 
-  // `body > .content`
-  > .content {
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 768px;
     $large: 1024px;
@@ -48,7 +64,7 @@ body {
     }
 
     // block
-    // `body > .content > .logo`
+    // `.body > .content > .logo`
     > .logo {
       // [ position ]
       grid-area: sitemap__logo;
@@ -62,7 +78,7 @@ body {
       }
 
       // element
-      // `body > .logo > .logo__image`
+      // `.body > .logo > .logo__image`
       > .logo__image {
         // [ position ]
         justify-self: center;
@@ -72,27 +88,27 @@ body {
       }
 
       // element
-      // `body > .logo > .logo__caption`
+      // `.body > .logo > .logo__caption`
       // block
-      // `body > .logo > .caption`
+      // `.body > .logo > .caption`
       > .logo__caption.caption {
         // [ skin ]
         margin-top: 9%;
 
         // element
-        // `body > .logo > .caption > .caption__text`
+        // `.body > .logo > .caption > .caption__text`
         > .caption__text {
           // [ skin ]
           text-align: center;
 
           // modifier
-          // `body > .logo > .caption > .caption__text.caption__text--large`
+          // `.body > .logo > .caption > .caption__text.caption__text--large`
           &.caption__text--large {
             font-size: .75rem;
           }
 
           // modifier
-          // `body > .logo > .caption > .caption__text.caption__text--small`
+          // `.body > .logo > .caption > .caption__text.caption__text--small`
           &.caption__text--small {
             font: {
               weight: normal;
@@ -104,7 +120,7 @@ body {
     }
 
     // block
-    // `body > .content > .sitemap`
+    // `.body > .content > .sitemap`
     > .sitemap {
       grid: {
         // [ position ]
@@ -186,7 +202,7 @@ body {
       }
 
       // element
-      // `body > .content > .sitemap > .sitemap__hr`
+      // `.body > .content > .sitemap > .sitemap__hr`
       > .sitemap__hr {
         // [ layout ]
         grid-area: sitemap__hr;
@@ -211,7 +227,7 @@ body {
       }
 
       // element
-      // `body > .content > .sitemap > .sitemap__title`
+      // `.body > .content > .sitemap > .sitemap__title`
       > .sitemap__title {
         // [ skin ]
         color: #213262;
@@ -224,45 +240,45 @@ body {
         letter-spacing: normal;
 
         // template
-        // `body > .content > .sitemap > .sitemap__title.sitemap__title--`
+        // `.body > .content > .sitemap > .sitemap__title.sitemap__title--`
         &.sitemap__title-- {
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--home
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--home
           &home {
             // [ position ]
             grid-area: sitemap__title--home;
           }
 
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--about
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--about
           &about {
             // [ position ]
             grid-area: sitemap__title--about;
           }
 
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--research
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--research
           &research {
             // [ position ]
             grid-area: sitemap__title--research;
           }
 
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--student
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--student
           &student {
             // [ position ]
             grid-area: sitemap__title--student;
           }
 
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--announce
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--announce
           &announce {
             // [ position ]
             grid-area: sitemap__title--announce;
           }
 
           // modifier
-          // `body > .content > .sitemap > .sitemap__title.sitemap__title--resource
+          // `.body > .content > .sitemap > .sitemap__title.sitemap__title--resource
           &resource {
             // [ position ]
             grid-area: sitemap__title--resource;
@@ -271,143 +287,143 @@ body {
       }
 
       // template
-      // `body > .content > .sitemap > .sitemap__link.sitemap__link--
+      // `.body > .content > .sitemap > .sitemap__link.sitemap__link--
       > .sitemap__link.sitemap__link-- {
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--home
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--home
         &home {
           // [ position ]
           grid-area: sitemap__link--home;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--intro
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--intro
         &intro {
           // [ position ]
           grid-area: sitemap__link--intro;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
         &faculty {
           // [ position ]
           grid-area: sitemap__link--faculty;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--staff
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--staff
         &staff {
           // [ position ]
           grid-area: sitemap__link--staff;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--award
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--award
         &award {
           // [ position ]
           grid-area: sitemap__link--award;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--contact
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--contact
         &contact {
           // [ position ]
           grid-area: sitemap__link--contact;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--lab
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--lab
         &lab {
           // [ position ]
           grid-area: sitemap__link--lab;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--groups
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--groups
         &groups {
           // [ position ]
           grid-area: sitemap__link--group;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--publications
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publications
         &publications {
           // [ position ]
           grid-area: sitemap__link--publication;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--course
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--course
         &course {
           // [ position ]
           grid-area: sitemap__link--course;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--college
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--college
         &college {
           // [ position ]
           grid-area: sitemap__link--college;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--master
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--master
         &master {
           // [ position ]
           grid-area: sitemap__link--master;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--phd
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--phd
         &phd {
           // [ position ]
           grid-area: sitemap__link--phd;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
         &scholarship {
           // [ position ]
           grid-area: sitemap__link--scholar;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--international
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--international
         &international {
           // [ position ]
           grid-area: sitemap__link--exchange;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--internship
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--internship
         &internship {
           // [ position ]
           grid-area: sitemap__link--intern;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--all
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--all
         &all {
           // [ position ]
           grid-area: sitemap__link--all;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--activity
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--activity
         &activity {
           // [ position ]
           grid-area: sitemap__link--activity;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
         &recruitment {
           // [ position ]
           grid-area: sitemap__link--recruit;
         }
 
         // modifier
-        // `body > .content > .sitemap > .sitemap__link.sitemap__link--resource
+        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--resource
         &resource {
           // [ position ]
           grid-area: sitemap__link--resource;
@@ -415,4 +431,10 @@ body {
       }
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

@@ -16,8 +16,8 @@
  * functions other than called function should also only be called at most once.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import researchGroupMap from 'models/faculty/maps/research-group.js';
+import LanguageUtils from '../../common/utils/language.js';
+import researchGroupMap from '../maps/research-group.js';
 
 class ResearchGroupUtils {
     static defaultResearchGroup ( languageId = LanguageUtils.defaultLanguageId ) {

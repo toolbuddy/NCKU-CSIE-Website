@@ -1,6 +1,9 @@
-mixin entries( entryArr )
-  section.entries
+mixin entries( belongBlock, entryArr )
+  section.entries( class = `${ belongBlock }__entries` )
     each entry in entryArr
-      a.entries__entry.entry( class = `entries__entry--${ entry.modifier }`, href = entry.href )
+      a.entries__entry.entry(
+        class = `entries__entry--${ entry.modifier }`,
+        href = UTILS.url( { href: entry.route, } )
+      )
         p.entry__title= entry.title
         p.entry__detail= entry.detail

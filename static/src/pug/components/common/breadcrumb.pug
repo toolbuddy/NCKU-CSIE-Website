@@ -1,13 +1,12 @@
-mixin breadcrumb( breadcrumbList )
-  nav.breadcrumb
+mixin breadcrumb( belongBlock, breadcrumbList = [] )
+  nav.breadcrumb( class = `${ belongBlock }__breadcrumb` )
     each value, index in breadcrumbList
-      if ( index !== 0 )
+      if ( index !== breadcrumbList.length - 1 )
+        a.breadcrumb__link( href = UTILS.url( { href: value.route } ) )= value.text
         +image( {
-          alt:       'arrow',
+          alt:       '>',
           className: 'breadcrumb__arrow',
           src:       'icon/arrow-right.png',
         } )
-      if ( index === breadcrumbList.length - 1 )
-        span.breadcrumb__text= value.text
       else
-        a.breadcrumb__text.breadcrumb__text--link( href = UTILS.url( { href: value.url } ) )= value.text
+        span.breadcrumb__text= value.text

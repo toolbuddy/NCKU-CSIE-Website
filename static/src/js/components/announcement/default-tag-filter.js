@@ -3,36 +3,42 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
-import { classAdd, classRemove, } from 'static/src/js/utils/class-name.js';
+import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
     constructor ( opt ) {
-        this.config = {
-            from:           new Date( '2019/01/01' ),
-            to:             new Date( Date.now() ),
-            page:           1,
-            visiblePageNum: 2,
-        };
-
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
-        if ( !opt.defaultTag ||
+        if ( typeof ( opt.defaultTag ) === 'undefined' ||
             !Array.isArray( opt.defaultTag ) ||
-            !opt.supportedTag ||
+            typeof ( opt.supportedTag ) === 'undefined' ||
             !Array.isArray( opt.supportedTag ) ||
-            !opt.filterDOM ||
+            ( opt.defaultTag.length === 0 && opt.supportedTag.length === 0 ) ||
+            typeof ( opt.filterDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.filterDOM ) ||
-            !opt.announcementPinnedDOM ||
+            typeof ( opt.announcementPinnedDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.announcementPinnedDOM ) ||
-            !opt.announcementNormalDOM ||
+            typeof ( opt.announcementNormalDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.announcementNormalDOM ) ||
-            !opt.pagesDOM ||
+            typeof ( opt.pagesDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.pagesDOM ) ||
-            !opt.amount ||
-            !ValidateUtils.isPositiveInteger( opt.amount ) )
+            typeof ( opt.scrollTopDOM ) === 'undefined' ||
+            !ValidateUtils.isDomElement( opt.scrollTopDOM ) ||
+            typeof ( opt.amount ) === 'undefined' ||
+            !ValidateUtils.isPositiveInteger( opt.amount ) ||
+            typeof ( opt.from ) === 'undefined' ||
+            !ValidateUtils.isValidDate( opt.from ) ||
+            typeof ( opt.to ) === 'undefined' ||
+            !ValidateUtils.isValidDate( opt.to ) ||
+            typeof ( opt.page ) === 'undefined' ||
+            !ValidateUtils.isPositiveInteger( opt.page ) ||
+            typeof ( opt.visiblePageNum ) === 'undefined' ||
+            !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
+        )
             throw new TypeError( 'invalid arguments' );
 
         if ( !opt.supportedTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) ||
@@ -48,6 +54,16 @@ export default class DefaultTagFilter {
                 throw new TypeError( 'invalid arguments' );
         } );
 
+        this.config = {
+            amount:             opt.amount,
+            from:               opt.from,
+            to:                 opt.to,
+            page:               opt.page,
+            visiblePageNum:     opt.visiblePageNum,
+            animationDelayTime:  500,
+            scrollPx:           5,
+        };
+
         this.tagId = {
             default: opt.defaultTag.map( tag => TagUtils.getTagId( {
                 tag,
@@ -60,14 +76,11 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            amount:        opt.amount,
-            languageId:    WebLanguageUtils.currentLanguageId,
+            languageId:    opt.currentLanguageId,
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
             tags:          [],
-            selectDefault: true,
-            tagParam:      this.tagId.default,
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -87,9 +100,9 @@ export default class DefaultTagFilter {
                 tags: Array.from( opt.filterDOM.querySelectorAll( '.filter__tags.tags > .tags__tag' ) ).map( ( node ) => {
                     const tagId = node.getAttribute( 'data-tag-id' );
                     if ( tagId === null )
-                        throw new Error( 'Invalid Tag DOM attribute.' );
+                        throw new Error( 'DOM attribute `data-tag-id` not found.' );
                     if ( !( Number( tagId ) === TagUtils.tagAllId ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
-                        throw new Error( 'Invalid Tag DOM attribute.' );
+                        throw new Error( 'Invalid DOM attribute `data-tag-id`.' );
                     return {
                         node,
                         id:   Number( tagId ),
@@ -108,7 +121,8 @@ export default class DefaultTagFilter {
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
-            pages: opt.pagesDOM,
+            pages:     opt.pagesDOM,
+            scrollTop: opt.scrollTopDOM,
         };
 
         if (
@@ -118,34 +132,47 @@ export default class DefaultTagFilter {
             !ValidateUtils.isDomElement( this.DOM.filter.to.year ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.month ) ||
             !ValidateUtils.isDomElement( this.DOM.filter.to.date ) ||
+            this.DOM.filter.tags.length === 0 ||
             !Array.from( this.DOM.filter.tags.map( tag => tag.node ) ).every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.loading ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.pinned.briefings ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.normal.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.announcement.normal.loading ) ||
-            !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings ) ||
-            !ValidateUtils.isDomElement( this.DOM.pages ) )
+            !ValidateUtils.isDomElement( this.DOM.announcement.normal.briefings )
+        )
             throw new Error( 'DOM not found.' );
 
+        /**
+         * Set transition of `.briefings`
+         */
+
+        this.renderTransitionInit();
 
         /**
-         * Load state from url
+         * Load state from url.
          */
 
         this.loadState();
-        this.pushState();
 
         /**
-         * @abstract
-         * DOM elements `.time__from` and `.time__to` click event subscribe.
+         * ONLY USE `this.eventLock` WITH FOLLOWING FUNCTIONS:
+         * - `this.constructor.acquireLock()`
+         * - `this.constructor.releaseLock()`
+         * - `this.constructor.isLocked()`
+         */
+
+        this.eventLock = false;
+
+        /**
+         * Subscribe change event for DOM elements `.time__from` and `.time__to`.
          */
 
         this.subscribeTimeEvent();
 
         /**
          * @abstract
-         * DOM elements `.tags__tag` click event subscribe.
+         * Subscribe click event for DOM elements `.tags__tag`.
          */
 
         this.subscribeTagEvent();
@@ -160,63 +187,65 @@ export default class DefaultTagFilter {
         } );
     }
 
-    pushState () {
-        const urlString = [
-            `languageId=${ this.state.languageId }`,
-            `amount=${ this.state.amount }`,
-            `from=${ Number( this.state.from ) }`,
-            `to=${ Number( this.state.to ) }`,
-            ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
-            `page=${ this.state.page }`,
-            `selectDefault=${ this.state.selectDefault }`,
-        ].join( '&' );
+    static renderTransitionShow ( dom ) {
+        classRemove( dom, 'announcement__briefings--hide' );
+        classAdd( dom, 'announcement__briefings--show' );
+    }
 
-        window.history.pushState( this.state, 'query string', `${ window.location.pathname }?${ urlString }` );
+    static renderTransitionHide ( dom ) {
+        classRemove( dom, 'announcement__briefings--show' );
+        classAdd( dom, 'announcement__briefings--hide' );
+    }
+
+    renderTransitionInit () {
+        [
+            'pinned',
+            'normal',
+        ].forEach( ( which ) => {
+            this.constructor.renderTransitionHide( this.DOM.announcement[ which ].briefings );
+        } );
     }
 
     loadState () {
         const urlParams = new URLSearchParams( window.location.search );
-        const tempAmount = urlParams.get( 'amount' );
-        const tempTagParam = urlParams.getAll( 'tags' );
-        const tempLanguageId = urlParams.get( 'languageId' );
+        const tempTags = urlParams.getAll( 'tags' );
         const tempFrom = urlParams.get( 'from' );
         const tempTo = urlParams.get( 'to' );
         const tempPage = urlParams.get( 'page' );
-        const tempSelectDefault = urlParams.get( 'selectDefault' );
 
-        if ( tempAmount !== null )
-            this.state.amount = Number( tempAmount );
-        if ( tempTagParam.length !== 0 )
-            this.state.tagParam = tempTagParam.map( tagId => Number( tagId ) );
-        if ( tempLanguageId !== null )
-            this.state.languageId = Number( tempLanguageId );
-        if ( tempPage !== null )
+        this.state.tags = [];
+        tempTags.forEach( ( tagId ) => {
+            tagId = Number( tagId );
+            if ( this.tagId.default.includes( tagId ) || this.tagId.supported.includes( tagId ) )
+                this.state.tags.push( tagId );
+        } );
+        this.state.tags = [ ...new Set( this.state.tags ), ];
+
+        if ( tempPage !== null && ValidateUtils.isPositiveInteger( Number( tempPage ) ) )
             this.state.page = Number( tempPage );
-        if ( tempSelectDefault !== null )
-            this.state.selectDefault = ( tempSelectDefault === 'true' );
-        if ( tempFrom !== null )
+        if ( tempFrom !== null && ValidateUtils.isValidDate( new Date( Number( tempFrom ) ) ) )
             this.state.from = new Date( Number( tempFrom ) );
-        if ( tempTo !== null )
+        if ( tempTo !== null && ValidateUtils.isValidDate( new Date( Number( tempTo ) ) ) )
             this.state.to = new Date( Number( tempTo ) );
 
-        if ( this.state.selectDefault === true )
-            this.state.tags = [];
-        else
-            this.state.tags = this.state.tagParam;
-
         /**
-         * Render filter-tag.
+         * Render `.filter__tags.tags > .tags__tag`.
          */
 
         this.DOM.filter.tags.forEach( ( tagObj ) => {
-            if ( tagObj.id === -1 || this.state.tags.indexOf( tagObj.id ) >= 0 )
+            if ( tagObj.id === TagUtils.tagAllId ||
+                ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
+                this.state.tags.indexOf( tagObj.id ) >= 0
+            )
                 classAdd( tagObj.node, 'tags__tag--active' );
             else
                 classRemove( tagObj.node, 'tags__tag--active' );
         } );
 
         /**
-         * Render filter-time.
+         * Set value for `.filter__time.time`.
+         * This action will trigger `.time__from` and `.time__to` change event,
+         * which will fetch data and render.
          */
 
         [
@@ -227,6 +256,96 @@ export default class DefaultTagFilter {
             this.DOM.filter[ timeFilter ].month.value = this.state[ timeFilter ].getMonth() + 1;
             this.DOM.filter[ timeFilter ].date.value = this.state[ timeFilter ].getDate();
         } );
+    }
+
+    pushState () {
+        const queryString = [
+            `languageId=${ this.state.languageId }`,
+            `from=${ Number( this.state.from ) }`,
+            `to=${ Number( this.state.to ) }`,
+            ...this.state.tags.map( tagId => `tags=${ tagId }` ),
+            `page=${ this.state.page }`,
+        ].join( '&' );
+        window.history.pushState( null, 'query string', `${ window.location.pathname }?${ queryString }` );
+    }
+
+    acquireLock () {
+        if ( this.eventLock )
+            return;
+        this.eventLock = true;
+    }
+
+    releaseLock () {
+        if ( this.eventLock )
+            this.eventLock = false;
+    }
+
+    /**
+     * @returns {boolean}
+     */
+
+    isLocked () {
+        return this.eventLock;
+    }
+
+    subscribeTimeEvent () {
+        [
+            'from',
+            'to',
+        ].forEach( ( timeFilter ) => {
+            [
+                'year',
+                'month',
+                'date',
+            ].forEach( ( timePart ) => {
+                this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
+                    try {
+                        if ( this.isLocked() )
+                            return;
+                        this.acquireLock();
+
+                        const year  = this.DOM.filter[ timeFilter ].year.value;
+                        const month = this.DOM.filter[ timeFilter ].month.value;
+                        const date  = this.DOM.filter[ timeFilter ].date.value;
+                        const tempTime = new Date( `${ year }/${ month }/${ date }` );
+
+                        if ( !ValidateUtils.isValidDate( tempTime ) ) {
+                            this.DOM.announcement.pinned.briefings.innerHTML = '';
+                            classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+                            classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+                            this.DOM.announcement.normal.briefings.innerHTML = '';
+                            classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+                            classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+                            throw new TypeError( 'invalid arguments' );
+                        }
+
+                        this.state.page = this.config.page;
+                        this.state[ timeFilter ] = tempTime;
+
+                        this.pushState();
+                        this.getAll();
+                    }
+                    catch ( err ) {
+                        console.error( err );
+                    }
+                } );
+            } );
+        } );
+    }
+
+    renderAnnouncement ( currentY ) {
+        if ( this.DOM.scrollTop.offsetTop - currentY > this.config.scrollPx ) {
+            setTimeout( () => {
+                window.scrollTo( window.scrollX, currentY );
+                this.renderAnnouncement( currentY + this.config.scrollPx );
+            }, 1 );
+        }
+        else if ( currentY - this.DOM.scrollTop.offsetTop > this.config.scrollPx ) {
+            setTimeout( () => {
+                window.scrollTo( window.scrollX, currentY );
+                this.renderAnnouncement( currentY - this.config.scrollPx );
+            }, 1 );
+        }
     }
 
     static formatUpdateTime ( time ) {
@@ -247,63 +366,176 @@ export default class DefaultTagFilter {
         ].join( ' | ' );
     }
 
-    renderPageExtra ( pages ) {
-        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
+    subscribePageControlEvent ( pages, pageDOMArr ) {
+        /**
+         * Subscribe click event for `.pages__control.pages__control--forward`.
+         */
 
+        this.DOM.pages
+        .querySelector( '.pages > .pages__control.pages__control--forward' )
+        .addEventListener( 'click', () => {
+            try {
+                if ( this.isLocked() )
+                    return;
+                this.acquireLock();
+
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
+
+                this.state.page -= 1;
+                if ( this.state.page < this.config.page )
+                    this.state.page = this.config.page;
+
+                const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                if ( !ValidateUtils.isDomElement( activeDOM ) )
+                    throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                classAdd( activeDOM, 'pages__page--active' );
+
+                /**
+                 * Render `.pages__extra`.
+                 */
+
+                this.renderPageExtra( pages );
+
+                this.getNormalAnnouncement();
+                this.pushState();
+                this.renderAnnouncement( window.scrollY );
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            finally {
+                if ( this.isLocked() )
+                    this.releaseLock();
+            }
+        } );
+
+        /**
+         * Subscribe click event for `.pages__control.pages__control--backward`.
+         */
+
+        this.DOM.pages
+        .querySelector( '.pages > .pages__control--backward' )
+        .addEventListener( 'click', () => {
+            try {
+                if ( this.isLocked() )
+                    return;
+                this.acquireLock();
+
+                pageDOMArr.forEach( ( pageDOM ) => {
+                    classRemove( pageDOM, 'pages__page--active' );
+                } );
+
+                this.state.page += 1;
+                if ( this.state.page > pages )
+                    this.state.page = pages;
+
+                const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                if ( !ValidateUtils.isDomElement( activeDOM ) )
+                    throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
+                classAdd( activeDOM, 'pages__page--active' );
+
+                /**
+                 * Render `.pages__extra`.
+                 */
+
+                this.renderPageExtra( pages );
+
+                this.getNormalAnnouncement();
+                this.pushState();
+                this.renderAnnouncement( window.scrollY );
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            finally {
+                if ( this.isLocked() )
+                    this.releaseLock();
+            }
+        } );
+    }
+
+    renderPageExtra ( pages ) {
         /**
          * If `pages` is larger than `visiblePageNum * 2 + 1`,
          * then `.pages__extra` is created and need to be rendered.
          */
 
-        if ( pages > this.config.visiblePageNum * 2 + 1 ) {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                const dataPage = pageDOM.getAttribute( 'data-page' );
-                if ( dataPage !== null ) {
-                    const page = Number( dataPage );
+        if ( pages <= this.config.visiblePageNum * 2 + 1 )
+            return;
 
-                    /**
-                     * The first page & the last page must show.
-                     * If the distance between a page and the current page is larger than `this.config.visiblePageNum`,
-                     * then the page should be hidden.
-                     */
+        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
-                    if ( page !== this.config.page &&
-                        page !== pages &&
-                        Math.abs( page - this.state.page ) > this.config.visiblePageNum )
-                        classAdd( pageDOM, 'pages__page--hidden' );
-                    else
-                        classRemove( pageDOM, 'pages__page--hidden' );
-                }
-            } );
+        pageDOMArr.forEach( ( pageDOM ) => {
+            const dataPage = pageDOM.getAttribute( 'data-page' );
+            if ( dataPage !== null ) {
+                const page = Number( dataPage );
 
-            /**
-             * If the page after the first page is hidden, then pages__extra--before should show.
-             */
+                /**
+                 * The first page & the last page must show.
+                 * If the distance between a page and the current page
+                 * is smaller than or equal to `this.config.visiblePageNum`,
+                 * then the page must show.
+                 */
 
-            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
-            else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__page--hidden' );
+                if ( page === this.config.page ||
+                    page === pages ||
+                    Math.abs( page - this.state.page ) <= this.config.visiblePageNum
+                )
+                    classRemove( pageDOM, 'pages__page--hidden' );
+                else
+                    classAdd( pageDOM, 'pages__page--hidden' );
+            }
+        } );
 
-            /**
-             * If the page before the last page is hidden, then pages__extra--after should show.
-             */
+        /**
+         * If the page after the first page is hidden,
+         * then `.pages__extra.pages__extra--before` must show.
+         */
 
-            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
+        if ( this.DOM.pages
+        .querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
+        .classList.contains( 'pages__page--hidden' )
+        ) {
+            classRemove(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--before' ),
+                'pages__extra--hidden'
+            );
+        }
+        else {
+            classAdd(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--before' ),
+                'pages__extra--hidden'
+            );
+        }
 
-            else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__page--hidden' );
+        /**
+         * If the page before the last page is hidden,
+         * then `.pages__extra.pages__extra--after` must show.
+         */
+
+        if ( this.DOM.pages
+        .querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
+        .classList.contains( 'pages__page--hidden' )
+        ) {
+            classRemove(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--after' ),
+                'pages__extra--hidden'
+            );
+        }
+
+        else {
+            classAdd(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--after' ),
+                'pages__extra--hidden'
+            );
         }
     }
 
     renderPages ( pages ) {
         try {
             this.DOM.pages.innerHTML = pagesHTML( { pages, } );
-
-            const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
             /**
              * Render `.pages__extra`.
@@ -315,13 +547,15 @@ export default class DefaultTagFilter {
              * Add eventListener to all the `.pages__page` element after rendering.
              */
 
+            const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
+
             pageDOMArr.forEach( ( pageDOM ) => {
                 pageDOM.addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
                     try {
+                        if ( this.isLocked() )
+                            return;
+                        this.acquireLock();
+
                         pageDOMArr.forEach( ( pageDOM ) => {
                             classRemove( pageDOM, 'pages__page--active' );
                         } );
@@ -329,6 +563,11 @@ export default class DefaultTagFilter {
                         const dataPage = pageDOM.getAttribute( 'data-page' );
                         if ( dataPage !== null && ValidateUtils.isPositiveInteger( Number( dataPage ) ) ) {
                             this.state.page = Number( dataPage );
+
+                            /**
+                             * Render `.pages__page--active`.
+                             */
+
                             classAdd( pageDOM, 'pages__page--active' );
 
                             /**
@@ -336,12 +575,18 @@ export default class DefaultTagFilter {
                              */
 
                             this.renderPageExtra( pages );
+
                             this.getNormalAnnouncement();
                             this.pushState();
+                            this.renderAnnouncement( window.scrollY );
                         }
                     }
                     catch ( err ) {
-                        throw new Error( 'Failed in addEventListener.' );
+                        throw new Error( err );
+                    }
+                    finally {
+                        if ( this.isLocked() )
+                            this.releaseLock();
                     }
                 } );
             } );
@@ -359,80 +604,8 @@ export default class DefaultTagFilter {
              * Add eventListener to all the `.pages__control` element after rendering.
              */
 
-            if ( pages !== this.config.page ) {
-                this.DOM.pages.querySelector( '.pages > .pages__control.pages__control--forward' ).addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
-                    try {
-                        pageDOMArr.forEach( ( pageDOM ) => {
-                            classRemove( pageDOM, 'pages__page--active' );
-                        } );
-
-                        this.state.page -= 1;
-                        if ( this.state.page < this.config.page )
-                            this.state.page = this.config.page;
-
-                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( !ValidateUtils.isDomElement( activeDOM ) )
-                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        classAdd( activeDOM, 'pages__page--active' );
-
-                        /**
-                         * Render `.pages__extra`.
-                         */
-
-                        this.renderPageExtra( pages );
-                        this.getNormalAnnouncement();
-                        this.pushState();
-                    }
-
-                    /**
-                     * Silence.
-                     */
-
-                    catch ( err ) {
-                        console.error( err );
-                    }
-                } );
-                this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
-                    try {
-                        pageDOMArr.forEach( ( pageDOM ) => {
-                            classRemove( pageDOM, 'pages__page--active' );
-                        } );
-
-                        this.state.page += 1;
-                        if ( this.state.page > pages )
-                            this.state.page = pages;
-
-                        const activeDOM = this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        if ( !ValidateUtils.isDomElement( activeDOM ) )
-                            throw new Error( `Failed to get element .pages > .pages__page[ data-page = "${ this.state.page }" ]` );
-                        classAdd( activeDOM, 'pages__page--active' );
-
-                        /**
-                         * Render `.pages__extra`.
-                         */
-
-                        this.renderPageExtra( pages );
-                        this.getNormalAnnouncement();
-                        this.pushState();
-                    }
-
-                    /**
-                     * Silence.
-                     */
-
-                    catch ( err ) {
-                        console.error( err );
-                    }
-                } );
-            }
+            if ( pages !== this.config.page )
+                this.subscribePageControlEvent( pages, pageDOMArr );
         }
         catch ( err ) {
             throw new Error( 'failed to render pages' );
@@ -441,29 +614,74 @@ export default class DefaultTagFilter {
 
     async getPage () {
         try {
-            this.DOM.pages.innerHTML = '';
-            this.DOM.announcement.pinned.briefings.innerHTML = '';
-            this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
+
+            this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+            this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
+            await delay( this.config.animationDelayTime );
+
+            /**
+             * Clear `#pages`, `.announcement__briefings.briefings`.
+             */
+
+            this.DOM.pages.innerHTML = '';
+            this.DOM.announcement.pinned.briefings.innerHTML = '';
+            this.DOM.announcement.normal.briefings.innerHTML = '';
+
+            let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
+            else if ( this.tagId.default.length === 1 )
+                tags = tags.concat( this.tagId.default );
+
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
+            if ( this.state.tags.length === 0 )
+                res = await window.fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
@@ -483,26 +701,71 @@ export default class DefaultTagFilter {
 
     async getPinnedAnnouncement () {
         try {
-            this.DOM.announcement.pinned.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.pinned.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
+
+            if ( this.DOM.announcement.pinned.briefings.innerHTML !== '' ) {
+                this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
+                await delay( this.config.animationDelayTime );
+            }
+
+            /**
+             * Clear `.announcement__briefings.briefings`.
+             */
+
+            this.DOM.announcement.pinned.briefings.innerHTML = '';
+
+            let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
+            else if ( this.tagId.default.length === 1 )
+                tags = tags.concat( this.tagId.default );
 
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
+            if ( this.state.tags.length === 0 )
+                res = await window.fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pinned announcement' );
@@ -516,7 +779,7 @@ export default class DefaultTagFilter {
                         languageId: this.state.languageId,
                     } ),
                 } ) );
-                briefing.updateTime = DefaultTagFilter.formatUpdateTime( new Date( briefing.updateTime ) );
+                briefing.updateTime = this.constructor.formatUpdateTime( new Date( briefing.updateTime ) );
                 return briefing;
             } )
             .forEach( ( briefing ) => {
@@ -528,6 +791,13 @@ export default class DefaultTagFilter {
                 } );
             } );
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+
+            /**
+             * Unfold `.announcement__briefings.briefings`.
+             */
+
+            this.constructor.renderTransitionShow( this.DOM.announcement.pinned.briefings );
+            await delay( this.config.animationDelayTime );
         }
         catch ( err ) {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -538,28 +808,73 @@ export default class DefaultTagFilter {
 
     async getNormalAnnouncement () {
         try {
-            this.DOM.announcement.normal.briefings.innerHTML = '';
             classAdd( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
             classRemove( this.DOM.announcement.normal.loading, 'loading--hidden' );
 
-            const index = this.state.tagParam.indexOf( TagUtils.tagAllId );
-            if ( index >= 0 )
-                this.state.tagParam.splice( index, 1 );
+            /**
+             * Fold `.announcement__briefings.briefings`.
+             */
+
+            if ( this.DOM.announcement.normal.briefings.innerHTML !== '' ) {
+                this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
+                await delay( this.config.animationDelayTime );
+            }
+
+            /**
+             * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             */
+
+            this.DOM.announcement.normal.briefings.innerHTML = '';
+
+            let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
+            if ( tags.length === 0 )
+                tags = this.tagId.default;
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
+            else if ( this.tagId.default.length === 1 )
+                tags = tags.concat( this.tagId.default );
 
             const queryString = [
-                `amount=${ this.state.amount }`,
+                `amount=${ this.config.amount }`,
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
                 `page=${ this.state.page }`,
                 `to=${ Number( this.state.to ) }`,
-                ...this.state.tagParam.map( tagId => `tags=${ tagId }` ),
+                ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
             let res = null;
-            if ( this.state.selectDefault )
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
+            if ( this.state.tags.length === 0 )
+                res = await window.fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );
@@ -573,7 +888,7 @@ export default class DefaultTagFilter {
                         languageId: this.state.languageId,
                     } ),
                 } ) );
-                briefing.updateTime = DefaultTagFilter.formatUpdateTime( new Date( briefing.updateTime ) );
+                briefing.updateTime = this.constructor.formatUpdateTime( new Date( briefing.updateTime ) );
                 return briefing;
             } )
             .forEach( ( briefing ) => {
@@ -585,6 +900,13 @@ export default class DefaultTagFilter {
                 } );
             } );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+
+            /**
+             * Unfold `.announcement__briefings.briefings`.
+             */
+
+            this.constructor.renderTransitionShow( this.DOM.announcement.normal.briefings );
+            await delay( this.config.animationDelayTime );
         }
         catch ( err ) {
             this.DOM.announcement.normal.briefings.innerHTML = '';
@@ -597,16 +919,17 @@ export default class DefaultTagFilter {
     async getAll () {
         try {
             await this.getPage();
-            await this.getPinnedAnnouncement();
-            await this.getNormalAnnouncement();
+            await Promise.all( [
+                this.getPinnedAnnouncement(),
+                this.getNormalAnnouncement(),
+            ] );
         }
-
-        /**
-         * Silence.
-         */
-
         catch ( err ) {
             console.error( err );
+        }
+        finally {
+            if ( this.isLocked() )
+                this.releaseLock();
         }
     }
 }

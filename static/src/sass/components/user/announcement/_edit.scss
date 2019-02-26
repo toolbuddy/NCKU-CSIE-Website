@@ -1,0 +1,20 @@
+@import 'components/user/announcement/filter';
+@import 'components/user/announcement/submit';
+@import 'components/user/announcement/topic';
+@import 'components/user/announcement/editor';
+@mixin edit () {
+  // .content > .content--top
+  @include topic();
+
+  // .content > .filter__tags.tags
+  @include filter__tags();
+
+  // `.content > .filter__tags.tags > .tags__tag-- `
+  @include tags();
+
+  // .content > .editor
+  @include editor();
+
+  // .content > .submit
+  @include submit();
+}
