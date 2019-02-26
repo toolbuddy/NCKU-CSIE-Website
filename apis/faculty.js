@@ -24,6 +24,7 @@ apis.get( '/', cors(), async ( req, res, next ) => {
         res.json( data );
     }
     catch ( error ) {
+        // Console.log( error );
         next( error );
     }
 } );
