@@ -429,7 +429,7 @@
 mixin header( belongBlock )
   - const i18n = headerI18n();
 
-  header#header.header.header--min( class = `${ belongBlock }__header` )
+  header.header.header--min( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
       +image( {
@@ -601,7 +601,7 @@ mixin header( belongBlock )
 mixin header--small( belongBlock )
   - const i18n = headerI18n();
 
-  header#header.header.header--small( class = `${ belongBlock }__header` )
+  header.header.header--small( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
       +image( {
@@ -773,7 +773,7 @@ mixin header--small( belongBlock )
 mixin header--medium( belongBlock )
   - const i18n = headerI18n();
 
-  header#header.header.header--medium( class = `${ belongBlock }__header` )
+  header.header.header--medium( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
       +image( {
@@ -993,7 +993,7 @@ mixin header--medium( belongBlock )
 mixin header--large( belongBlock )
   - const i18n = headerI18n();
 
-  header#header.header.header--large( class = `${ belongBlock }__header` )
+  header.header.header--large( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
       +image( {
@@ -1015,14 +1015,8 @@ mixin header--large( belongBlock )
         span.subtitle__text and
         span.subtitle__text Information Engineering
 
-    //- Menu Icon
-    button.header__menu
-
     //- Navigation Bar
     nav.header__navigation.navigation
-      //- Cancel Icon
-      button.navigation__cancel
-
       //- All routes
       ul.navigation__list.list
         li.list__item.item
@@ -1088,48 +1082,50 @@ mixin header--large( belongBlock )
 
     //- Calendar, currently not available
     //- Large screen version
-    a.header__calendar.calender( href = i18n[ LANG.id ].home.calendar.route )
-      +image( {
-        alt:       i18n[ LANG.id ].home.calendar.text,
-        className: 'calendar__image',
-        src:       'icon/calendar.png',
-      } )
-
-    //- Language Choice
-    //- Large screen version
-    section.header__language.language
-      button.language__button.button
+    section.header__functions.functions
+      a.header__calendar.calender( href = i18n[ LANG.id ].home.calendar.route )
         +image( {
-          alt:       i18n[ LANG.id ].language,
-          className: 'button__image',
-          src:       `icon/flag-${ LANG.id }.png`,
+          alt:       i18n[ LANG.id ].home.calendar.text,
+          className: 'calendar__image',
+          src:       'icon/calendar.png',
         } )
-        ul.button__dropdown.dropdown
-          a.dropdown__item.dropdown__item--zh-TW( href = UTILS.url( {
-            href: currentRoute,
-            query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
-          } ) ) 中文
-          a.dropdown__item.dropdown__item--en-US( href = UTILS.url( {
-            href: currentRoute,
-            query: { languageId: LANG.getLanguageId( 'en-US' ) }
-          } ) ) English
 
-    //- Login
-    //- Large screen version
-    a.header__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
+      //- Language Choice
+      //- Large screen version
+      section.header__language.language
+        button.language__button.button
+          +image( {
+            alt:       i18n[ LANG.id ].language,
+            className: 'button__image',
+            src:       `icon/flag-${ LANG.id }.png`,
+          } )
+          ul.button__dropdown.dropdown
+            a.dropdown__item.dropdown__item--zh-TW( href = UTILS.url( {
+              href: currentRoute,
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+            } ) ) 中文
+            a.dropdown__item.dropdown__item--en-US( href = UTILS.url( {
+              href: currentRoute,
+              query: { languageId: LANG.getLanguageId( 'en-US' ) }
+            } ) ) English
 
-    //- Search, currently not available
-    //- Large screen version
-    scetion.header__search.search
-      button.search__button.button
-        +image( {
-          alt: i18n[ LANG.id ].home.search.text,
-          className: 'button__image',
-          src:       'icon/search.png',
-        } )
-      section.search__dropdown.dropdown
-        form.dropdown__form.form( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
-          input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
-          input.form__input( type = 'text', placeholder = i18n[ LANG.id ].home.search.text, name = 'searchText', value = '' )
-          input.form__submit( type = 'submit', value = '' )
-        button.dropdown__cancel ✕
+      aside.functions__bottom.bottom
+        //- Login
+        //- Large screen version
+        a.header__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
+
+        //- Search, currently not available
+        //- Large screen version
+        scetion.header__search.search
+          button.search__button.button
+            +image( {
+              alt: i18n[ LANG.id ].home.search.text,
+              className: 'button__image',
+              src:       'icon/search.png',
+            } )
+          section.search__dropdown.dropdown
+            form.dropdown__form.form( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
+              input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
+              input.form__input( type = 'text', placeholder = i18n[ LANG.id ].home.search.text, name = 'searchText', value = '' )
+              input.form__submit( type = 'submit', value = '' )
+            button.dropdown__cancel ✕

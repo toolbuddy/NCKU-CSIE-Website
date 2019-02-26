@@ -19,7 +19,9 @@ export class GetHeaderMin {
 
         if (
             !opt.headerDOM ||
-            !ValidateUtils.isDomElement( opt.headerDOM )
+            !ValidateUtils.isDomElement( opt.headerDOM ) ||
+            opt.allHeaderDOMs.length === 0 ||
+            !Array.from( opt.allHeaderDOMs ).every( ValidateUtils.isDomElement )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -33,11 +35,13 @@ export class GetHeaderMin {
         const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;
 
         this.DOM = {
-            header:     opt.headerDOM,
-            menu:       opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
-            navigation: opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
-            cancel:     opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
-            item:       Array
+            header:         opt.headerDOM,
+            allHeaders: Array.from( opt.allHeaderDOMs ),
+            allNavigations: Array.from(opt.allHeaderDOMs).map(header => header.querySelector(headerBlockQuerySelector('navigation'))),
+            menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
+            navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
+            cancel:         opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
+            item:           Array
             .from( opt.headerDOM.querySelectorAll( `${ navigationBlockQuerySelector( 'list' ) } > .list__item.item` ) )
             .map( listDOM => ( {
                 switch:   listDOM.querySelector( itemElementQuerySelector( 'switch' ) ),
@@ -71,21 +75,39 @@ export class GetHeaderMin {
 
     subscribeMenuEvent () {
         window.addEventListener( 'click', ( event ) => {
-            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) )
-                classRemove( this.DOM.navigation, 'header__navigation--active' );
+            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) && window.getComputedStyle(this.DOM.header).display !== 'none') {
+                this.DOM.allNavigations.forEach(navigationDOM => {
+                    classRemove( navigationDOM, 'header__navigation--active' );
+            });
+            }
         } );
 
         this.DOM.menu.addEventListener( 'click', () => {
-            classAdd( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classAdd( navigationDOM, 'header__navigation--active' );
+            });
         } );
 
         this.DOM.cancel.addEventListener( 'click', () => {
-            classRemove( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classRemove( navigationDOM, 'header__navigation--active' );
+            });
         } );
     }
 
     subscribeDropdownEvent () {
         this.DOM.item.forEach( ( itemObj ) => {
+            /*
+            itemObj.switches.forEach( ( switch ) => {
+                switch.addEventListener('click', () => {
+                    if(itemObj.active){
+                        console.log();
+                    }else{
+
+                    }
+                });
+            });
+            */
             itemObj.switch.addEventListener( 'click', () => {
                 if ( itemObj.active ) {
                     classRemove( itemObj.dropdown, 'item__dropdown--open' );
@@ -133,7 +155,9 @@ export class GetHeaderSmall {
 
         if (
             !opt.headerDOM ||
-            !ValidateUtils.isDomElement( opt.headerDOM )
+            !ValidateUtils.isDomElement( opt.headerDOM ) ||
+            opt.allHeaderDOMs.length === 0 ||
+            !Array.from( opt.allHeaderDOMs ).every( ValidateUtils.isDomElement )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -147,11 +171,13 @@ export class GetHeaderSmall {
         const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;
 
         this.DOM = {
-            header:     opt.headerDOM,
-            menu:       opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
-            navigation: opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
-            cancel:     opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
-            item:       Array
+            header:         opt.headerDOM,
+            allHeaders: Array.from( opt.allHeaderDOMs ),
+            allNavigations: Array.from(opt.allHeaderDOMs).map(header => header.querySelector(headerBlockQuerySelector('navigation'))),
+            menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
+            navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
+            cancel:         opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
+            item:           Array
             .from( opt.headerDOM.querySelectorAll( `${ navigationBlockQuerySelector( 'list' ) } > .list__item.item` ) )
             .map( listDOM => ( {
                 switch:   listDOM.querySelector( itemElementQuerySelector( 'switch' ) ),
@@ -185,16 +211,23 @@ export class GetHeaderSmall {
 
     subscribeMenuEvent () {
         window.addEventListener( 'click', ( event ) => {
-            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) )
-                classRemove( this.DOM.navigation, 'header__navigation--active' );
+            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) && window.getComputedStyle(this.DOM.header).display !== 'none' ) {
+                this.DOM.allNavigations.forEach(navigationDOM => {
+                    classRemove( navigationDOM, 'header__navigation--active' );
+                });
+            }
         } );
 
         this.DOM.menu.addEventListener( 'click', () => {
-            classAdd( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classAdd( navigationDOM, 'header__navigation--active' );
+            });
         } );
 
         this.DOM.cancel.addEventListener( 'click', () => {
-            classRemove( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classRemove( navigationDOM, 'header__navigation--active' );
+            });
         } );
     }
 
@@ -247,7 +280,9 @@ export class GetHeaderMedium {
 
         if (
             !opt.headerDOM ||
-            !ValidateUtils.isDomElement( opt.headerDOM )
+            !ValidateUtils.isDomElement( opt.headerDOM ) ||
+            opt.allHeaderDOMs.length === 0 ||
+            !Array.from( opt.allHeaderDOMs ).every( ValidateUtils.isDomElement )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -261,11 +296,13 @@ export class GetHeaderMedium {
         const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;
 
         this.DOM = {
-            header:     opt.headerDOM,
-            menu:       opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
-            navigation: opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
-            cancel:     opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
-            item:       Array
+            header:         opt.headerDOM,
+            allHeaders: Array.from( opt.allHeaderDOMs ),
+            allNavigations: Array.from(opt.allHeaderDOMs).map(header => header.querySelector(headerBlockQuerySelector('navigation'))),
+            menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
+            navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
+            cancel:         opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
+            item:           Array
             .from( opt.headerDOM.querySelectorAll( `${ navigationBlockQuerySelector( 'list' ) } > .list__item.item` ) )
             .map( listDOM => ( {
                 switch:   listDOM.querySelector( itemElementQuerySelector( 'switch' ) ),
@@ -299,16 +336,23 @@ export class GetHeaderMedium {
 
     subscribeMenuEvent () {
         window.addEventListener( 'click', ( event ) => {
-            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) )
-                classRemove( this.DOM.navigation, 'header__navigation--active' );
+            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) && window.getComputedStyle(this.DOM.header).display !== 'none' ) {
+                this.DOM.allNavigations.forEach(navigationDOM => {
+                    classRemove( navigationDOM, 'header__navigation--active' );
+                });
+            }
         } );
 
         this.DOM.menu.addEventListener( 'click', () => {
-            classAdd( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classAdd( navigationDOM, 'header__navigation--active' );
+            });
         } );
 
         this.DOM.cancel.addEventListener( 'click', () => {
-            classRemove( this.DOM.navigation, 'header__navigation--active' );
+            this.DOM.allNavigations.forEach(navigationDOM => {
+                classRemove( navigationDOM, 'header__navigation--active' );
+            });
         } );
     }
 
@@ -358,67 +402,6 @@ export class GetHeaderLarge {
 
     constructor ( opt ) {
         opt = opt || {};
-
-        if (
-            !opt.headerDOM ||
-            !ValidateUtils.isDomElement( opt.headerDOM )
-        )
-            throw new TypeError( 'invalid arguments' );
-
-        const headerElementQuerySelector = element => `.header > .header__${ element }`;
-        const headerBlockQuerySelector = block => `${ headerElementQuerySelector( block ) }.${ block }`;
-        const navigationElementQuerySelector = element => `${ headerBlockQuerySelector( 'navigation' ) } > .navigation__${ element }`;
-        const navigationBlockQuerySelector = block => `${ navigationElementQuerySelector( block ) }.${ block }`;
-        const itemElementQuerySelector = element => `${ navigationBlockQuerySelector( 'list' ) } > .list__item.item > .item__${ element }`;
-        const itemBlockQuerySelector = block => `${ itemElementQuerySelector( block ) }.${ block }`;
-        const languageElementQuerySelector = element => `${ navigationBlockQuerySelector( 'language' ) } > .language__${ element }`;
-        const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;
-
-        this.DOM = {
-            header:     opt.headerDOM,
-            menu:       opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
-            navigation: opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
-            cancel:     opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
-            item:       Array
-            .from( opt.headerDOM.querySelectorAll( `${ navigationBlockQuerySelector( 'list' ) } > .list__item.item` ) )
-            .map( listDOM => ( {
-                switch:   listDOM.querySelector( itemElementQuerySelector( 'switch' ) ),
-                dropdown: listDOM.querySelector( itemBlockQuerySelector( 'dropdown' ) ),
-                active:   false,
-            } ) )
-            .filter( itemObj => itemObj.switch !== null && itemObj.dropdown !== null ),
-            language: {
-                switch:   opt.headerDOM.querySelector( languageElementQuerySelector( 'switch' ) ),
-                dropdown: opt.headerDOM.querySelector( languageBlockQuerySelector( 'dropdown' ) ),
-                active:   false,
-            },
-        };
-
-        if (
-            !ValidateUtils.isDomElement( this.DOM.menu ) ||
-            !ValidateUtils.isDomElement( this.DOM.cancel ) ||
-            !this.DOM.item.length ||
-            !this.DOM.item.every( itemObj => ValidateUtils.isDomElement( itemObj.switch ) && ValidateUtils.isDomElement( itemObj.dropdown ) )
-        )
-            throw new Error( 'DOM not found.' );
-
-        this.subscribeMenuEvent();
-
         return this;
-    }
-
-    subscribeMenuEvent () {
-        window.addEventListener( 'click', ( event ) => {
-            if ( event.target !== this.DOM.menu && !this.DOM.navigation.contains( event.target ) )
-                classRemove( this.DOM.navigation, 'header__navigation--active' );
-        } );
-
-        this.DOM.menu.addEventListener( 'click', () => {
-            classAdd( this.DOM.navigation, 'header__navigation--active' );
-        } );
-
-        this.DOM.cancel.addEventListener( 'click', () => {
-            classRemove( this.DOM.navigation, 'header__navigation--active' );
-        } );
     }
 }
