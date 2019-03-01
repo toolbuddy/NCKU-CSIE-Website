@@ -1,249 +1,296 @@
-@mixin mountain_animation {
-  animation: {
-    duration: 2.6s;
-    iteration-count: infinite;
-    timing-function: linear;
-  }
-}
+@import 'components/common/font';
 
 // component
-// `.#{ $block } > .#{ $block }__loading.loading`
+// `> .#{ $block } > .#{ $block }__loading.loading`
 @mixin loading ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__loading`
+  // `> .#{ $block } > .#{ $block }__loading`
   // block
-  // `.#{ $block } > .loading`
+  // `> .#{ $block } > .loading`
   > .#{ $block }__loading.loading {
     // [ layout ]
-    margin-top: 2rem;
+    display: block;
+    margin-top: font__px-to-rem( 64 );
     text-align: center;
 
-    // [ skin ]
-    color: #adacad;
-    font-family: var( --font__family--NotoSansTC );
-
-    &--hidden {
+    // modifier
+    // `> .#{ $block } > .loading.loading--hidden`
+    &.loading--hidden {
+      // [ layout ]
       display: none;
     }
 
     // element
-    // `.loading > .loading__image`
+    // `> .#{ $block } > .loading > .loading__image`
     // block
-    // `.loading > .loading__image > .image`
+    // `> .#{ $block } > .loading > .image`
     > .loading__image.image {
       // [ layout ]
-      width: 100px;
-      height: 100px;
+      display: block;
       margin: {
         right: auto;
         left: auto;
       }
       text-align: center;
 
-      // [ variable ]
-      $mountain-color: #335098;
+      // template
+      // `> .#{ $block } > .loading > .image > .image__?`
+      %image__element {
+        fill: #335098;
+        animation: {
+          duration: 2.6s;
+          iteration-count: infinite;
+          timing-function: linear;
+        }
+      }
+
+      // animation
+      @keyframes image__a {
+        0% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        33.33% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        40% {
+          // [ skin ]
+          opacity: .1;
+        }
+
+        46.66% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        60% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        66.66% {
+          // [ skin ]
+          opacity: .1;
+        }
+
+        73.33% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        100% {
+          // [ skin ]
+          opacity: 0;
+        }
+      }
+
+      // animation
+      @keyframes image__b {
+        0% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        20% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        26.66% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        33.33% {
+          // [ skin ]
+          opacity: .4;
+        }
+
+        60% {
+          // [ skin ]
+          opacity: .4;
+        }
+
+        66.66% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        73.33% {
+          // [ skin ]
+          opacity: .1;
+        }
+
+        80% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        100% {
+          // [ skin ]
+          opacity: 0;
+        }
+      }
+
+      // animation
+      @keyframes image__c {
+        0% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        6.66% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        13.33% {
+          // [ skin ]
+          opacity: .3;
+        }
+
+        20% {
+          // [ skin ]
+          opacity: .6;
+        }
+
+        60% {
+          // [ skin ]
+          opacity: .6;
+        }
+
+        66.66% {
+          // [ skin ]
+          opacity: .4;
+        }
+
+        73.33% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        80% {
+          // [ skin ]
+          opacity: .1;
+        }
+
+        86.66% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        100% {
+          // [ skin ]
+          opacity: 0;
+        }
+      }
+
+      // animation
+      @keyframes image__d {
+        0% {
+          // [ skin ]
+          opacity: .4;
+        }
+
+        6.66% {
+          // [ skin ]
+          opacity: .8;
+        }
+
+        60% {
+          // [ skin ]
+          opacity: .8;
+        }
+
+        66.66% {
+          // [ skin ]
+          opacity: .6;
+        }
+
+        73.33% {
+          // [ skin ]
+          opacity: .4;
+        }
+
+        80% {
+          // [ skin ]
+          opacity: .2;
+        }
+
+        86.66% {
+          // [ skin ]
+          opacity: .1;
+        }
+
+        93.33% {
+          // [ skin ]
+          opacity: 0;
+        }
+
+        100% {
+          // [ skin ]
+          opacity: 0;
+        }
+      }
 
       // element
-      // `.loading > .loading__image > .image > .image__a`
+      // `> .#{ $block } > .loading > .image > .image__a`
       > .image__a {
-        fill: $mountain-color;
-        animation-name: mountain_a;
-        @include mountain_animation ();
+        // [ template ]
+        @extend %image__element;
+
+        // [ animation ]
+        animation-name: image__a;
       }
 
       // element
-      // `.loading > .loading__image > .image > .image__b`
+      // `> .#{ $block } > .loading > .image > .image__b`
       > .image__b {
-        fill: $mountain-color;
-        animation-name: mountain_b;
-        @include mountain_animation ();
+        // [ template ]
+        @extend %image__element;
+
+        // [ animation ]
+        animation-name: image__b;
       }
 
       // element
-      // `.loading > .loading__image > .image > .image__c`
+      // `> .#{ $block } > .loading > .image > .image__c`
       > .image__c {
-        fill: $mountain-color;
-        animation-name: mountain_c;
-        @include mountain_animation ();
+        // [ template ]
+        @extend %image__element;
+
+        // [ animation ]
+        animation-name: image__c;
       }
 
       // element
-      // `.loading > .loading__image > .image > .image__d`
+      // `> .#{ $block } > .loading > .image > .image__d`
       > .image__d {
-        fill: $mountain-color;
-        animation-name: mountain_d;
-        @include mountain_animation ();
+        // [ template ]
+        @extend %image__element;
+
+        // [ animation ]
+        animation-name: image__d;
       }
     }
 
     // element
-    // `.loading > .loading__caption`
-    // block
-    // `.loading > .loading__caption > .caption`
-    > .loading__caption.caption {
-      // element
-      // `.loading > .loading__caption > .caption > .caption__text`
-      > .caption__text {
-        // [ skin ]
-        font-size: .4125rem;
-        text-shadow: 0 4px 4px #bfbfbf;
-      }
-    }
-  }
+    // `> .#{ $block } > .loading > .loading__caption`
+    > .loading__caption {
+      // [ layout ]
+      display: inline-block;
+      line-height: font__px-to-rem( 14 );
+      vertical-align: top;
 
-  // animation
-  @keyframes mountain_a {
-    0% {
-      opacity: 0;
-    }
-
-    33.33% {
-      opacity: 0;
-    }
-
-    40% {
-      opacity: .1;
-    }
-
-    46.66% {
-      opacity: .2;
-    }
-
-    60% {
-      opacity: .2;
-    }
-
-    66.66% {
-      opacity: .1;
-    }
-
-    73.33% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
-    }
-  }
-
-  // animation
-  @keyframes mountain_b {
-    0% {
-      opacity: 0;
-    }
-
-    20% {
-      opacity: 0;
-    }
-
-    26.66% {
-      opacity: .2;
-    }
-
-    33.33% {
-      opacity: .4;
-    }
-
-    60% {
-      opacity: .4;
-    }
-
-    66.66% {
-      opacity: .2;
-    }
-
-    73.33% {
-      opacity: .1;
-    }
-
-    80% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
-    }
-  }
-
-  // animation
-  @keyframes mountain_c {
-    0% {
-      opacity: 0;
-    }
-
-    6.66% {
-      opacity: 0;
-    }
-
-    13.33% {
-      opacity: .3;
-    }
-
-    20% {
-      opacity: .6;
-    }
-
-    60% {
-      opacity: .6;
-    }
-
-    66.66% {
-      opacity: .4;
-    }
-
-    73.33% {
-      opacity: .2;
-    }
-
-    80% {
-      opacity: .1;
-    }
-
-    86.66% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
-    }
-  }
-
-  // animation
-  @keyframes mountain_d {
-    0% {
-      opacity: .4;
-    }
-
-    6.66% {
-      opacity: .8;
-    }
-
-    60% {
-      opacity: .8;
-    }
-
-    66.66% {
-      opacity: .6;
-    }
-
-    73.33% {
-      opacity: .4;
-    }
-
-    80% {
-      opacity: .2;
-    }
-
-    86.66% {
-      opacity: .1;
-    }
-
-    93.33% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 14 );
+      color: #adacad;
+      font-size: font__px-to-rem( 14 );
+      text-shadow: 0 font__px-to-rem( 1 ) font__px-to-rem( 1 ) #bfbfbf;
     }
   }
 }
