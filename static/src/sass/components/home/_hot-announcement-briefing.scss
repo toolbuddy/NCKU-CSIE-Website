@@ -1,3 +1,4 @@
+@import 'components/common/font';
 @import 'components/common/no-result';
 @import 'components/common/loading';
 @import 'components/announcement/tags';
@@ -49,13 +50,19 @@
     // `> .hot-announcement > .hot-announcement__no-result`
     // block
     // `> .hot-announcement > .no-result`
-    @include no-result( 'hot-announcement' );
+    @include no-result( 'hot-announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
 
     // element
     // `> .hot-announcement > .hot-announcement__loading`
     // block
     // `> .hot-announcement > .loading`
-    @include loading( 'hot-announcement' );
+    @include loading( 'hot-announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
 
     // element
     // `> .hot-announcement > .announcement__briefings`

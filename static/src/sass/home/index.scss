@@ -84,13 +84,19 @@
       // `.body > .content > .announcement > .announcement__no-result`
       // block
       // `.body > .content > .announcement > .no-result`
-      @include no-result( 'announcement' );
+      @include no-result( 'announcement' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .announcement > .announcement__loading`
       // block
       // `.body > .content > .announcement > .loading`
-      @include loading( 'announcement' );
+      @include loading( 'announcement' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .announcement > .announcement__briefings`

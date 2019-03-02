@@ -1,76 +1,123 @@
+@import 'components/common/font';
+
 // components
-// `.#{ $block } > .#{ $block }__no-result.no-result`
+// `> .#{ $block } > .#{ $block }__no-result.no-result`
 @mixin no-result ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__no-result`
+  // `> .#{ $block } > .#{ $block }__no-result`
   // block
-  // `.#{ $block } > .no-result`
+  // `> .#{ $block } > .no-result`
   > .#{ $block }__no-result.no-result {
     // [ layout ]
+    display: block;
     text-align: center;
-    margin-top: 2rem;
 
     // [ skin ]
-    color: #adacad;
-    font-family: var( --font__family--NotoSansTC );
-    min-width: 73 / 32 * 1rem;
+    width: auto;
 
-    &--hidden {
+    // modifier
+    // `> .#{ $block } > .no-result.no-result--hidden`
+    &.no-result--hidden {
+      // [ layout ]
       display: none;
     }
 
     // element
-    // `.no-result > .no-result__caption`
-    > .no-result__caption {
+    // `> .#{ $block } > .no-result > .no-result__image`
+    > .no-result__image {
+      // [ layout ]
+      display: block;
+      margin: {
+        top: font__px-to-rem( 100 );
+        left: auto;
+        right: auto;
+      }
+
       // [ skin ]
-      font-size: .4125rem;
-      line-height: 1.2rem;
+      width: font__px-to-rem( 74 );
+      height: auto;
     }
 
+    // element
+    // `> .#{ $block } > .no-result > .no-result__caption`
+    > .no-result__caption {
+      // [ layout ]
+      display: block;
+      line-height: font__px-to-rem( 16 );
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 16 );
+      color: #adacad;
+      font: {
+        size: font__px-to-rem( 16 );
+        style: normal;
+        weight: normal;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .no-result > .no-result__suggestion`
     // block
-    &.no-result--with-image {
-      // element
-      // `.no-result--with-image > .no-result__image`
-      > .no-result__image {
+    // `> .#{ $block } > .no-result > .suggestion`
+    > .no-result__suggestion.suggestion {
+      // [ layout ]
+      display: block;
+      text-align: center;
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: auto;
+
+      // template
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__?`
+      %suggestion__element {
         // [ layout ]
-        width: 7%;
-        margin-top: 3rem;
+        display: inline;
+        line-height: font__px-to-rem( 16 );
+        vertical-align: top;
+
+        // [ skin ]
+        color: #adacad;
+        font: {
+          size: font__px-to-rem( 16 );
+          style: normal;
+          weight: normal;
+        }
       }
 
       // element
-      // `.no-result--with-image > .no-result__caption`
-      // block
-      // `.no-result--with-image > .no-result__caption > .caption`
-      > .no-result__caption.caption {
-        // element
-        // `.no-result--with-image > .no-result__caption > .caption > .caption__text`
-        > .caption__text {
-          // [ skin ]
-          font-size: .4125rem;
-          line-height: 1.2rem;
-        }
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__text`
+      > .suggestion__text {
+        // [ template ]
+        @extend %suggestion__element;
+      }
 
-        // element
-        // `.no-result--with-image > .no-result__caption > .caption > .caption__suggestion`
-        // block
-        // `.no-result--with-image > .no-result__caption > .caption > .caption__suggestion > .suggestion`
-        > .caption__suggestion.suggestion {
-          // element
-          // `.no-result--with-image > .no-result__caption > .caption > .caption__suggestion > .suggestion > .suggestion__text`
-          > .suggestion__text {
-            // [ skin ]
-            font-size: .4125rem;
-            line-height: 1.2rem;
+      // element
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__link`
+      > .suggestion__link {
+        // [ template ]
+        @extend %suggestion__element;
 
-            // modifier
-            // `.no-result--with-image > .no-result__caption > .caption > .caption__suggestion > .suggestion > .suggestion__text--link`
-            &.suggestion__text--link {
-              // [ skin ]
-              text-decoration: underline;
-            }
-          }
-        }
+        // [ layout ]
+        white-space: nowrap;
+
+        // [ skin ]
+        text-decoration: underline;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

@@ -10,7 +10,6 @@
   > .#{ $block }__loading.loading {
     // [ layout ]
     display: block;
-    margin-top: font__px-to-rem( 64 );
     text-align: center;
 
     // modifier
@@ -36,7 +35,10 @@
       // template
       // `> .#{ $block } > .loading > .image > .image__?`
       %image__element {
+        // [ skin ]
         fill: #335098;
+
+        // [ animation ]
         animation: {
           duration: 2.6s;
           iteration-count: infinite;
@@ -281,9 +283,8 @@
     // `> .#{ $block } > .loading > .loading__caption`
     > .loading__caption {
       // [ layout ]
-      display: inline-block;
+      display: block;
       line-height: font__px-to-rem( 14 );
-      vertical-align: top;
 
       // [ skin ]
       width: auto;
@@ -292,5 +293,8 @@
       font-size: font__px-to-rem( 14 );
       text-shadow: 0 font__px-to-rem( 1 ) font__px-to-rem( 1 ) #bfbfbf;
     }
+
+    // [ customization ]
+    @content;
   }
 }

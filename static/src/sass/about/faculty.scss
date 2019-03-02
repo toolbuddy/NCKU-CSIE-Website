@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
@@ -97,13 +98,19 @@
       // `.body > .content > .faculty > .faculty__no-result`
       // block
       // `.body > .content > .faculty > .no-result`
-      @include no-result( $block: 'faculty' );
+      @include no-result( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .faculty > .faculty__loading`
       // block
       // `.body > .content > .faculty > .loading`
-      @include loading( $block: 'faculty' );
+      @include loading( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .faculty > .faculty__cards`
