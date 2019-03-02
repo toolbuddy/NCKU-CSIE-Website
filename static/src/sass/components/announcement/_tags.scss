@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // template
 // `.tags > .tags__tag.tags__tag--?`
 // This mixin should not be used outside this file.
@@ -30,21 +32,26 @@
     // `> .#{ $block } > .tags > .tags__tag`
     > .tags__tag {
       // [ layout ]
-      grid: {
-        column-start: auto;
-        row-start: auto;
-      }
+      display: inline-block;
+      text-align: center;
+      vertical-align: top;
+      line-height: font__px-to-rem( 14 );
 
       // [ skin ]
-      width: 78 / 32 * 1rem;
-      height: 30 / 32 * 1rem;
+      min-width: font__px-to-rem( 105 );
+      height: font__px-to-rem( 30 );
       margin: {
-        right: 16 / 32 * 1rem;
-        bottom: 10 / 32 * 1rem;
+        right: font__px-to-rem( 16 );
+        bottom: font__px-to-rem( 10 );
       }
-      border-radius: 15 / 32 * 1rem;
-      padding: 9 / 32 * 1rem 14 / 32 * 1rem;
-      font-size: 12 / 32 * 1rem;
+      border-radius: font__px-to-rem( 15 );
+      padding: {
+        top: font__px-to-rem( 9 );
+        bottom: font__px-to-rem( 9 );
+        left: font__px-to-rem( 14 );
+        right: font__px-to-rem( 14 );
+      }
+      font-size: font__px-to-rem( 14 );
 
       // [ interaction ]
       &:hover {

@@ -12,30 +12,30 @@ export default class DefaultTagFilter {
         opt = opt || {};
         const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
-        if ( !opt.defaultTag ||
+        if ( typeof ( opt.defaultTag ) === 'undefined' ||
             !Array.isArray( opt.defaultTag ) ||
-            !opt.supportedTag ||
+            typeof ( opt.supportedTag ) === 'undefined' ||
             !Array.isArray( opt.supportedTag ) ||
             ( opt.defaultTag.length === 0 && opt.supportedTag.length === 0 ) ||
-            !opt.filterDOM ||
+            typeof ( opt.filterDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.filterDOM ) ||
-            !opt.announcementPinnedDOM ||
+            typeof ( opt.announcementPinnedDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.announcementPinnedDOM ) ||
-            !opt.announcementNormalDOM ||
+            typeof ( opt.announcementNormalDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.announcementNormalDOM ) ||
-            !opt.pagesDOM ||
+            typeof ( opt.pagesDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.pagesDOM ) ||
-            !opt.scrollTopDOM ||
+            typeof ( opt.scrollTopDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.scrollTopDOM ) ||
-            !opt.amount ||
+            typeof ( opt.amount ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.amount ) ||
-            !opt.from ||
+            typeof ( opt.from ) === 'undefined' ||
             !ValidateUtils.isValidDate( opt.from ) ||
-            !opt.to ||
+            typeof ( opt.to ) === 'undefined' ||
             !ValidateUtils.isValidDate( opt.to ) ||
-            !opt.page ||
+            typeof ( opt.page ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.page ) ||
-            !opt.visiblePageNum ||
+            typeof ( opt.visiblePageNum ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
         )
@@ -55,13 +55,13 @@ export default class DefaultTagFilter {
         } );
 
         this.config = {
-            amount:         opt.amount,
-            from:           opt.from,
-            to:             opt.to,
-            page:           opt.page,
-            visiblePageNum: opt.visiblePageNum,
-            transitionSec:  0.5,
-            scrollPx:       5,
+            amount:             opt.amount,
+            from:               opt.from,
+            to:                 opt.to,
+            page:               opt.page,
+            visiblePageNum:     opt.visiblePageNum,
+            animationDelayTime:  500,
+            scrollPx:           5,
         };
 
         this.tagId = {
@@ -154,7 +154,6 @@ export default class DefaultTagFilter {
          */
 
         this.loadState();
-        this.pushState();
 
         /**
          * ONLY USE `this.eventLock` WITH FOLLOWING FUNCTIONS:
@@ -166,15 +165,14 @@ export default class DefaultTagFilter {
         this.eventLock = false;
 
         /**
-         * @abstract
-         * DOM elements `.time__from` and `.time__to` click event subscribe.
+         * Subscribe change event for DOM elements `.time__from` and `.time__to`.
          */
 
         this.subscribeTimeEvent();
 
         /**
          * @abstract
-         * DOM elements `.tags__tag` click event subscribe.
+         * Subscribe click event for DOM elements `.tags__tag`.
          */
 
         this.subscribeTagEvent();
@@ -189,36 +187,14 @@ export default class DefaultTagFilter {
         } );
     }
 
-    acquireLock () {
-        if ( this.eventLock )
-            return;
-        this.eventLock = true;
-    }
-
-    releaseLock () {
-        if ( this.eventLock )
-            this.eventLock = false;
-    }
-
-    /**
-     * @returns {boolean}
-     */
-
-    isLocked () {
-        return this.eventLock;
-    }
-
-    async renderTransitionShow ( dom ) {
-        classRemove( dom, 'briefings__briefing--disappear' );
-        classAdd( dom, 'briefings__briefing--show' );
-        await delay( this.config.transitionSec * 1000 );
+    static renderTransitionShow ( dom ) {
+        classRemove( dom, 'announcement__briefings--hide' );
+        classAdd( dom, 'announcement__briefings--show' );
     }
 
     static renderTransitionHide ( dom ) {
-        if ( dom.style.maxHeight !== '0px' ) {
-            classRemove( dom, 'briefings__briefing--show' );
-            classAdd( dom, 'briefings__briefing--disappear' );
-        }
+        classRemove( dom, 'announcement__briefings--show' );
+        classAdd( dom, 'announcement__briefings--hide' );
     }
 
     renderTransitionInit () {
@@ -268,6 +244,8 @@ export default class DefaultTagFilter {
 
         /**
          * Set value for `.filter__time.time`.
+         * This action will trigger `.time__from` and `.time__to` change event,
+         * which will fetch data and render.
          */
 
         [
@@ -281,14 +259,78 @@ export default class DefaultTagFilter {
     }
 
     pushState () {
-        const urlString = [
+        const queryString = [
             `languageId=${ this.state.languageId }`,
             `from=${ Number( this.state.from ) }`,
             `to=${ Number( this.state.to ) }`,
             ...this.state.tags.map( tagId => `tags=${ tagId }` ),
             `page=${ this.state.page }`,
         ].join( '&' );
-        window.history.pushState( null, 'query string', `${ window.location.pathname }?${ urlString }` );
+        window.history.pushState( null, 'query string', `${ window.location.pathname }?${ queryString }` );
+    }
+
+    acquireLock () {
+        if ( this.eventLock )
+            return;
+        this.eventLock = true;
+    }
+
+    releaseLock () {
+        if ( this.eventLock )
+            this.eventLock = false;
+    }
+
+    /**
+     * @returns {boolean}
+     */
+
+    isLocked () {
+        return this.eventLock;
+    }
+
+    subscribeTimeEvent () {
+        [
+            'from',
+            'to',
+        ].forEach( ( timeFilter ) => {
+            [
+                'year',
+                'month',
+                'date',
+            ].forEach( ( timePart ) => {
+                this.DOM.filter[ timeFilter ][ timePart ].addEventListener( 'change', () => {
+                    try {
+                        if ( this.isLocked() )
+                            return;
+                        this.acquireLock();
+
+                        const year  = this.DOM.filter[ timeFilter ].year.value;
+                        const month = this.DOM.filter[ timeFilter ].month.value;
+                        const date  = this.DOM.filter[ timeFilter ].date.value;
+                        const tempTime = new Date( `${ year }/${ month }/${ date }` );
+
+                        if ( !ValidateUtils.isValidDate( tempTime ) ) {
+                            this.DOM.announcement.pinned.briefings.innerHTML = '';
+                            classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
+                            classRemove( this.DOM.announcement.pinned.noResult, 'no-result--hidden' );
+                            this.DOM.announcement.normal.briefings.innerHTML = '';
+                            classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
+                            classRemove( this.DOM.announcement.normal.noResult, 'no-result--hidden' );
+                            throw new TypeError( 'invalid arguments' );
+                        }
+
+                        this.state.page = this.config.page;
+                        this.state[ timeFilter ] = tempTime;
+
+                        this.pushState();
+                        this.getAll();
+                    }
+                    catch ( err ) {
+                        console.error( err );
+                    }
+                } );
+            } );
+        } );
     }
 
     renderAnnouncement ( currentY ) {
@@ -324,64 +366,14 @@ export default class DefaultTagFilter {
         ].join( ' | ' );
     }
 
-    renderPageExtra ( pages ) {
-        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
-
+    subscribePageControlEvent ( pages, pageDOMArr ) {
         /**
-         * If `pages` is larger than `visiblePageNum * 2 + 1`,
-         * then `.pages__extra` is created and need to be rendered.
+         * Subscribe click event for `.pages__control.pages__control--forward`.
          */
 
-        if ( pages > this.config.visiblePageNum * 2 + 1 ) {
-            pageDOMArr.forEach( ( pageDOM ) => {
-                const dataPage = pageDOM.getAttribute( 'data-page' );
-                if ( dataPage !== null ) {
-                    const page = Number( dataPage );
-
-                    /**
-                     * The first page & the last page must show.
-                     * If the distance between a page and the current page is larger than `this.config.visiblePageNum`,
-                     * then the page should be hidden.
-                     */
-
-                    if ( page !== this.config.page &&
-                        page !== pages &&
-                        Math.abs( page - this.state.page ) > this.config.visiblePageNum )
-                        classAdd( pageDOM, 'pages__page--hidden' );
-                    else
-                        classRemove( pageDOM, 'pages__page--hidden' );
-                }
-            } );
-
-            /**
-             * If the page after the first page is hidden, then pages__extra--before should show.
-             */
-
-            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
-            else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--before' ), 'pages__extra--hidden' );
-
-            /**
-             * If the page before the last page is hidden, then pages__extra--after should show.
-             */
-
-            if ( this.DOM.pages.querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
-            .classList.contains( 'pages__page--hidden' ) )
-                classRemove( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
-
-            else
-                classAdd( this.DOM.pages.querySelector( '.pages > .pages__extra--after' ), 'pages__extra--hidden' );
-        }
-    }
-
-    subscribePageControlEvent ( pages, pageDOMArr ) {
-        this.DOM.pages.querySelector( '.pages > .pages__control.pages__control--forward' ).addEventListener( 'click', () => {
-            /**
-             * Render `.pages__page--active`.
-             */
-
+        this.DOM.pages
+        .querySelector( '.pages > .pages__control.pages__control--forward' )
+        .addEventListener( 'click', () => {
             try {
                 if ( this.isLocked() )
                     return;
@@ -405,6 +397,7 @@ export default class DefaultTagFilter {
                  */
 
                 this.renderPageExtra( pages );
+
                 this.getNormalAnnouncement();
                 this.pushState();
                 this.renderAnnouncement( window.scrollY );
@@ -413,14 +406,18 @@ export default class DefaultTagFilter {
                 console.error( err );
             }
             finally {
-                this.releaseLock();
+                if ( this.isLocked() )
+                    this.releaseLock();
             }
         } );
-        this.DOM.pages.querySelector( '.pages > .pages__control--backward' ).addEventListener( 'click', () => {
-            /**
-             * Render `.pages__page--active`.
-             */
 
+        /**
+         * Subscribe click event for `.pages__control.pages__control--backward`.
+         */
+
+        this.DOM.pages
+        .querySelector( '.pages > .pages__control--backward' )
+        .addEventListener( 'click', () => {
             try {
                 if ( this.isLocked() )
                     return;
@@ -444,26 +441,101 @@ export default class DefaultTagFilter {
                  */
 
                 this.renderPageExtra( pages );
+
                 this.getNormalAnnouncement();
                 this.pushState();
-
-                // Window.scrollTo( window.scrollX, this.DOM.scrollTop.offsetTop );
                 this.renderAnnouncement( window.scrollY );
             }
             catch ( err ) {
                 console.error( err );
             }
             finally {
-                this.releaseLock();
+                if ( this.isLocked() )
+                    this.releaseLock();
             }
         } );
+    }
+
+    renderPageExtra ( pages ) {
+        /**
+         * If `pages` is larger than `visiblePageNum * 2 + 1`,
+         * then `.pages__extra` is created and need to be rendered.
+         */
+
+        if ( pages <= this.config.visiblePageNum * 2 + 1 )
+            return;
+
+        const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
+
+        pageDOMArr.forEach( ( pageDOM ) => {
+            const dataPage = pageDOM.getAttribute( 'data-page' );
+            if ( dataPage !== null ) {
+                const page = Number( dataPage );
+
+                /**
+                 * The first page & the last page must show.
+                 * If the distance between a page and the current page
+                 * is smaller than or equal to `this.config.visiblePageNum`,
+                 * then the page must show.
+                 */
+
+                if ( page === this.config.page ||
+                    page === pages ||
+                    Math.abs( page - this.state.page ) <= this.config.visiblePageNum
+                )
+                    classRemove( pageDOM, 'pages__page--hidden' );
+                else
+                    classAdd( pageDOM, 'pages__page--hidden' );
+            }
+        } );
+
+        /**
+         * If the page after the first page is hidden,
+         * then `.pages__extra.pages__extra--before` must show.
+         */
+
+        if ( this.DOM.pages
+        .querySelector( `.pages > .pages__page[ data-page = "${ this.config.page + 1 }" ]` )
+        .classList.contains( 'pages__page--hidden' )
+        ) {
+            classRemove(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--before' ),
+                'pages__extra--hidden'
+            );
+        }
+        else {
+            classAdd(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--before' ),
+                'pages__extra--hidden'
+            );
+        }
+
+        /**
+         * If the page before the last page is hidden,
+         * then `.pages__extra.pages__extra--after` must show.
+         */
+
+        if ( this.DOM.pages
+        .querySelector( `.pages > .pages__page[ data-page = "${ pages - 1 }" ]` )
+        .classList.contains( 'pages__page--hidden' )
+        ) {
+            classRemove(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--after' ),
+                'pages__extra--hidden'
+            );
+        }
+
+        else {
+            classAdd(
+                this.DOM.pages.querySelector( '.pages > .pages__extra.pages__extra--after' ),
+                'pages__extra--hidden'
+            );
+        }
     }
 
     renderPages ( pages ) {
         try {
             this.DOM.pages.innerHTML = pagesHTML( { pages, } );
-
-            const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
 
             /**
              * Render `.pages__extra`.
@@ -475,12 +547,10 @@ export default class DefaultTagFilter {
              * Add eventListener to all the `.pages__page` element after rendering.
              */
 
+            const pageDOMArr = Array.from( this.DOM.pages.querySelectorAll( '.pages > .pages__page' ) );
+
             pageDOMArr.forEach( ( pageDOM ) => {
                 pageDOM.addEventListener( 'click', () => {
-                    /**
-                     * Render `.pages__page--active`.
-                     */
-
                     try {
                         if ( this.isLocked() )
                             return;
@@ -493,6 +563,11 @@ export default class DefaultTagFilter {
                         const dataPage = pageDOM.getAttribute( 'data-page' );
                         if ( dataPage !== null && ValidateUtils.isPositiveInteger( Number( dataPage ) ) ) {
                             this.state.page = Number( dataPage );
+
+                            /**
+                             * Render `.pages__page--active`.
+                             */
+
                             classAdd( pageDOM, 'pages__page--active' );
 
                             /**
@@ -500,6 +575,7 @@ export default class DefaultTagFilter {
                              */
 
                             this.renderPageExtra( pages );
+
                             this.getNormalAnnouncement();
                             this.pushState();
                             this.renderAnnouncement( window.scrollY );
@@ -509,7 +585,8 @@ export default class DefaultTagFilter {
                         throw new Error( err );
                     }
                     finally {
-                        this.releaseLock();
+                        if ( this.isLocked() )
+                            this.releaseLock();
                     }
                 } );
             } );
@@ -548,20 +625,34 @@ export default class DefaultTagFilter {
 
             this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
             this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
-            await delay( this.config.transitionSec * 1000 );
+            await delay( this.config.animationDelayTime );
 
             /**
-             * Clear `#pages` & `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             * Clear `#pages`, `.announcement__briefings.briefings`.
              */
 
             this.DOM.pages.innerHTML = '';
             this.DOM.announcement.pinned.briefings.innerHTML = '';
             this.DOM.announcement.normal.briefings.innerHTML = '';
 
-
             let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
             if ( tags.length === 0 )
                 tags = this.tagId.default;
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
             else if ( this.tagId.default.length === 1 )
                 tags = tags.concat( this.tagId.default );
 
@@ -573,10 +664,24 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
             if ( this.state.tags.length === 0 )
-                res = await fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pages-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pages-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pages' );
@@ -605,19 +710,34 @@ export default class DefaultTagFilter {
 
             if ( this.DOM.announcement.pinned.briefings.innerHTML !== '' ) {
                 this.constructor.renderTransitionHide( this.DOM.announcement.pinned.briefings );
-                await delay( this.config.transitionSec * 1000 );
+                await delay( this.config.animationDelayTime );
             }
 
             /**
-             * Clear `.announcement__briefings.briefings`, then show `.announcement__loading.loading`.
+             * Clear `.announcement__briefings.briefings`.
              */
 
             this.DOM.announcement.pinned.briefings.innerHTML = '';
 
             let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
             if ( tags.length === 0 )
                 tags = this.tagId.default;
-            if ( this.tagId.default.length === 1 && this.state.tags.length !== 0 )
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
+            else if ( this.tagId.default.length === 1 )
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
@@ -628,10 +748,24 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
             if ( this.state.tags.length === 0 )
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-pinned-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all pinned announcement' );
@@ -662,7 +796,8 @@ export default class DefaultTagFilter {
              * Unfold `.announcement__briefings.briefings`.
              */
 
-            await this.renderTransitionShow( this.DOM.announcement.pinned.briefings );
+            this.constructor.renderTransitionShow( this.DOM.announcement.pinned.briefings );
+            await delay( this.config.animationDelayTime );
         }
         catch ( err ) {
             this.DOM.announcement.pinned.briefings.innerHTML = '';
@@ -682,7 +817,7 @@ export default class DefaultTagFilter {
 
             if ( this.DOM.announcement.normal.briefings.innerHTML !== '' ) {
                 this.constructor.renderTransitionHide( this.DOM.announcement.normal.briefings );
-                await delay( this.config.transitionSec * 1000 );
+                await delay( this.config.animationDelayTime );
             }
 
             /**
@@ -692,9 +827,24 @@ export default class DefaultTagFilter {
             this.DOM.announcement.normal.briefings.innerHTML = '';
 
             let tags = this.state.tags;
+
+            /**
+             * If current state didn't have any tags,
+             * then use default tags to query.
+             * - Multiple default tags: `this.tagId.default.length > 1`.
+             * - Single default tag: `this.tagId.default.length === 1`.
+             */
+
             if ( tags.length === 0 )
                 tags = this.tagId.default;
-            if ( this.tagId.default.length === 1 && this.state.tags.length !== 0 )
+
+            /**
+             * If current state have some tags,
+             * and it is a single default tag filter,
+             * then add default tag to query.
+             */
+
+            else if ( this.tagId.default.length === 1 )
                 tags = tags.concat( this.tagId.default );
 
             const queryString = [
@@ -707,10 +857,24 @@ export default class DefaultTagFilter {
             ].join( '&' );
 
             let res = null;
+
+            /**
+             * OR query.
+             *
+             * Used when default tag is the only tag active.
+             */
+
             if ( this.state.tags.length === 0 )
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-announcements-by-or-tags?${ queryString }` );
+
+            /**
+             * AND query.
+             *
+             * Used when default tag is not the only tag active.
+             */
+
             else
-                res = await fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
+                res = await window.fetch( `${ host }/api/announcement/get-announcements-by-and-tags?${ queryString }` );
 
             if ( !res.ok )
                 throw new Error( 'failed to get all normal announcement' );
@@ -741,7 +905,8 @@ export default class DefaultTagFilter {
              * Unfold `.announcement__briefings.briefings`.
              */
 
-            await this.renderTransitionShow( this.DOM.announcement.normal.briefings );
+            this.constructor.renderTransitionShow( this.DOM.announcement.normal.briefings );
+            await delay( this.config.animationDelayTime );
         }
         catch ( err ) {
             this.DOM.announcement.normal.briefings.innerHTML = '';
@@ -754,14 +919,17 @@ export default class DefaultTagFilter {
     async getAll () {
         try {
             await this.getPage();
-            await this.getPinnedAnnouncement();
-            await this.getNormalAnnouncement();
+            await Promise.all( [
+                this.getPinnedAnnouncement(),
+                this.getNormalAnnouncement(),
+            ] );
         }
         catch ( err ) {
             console.error( err );
         }
         finally {
-            this.releaseLock();
+            if ( this.isLocked() )
+                this.releaseLock();
         }
     }
 }

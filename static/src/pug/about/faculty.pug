@@ -64,7 +64,7 @@ append content
           button.research-group__tag(
             data-research-group-id = `${ researchGroupId }`,
           )= UTILS.ResearchGroupUtils.getResearchGroupById( { researchGroupId, languageId: LANG.id } )
-    +noResult( 'faculty' )
+    +noResultWithImage( 'faculty' )
     +loading( 'faculty' )
     section.faculty__cards.cards
 

@@ -38,7 +38,7 @@ append content
       aside.time__from.from
         label.from__text= i18n[ LANG.id ].time.from
         span.from__input.input
-          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
+          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2018' )
           input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
           input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
       aside.time__to.to
@@ -59,7 +59,7 @@ append content
 
   section#announcement--normal.content__announcement.announcement.announcement--normal
     header.announcement__title= i18n[ LANG.id ].normal
-    +noResult( 'announcement' )
+    +noResultWithImage( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
 
