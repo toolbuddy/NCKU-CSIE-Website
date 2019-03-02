@@ -1,9 +1,22 @@
-import GetHeader from 'static/src/js/components/common/header.js';
+import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge, } from 'static/src/js/components/common/header.js';
 import img404Src from 'static/src/image/icon/404.png';
 
 window.addEventListener( 'load', () => {
-    const header = new GetHeader( {
-        headerDOM: document.getElementById( 'header' ),
+    const headerMin = new GetHeaderMin( {
+        headerDOM:     document.querySelector( '.body__header.header.header--min' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    const headerSmall = new GetHeaderSmall( {
+        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    const headerMedium = new GetHeaderMedium( {
+        headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    const headerLarge = new GetHeaderLarge( {
+        headerDOM:     document.querySelector( '.body__header.header.header--large' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
 
     const img404 = new Image();

@@ -1,16 +1,20 @@
-import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge } from 'static/src/js/components/common/header.js';
+import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge, } from 'static/src/js/components/common/header.js';
 
 window.addEventListener( 'load', () => {
     const headerMin = new GetHeaderMin( {
-        headerDOM: document.getElementsByClassName( 'header--min' )[0],
+        headerDOM:     document.querySelector( '.body__header.header.header--min' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
     const headerSmall = new GetHeaderSmall( {
-        headerDOM: document.getElementsByClassName( 'header--small' )[0],
+        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
     const headerMedium = new GetHeaderMedium( {
-        headerDOM: document.getElementsByClassName( 'header--medium' )[0],
+        headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
     const headerLarge = new GetHeaderLarge( {
-        headerDOM: document.getElementsByClassName( 'header--large' )[0],
+        headerDOM:     document.querySelector( '.body__header.header.header--large' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
 } );

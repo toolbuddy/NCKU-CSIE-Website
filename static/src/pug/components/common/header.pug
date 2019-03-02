@@ -480,7 +480,7 @@ mixin header( belongBlock )
       ul.navigation__list.list
         li.list__item.item
           a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
-        li.list__item.item
+        li.list__item.item.list__item--about
           a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -494,7 +494,7 @@ mixin header( belongBlock )
               a.item__link( href = i18n[ LANG.id ].about.award.route )= i18n[ LANG.id ].about.award.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
-        li.list__item.item
+        li.list__item.item.list__item--research
           a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -502,7 +502,7 @@ mixin header( belongBlock )
               a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
-        li.list__item.item
+        li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -512,7 +512,7 @@ mixin header( belongBlock )
               a.item__link( href = i18n[ LANG.id ].student.master.route )= i18n[ LANG.id ].student.master.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
-        li.list__item.item
+        li.list__item.item.list__item--announcement
           a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -522,7 +522,7 @@ mixin header( belongBlock )
               a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
-        li.list__item.item
+        li.list__item.item.list__item--resource
           a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -652,7 +652,7 @@ mixin header--small( belongBlock )
       ul.navigation__list.list
         li.list__item.item
           a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
-        li.list__item.item
+        li.list__item.item.list__item--about
           a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -666,7 +666,7 @@ mixin header--small( belongBlock )
               a.item__link( href = i18n[ LANG.id ].about.award.route )= i18n[ LANG.id ].about.award.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
-        li.list__item.item
+        li.list__item.item.list__item--research
           a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -674,7 +674,7 @@ mixin header--small( belongBlock )
               a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
-        li.list__item.item
+        li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -684,7 +684,7 @@ mixin header--small( belongBlock )
               a.item__link( href = i18n[ LANG.id ].student.master.route )= i18n[ LANG.id ].student.master.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
-        li.list__item.item
+        li.list__item.item.list__item--announcement
           a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -694,7 +694,7 @@ mixin header--small( belongBlock )
               a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
-        li.list__item.item
+        li.list__item.item.list__item--resource
           a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -824,7 +824,7 @@ mixin header--medium( belongBlock )
       ul.navigation__list.list
         li.list__item.item
           a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
-        li.list__item.item
+        li.list__item.item.list__item--about
           a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -838,7 +838,7 @@ mixin header--medium( belongBlock )
               a.item__link( href = i18n[ LANG.id ].about.award.route )= i18n[ LANG.id ].about.award.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
-        li.list__item.item
+        li.list__item.item.list__item--research
           a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -846,7 +846,7 @@ mixin header--medium( belongBlock )
               a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
-        li.list__item.item
+        li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -856,7 +856,7 @@ mixin header--medium( belongBlock )
               a.item__link( href = i18n[ LANG.id ].student.master.route )= i18n[ LANG.id ].student.master.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
-        li.list__item.item
+        li.list__item.item.list__item--announcement
           a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -866,7 +866,7 @@ mixin header--medium( belongBlock )
               a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
-        li.list__item.item
+        li.list__item.item.list__item--resource
           a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
           button.item__switch
           ul.item__dropdown.dropdown
@@ -942,54 +942,6 @@ mixin header--medium( belongBlock )
               else
                 span.link__text USA
 
-    //- Calendar, currently not available
-    //- Large screen version
-    a.header__calendar.calender( href = i18n[ LANG.id ].home.calendar.route )
-      +image( {
-        alt:       i18n[ LANG.id ].home.calendar.text,
-        className: 'calendar__image',
-        src:       'icon/calendar.png',
-      } )
-
-    //- Language Choice
-    //- Large screen version
-    section.header__language.language
-      button.language__button.button
-        +image( {
-          alt:       i18n[ LANG.id ].language,
-          className: 'button__image',
-          src:       `icon/flag-${ LANG.id }.png`,
-        } )
-        ul.button__dropdown.dropdown
-          a.dropdown__item.dropdown__item--zh-TW( href = UTILS.url( {
-            href: currentRoute,
-            query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
-          } ) ) 中文
-          a.dropdown__item.dropdown__item--en-US( href = UTILS.url( {
-            href: currentRoute,
-            query: { languageId: LANG.getLanguageId( 'en-US' ) }
-          } ) ) English
-
-    //- Login
-    //- Large screen version
-    a.header__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
-
-    //- Search, currently not available
-    //- Large screen version
-    scetion.header__search.search
-      button.search__button.button
-        +image( {
-          alt: i18n[ LANG.id ].home.search.text,
-          className: 'button__image',
-          src:       'icon/search.png',
-        } )
-      section.search__dropdown.dropdown
-        form.dropdown__form.form( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
-          input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
-          input.form__input( type = 'text', placeholder = i18n[ LANG.id ].home.search.text, name = 'searchText', value = '' )
-          input.form__submit( type = 'submit', value = '' )
-        button.dropdown__cancel ✕
-
 mixin header--large( belongBlock )
   - const i18n = headerI18n();
 
@@ -1023,7 +975,6 @@ mixin header--large( belongBlock )
           a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
-          button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].about.intro.route )= i18n[ LANG.id ].about.intro.text
@@ -1037,7 +988,6 @@ mixin header--large( belongBlock )
               a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
-          button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
@@ -1045,7 +995,6 @@ mixin header--large( belongBlock )
               a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
-          button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].student.college.route )= i18n[ LANG.id ].student.college.text
@@ -1055,7 +1004,6 @@ mixin header--large( belongBlock )
               a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
-          button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].announcement.all.route )= i18n[ LANG.id ].announcement.all.text
@@ -1065,7 +1013,6 @@ mixin header--large( belongBlock )
               a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
-          button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
               a.item__link( href = i18n[ LANG.id ].resource.rule.route )= i18n[ LANG.id ].resource.rule.text
@@ -1083,7 +1030,7 @@ mixin header--large( belongBlock )
     //- Calendar, currently not available
     //- Large screen version
     section.header__functions.functions
-      a.header__calendar.calender( href = i18n[ LANG.id ].home.calendar.route )
+      a.functions__calendar.calender( href = i18n[ LANG.id ].home.calendar.route )
         +image( {
           alt:       i18n[ LANG.id ].home.calendar.text,
           className: 'calendar__image',
@@ -1092,7 +1039,7 @@ mixin header--large( belongBlock )
 
       //- Language Choice
       //- Large screen version
-      section.header__language.language
+      section.functions__language.language
         button.language__button.button
           +image( {
             alt:       i18n[ LANG.id ].language,
@@ -1112,11 +1059,11 @@ mixin header--large( belongBlock )
       aside.functions__bottom.bottom
         //- Login
         //- Large screen version
-        a.header__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
+        a.bottom__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
 
         //- Search, currently not available
         //- Large screen version
-        scetion.header__search.search
+        scetion.bottom__search.search
           button.search__button.button
             +image( {
               alt: i18n[ LANG.id ].home.search.text,

@@ -4,7 +4,9 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header ( $block ) {
-  @media screen and ( max-width: 320px ) {
+  // [ variable ]
+  $small-width: 320px;
+  @media screen and ( max-width: $small-width ) {
     // [ variable ]
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
@@ -936,43 +938,9 @@
           }
         }
       }
-
-      // element
-      // `> .#{ $block } > .header > .header__calendar`
-      // block
-      // `> .#{ $block } > .header > .calendar`
-      > .header__calendar.calender {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__language`
-      // block
-      // `> .#{ $block } > .header > .language`
-      > .header__language.language {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__login`
-      > .header__login {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__search`
-      // block
-      // `> .#{ $block } > .header > .search`
-      .header__search.search {
-        // [ layout ]
-        display: none;
-      }
     }
   }
-  @media screen and ( min-width: 320px ) {
+  @media screen and ( min-width: $small-width ) {
     > .#{ $block }__header.header.header--min {
       display: none;
     }
@@ -982,7 +950,10 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--small ( $block ) {
-  @media screen and ( min-width: 320px ) and ( max-width: 560px ) {
+  // [ variable ]
+  $small-width: 320px;
+  $medium-width: 560px;
+  @media screen and ( min-width: $small-width ) and ( max-width: $medium-width ) {
     // [ variable ]
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
@@ -1914,48 +1885,14 @@
           }
         }
       }
-
-      // element
-      // `> .#{ $block } > .header > .header__calendar`
-      // block
-      // `> .#{ $block } > .header > .calendar`
-      > .header__calendar.calender {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__language`
-      // block
-      // `> .#{ $block } > .header > .language`
-      > .header__language.language {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__login`
-      > .header__login {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__search`
-      // block
-      // `> .#{ $block } > .header > .search`
-      .header__search.search {
-        // [ layout ]
-        display: none;
-      }
     }
   }
-  @media screen and ( max-width: 320px ) {
+  @media screen and ( max-width: $small-width ) {
     > .#{ $block }__header.header.header--small {
       display: none;
     }
   }
-  @media screen and ( min-width: 560px ) {
+  @media screen and ( min-width: $medium-width ) {
     > .#{ $block }__header.header.header--small {
       display: none;
     }
@@ -1965,7 +1902,10 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--medium ( $block ) {
-  @media screen and ( min-width: 560px ) and ( max-width: 1400px ) {
+  // [ variable ]
+  $large-width: 1500px;
+  $medium-width: 560px;
+  @media screen and ( min-width: $medium-width ) and ( max-width: $large-width ) {
     // [ variable ]
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
@@ -2908,48 +2848,14 @@
           }
         }
       }
-
-      // element
-      // `> .#{ $block } > .header > .header__calendar`
-      // block
-      // `> .#{ $block } > .header > .calendar`
-      > .header__calendar.calender {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__language`
-      // block
-      // `> .#{ $block } > .header > .language`
-      > .header__language.language {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__login`
-      > .header__login {
-        // [ layout ]
-        display: none;
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__search`
-      // block
-      // `> .#{ $block } > .header > .search`
-      .header__search.search {
-        // [ layout ]
-        display: none;
-      }
     }
   }
-  @media screen and ( max-width: 560px ) {
+  @media screen and ( max-width: $medium-width ) {
     > .#{ $block }__header.header.header--medium {
       display: none;
     }
   }
-  @media screen and ( min-width: 1400px ) {
+  @media screen and ( min-width: $large-width ) {
     > .#{ $block }__header.header.header--medium {
       display: none;
     }
@@ -2959,7 +2865,9 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--large ( $block ) {
-  @media screen and ( min-width: 1400px ) {
+  // [ variable ]
+  $large-width: 1500px;
+  @media screen and ( min-width: $large-width ) {
     // [ variable ]
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
@@ -2981,7 +2889,7 @@
       display: block;
       text-align: left;
       line-height: 0;
-      padding-right: 3.125rem;
+      padding-right: font__px-to-rem( 100 );
 
       // [ skin ]
       width: 100%;
@@ -3333,61 +3241,6 @@
             }
 
             // element
-            // `> .#{ $block } > .header > .navigation > .list > .item > .item__switch`
-            > .item__switch {
-              // [ position ]
-              // `z-index` is set to put `.item__switch` beneath `.item__link`.
-              position: absolute;
-              text-align: right;
-              left: 0;
-              top: 0;
-              z-index: 4;
-
-              // [ layout ]
-              display: none;
-
-              // [ skin ]
-              width: 100%;
-              height: $item-height;
-              padding-right: font__px-to-rem( 20 );
-              background-color: transparent;
-              cursor: pointer;
-
-              // [ after ]
-              // The look of this element should look like arrow.
-              &::after {
-                // [ layout ]
-                display: inline-block;
-                vertical-align: middle;
-
-                // [ skin ]
-                width: font__px-to-rem( 14 );
-                height: font__px-to-rem( 14 );
-                border: {
-                  color: #8f98ae;
-                  style: solid;
-                  top-width: font__px-to-rem( 3 );
-                  right-width: font__px-to-rem( 3 );
-                }
-                content: '';
-                transform: rotate( 45deg );
-
-                // [ animation ]
-                transition: transform .5s;
-              }
-
-              // modifier
-              // `> .#{ $block } > .header > .navigation > .list > .item > .item__switch > .item__switch--active`
-              &.item__switch--active {
-                // [ after ]
-                &::after {
-                  // [ skin ]
-                  transform: rotate( 135deg );
-                }
-              }
-            }
-
-            // element
             // `> .#{ $block } > .header > .navigation > .list > .item > .item__dropdown`
             // block
             // `> .#{ $block } > .header > .navigation > .list > .item > .dropdown`
@@ -3504,22 +3357,25 @@
         // `> .#{ $block } > .header > .header__calendar`
         // block
         // `> .#{ $block } > .header > .calendar`
-        > .header__calendar.calender {
+        > .functions__calendar.calender {
           // [ layout ]
           display: inline;
           justify-self: flex-end;
-          margin-top: .75rem;
+          margin: {
+            top: font__px-to-rem( 24 );
+            left: font__px-to-rem( 80 );
+          }
 
           // [ skin ]
-          height: .75rem;
-          width: .75rem;
+          height: font__px-to-rem( 24 );
+          width: font__px-to-rem( 24 );
 
           // element
           // `> .#{ $block } > .header > .calendar > .calendar__image`
           > .calendar__image {
             // [ skin ]
-            height: .75rem;
-            width: .75rem;
+            height: font__px-to-rem( 24 );
+            width: font__px-to-rem( 24 );
           }
         }
 
@@ -3527,17 +3383,17 @@
         // `> .#{ $block } > .header > .header__language`
         // block
         // `> .#{ $block } > .header > .language`
-        > .header__language.language {
+        > .functions__language.language {
           // [ layout ]
           display: inline-block;
           margin: {
-            top: .75rem;
-            left: .75rem;
+            top: font__px-to-rem( 24 );
+            left: font__px-to-rem( 24 );
           }
 
           // [ skin ]
-          height: .75rem;
-          width: .75rem;
+          height: font__px-to-rem( 24 );
+          width: font__px-to-rem( 24 );
 
           // element
           // `> .#{ $block } > .header > .language > .language__button`
@@ -3548,8 +3404,8 @@
             display: flex;
 
             // [ skin ]
-            height: .75rem;
-            width: .75rem;
+            height: font__px-to-rem( 24 );
+            width: font__px-to-rem( 24 );
             cursor: pointer;
             background-color: #ffffff;
 
@@ -3557,8 +3413,8 @@
             // `> .#{ $block } > .header > .language > .button > .button__image`
             > .button__image {
               // [ skin ]
-              height: .75rem;
-              width: .75rem;
+              height: font__px-to-rem( 24 );
+              width: font__px-to-rem( 24 );
             }
 
             // element
@@ -3574,29 +3430,29 @@
               justify-content: center;
 
               // [ position ]
-              top: 1rem;
-              left: -4rem;
+              top: font__px-to-rem( 32 );
+              left: font__px-to-rem( -128 );
               z-index: 1;
 
               // [ skin ]
-              height: 2.56rem;
-              min-width: 4rem;
+              height: font__px-to-rem( 82 );
+              min-width: font__px-to-rem( 128 );
               background-color: #1a284d;
               box-shadow: 0 1px 2px 0 rgba( 0, 0, 0, .25 );
-              font-size: .5rem;
+              font-size: font__px-to-rem( 16 );
               color: #ffffff;
 
               &::before {
                 // [ layout ]
                 display: inline;
                 position: absolute;
-                top: -.3rem;
-                right: .3rem;
+                top: font__px-to-rem( -9.6 );
+                right: font__px-to-rem( 9.6 );
 
                 // [ skin ]
                 content: '';
                 border: {
-                  width: .15rem;
+                  width: font__px-to-rem( 4.8 );
                   style: solid;
                   top-color: transparent;
                   right-color: transparent;
@@ -3620,10 +3476,10 @@
                 // [ layout ]
                 display: flex;
                 align-items: center;
-                padding-left: .8rem;
+                padding-left: font__px-to-rem( 25.6 );
 
                 // [ skin ]
-                height: 1.28rem;
+                height: font__px-to-rem( 41 );
                 width: 100%;
 
                 // element
@@ -3631,15 +3487,15 @@
                 &::before {
                   // [ layout ]
                   background: {
-                    size: .66rem;
+                    size: font__px-to-rem( 21.1 );
                     repeat: no-repeat;
                   }
-                  margin-right: .5rem;
+                  margin-right: font__px-to-rem( 16 );
 
                   // [ skin ]
                   content: '';
-                  width: .66rem;
-                  height: .66rem;
+                  width: font__px-to-rem( 21.1 );
+                  height: font__px-to-rem( 21.1 );
                 }
 
                 // modifier
@@ -3660,7 +3516,7 @@
                 // `> .#{ $block } > .header > .language > .dropdown > .item > .item__link`
                 > .item__link {
                   // [ skin ]
-                  font-size: .5rem;
+                  font-size: font__px-to-rem( 16 );
                   color: #ffffff;
                   width: 50%;
                 }
@@ -3670,27 +3526,24 @@
         }
 
         > .functions__bottom.bottom {
+          // [ layout ]
+          margin-top: font__px-to-rem( 38 );
+
           // element
           // `> .#{ $block } > .header > .header__login`
-          > .header__login {
+          > .bottom__login {
             // [ layout ]
-            display: flex;
-            align: {
-              self: flex-start;
-              items: center;
-            }
-            justify: {
-              self: flex-end;
-              items: center;
-            }
+            display: inline-block;
+            vertical-align: top;
 
             // [ skin ]
-            width: 3.28rem;
-            height: 1.13rem;
+            width: font__px-to-rem( 105 );
+            height: font__px-to-rem( 36.15 );
+            line-height: font__px-to-rem( 36.15 );
             background-color: #213262;
             box-shadow: 0 .06rem .06rem 0 rgba( 0, 0, 0, .24 ), 0 0 2px 0 rgba( 0, 0, 0, .12 );
             font: {
-              size: .44rem;
+              size: font__px-to-rem( 14.1 );
               weight: 500;
             }
             color: #ffffff;
@@ -3699,19 +3552,20 @@
             // `> .#{ $block } > .header > .header__login::before`
             &::before {
               // [ layout ]
-              margin: {
-                left: .61rem;
-                right: .45rem;
+              margin-left: font__px-to-rem( 14.4 );
+              padding: {
+                left: font__px-to-rem( 32 );
+                right: font__px-to-rem( 6.4 );
               }
               background: {
-                size: .66rem;
+                size: font__px-to-rem( 21.1 );
                 repeat: no-repeat;
               }
 
               // [ skin ]
               content: '';
-              width: .66rem;
-              height: .66rem;
+              width: font__px-to-rem( 14 );
+              height: font__px-to-rem( 14 );
               filter:
                 invert( 100% )
                 sepia( 0% )
@@ -3729,15 +3583,18 @@
           // `> .#{ $block } > .header > .header__search`
           // block
           // `> .#{ $block } > .header > .search`
-          .header__search.search {
+          .bottom__search.search {
             // [ layout ]
             display: inline-block;
-            flex-direction: row;
-            margin-left: .75rem;
+            vertical-align: top;
+            margin: {
+              left: font__px-to-rem( 24 );
+              top: font__px-to-rem( 5 );
+            }
 
             // [ skin ]
-            height: .75rem;
-            width: .75rem;
+            height: font__px-to-rem( 24 );
+            width: font__px-to-rem( 24 );
 
             // element
             // `> .#{ $block } > .header > .search > .search__button`
@@ -3748,8 +3605,8 @@
               display: flex;
 
               // [ skin ]
-              height: .75rem;
-              width: .75rem;
+              height: font__px-to-rem( 24 );
+              width: font__px-to-rem( 24 );
               background-color: #ffffff;
               cursor: pointer;
 
@@ -3757,8 +3614,8 @@
               // `> .#{ $block } > .header > .search > .button > .button__image`
               > .button__image {
                 // [ skin ]
-                height: .75rem;
-                width: .75rem;
+                height: font__px-to-rem( 24 );
+                width: font__px-to-rem( 24 );
               }
             }
 
@@ -3772,10 +3629,10 @@
               position: absolute;
               top: 0;
               left: 0;
-              z-index: 1;
+              z-index: 2;
 
               // [ skin ]
-              height: 4.6rem;
+              height: font__px-to-rem( 147.2 );
               width: 100%;
               background-color: #ffffff;
 
@@ -3810,9 +3667,9 @@
                   // [ skin ]
                   height: 100%;
                   width: 97%;
-                  font-size: 1.5rem;
+                  font-size: font__px-to-rem( 48 );
                   background-color: #ffffff;
-                  margin-left: 1.87rem;
+                  margin-left: font__px-to-rem( 60 );
 
                   &::placeholder {
                     color: rgba( 0, 0, 0, .5 );
@@ -3851,7 +3708,7 @@
                 height: 30%;
                 background-color: #ffffff;
                 cursor: pointer;
-                font-size: 1.3rem;
+                font-size: font__px-to-rem( 41.6 );
               }
             }
           }
@@ -3859,7 +3716,7 @@
       }
     }
   }
-  @media screen and ( max-width: 1400px ) {
+  @media screen and ( max-width: $large-width ) {
     > .#{ $block }__header.header.header--large {
       display: none;
     }
