@@ -17,6 +17,9 @@
   // block
   // `.body > .header`
   @include header( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
   // element
   // `.body > .body__banner`
