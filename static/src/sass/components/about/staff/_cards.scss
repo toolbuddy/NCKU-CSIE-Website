@@ -43,10 +43,6 @@
     // block
     // `> .#{ $block } > .cards > .card`
     > .cards__card.card {
-      // [ position ]
-      // This style is set because `.card__more` need to be position at the end of `.card`.
-      position: relative;
-
       // [ layout ]
       display: block;
       margin-bottom: font__px-to-rem( 16 );
@@ -82,22 +78,6 @@
         > .card__photo {
           // [ skin ]
           transform: rotate( 10deg );
-        }
-
-        // element
-        // `> .#{ $block } > .cards > .card:hover > .card__more`
-        > .card__more {
-          // [ skin ]
-          color: #213262;
-
-          // [ after ]
-          &::after {
-            // [ skin ]
-            border: {
-              top-color: #213262;
-              right-color: #213262;
-            }
-          }
         }
       }
 
@@ -184,10 +164,10 @@
         }
 
         // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__departments`
+        // `> .#{ $block } > .cards > .card > .intro > .intro__businesses`
         // block
-        // `> .#{ $block } > .cards > .card > .intro > .departments`
-        > .intro__departments.departments {
+        // `> .#{ $block } > .cards > .card > .intro > .businesses`
+        > .intro__businesses.businesses {
           // [ layout ]
           display: block;
           text-align: center;
@@ -204,8 +184,8 @@
           height: auto;
 
           // element
-          // `> .#{ $block } > .cards > .card > .intro > .departments > .departments__department`
-          > .departments__department {
+          // `> .#{ $block } > .cards > .card > .intro > .businesses > .businesses__business`
+          > .businesses__business {
             // [ variable ]
             $min-height: font__px-to-rem( 28 );
             $font-size: font__px-to-rem( 14 );
@@ -399,90 +379,6 @@
             // [ icon ]
             @include icon__phone();
           }
-        }
-
-        // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__lab-name`
-        > .intro__lab-name {
-          // [ template ]
-          @extend %intro__element;
-
-          // [ layout ]
-          margin-bottom: 0;
-          word-break: break-word;
-
-          // [ skin ]
-          text-decoration: underline;
-
-          // [ before ]
-          &::before {
-            // [ icon ]
-            @include icon__laboratory();
-          }
-        }
-
-        // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__lab-address`
-        > .intro__lab-address {
-          // [ template ]
-          @extend %intro__element;
-
-          // [ layout ]
-          margin-bottom: 0;
-          word-break: normal;
-
-          // [ skin ]
-          color: #757575;
-          font-size: font__px-to-rem( 14 );
-        }
-      }
-
-      // element
-      // `> .#{ $block } > .cards > .card > .card__more`
-      > .card__more {
-        // [ variable ]
-        $color: #8caae2;
-        $font-size: font__px-to-rem( 16 );
-
-        // [ position ]
-        position: absolute;
-        top: 102%;
-        right: 5%;
-
-        // [ layout ]
-        display: block;
-        text-align: right;
-
-        // [ skin ]
-        color: $color;
-        font-size: $font-size;
-
-        // [ animation ]
-        transition: color $transition-time;
-
-        // element
-        // `> .#{ $block } > .cards > .card > .intro > .intro__more::after`
-        &::after {
-          // [ layout ]
-          display: inline-block;
-          margin-left: font__px-to-rem( 10 );
-          transform: rotate( 45deg );
-
-          // [ skin ]
-          width: $font-size / 1.414;
-          height: $font-size / 1.414;
-          border: {
-            style: solid;
-            width: $font-size / 6;
-            top-color: $color;
-            right-color: $color;
-            left-color: transparent;
-            bottom-color: transparent;
-          }
-          content: '';
-
-          // [ animation ]
-          transition: border-color $transition-time;
         }
       }
     }

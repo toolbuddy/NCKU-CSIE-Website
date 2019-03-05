@@ -43,7 +43,7 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $small: 475px;
+    $small: 545px;
 
     // [ layout ]
     display: grid;
@@ -70,7 +70,7 @@
           '. topic   .'
           '. faculty .'
           '. .       .';
-        columns: 1fr 75% 1fr;
+        columns: 1fr 8fr 1fr;
       };
     }
 

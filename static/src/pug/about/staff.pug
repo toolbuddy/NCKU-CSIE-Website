@@ -5,9 +5,19 @@ append data
     const i18n= Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Staff',
+        'topic': 'Staff',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '行政人員',
+        'topic': '行政人員',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
       },
     } );
     const currentRoute = 'about/staff';
@@ -19,10 +29,33 @@ append stylesheets
   +css( 'about/staff' )
 
 append header
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
-  include /components/common/not-available.pug
-  +notAvailable( 'content' )
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#staff.content__staff.staff
+    +noResultWithImage( 'staff' )
+    +loading( 'staff' )
+    section.staff__cards.cards
 
 append footer
 

@@ -28,7 +28,7 @@ router
     path.join( projectRoot, '/static/dist/css' ),
     {
         extensions:  [ 'css', ],
-        fallthrough: false,
+        fallthrough: true,
         index:       false,
         maxAge,
         redirect:    false,
@@ -44,7 +44,7 @@ router
     path.join( projectRoot, '/static/dist/js' ),
     {
         extensions:  [ 'js', ],
-        fallthrough: false,
+        fallthrough: true,
         index:       false,
         maxAge,
         redirect:    false,
@@ -65,7 +65,21 @@ router
             'svg',
             'bmp',
         ],
-        fallthrough: false,
+        fallthrough: true,
+        index:       false,
+        maxAge,
+        redirect:    false,
+    }
+), express.static(
+    path.join( projectRoot, '/static/dist/image' ),
+    {
+        extensions: [
+            'jpg',
+            'png',
+            'svg',
+            'bmp',
+        ],
+        fallthrough: true,
         index:       false,
         maxAge,
         redirect:    false,

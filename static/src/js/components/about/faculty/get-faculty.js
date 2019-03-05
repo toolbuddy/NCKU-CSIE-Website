@@ -7,7 +7,7 @@
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import DepartmentUtils from 'models/faculty/utils/department.js';
 import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
 import UrlUtils from 'static/src/js/utils/url.js';
@@ -164,10 +164,14 @@ export default class GetFaculty {
                     getLanguageId: WebLanguageUtils.getLanguageId,
                 },
                 UTILS: {
-                    url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                    url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                    staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
                     DepartmentUtils,
                 },
             } );
+
+            if ( !this.DOM.cards.hasChildNodes() )
+                throw new Error( 'No data is rendered.' );
 
             this.state.DOM.show = Array
             .from( this.DOM.cards.querySelectorAll( '.cards > .cards__card' ) )
