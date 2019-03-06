@@ -62,11 +62,10 @@ export default class I18nUtils {
     }
 
     isSupportedValue ( opt ) {
-        opt = opt || {};
         const {
             value = null,
             languageId = null,
-        } = opt;
+        } = opt || {};
 
         if ( typeof ( value ) === 'string' )
             return this.supportedValues( languageId ).includes( value );
@@ -86,24 +85,47 @@ export default class I18nUtils {
     }
 
     getValueByOption ( opt ) {
-        opt = opt || {};
         const {
             option = null,
             languageId = null,
-        } = opt;
+        } = opt || {};
 
         if ( this.isSupportedOption( option ) && LanguageUtils.isSupportedLanguageId( languageId ) )
             return this.i18n[ languageId ][ option ];
     }
 
     getValueById ( opt ) {
-        opt = opt || {};
         const {
             id = null,
             languageId = null,
-        } = opt;
+        } = opt || {};
 
         if ( this.isSupportedId( id ) && LanguageUtils.isSupportedLanguageId( languageId ) )
             return this.i18n[ languageId ][ this.map[ id ] ];
+    }
+
+    getOptionByValue ( opt ) {
+        const {
+            value = null,
+            languageId = null,
+        } = opt || {};
+
+        if ( this.isSupportedValue( opt ) )
+            return this.map.find( option => this.map[ languageId ][ option ] === value, this );
+    }
+
+    getOptionById ( id = null ) {
+        if ( this.isSupportedId( id ) )
+            return this.map[ id ];
+    }
+
+    getIdByValue ( opt ) {
+        if ( this.isSupportedValue( opt ) )
+            return this.map.indexOf( this.getOptionByValue( opt ) );
+    }
+
+    getIdByOption ( option = null ) {
+        if ( this.isSupportedOption( option ) )
+            return this.map.indexOf( option );
     }
 }

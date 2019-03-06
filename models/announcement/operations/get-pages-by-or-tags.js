@@ -3,7 +3,7 @@ import {
     Announcement,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
@@ -22,15 +22,14 @@ import ValidateUtils from 'models/common/utils/validate.js';
 
 export default async ( opt ) => {
     try {
-        opt = opt || {};
         const {
             tags = [],
             from = null,
             to = null,
             amount = null,
-        } = opt;
+        } = opt || {};
 
-        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
             const error = new Error( 'invalid tag id' );
             error.status = 400;
             throw error;
