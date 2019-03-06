@@ -8,8 +8,8 @@
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import { host, staticHost, } from 'settings/server/config.js';
-import DepartmentUtils from 'models/faculty/utils/department.js';
-import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import cardHTML from 'static/src/pug/components/about/faculty/cards.pug';
 import ValidateUtils from 'models/common/utils/validate.js';
@@ -59,13 +59,13 @@ export default class GetFaculty {
             !this.DOM.filter.department.every( ( element ) => {
                 if ( element.id !== null )
                     element.id = Number( element.id );
-                return DepartmentUtils.isSupportedDepartmentId( element.id ) && ValidateUtils.isDomElement( element.node );
+                return departmentUtils.isSupportedId( element.id ) && ValidateUtils.isDomElement( element.node );
             } ) ||
             !this.DOM.filter.researchGroup.length ||
             !this.DOM.filter.researchGroup.every( ( element ) => {
                 if ( element.id !== null )
                     element.id = Number( element.id );
-                return ResearchGroupUtils.isSupportedResearchGroupId( element.id ) && ValidateUtils.isDomElement( element.node );
+                return researchGroupUtils.isSupportedId( element.id ) && ValidateUtils.isDomElement( element.node );
             } ) ||
             !ValidateUtils.isDomElement( this.DOM.noResult ) ||
             !ValidateUtils.isDomElement( this.DOM.loading ) ||
@@ -166,7 +166,9 @@ export default class GetFaculty {
                 UTILS: {
                     url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
                     staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
-                    DepartmentUtils,
+                    faculty:   {
+                        departmentUtils,
+                    },
                 },
             } );
 
@@ -180,14 +182,14 @@ export default class GetFaculty {
                     String( node.getAttribute( 'data-department-ids' ) || NaN )
                     .split( ',' )
                     .map( Number )
-                    .filter( DepartmentUtils.isSupportedDepartmentId )
+                    .filter( departmentUtils.isSupportedId, departmentUtils )
                 ), ];
 
                 const researchGroup = [ ...new Set(
                     String( node.getAttribute( 'data-research-group-ids' ) || NaN )
                     .split( ',' )
                     .map( Number )
-                    .filter( ResearchGroupUtils.isSupportedResearchGroupId )
+                    .filter( researchGroupUtils.isSupportedId, researchGroupUtils )
                 ), ];
 
                 return {

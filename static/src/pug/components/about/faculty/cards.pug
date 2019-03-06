@@ -44,7 +44,7 @@ each profile in data
             each departmentId in profile.department
               span.departments__department(
                 data = `${ departmentId }`
-              )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
+              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
 
         //- Faculty's name.
         header.intro__name= profile.name

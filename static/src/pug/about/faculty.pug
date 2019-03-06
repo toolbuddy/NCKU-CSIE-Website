@@ -55,15 +55,15 @@ append content
   section#faculty.content__faculty.faculty
     section.faculty__filter.filter
       article.filter__department.department
-        each departmentId in UTILS.DepartmentUtils.supportedDepartmentId
+        each departmentId in UTILS.faculty.departmentUtils.supportedId
           button.department__tag(
             data-department-id = `${ departmentId }`
-          )= UTILS.DepartmentUtils.getDepartmentById( { departmentId, languageId: LANG.id } )
+          )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
       article.filter__research-group.research-group
-        each researchGroupId in UTILS.ResearchGroupUtils.supportedResearchGroupId
+        each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
           button.research-group__tag(
             data-research-group-id = `${ researchGroupId }`,
-          )= UTILS.ResearchGroupUtils.getResearchGroupById( { researchGroupId, languageId: LANG.id } )
+          )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
     +noResultWithImage( 'faculty' )
     +loading( 'faculty' )
     section.faculty__cards.cards

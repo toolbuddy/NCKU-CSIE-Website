@@ -2,8 +2,8 @@ import path from 'path';
 
 import LanguageUtils from '../../models/common/utils/language.js';
 import TagUtils from '../../models/announcement/utils/tag.js';
-import * as facultyResearchGroupUtils from '../../models/faculty/utils/research-group';
-import * as facultyDepartmentUtils from '../../models/faculty/utils/department.js';
+import facultyResearchGroupUtils from '../../models/faculty/utils/research-group';
+import facultyDepartmentUtils from '../../models/faculty/utils/department.js';
 import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
@@ -179,13 +179,13 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                     getLanguageId: LanguageUtils.getLanguageId,
                                 },
                                 UTILS: {
-                                    url:             UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-                                    staticUrl:       UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
+                                    url:       UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                    staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
                                     TagUtils,
-                                    faculty: {
+                                    faculty:   {
                                         researchGroupUtils: facultyResearchGroupUtils,
-                                        departmentUtils: facultyDepartmentUtils,
-                                    }
+                                        departmentUtils:    facultyDepartmentUtils,
+                                    },
                                 },
                             },
                         },

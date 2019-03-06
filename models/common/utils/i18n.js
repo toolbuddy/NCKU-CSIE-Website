@@ -29,22 +29,22 @@ export default class I18nUtils {
         if ( defaultOption === null || i18n === null || map === null )
             throw new Error( 'Invalid arguments' );
 
-        this.defaultOption = defaultOption;
+        this.default = defaultOption;
         this.i18n = i18n;
         this.map = map;
     }
 
     defaultValue ( languageId = LanguageUtils.defaultLanguageId ) {
         if ( LanguageUtils.isSupportedLanguageId( languageId ) )
-            return this.i18n[ languageId ][ this.defaultOption ];
+            return this.i18n[ languageId ][ this.default ];
     }
 
     get defaultOption () {
-        return this.defaultOption;
+        return this.default;
     }
 
     get defaultId () {
-        return this.map.indexOf( this.defaultOption );
+        return this.map.indexOf( this.default );
     }
 
     supportedValues ( languageId = LanguageUtils.defaultLanguageId ) {
