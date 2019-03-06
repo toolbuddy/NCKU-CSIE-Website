@@ -1,7 +1,7 @@
 /**
- * NationUtils module.
+ * PublicationUtils module.
  *
- * All `^default*` and `^get*` methods should only return one of the following types:
+ * All `^default*` and `^get*` methods should only return one of the following Publications:
  *     - `string`
  *     - `number`
  *     - `undefined`
@@ -17,12 +17,12 @@
  */
 
 import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/nation.js';
+import { defaultOption, i18n, map, } from '../maps/publication-category.js';
 
-export const nationUtils = new I18nUtils( {
+export const publicationCategoryUtils = new I18nUtils( {
     defaultOption,
     i18n,
     map,
 } );
 
-export default nationUtils;
+export default publicationCategoryUtils;

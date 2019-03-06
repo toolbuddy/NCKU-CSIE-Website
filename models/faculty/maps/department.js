@@ -1,27 +1,41 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const departmentMap = {
+const map = [
+    'dept',
+    'inst',
+    'adj',
+    'join',
+];
+
+const defaultOption = 'dept';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'Department of CSIE',
-            'Institute of CSIE',
-            'Adjunct Professor',
-            'Joint Appointment',
-        ],
-        'default': 'Department of CSIE',
+        dept: 'Department of CSIE',
+        inst: 'Institute of CSIE',
+        adj:  'Adjunct Professor',
+        join: 'Joint Appointment',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '資訊系',
-            '資訊所',
-            '兼任師資',
-            '合聘師資',
-        ],
-        'default': '資訊系',
+        dept: '資訊系',
+        inst: '資訊所',
+        adj:  '兼任師資',
+        join: '合聘師資',
     },
 };
 
-deepFreeze( departmentMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default departmentMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

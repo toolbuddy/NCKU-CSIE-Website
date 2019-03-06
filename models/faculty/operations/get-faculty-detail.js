@@ -1,10 +1,10 @@
 import LanguageUtils from 'models/common/utils/language.js';
-import DegreeUtils from 'models/faculty/utils/degree';
-import DepartmentUtils from 'models/faculty/utils/department';
-import NationUtils from 'models/faculty/utils/nation';
-import ProjectUtils from 'models/faculty/utils/project';
-import PublicationUtils from 'models/faculty/utils/publication';
-import ResearchGroupUtils from 'models/faculty/utils/research-group';
+import degreeUtils from 'models/faculty/utils/degree.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import projectCategoryUtils from 'models/faculty/utils/project-category.js';
+import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import {
     AwardI18n,
     Award,
@@ -420,19 +420,19 @@ export default async ( opt ) => {
                 hostYear:   conference.hostYear,
                 title:      conference.conferenceI18n[ 0 ].title,
             } ) ),
-            department: department.map( department => DepartmentUtils.getDepartmentById( {
-                departmentId: department.type,
+            department: department.map( department => departmentUtils.getValueById( {
+                value: department.type,
                 languageId,
             } ) ),
             education:  education.map( education => ( {
-                degree: DegreeUtils.getDegreeById( {
-                    degreeId: education.degree,
+                degree: degreeUtils.getValueById( {
+                    value: education.degree,
                     languageId,
                 } ),
                 from:   education.from,
                 major:  education.educationI18n[ 0 ].major,
-                nation: NationUtils.getNationById( {
-                    nationId: education.nation,
+                nation: nationUtils.getValueById( {
+                    value: education.nation,
                     languageId,
                 } ),
                 school: education.educationI18n[ 0 ].school,
@@ -451,8 +451,8 @@ export default async ( opt ) => {
                 expireDate:          patent.expireDate,
                 inventor:            patent.patentI18n[ 0 ].inventor,
                 issueDate:           patent.issueDate,
-                nation:              NationUtils.getNationById( {
-                    nationId: patent.nation,
+                nation:              nationUtils.getValueById( {
+                    value: patent.nation,
                     languageId,
                 } ),
                 patent:              patent.patentI18n[ 0 ].patent,
@@ -466,8 +466,8 @@ export default async ( opt ) => {
                 labTel:        profile.labTel,
                 labWeb:        profile.labWeb,
                 name:          profileI18n.name,
-                nation:        NationUtils.getNationById( {
-                    nationId: profile.nation,
+                nation:        nationUtils.getValueById( {
+                    value: profile.nation,
                     languageId,
                 } ),
                 officeAddress: profileI18n.officeAddress,
@@ -477,8 +477,8 @@ export default async ( opt ) => {
                 profileId,
             },
             project: project.map( project => ( {
-                category: ProjectUtils.getProjectCategoryById( {
-                    projectCategoryId: project.category,
+                category: projectCategoryUtils.getValueById( {
+                    value: project.category,
                     languageId,
                 } ),
                 from:     project.from,
@@ -488,8 +488,8 @@ export default async ( opt ) => {
             } ) ),
             publication: publication.map( publication => ( {
                 authors:       publication.publicationI18n[ 0 ].authors,
-                category:      PublicationUtils.getPublicationCategoryById( {
-                    publicationCategoryId: publication.category,
+                category:      publicationCategoryUtils.getValueById( {
+                    value: publication.category,
                     languageId,
                 } ),
                 international: publication.international,
@@ -498,8 +498,8 @@ export default async ( opt ) => {
                 refereed:      publication.refereed,
                 title:         publication.publicationI18n[ 0 ].title,
             } ) ),
-            researchGroup: researchGroup.map( researchGroup => ResearchGroupUtils.getResearchGroupById( {
-                researchGroupId: researchGroup.type,
+            researchGroup: researchGroup.map( researchGroup => researchGroupUtils.getValueById( {
+                value: researchGroup.type,
                 languageId,
             } ) ),
             specialty:     specialtyI18n.map( specialty => specialty.specialty ),
@@ -507,8 +507,8 @@ export default async ( opt ) => {
                 award:        studentAward.studentAwardI18n[ 0 ].award,
                 receivedYear: studentAward.receivedYear,
                 student:      studentAward.student.map( student => ( {
-                    degree: DegreeUtils.getDegreeById( {
-                        degreeId: student.degree,
+                    degree: degreeUtils.getValueById( {
+                        value: student.degree,
                         languageId,
                     } ),
                     name:   student.studentI18n[ 0 ].name,

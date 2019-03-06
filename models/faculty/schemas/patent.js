@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import NationUtils from 'models/faculty/utils/nation.js';
+import nationUtils from 'models/faculty/utils/nation.js';
 
 const Patent = faculty.define( 'patent', {
     patentId: {
@@ -16,7 +16,7 @@ const Patent = faculty.define( 'patent', {
     nation: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: NationUtils.defaultNationId,
+        defaultValue: nationUtils.defaultId,
     },
     certificationNumber: {
         type:      Sequelize.STRING( 100 ),
