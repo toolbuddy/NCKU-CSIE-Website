@@ -22,27 +22,30 @@
   // block
   // `body > .content`
   > .content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1300px;
+
     // [ layout ]
     display: grid;
     grid: {
       template: {
         areas:
-          '.   .        .         .'
-          '.   intro    intro     .'
-          '.   history  history   .'
-          '.   develop  develop   .'
-          '.   develop1 image1    .'
-          '.   image2   develop2  .'
-          '.   develop3 image3    .'
-          '.   target   target    .'
-          '.   target1  image4    .'
-          '.   target2  image5    .'
-          '.   target3  image6    .'
-          '.   certi    certi     .'
-          '.   .        .         .';
+          '.   .         .         .'
+          '.   intro     intro     .'
+          '.   history1  history1  .'
+          '.   history2  history2  .'
+          '.   develop   develop   .'
+          '.   develop1  image1    .'
+          '.   image2    develop2  .'
+          '.   develop3  image3    .'
+          '.   target    target    .'
+          '.   target1   image4    .'
+          '.   target2   image5    .'
+          '.   target3   image6    .'
+          '.   certi     certi     .'
+          '.   .         .         .';
         columns: 2fr 4fr 4fr 2fr;
-
-        // rows: .5rem repeat( 11, minmax( auto, min-content ) ) .5rem
       }
       column-gap: 0;
       row-gap: 0;
@@ -58,8 +61,15 @@
     // block
     // `body > .content > .history`
     > .history {
-      // [ position ]
-      grid-area: history;
+      &1 {
+        // [ position ]
+        grid-area: history1;
+      }
+
+      &2 {
+        // [ position ]
+        grid-area: history2;
+      }
     }
 
     // block
@@ -180,7 +190,7 @@
 
     // [ skin ]
     border-bottom: solid .07rem #888888;
-    padding: .1rem;
+    padding: .03rem;
     color: rgba( 0, 0, 0, .87 );
     font: {
       size: .875rem;
@@ -243,11 +253,12 @@
   }
 
   // modifier
-  // `.intro__text > .intro__text--smallinhistoryicon`
-  &smallinhistoryicon {
+  // `.intro__text > .intro__text--state`
+  &state {
     // [ skin ]
     color: #000000;
     font-size: .5625rem;
+    margin-bottom: .8rem;
   }
 
   // modifier
@@ -334,6 +345,11 @@
     height: .8125rem;
     background-color: #ea6d55;
     border-radius: 100%;
+
+    &right {
+      // [ layout ]
+      float: right;
+    }
   }
 
   // modifier
@@ -344,38 +360,125 @@
   }
 
   // modifier
-  // `.intro__text > .intro__text--spikeblueright`
-  &spikeblueright {
-    // [ layout ]
-    float: left;
+  // `.intro__text > .intro__text--icon-
+  &icon- {
+    // `.intro__text > .intro__text--icon-blue
+    &circle- {
+      &blue {
+        // [ layout ]
+        float: left;
 
-    // [ skin ]
-    border: {
-      top: .1rem solid transparent;
-      bottom: .15rem solid transparent;
-      left: .6875rem solid #399dff;
+        // [ skin ]
+        width: .8125rem;
+        height: .8125rem;
+        background-color: #399dff;
+        border-radius: 100%;
+      }
+
+      &orange {
+        // [ layout ]
+        float: left;
+
+        // [ skin ]
+        width: .8125rem;
+        height: .8125rem;
+        background-color: #ea6d55;
+        border-radius: 100%;
+      }
     }
-    margin: {
-      top: .2813rem;
-      right: .2rem;
+
+    &spike- {
+      &blue {
+        // [ layout ]
+        float: left;
+
+        // [ skin ]
+        margin: {
+          top: .2813rem;
+          right: .2rem;
+        }
+        border: {
+          top: .1rem solid transparent;
+          bottom: .15rem solid transparent;
+          left: .6875rem solid #399dff;
+        }
+      }
+
+      &orange {
+        // [ layout ]
+        float: left;
+
+        // [ skin ]
+        margin: {
+          top: .2813rem;
+          right: .2rem;
+        }
+        border: {
+          top: .1rem solid transparent;
+          bottom: .15rem solid transparent;
+          left: .6875rem solid #ea6d55;
+        }
+      }
     }
   }
 
   // modifier
-  // `.intro__text > .intro__text--spikeorangeright`
-  &spikeorangeright {
-    // [ layout ]
-    float: left;
+  // `.intro__text > .intro__text--line-
+  &line- {
+    // modifier
+    // `.intro__text > .intro__text--line-blue
+    &blue {
+      // [ skin ]
+      height: .05rem;
+      width: 14rem;
+      background-color: #399dff;
+    }
 
+    // modifier
+    // `.intro__text > .intro__text--line-orange
+    &orange {
+      float: right;
+      clear: right;
+
+      // [ skin ]
+      height: .05rem;
+      width: 14rem;
+      background-color: #f67057;
+    }
+  }
+
+  // modifier
+  // `.intro__text > .intro__text--history-
+  &history- {
+    // modifier
+    // `.intro__text > .intro__text--history-year
+    &year- {
+      &right {
+        float: right;
+        clear: right;
+
+        // [ skin ]
+        color: rgba( 0, 0, 0, .87 );
+        font-size: 24 / 32 * 1rem;
+      }
+    }
+
+    // modifier
+    // `.intro__text > .intro__text--history-event
+    &event- {
+      &right {
+        float: right;
+        clear: right;
+
+        // [ skin ]
+        color: #000000;
+        font-size: 20 / 32 * 1rem;
+      }
+    }
+  }
+
+  .sectionright {
     // [ skin ]
-    border: {
-      top: .1rem solid transparent;
-      bottom: .15rem solid transparent;
-      left: .6875rem solid #ea6d55;
-    }
-    margin: {
-      top: .2813rem;
-      right: .2rem;
-    }
+    width: 100%;
   }
 }

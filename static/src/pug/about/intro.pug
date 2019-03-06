@@ -20,43 +20,24 @@ append data
             '歷屆所長/系主任',
             '系所歷史與沿革',
           ],
-          'events': [
-            '高宏宇教授',
-            '謝孫源教授',
-            '陳培殷教授',
-            '鄭憲宗教授',
-            '製造資訊與系統研究所整合至本系',
-            '黃崇明教授',
-            '九十五學年度增設醫學資訊研究所',
-            '李　強教授',
-            '朱治平教授',
-            '擴增大學部為兩班',
-            '吳宗憲教授',
-            '孫永年教授',
-            '成立大學部',
-            '王駿發教授',
-            '成立博士班',
-            '孔令洋教授',
-            '成立碩士班',
-          ],
-          'years': [
-            '2017.8 -',
-            '2015.8 - 2017,8',
-            '2012.8 - 2015.7',
-            '2009.8 - 2012.7',
-            '2011.8',
-            '2006.8 - 2009.7',
-            '2006',
-            '2005.8 - 2006.7',
-            '2002.8 - 2005.7',
-            '2002.8',
-            '1999.8 - 2002.7',
-            '1996.8 - 1999.8',
-            '1997.8',
-            '1990.8 - 1996.8',
-            '1992.8',
-            '1987.8 - 1990.7',
-            '1987.8',
+          'content': [
+            ['高宏宇教授', '2017.8 -',],
+            ['謝孫源教授', '2015.8 - 2017,8',],
+            ['陳培殷教授', '2012.8 - 2015.7',],
+            ['鄭憲宗教授', '2009.8 - 2012.7',],
+            ['製造資訊與系統研究所整合至本系', '2011.8',],
+            ['黃崇明教授', '2006.8 - 2009.7',],
+            ['九十五學年度增設醫學資訊研究所', '2006',],
+            ['李　強教授', '2005.8 - 2006.7',],
+            ['朱治平教授', '2002.8 - 2005.7',],
+            ['擴增大學部為兩班', '2002.8',],
+            ['吳宗憲教授', '1999.8 - 2002.7',],
+            ['孫永年教授', '1996.8 - 1999.8',],
+            ['成立大學部', '1997.8',],
+            ['王駿發教授', '1990.8 - 1996.8',],
+            ['成立博士班', '1992.8',],
+            ['孔令洋教授', '1987.8 - 1990.7',],
+            ['成立碩士班', '1987.8',],
           ],
         },
         'develop' : {
@@ -399,43 +380,24 @@ append data
             '歷屆所長/系主任',
             '系所歷史與沿革',
           ],
-          'events': [
-            '高宏宇教授',
-            '謝孫源教授',
-            '陳培殷教授',
-            '鄭憲宗教授',
-            '製造資訊與系統研究所整合至本系',
-            '黃崇明教授',
-            '九十五學年度增設醫學資訊研究所',
-            '李　強教授',
-            '朱治平教授',
-            '擴增大學部為兩班',
-            '吳宗憲教授',
-            '孫永年教授',
-            '成立大學部',
-            '王駿發教授',
-            '成立博士班',
-            '孔令洋教授',
-            '成立碩士班',
-          ],
-          'years': [
-            '2017.8 -',
-            '2015.8 - 2017,8',
-            '2012.8 - 2015.7',
-            '2009.8 - 2012.7',
-            '2011.8',
-            '2006.8 - 2009.7',
-            '2006',
-            '2005.8 - 2006.7',
-            '2002.8 - 2005.7',
-            '2002.8',
-            '1999.8 - 2002.7',
-            '1996.8 - 1999.8',
-            '1997.8',
-            '1990.8 - 1996.8',
-            '1992.8',
-            '1987.8 - 1990.7',
-            '1987.8',
+          'content': [
+            ['高宏宇教授', '2017.8 -',],
+            ['謝孫源教授', '2015.8 - 2017,8',],
+            ['陳培殷教授', '2012.8 - 2015.7',],
+            ['鄭憲宗教授', '2009.8 - 2012.7',],
+            ['製造資訊與系統研究所整合至本系', '2011.8',],
+            ['黃崇明教授', '2006.8 - 2009.7',],
+            ['九十五學年度增設醫學資訊研究所', '2006',],
+            ['李　強教授', '2005.8 - 2006.7',],
+            ['朱治平教授', '2002.8 - 2005.7',],
+            ['擴增大學部為兩班', '2002.8',],
+            ['吳宗憲教授', '1999.8 - 2002.7',],
+            ['孫永年教授', '1996.8 - 1999.8',],
+            ['成立大學部', '1997.8',],
+            ['王駿發教授', '1990.8 - 1996.8',],
+            ['成立博士班', '1992.8',],
+            ['孔令洋教授', '1987.8 - 1990.7',],
+            ['成立碩士班', '1987.8',],
           ],
         },
         'develop' : {
@@ -790,20 +752,38 @@ append content
       h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[0]
     each info in i18n[ LANG.id ].intro
       p.intro__text.intro__text--smallblue= info
-  section.history
+  section.history1
     //- Header.
     section.intro__text.intro__text--underline
       h2.intro__text.intro__text--large= i18n[ LANG.id ].subtitle[1]
     //- History of department.
     //- The caption of icon.
-    //- p.intro__text.intro__text--circleblue
-    //- p.intro__text.intro__text--spikeblueright
-    //- p.intro__text.intro__text--smallinhistoryicon= i18n[ LANG.id ].history.icons[0]
-    //- p.intro__text.intro__text--circleorange
-    //- p.intro__text.intro__text--spikeorangeright
-    //- p.intro__text.intro__text--smallinhistoryicon= i18n[ LANG.id ].history.icons[1]
-    //- each info in i18n[ LANG.id ].history.events
-    //-   p.intro__text.intro__text--small= info
+    p.intro__text.intro__text--icon-circle-blue
+    p.intro__text.intro__text--icon-spike-blue
+    p.intro__text.intro__text--state= i18n[ LANG.id ].history.icons[0]
+    p.intro__text.intro__text--icon-circle-orange
+    p.intro__text.intro__text--icon-spike-orange
+
+    p.intro__text.intro__text--state= i18n[ LANG.id ].history.icons[1]
+    p.intro__text.intro__text--interval
+  section.history2
+    //-each info, index in i18n[ LANG.id ].history.content
+      if index===4 || index===6 || index===9 || index===12 || index===14 || index===6
+        section.sectionright
+          p.intro__text.intro__text--history-year-right= info[1]
+          p.intro__text.intro__text--line-orange
+          p.intro__text.intro__text--spike-orangeright
+          p.intro__text.intro__text--circleorangeright
+          p.intro__text.intro__text--history-event-right= info[0]
+        p.intro__text.intro__text--interval
+      //- else
+        //- section.leftside
+        //-   p.intro__text.intro__text--history-year= info[0]
+        //-   p.intro__text.intro__text--lineblue
+        //-   p.intro__text.intro__text--circleblue
+        //-   p.intro__text.intro__text--spikeblueright
+        //-   p.intro__text.intro__text--history-event= info[1]
+
   section.develop
     //- Header.
     section.intro__text.intro__text--underline
