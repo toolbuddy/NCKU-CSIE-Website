@@ -1,10 +1,13 @@
 import { Announcement, } from 'static/src/js/components/user/announcement/Announcement.js';
 import editorEvent from 'static/src/js/components/user/announcement/index.js';
-import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge, } from 'static/src/js/components/common/header.js';
+import GetHeaderBase from 'static/src/js/components/common/headerBase.js';
+import GetHeaderSmall from 'static/src/js/components/common/headerSmall.js';
+import GetHeaderMedium from 'static/src/js/components/common/headerMedium.js';
+import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
 
 window.addEventListener( 'load', () => {
-    const headerMin = new GetHeaderMin( {
-        headerDOM:     document.querySelector( '.body__header.header.header--min' ),
+    const headerBase = new GetHeaderBase( {
+        headerDOM:     document.querySelector( '.body__header.header.header--base' ),
         allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
     const headerSmall = new GetHeaderSmall( {

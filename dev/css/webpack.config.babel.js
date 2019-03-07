@@ -48,6 +48,7 @@ export default {
 
     entry:   {
         // Route `about`
+        /*
         'about/award':          path.join( sassRoot, 'about/award.scss' ),
         'about/contact':        path.join( sassRoot, 'about/contact.scss' ),
         'about/faculty-detail': path.join( sassRoot, 'about/faculty-detail.scss' ),
@@ -66,10 +67,11 @@ export default {
 
         // Route `error`
         'error/404':  path.join( sassRoot, 'error/404.scss' ),
-
+        */
         // Route `home`
         'home/index': path.join( sassRoot, 'home/index.scss' ),
 
+        /*
         // Route `research`
         'research/index':        path.join( sassRoot, 'research/index.scss' ),
         'research/labs':         path.join( sassRoot, 'research/labs.scss' ),
@@ -93,6 +95,8 @@ export default {
         // Route `user`
         'user/index':             path.join( sassRoot, 'user/index.scss' ),
         'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
+        */
+
     },
 
     /**

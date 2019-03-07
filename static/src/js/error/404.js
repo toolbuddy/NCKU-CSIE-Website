@@ -1,9 +1,12 @@
-import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge, } from 'static/src/js/components/common/header.js';
+import GetHeaderBase from 'static/src/js/components/common/headerBase.js';
+import GetHeaderSmall from 'static/src/js/components/common/headerSmall.js';
+import GetHeaderMedium from 'static/src/js/components/common/headerMedium.js';
+import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
 import img404Src from 'static/src/image/icon/404.png';
 
 window.addEventListener( 'load', () => {
-    const headerMin = new GetHeaderMin( {
-        headerDOM:     document.querySelector( '.body__header.header.header--min' ),
+    const headerBase = new GetHeaderBase( {
+        headerDOM:     document.querySelector( '.body__header.header.header--base' ),
         allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
     const headerSmall = new GetHeaderSmall( {

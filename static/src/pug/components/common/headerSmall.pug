@@ -1,0 +1,599 @@
+-
+  function headerI18n () {
+    return Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        language: 'Language',
+        about: {
+          award: {
+            text: 'Awards',
+            route: UTILS.url( {
+              href : 'about/award',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          contact: {
+            text: 'Contact Us',
+            route: UTILS.url( {
+              href : 'about/contact',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          faculty: {
+            text: 'Faculties',
+            route: UTILS.url( {
+              href : 'about/faculty',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          index: {
+            text: 'About',
+            route: UTILS.url( {
+              href : 'about',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          intro: {
+            text: 'Introduction',
+            route: UTILS.url( {
+              href : 'about/intro',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          staff: {
+            text: 'Staff',
+            route: UTILS.url( {
+              href : 'about/staff',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        announcement: {
+          activity: {
+            text: 'Activities',
+            route: UTILS.url( {
+              href : 'announcement/activity',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          all: {
+            text: 'All',
+            route: UTILS.url( {
+              href : 'announcement/all',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) }
+            } ),
+          },
+          index: {
+            text: 'Announcement',
+            route: UTILS.url( {
+              href : 'announcement',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          recruitment: {
+            text: 'Recruitment',
+            route: UTILS.url( {
+              href : 'announcement/recruitment',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        home: {
+          index: {
+            text: 'Home',
+            route: UTILS.url( {
+              href : '',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          calendar: {
+            text: 'Calendar',
+            route: UTILS.url( {
+              href : 'calendar',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          login: {
+            text: 'Login',
+            route: UTILS.url( {
+              href : 'auth/login',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          search: {
+            text: 'Search',
+            route: UTILS.url( {
+              href : 'search',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        research: {
+          index: {
+            text: 'Research',
+            route: UTILS.url( {
+              href : 'research',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          labs: {
+            text: 'Laboratories',
+            route: UTILS.url( {
+              href : 'research/labs',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          publications: {
+            text: 'Publications',
+            route: UTILS.url( {
+              href : 'research/publications',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        resource: {
+          alumni: {
+            text: 'Alumni',
+            route: UTILS.url( {
+              href : 'resource/alumni',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          fix: {
+            text: 'Fix',
+            route: UTILS.url( {
+              href : 'resource/fix',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          ieet: {
+            text: 'IEET',
+            route: UTILS.url( {
+              href : 'resource/ieet',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          index: {
+            text: 'Resource',
+            route: UTILS.url( {
+              href : 'resource',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          rent: {
+            text: 'Rent',
+            route: UTILS.url( {
+              href : 'resource/rent',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          rule: {
+            text: 'Rule',
+            route: UTILS.url( {
+              href : 'resource/rule',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          sitemap: {
+            text: 'Sitemap',
+            route: UTILS.url( {
+              href : 'resource/sitemap',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        student: {
+          college: {
+            text: 'College',
+            route: UTILS.url( {
+              href : 'student/college',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          index: {
+            text: 'Student',
+            route: UTILS.url( {
+              href : 'student',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          master: {
+            text: 'Master',
+            route: UTILS.url( {
+              href : 'student/master',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          phd: {
+            text: 'Ph.D',
+            route: UTILS.url( {
+              href : 'student/phd',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        language: '語言',
+        about: {
+          award: {
+            text: '榮譽事蹟',
+            route: UTILS.url( {
+              href : 'about/award',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          contact: {
+            text: '聯絡我們',
+            route: UTILS.url( {
+              href : 'about/contact',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          faculty: {
+            text: '師資陣容',
+            route: UTILS.url( {
+              href : 'about/faculty',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          index: {
+            text: '關於本系',
+            route: UTILS.url( {
+              href : 'about',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          intro: {
+            text: '系所介紹',
+            route: UTILS.url( {
+              href : 'about/intro',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          staff: {
+            text: '行政人員',
+            route: UTILS.url( {
+              href : 'about/staff',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        announcement: {
+          activity: {
+            text: '活動公告',
+            route: UTILS.url( {
+              href : 'announcement/activity',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          all: {
+            text: '全部公告',
+            route: UTILS.url( {
+              href : 'announcement/all',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          index: {
+            text: '系所公告',
+            route: UTILS.url( {
+              href : 'announcement',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          recruitment: {
+            text: '徵才資訊',
+            route: UTILS.url( {
+              href : 'announcement/recruitment',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        home: {
+          index: {
+            text: '首頁',
+            route: UTILS.url( {
+              href : '',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          calendar: {
+            text: '行事曆',
+            route: UTILS.url( {
+              href : 'calendar',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          login: {
+            text: '登入',
+            route: UTILS.url( {
+              href : 'auth/login',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          search: {
+            text: '搜尋',
+            route: UTILS.url( {
+              href : 'search',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        research: {
+          index: {
+            text: '學術研究',
+            route: UTILS.url( {
+              href : 'research',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          labs: {
+            text: '實驗室',
+            route: UTILS.url( {
+              href : 'research/labs',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          publications: {
+            text: '發表論文',
+            route: UTILS.url( {
+              href : 'research/publications',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        resource: {
+          alumni: {
+            text: '系友專區',
+            route: UTILS.url( {
+              href : 'resource/alumni',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          fix: {
+            text: '修繕登記',
+            route: UTILS.url( {
+              href : 'resource/fix',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          ieet: {
+            text: 'IEET工程認證',
+            route: UTILS.url( {
+              href : 'resource/ieet',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          index: {
+            text: '資源連結',
+            route: UTILS.url( {
+              href : 'resource',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          rent: {
+            text: '線上租借',
+            route: UTILS.url( {
+              href : 'resource/rent',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          rule: {
+            text: '法規彙編',
+            route: UTILS.url( {
+              href : 'resource/rule',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          sitemap: {
+            text: '網站地圖',
+            route: UTILS.url( {
+              href : 'resource/sitemap',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        student: {
+          college: {
+            text: '大學部',
+            route: UTILS.url( {
+              href : 'student/college',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          index: {
+            text: '學生事務',
+            route: UTILS.url( {
+              href : 'student',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          master: {
+            text: '碩士',
+            route: UTILS.url( {
+              href : 'student/master',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          phd: {
+            text: '博士',
+            route: UTILS.url( {
+              href : 'student/phd',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+      }
+    } );
+  }
+
+mixin header--small( belongBlock )
+  - const i18n = headerI18n();
+
+  header.header.header--small( class = `${ belongBlock }__header` )
+    //- Logo
+    a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
+      +image( {
+        alt:       'csie',
+        className: 'logo__image',
+        src:       'logo/csie.png',
+      } )
+    //- Caption
+    section.header__caption.caption
+      article.caption__title.title
+        span.title__text 成功大學
+        span.title__text 資訊工程學系
+        span.title__text 暨
+        span.title__text 研究所
+      article.caption__subtitle.subtitle
+        span.subtitle__text Department
+        span.subtitle__text of
+        span.subtitle__text Computer Science
+        span.subtitle__text and
+        span.subtitle__text Information Engineering
+
+    //- Menu Icon
+    button.header__menu
+
+    //- Navigation Bar
+    nav.header__navigation.navigation
+
+      //- Search Column, currently not available
+      //- Small screen version
+      form.navigation__search.search( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
+        input.search__input(
+          type = 'text',
+          placeholder = i18n[ LANG.id ].home.search.text,
+          name = 'searchText',
+          value = ''
+        )
+        button.search__submit.submit( type = 'submit' )
+          +image( {
+            alt:       i18n[ LANG.id ].home.search.text,
+            className: 'submit__image',
+            src:       'icon/search.png',
+          } )
+
+      //- Cancel Icon
+      button.navigation__cancel
+
+      //- All routes
+      ul.navigation__list.list
+        li.list__item.item
+          a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
+        li.list__item.item.list__item--about
+          a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
+          button.item__switch
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].about.intro.route )= i18n[ LANG.id ].about.intro.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].about.faculty.route )= i18n[ LANG.id ].about.faculty.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].about.staff.route )= i18n[ LANG.id ].about.staff.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].about.award.route )= i18n[ LANG.id ].about.award.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
+        li.list__item.item.list__item--research
+          a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
+          button.item__switch
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
+        li.list__item.item.list__item--student
+          a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
+          button.item__switch
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].student.college.route )= i18n[ LANG.id ].student.college.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].student.master.route )= i18n[ LANG.id ].student.master.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
+        li.list__item.item.list__item--announcement
+          a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
+          button.item__switch
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].announcement.all.route )= i18n[ LANG.id ].announcement.all.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
+        li.list__item.item.list__item--resource
+          a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
+          button.item__switch
+          ul.item__dropdown.dropdown
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.rule.route )= i18n[ LANG.id ].resource.rule.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.rent.route )= i18n[ LANG.id ].resource.rent.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.fix.route )= i18n[ LANG.id ].resource.fix.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.ieet.route )= i18n[ LANG.id ].resource.ieet.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.sitemap.route )= i18n[ LANG.id ].resource.sitemap.text
+            li.dropdown__item.item
+              a.item__link( href = i18n[ LANG.id ].resource.alumni.route )= i18n[ LANG.id ].resource.alumni.text
+
+      //- Login,
+      //- Small screen version
+      a.navigation__login.login( href = i18n[ LANG.id ].home.login.route )
+        +image( {
+          alt:       i18n[ LANG.id ].home.login.text,
+          className: 'login__image',
+          src:       'icon/user.png',
+        } )
+        span.login__text= i18n[ LANG.id ].home.login.text
+
+      //- Calendar, currently not available
+      //- Small screen version
+      a.navigation__calendar.calendar( href = i18n[ LANG.id ].home.calendar.route )
+        +image( {
+          alt:       i18n[ LANG.id ].home.calendar.text,
+          className: 'calendar__image',
+          src:       'icon/calendar.png',
+        } )
+        span.calendar__text= i18n[ LANG.id ].home.calendar.text
+
+      //- Language Choice
+      //- Small screen version
+      section.navigation__language.language
+        +image( {
+          alt:       i18n[ LANG.id ].language,
+          className: 'language__image',
+          src:       `icon/flag-${ LANG.id }.png`,
+        } )
+        span.language__text= i18n[ LANG.id ].language
+        button.language__switch
+        ul.language__dropdown.dropdown
+          li.dropdown__item.item
+            a.item__link.link(
+              href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } )
+            )
+              +image( {
+                alt:       '臺灣',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'zh-TW' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'zh-TW' )
+                span.link__text.link__text--active 臺灣
+              else
+                span.link__text 臺灣
+          li.dropdown__item.item
+            a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'en-US' ) } } ) )
+              +image( {
+                alt:       'USA',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'en-US' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'en-US' )
+                span.link__text.link__text--active USA
+              else
+                span.link__text USA
