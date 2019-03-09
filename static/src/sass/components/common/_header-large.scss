@@ -399,7 +399,7 @@
               // [ skin ]
               // In order to trigger `height` transition without knowing actual elements `height`,
               // `max-height` must be used instead of `height`.
-              //width: 100%;
+              // width: 100%;
               max-height: none;
               height: font__px-to-rem( 80 );
               background-color: transparent;

@@ -7,15 +7,10 @@
 @import 'components/common/breadcrumb';
 @import 'components/common/entries';
 @import 'components/common/footer';
-@import 'components/common/scrollbar-hide';
-
 
 // block
 // `.body`
 .body {
-  overflow: hidden;
-  @include scrollbar--hide();
-
   // element
   // `.body > .body__header`
   // block
