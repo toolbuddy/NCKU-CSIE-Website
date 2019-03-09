@@ -1,0 +1,9 @@
+@mixin scrollbar--hide () {
+  > .scrollbar--hide {
+    background-color: transparent;
+    max-height: 100%;
+    height: inherit;
+    overflow: auto;
+    margin-right: -15px; // scrollbar width
+  }
+}

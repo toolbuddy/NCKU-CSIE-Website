@@ -27,7 +27,7 @@ export default class GetHeaderSmall {
 
         const headerElementQuerySelector = element => `.header > .header__${ element }`;
         const headerBlockQuerySelector = block => `${ headerElementQuerySelector( block ) }.${ block }`;
-        const navigationElementQuerySelector = element => `${ headerBlockQuerySelector( 'navigation' ) } > .navigation__${ element }`;
+        const navigationElementQuerySelector = element => `${ headerBlockQuerySelector( 'navigation' ) } > .scrollbar--hide > .navigation__${ element }`;
         const navigationBlockQuerySelector = block => `${ navigationElementQuerySelector( block ) }.${ block }`;
         const languageElementQuerySelector = element => `${ navigationBlockQuerySelector( 'language' ) } > .language__${ element }`;
         const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;

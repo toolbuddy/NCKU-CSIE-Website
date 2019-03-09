@@ -31,51 +31,52 @@ html
       include /components/common/css.pug
 
   body.body
+    include /components/common/scrollbar-hide.pug
+    +scrollbar-hide()
+      //- Image template module.
+      //-
+      //- Each page has there own image (`<img>` tags).
+      //- Use image template `+image( {image detail} )` to generate `<img>` tag.
+      //- Image template module can be found at `static/src/pug/components/common/image.pug`.
+      include /components/common/image.pug
+      include /components/common/banner.pug
+      include /components/common/breadcrumb.pug
 
-    //- Image template module.
-    //-
-    //- Each page has there own image (`<img>` tags).
-    //- Use image template `+image( {image detail} )` to generate `<img>` tag.
-    //- Image template module can be found at `static/src/pug/components/common/image.pug`.
-    include /components/common/image.pug
-    include /components/common/banner.pug
-    include /components/common/breadcrumb.pug
+      //- Header block.
+      //-
+      //- Each page has there own header (`<header>` tags).
+      //- Use header template `+header()` to generate `<header>` tag.
+      //- Header template module can be found at `static/src/pug/components/common/header.pug`.
+      block header
+        include /components/common/headerBase.pug
+        include /components/common/headerSmall.pug
+        include /components/common/headerMedium.pug
+        include /components/common/headerLarge.pug
+        +header--base( 'body' )
+        +header--small( 'body' )
+        +header--medium( 'body' )
+        +header--large( 'body' )
 
-    //- Header block.
-    //-
-    //- Each page has there own header (`<header>` tags).
-    //- Use header template `+header()` to generate `<header>` tag.
-    //- Header template module can be found at `static/src/pug/components/common/header.pug`.
-    block header
-      include /components/common/headerBase.pug
-      include /components/common/headerSmall.pug
-      include /components/common/headerMedium.pug
-      include /components/common/headerLarge.pug
-      +header--base( 'body' )
-      +header--small( 'body' )
-      +header--medium( 'body' )
-      +header--large( 'body' )
+      //- Content block.
+      //-
+      //- Each page has there own content.
+      //- All specific content go to this block.
+      main#content.body__content.content
+        block content
 
-    //- Content block.
-    //-
-    //- Each page has there own content.
-    //- All specific content go to this block.
-    main#content.body__content.content
-      block content
+      //- Footer block.
+      //-
+      //- Each page has there own footer (`<footer>` tags).
+      //- Use footer template `+footer()` to generate `<footer>` tag.
+      //- Footer template module can be found at `static/src/pug/components/common/footer.pug`.
+      block footer
+        include /components/common/footer.pug
+        +footer( 'body' )
 
-    //- Footer block.
-    //-
-    //- Each page has there own footer (`<footer>` tags).
-    //- Use footer template `+footer()` to generate `<footer>` tag.
-    //- Footer template module can be found at `static/src/pug/components/common/footer.pug`.
-    block footer
-      include /components/common/footer.pug
-      +footer( 'body' )
-
-    //- Scripts block.
-    //-
-    //- Each page has there own scripts (JS files; `<script>` tags).
-    //- Use script template `+js( 'route to script' )` to generate `<script>` tag.
-    //- Scripts template module can be found at `static/src/pug/components/common/js.pug`.
-    block scripts
-      include /components/common/js.pug
+      //- Scripts block.
+      //-
+      //- Each page has there own scripts (JS files; `<script>` tags).
+      //- Use script template `+js( 'route to script' )` to generate `<script>` tag.
+      //- Scripts template module can be found at `static/src/pug/components/common/js.pug`.
+      block scripts
+        include /components/common/js.pug

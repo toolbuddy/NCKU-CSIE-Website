@@ -1,265 +1,263 @@
 @import 'components/common/font';
 @import 'components/common/icon';
+@import 'components/common/scrollbar-hide';
 
 // components
 // `> .#{ $block } > .header`
 @mixin header--base ( $block ) {
   // [ variable ]
-  $small-width: 335px;
-  @media screen and ( max-width: $small-width ) {
-    // [ variable ]
-    $logo-width: font__px-to-rem( 58 );
-    $logo-height: font__px-to-rem( 44 );
-    $caption-title-font-size: font__px-to-rem( 16 );
-    $caption-subtitle-font-size: font__px-to-rem( 12 );
-    $caption-gap: font__px-to-rem( 4 );
+  $small-width: 320px;
+  $logo-width: font__px-to-rem( 58 );
+  $logo-height: font__px-to-rem( 44 );
+  $caption-title-font-size: font__px-to-rem( 16 );
+  $caption-subtitle-font-size: font__px-to-rem( 12 );
+  $caption-gap: font__px-to-rem( 4 );
+
+  // element
+  // `> .#{ $block } > .#{ $block }__header`
+  // block
+  // `> .#{ $block } > .header`
+  .#{ $block }__header.header.header--base {
+    // [ position ]
+    // This style is set to put `.header__menu` on the right of screen.
+    position: relative;
+    z-index: 1;
+
+    // [ layout ]
+    display: block;
+    text-align: center;
+    line-height: 0;
+
+    // [ skin ]
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
 
     // element
-    // `> .#{ $block } > .#{ $block }__header`
+    // `> .#{ $block } > .header > .header__logo`
     // block
-    // `> .#{ $block } > .header`
-    > .#{ $block }__header.header.header--base {
-      // [ position ]
-      // This style is set to put `.header__menu` on the right of screen.
-      position: relative;
-      z-index: 1;
-
+    // `> .#{ $block } > .header > .logo`
+    > .header__logo.logo {
       // [ layout ]
-      display: block;
-      text-align: center;
-      line-height: 0;
+      display: inline-block;
+      margin: {
+        top: font__px-to-rem( 26 );
+        left: font__px-to-rem( 12 );
+        right: font__px-to-rem( 12 );
+      }
+      vertical-align: top;
 
       // [ skin ]
-      width: 100%;
-      height: auto;
-      background-color: #ffffff;
+      width: $logo-width;
+      height: $logo-height;
+      background-color: transparent;
 
       // element
-      // `> .#{ $block } > .header > .header__logo`
-      // block
-      // `> .#{ $block } > .header > .logo`
-      > .header__logo.logo {
+      // `> .#{ $block } > .header > .logo > .logo__image`
+      > .logo__image {
         // [ layout ]
         display: inline-block;
-        margin: {
-          top: font__px-to-rem( 26 );
-          left: font__px-to-rem( 12 );
-          right: font__px-to-rem( 12 );
-        }
-        vertical-align: top;
-
-        // [ skin ]
-        width: $logo-width;
-        height: $logo-height;
-        background-color: transparent;
-
-        // element
-        // `> .#{ $block } > .header > .logo > .logo__image`
-        > .logo__image {
-          // [ layout ]
-          display: inline-block;
-          vertical-align: top;
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-          background-color: transparent;
-        }
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__caption`
-      // block
-      // `> .#{ $block } > .header > .caption`
-      > .header__caption.caption {
-        // [ layout ]
-        display: inline-block;
-        margin: {
-          top: font__px-to-rem( 16 );
-          left: font__px-to-rem( 12 );
-          right: font__px-to-rem( 12 );
-        }
         vertical-align: top;
 
         // [ skin ]
         width: 100%;
         height: auto;
         background-color: transparent;
-
-        // element
-        // `> .#{ $block } > .header > .logo > .caption > .caption__title`
-        // block
-        // `> .#{ $block } > .header > .logo > .caption > .title`
-        > .caption__title.title {
-          // [ layout ]
-          display: block;
-          margin-bottom: $caption-gap;
-          text-align: center;
-          line-height: $caption-title-font-size;
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-          color: #212121;
-          background-color: transparent;
-
-          // element
-          // `> .#{ $block } > .header > .logo > .caption > .title > .title__text`
-          > .title__text {
-            // [ layout ]
-            display: inline-block;
-            vertical-align: top;
-            line-height: $caption-title-font-size;
-
-            // [ skin ]
-            width: auto;
-            height: $caption-title-font-size;
-            background-color: transparent;
-            font: {
-              size: $caption-title-font-size;
-              style: normal;
-              weight: bold;
-            }
-          }
-        }
-
-        // element
-        // `> .#{ $block } > .header > .logo > .caption > .caption__subtitle`
-        // block
-        // `> .#{ $block } > .header > .logo > .caption > .subtitle`
-        > .caption__subtitle.subtitle {
-          // [ layout ]
-          display: block;
-          text-align: center;
-          line-height: $caption-subtitle-font-size;
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-          color: #212121;
-          background-color: transparent;
-
-          // element
-          // `> .#{ $block } > .header > .logo > .caption > .subtitle > .subtitle__text`
-          > .subtitle__text {
-            // [ layout ]
-            display: inline-block;
-            vertical-align: top;
-            line-height: $caption-subtitle-font-size;
-            word-spacing: font__px-to-rem( 3 );
-
-            // [ skin ]
-            width: auto;
-            height: $caption-subtitle-font-size;
-            border: {
-              color: transparent;
-              style: solid;
-              right-width: font__px-to-rem( 3 );
-            }
-            background-color: transparent;
-            font: {
-              size: $caption-subtitle-font-size;
-              style: normal;
-              weight: normal;
-            }
-          }
-        }
       }
+    }
+
+    // element
+    // `> .#{ $block } > .header > .header__caption`
+    // block
+    // `> .#{ $block } > .header > .caption`
+    > .header__caption.caption {
+      // [ layout ]
+      display: inline-block;
+      margin-top: font__px-to-rem( 16 );
+      vertical-align: top;
+
+      // [ skin ]
+      width: 100%;
+      height: auto;
+      background-color: transparent;
 
       // element
-      // `> .#{ $block } > .header > .header__menu`
-      > .header__menu {
-        // [ layout ]
-        display: inline-block;
-        margin: {
-          top: font__px-to-rem( 26 );
-          bottom: font__px-to-rem( 26 );
-          left: font__px-to-rem( 12 );
-          right: font__px-to-rem( 12 );
-        }
-        line-height: 0;
-
-        // [ skin ]
-        width: font__px-to-rem( 28 );
-        height: font__px-to-rem( 17 );
-        background-color: transparent;
-
-        // [ before & after ]
-        // The look of these elements should be three parallel horizontal lines.
-        &::before, &::after {
-          // [ layout ]
-          display: inline-block;
-          vertical-align: top;
-
-          // [ skin ]
-          width: 100%;
-          border: {
-            color: #757575;
-            style: solid;
-          }
-          background-color: transparent;
-          content: '';
-        }
-
-        // [ before ]
-        &::before {
-          // [ skin ]
-          height: font__px-to-rem( 10 );
-          border: {
-            top-width: font__px-to-rem( 3 );
-            bottom-width: font__px-to-rem( 3 );
-          }
-        }
-
-        // [ after ]
-        &::after {
-          // [ skin ]
-          height: font__px-to-rem( 7 );
-          border-bottom-width: font__px-to-rem( 3 );
-        }
-      }
-
-      // element
-      // `> .#{ $block } > .header > .header__navigation`
+      // `> .#{ $block } > .header > .logo > .caption > .caption__title`
       // block
-      // `> .#{ $block } > .header > .navigation`
-      > .header__navigation.navigation {
-        // [ variable ]
-        $border-height: font__px-to-rem( 1 );
-        $item-width: font__px-to-rem( 320 );
-        $item-height: font__px-to-rem( 50 ) + $border-height;
-        $font-size: font__px-to-rem( 16 );
-
-        // [ position ]
-        position: fixed;
-        top: 0;
-        right: -1 * $item-width;
-        z-index: 2;
-
+      // `> .#{ $block } > .header > .logo > .caption > .title`
+      > .caption__title.title {
         // [ layout ]
-        overflow-y: auto;
+        display: block;
+        margin-bottom: $caption-gap;
+        text-align: center;
+        line-height: $caption-title-font-size;
 
         // [ skin ]
         width: 100%;
-        height: 100%;
-        background-color: #213262;
+        height: auto;
+        color: #212121;
+        background-color: transparent;
 
-        // [ animation ]
-        transition: right .5s;
-
-        // modifier
-        // `> .#{ $block } > .header > .header__navigation > .header__navigation--active`
-        &.header__navigation--active {
-          // [ position ]
-          right: 0;
-
+        // element
+        // `> .#{ $block } > .header > .logo > .caption > .title > .title__text`
+        > .title__text {
           // [ layout ]
-          display: block;
+          display: inline-block;
+          vertical-align: top;
+          line-height: $caption-title-font-size;
 
           // [ skin ]
-          width: 100%;
+          width: auto;
+          height: $caption-title-font-size;
+          background-color: transparent;
+          font: {
+            size: $caption-title-font-size;
+            style: normal;
+            weight: bold;
+          }
         }
+      }
 
+      // element
+      // `> .#{ $block } > .header > .logo > .caption > .caption__subtitle`
+      // block
+      // `> .#{ $block } > .header > .logo > .caption > .subtitle`
+      > .caption__subtitle.subtitle {
+        // [ layout ]
+        display: block;
+        text-align: center;
+        line-height: $caption-subtitle-font-size;
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+        color: #212121;
+        background-color: transparent;
+
+        // element
+        // `> .#{ $block } > .header > .logo > .caption > .subtitle > .subtitle__text`
+        > .subtitle__text {
+          // [ layout ]
+          display: inline-block;
+          vertical-align: top;
+          line-height: $caption-subtitle-font-size;
+          word-spacing: font__px-to-rem( 3 );
+
+          // [ skin ]
+          width: auto;
+          height: $caption-subtitle-font-size;
+          border: {
+            color: transparent;
+            style: solid;
+            right-width: font__px-to-rem( 3 );
+          }
+          background-color: transparent;
+          font: {
+            size: $caption-subtitle-font-size;
+            style: normal;
+            weight: normal;
+          }
+        }
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .header > .header__menu`
+    > .header__menu {
+      // [ layout ]
+      display: inline-block;
+      margin: {
+        top: font__px-to-rem( 26 );
+        bottom: font__px-to-rem( 26 );
+        left: font__px-to-rem( 12 );
+        right: font__px-to-rem( 12 );
+      }
+      line-height: 0;
+
+      // [ skin ]
+      width: font__px-to-rem( 28 );
+      height: font__px-to-rem( 17 );
+      background-color: transparent;
+
+      // [ before & after ]
+      // The look of these elements should be three parallel horizontal lines.
+      &::before, &::after {
+        // [ layout ]
+        display: inline-block;
+        vertical-align: top;
+
+        // [ skin ]
+        width: 100%;
+        border: {
+          color: #757575;
+          style: solid;
+        }
+        background-color: transparent;
+        content: '';
+      }
+
+      // [ before ]
+      &::before {
+        // [ skin ]
+        height: font__px-to-rem( 10 );
+        border: {
+          top-width: font__px-to-rem( 3 );
+          bottom-width: font__px-to-rem( 3 );
+        }
+      }
+
+      // [ after ]
+      &::after {
+        // [ skin ]
+        height: font__px-to-rem( 7 );
+        border-bottom-width: font__px-to-rem( 3 );
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .header > .header__navigation`
+    // block
+    // `> .#{ $block } > .header > .navigation`
+    > .header__navigation.navigation {
+      // [ variable ]
+      $border-height: font__px-to-rem( 1 );
+      $item-width: font__px-to-rem( 320 );
+      $item-height: font__px-to-rem( 50 ) + $border-height;
+      $font-size: font__px-to-rem( 16 );
+
+      // [ position ]
+      position: fixed;
+      top: 0;
+      right: -1 * $item-width;
+      z-index: 2;
+
+      // [ layout ]
+      overflow-y: auto;
+
+      // [ skin ]
+      width: 100%;
+      height: 100%;
+      background-color: #213262;
+
+      // [ animation ]
+      transition: right .5s;
+
+      // modifier
+      // `> .#{ $block } > .header > .header__navigation > .header__navigation--active`
+      &.header__navigation--active {
+        // [ position ]
+        right: 0;
+
+        // [ layout ]
+        display: block;
+        overflow: hidden;
+
+        // [ skin ]
+        width: 100%;
+      }
+      @include scrollbar--hide();
+
+      > .scrollbar--hide {
         // element
         // `> .#{ $block } > .header > .navigation > .navigation__search`
         // block
@@ -941,7 +939,7 @@
     }
   }
   @media screen and ( min-width: $small-width ) {
-    > .#{ $block }__header.header.header--base {
+    .#{ $block }__header.header.header--base {
       display: none;
     }
   }

@@ -11,12 +11,12 @@
 @import 'components/common/footer';
 @import 'components/announcement/briefing';
 @import 'components/home/hot-announcement-briefing';
+@import 'components/common/scrollbar-hide';
 
 // block
 // `.body`
 .body {
-  // [ skin ]
-  background-color: #ffffff;
+  @include scrollbar--hide();
 
   // element
   // `.body > .body__header`
@@ -37,7 +37,7 @@
   // `.body > .body__content`
   // block
   // `.body > .content`
-  > .body__content.content {
+  .body__content.content {
     // [ variable ]
     $large: 992px;
 
@@ -191,3 +191,5 @@
   // `.body > .footer`
   @include footer ( $block: 'body' );
 }
+
+

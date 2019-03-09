@@ -11,12 +11,12 @@
 @import 'components/announcement/filter';
 @import 'components/announcement/announcement-briefing';
 @import 'components/announcement/pages';
+@import 'components/common/scrollbar-hide';
 
 // block
 // `.body`
 .body {
-  // [ skin ]
-  background-color: #ffffff;
+  @include scrollbar--hide();
 
   // element
   // `.body > .body__header`
@@ -43,7 +43,7 @@
   // `.body > .body__content`
   // block
   // `.body > .content`
-  > .body__content.content {
+  .body__content.content {
     // [ variable ]
     $small: 850px;
     $large: 992px;

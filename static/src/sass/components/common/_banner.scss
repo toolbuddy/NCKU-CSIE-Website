@@ -5,7 +5,7 @@
   // `> .#{ $block } > .#{ $block }__banner`
   // block
   // `> .#{ $block } > .banner`
-  > .#{ $block }__banner.banner {
+  .#{ $block }__banner.banner {
     // [ variable ]
     $large: 600px;
 

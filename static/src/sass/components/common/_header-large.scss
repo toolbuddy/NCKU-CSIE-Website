@@ -18,7 +18,7 @@
     // `> .#{ $block } > .#{ $block }__header`
     // block
     // `> .#{ $block } > .header`
-    > .#{ $block }__header.header.header--large {
+    .#{ $block }__header.header.header--large {
       // [ position ]
       // This style is set to put `.header__menu` on the right of screen.
       position: static;
@@ -770,7 +770,7 @@
               position: absolute;
               top: 0;
               left: 0;
-              z-index: 2;
+              z-index: 5;
 
               // [ skin ]
               height: font__px-to-rem( 147.2 );
@@ -858,7 +858,7 @@
     }
   }
   @media screen and ( max-width: $large-width ) {
-    > .#{ $block }__header.header.header--large {
+    .#{ $block }__header.header.header--large {
       display: none;
     }
   }
