@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // component
 // `> .#{ $block } > .#{ $block }__topic.topic`
 @mixin topic ( $block ) {
@@ -10,9 +12,11 @@
     $large: 850px;
 
     // [ layout ]
+    display: block;
     text-align: center;
 
     // [ skin ]
+    width: 100%;
     color: #000000;
 
     // [ RWD: $large ]
@@ -21,7 +25,7 @@
       text-align: left;
 
       // [skin ]
-      border-bottom: solid .0156rem #bfbfbf;
+      border-bottom: solid font__px-to-rem( 1 ) #bfbfbf;
     }
 
     // element
@@ -29,14 +33,17 @@
     > .topic__text {
       // [ layout ]
       display: inline-block;
-      line-height: 1.4rem;
+      vertical-align: bottom;
+      line-height: font__px-to-rem( 24 );
 
       // [ skin ]
       width: auto;
-      border-bottom: solid .0156rem #213262;
+      padding-bottom: font__px-to-rem( 10 );
+      border-bottom: solid font__px-to-rem( 1 ) #213262;
+      color: #000000;
       font: {
         weight: bold;
-        size: 24 / 32 * 1rem;
+        size: font__px-to-rem( 24 );
       }
     }
 
