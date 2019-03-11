@@ -69,13 +69,19 @@
     // `> .#{ $block } > .announcement > .announcement__no-result`
     // block
     // `> .#{ $block } > .announcement > .no-result`
-    @include no-result( 'announcement' );
+    @include no-result( 'announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
 
     // element
     // `> .#{ $block } > .announcement > .announcement__loading`
     // block
     // `> .#{ $block } > .announcement > .loading`
-    @include loading( 'announcement' );
+    @include loading( 'announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
 
     // element
     // `> .#{ $block } > .announcement > .announcement__briefings`
@@ -90,19 +96,23 @@
       transition: max-height .5s ease;
       @keyframes collapse {
         from {
+          // [ skin ]
           transform: scaleY( 1 );
         }
 
         to {
+          // [ skin ]
           transform: scaleY( 0 );
         }
       }
       @keyframes expand {
         from {
+          // [ skin ]
           transform: scaleY( 0 );
         }
 
         to {
+          // [ skin ]
           transform: scaleY( 1 );
         }
       }
@@ -136,6 +146,11 @@
           timing-function: ease;
         }
       }
+
+      // element
+      // `> .#{ $block } > .announcement > .briefings > .briefings__briefing`
+      // block
+      // `> .#{ $block } > .announcement > .briefings  > .briefing`
       @include briefing( $block: 'briefings' );
     }
 

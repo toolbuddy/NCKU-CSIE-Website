@@ -1,25 +1,38 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const degreeMap = {
+const map = [
+    'bachelor',
+    'master',
+    'phd',
+];
+
+const defaultOption = 'bachelor';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'bachelor',
-            'master',
-            'phd',
-        ],
-        'default': 'bachelor',
+        bachelor: 'bachelor',
+        master:   'master',
+        phd:      'phd',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '學士',
-            '碩士',
-            '博士',
-        ],
-        'default': '學士',
+        bachelor: '學士',
+        master:   '碩士',
+        phd:      '博士',
     },
 };
 
-deepFreeze( degreeMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default degreeMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import PublicationUtils from 'models/faculty/utils/publication.js';
+import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 
 const Publication = faculty.define( 'publication', {
     publicationId: {
@@ -20,7 +20,7 @@ const Publication = faculty.define( 'publication', {
     category: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: PublicationUtils.defaultPublicationCategoryId,
+        defaultValue: publicationCategoryUtils.defaultId,
     },
     international: {
         type:      Sequelize.BOOLEAN,

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { announcement, } from 'models/common/utils/connect.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 
 const Tag = announcement.define( 'tag', {
     announcementId: {
@@ -11,7 +11,7 @@ const Tag = announcement.define( 'tag', {
     typeId: {
         type:         Sequelize.INTEGER.UNSIGNED,
         allowNull:    false,
-        defaultValue: TagUtils.defaultTagId,
+        defaultValue: tagUtils.defaultId,
         primaryKey:   true,
     },
 } );

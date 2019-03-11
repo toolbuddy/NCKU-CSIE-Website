@@ -10,6 +10,7 @@ import express from 'express';
 
 import announcement from 'apis/announcement.js';
 import faculty from 'apis/faculty.js';
+import staff from 'apis/staff.js';
 
 const apis = express();
 
@@ -39,6 +40,12 @@ apis.use( '/announcement', announcement );
  */
 
 apis.use( '/faculty', faculty );
+
+/**
+ * Resolve URL `/api/staff`.
+ */
+
+apis.use( '/staff', staff );
 
 apis.use( ( {}, res, {} ) => {
     res.status( 404 ).json( {

@@ -48,7 +48,9 @@ append content
     header.announcement__headline.headline
       aside.headline__tags.tags
         each tagId in data.tags
-          button.tags__tag( class=`tags__tag--${ UTILS.getTagColorById( tagId ) }` )= UTILS.getTagById( { languageId: LANG.id, tagId, } )
+          button.tags__tag(
+            class = `tags__tag--${ UTILS.announcement.tagUtils.getTagColorById( tagId ) }`
+          )= UTILS.announcement.tagUtils.getValueById( { id: tagId, languageId: LANG.id, } )
       h1.headline__title= data.title
       a.headline__announcer= `公告人員 : ${ data.author }`
       time.headline__time= new Date( data.updateTime )

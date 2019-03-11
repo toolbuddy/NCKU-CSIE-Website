@@ -1,0 +1,389 @@
+@import 'components/common/font.scss';
+@import 'components/common/icon.scss';
+
+// component
+// `> .#{ $block } > .#{ $block }__cards.cards`
+@mixin cards ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__cards`
+  // block
+  // `> .#{ $block } > .cards`
+  > .#{ $block }__cards.cards {
+    // [ variable ]
+    $small: 300px;
+    $medium: 350px;
+    $large: 545px;
+    $card-width: font__px-to-rem( 464 );
+    $transition-time: .5s;
+
+    // [ layout ]
+    display: block;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    width: 96%;
+    height: auto;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: grid;
+      grid: {
+        template-columns: repeat( auto-fit, $card-width );
+        gap: font__px-to-rem( 6 );
+      };
+      justify-content: center;
+    }
+
+    // element
+    // `> .#{ $block } > .cards > .cards__card`
+    // block
+    // `> .#{ $block } > .cards > .card`
+    > .cards__card.card {
+      // [ layout ]
+      display: block;
+      margin-bottom: font__px-to-rem( 16 );
+
+      // [ skin ]
+      width: 100%;
+      height: auto;
+      border: {
+        top-width: font__px-to-rem( 48 );
+        bottom-width: font__px-to-rem( 50 );
+        color: #ffffff;
+        style: solid;
+      }
+      background-color: #ffffff;
+
+      // [ animation ]
+      transition: width $transition-time, opacity $transition-time;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin-bottom: 0;
+
+        // [ skin ]
+        width: $card-width;
+      }
+
+      // [ interaction ]
+      // `.card__photo` should grow and `.card__more` should change color
+      &:hover {
+        // element
+        // `> .#{ $block } > .cards > .card:hover > .card__photo`
+        > .card__photo {
+          // [ skin ]
+          transform: rotate( 10deg );
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .cards > .card.card--fade-out`
+      &.card--fade-out {
+        // [ skin ]
+        opacity: 0;
+      }
+
+      // modifier
+      // `> .#{ $block } > .cards > .card.card--hide`
+      &.card--hide {
+        // [ layout ]
+        display: none;
+      }
+
+      // element
+      // `> .#{ $block } > .cards > .card > .card__photo`
+      > .card__photo {
+        // [ layout ]
+        display: block;
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: font__px-to-rem( 32 );
+        }
+        object-fit: cover;
+
+        // [ skin ]
+        width: 80vw;
+        height: 80vw;
+        border-radius: 50%;
+        background-color: #c4c4c4;
+
+        // [ animation ]
+        transition: transform .2s;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ skin ]
+          width: font__px-to-rem( 272 );
+          height: font__px-to-rem( 272 );
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .cards > .card > .card__intro`
+      // block
+      // `> .#{ $block } > .cards > .card > .intro`
+      > .card__intro.intro {
+        // [ layout ]
+        display: block;
+        margin: {
+          left: 6%;
+          right: 6%;
+        }
+
+        // [ skin ]
+        width: ( 100 - 2 * 6 ) * 1%;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          margin: {
+            left: 10%;
+            right: 10%;
+          }
+
+          // [ skin ]
+          width: ( 100 - 2 * 10 ) * 1%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          margin: {
+            left: $card-width * .15;
+            right: $card-width * .15;
+          }
+
+          // [ skin ]
+          width: $card-width - 2 * $card-width * .15;
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__businesses`
+        // block
+        // `> .#{ $block } > .cards > .card > .intro > .businesses`
+        > .intro__businesses.businesses {
+          // [ layout ]
+          display: block;
+          text-align: center;
+          margin-bottom: font__px-to-rem( 32 );
+          line-height: font__px-to-rem( 14 );
+          word: {
+            wrap: normal;
+            break: normal;
+          }
+          white-space: normal;
+
+          // [ skin ]
+          width: 100%;
+          height: auto;
+
+          // element
+          // `> .#{ $block } > .cards > .card > .intro > .businesses > .businesses__business`
+          > .businesses__business {
+            // [ variable ]
+            $min-height: font__px-to-rem( 28 );
+            $font-size: font__px-to-rem( 14 );
+            $padding-vertical-align: ( $min-height - $font-size ) / 2;
+
+            // [ layout ]
+            display: inline-block;
+            margin: font__px-to-rem( 4 );
+            vertical-align: top;
+            text-align: center;
+            word: {
+              wrap: normal;
+              break: normal;
+            }
+            white-space: normal;
+
+            // [ skin ]
+            min: {
+              width: font__px-to-rem( 96 );
+              height: $min-height;
+            }
+            border-radius: font__px-to-rem( 15 );
+            padding: {
+              top: $padding-vertical-align;
+              bottom: $padding-vertical-align;
+              left: font__px-to-rem( 16 );
+              right: font__px-to-rem( 16 );
+            }
+            color: #8caae2;
+            background-color: #eaeff7;
+            font-size: $font-size;
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__name`
+        > .intro__name {
+          // [ layout ]
+          display: block;
+          text-align: center;
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 20 );
+            weight: bold;
+          }
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            display: inline-block;
+            margin-right: font__px-to-rem( 20 );
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__titles`
+        // block
+        // `> .#{ $block } > .cards > .card > .intro > .titles`
+        > .intro__titles.titles {
+          // [ layout ]
+          display: block;
+          text-align: center;
+          margin-bottom: font__px-to-rem( 6 );
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            display: inline-block;
+            text-align: left;
+          }
+
+          // element
+          // `> .#{ $block } > .cards > .card > .intro > .titles > .titles__title`
+          > .titles__title {
+            // [ layout ]
+            display: inline-block;
+            text-align: center;
+            margin: {
+              right: font__px-to-rem( 4 );
+              bottom: font__px-to-rem( 4 );
+            }
+
+            // [ skin ]
+            min-height: font__px-to-rem( 24 );
+            border: {
+              width: font__px-to-rem( 2 );
+              style: solid;
+              color: #adacad;
+              radius: font__px-to-rem( 4 );
+            }
+            padding: font__px-to-rem( 2 ) font__px-to-rem( 5 );
+            color: #adacad;
+            font-size: font__px-to-rem( 14 );
+          }
+        }
+
+        // template
+        // `> .#{ $block } > .cards > .card > .intro > .intro__?`
+        %intro__element {
+          // [ variable ]
+          $before-gap: font__px-to-rem( 36 );
+          $icon-size: font__px-to-rem( 24 );
+
+          // [ position ]
+          position: relative;
+
+          // [ layout ]
+          display: block;
+          margin: {
+            bottom: font__px-to-rem( 16 );
+            left: $before-gap;
+          }
+          line-height: $icon-size;
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 16 );
+            style: normal;
+          }
+
+          // [ before ]
+          &::before {
+            // [ position ]
+            position: absolute;
+            top: 0;
+            left: -1 * $before-gap;
+
+            // [ layout ]
+            display: inline-block;
+
+            // [ skin ]
+            content: '';
+            width: $icon-size;
+            height: $icon-size;
+            background: {
+              position: center;
+              size: contain;
+              repeat: no-repeat;
+            }
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__email`
+        > .intro__email {
+          // [ template ]
+          @extend %intro__element;
+
+          // [ layout ]
+          word-break: break-all;
+
+          // [ skin ]
+          text-decoration: underline;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__envelope();
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__office-address`
+        > .intro__office-address {
+          // [ template ]
+          @extend %intro__element;
+
+          // [ layout ]
+          word-break: normal;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__location();
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__office-tel`
+        > .intro__office-tel {
+          // [ template ]
+          @extend %intro__element;
+
+          // [ layout ]
+          word-break: break-all;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__phone();
+          }
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

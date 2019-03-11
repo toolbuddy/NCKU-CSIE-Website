@@ -1,25 +1,38 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const publicationCategoryMap = {
+const map = [
+    'journal',
+    'conference',
+    'workshop',
+];
+
+const defaultOption = 'journal';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'journal',
-            'conference',
-            'workshop',
-        ],
-        'default': 'journal',
+        journal:    'journal',
+        conference: 'conference',
+        workshop:   'workshop',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '期刊',
-            '會議',
-            '工作坊',
-        ],
-        'default': '期刊',
+        journal:    '期刊',
+        conference: '會議',
+        workshop:   '工作坊',
     },
 };
 
-deepFreeze( publicationCategoryMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default publicationCategoryMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

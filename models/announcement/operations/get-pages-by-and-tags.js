@@ -3,7 +3,7 @@ import {
     Announcement,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 const op = Sequelize.Op;
@@ -24,15 +24,14 @@ const op = Sequelize.Op;
 
 export default async ( opt ) => {
     try {
-        opt = opt || {};
         const {
             amount = null,
             from = null,
             tags = [],
             to = null,
-        } = opt;
+        } = opt || {};
 
-        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
             const error = new Error( 'invalid tag id' );
             error.status = 400;
             throw error;

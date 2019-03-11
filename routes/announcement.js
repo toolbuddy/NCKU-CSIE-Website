@@ -15,7 +15,7 @@ import MarkdownIt from 'markdown-it';
 
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import getFileInfo from 'models/announcement/operations/get-file-info.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, } from 'settings/server/config.js';
 
@@ -70,8 +70,9 @@ router
             languageId:     req.query.languageId,
         } );
 
-        res.locals.UTILS.getTagById = TagUtils.getTagById;
-        res.locals.UTILS.getTagColorById = TagUtils.getTagColorById;
+        res.locals.UTILS.announcement = {
+            tagUtils,
+        };
         res.locals.UTILS.md = new MarkdownIt( {
             breaks:  true,
             linkify: true,

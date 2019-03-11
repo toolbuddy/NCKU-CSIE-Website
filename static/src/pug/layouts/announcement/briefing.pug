@@ -6,21 +6,18 @@ append data
         'all':
         {
             color:   'yellow',
-            id:      UTILS.TagUtils.tagAllId,
-            tag:     UTILS.TagUtils.getTagAll( LANG.id ),
+            id:      UTILS.announcement.tagUtils.tagAllId,
+            tag:     UTILS.announcement.tagUtils.getTagAllValue( LANG.id ),
             tagName: 'all',
         },
     };
-    UTILS.TagUtils.supportedTag( LANG.getLanguageId( 'en-US' ) ).forEach( tag => {
-        const tagId = UTILS.TagUtils.getTagId( {
-            tag:        tag,
-            languageId: LANG.getLanguageId( 'en-US' ),
-        } );
+    UTILS.announcement.tagUtils.supportedOptions.forEach( tag => {
+        const tagId = UTILS.announcement.tagUtils.getIdByOption( tag );
         allTags[ tag ] = {
-            color: UTILS.TagUtils.getTagColorById( tagId ),
+            color: UTILS.announcement.tagUtils.getTagColorById( tagId ),
             id:    tagId,
-            tag:   UTILS.TagUtils.getTagById( {
-                tagId: tagId,
+            tag:   UTILS.announcement.tagUtils.getValueById( {
+                id: tagId,
                 languageId: LANG.id,
             } ),
             tagName: tag,
@@ -59,7 +56,7 @@ append content
 
   section#announcement--normal.content__announcement.announcement.announcement--normal
     header.announcement__title= i18n[ LANG.id ].normal
-    +noResult( 'announcement' )
+    +noResultWithImage( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
 

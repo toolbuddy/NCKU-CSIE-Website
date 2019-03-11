@@ -6,7 +6,7 @@ import {
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 
 /**
  * A function for getting all pinned announcements.
@@ -30,15 +30,14 @@ import TagUtils from 'models/announcement/utils/tag.js';
 
 export default async ( opt ) => {
     try {
-        opt = opt || {};
         const {
             tags = [],
             from = null,
             to = null,
             languageId = null,
-        } = opt;
+        } = opt || {};
 
-        if ( !tags.every( TagUtils.isSupportedTagId ) ) {
+        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
             const error = new Error( 'invalid tag id' );
             error.status = 400;
             throw error;

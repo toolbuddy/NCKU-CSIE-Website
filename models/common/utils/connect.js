@@ -43,8 +43,10 @@ const connect = databaseName => new Sequelize(
 
 export const faculty = connect( 'faculty' );
 export const announcement = connect( 'announcement' );
+export const staff = connect( 'staff' );
 
 export default {
     faculty,
     announcement,
+    staff,
 };

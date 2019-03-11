@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import DepartmentUtils from 'models/faculty/utils/department.js';
+import departmentUtils from 'models/faculty/utils/department.js';
 
 const Department = faculty.define( 'department', {
     profileId: {
@@ -12,7 +12,7 @@ const Department = faculty.define( 'department', {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         primaryKey:   true,
-        defaultValue: DepartmentUtils.defaultDepartmentId,
+        defaultValue: departmentUtils.defaultId,
     },
 } );
 

@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import NationUtils from 'models/faculty/utils/nation.js';
-import DegreeUtils from 'models/faculty/utils/degree.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import degreeUtils from 'models/faculty/utils/degree.js';
 
 const Education = faculty.define( 'education', {
     educationId: {
@@ -17,12 +17,12 @@ const Education = faculty.define( 'education', {
     nation: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: NationUtils.defaultNationId,
+        defaultValue: nationUtils.defaultId,
     },
     degree: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: DegreeUtils.defaultDegreeId,
+        defaultValue: degreeUtils.defaultId,
     },
     from: {
         type:      Sequelize.SMALLINT.UNSIGNED,

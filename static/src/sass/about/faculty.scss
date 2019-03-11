@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
@@ -20,6 +21,9 @@
   // block
   // `.body > .header`
   @include header( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
   // element
   // `.body > .body__banner`
@@ -39,7 +43,7 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $small: 475px;
+    $small: 545px;
 
     // [ layout ]
     display: grid;
@@ -66,7 +70,7 @@
           '. topic   .'
           '. faculty .'
           '. .       .';
-        columns: 1fr 75% 1fr;
+        columns: 1fr 8fr 1fr;
       };
     }
 
@@ -97,13 +101,19 @@
       // `.body > .content > .faculty > .faculty__no-result`
       // block
       // `.body > .content > .faculty > .no-result`
-      @include no-result( $block: 'faculty' );
+      @include no-result( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .faculty > .faculty__loading`
       // block
       // `.body > .content > .faculty > .loading`
-      @include loading( $block: 'faculty' );
+      @include loading( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // element
       // `.body > .content > .faculty > .faculty__cards`

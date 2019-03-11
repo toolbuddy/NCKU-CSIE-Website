@@ -1,0 +1,12 @@
+mixin legend__icon( { color = 'blue' } = {} )
+  - const size = 45;
+  svg.legend__icon.icon( class = `icon--${ color }`, width = `${ size }`, height = `${ size }` )
+    circle.icon__circle(
+      cx = `${ size * 0.3 }`,
+      cy = `${ size * 0.5 }`,
+      r = `${ size * 0.3 }`
+    )
+    polygon.icon__spike(
+      points = `${ size * 0.5 } ${ size * 0.4 }, ${ size } ${ size * 0.5 }, ${ size * 0.5 } ${ size * 0.6 }`,
+      stroke-width = '2'
+    )

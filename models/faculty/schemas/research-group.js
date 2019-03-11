@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import ResearchGroupUtils from 'models/faculty/utils/research-group.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
 const ResearchGroup = faculty.define( 'researchGroup', {
     profileId: {
@@ -12,7 +12,7 @@ const ResearchGroup = faculty.define( 'researchGroup', {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         primaryKey:   true,
-        defaultValue: ResearchGroupUtils.defaultResearchGroupId,
+        defaultValue: researchGroupUtils.defaultId,
     },
 } );
 

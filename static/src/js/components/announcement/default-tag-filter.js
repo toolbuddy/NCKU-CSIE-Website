@@ -1,4 +1,4 @@
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
@@ -10,7 +10,6 @@ import ValidateUtils from 'models/common/utils/validate.js';
 export default class DefaultTagFilter {
     constructor ( opt ) {
         opt = opt || {};
-        const languageId = WebLanguageUtils.getLanguageId( 'en-US' );
 
         if ( typeof ( opt.defaultTag ) === 'undefined' ||
             !Array.isArray( opt.defaultTag ) ||
@@ -41,8 +40,8 @@ export default class DefaultTagFilter {
         )
             throw new TypeError( 'invalid arguments' );
 
-        if ( !opt.supportedTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) ||
-            !opt.defaultTag.every( tag => TagUtils.isSupportedTag( { tag, languageId, } ) ) )
+        if ( !opt.supportedTag.every( tag => tagUtils.isSupportedOption( tag ) ) ||
+            !opt.defaultTag.every( tag => tagUtils.isSupportedOption( tag ) ) )
             throw new TypeError( 'tag is not supported' );
 
         /**
@@ -65,14 +64,8 @@ export default class DefaultTagFilter {
         };
 
         this.tagId = {
-            default: opt.defaultTag.map( tag => TagUtils.getTagId( {
-                tag,
-                languageId,
-            } ) ),
-            supported: opt.supportedTag.map( tag => TagUtils.getTagId( {
-                tag,
-                languageId,
-            } ) ),
+            default:   opt.defaultTag.map( tag => tagUtils.getIdByOption( tag ) ),
+            supported: opt.supportedTag.map( tag => tagUtils.getIdByOption( tag ) ),
         };
 
         this.state = {
@@ -101,7 +94,7 @@ export default class DefaultTagFilter {
                     const tagId = node.getAttribute( 'data-tag-id' );
                     if ( tagId === null )
                         throw new Error( 'DOM attribute `data-tag-id` not found.' );
-                    if ( !( Number( tagId ) === TagUtils.tagAllId ) && !TagUtils.isSupportedTagId( Number( tagId ) ) )
+                    if ( !( Number( tagId ) === tagUtils.tagAllId ) && !tagUtils.isSupportedId( Number( tagId ) ) )
                         throw new Error( 'Invalid DOM attribute `data-tag-id`.' );
                     return {
                         node,
@@ -233,7 +226,7 @@ export default class DefaultTagFilter {
          */
 
         this.DOM.filter.tags.forEach( ( tagObj ) => {
-            if ( tagObj.id === TagUtils.tagAllId ||
+            if ( tagObj.id === tagUtils.tagAllId ||
                 ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
                 this.state.tags.indexOf( tagObj.id ) >= 0
             )
@@ -773,9 +766,9 @@ export default class DefaultTagFilter {
             const data = await res.json();
             data.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
-                    color: TagUtils.getTagColorById( tagId ),
-                    tag:   TagUtils.getTagById( {
-                        tagId,
+                    color: tagUtils.getTagColorById( tagId ),
+                    tag:   tagUtils.getValueById( {
+                        id:         tagId,
                         languageId: this.state.languageId,
                     } ),
                 } ) );
@@ -882,9 +875,9 @@ export default class DefaultTagFilter {
             const data = await res.json();
             data.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
-                    color: TagUtils.getTagColorById( tagId ),
-                    tag:   TagUtils.getTagById( {
-                        tagId,
+                    color: tagUtils.getTagColorById( tagId ),
+                    tag:   tagUtils.getValueById( {
+                        id:         tagId,
                         languageId: this.state.languageId,
                     } ),
                 } ) );

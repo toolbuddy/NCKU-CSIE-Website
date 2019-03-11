@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import NationUtils from 'models/faculty/utils/nation.js';
+import nationUtils from 'models/faculty/utils/nation.js';
 
 const Profile = faculty.define( 'profile', {
     profileId: {
@@ -25,7 +25,7 @@ const Profile = faculty.define( 'profile', {
     nation: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: NationUtils.defaultNationId,
+        defaultValue: nationUtils.defaultId,
     },
     photo: {
         type:      Sequelize.STRING( 2083 ),
