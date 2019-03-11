@@ -115,17 +115,17 @@
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
-          labs: {
+          lab: {
             text: 'Laboratories',
             route: UTILS.url( {
-              href : 'research/labs',
+              href : 'research/lab',
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
-          publications: {
+          publication: {
             text: 'Publications',
             route: UTILS.url( {
-              href : 'research/publications',
+              href : 'research/publication',
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
@@ -326,17 +326,17 @@
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
-          labs: {
+          lab: {
             text: '實驗室',
             route: UTILS.url( {
-              href : 'research/labs',
+              href : 'research/lab',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
-          publications: {
+          publication: {
             text: '發表論文',
             route: UTILS.url( {
-              href : 'research/publications',
+              href : 'research/publication',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
@@ -499,9 +499,9 @@ mixin header( belongBlock )
           button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
+              a.item__link( href = i18n[ LANG.id ].research.lab.route )= i18n[ LANG.id ].research.lab.text
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
+              a.item__link( href = i18n[ LANG.id ].research.publication.route )= i18n[ LANG.id ].research.publication.text
         li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
@@ -671,9 +671,9 @@ mixin header--small( belongBlock )
           button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
+              a.item__link( href = i18n[ LANG.id ].research.lab.route )= i18n[ LANG.id ].research.lab.text
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
+              a.item__link( href = i18n[ LANG.id ].research.publication.route )= i18n[ LANG.id ].research.publication.text
         li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
@@ -843,9 +843,9 @@ mixin header--medium( belongBlock )
           button.item__switch
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
+              a.item__link( href = i18n[ LANG.id ].research.lab.route )= i18n[ LANG.id ].research.lab.text
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
+              a.item__link( href = i18n[ LANG.id ].research.publication.route )= i18n[ LANG.id ].research.publication.text
         li.list__item.item.list__item--student
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           button.item__switch
@@ -990,9 +990,9 @@ mixin header--large( belongBlock )
           a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
           ul.item__dropdown.dropdown
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.labs.route )= i18n[ LANG.id ].research.labs.text
+              a.item__link( href = i18n[ LANG.id ].research.lab.route )= i18n[ LANG.id ].research.lab.text
             li.dropdown__item.item
-              a.item__link( href = i18n[ LANG.id ].research.publications.route )= i18n[ LANG.id ].research.publications.text
+              a.item__link( href = i18n[ LANG.id ].research.publication.route )= i18n[ LANG.id ].research.publication.text
         li.list__item.item
           a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
           ul.item__dropdown.dropdown

@@ -4,11 +4,11 @@ include /components/common/image.pug
   const i18n = Object.freeze( {
     [ LANG.getLanguageId( 'en-US' ) ]: {
       title:  'Adviser:',
-      labTel: data.labTel !== null ? data.labTel.split(',').join( ' ext. ' ) : '',
+      labTel: data.labTel !== null ? data.labTel.split( ',' ).join( ' ext. ' ) : '',
     },
     [ LANG.getLanguageId( 'zh-TW' ) ]: {
       title:  '指導教授：',
-      labTel: data.labTel !== null ? data.labTel.split(',').join( ' 分機 ' ) : '',
+      labTel: data.labTel !== null ? data.labTel.split( ',' ).join( ' 分機 ' ) : '',
     },
   } );
 

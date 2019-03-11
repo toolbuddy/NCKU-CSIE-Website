@@ -30,7 +30,7 @@ router
  */
 
 router
-.route( '/labs' )
+.route( '/lab' )
 .get( staticHtml( 'research/lab' ) );
 
 /**
@@ -38,7 +38,7 @@ router
  */
 
 router
-.route( '/publications' )
+.route( '/publication' )
 .get( staticHtml( 'research/publication' ) );
 
 export default router;
