@@ -1,0 +1,104 @@
+@import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/header';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/loading';
+@import 'components/common/no-result';
+@import 'components/common/footer';
+@import 'components/research/lab/cards';
+
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #eff3f9;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ layout ]
+    display: block;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    max-width: font__px-to-rem( 1740 );
+    width: 94%;
+    height: auto;
+
+    // element
+    // `.body > .content > .content__topic`
+    // block
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 32 );
+    }
+
+    // element
+    // `.body > .content > .content__lab`
+    // block
+    // `.body > .content > .lab`
+    > .content__lab.lab {
+      // element
+      // `.body > .content > .lab > .lab__no-result`
+      // block
+      // `.body > .content > .lab > .no-result`
+      @include no-result( $block: 'lab' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // element
+      // `.body > .content > .lab > .lab__loading`
+      // block
+      // `.body > .content > .lab > .loading`
+      @include loading( $block: 'lab' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // element
+      // `.body > .content > .lab > .lab__cards`
+      // block
+      // `.body > .content > .lab > .cards`
+      @include cards ( $block: 'lab' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 32 );
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

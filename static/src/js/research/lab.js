@@ -1,4 +1,6 @@
 import { GetHeaderMin, GetHeaderSmall, GetHeaderMedium, GetHeaderLarge, } from 'static/src/js/components/common/header.js';
+import GetLabs from 'static/src/js/components/research/lab/get-labs.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 window.addEventListener( 'load', () => {
     const headerMin = new GetHeaderMin( {
@@ -17,4 +19,11 @@ window.addEventListener( 'load', () => {
         headerDOM:     document.querySelector( '.body__header.header.header--large' ),
         allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
+
+    const getLabs = new GetLabs( {
+        labDOM:     document.getElementById( 'lab' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+    } );
+
+    getLabs.exec();
 } );

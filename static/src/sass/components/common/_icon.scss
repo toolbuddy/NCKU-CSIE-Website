@@ -48,6 +48,12 @@ $icon-path: '~image/icon';
 }
 
 // [ icon ]
+// World Wide Web
+@mixin icon__www () {
+  background-image: url( '#{ $icon-path }/www.png' );
+}
+
+// [ icon ]
 // Taiwan flag
 @mixin icon__flag-zh-TW () {
   background-image: url( '#{ $icon-path }/flag-0.png' );

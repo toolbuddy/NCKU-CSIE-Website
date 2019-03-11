@@ -80,9 +80,9 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'home/index': path.join( pugRoot, 'home/index.pug' ),
 
         // Route `research`
-        'research/index':        path.join( pugRoot, 'research/index.pug' ),
-        'research/labs':         path.join( pugRoot, 'research/labs.pug' ),
-        'research/publications': path.join( pugRoot, 'research/publications.pug' ),
+        'research/index':       path.join( pugRoot, 'research/index.pug' ),
+        'research/lab':         path.join( pugRoot, 'research/lab.pug' ),
+        'research/publication': path.join( pugRoot, 'research/publication.pug' ),
 
         // Route `resource`
         'resource/alumni':  path.join( pugRoot, 'resource/alumni.pug' ),

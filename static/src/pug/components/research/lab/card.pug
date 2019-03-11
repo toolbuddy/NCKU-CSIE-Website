@@ -1,0 +1,27 @@
+include /components/common/image.pug
+
+-
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      title:  'Adviser:',
+      labTel: data.labTel !== null ? data.labTel.split(',').join( ' ext. ' ) : '',
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      title:  '指導教授：',
+      labTel: data.labTel !== null ? data.labTel.split(',').join( ' 分機 ' ) : '',
+    },
+  } );
+
+if data.name !== null && data.labName !== null
+  section.cards__card.card
+    header.card__title= data.labName
+    article.card__info.info
+      if data.labAddress !== null
+        address.info__lab-address= data.labAddress
+      if data.labTel !== null
+        a.info__lab-tel( href = `tel:${ data.labTel }` )= i18n[ LANG.id ].labTel
+      if data.labWeb !== null
+        a.info__lab-web( href = data.labWeb )= data.labWeb
+      span.info__advise.advise
+        span.advise__title= i18n[ LANG.id ].title
+        a.advise__adviser( href = UTILS.url( { href: `about/faculty/${ data.profileId }` } ) )= data.name
