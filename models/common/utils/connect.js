@@ -29,6 +29,15 @@ const connect = databaseName => new Sequelize(
             freezeTableName:  true,
             timestamps:       false,
         },
+        dialectOptions: {
+            connectTimeout: 1000000,
+        },
+        pool: {
+            max:     5,
+            min:     0,
+            idle:    20000,
+            acquire: 20000,
+        },
     }
 );
 
