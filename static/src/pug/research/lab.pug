@@ -1,0 +1,63 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:　'Laboratories',
+        topic:  'All Laboratories',
+        breadcrumb: {
+          home:     'Home',
+          research: 'Research',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:　'實驗室',
+        topic:  '實驗室列表',
+        breadcrumb: {
+          home:     '首頁',
+          research: '學術研究',
+        },
+      },
+    } );
+    const currentRoute = 'research/lab';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'research/lab' )
+
+append header
+  +banner(
+    'body',
+    {
+      text: i18n[ LANG.id ].title,
+      image: 'https://via.placeholder.com/1920x500',
+    }
+  )
+  +breadcrumb(
+    'body',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#lab.content__lab.lab
+    +noResultWithImage( 'lab' )
+    +loading( 'lab' )
+    section.lab__cards.cards
+
+append footer
+
+append scripts
+  +js( 'research/lab' )

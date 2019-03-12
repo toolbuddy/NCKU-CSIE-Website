@@ -4,13 +4,20 @@
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
 @import 'components/common/not-available';
+@import 'components/common/font';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/loading';
+@import 'components/common/no-result';
 @import 'components/common/footer';
+@import 'components/about/staff/cards';
 
 // block
 // `.body`
 .body {
   // [ skin ]
-  background-color: #ffffff;
+  background-color: #eff3f9;
 
   // element
   // `.body > .body__header`
@@ -22,18 +29,95 @@
   @include header--large( $block: 'body' );
 
   // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body' );
+
+  // element
+  // `.body > .body__breadcrumb`
+  // block
+  // `.body > .breadcrumb`
+  @include breadcrumb( $block: 'body' );
+
+  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
+    // [ variable ]
+    $small: 545px;
+
+    // [ layout ]
+    display: grid;
+    grid: {
+      template: {
+        areas:
+          '.'
+          'topic'
+          'staff';
+        columns: 100%;
+      }
+      row-gap: 1rem;
+    };
+
     // [ skin ]
-    height: 120%;
+    width: 100%;
+
+    // [RWD: $small]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. .     .'
+          '. topic .'
+          '. staff .'
+          '. .     .';
+        columns: 1fr 80% 1fr;
+      };
+    }
 
     // element
-    // `.body > .content > .content__not-available`
+    // `.body > .content > .content__topic`
     // block
-    // `.body > .content > .not-available`
-    @include not-available( $block: 'content' );
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
+      // [ position ]
+      grid-area: topic;
+    }
+
+    // element
+    // `.body > .content > .content__staff`
+    // block
+    // `.body > .content > .staff`
+    > .content__staff.staff {
+      // [ position ]
+      grid-area: staff;
+
+      // element
+      // `.body > .content > .staff > .staff__no-result`
+      // block
+      // `.body > .content > .staff > .no-result`
+      @include no-result( $block: 'staff' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // element
+      // `.body > .content > .staff > .staff__loading`
+      // block
+      // `.body > .content > .staff > .loading`
+      @include loading( $block: 'staff' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // element
+      // `.body > .content > .staff > .staff__cards`
+      // block
+      // `.body > .content > .staff > .cards`
+      @include cards ( $block: 'staff' );
+    }
   }
 
   // element

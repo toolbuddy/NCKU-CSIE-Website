@@ -7,12 +7,11 @@ import ValidateUtils from 'models/common/utils/validate.js';
 
 export default async ( opt ) => {
     try {
-        opt = opt || {};
         const {
             languageId = null,
             announcementId = null,
             fileId = null,
-        } = opt;
+        } = opt || {};
 
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
             const error = new Error( 'invalid language id' );

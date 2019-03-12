@@ -3,7 +3,7 @@ import GetHeaderSmall from 'static/src/js/components/common/headerSmall.js';
 import GetHeaderMedium from 'static/src/js/components/common/headerMedium.js';
 import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import { GetAllAnnouncement, GetHotAnnouncement, } from 'static/src/js/components/home/get-announcement.js';
 
 window.addEventListener( 'load', () => {
@@ -29,7 +29,7 @@ window.addEventListener( 'load', () => {
         announcementDOM: document.getElementById( 'announcement' ),
         from:            new Date( '2019/01/01' ),
         languageId:      WebLanguageUtils.currentLanguageId,
-        tags:            TagUtils.supportedTag( WebLanguageUtils.getLanguageId( 'en-US' ) ),
+        tags:            tagUtils.supportedOptions,
         to:              new Date( Date.now() ),
         page:            1,
     } );
@@ -41,7 +41,7 @@ window.addEventListener( 'load', () => {
         announcementDOM: document.getElementById( 'hot-announcement' ),
         from:            new Date( '2019/01/01' ),
         languageId:      WebLanguageUtils.currentLanguageId,
-        tags:            TagUtils.supportedTag( WebLanguageUtils.getLanguageId( 'en-US' ) ),
+        tags:            tagUtils.supportedOptions,
         to:              new Date( Date.now() ),
         page:            1,
     } );

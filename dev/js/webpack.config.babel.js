@@ -59,9 +59,9 @@ export default {
         'home/index': path.join( jsSrcRoot, 'home/index.js' ),
 
         // Route `research`
-        'research/index':        path.join( jsSrcRoot, 'research/index.js' ),
-        'research/labs':         path.join( jsSrcRoot, 'research/labs.js' ),
-        'research/publications': path.join( jsSrcRoot, 'research/publications.js' ),
+        'research/index':       path.join( jsSrcRoot, 'research/index.js' ),
+        'research/lab':         path.join( jsSrcRoot, 'research/lab.js' ),
+        'research/publication': path.join( jsSrcRoot, 'research/publication.js' ),
 
         // Route `resource`
         'resource/alumni':  path.join( jsSrcRoot, 'resource/alumni.js' ),

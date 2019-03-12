@@ -1,6 +1,6 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import DefaultTagFilter from 'static/src/js/components/announcement/default-tag-filter.js';
-import TagUtils from 'models/announcement/utils/tag';
+import tagUtils from 'models/announcement/utils/tag';
 
 export default class MultipleDefaultTagFilter extends DefaultTagFilter {
     subscribeTagEvent () {
@@ -9,7 +9,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
              * Default tag event subscribe.
              */
 
-            if ( tagObj.id === TagUtils.tagAllId ) {
+            if ( tagObj.id === tagUtils.tagAllId ) {
                 /**
                  * Default tag should be always active.
                  */

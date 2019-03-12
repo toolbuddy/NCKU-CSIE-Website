@@ -3,8 +3,8 @@
  *
  * Including following sub-routes:
  * - `/research`
- * - `/research/labs`
- * - `/research/publications`
+ * - `/research/lab`
+ * - `/research/publication`
  */
 
 import express from 'express';
@@ -26,19 +26,19 @@ router
 .get( staticHtml( 'research/index' ) );
 
 /**
- * Resolve URL `/research/labs`.
+ * Resolve URL `/research/lab`.
  */
 
 router
-.route( '/labs' )
-.get( staticHtml( 'research/labs' ) );
+.route( '/lab' )
+.get( staticHtml( 'research/lab' ) );
 
 /**
- * Resolve URL `/research/publications`.
+ * Resolve URL `/research/publication`.
  */
 
 router
-.route( '/publications' )
-.get( staticHtml( 'research/publications' ) );
+.route( '/publication' )
+.get( staticHtml( 'research/publication' ) );
 
 export default router;

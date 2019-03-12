@@ -2,7 +2,7 @@ import briefingHTML from 'static/src/pug/components/announcement/announcement-br
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import hotAnnouncementBriefingHTML from 'static/src/pug/components/home/hot-announcement-briefing.pug';
-import TagUtils from 'models/announcement/utils/tag.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
@@ -22,7 +22,7 @@ export class GetAllAnnouncement {
             !opt.to ||
             !ValidateUtils.isValidDate( opt.to ) ||
             !Array.isArray( opt.tags ) ||
-            !opt.tags.every( tag => TagUtils.isSupportedTag( { tag, languageId: WebLanguageUtils.getLanguageId( 'en-US' ), } ) ) ||
+            !opt.tags.every( tag => tagUtils.isSupportedOption( tag ) ) ||
             !opt.page ||
             !ValidateUtils.isPositiveInteger( opt.page ) )
             throw new TypeError( 'invalid arguments' );
@@ -56,10 +56,7 @@ export class GetAllAnnouncement {
             `from=${ Number( this.from ) }`,
             `page=${ this.page }`,
             `to=${ Number( this.to ) }`,
-            ...this.tags.map( tag => `tags=${ TagUtils.getTagId( {
-                tag,
-                languageId: WebLanguageUtils.getLanguageId( 'en-US' ),
-            } ) }` ),
+            ...this.tags.map( tag => `tags=${ tagUtils.getIdByOption( tag ) }` ),
         ].join( '&' );
     }
 
@@ -88,9 +85,9 @@ export class GetAllAnnouncement {
     static formatData ( { data, languageId, } ) {
         return data.map( ( briefing ) => {
             briefing.tags = briefing.tags.map( tagId => ( {
-                color: TagUtils.getTagColorById( tagId ),
-                tag:   TagUtils.getTagById( {
-                    tagId,
+                color: tagUtils.getTagColorById( tagId ),
+                tag:   tagUtils.getValueById( {
+                    id: tagId,
                     languageId,
                 } ),
             } ) );

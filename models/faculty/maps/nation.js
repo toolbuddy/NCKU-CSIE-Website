@@ -1,33 +1,54 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const nationMap = {
+/**
+ * `map` should following ISO 3166-1.
+ */
+
+const map = [
+    'tw',
+    'us',
+    'cn',
+    'gb',
+    'jp',
+    'de',
+    'au',
+];
+
+const defaultOption = 'tw';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'Taiwan',
-            'USA',
-            'China',
-            'UK',
-            'Japan',
-            'Germany',
-            'Australia',
-        ],
-        'default': 'Taiwan',
+        tw: 'Taiwan',
+        us: 'USA',
+        cn: 'China',
+        gb: 'UK',
+        jp: 'Japan',
+        de: 'Germany',
+        au: 'Australia',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '臺灣',
-            '美國',
-            '中國',
-            '英國',
-            '日本',
-            '德國',
-            '澳洲',
-        ],
-        'default': '臺灣',
+        tw: '臺灣',
+        us: '美國',
+        cn: '中國',
+        gb: '英國',
+        jp: '日本',
+        de: '德國',
+        au: '澳洲',
     },
 };
 
-deepFreeze( nationMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default nationMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { faculty, } from 'models/common/utils/connect.js';
-import ProjectUtils from 'models/faculty/utils/project.js';
+import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 
 const Project = faculty.define( 'project', {
     projectId: {
@@ -24,7 +24,7 @@ const Project = faculty.define( 'project', {
     category: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
-        defaultValue: ProjectUtils.defaultProjectCategoryId,
+        defaultValue: projectCategoryUtils.defaultId,
     },
 } );
 

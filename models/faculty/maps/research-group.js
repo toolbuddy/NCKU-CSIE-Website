@@ -1,33 +1,50 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const researchGroupMap = {
+const map = [
+    'elife',
+    'communication',
+    'data',
+    'multimedia',
+    'architecture',
+    'biomedical',
+    'manufacturing',
+];
+
+const defaultOption = 'general';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'E-life Digital Technology and Software Technology',
-            'Computation, Communication and Network',
-            'Data and Knowledge Engineering',
-            'Multimedia',
-            'Architecture and Embedded System',
-            'Biomedical Engineering',
-            'Manufacturing Engineering',
-        ],
-        'default': 'E-life Digital Technology and Software Technology',
+        elife:         'E-life Digital Technology and Software Technology',
+        communication: 'Computation, Communication and Network',
+        data:          'Data and Knowledge Engineering',
+        multimedia:    'Multimedia',
+        architecture:  'Architecture and Embedded System',
+        biomedical:    'Biomedical Engineering',
+        manufacturing: 'Manufacturing Engineering',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '數位生活科技與軟體技術',
-            '計算通訊與網路',
-            '資料與知識工程',
-            '多媒體',
-            '架構與嵌入式系統',
-            '生醫工程',
-            '製造工程',
-        ],
-        'default': '數位生活科技與軟體技術',
+        elife:         '數位生活科技與軟體技術',
+        communication: '計算通訊與網路',
+        data:          '資料與知識工程',
+        multimedia:    '多媒體',
+        architecture:  '架構與嵌入式系統',
+        biomedical:    '生醫工程',
+        manufacturing: '製造工程',
     },
 };
 
-deepFreeze( researchGroupMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default researchGroupMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

@@ -3,6 +3,7 @@
  *
  * Including following sub-routing modules:
  * - `/api/faculty`
+ * - `/api/faculty/lab`
  * - `/api/faculty/[id]`
  */
 
@@ -11,6 +12,7 @@ import cors from 'cors';
 
 import getFaculty from 'models/faculty/operations/get-faculty.js';
 import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+import getLabs from 'models/faculty/operations/get-labs.js';
 
 const apis = express.Router();
 
@@ -21,6 +23,20 @@ const apis = express.Router();
 apis.get( '/', cors(), async ( req, res, next ) => {
     try {
         const data = await getFaculty( Number( req.query.languageId ) );
+        res.json( data );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
+/**
+ * Resolve URL `/api/faculty/lab`.
+ */
+
+apis.get( '/lab', cors(), async ( req, res, next ) => {
+    try {
+        const data = await getLabs( Number( req.query.languageId ) );
         res.json( data );
     }
     catch ( error ) {

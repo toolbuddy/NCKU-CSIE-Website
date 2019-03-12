@@ -71,9 +71,9 @@ export default {
         'home/index':  path.join( sassRoot, 'home/index.scss' ),
 
         // Route `research`
-        'research/index':        path.join( sassRoot, 'research/index.scss' ),
-        'research/labs':         path.join( sassRoot, 'research/labs.scss' ),
-        'research/publications': path.join( sassRoot, 'research/publications.scss' ),
+        'research/index':       path.join( sassRoot, 'research/index.scss' ),
+        'research/lab':         path.join( sassRoot, 'research/lab.scss' ),
+        'research/publication': path.join( sassRoot, 'research/publication.scss' ),
 
         // Route `resource`
         'resource/alumni':  path.join( sassRoot, 'resource/alumni.scss' ),

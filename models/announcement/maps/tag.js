@@ -1,51 +1,76 @@
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
-const tagMap = {
+const map = [
+    'faculty',
+    'course',
+    'college',
+    'master',
+    'phd',
+    'speech',
+    'conference',
+    'exhibition',
+    'competition',
+    'scholarship',
+    'international',
+    'internship',
+    'rule',
+    'recruitment',
+    'award',
+];
+
+const defaultOption = 'faculty';
+
+const i18n = {
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        'support': [
-            '教職人員',
-            '課程',
-            '大學部',
-            '碩士',
-            '博士',
-            '演講',
-            '研討會',
-            '展覽',
-            '競賽',
-            '獎學金',
-            '國際交流',
-            '實習',
-            '法規彙編',
-            '徵人',
-            '榮譽',
-        ],
-        'default': '教職人員',
-        'all':     '全部',
+        faculty:       '教職人員',
+        course:        '課程',
+        college:       '大學部',
+        master:        '碩士',
+        phd:           '博士',
+        speech:        '演講',
+        conference:    '研討會',
+        exhibition:    '展覽',
+        competition:   '競賽',
+        scholarship:   '獎學金',
+        international: '國際交流',
+        internship:    '實習',
+        rule:          '法規彙編',
+        recruitment:   '徵人',
+        award:         '榮譽',
+        all:           '全部',
     },
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        'support': [
-            'faculty',
-            'course',
-            'college',
-            'master',
-            'phd',
-            'speech',
-            'conference',
-            'exhibition',
-            'competition',
-            'scholarship',
-            'international',
-            'internship',
-            'rule',
-            'recruitment',
-            'award',
-        ],
-        'default': 'faculty',
-        'all':     'all',
+        faculty:       'faculty',
+        course:        'course',
+        college:       'college',
+        master:        'master',
+        phd:           'phd',
+        speech:        'speech',
+        conference:    'conference',
+        exhibition:    'exhibition',
+        competition:   'competition',
+        scholarship:   'scholarship',
+        international: 'international',
+        internship:    'internship',
+        rule:          'rule',
+        recruitment:   'recruitment',
+        award:         'award',
+        all:           'all',
     },
 };
 
-deepFreeze( tagMap );
+deepFreeze( i18n );
+deepFreeze( map );
 
-export default tagMap;
+export default {
+    defaultOption,
+    i18n,
+    map,
+};
+
+export {
+    defaultOption,
+    i18n,
+    map,
+};

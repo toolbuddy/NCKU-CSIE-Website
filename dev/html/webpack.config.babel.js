@@ -1,9 +1,9 @@
 import path from 'path';
 
 import LanguageUtils from '../../models/common/utils/language.js';
-import TagUtils from '../../models/announcement/utils/tag.js';
-import ResearchGroupUtils from '../../models/faculty/utils/research-group';
-import DepartmentUtils from '../../models/faculty/utils/department.js';
+import announcementTagUtils from '../../models/announcement/utils/tag.js';
+import facultyResearchGroupUtils from '../../models/faculty/utils/research-group';
+import facultyDepartmentUtils from '../../models/faculty/utils/department.js';
 import UrlUtils from '../../static/src/js/utils/url.js';
 import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
 
@@ -80,9 +80,9 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'home/index': path.join( pugRoot, 'home/index.pug' ),
 
         // Route `research`
-        'research/index':        path.join( pugRoot, 'research/index.pug' ),
-        'research/labs':         path.join( pugRoot, 'research/labs.pug' ),
-        'research/publications': path.join( pugRoot, 'research/publications.pug' ),
+        'research/index':       path.join( pugRoot, 'research/index.pug' ),
+        'research/lab':         path.join( pugRoot, 'research/lab.pug' ),
+        'research/publication': path.join( pugRoot, 'research/publication.pug' ),
 
         // Route `resource`
         'resource/alumni':  path.join( pugRoot, 'resource/alumni.pug' ),
@@ -179,11 +179,15 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
                                     getLanguageId: LanguageUtils.getLanguageId,
                                 },
                                 UTILS: {
-                                    url:             UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-                                    staticUrl:       UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
-                                    TagUtils,
-                                    ResearchGroupUtils,
-                                    DepartmentUtils,
+                                    url:          UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
+                                    staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
+                                    announcement: {
+                                        tagUtils: announcementTagUtils,
+                                    },
+                                    faculty:   {
+                                        researchGroupUtils: facultyResearchGroupUtils,
+                                        departmentUtils:    facultyDepartmentUtils,
+                                    },
                                 },
                             },
                         },
