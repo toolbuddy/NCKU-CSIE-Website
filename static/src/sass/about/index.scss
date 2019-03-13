@@ -1,5 +1,8 @@
 @import 'components/common/reset';
-@import 'components/common/header';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 @import 'components/common/entries';
@@ -8,14 +11,11 @@
 // block
 // `.body`
 .body {
-  // [ skin ]
-  background-color: #ffffff;
-
   // element
   // `.body > .body__header`
   // block
   // `.body > .header`
-  @include header( $block: 'body' );
+  @include header--base( $block: 'body' );
   @include header--small( $block: 'body' );
   @include header--medium( $block: 'body' );
   @include header--large( $block: 'body' );
