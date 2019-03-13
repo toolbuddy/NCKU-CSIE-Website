@@ -2,8 +2,6 @@ import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import departmentUtils from 'models/faculty/utils/department.js';
 import nationUtils from 'models/faculty/utils/nation.js';
-import projectCategoryUtils from 'models/faculty/utils/project-category.js';
-import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import {
     AwardI18n,
@@ -421,20 +419,17 @@ export default async ( opt ) => {
                 title:      conference.conferenceI18n[ 0 ].title,
             } ) ),
             department: department.map( department => departmentUtils.getValueById( {
-                value: department.type,
+                id: department.type,
                 languageId,
             } ) ),
             education:  education.map( education => ( {
                 degree: degreeUtils.getValueById( {
-                    value: education.degree,
+                    id: education.degree,
                     languageId,
                 } ),
                 from:   education.from,
                 major:  education.educationI18n[ 0 ].major,
-                nation: nationUtils.getValueById( {
-                    value: education.nation,
-                    languageId,
-                } ),
+                nation: nationUtils.getOptionById( education.nation ),
                 school: education.educationI18n[ 0 ].school,
                 to:     education.to,
             } ) ),
@@ -451,10 +446,7 @@ export default async ( opt ) => {
                 expireDate:          patent.expireDate,
                 inventor:            patent.patentI18n[ 0 ].inventor,
                 issueDate:           patent.issueDate,
-                nation:              nationUtils.getValueById( {
-                    value: patent.nation,
-                    languageId,
-                } ),
+                nation:              nationUtils.getOptionById( patent.nation ),
                 patent:              patent.patentI18n[ 0 ].patent,
                 patentOwner:         patent.patentI18n[ 0 ].patentOwner,
             } ) ),
@@ -467,7 +459,7 @@ export default async ( opt ) => {
                 labWeb:        profile.labWeb,
                 name:          profileI18n.name,
                 nation:        nationUtils.getValueById( {
-                    value: profile.nation,
+                    id: profile.nation,
                     languageId,
                 } ),
                 officeAddress: profileI18n.officeAddress,
@@ -477,10 +469,7 @@ export default async ( opt ) => {
                 profileId,
             },
             project: project.map( project => ( {
-                category: projectCategoryUtils.getValueById( {
-                    value: project.category,
-                    languageId,
-                } ),
+                category: project.category,
                 from:     project.from,
                 name:     project.projectI18n[ 0 ].name,
                 support:  project.projectI18n[ 0 ].support,
@@ -488,18 +477,15 @@ export default async ( opt ) => {
             } ) ),
             publication: publication.map( publication => ( {
                 authors:       publication.publicationI18n[ 0 ].authors,
-                category:      publicationCategoryUtils.getValueById( {
-                    value: publication.category,
-                    languageId,
-                } ),
+                category:      publication.category,
                 international: publication.international,
-                issueMonth:    publication.issueDate,
+                issueDate:     publication.issueDate,
                 issueYear:     publication.issueYear,
                 refereed:      publication.refereed,
                 title:         publication.publicationI18n[ 0 ].title,
             } ) ),
             researchGroup: researchGroup.map( researchGroup => researchGroupUtils.getValueById( {
-                value: researchGroup.type,
+                id: researchGroup.type,
                 languageId,
             } ) ),
             specialty:     specialtyI18n.map( specialty => specialty.specialty ),
@@ -508,7 +494,7 @@ export default async ( opt ) => {
                 receivedYear: studentAward.receivedYear,
                 student:      studentAward.student.map( student => ( {
                     degree: degreeUtils.getValueById( {
-                        value: student.degree,
+                        id: student.degree,
                         languageId,
                     } ),
                     name:   student.studentI18n[ 0 ].name,

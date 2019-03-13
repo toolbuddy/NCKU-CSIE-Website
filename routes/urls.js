@@ -30,6 +30,7 @@ import user from 'routes/user.js';
 import { host, staticHost, projectRoot, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 const app = express();
 
@@ -95,6 +96,7 @@ app.use( ( req, res, next ) => {
     res.locals.UTILS = {
         url:       UrlUtils.serverUrl( new UrlUtils( host, req.query.languageId ) ),
         staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, req.query.languageId ) ),
+        ValidateUtils,
     };
     next();
 } );

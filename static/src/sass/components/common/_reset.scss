@@ -3,16 +3,27 @@
 @include font--notosanstc();
 
 *, *::before, *::after {
+  // text wrap
+  word: {
+    wrap: normal;
+    break: normal;
+  }
+  white-space: normal;
+
   // Box model: border-box
   // Width include border, padding and content.
+  box-sizing: border-box;
   margin: 0;
   border: 0;
   padding: 0;
-  box-sizing: border-box;
 
   // Inherit style from parent.
-  font-size: inherit;
   color: inherit;
+  font: {
+    size: inherit;
+    style: normal;
+    weight: normal;
+  }
 
   // No extra decoration.
   outline: 0;

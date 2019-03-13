@@ -7,11 +7,11 @@ each profile in data
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         more: 'Read more',
-        officeTel: profile.officeTel !== null ? profile.officeTel.split(',').join( ' ext. ' ) : '',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' ext. ' ) : '',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         more: '更多資訊',
-        officeTel: profile.officeTel !== null ? profile.officeTel.split(',').join( ' 分機 ' ) : '',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' 分機 ' ) : '',
       },
     } );
 
@@ -39,7 +39,7 @@ each profile in data
       article.card__intro.intro
 
         //- Faculty belongs to some departments.
-        if Array.isArray( profile.department )
+        if Array.isArray( profile.department ) && profile.department.length
           aside.intro__departments.departments
             each departmentId in profile.department
               span.departments__department(
@@ -50,7 +50,7 @@ each profile in data
         header.intro__name= profile.name
 
         //- Faculty has some titles.
-        if Array.isArray( profile.title )
+        if Array.isArray( profile.title ) && profile.title.length
           aside.intro__titles.titles
             each title in profile.title
               span.titles__title= title

@@ -36,6 +36,12 @@ $icon-path: '~image/icon';
 }
 
 // [ icon ]
+// Printer
+@mixin icon__printer () {
+  background-image: url( '#{ $icon-path }/printer.png' );
+}
+
+// [ icon ]
 // Search
 @mixin icon__search () {
   background-image: url( '#{ $icon-path }/search.png' );
@@ -73,18 +79,18 @@ $icon-path: '~image/icon';
 
 // [ icon ]
 // Trophys
-@mixin icon__award () {
+@mixin icon__trophy () {
   background-image: url( '#{ $icon-path }/trophy.png' );
 }
 
 // [ icon ]
 // Conference
-@mixin icon__conference () {
-  background-image: url( '#{ $icon-path }/conference.png' );
+@mixin icon__speech () {
+  background-image: url( '#{ $icon-path }/speech.png' );
 }
 
 // [ icon ]
 // Paper
-@mixin icon__paper () {
-  background-image: url( '#{ $icon-path }/open-book.png' );
+@mixin icon__book () {
+  background-image: url( '#{ $icon-path }/book.png' );
 }
