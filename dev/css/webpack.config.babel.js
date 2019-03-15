@@ -68,7 +68,9 @@ export default {
         'error/404':  path.join( sassRoot, 'error/404.scss' ),
 
         // Route `home`
-        'home/index':  path.join( sassRoot, 'home/index.scss' ),
+        'home/index':    path.join( sassRoot, 'home/index.scss' ),
+        'home/calendar': path.join( sassRoot, 'home/calendar.scss' ),
+        'home/search':   path.join( sassRoot, 'home/search.scss' ),
 
         // Route `research`
         'research/index':       path.join( sassRoot, 'research/index.scss' ),

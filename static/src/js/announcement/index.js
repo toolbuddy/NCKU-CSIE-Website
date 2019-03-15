@@ -3,41 +3,39 @@ import GetHeaderSmall from 'static/src/js/components/common/headerSmall.js';
 import GetHeaderMedium from 'static/src/js/components/common/headerMedium.js';
 import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
 
-window.addEventListener( 'load', () => {
-    try {
-        const headerBase = new GetHeaderBase( {
-            headerDOM:     document.querySelector( '.body__header.header.header--base' ),
-            allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-        } );
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-    try {
-        const headerSmall = new GetHeaderSmall( {
-            headerDOM:     document.querySelector( '.body__header.header.header--small' ),
-            allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-        } );
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-    try {
-        const headerMedium = new GetHeaderMedium( {
-            headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
-            allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-        } );
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-    try {
-        const headerLarge = new GetHeaderLarge( {
-            headerDOM:     document.querySelector( '.body__header.header.header--large' ),
-            allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-        } );
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-} );
+try {
+    const headerBase = new GetHeaderBase( {
+        headerDOM:     document.querySelector( '.body__header.header.header--base' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerSmall = new GetHeaderSmall( {
+        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerMedium = new GetHeaderMedium( {
+        headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerLarge = new GetHeaderLarge( {
+        headerDOM:     document.querySelector( '.body__header.header.header--large' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+}
+catch ( err ) {
+    console.error( err );
+}

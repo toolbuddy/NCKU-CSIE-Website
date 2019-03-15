@@ -77,7 +77,9 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'error/404': path.join( pugRoot, 'error/404.pug' ),
 
         // Route `home`
-        'home/index': path.join( pugRoot, 'home/index.pug' ),
+        'home/index':    path.join( pugRoot, 'home/index.pug' ),
+        'home/calendar': path.join( pugRoot, 'home/calendar.pug' ),
+        'home/search':   path.join( pugRoot, 'home/search.pug' ),
 
         // Route `research`
         'research/index':       path.join( pugRoot, 'research/index.pug' ),

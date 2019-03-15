@@ -4,19 +4,19 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title': 'Publications',
+        'title': 'Search',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title': '發表著作',
+        'title': '搜尋',
       },
     } );
-    const currentRoute = 'research/publication';
+    const currentRoute = 'home/search';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'research/publication' )
+  +css( 'home/search' )
 
 append header
 
@@ -27,4 +27,4 @@ append content
 append footer
 
 append scripts
-  +js( 'research/publication' )
+  +js( 'home/search' )

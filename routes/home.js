@@ -31,7 +31,8 @@ router
 
 router
 .route( '/search' )
-.get( staticHtml( 'home/index' ) );
+.get( staticHtml( 'home/search' ) )
+.post( staticHtml( 'home/search' ) );
 
 /**
  * Resolve URL `/calender`.
@@ -39,6 +40,6 @@ router
 
 router
 .route( '/calendar' )
-.get( staticHtml( 'home/index' ) );
+.get( staticHtml( 'home/calendar' ) );
 
 export default router;
