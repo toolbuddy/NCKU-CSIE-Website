@@ -4,7 +4,6 @@
 @import 'components/common/header-small';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
-@import 'components/common/banner';
 @import 'components/common/topic';
 @import 'components/common/no-result';
 @import 'components/common/loading';
@@ -23,12 +22,6 @@
   @include header--small( $block: 'body' );
   @include header--medium( $block: 'body' );
   @include header--large( $block: 'body' );
-
-  // element
-  // `.body > .body__banner`
-  // block
-  // `.body > .banner`
-  @include banner( $block: 'body' );
 
   // element
   // `.body > .body__content`

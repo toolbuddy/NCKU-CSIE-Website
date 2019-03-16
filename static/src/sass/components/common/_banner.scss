@@ -1,11 +1,11 @@
 // component
 // `> .#{ $block } > .#{ $block }__banner.banner`
-@mixin banner ( $block ) {
+@mixin banner ( $block, $image ) {
   // element
   // `> .#{ $block } > .#{ $block }__banner`
   // block
   // `> .#{ $block } > .banner`
-  .#{ $block }__banner.banner {
+  > .#{ $block }__banner.banner {
     // [ variable ]
     $large: 600px;
 
@@ -19,22 +19,18 @@
     // [ skin ]
     width: 100%;
     height: 100%;
+    background: {
+      image: url( $image );
+      position: center center;
+      repeat: no-repeat;
+      size: cover;
+      attachment: fixed;
+    }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ skin ]
       height: 500 / 32 * 1rem;
-    }
-
-    // element
-    // `> .#{ $block } > .banner > .banner__image`
-    > .banner__image {
-      // [ layout ]
-      object-fit: cover;
-
-      // [ skin ]
-      width: 100%;
-      height: 100%;
     }
 
     // element

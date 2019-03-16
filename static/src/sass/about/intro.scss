@@ -85,7 +85,7 @@
   // `.body > .body__content`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' );
+  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
 
   // block
   // `.body > .breadcrumb`
