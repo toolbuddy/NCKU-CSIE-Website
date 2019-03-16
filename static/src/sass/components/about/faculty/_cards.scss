@@ -78,13 +78,6 @@
       // `.card__photo` should grow and `.card__more` should change color
       &:hover {
         // element
-        // `> .#{ $block } > .cards > .card:hover > .card__photo`
-        > .card__photo {
-          // [ skin ]
-          transform: rotate( 10deg );
-        }
-
-        // element
         // `> .#{ $block } > .cards > .card:hover > .card__more`
         > .card__more {
           // [ skin ]

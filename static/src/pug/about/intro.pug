@@ -80,9 +80,9 @@ append content
   section.content__index.index
     +topic( 'index', i18n[ LANG.id ].index.title )
     each value, key in i18n[ LANG.id ].index.link
-      a.index__link( href = UTILS.url( { href: `${ currentRoute }#${ key }` } ) )= value
+      a.index__link( href = `#${ key }` )= value
 
-  section.content__history.history
+  section#history.content__history.history
     +topic( 'history', i18n[ LANG.id ].index.link.history )
     nav.history__navigation.navigation
       aside.navigation__legend.legend
@@ -106,7 +106,7 @@ append content
               +legend__icon( { color: 'red' } )
               span.legend__context= historyObj.context
 
-  section.content__develop.develop
+  section#develop.content__develop.develop
     +topic( 'develop', i18n[ LANG.id ].index.link.develop )
     aside.develop__intro= developI18n()[ LANG.id ][ 'intro' ]
     each context, index in developI18n()[ LANG.id ][ 'context' ]
@@ -127,7 +127,7 @@ append content
             src: context.image.src,
           } )
 
-  section.content__education.education
+  section#education.content__education.education
     +topic( 'education', i18n[ LANG.id ].index.link.education )
     each context in educationI18n()[ LANG.id ]
       article.education__context.context
@@ -143,7 +143,7 @@ append content
             src: context.image.src,
           } )
 
-  section.content__ieet.ieet
+  section#ieet.content__ieet.ieet
     +topic( 'ieet', i18n[ LANG.id ].index.link.ieet )
     each goal in ieetI18n()[ LANG.id ]
       section.ieet__goal.goal

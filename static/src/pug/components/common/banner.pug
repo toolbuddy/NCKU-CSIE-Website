@@ -1,9 +1,4 @@
 mixin banner( belongBlock, { image, text } )
   section.banner( class = `${ belongBlock }__banner` )
-    //- +image( {
-    //-   alt: text,
-    //-   className: 'banner__image',
-    //-   src: image,
-    //- } )
     img.banner__image( src = image )
     h1.banner__text= text
