@@ -31,13 +31,20 @@ append content
   include /components/common/loading.pug
   include /components/common/no-result.pug
 
+  section#tv.content__tv.tv
+    +noResult( 'tv' )
+    +loading( 'tv' )
+    nav.tv__series.series
+
   +topic( 'content', i18n[ LANG.id ].topic )
+
   section#announcement.content__announcement.announcement
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
     aside.announcement__more.more
       a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
   section#hot-announcement.content__hot-announcement.hot-announcement
     header.hot-announcement__title.title= i18n[ LANG.id ].hot
     +noResult( 'hot-announcement' )

@@ -7,7 +7,7 @@
   // `> .#{ $block } > .#{ $block }__footer`
   // block
   // `> .#{ $block } > .footer`
-  .#{ $block }__footer.footer {
+  > .#{ $block }__footer.footer {
     // [ variable ]
     $large: 600px;
 

@@ -35,6 +35,10 @@ const Announcement = announcement.define( 'announcement', {
         allowNull:    true,
         defaultValue: '1',
     },
+    image: {
+        type:      Sequelize.STRING( 2083 ),
+        allowNull: true,
+    },
 } );
 
 export default Announcement;

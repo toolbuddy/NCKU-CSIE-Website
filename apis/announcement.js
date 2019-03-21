@@ -9,6 +9,7 @@ import getAnnouncementsByAndTags from 'models/announcement/operations/get-announ
 import getHotAnnouncements from 'models/announcement/operations/get-hot-announcements.js';
 import getPagesByAndTags from '../models/announcement/operations/get-pages-by-and-tags';
 import getPinnedAnnouncementsByAndTags from 'models/announcement/operations/get-pinned-announcements-by-and-tags.js';
+import getTvAnnouncements from 'models/announcement/operations/get-tv-announcements.js';
 
 const apis = express.Router();
 
@@ -144,6 +145,24 @@ apis.get( '/get-hot-announcements', cors(), async ( req, res, next ) => {
             page:       Number( req.query.page ),
             tags,
             to:         new Date( Number( req.query.to ) ),
+        } ) );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
+apis.get( '/get-tv-announcements', cors(), async ( req, res, next ) => {
+    try {
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getTvAnnouncements( {
+            amount:     Number( req.query.amount ),
+            languageId: Number( req.query.languageId ),
+            tags,
         } ) );
     }
     catch ( error ) {

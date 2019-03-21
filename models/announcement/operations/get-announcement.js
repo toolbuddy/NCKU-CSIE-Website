@@ -54,6 +54,7 @@ export default async ( opt ) => {
                 'updateTime',
                 'views',
                 'isPinned',
+                'image',
             ],
             where: {
                 announcementId,
@@ -111,6 +112,7 @@ export default async ( opt ) => {
             updateTime:     Number( data.updateTime ),
             views:          data.views,
             isPinned:       data.isPinned,
+            image:          data.image,
             title:          data.announcementI18n[ 0 ].title,
             content:        data.announcementI18n[ 0 ].content,
             tags:           data.tag.map( tag => tag.typeId ),

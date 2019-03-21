@@ -8,37 +8,13 @@ import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 
-/**
- * A function for getting all announcements.
- *
- * @async
- * @param {string[]} [tags = []]                          - Specifying the announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                          announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
- *                                                          announcements were post.
- * @param {number}   [page = defaultValue.page]           - Specify the announcements under the given page number.
- * @param {string} [language = defaultValue.language]     - Language option of the announcements.
- * @returns {object[]}                                      Requested announcements, including:
- * - id
- * - title
- * - content
- * - updateTime
- * - tags(id, name)
- *
- * Announcements which contain all the given tags are taken into account.
- */
-
 const op = Sequelize.Op;
 
 export default async ( opt ) => {
     try {
         const {
             tags = [],
-            page = null,
             amount = null,
-            from = null,
-            to = null,
             languageId = null,
         } = opt || {};
 
@@ -47,23 +23,8 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( page ) ) {
-            const error = new Error( 'invalid page' );
-            error.status = 400;
-            throw error;
-        }
         if ( !ValidateUtils.isPositiveInteger( amount ) ) {
             const error = new Error( 'invalid amount' );
-            error.status = 400;
-            throw error;
-        }
-        if ( !ValidateUtils.isValidDate( from ) ) {
-            const error = new Error( 'invalid time - from' );
-            error.status = 400;
-            throw error;
-        }
-        if ( !ValidateUtils.isValidDate( to ) ) {
-            const error = new Error( 'invalid time - to' );
             error.status = 400;
             throw error;
         }
@@ -78,13 +39,10 @@ export default async ( opt ) => {
                 'announcementId',
             ],
             where: {
-                updateTime: {
-                    [ op.between ]: [
-                        from,
-                        to,
-                    ],
-                },
                 isPublished: true,
+                image:       {
+                    [ op.not ]: null,
+                },
             },
             include: [
                 {
@@ -98,10 +56,9 @@ export default async ( opt ) => {
                     },
                 },
             ],
-            offset:   amount * ( page - 1 ),
             order:  [
                 [
-                    'views',
+                    'updateTime',
                     'DESC',
                 ],
             ],
@@ -123,8 +80,7 @@ export default async ( opt ) => {
         data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
             attributes: [
                 'announcementId',
-                'updateTime',
-                'views',
+                'image',
             ],
             where: {
                 announcementId,
@@ -148,14 +104,14 @@ export default async ( opt ) => {
             announcementId: announcement.announcementId,
             content:        announcement.announcementI18n[ 0 ].content,
             title:          announcement.announcementI18n[ 0 ].title,
-            updateTime:     Number( announcement.updateTime ),
-            views:          announcement.views,
+            image:          announcement.image,
         } ) );
 
         return data;
     }
 
     catch ( err ) {
+        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();

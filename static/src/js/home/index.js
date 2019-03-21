@@ -5,6 +5,7 @@ import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import { GetAllAnnouncement, GetHotAnnouncement, } from 'static/src/js/components/home/get-announcement.js';
+import GetTvAnnouncements from 'static/src/js/components/home/get-tv-announcements.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -38,6 +39,19 @@ try {
         headerDOM:     document.querySelector( '.body__header.header.header--large' ),
         allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getTvAnnouncements = new GetTvAnnouncements( {
+        amount:     6,
+        tvDOM:      document.getElementById( 'tv' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+        tags:       tagUtils.supportedOptions,
+    } );
+
+    getTvAnnouncements.exec();
 }
 catch ( err ) {
     console.error( err );

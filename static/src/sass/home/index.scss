@@ -8,6 +8,7 @@
 @import 'components/common/no-result';
 @import 'components/common/loading';
 @import 'components/common/footer';
+@import 'components/home/tv';
 @import 'components/announcement/briefing';
 @import 'components/home/hot-announcement-briefing';
 
@@ -27,7 +28,7 @@
   // `.body > .body__content`
   // block
   // `.body > .content`
-  .body__content.content {
+  > .body__content.content {
     // [ variable ]
     $large: 992px;
 
@@ -35,12 +36,12 @@
     display: grid;
     grid-template: {
       areas:
-        '. .                .'
-        '. topic            .'
-        '. announcement     .'
-        '. hot-announcement .'
-        '. .                .';
-      rows: font__px-to-rem( 70 ) repeat( 3, min-content ) font__px-to-rem( 70 );
+        'tv tv               tv'
+        '.  topic            .'
+        '.  announcement     .'
+        '.  hot-announcement .'
+        '.  .                .';
+      rows: 100vh repeat( 3, min-content ) font__px-to-rem( 70 );
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
     }
 
@@ -49,14 +50,24 @@
       // [ layout ]
       grid-template: {
         areas:
-          '. .            . .                .'
-          '. topic        . hot-announcement .'
-          '. announcement . hot-announcement .'
-          '. .            . .                .';
-        rows: font__px-to-rem( 148 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 );
+          'tv tv           tv tv               tv'
+          '.  .            .  .                .'
+          '.  topic        .  hot-announcement .'
+          '.  announcement .  hot-announcement .'
+          '.  .            .  .                .';
+        rows: 80vh font__px-to-rem( 16 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 );
         columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
       }
       align-items: start;
+    }
+
+    // element
+    // `.body > .content > .content__tv`
+    // block
+    // `.body > .content > .tv`
+    @include tv( 'content' ) {
+      // [ position ]
+      grid-area: tv;
     }
 
     // element
