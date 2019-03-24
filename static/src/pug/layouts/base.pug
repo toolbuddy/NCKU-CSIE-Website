@@ -44,12 +44,12 @@ html
     //-
     //- Each page has there own header (`<header>` tags).
     //- Use header template `+header()` to generate `<header>` tag.
-    //- Header template module can be found at `static/src/pug/components/common/header.pug`.
+    //- Header template module can be found at `static/src/pug/components/common/header-.pug`.
     block header
-      include /components/common/headerBase.pug
-      include /components/common/headerSmall.pug
-      include /components/common/headerMedium.pug
-      include /components/common/headerLarge.pug
+      include /components/common/header-base.pug
+      include /components/common/header-small.pug
+      include /components/common/header-medium.pug
+      include /components/common/header-large.pug
       +header--base( 'body' )
       +header--small( 'body' )
       +header--medium( 'body' )

@@ -57,7 +57,6 @@ export default {
 
         // Route `home`
         'home/index':    path.join( jsSrcRoot, 'home/index.js' ),
-        'home/calendar': path.join( jsSrcRoot, 'home/calendar.js' ),
         'home/search':   path.join( jsSrcRoot, 'home/search.js' ),
 
         // Route `research`

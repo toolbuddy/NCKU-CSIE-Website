@@ -1,7 +1,7 @@
-import GetHeaderBase from 'static/src/js/components/common/headerBase.js';
-import GetHeaderSmall from 'static/src/js/components/common/headerSmall.js';
-import GetHeaderMedium from 'static/src/js/components/common/headerMedium.js';
-import GetHeaderLarge from 'static/src/js/components/common/headerLarge.js';
+import GetHeaderBase from 'static/src/js/components/common/header-base.js';
+import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
+import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
+import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -33,7 +33,6 @@ catch ( err ) {
 try {
     const headerLarge = new GetHeaderLarge( {
         headerDOM:     document.querySelector( '.body__header.header.header--large' ),
-        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
     } );
 }
 catch ( err ) {

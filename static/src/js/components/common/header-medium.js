@@ -8,7 +8,7 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
-export default class GetHeaderBase {
+export default class GetHeaderMedium {
     /**
      * @param {object} opt
      * @param {HTMLElement} opt.headerDOM
@@ -44,8 +44,7 @@ export default class GetHeaderBase {
 
         this.DOM = {
             header:         opt.headerDOM,
-            allNavigations: Array.from( opt.allHeaderDOMs )
-            .map( header => header.querySelector( headerBlockQuerySelector( 'navigation' ) ) ),
+            allNavigations: Array.from( opt.allHeaderDOMs ).map( header => header.querySelector( headerBlockQuerySelector( 'navigation' ) ) ),
             menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
             navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
             cancel:         opt.headerDOM.querySelector( navigationElementQuerySelector( 'cancel' ) ),
@@ -88,6 +87,7 @@ export default class GetHeaderBase {
         this.subscribeMenuEvent();
         this.subscribeDropdownEvent();
         this.subscribeLanguageEvent();
+        this.subscribeScrollEvent();
 
         return this;
     }
@@ -95,8 +95,8 @@ export default class GetHeaderBase {
     subscribeMenuEvent () {
         window.addEventListener( 'click', ( event ) => {
             if ( event.target !== this.DOM.menu &&
-                 !this.DOM.navigation.contains( event.target ) &&
-                 window.getComputedStyle( this.DOM.header ).display !== 'none'
+                !this.DOM.navigation.contains( event.target ) &&
+                window.getComputedStyle( this.DOM.header ).display !== 'none'
             ) {
                 this.DOM.allNavigations.forEach( ( navigationDOM ) => {
                     classRemove( navigationDOM, 'header__navigation--active' );
@@ -146,6 +146,18 @@ export default class GetHeaderBase {
                 this.DOM.language.dropdowns.forEach( dropdownDOM => classAdd( dropdownDOM, 'language__dropdown--open' ) );
                 this.DOM.language.switches.forEach( switchDOM => classAdd( switchDOM, 'language__switch--active' ) );
             }
+        } );
+    }
+
+    subscribeScrollEvent () {
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener( 'scroll', () => {
+            const currentScrollPos = window.pageYOffset;
+            if ( prevScrollpos > currentScrollPos )
+                classAdd( this.DOM.header, 'header--active' );
+            else
+                classRemove( this.DOM.header, 'header--active' );
+            prevScrollpos = currentScrollPos;
         } );
     }
 }

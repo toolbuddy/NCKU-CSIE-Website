@@ -8,7 +8,7 @@
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
-export default class GetHeaderMedium {
+export default class GetHeaderSmall {
     /**
      * @param {object} opt
      * @param {HTMLElement} opt.headerDOM
@@ -87,6 +87,7 @@ export default class GetHeaderMedium {
         this.subscribeMenuEvent();
         this.subscribeDropdownEvent();
         this.subscribeLanguageEvent();
+        this.subscribeScrollEvent();
 
         return this;
     }
@@ -145,6 +146,18 @@ export default class GetHeaderMedium {
                 this.DOM.language.dropdowns.forEach( dropdownDOM => classAdd( dropdownDOM, 'language__dropdown--open' ) );
                 this.DOM.language.switches.forEach( switchDOM => classAdd( switchDOM, 'language__switch--active' ) );
             }
+        } );
+    }
+
+    subscribeScrollEvent () {
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener( 'scroll', () => {
+            const currentScrollPos = window.pageYOffset;
+            if ( prevScrollpos > currentScrollPos )
+                classAdd( this.DOM.header, 'header--active' );
+            else
+                classRemove( this.DOM.header, 'header--active' );
+            prevScrollpos = currentScrollPos;
         } );
     }
 }

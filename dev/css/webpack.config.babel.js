@@ -69,7 +69,6 @@ export default {
 
         // Route `home`
         'home/index':    path.join( sassRoot, 'home/index.scss' ),
-        'home/calendar': path.join( sassRoot, 'home/calendar.scss' ),
         'home/search':   path.join( sassRoot, 'home/search.scss' ),
 
         // Route `research`

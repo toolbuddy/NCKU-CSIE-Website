@@ -4,7 +4,6 @@
  * Including following sub-routes:
  * - `/`
  * - `/search`
- * - `/calendar`
  */
 
 import express from 'express';
@@ -36,13 +35,5 @@ router
 .route( '/search' )
 .get( staticHtml( 'home/search' ) )
 .post( staticHtml( 'home/search' ) );
-
-/**
- * Resolve URL `/calender`.
- */
-
-router
-.route( '/calendar' )
-.get( staticHtml( 'home/calendar' ) );
 
 export default router;
