@@ -520,7 +520,6 @@
           > .right__login {
             // [ layout ]
             display: inline-block;
-            margin-top: font__px-to-rem( 4 );
             vertical-align: top;
 
             // [ skin ]
@@ -576,7 +575,8 @@
             vertical-align: top;
             margin: {
               left: font__px-to-rem( 24 );
-              top: font__px-to-rem( 5 );
+              top: font__px-to-rem( 6 );
+              bottom: font__px-to-rem( 6 );
             }
 
             // [ skin ]
@@ -712,7 +712,8 @@
               vertical-align: top;
               margin: {
                 left: font__px-to-rem( 24 );
-                top: font__px-to-rem( 10 );
+                top: font__px-to-rem( 6 );
+                bottom: font__px-to-rem( 6 );
               }
 
               // [ skin ]
