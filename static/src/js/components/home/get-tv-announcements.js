@@ -66,7 +66,9 @@ export default class GetTvAnnouncements {
         this.DOM.show.hidden.push( this.DOM.show.active );
         this.DOM.show.active = this.DOM.show.hidden[ 0 ];
         this.DOM.show.hidden.splice( 0, 1 );
-        setTimeout( () => { this.subscribeShowEvent(); }, 3000 );
+        setTimeout( () => {
+            this.subscribeShowEvent();
+        }, 3000 );
     }
 
     render ( data ) {
