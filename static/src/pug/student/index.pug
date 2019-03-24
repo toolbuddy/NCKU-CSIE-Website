@@ -4,11 +4,11 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title':     'Student Affairs',
-        'breadcrumb': {
-          'home':    'Home',
+        title:     'Student Affairs',
+        breadcrumb: {
+          home:    'Home',
         },
-        'entries': [
+        entries: [
           {
             title: 'College',
             detail: 'Information related to undergraduated students, including course, internship, scholarship and more',
@@ -30,11 +30,11 @@ append data
         ],
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title':     '學生事務',
-        'breadcrumb': {
-          'home':    '首頁',
+        title:     '學生事務',
+        breadcrumb: {
+          home:    '首頁',
         },
-        'entries': [
+        entries: [
           {
             title: '大學部',
             detail: '資訊系大學部的相關資訊，包含課程、實習、獎學金等',
@@ -69,8 +69,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },
@@ -80,8 +82,6 @@ append header
 append content
   include /components/common/entries.pug
   +entries( 'content', i18n[ LANG.id ].entries )
-
-append content
 
 append footer
 

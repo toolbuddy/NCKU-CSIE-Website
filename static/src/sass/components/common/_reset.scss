@@ -3,15 +3,16 @@
 @include font--notosanstc();
 
 *, *::before, *::after {
-  // text wrap
+  // Text default style.
+  line-height: 0;
   word: {
     wrap: normal;
     break: normal;
   }
   white-space: normal;
 
-  // Box model: border-box
-  // Width include border, padding and content.
+  // Box model: border-box.
+  // No initial margin, border and padding.
   box-sizing: border-box;
   margin: 0;
   border: 0;
@@ -59,6 +60,5 @@ html, body {
   font: {
     size: font__base-font-size();
     family: 'Noto Sans TC', 'Arial', 'Microsoft JhengHei';
-    weight: normal;
   }
 }

@@ -57,8 +57,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },

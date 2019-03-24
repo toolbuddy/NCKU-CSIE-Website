@@ -1,3 +1,5 @@
+@import 'components/common/font.scss';
+
 // component
 // `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
@@ -14,7 +16,7 @@
 
       // [ layout ]
       display: inline-block;
-      margin: .14rem;
+      margin: font__px-to-rem( 4 );
       text-align: center;
       white-space: normal;
       word: {
@@ -23,18 +25,18 @@
       }
 
       // [ skin ]
-      min-height: 1rem;
+      min-height: font__px-to-rem( 32 );
       border: {
         style: solid;
-        width: .03rem;
-        radius: .69rem;
+        width: font__px-to-rem( 1 );
+        radius: font__px-to-rem( 22 );
       }
       padding: {
-        left: .5rem;
-        right: .5rem;
+        left: font__px-to-rem( 16 );
+        right: font__px-to-rem( 16 );
       }
       background-color: #eff3f9;
-      font-size: .44rem;
+      font-size: font__px-to-rem( 14 );
 
       // [ interaction ]
       &:hover {
@@ -46,13 +48,13 @@
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ skin ]
-        min-height: 1.4rem;
-        font-size: .58rem;
+        min-height: font__px-to-rem( 44 );
+        font-size: font__px-to-rem( 18 );
       }
     }
 
     // [ layout ]
-    margin-bottom: 1rem;
+    margin-bottom: font__px-to-rem( 32 );
 
     // element
     // `> .#{ $block } > .filter > .filter__department`

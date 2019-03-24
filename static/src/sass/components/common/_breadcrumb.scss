@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // component
 // `> .#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
 @mixin breadcrumb ( $block ) {
@@ -7,70 +9,35 @@
   // `> .#{ $block } > .breadcrumb`
   > .#{ $block }__breadcrumb.breadcrumb {
     // [ variable ]
-    $small: 600px;
-    $medium: 800px;
-    $large: 1000px;
-    $font-size: 20 / 32 * 1rem;
+    $large: 800px;
+    $font-size: font__px-to-rem( 20 );
 
     // [ dispaly ]
     display: block;
+    line-height: $font-size * 1.2;
 
     // [ skin ]
-    width: 100%;
-    height: auto;
-    border: {
-      style: solid;
-      color: transparent;
-      left-width: 16 / 32 * 1rem;
-      top-width: 16 / 32 * 1rem;
-    }
     background-color: transparent;
-
-    // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
-      // [ skin ]
-      border: {
-        left-width: 40 / 32 * 1rem;
-        top-width: 50 / 32 * 1rem;
-      }
-    }
-
-    // [ RWD: $medium ]
-    @media screen and ( min-width: $medium ) {
-      // [ skin ]
-      border-left-width: 60 / 32 * 1rem;
-    }
-
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // [ skin ]
-      border-left-width: 20vw;
-    }
 
     // element
     // `> .#{ $block } > .breadcrumb > .breadcrumb__link`
     > .breadcrumb__link {
       // [ layout ]
       display: inline-block;
+      line-height: $font-size;
 
       // [ skin ]
-      color: #6982c0;
+      color: #213262;
+      background-color: transparent;
       font-size: $font-size;
       text-decoration: underline;
-      background-color: transparent;
-
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
-        // [ skin ]
-        color: #213262;
-      }
     }
 
     // element
     // `> .#{ $block } > .breadcrumb > .breadcrumb__arrow`
     > .breadcrumb__arrow {
       // [ variable ]
-      $image-width: 6 / 32 * 1rem;
+      $image-width: font__px-to-rem( 6 );
       $image-height: $image-width * 1.6;
       $vertical-align: $font-size - $image-height;
 
@@ -79,8 +46,8 @@
       margin: {
         top: $vertical-align / 2;
         bottom: $vertical-align / 2;
-        left: 18 / 32 * 1rem;
-        right: 18 / 32 * 1rem;
+        left: font__px-to-rem( 18 );
+        right: font__px-to-rem( 18 );
       }
       vertical-align: middle;
 
@@ -89,12 +56,12 @@
       height: $image-height;
       background-color: transparent;
 
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
         // [ layout ]
         margin: {
-          left: 40 / 32 * 1rem;
-          right: 40 / 32 * 1rem;
+          left: font__px-to-rem( 40 );
+          right: font__px-to-rem( 40 );
         }
       }
     }
@@ -104,17 +71,12 @@
     > .breadcrumb__text {
       // [ layout ]
       display: inline-block;
+      line-height: $font-size;
 
       // [ skin ]
       color: #757575;
-      font-size: $font-size;
       background-color: transparent;
-
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
-        // [ skin ]
-        color: #adacad;
-      }
+      font-size: $font-size;
     }
 
     // [ customization ]

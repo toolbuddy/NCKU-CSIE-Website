@@ -196,6 +196,7 @@
             margin: font__px-to-rem( 4 );
             vertical-align: top;
             text-align: center;
+            line-height: $font-size;
             word: {
               wrap: normal;
               break: normal;
@@ -226,6 +227,8 @@
           // [ layout ]
           display: block;
           text-align: center;
+          line-height: font__px-to-rem( 20 );
+          margin-bottom: font__px-to-rem( 6 );
 
           // [ skin ]
           font: {
@@ -268,16 +271,17 @@
               right: font__px-to-rem( 4 );
               bottom: font__px-to-rem( 4 );
             }
+            line-height: font__px-to-rem( 14 );
 
             // [ skin ]
-            min-height: font__px-to-rem( 24 );
+            min-height: font__px-to-rem( 28 );
             border: {
               width: font__px-to-rem( 2 );
               style: solid;
               color: #adacad;
               radius: font__px-to-rem( 4 );
             }
-            padding: font__px-to-rem( 2 ) font__px-to-rem( 5 );
+            padding: font__px-to-rem( 5 ) font__px-to-rem( 5 );
             color: #adacad;
             font-size: font__px-to-rem( 14 );
           }

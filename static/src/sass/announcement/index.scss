@@ -27,24 +27,55 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'announcement/index' );
 
   // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
+    // [ skin ]
+    width: 100%;
+    background-color: #ffffff;
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ layout ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1362 );
+      width: 80%;
+      border: {
+        style: solid;
+        top-width: font__px-to-rem( 20 );
+        color: transparent;
+      }
+    }
+
     // element
     // `.body > .content > .content__entries`
     // block
     // `.body > .content > .entries`
-    @include entries( $block: 'content' );
+    @include entries( $block: 'content' ) {
+      // [ layout ]
+      margin: {
+        top: font__px-to-rem( 32 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1362 );
+      width: 100%;
+      border-bottom: 10px solid transparent;
+    }
   }
 
   // element

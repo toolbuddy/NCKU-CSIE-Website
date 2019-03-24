@@ -149,8 +149,10 @@ append stylesheets
   +css( 'about/faculty-detail' )
 
 append header
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },

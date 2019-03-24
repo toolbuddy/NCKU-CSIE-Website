@@ -17,7 +17,7 @@
 // `.body`
 .body {
   // [ skin ]
-  background-color: #eff3f9;
+  background-color: #ffffff;
 
   // element
   // `.body > .body__header`
@@ -32,13 +32,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'about/faculty' );
 
   // element
   // `.body > .body__content`
@@ -54,27 +48,47 @@
       template: {
         areas:
           '.'
+          'breadcrumb'
           'topic'
           'faculty';
         columns: 100%;
       }
-      row-gap: 1rem;
+      row-gap: font__px-to-rem( 32 );
     };
 
     // [ skin ]
     width: 100%;
+    background-color: #eff3f9;
 
-    // [RWD: $small]
+    // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template: {
         areas:
-          '. .       .'
-          '. topic   .'
-          '. faculty .'
-          '. .       .';
+          '. .          .'
+          '. breadcrumb .'
+          '. topic      .'
+          '. faculty    .'
+          '. .          .';
         columns: 1fr 8fr 1fr;
       };
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+
+      // [ skin ]
+      border-left: font__px-to-rem( 32 ) solid transparent;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        border-left: 0;
+      }
     }
 
     // element

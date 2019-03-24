@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // component
 // `> .#{ $block } > .#{ $block }__entries.entries`
 @mixin entries ( $block ) {
@@ -11,10 +13,8 @@
 
     // [ layout ]
     display: block;
-    margin-top: 30 / 32 * 1rem;
 
     // [ skin ]
-    width: 100%;
     background-color: transparent;
 
     // [ RWD: $large ]
@@ -23,7 +23,6 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 50 / 32 * 1rem;
     }
 
     // element
@@ -36,32 +35,32 @@
       margin: {
         left: auto;
         right: auto;
-        bottom: 9 / 32 * 1rem;
+        bottom: font__px-to-rem( 9 );
       }
       text-align: center;
 
       // [ skin ]
       width: 95%;
-      min-height: 168 / 32 * 1rem;
+      min-height: font__px-to-rem( 168 );
       border: {
         top: {
-          width: 6 / 32 * 1rem;
+          width: font__px-to-rem( 6 );
           color: #e6e6e6;
         }
         bottom: {
-          width: 1 / 32 * 1rem;
+          width: font__px-to-rem( 1 );
           color: #e6e6e6;
         }
         left: {
-          width: 1 / 32 * 1rem;
+          width: font__px-to-rem( 1 );
           color: #e6e6e6;
         }
         right: {
-          width: 1 / 32 * 1rem;
+          width: font__px-to-rem( 1 );
           color: #e6e6e6;
         }
         style: solid;
-        radius: 6 / 32 * 1rem;
+        radius: font__px-to-rem( 6 );
       }
       background-color: #ffffff;
 
@@ -76,14 +75,14 @@
       @media screen and ( min-width: $large ) {
         // [ layout ]
         margin: {
-          left: 0;
-          right: 25 / 32 * 1rem;
-          bottom: 27 / 32 * 1rem;
+          left: font__px-to-rem( 12 );
+          right: font__px-to-rem( 12 );
+          bottom: font__px-to-rem( 26 );
         }
 
         // [ skin ]
-        min-height: 239 / 32 * 1rem;
-        width: 430 / 32 * 1rem;
+        min-height: font__px-to-rem( 190 );
+        width: font__px-to-rem( 430 );
       }
 
       // template
@@ -137,8 +136,9 @@
       > .entry__title {
         // [ layout ]
         display: block;
-        margin-top: 60 / 32 * 1rem;
         text-align: center;
+        margin-top: font__px-to-rem( 60 );
+        line-height: font__px-to-rem( 26 );
         white-space: normal;
         word: {
           break: normal;
@@ -149,7 +149,7 @@
         color: black;
         background-color: transparent;
         font: {
-          size: 26 / 32 * 1rem;
+          size: font__px-to-rem( 26 );
           weight: bold;
         }
       }
@@ -161,29 +161,29 @@
         display: block;
         text-align: center;
         margin: {
-          top: 20 / 32 * 1rem;
-          left: 32 / 32 * 1rem;
-          right: 32 / 32 * 1rem;
-          bottom: 40 / 32 * 1rem;
+          top: font__px-to-rem( 20 );
+          left: font__px-to-rem( 32 );
+          right: font__px-to-rem( 32 );
+          bottom: font__px-to-rem( 40 );
         }
+        line-height: font__px-to-rem( 16 ) * 1.2;
         white-space: normal;
         word: {
           break: normal;
           wrap: normal;
         };
-        line-height: 26 / 32 * 1rem;
 
         // [ skin ]
         color: #757575;
         background-color: transparent;
-        font-size: 16 / 32 * 1rem;
+        font-size: font__px-to-rem( 16 );
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           margin: {
-            left: 2.3rem;
-            right: 2.3rem;
+            left: font__px-to-rem( 70 );
+            right: font__px-to-rem( 70 );
           }
         }
       }

@@ -1,0 +1,57 @@
+@import 'components/common/font';
+
+// component
+// `> .legend > .legend__icon.icon`
+@mixin legend__icon () {
+  // element
+  // `> .legend > .legend__icon`
+  // block
+  // `> .legend > .icon`
+  > .legend__icon.icon {
+    // [ layout ]
+    display: inline-block;
+
+    // [ skin ]
+    width: font__px-to-rem( 45 );
+    height: font__px-to-rem( 45 );
+
+    // modifier
+    // `> .legend > .icon.icon--blue`
+    &.icon--blue {
+      // element
+      // `> .legend > .icon.icon--blue > .icon__circle`
+      > .icon__circle {
+        // [ skin ]
+        fill: #399dff;
+      }
+
+      // element
+      // `> .legend > .icon.icon--blue > .icon__spike`
+      > .icon__spike {
+        // [ skin ]
+        fill: #399dff;
+      }
+    }
+
+    // modifier
+    // `> .legend > .icon.icon--red`
+    &.icon--red {
+      // element
+      // `> .legend > .icon.icon--red > .icon__circle`
+      > .icon__circle {
+        // [ skin ]
+        fill: #ea6d55;
+      }
+
+      // element
+      // `> .legend > .icon.icon--red > .icon__spike`
+      > .icon__spike {
+        // [ skin ]
+        fill: #ea6d55;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

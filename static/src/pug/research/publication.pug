@@ -4,10 +4,18 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title': 'Publications',
+        title: 'Publications',
+        breadcrumb: {
+          home:     'Home',
+          research: 'Research',
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title': '發表著作',
+        title: '發表著作',
+        breadcrumb: {
+          home:     '首頁',
+          research: '學術研究',
+        },
       },
     } );
     const currentRoute = 'research/publication';
@@ -19,6 +27,20 @@ append stylesheets
   +css( 'research/publication' )
 
 append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/not-available.pug

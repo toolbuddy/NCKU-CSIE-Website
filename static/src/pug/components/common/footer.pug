@@ -2,21 +2,21 @@ mixin footer( belongBlock )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'contact': {
-          'title':    'Contact Us',
-          'address':  'No.1, Daxue Rd., East Dist., Tainan City 701, Taiwan (R.O.C.)',
-          'map': 'Department Location'
+        contact: {
+          title:   'Contact Us',
+          address: 'No.1, Daxue Rd., East Dist., Tainan City 701, Taiwan (R.O.C.)',
+          map:     'Department Location',
         },
-        'follow':     'Follow us'
+        follow: 'Follow us',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'contact': {
-          'title':    '聯絡我們',
-          'address':  '70101 台南市東區大學路一號',
-          'nap': '系館位置圖'
+        contact: {
+          title:   '聯絡我們',
+          address: '70101 台南市東區大學路一號',
+          map:     '系館位置圖',
         },
-        'follow':     '關注我們'
-      }
+        follow: '關注我們',
+      },
     } );
 
   footer.footer( class = `${ belongBlock }__footer` )

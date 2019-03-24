@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header-base';
 @import 'components/common/header-small';
 @import 'components/common/header-medium';
@@ -7,7 +8,7 @@
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
 @import 'components/announcement/tags';
-@import 'components/announcement/announcement';
+@import 'components/announcement/announcement-detail';
 @import '~thirdPartyLib/github-markdown-css/github-markdown.css';
 
 // block
@@ -29,13 +30,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'announcement/detail' );
 
   // element
   // `.body > .body__content`
@@ -49,28 +44,46 @@
 
     // [ layout ]
     display: grid;
-    grid-template: {
-      areas:
-          '. announcement .';
-      columns: 5% 1fr 5%;
+    grid: {
+      row-gap: font__px-to-rem( 32 );
+      template: {
+        areas:
+          '. .            .'
+          '. breadcrumb   .'
+          '. announcement .'
+          '. .            .';
+        columns: 5% 90% 5%;
+      }
     };
+
+    // [ skin ]
+    background-color: #ffffff;
 
     // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
       // [ layout ]
-      grid-template-columns: 10% 1fr 10%;
+      grid-template-columns: 10% 80% 10%;
     }
 
     // [ RWD: $medium ]
     @media screen and ( min-width: $medium ) {
       // [ layout ]
-      grid-template-columns: 15% 1fr 15%;
+      grid-template-columns: 15% 70% 15%;
     }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid-template-columns: 1fr 31.81rem 1fr;
+      grid-template-columns: 1fr font__px-to-rem( 950 ) 1fr;
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
     }
 
     // block
@@ -101,7 +114,7 @@
         type: circle;
         position: inside;
       }
-      margin-left: 15 / 32 * 1rem;
+      margin-left: font__px-to-rem( 15 );
     }
 
     ol ol, ul ol {
@@ -109,7 +122,7 @@
         type: lower-latin;
         position: inside;
       }
-      margin-left: 15 / 32 * 1rem;
+      margin-left: font__px-to-rem( 15 );
     }
   }
 

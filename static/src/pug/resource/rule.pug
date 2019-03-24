@@ -4,34 +4,35 @@ append data
   -
     const i18n =  Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title':      'Rule',
-        'topic':      'Rule',
-        'time':   {
-          'from': 'Start Date',
-          'to':   'End Date',
+        title:      'Rule',
+        topic:      'Rule',
+        time:   {
+          from: 'Start Date',
+          to:   'End Date',
         },
-        'pinned':     'Pinned Announcement',
-        'normal':     'Announcement',
-        'breadcrumb': {
-          'home':     'Home',
-          'resource': 'Resource',
+        pinned:     'Pinned Announcement',
+        normal:     'Announcement',
+        breadcrumb: {
+          home:     'Home',
+          resource: 'Resource',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title':      '法規彙編',
-        'topic':      '法規彙編',
-        'time':   {
-          'from': '開始日期',
-          'to':   '結束日期',
+        title:      '法規彙編',
+        topic:      '法規彙編',
+        time:   {
+          from: '開始日期',
+          to:   '結束日期',
         },
-        'pinned':     '置頂貼文',
-        'normal':     '一般公告',
-        'breadcrumb': {
-          'home':     '首頁',
-          'resource': '資源連結',
+        pinned:     '置頂貼文',
+        normal:     '一般公告',
+        breadcrumb: {
+          home:     '首頁',
+          resource: '資源連結',
         },
       },
     } );
+
     const tags = [
         'rule',
         'college',
@@ -39,6 +40,7 @@ append data
         'phd',
         'faculty',
     ].map( tag => allTags[ tag ] );
+
     const currentRoute = 'resource/rule';
 
 append title
@@ -52,8 +54,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },

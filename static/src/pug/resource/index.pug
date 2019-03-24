@@ -4,11 +4,11 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title':      'Resource',
-        'breadcrumb': {
-          'home':     'Home',
+        title:      'Resource',
+        breadcrumb: {
+          home:     'Home',
         },
-        'entries': [
+        entries: [
           {
             title: 'Rule',
             detail: 'Rules of department, graduation requirements and documents',
@@ -48,11 +48,11 @@ append data
         ],
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title':      '資源連結',
-        'breadcrumb': {
-          'home':     '首頁',
+        title:      '資源連結',
+        breadcrumb: {
+          home:     '首頁',
         },
-        'entries': [
+        entries: [
           {
             title: '法規彙編',
             detail: '系所規範、畢業辦法與表單文件',
@@ -105,8 +105,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].title },

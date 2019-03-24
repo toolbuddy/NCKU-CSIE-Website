@@ -4,31 +4,31 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title':     'Master',
-        'topic':     'Master',
-        'time':   {
-          'from': 'Start Date',
-          'to':   'End Date',
+        title:     'Master',
+        topic:     'Master',
+        time:   {
+          from: 'Start Date',
+          to:   'End Date',
         },
-        'pinned':    'Pinned Announcement',
-        'normal':    'Announcement',
-        'breadcrumb': {
-          'home':    'Home',
-          'student': 'Student',
+        pinned:    'Pinned Announcement',
+        normal:    'Announcement',
+        breadcrumb: {
+          home:    'Home',
+          student: 'Student',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title':     '碩士',
-        'topic':     '碩士',
-        'time':   {
-          'from': '開始日期',
-          'to':   '結束日期',
+        title:     '碩士',
+        topic:     '碩士',
+        time:   {
+          from: '開始日期',
+          to:   '結束日期',
         },
-        'pinned':    '置頂貼文',
-        'normal':    '一般公告',
-        'breadcrumb': {
-          'home':    '首頁',
-          'student': '學生事務',
+        pinned:    '置頂貼文',
+        normal:    '一般公告',
+        breadcrumb: {
+          home:    '首頁',
+          student: '學生事務',
         },
       },
     } );
@@ -57,8 +57,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },

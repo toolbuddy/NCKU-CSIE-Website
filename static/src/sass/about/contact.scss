@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header-base';
 @import 'components/common/header-small';
 @import 'components/common/header-medium';
@@ -12,7 +13,7 @@
 // `.body`
 .body {
   // [ skin ]
-  background-color: #f2f4f7;
+  background-color: #ffffff;
 
   // element
   // `.body > .body__header`
@@ -27,13 +28,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'about/contact' );
 
   // element
   // `.body > .body__content`
@@ -49,25 +44,27 @@
     grid: {
       template: {
         areas:
-          '. .     .'
-          '. map   .'
-          '. drive .'
-          '. train .'
-          '. thsr  .'
-          '. .     .';
+          '. .          .'
+          '. breadcrumb .'
+          '. map        .'
+          '. drive      .'
+          '. train      .'
+          '. thsr       .'
+          '. .          .';
         columns: 1fr 13fr 1fr;
-        rows: .5rem 15rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
+        rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
       }
-      row-gap: 1rem;
+      row-gap: font__px-to-rem( 32 );
     };
 
     // [ skin ]
     width: 100%;
+    background-color: #f2f4f7;
 
     // [ RWD: $small ]
     @media screen and ( min-width: $small ) {
       // [ layout ]
-      grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
+      grid-template-rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
     }
 
     // [ RWD: $large ]
@@ -77,18 +74,27 @@
       grid: {
         template: {
           areas:
-            '.  .   .     .'
-            '.  map drive .'
-            '.  map train .'
-            '.  map thsr  .'
-            '.  map .     .'
-            '.  .   .     .';
+            '.  .          .          .'
+            '.  breadcrumb breadcrumb .'
+            '.  map        drive      .'
+            '.  map        train      .'
+            '.  map        thsr       .'
+            '.  .          .          .';
           columns: 1fr 6fr 4fr 1fr;
-          rows: 1.6rem repeat( 3, minmax( auto, min-content ) ) 1rem 3.125rem;
+          rows: font__px-to-rem( 32 ) repeat( 4, minmax( auto, min-content ) ) font__px-to-rem( 100 );
         }
-        column-gap: 2rem;
-        row-gap: 0;
+        column-gap: font__px-to-rem( 64 );
+        row-gap: font__px-to-rem( 32 );
       };
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
     }
 
     // element
@@ -98,6 +104,15 @@
     > .content__map.map {
       // [ position ]
       grid-area: map;
+
+      // [ skin ]
+      min-height: font__px-to-rem( 480 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        min-height: font__px-to-rem( 640 );
+      }
     }
 
     // element
@@ -105,6 +120,12 @@
     // block
     // `.body > .content > .traffic`
     > .content__traffic.traffic {
+      // element
+      // `.body > .content > .content__traffic`
+      // block
+      // `.body > .content > .traffic`
+      @include topic( $block: 'traffic' );
+
       // template
       // `.body > .content > .traffic.traffic--?`
       &.traffic-- {
@@ -130,81 +151,32 @@
         }
       }
 
+      > .traffic__direction {
+        // [ layout ]
+        display: inline-block;
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 14 ) * 1.2;
+
+        // [ skin ]
+        border: solid font__px-to-rem( 1 ) #adacad;
+        border-radius: font__px-to-rem( 3 );
+        padding: font__px-to-rem( 3 );
+        color: #adacad;
+        font: {
+          size: font__px-to-rem( 14 );
+          weight: bold;
+        }
+      }
+
       // element
       // `.body > .content > .traffic > .traffic__text.`
       > .traffic__text {
-        // template
-        // `.body > .content > .traffic > .traffic__text.traffic__text--?`
-        &.traffic__text-- {
-          // modifier
-          // `.body > .content > .traffic > .traffic__text.traffic__text--information`
-          &information {
-            // [ skin ]
-            font-size: .5rem;
-          }
+        // [ layout ]
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 16 ) * 1.2;
 
-          // modifier
-          // `.body > .content > .traffic > .traffic__text.traffic__text--title`
-          &title {
-            // [ layout ]
-            display: inline;
-
-            // [ skin ]
-            border-bottom: solid .0156rem #213262;
-            padding-bottom: .3rem;
-            font: {
-              size: .75rem;
-              weight: bold;
-            }
-
-            // [ before ]
-            &::before {
-              // [ layout ]
-              display: block;
-              margin-top: 1.5625rem;
-
-              // [ skin ]
-              content: '';
-            }
-
-            // [ after ]
-            &::after {
-              // [ layout ]
-              display: block;
-              margin-top: 1.5938rem;
-
-              // [ skin ]
-              content: '';
-            }
-          }
-
-          // modifier
-          // `.body > .content > .traffic > .traffic__text.traffic__text--direction`
-          &direction {
-            // [ layout ]
-            display: inline-block;
-            margin: {
-              top: .9688rem;
-              bottom: .4688rem;
-            }
-
-            // [ skin ]
-            border: solid .0313rem #adacad;
-            border-radius: .0938rem;
-            padding: .1rem;
-            color: #adacad;
-            font: {
-              size: .4375rem;
-              weight: bold;
-            }
-
-            // [ first-of-type ]
-            &:first-of-type {
-              // [ layout ]
-              margin-top: 0;
-            }
-          }
-        }
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
       }
     }
   }

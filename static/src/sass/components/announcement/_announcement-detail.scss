@@ -1,3 +1,4 @@
+@import 'components/common/font';
 @import 'components/common/icon';
 
 // component
@@ -16,44 +17,40 @@
     display: grid;
     grid: {
       template-areas:
-        '. .                         .'
-        '. announcement__headline    .'
-        '. announcement__title       .'
-        '. announcement__article     .'
-        '. announcement__attachments .'
-        '. .                         .';
-      row-gap: .5rem;
+        'announcement__headline'
+        'announcement__image'
+        'announcement__article'
+        'announcement__attachments';
+      row-gap: font__px-to-rem( 32 );
     };
-
-    // [ skin ]
-    font-size: .5rem;
 
     // element
     // `> .#{ $block } > .announcement > .announcement__headline`
     // block
     // `> .#{ $block } > .announcement > .headline`
     > .announcement__headline.headline {
-      // [ position ]
-      grid-area: announcement__headline;
+      grid: {
+        // [ position ]
+        area: announcement__headline;
 
-      // [ layout ]
-      display: grid;
-      grid-template: {
-        areas:
-          'headline__tags'
-          'headline__title'
-          'headline__announcer'
-          'headline__time';
-        columns: auto;
+        // [ layout ]
+        row-gap: font__px-to-rem( 10 );
+        template: {
+          areas:
+            'headline__tags'
+            'headline__title'
+            'headline__announcer'
+            'headline__time';
+          columns: 1fr;
+        }
       }
+      display: grid;
 
       // [ skin ]
-      border-radius: .2rem;
-      padding: .4rem;
+      border-radius: font__px-to-rem( 6 );
+      padding: font__px-to-rem( 12 );
       background-color: #ffffff;
-      color: #b5babf;
-      box-shadow: 0 .0625rem .75rem 0 #dbdbdb, 0 .25rem .313rem 0 #cccccc;
-      font-size: .4375rem;
+      box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 24 ) 0 #dbdbdb, 0 font__px-to-rem( 8 ) font__px-to-rem( 10 ) 0 #cccccc;
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
@@ -61,6 +58,9 @@
         grid-template-areas:
           'headline__tags  headline__announcer'
           'headline__title headline__time';
+
+        // [ skin ]
+        padding: font__px-to-rem( 24 );
       }
 
       // element
@@ -70,15 +70,6 @@
       @include tags( 'headline' ) {
         // [ position ]
         grid-area: headline__tags;
-
-        // [ layout ]
-        display: block;
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ skin ]
-          font-size: .4375rem;
-        }
       }
 
       // element
@@ -87,10 +78,16 @@
         // [ position ]
         grid-area: headline__title;
 
+        // [ layout ]
+        display: block;
+        line-height: font__px-to-rem( 16 ) * 1.2;
+
         // [ skin ]
-        padding-bottom: .5rem;
         color: #000000;
-        font-size: .5rem;
+        font: {
+          size: font__px-to-rem( 16 );
+          weight: bold;
+        }
       }
 
       // element
@@ -98,6 +95,14 @@
       > .headline__announcer {
         // [ position ]
         grid-area: headline__announcer;
+
+        // [ layout ]
+        display: block;
+        line-height: font__px-to-rem( 14 );
+
+        // [ skin ]
+        color: #b5babf;
+        font-size: font__px-to-rem( 14 );
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
@@ -113,27 +118,34 @@
         // [ position ]
         grid-area: headline__time;
 
+        // [ layout ]
+        display: block;
+        line-height: font__px-to-rem( 14 );
+
+        // [ skin ]
+        color: #b5babf;
+        font-size: font__px-to-rem( 14 );
+
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ position ]
           justify-self: end;
           align-self: end;
-
-          // [ skin ]
-          margin-bottom: .3rem;
         }
       }
     }
 
     // element
-    // `> .#{ $block } > .announcement > .announcement__title`
-    > .announcement__title {
+    // `> .#{ $block } > .announcement > .announcement__image`
+    > .announcement__image {
       // [ position ]
-      grid-area: announcement__title;
+      grid-area: announcement__image;
 
       // [ skin ]
-      margin-top: .7rem;
-      font-size: .5rem;
+      padding: {
+        left: font__px-to-rem( 10 );
+        right: font__px-to-rem( 10 );
+      }
     }
 
     // element
@@ -144,10 +156,9 @@
 
       // [ skin ]
       padding: {
-        left: .3rem;
-        right: .3rem;
+        left: font__px-to-rem( 10 );
+        right: font__px-to-rem( 10 );
       }
-      line-height: .75rem;
     }
 
     // element
@@ -158,8 +169,8 @@
       // [ layout ]
       display: grid;
       grid: {
-        template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
-        gap: .625rem;
+        template-columns: repeat( auto-fit, minmax( font__px-to-rem( 256 ), 1fr ) );
+        gap: font__px-to-rem( 20 );
 
         // [ position ]
         area: announcement__attachments;
@@ -175,29 +186,30 @@
         align-self: start;
 
         // [ skin ]
-        border-radius: .09rem;
-        padding: .625rem .9375rem;
+        border-radius: font__px-to-rem( 4 );
+        padding: font__px-to-rem( 20 ) font__px-to-rem( 30 );
         background-color: #6982c0;
-        box-shadow: 0 .0625rem 0625rem 0 #7c79ad;
+        font-size: font__px-to-rem( 16 );
+        box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 2 ) 0 #7c79ad;
 
         // [ before ]
         &::before {
           // [ layout ]
           display: inline-block;
+          margin: {
+            right: font__px-to-rem( 16 );
+            bottom: font__px-to-rem( -1 );
+          }
 
           // [ skin ]
-          content: '';
-          margin: {
-            right: .5rem;
-            bottom: -.03rem;
-          }
-          width: .5rem;
-          height: .5rem;
+          width: font__px-to-rem( 16 );
+          height: font__px-to-rem( 16 );
           background: {
             position: center;
             repeat: no-repeat;
             size: cover;
           }
+          content: '';
 
           // [ icon ]
           @include icon__download();

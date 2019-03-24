@@ -9,7 +9,7 @@
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/announcement/filter';
-@import 'components/announcement/announcement-briefing';
+@import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
 
 // block
@@ -31,13 +31,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'announcement/all' );
 
   // element
   // `.body > .body__content`
@@ -53,16 +47,16 @@
     grid: {
       row-gap: font__px-to-rem( 38 );
       template: {
-        columns: 1fr;
+        columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
         areas:
-          'filter'
-          'topic'
-          'announcement--pinned'
-          'announcement--normal'
-          'pages';
+          '. breadcrumb           .'
+          '. filter               .'
+          '. topic                .'
+          '. announcement--pinned .'
+          '. announcement--normal .'
+          '. pages                .';
       }
     }
-    margin: 0 auto;
 
     // [ skin ]
     padding: {
@@ -71,17 +65,24 @@
       left: font__px-to-rem( 16 );
       right: font__px-to-rem( 16 );
     }
-    max-width: font__px-to-rem( 950 );
+    background-color: #ffffff;
 
     // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
+    @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid-template-areas:
-        'topic'
-        'filter'
-        'announcement--pinned'
-        'announcement--normal'
-        'pages';
+      grid: {
+        row-gap: font__px-to-rem( 60 );
+        template: {
+          columns: 1fr font__px-to-rem( 950 ) 1fr;
+          areas:
+            '. breadcrumb           .'
+            '. topic                .'
+            '. filter               .'
+            '. announcement--pinned .'
+            '. announcement--normal .'
+            '. pages                .';
+        }
+      }
     }
 
     // [ RWD: $large ]
@@ -93,6 +94,15 @@
         left: 0;
         right: 0;
       }
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
     }
 
     // element

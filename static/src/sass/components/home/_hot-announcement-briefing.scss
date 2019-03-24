@@ -38,13 +38,10 @@
       // [ layout ]
       display: block;
       text-align: center;
+      line-height: font__px-to-rem( 22 );
 
       // [ skin ]
-      font: {
-        size: font__px-to-rem( 22 );
-        style: normal;
-        weight: normal;
-      }
+      font-size: font__px-to-rem( 22 );
     }
 
     // element
@@ -118,14 +115,11 @@
           // [ position ]
           grid-area: briefing__index;
           justify-self: end;
+          line-height: font__px-to-rem( 24 );
 
           // [ skin ]
           color: #adacad;
-          font: {
-            size: font__px-to-rem( 24 );
-            style: normal;
-            weight: normal;
-          }
+          font-size: font__px-to-rem( 24 );
         }
 
         // element
@@ -140,14 +134,11 @@
             wrap: break-word;
             break: break-all;
           }
+          line-height: font__px-to-rem( 16 ) * 1.2;
 
           // [ skin ]
           color: #000000;
-          font: {
-            size: font__px-to-rem( 16 );
-            style: normal;
-            weight: normal;
-          }
+          font-size: font__px-to-rem( 16 );
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
@@ -166,15 +157,12 @@
           display: none;
           overflow: hidden;
           margin-bottom: font__px-to-rem( 10 );
+          line-height: font__px-to-rem( 14 ) * 1.5;
           white-space: nowrap;
 
           // [ skin ]
           color: #000000;
-          font: {
-            size: font__px-to-rem( 14 );
-            style: normal;
-            weight: normal;
-          }
+          font-size: font__px-to-rem( 14 );
           text-overflow: ellipsis;
 
           // [ RWD: $large ]
@@ -193,14 +181,11 @@
 
           // [ layout ]
           display: inline-block;
+          line-height: font__px-to-rem( 14 ) * 1.2;
 
           // [ skin ]
           color: #888888;
-          font: {
-            size: font__px-to-rem( 14 );
-            style: normal;
-            weight: normal;
-          }
+          font-size: font__px-to-rem( 14 );
         }
 
         // element
@@ -212,14 +197,11 @@
 
           // [ layout ]
           display: inline-block;
+          line-height: font__px-to-rem( 14 ) * 1.2;
 
           // [ skin ]
           color: #b5babf;
-          font: {
-            size: font__px-to-rem( 14 );
-            style: normal;
-            weight: normal;
-          }
+          font-size: font__px-to-rem( 14 );
         }
       }
     }

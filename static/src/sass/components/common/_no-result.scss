@@ -54,11 +54,7 @@
       width: auto;
       height: font__px-to-rem( 16 );
       color: #adacad;
-      font: {
-        size: font__px-to-rem( 16 );
-        style: normal;
-        weight: normal;
-      }
+      font-size: font__px-to-rem( 16 );
     }
 
     // element
@@ -89,11 +85,7 @@
 
         // [ skin ]
         color: #adacad;
-        font: {
-          size: font__px-to-rem( 16 );
-          style: normal;
-          weight: normal;
-        }
+        font-size: font__px-to-rem( 16 );
       }
 
       // element

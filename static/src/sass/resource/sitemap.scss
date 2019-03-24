@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/font';
 @import 'components/common/header-base';
 @import 'components/common/header-small';
 @import 'components/common/header-medium';
@@ -26,13 +27,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'https://via.placeholder.com/1920x500' );
-
-  // element
-  // `.body > .body__breadcrumb`
-  // block
-  // `.body > .breadcrumb`
-  @include breadcrumb( $block: 'body' );
+  @include banner( $block: 'body', $image: 'resource/sitemap' );
 
   // element
   // `.body > .body__content`
@@ -45,33 +40,52 @@
 
     // [ layout ]
     display: grid;
-    grid-template: {
-      columns: 1fr 80% 1fr;
-      areas: '. sitemap__link .';
+    grid: {
+      row-gap: font__px-to-rem( 32 );
+      template: {
+        columns: 1fr 80% 1fr;
+        areas:
+          '. .             .'
+          '. breadcrumb    .'
+          '. sitemap__link .'
+          '. .             .';
+      }
     }
 
     // [ skin ]
-    margin: 4rem 0;
+    background-color: #ffffff;
 
     // [ RWD: $small ]
     @media screen and( min-width: $small ) {
-      grid-template: {
-        columns: 1fr 80% 1fr;
-        areas: '. sitemap__link .';
-      }
+      // [ layout ]
+      grid-template-columns: 1fr 80% 1fr;
     }
 
     // [ RWD: $large ]
     @media screen and( min-width: $large ) {
+      // [ layout ]
       grid-template: {
-        areas: '. sitemap__logo sitemap__link .';
+        areas:
+          '. .             .             .'
+          '. breadcrumb    breadcrumb    .'
+          '. sitemap__logo sitemap__link .'
+          '. .             .             .';
         columns: 1fr 22% 72% 1fr;
       }
     }
 
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+    }
+
     // block
     // `.body > .content > .logo`
-    > .logo {
+    > .content__logo.logo {
       // [ position ]
       grid-area: sitemap__logo;
 
@@ -80,6 +94,7 @@
 
       // [ RWD: $large ]
       @media screen and( min-width: $large ) {
+        // [ layout ]
         display: grid;
       }
 
@@ -90,7 +105,7 @@
         justify-self: center;
 
         // [ skin ]
-        width: 4.9063rem;
+        width: font__px-to-rem( 158 );
       }
 
       // element
@@ -98,28 +113,30 @@
       // block
       // `.body > .logo > .caption`
       > .logo__caption.caption {
-        // [ skin ]
-        margin-top: 9%;
-
         // element
         // `.body > .logo > .caption > .caption__text`
         > .caption__text {
-          // [ skin ]
+          // [ layout ]
           text-align: center;
 
           // modifier
           // `.body > .logo > .caption > .caption__text.caption__text--large`
           &.caption__text--large {
-            font-size: .75rem;
+            // [ layout ]
+            line-height: font__px-to-rem( 24 ) * 1.2;
+
+            // [ skin ]
+            font-size: font__px-to-rem( 24 );
           }
 
           // modifier
           // `.body > .logo > .caption > .caption__text.caption__text--small`
           &.caption__text--small {
-            font: {
-              weight: normal;
-              size: .5rem;
-            }
+            // [ layout ]
+            line-height: font__px-to-rem( 16 ) * 1.2;
+
+            // [ skin ]
+            font-size: font__px-to-rem( 16 );
           }
         }
       }
@@ -127,7 +144,7 @@
 
     // block
     // `.body > .content > .sitemap`
-    > .sitemap {
+    > .content__sitemap.sitemap {
       grid: {
         // [ position ]
         area: sitemap__link;
@@ -162,10 +179,7 @@
           'sitemap__link--resource';
       }
       display: grid;
-
-      // [ skin ]
       text-align: center;
-      font-size: .5625rem;
 
       // [ RWD: $small ]
       @media screen and( min-width: $small ) {
@@ -210,20 +224,22 @@
       // element
       // `.body > .content > .sitemap > .sitemap__hr`
       > .sitemap__hr {
-        // [ layout ]
+        // [ position ]
         grid-area: sitemap__hr;
 
-        // [ position ]
+        // [ layout ]
         display: none;
+        margin: 3% font__px-to-rem( 10 );
 
         // [ skin ]
-        margin: 3% .3125rem;
-        border: {
-          top: .0313rem solid #aaaaaa;
-          bottom: .0313rem solid #aaaaaa;
-        }
-        height: .0625rem;
         width: 95%;
+        height: font__px-to-rem( 2 );
+        border: {
+          top-width: font__px-to-rem( 1 );
+          bottom-width: font__px-to-rem( 1 );
+          color: #aaaaaa;
+          style: solid;
+        }
 
         // [ RWD: $small ]
         @media screen and( min-width: $small ) {
@@ -235,15 +251,16 @@
       // element
       // `.body > .content > .sitemap > .sitemap__title`
       > .sitemap__title {
+        // [ layout ]
+        line-height: font__px-to-rem( 24 ) * 1.5;
+        letter-spacing: normal;
+
         // [ skin ]
         color: #213262;
         font: {
-          size: .75rem;
+          size: font__px-to-rem( 24 );
           weight: bold;
-          style: normal;
         };
-        line-height: normal;
-        letter-spacing: normal;
 
         // template
         // `.body > .content > .sitemap > .sitemap__title.sitemap__title--`
@@ -294,145 +311,155 @@
 
       // template
       // `.body > .content > .sitemap > .sitemap__link.sitemap__link--
-      > .sitemap__link.sitemap__link-- {
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--home
-        &home {
-          // [ position ]
-          grid-area: sitemap__link--home;
-        }
+      > .sitemap__link {
+        // [ layout ]
+        line-height: font__px-to-rem( 18 ) * 1.5;
+        letter-spacing: normal;
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--intro
-        &intro {
-          // [ position ]
-          grid-area: sitemap__link--intro;
-        }
+        // [ skin ]
+        color: #000000;
+        font-size: font__px-to-rem( 18 );
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
-        &faculty {
-          // [ position ]
-          grid-area: sitemap__link--faculty;
-        }
+        &.sitemap__link-- {
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--home
+          &home {
+            // [ position ]
+            grid-area: sitemap__link--home;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--staff
-        &staff {
-          // [ position ]
-          grid-area: sitemap__link--staff;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--intro
+          &intro {
+            // [ position ]
+            grid-area: sitemap__link--intro;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--award
-        &award {
-          // [ position ]
-          grid-area: sitemap__link--award;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--faculty
+          &faculty {
+            // [ position ]
+            grid-area: sitemap__link--faculty;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--contact
-        &contact {
-          // [ position ]
-          grid-area: sitemap__link--contact;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--staff
+          &staff {
+            // [ position ]
+            grid-area: sitemap__link--staff;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--lab
-        &lab {
-          // [ position ]
-          grid-area: sitemap__link--lab;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--award
+          &award {
+            // [ position ]
+            grid-area: sitemap__link--award;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--groups
-        &groups {
-          // [ position ]
-          grid-area: sitemap__link--group;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--contact
+          &contact {
+            // [ position ]
+            grid-area: sitemap__link--contact;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publications
-        &publications {
-          // [ position ]
-          grid-area: sitemap__link--publication;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--lab
+          &lab {
+            // [ position ]
+            grid-area: sitemap__link--lab;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--course
-        &course {
-          // [ position ]
-          grid-area: sitemap__link--course;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--groups
+          &groups {
+            // [ position ]
+            grid-area: sitemap__link--group;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--college
-        &college {
-          // [ position ]
-          grid-area: sitemap__link--college;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publications
+          &publications {
+            // [ position ]
+            grid-area: sitemap__link--publication;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--master
-        &master {
-          // [ position ]
-          grid-area: sitemap__link--master;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--course
+          &course {
+            // [ position ]
+            grid-area: sitemap__link--course;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--phd
-        &phd {
-          // [ position ]
-          grid-area: sitemap__link--phd;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--college
+          &college {
+            // [ position ]
+            grid-area: sitemap__link--college;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
-        &scholarship {
-          // [ position ]
-          grid-area: sitemap__link--scholar;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--master
+          &master {
+            // [ position ]
+            grid-area: sitemap__link--master;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--international
-        &international {
-          // [ position ]
-          grid-area: sitemap__link--exchange;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--phd
+          &phd {
+            // [ position ]
+            grid-area: sitemap__link--phd;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--internship
-        &internship {
-          // [ position ]
-          grid-area: sitemap__link--intern;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
+          &scholarship {
+            // [ position ]
+            grid-area: sitemap__link--scholar;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--all
-        &all {
-          // [ position ]
-          grid-area: sitemap__link--all;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--international
+          &international {
+            // [ position ]
+            grid-area: sitemap__link--exchange;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--activity
-        &activity {
-          // [ position ]
-          grid-area: sitemap__link--activity;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--internship
+          &internship {
+            // [ position ]
+            grid-area: sitemap__link--intern;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
-        &recruitment {
-          // [ position ]
-          grid-area: sitemap__link--recruit;
-        }
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--all
+          &all {
+            // [ position ]
+            grid-area: sitemap__link--all;
+          }
 
-        // modifier
-        // `.body > .content > .sitemap > .sitemap__link.sitemap__link--resource
-        &resource {
-          // [ position ]
-          grid-area: sitemap__link--resource;
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--activity
+          &activity {
+            // [ position ]
+            grid-area: sitemap__link--activity;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link-recruitment
+          &recruitment {
+            // [ position ]
+            grid-area: sitemap__link--recruit;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--resource
+          &resource {
+            // [ position ]
+            grid-area: sitemap__link--resource;
+          }
         }
       }
     }

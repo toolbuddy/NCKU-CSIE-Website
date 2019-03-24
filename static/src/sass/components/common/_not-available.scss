@@ -1,3 +1,5 @@
+@import 'components/common/font';
+
 // component
 // `.#{ $block } > .#{ $block }__not-available.not-available`
 @mixin not-available ( $block ) {
@@ -62,15 +64,19 @@
       // [ position ]
       grid-area: not-available__text;
 
-      // [ skin ]
+      // [ layout ]
+      display: block;
       text-align: center;
+      line-height: font__px-to-rem( 36 ) * 1.2;
       word-spacing: 100vw;
-      font-size: 1.125rem;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 36 );
       color: #757575;
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
-        word-spacing: .3125rem;
+        word-spacing: font__px-to-rem( 10 );
       }
     }
 
@@ -80,10 +86,14 @@
       // [ position ]
       grid-area: not-available__link;
 
-      // [ skin ]
+      // [ layout ]
+      display: block;
       text-align: center;
-      font-size: 1.125rem;
+      line-height: font__px-to-rem( 36 ) * 1.2;
+
+      // [ skin ]
       color: #399dff;
+      font-size: font__px-to-rem( 36 );
     }
 
     // [ customization ]

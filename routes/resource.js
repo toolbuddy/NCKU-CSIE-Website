@@ -27,7 +27,10 @@ const router = express.Router( {
  */
 
 router
-.route( '/' )
+.route( [
+    '/',
+    '/index',
+] )
 .get( staticHtml( 'resource/index' ) );
 
 /**

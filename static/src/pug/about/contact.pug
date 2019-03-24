@@ -106,8 +106,10 @@ append header
     'body',
     i18n[ LANG.id ].title
   )
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
@@ -116,30 +118,32 @@ append header
   )
 
 append content
+  include /components/common/topic.pug
+
   section#map.content__map.map
+
   section.content__traffic.traffic.traffic--drive
-    //- Header.
-    h2.traffic__text.traffic__text--title= i18n[ LANG.id ].drive.title
+    +topic( 'traffic', i18n[ LANG.id ].drive.title )
+
     //- Information of driving from north to south.
-    p.traffic__text.traffic__text--direction= i18n[ LANG.id ].drive.south.title
+    aside.traffic__direction= i18n[ LANG.id ].drive.south.title
     each info in i18n[ LANG.id ].drive.south.content
-      p.traffic__text.traffic__text--information= info
+      article.traffic__text= info
+
     //- Information of driving from south to north.
-    p.traffic__text.traffic__text--direction= i18n[ LANG.id ].drive.north.title
+    aside.traffic__direction= i18n[ LANG.id ].drive.north.title
     each info in i18n[ LANG.id ].drive.north.content
-      p.traffic__text.traffic__text--information= info
+      article.traffic__text= info
+
   section.content__traffic.traffic.traffic--train
-    //- Header.
-    h2.traffic__text.traffic__text--title= i18n[ LANG.id ].train.title
-    //- Metro information.
+    +topic( 'traffic', i18n[ LANG.id ].train.title )
     each info in i18n[ LANG.id ].train.content
-      p.traffic__text.traffic__text--information= info
+      article.traffic__text= info
+
   section.content__traffic.traffic.traffic--thsr
-    //- Header.
-    h2.traffic__text.traffic__text--title= i18n[ LANG.id ].thsr.title
-    //- Metro information.
+    +topic( 'traffic', i18n[ LANG.id ].thsr.title )
     each info in i18n[ LANG.id ].thsr.content
-      p.traffic__text.traffic__text--information= info
+      article.traffic__text= info
 
 append footer
 
