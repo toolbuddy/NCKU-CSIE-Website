@@ -33,6 +33,7 @@
 
     // [ layout ]
     display: grid;
+    padding-top: font__px-to-rem( 143 );
     grid-template: {
       areas:
         '. .                .'
@@ -57,6 +58,22 @@
         columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
       }
       align-items: start;
+    }
+    @media screen and ( min-width: 321px ) {
+      // [ layout ]
+      padding-top: font__px-to-rem( 199 );
+    }
+    @media screen and ( min-width: 360px ) {
+      // [ layout ]
+      padding-top: font__px-to-rem( 187 );
+    }
+    @media screen and ( min-width: 561px ) {
+      // [ layout ]
+      padding-top: font__px-to-rem( 96 );
+    }
+    @media screen and ( min-width: 1201px ) {
+      // [ layout ]
+      padding-top: font__px-to-rem( 70 );
     }
 
     // element

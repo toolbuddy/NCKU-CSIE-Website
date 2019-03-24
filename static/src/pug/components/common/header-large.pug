@@ -1,0 +1,69 @@
+mixin header--large( belongBlock )
+  include /components/common/header-i18n.pug
+  include /components/common/header-router.pug
+  include /components/common/image.pug
+  - const i18n = headerI18n();
+
+  header.header.header--large( class = `${ belongBlock }__header header--active` )
+    //- Logo
+    a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
+      +image( {
+        alt:       'csie',
+        className: 'logo__image',
+        src:       'logo/csie-small.png',
+      } )
+    //- Caption
+    section.header__caption.caption
+      article.caption__title.title
+        span.title__text 成功大學
+        span.title__text 資訊工程學系
+        span.title__text 暨
+        span.title__text 研究所
+      article.caption__subtitle.subtitle
+        span.subtitle__text Department
+        span.subtitle__text of
+        span.subtitle__text Computer Science
+        span.subtitle__text and
+        span.subtitle__text Information Engineering
+    //- Navigation Bar
+    nav.header__navigation.navigation
+      //- All routes
+      +navigation__list
+
+    section.header__functions.functions
+      aside.functions__right.right
+        //- Login
+        a.right__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
+
+        //- Search, currently not available
+        scetion.right__search.search
+          button.search__button.button
+            +image( {
+              alt: i18n[ LANG.id ].home.search.text,
+              className: 'button__image',
+              src:       'icon/search.png',
+            } )
+          section.search__dropdown.dropdown
+            form.dropdown__form.form( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
+              input.form__hidden( type = 'hidden', value = LANG.id, name = 'language' )
+              input.form__input( type = 'text', placeholder = i18n[ LANG.id ].home.search.text, name = 'searchText', value = '' )
+              input.form__submit( type = 'submit', value = '' )
+            button.dropdown__cancel ✕
+
+        //-language
+        section.right__language.language
+          button.language__button.button
+            +image( {
+              alt:       i18n[ LANG.id ].language,
+              className: 'button__image',
+              src:       `icon/flag-${ LANG.id }.png`,
+            } )
+            ul.button__dropdown.dropdown
+              a.dropdown__item.dropdown__item--zh-TW( href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } ) ) 中文
+              a.dropdown__item.dropdown__item--en-US( href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'en-US' ) }
+              } ) ) English

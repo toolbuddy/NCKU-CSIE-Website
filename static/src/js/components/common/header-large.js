@@ -19,9 +19,7 @@ export default class GetHeaderLarge {
 
         if (
             !opt.headerDOM ||
-            !ValidateUtils.isDomElement( opt.headerDOM ) ||
-            opt.allHeaderDOMs.length === 0 ||
-            !Array.from( opt.allHeaderDOMs ).every( ValidateUtils.isDomElement )
+            !ValidateUtils.isDomElement( opt.headerDOM )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -29,19 +27,18 @@ export default class GetHeaderLarge {
         const headerBlockQuerySelector = block => `${ headerElementQuerySelector( block ) }.${ block }`;
         const functionElementQuerySelector = element => `${ headerBlockQuerySelector( 'functions' ) } > .functions__${ element }`;
         const functionBlockQuerySelector = block => `${ functionElementQuerySelector( block ) }.${ block }`;
-        const functionBottomElementQuerySelector = element => `${ functionBlockQuerySelector( 'bottom' ) } > .bottom__${ element }`;
-        const functionBottomBlockQuerySelector = block => `${ functionBottomElementQuerySelector( block ) }.${ block }`;
-        const searchElementQuerySelector = element => `${ functionBottomBlockQuerySelector( 'search' ) } > .search__${ element }`;
+        const functionRightElementQuerySelector = element => `${ functionBlockQuerySelector( 'right' ) } > .right__${ element }`;
+        const functionRightBlockQuerySelector = block => `${ functionRightElementQuerySelector( block ) }.${ block }`;
+        const searchElementQuerySelector = element => `${ functionRightBlockQuerySelector( 'search' ) } > .search__${ element }`;
         const searchBlockQuerySelector = block => `${ searchElementQuerySelector( block ) }.${ block }`;
-        const languageElementQuerySelector = element => `${ functionBlockQuerySelector( 'language' ) } > .language__${ element }`;
+        const languageElementQuerySelector = element => `${ functionRightBlockQuerySelector( 'language' ) } > .language__${ element }`;
         const languageBlockQuerySelector = block => `${ languageElementQuerySelector( block ) }.${ block }`;
         const languageButtonElementQuerySelector = element => `${ languageBlockQuerySelector( 'button' ) } > .button__${ element }`;
 
         this.DOM = {
             header:         opt.headerDOM,
-            allNavigations: Array.from( opt.allHeaderDOMs ).map( header => header.querySelector( headerBlockQuerySelector( 'navigation' ) ) ),
             language:       {
-                button:   opt.headerDOM.querySelector( languageElementQuerySelector( 'button' ) ),
+                button:   opt.headerDOM.querySelector( languageBlockQuerySelector( 'button' ) ),
                 dropdown: opt.headerDOM.querySelector( languageButtonElementQuerySelector( 'dropdown' ) ),
                 active:   false,
             },
@@ -53,8 +50,6 @@ export default class GetHeaderLarge {
         };
 
         if (
-            !this.DOM.allNavigations.length ||
-            !this.DOM.allNavigations.every( ValidateUtils.isDomElement ) ||
             !ValidateUtils.isDomElement( this.DOM.language.button ) ||
             !ValidateUtils.isDomElement( this.DOM.language.dropdown ) ||
             !ValidateUtils.isDomElement( this.DOM.search.button ) ||
@@ -65,6 +60,7 @@ export default class GetHeaderLarge {
 
         this.subscribeLanguageEvent();
         this.subscribeSearchEvent();
+        this.subscribeScrollEvent();
 
         return this;
     }
@@ -89,4 +85,17 @@ export default class GetHeaderLarge {
             classRemove( this.DOM.search.dropdown, 'search__dropdown--active' );
         } );
     }
+
+    subscribeScrollEvent () {
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener( 'scroll', () => {
+            const currentScrollPos = window.pageYOffset;
+            if ( prevScrollpos > currentScrollPos )
+                classAdd( this.DOM.header, 'header--active' );
+            else
+                classRemove( this.DOM.header, 'header--active' );
+            prevScrollpos = currentScrollPos;
+        } );
+    }
 }
+
