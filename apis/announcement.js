@@ -1,233 +1,184 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import cors from 'cors';
 
-import getAllAnnouncements from 'models/announcement/operation/get-all-announcements.js';
-import getAnnouncementsByTags from 'models/announcement/operation/get-announcements-by-tags.js';
-import getAllPinnedAnnouncements from 'models/announcement/operation/get-all-pinned-announcements.js';
-import getPinnedAnnouncementsByTags from 'models/announcement/operation/get-pinned-announcements-by-tags.js';
-import getAllPages from 'models/announcement/operation/get-all-pages.js';
-import getPagesByTags from 'models/announcement/operation/get-pages-by-tags.js';
-import getAnnouncement from 'models/announcement/operation/get-announcement.js';
-import getAnnouncementAllLanguages from 'models/announcement/operation/get-announcement-all-languages.js';
-
-import postAnnouncement from 'models/announcement/operation/post-announcement.js';
-import postAnnouncementTags from 'models/announcement/operation/post-announcementTags.js';
-import postAnnouncementFile from 'models/announcement/operation/post-announcementFile.js';
-
-import patchAnnouncement from 'models/announcement/operation/patch-announcement.js';
-
-import deleteAnnouncement from 'models/announcement/operation/delete-announcements.js';
-import deleteAnnouncementTags from 'models/announcement/operation/delete-announcementTags.js';
-import deleteAnnouncementFiles from 'models/announcement/operation/delete-announcementFiles.js';
+import getAnnouncementsByOrTags from 'models/announcement/operations/get-announcements-by-or-tags.js';
+import getPagesByOrTags from 'models/announcement/operations/get-pages-by-or-tags.js';
+import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+import getPinnedAnnouncementsByOrTags from 'models/announcement/operations/get-pinned-announcements-by-or-tags.js';
+import getAnnouncementsByAndTags from 'models/announcement/operations/get-announcements-by-and-tags.js';
+import getHotAnnouncements from 'models/announcement/operations/get-hot-announcements.js';
+import getPagesByAndTags from '../models/announcement/operations/get-pages-by-and-tags';
+import getPinnedAnnouncementsByAndTags from 'models/announcement/operations/get-pinned-announcements-by-and-tags.js';
+import getTvAnnouncements from 'models/announcement/operations/get-tv-announcements.js';
 
 const apis = express.Router();
 
-apis.use( bodyParser.json() );
-
-apis.get( /^\/all-announcement$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getAllAnnouncements( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-        page:      req.query.page,
-        language:  req.query.language,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.length )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/all-pages$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getAllPages( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.pageNumber )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/all-pinned$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getAllPinnedAnnouncements( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-        language:  req.query.language,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.length )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/tags-announcement$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getAnnouncementsByTags( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-        page:      req.query.page,
-        language:  req.query.language,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.length )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/tags-pages$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getPagesByTags( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.pageNumber )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/tags-pinned$/, async ( req, res ) => {
-    let tags = req.query.tags;
-    if ( typeof tags === 'string' )
-        tags = Array.of( tags );
-
-    const result = await getPinnedAnnouncementsByTags( {
-        tags,
-        startTime: req.query.startTime,
-        endTime:   req.query.endTime,
-        language:  req.query.language,
-    } );
-
-    if ( result.error )
-        res.status( 400 ).json( result );
-    else if ( !result.length )
-        res.status( 404 ).end();
-    else
-        res.status( 200 ).json( result );
-} );
-
-apis.get( /^\/all-languages\/(\d+)$/, async ( req, res ) => {
+apis.get( '/get-announcements-by-or-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await getAnnouncementAllLanguages( { announcementId: req.params[ 0 ], } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getAnnouncementsByOrTags( {
+            amount:     Number( req.query.amount ),
+            from:       new Date( Number( req.query.from ) ),
+            languageId: Number( req.query.languageId ),
+            page:       Number( req.query.page ),
+            tags,
+            to:         new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 404 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.get( /^\/(\d+)$/, async ( req, res ) => {
+apis.get( '/get-pages-by-or-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await getAnnouncement( { announcementId: req.params[ 0 ], language: req.query.language, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getPagesByOrTags( {
+            amount: Number( req.query.amount ),
+            from:   new Date( Number( req.query.from ) ),
+            tags,
+            to:     new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 404 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.post( '/', async ( req, res ) => {
+apis.get( '/get-pinned-announcements-by-or-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await postAnnouncement( { announcementData: req.body, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getPinnedAnnouncementsByOrTags( {
+            from:       new Date( Number( req.query.from ) ),
+            languageId: Number( req.query.languageId ),
+            tags,
+            to:         new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.patch( '/:id', async ( req, res ) => {
+apis.get( '/get-announcements-by-and-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await patchAnnouncement( { announcementId: req.params.id, announcementData: req.body, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getAnnouncementsByAndTags( {
+            amount:     Number( req.query.amount ),
+            from:       new Date( Number( req.query.from ) ),
+            languageId: Number( req.query.languageId ),
+            page:       Number( req.query.page ),
+            tags,
+            to:         new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.delete( '/:id', async ( req, res ) => {
+apis.get( '/get-pages-by-and-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await deleteAnnouncement( { announcementId: req.params.id, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getPagesByAndTags( {
+            amount: Number( req.query.amount ),
+            from:   new Date( Number( req.query.from ) ),
+            tags,
+            to:     new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-/**
- * @todo Not yet finished
- */
-
-apis.post( '/:id/file', async ( req, res ) => {
+apis.get( '/get-pinned-announcements-by-and-tags', cors(), async ( req, res, next ) => {
     try {
-        res.json( await postAnnouncementFile( { announcementFileData: req.body, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getPinnedAnnouncementsByAndTags( {
+            from:       new Date( Number( req.query.from ) ),
+            languageId: Number( req.query.languageId ),
+            tags,
+            to:         new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-// TODO: Not yet finished
-apis.delete( '/:id/file/:id', async ( req, res ) => {
+apis.get( '/get-hot-announcements', cors(), async ( req, res, next ) => {
     try {
-        res.json( await deleteAnnouncementFiles( { announcementFileData: req.body, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getHotAnnouncements( {
+            amount:     Number( req.query.amount ),
+            from:       new Date( Number( req.query.from ) ),
+            languageId: Number( req.query.languageId ),
+            page:       Number( req.query.page ),
+            tags,
+            to:         new Date( Number( req.query.to ) ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.post( '/:id/tags', async ( req, res ) => {
+apis.get( '/get-tv-announcements', cors(), async ( req, res, next ) => {
     try {
-        res.json( await postAnnouncementTags( { announcementId: req.params.id, tagId: req.body, } ) );
+        let tags = req.query.tags || [];
+        if ( !Array.isArray( tags ) )
+            tags = [ tags, ];
+        tags = tags.map( Number );
+
+        res.json( await getTvAnnouncements( {
+            amount:     Number( req.query.amount ),
+            languageId: Number( req.query.languageId ),
+            tags,
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 
-apis.delete( '/:id/tags', async ( req, res ) => {
-    const tagId = req.query.tagId.split( ',' ).map( s => Number.parseInt( s, 10 ) );
+apis.get( '/:announcementId', cors(), async ( req, res, next ) => {
     try {
-        res.json( await deleteAnnouncementTags( { announcementId: req.params.id, tagId, } ) );
+        res.json( await getAnnouncement( {
+            announcementId: Number( req.params.announcementId ),
+            languageId:     Number( req.query.languageId ),
+        } ) );
     }
-    catch ( e ) {
-        res.status( 500 ).end();
+    catch ( error ) {
+        next( error );
     }
 } );
 

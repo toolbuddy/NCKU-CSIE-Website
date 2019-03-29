@@ -3,13 +3,16 @@
  *
  * Including following sub-routing modules:
  * - `/api/faculty`
+ * - `/api/faculty/lab`
  * - `/api/faculty/[id]`
  */
 
 import express from 'express';
+import cors from 'cors';
 
-import getFaculty from 'models/faculty/operation/get-faculty.js';
-import getFacultyDetail from 'models/faculty/operation/get-faculty-detail.js';
+import getFaculty from 'models/faculty/operations/get-faculty.js';
+import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+import getLabs from 'models/faculty/operations/get-labs.js';
 
 const apis = express.Router();
 
@@ -17,16 +20,45 @@ const apis = express.Router();
  * Resolve URL `/api/faculty`.
  */
 
-apis.get( /^\/$/, async ( req, res ) => {
-    res.json( await getFaculty( req.query.language ) );
+apis.get( '/', cors(), async ( req, res, next ) => {
+    try {
+        const data = await getFaculty( Number( req.query.languageId ) );
+        res.json( data );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
+/**
+ * Resolve URL `/api/faculty/lab`.
+ */
+
+apis.get( '/lab', cors(), async ( req, res, next ) => {
+    try {
+        const data = await getLabs( Number( req.query.languageId ) );
+        res.json( data );
+    }
+    catch ( error ) {
+        next( error );
+    }
 } );
 
 /**
  * Resolve URL `/api/faculty/[id]`.
  */
 
-apis.get( /^\/(\d+)$/, async ( req, res ) => {
-    res.json( await getFacultyDetail( { profileId: req.params[ 0 ], language: req.query.language, } ) );
+apis.get( '/:profileId', cors(), async ( req, res, next ) => {
+    try {
+        const data = await getFacultyDetail( {
+            profileId:  Number( req.params.profileId ),
+            languageId: Number( req.query.languageId ),
+        } );
+        res.json( data );
+    }
+    catch ( error ) {
+        next( error );
+    }
 } );
 
 export default apis;

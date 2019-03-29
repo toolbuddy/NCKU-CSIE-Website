@@ -1,47 +1,56 @@
-mixin footer()
+mixin footer( belongBlock )
   -
     const i18n = Object.freeze( {
-      'en-US': {
-        'contact': {
-          'title':    'Contact Us',
-          'address':  'No.1, Daxue Rd., East Dist., Tainan City 701, Taiwan (R.O.C.)',
-          'position': 'Department Location'
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        contact: {
+          title:   'Contact Us',
+          address: 'No.1, Daxue Rd., East Dist., Tainan City 701, Taiwan (R.O.C.)',
+          map:     'Department Location',
         },
-        'follow':     'Follow us'
+        follow: 'Follow us',
       },
-      'zh-TW': {
-        'contact': {
-          'title':    '聯絡我們',
-          'address':  '70101 台南市東區大學路一號',
-          'position': '系館位置圖'
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        contact: {
+          title:   '聯絡我們',
+          address: '70101 台南市東區大學路一號',
+          map:     '系館位置圖',
         },
-        'follow':     '關注我們'
-      }
+        follow: '關注我們',
+      },
     } );
 
-  footer.footer
-    figure.footer__logo.logo
-      a.logo__link.link( href = url( { href : '' } ) )
+  footer.footer( class = `${ belongBlock }__footer` )
+    section.footer__logo.logo
+      a.logo__link.link( href = UTILS.url( { href : '' } ) )
         +image( {
           alt:          'csie',
           className:    'link__image',
-          src:          'logo/csie-white.png',
+          src:          'logo/csie-white-small.png',
         } )
-      a.logo__caption.caption( href = url( { href : '' } ) )
-        h1.caption__text 成功大學資訊工程學系暨研究所
-        h2.caption__text.caption__text--small Department of Computer Science and Information Engineering
+      article.logo__caption.caption.caption--zh-TW
+        a.caption__text( href = UTILS.url( { href : '' } ) ) 成功大學
+        a.caption__text( href = UTILS.url( { href : '' } ) ) 資訊工程學系
+        a.caption__text( href = UTILS.url( { href : '' } ) ) 暨
+        a.caption__text( href = UTILS.url( { href : '' } ) ) 研究所
+      article.logo__caption.caption.caption--en-US
+        a.caption__text( href = UTILS.url( { href : '' } ) ) Department
+        a.caption__text( href = UTILS.url( { href : '' } ) ) of
+        a.caption__text( href = UTILS.url( { href : '' } ) ) Computer
+        a.caption__text( href = UTILS.url( { href : '' } ) ) Science
+        a.caption__text( href = UTILS.url( { href : '' } ) ) and
+        a.caption__text( href = UTILS.url( { href : '' } ) ) Information
+        a.caption__text( href = UTILS.url( { href : '' } ) ) Engineering
     section.footer__contact.contact
-      h1.contact__title= i18n[ language ].contact.title
-      address.contact__address.address= `${ i18n[ language ].contact.address }｜`
-        a.address__map( href = url( { href : 'about' } ) )= i18n[ language ].contact.position
+      h1.contact__title= i18n[ LANG.id ].contact.title
+      address.contact__address.address= `${ i18n[ LANG.id ].contact.address }｜`
+        a.address__map( href = UTILS.url( { href : 'about/contact' } ) )= i18n[ LANG.id ].contact.map
       a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
       a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
     section.footer__copyright.copyright
-      hr.copyright__line.copyright__line--left
-      h1.copyright__text Copyright © 2018 國立成功大學資訊工程系
-      hr.copyright__line.copyright__line--right
+      h1.copyright__title Copyright © 2018 國立成功大學資訊工程學系
+      hr.copyright__line
     section.footer__social-media.social-media
-      h1.social-media__text= i18n[ language ].follow
+      h1.social-media__title= i18n[ LANG.id ].follow
       a.social-media__link.link( href = 'https://www.facebook.com/ncku.csie', target = '_blank' )
         +image( {
           alt:       'facebook',

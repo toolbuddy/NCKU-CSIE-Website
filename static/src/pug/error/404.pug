@@ -1,0 +1,25 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'Page not found',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '頁面不存在',
+      },
+    } );
+    const currentRoute = '';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'error/404' )
+
+append content
+  canvas#banner.content__banner.banner
+
+append scripts
+  +js( 'error/404' )

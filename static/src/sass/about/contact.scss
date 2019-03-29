@@ -1,176 +1,189 @@
 @import 'components/common/reset';
-@import 'components/common/header';
 @import 'components/common/font';
-@import 'components/common/topic';
-@import 'components/common/footer';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
 
 // block
-// `body`
-body > {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'about/contact' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1300px;
+
     // [ layout ]
     display: grid;
     grid: {
       template: {
         areas:
-          '. .     .'
-          '. map   .'
-          '. drive .'
-          '. train .'
-          '. thsr  .'
-          '. .     .';
+          '. .          .'
+          '. breadcrumb .'
+          '. map        .'
+          '. drive      .'
+          '. train      .'
+          '. thsr       .'
+          '. .          .';
         columns: 1fr 13fr 1fr;
-        rows: .5rem 15rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
+        rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
       }
-      row-gap: 1rem;
+      row-gap: font__px-to-rem( 32 );
     };
 
     // [ skin ]
     width: 100%;
     background-color: #f2f4f7;
 
-    // [ RWD: 768px ]
-    @media screen and ( min-width: 768px ) {
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
       // [ layout ]
-      grid-template-rows: .5rem 20rem repeat( 3, minmax( auto, min-content ) ) 1.56rem;
+      grid-template-rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
     }
 
-    // [ RWD: 1300px ]
-    @media screen and ( min-width: 1300px ) {
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
       // [ layout ]
       display: grid;
       grid: {
         template: {
           areas:
-            '.  .   .     .'
-            '.  map drive .'
-            '.  map train .'
-            '.  map thsr  .'
-            '.  map .     .'
-            '.  .   .     .';
+            '.  .          .          .'
+            '.  breadcrumb breadcrumb .'
+            '.  map        drive      .'
+            '.  map        train      .'
+            '.  map        thsr       .'
+            '.  .          .          .';
           columns: 1fr 6fr 4fr 1fr;
-          rows: 1.6rem repeat( 3, minmax( auto, min-content ) ) 1rem 3.125rem;
+          rows: font__px-to-rem( 32 ) repeat( 4, minmax( auto, min-content ) ) font__px-to-rem( 100 );
         }
-        column-gap: 2rem;
-        row-gap: 0;
+        column-gap: font__px-to-rem( 64 );
+        row-gap: font__px-to-rem( 32 );
       };
     }
 
+    // element
+    // `.body > .content > .content__breadcrumb`
     // block
-    // `body > .content > .map`
-    > .map {
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
       // [ position ]
-      grid-area: map;
+      grid-area: breadcrumb;
     }
 
+    // element
+    // `.body > .content > .content__map`
     // block
-    // `body > .content > .traffic`
-    > .traffic {
+    // `.body > .content > .map`
+    > .content__map.map {
+      // [ position ]
+      grid-area: map;
+
+      // [ skin ]
+      min-height: font__px-to-rem( 480 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        min-height: font__px-to-rem( 640 );
+      }
+    }
+
+    // element
+    // `.body > .content > .content__traffic`
+    // block
+    // `.body > .content > .traffic`
+    > .content__traffic.traffic {
+      // element
+      // `.body > .content > .content__traffic`
       // block
-      // `body > .content > .traffic.traffic--thsr`
-      &.traffic--thsr {
-        // [ position ]
-        grid-area: thsr;
+      // `.body > .content > .traffic`
+      @include topic( $block: 'traffic' );
+
+      // template
+      // `.body > .content > .traffic.traffic--?`
+      &.traffic-- {
+        // modifier
+        // `.body > .content > .traffic.traffic--thsr`
+        &thsr {
+          // [ position ]
+          grid-area: thsr;
+        }
+
+        // modifier
+        // `.body > .content > .traffic.traffic--train`
+        &train {
+          // [ position ]
+          grid-area: train;
+        }
+
+        // modifier
+        // `.body > .content > .traffic.traffic--drive`
+        &drive {
+          // [ position ]
+          grid-area: drive;
+        }
       }
 
-      // block
-      // `body > .content > .traffic.traffic--train`
-      &.traffic--train {
-        // [ position ]
-        grid-area: train;
-      }
+      > .traffic__direction {
+        // [ layout ]
+        display: inline-block;
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 14 ) * 1.2;
 
-      // block
-      // `body > .content > .traffic.traffic--drive`
-      &.traffic--drive {
-        // [ position ]
-        grid-area: drive;
+        // [ skin ]
+        border: solid font__px-to-rem( 1 ) #adacad;
+        border-radius: font__px-to-rem( 3 );
+        padding: font__px-to-rem( 3 );
+        color: #adacad;
+        font: {
+          size: font__px-to-rem( 14 );
+          weight: bold;
+        }
       }
 
       // element
-      // `> .traffic > .traffic__text.traffic__text--`
-      > .traffic__text.traffic__text-- {
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--information`
-        &information {
-          // [ skin ]
-          font-size: .5rem;
-        }
+      // `.body > .content > .traffic > .traffic__text.`
+      > .traffic__text {
+        // [ layout ]
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 16 ) * 1.2;
 
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--title`
-        &title {
-          // [ layout ]
-          display: inline;
-
-          // [ skin ]
-          border-bottom: solid .0156rem #213262;
-          padding-bottom: .3rem;
-          font: {
-            size: .75rem;
-            weight: bold;
-          }
-
-          // [ before ]
-          &::before {
-            // [ layout ]
-            display: block;
-
-            // [ skin ]
-            content: '';
-            margin-top: 1.5625rem;
-          }
-
-          // [ after ]
-          &::after {
-            // [ layout ]
-            display: block;
-
-            // [ skin ]
-            content: '';
-            margin-top: 1.5938rem;
-          }
-        }
-
-        // modifier
-        // `> .traffic > .traffic__text.traffic__text--direction`
-        &direction {
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          margin: {
-            top: .9688rem;
-            bottom: .4688rem;
-          }
-          border: solid .0313rem #adacad;
-          border-radius: .0938rem;
-          padding: .1rem;
-          color: #adacad;
-          font: {
-            size: .4375rem;
-            weight: bold;
-          }
-
-          // [ first-of-type ]
-          &:first-of-type {
-            // [ skin ]
-            margin-top: 0;
-          }
-        }
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
       }
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

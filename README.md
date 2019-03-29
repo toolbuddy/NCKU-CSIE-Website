@@ -32,13 +32,8 @@ Build a better website for NCKU CSIE.
         - **Filling-in** information required by `settings/database/config.js`.
             - Fill in `username` and `password` for **database authentication** information (If you are a developer and need to connect to our database, please contact us).
             - Fill in `domainName` for **database domain name** information (If you are a developer and need to connect to our database, please contact us).
-            - Fill in `protocol` for database (**not required** in **develop** mode).
             - Fill in `port` for **database server port** information (**not required** in **develop** mode).
-            - Fill in `projectRoot` with `pwd` at project root directory.
-        - Create database ORM files by running:
-            ```
-            npm run build:database
-            ```
+            - Fill in `dialect` with database you use.
     - Build Server, HTML, CSS and ECMAScript files by running:
         ```
         npm run build
@@ -127,6 +122,6 @@ Feel free to contact us if you have question.
 ## Team ProFatXuanAll
 Special thanks for
 - Designer: [lanhsincheng](https://github.com/lanhsincheng) and [Cindy](https://www.facebook.com/cindy461022).
-- Active Developer: [ProFatXuanAll](https://github.com/ProFatXuanAll), [kaeteyaruyo](https://github.com/kaeteyaruyo), [Rispolyv0n](https://github.com/Rispolyv0n), [IsabelTseng](https://github.com/IsabelTseng), [ya-sin](https://github.com/ya-sin), [danielian1121](https://github.com/danielian1121), [AmyLin0210](https://github.com/AmyLin0210), [aqwefghnm](https://github.com/aqwefghnm), [claire11327](https://github.com/claire11327), [d4n1elchen](https://github.com/d4n1elchen), [eecheng87](https://github.com/eecheng87).
-- Participant: [bbbchiu](https://github.com/bbbchiu), [Darkborderman](https://github.com/Darkborderman), [f26401004](https://github.com/f26401004), [k32367mdbf](https://github.com/k32367mdbf), [Kazumachi124170](https://github.com/Kazumachi124170), [melody825cat](https://github.com/melody825cat), [allen621115](https://github.com/allen621115), [laxative](https://github.com/laxative), [HMKRL](https://github.com/HMKRL), [DyslexiaS](https://github.com/DyslexiaS), [james831018](https://github.com/james831018), [wang0630](https://github.com/wang0630).
-- [kevinbird61](https://github.com/kevinbird61) our mentor, also the founder of [Toolbuddy](https://github.com/toolbuddy) Organization.
+- Active Developer: [ProFatXuanAll](https://github.com/ProFatXuanAll), [kaeteyaruyo](https://github.com/kaeteyaruyo), [Rispolyv0n](https://github.com/Rispolyv0n), [danielian1121](https://github.com/danielian1121), [eecheng87](https://github.com/eecheng87), [yellow951321](https://github.com/yellow951321), [aqwefghnm](https://github.com/aqwefghnm), [AmyLin0210](https://github.com/AmyLin0210), [d4n1elchen](https://github.com/d4n1elchen).
+- Participant: [ya-sin](https://github.com/ya-sin), [IsabelTseng](https://github.com/IsabelTseng), [Kazumachi124170](https://github.com/Kazumachi124170), [k32367mdbf](https://github.com/k32367mdbf), [wang0630](https://github.com/wang0630), [bbbchiu](https://github.com/bbbchiu), [f26401004](https://github.com/f26401004), [Darkborderman](https://github.com/Darkborderman), [melody825cat](https://github.com/melody825cat), [laxative](https://github.com/laxative), [HMKRL](https://github.com/HMKRL), [claire11327](https://github.com/claire11327).
+- Founder of [Toolbuddy](https://github.com/toolbuddy) Organization: [kevinbird61](https://github.com/kevinbird61)

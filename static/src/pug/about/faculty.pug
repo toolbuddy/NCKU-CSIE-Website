@@ -1,59 +1,71 @@
-extends /layouts/about.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Faculty',
         'topic':    'Faculty',
         'breadcrumb': {
           'home':   'Home',
           'about':  'About',
         },
-        'noResult': 'No Result',
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '師資陣容',
         'topic':    '師資陣容',
         'breadcrumb': {
           'home':   '首頁',
           'about':  '關於本系',
         },
-        'noResult': '無結果',
       },
     } );
     const currentRoute = 'about/faculty';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'about/faculty' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.about, url: 'about' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/topic.pug
-  include /components/about/faculty/filters.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
 
-  +topic( i18n[ language ].topic )
+  +topic( 'content', i18n[ LANG.id ].topic )
 
-  //- Filter component for faculty selection.
-  +filters()
-
-  //- Faculty data display section.
-  //-
-  //- Use card outfit to display faculty information.
-  //- @todo add loading screen.
-  section#cards.cards
-  section#no-result.no-result.no-result--hide
-    p.no-result__text= i18n[ language ].noResult
+  section#faculty.content__faculty.faculty
+    section.faculty__filter.filter
+      article.filter__department.department
+        each departmentId in UTILS.faculty.departmentUtils.supportedId
+          button.department__tag(
+            data-department-id = `${ departmentId }`
+          )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+      article.filter__research-group.research-group
+        each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+          button.research-group__tag(
+            data-research-group-id = `${ researchGroupId }`,
+          )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+    +noResultWithImage( 'faculty' )
+    +loading( 'faculty' )
+    section.faculty__cards.cards
 
 append footer
 

@@ -1,26 +1,43 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/topic';
-@import 'components/common/footer';
-@import 'components/announcement/title';
-@import 'components/announcement/filter';
-@import 'components/announcement/briefing';
-@import 'components/announcement/pages';
+@import 'components/common/font';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
+@import 'components/announcement/filter';
+@import 'components/announcement/announcement-briefing-list';
+@import 'components/announcement/pages';
 
-body > {
-  // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
 
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .content`
-  > .content {
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'announcement/recruitment' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
     // [ variable ]
     $small: 850px;
     $large: 992px;
@@ -28,74 +45,122 @@ body > {
 
     // [ layout ]
     grid: {
-      gap: 1.2rem 0;
+      row-gap: font__px-to-rem( 38 );
       template: {
-        columns: repeat( 10, 1fr );
+        columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
         areas:
-          'filter'
-          'topic';
+          '. breadcrumb           .'
+          '. filter               .'
+          '. topic                .'
+          '. announcement--pinned .'
+          '. announcement--normal .'
+          '. pages                .';
       }
     }
 
     // [ skin ]
-    margin: 0 auto;
-    padding: 2.2rem .5rem;
-    max-width: 26rem;
+    padding: {
+      top: font__px-to-rem( 70 );
+      bottom: font__px-to-rem( 70 );
+      left: font__px-to-rem( 16 );
+      right: font__px-to-rem( 16 );
+    }
+    background-color: #ffffff;
 
     // [ RWD: $small ]
-    @media screen and ( min-width: $small ) {
+    @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid-template-areas:
-        'topic'
-        'filter';
+      grid: {
+        row-gap: font__px-to-rem( 60 );
+        template: {
+          columns: 1fr font__px-to-rem( 950 ) 1fr;
+          areas:
+            '. breadcrumb           .'
+            '. topic                .'
+            '. filter               .'
+            '. announcement--pinned .'
+            '. announcement--normal .'
+            '. pages                .';
+        }
+      }
     }
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ skin ]
-      padding: 2.2rem 0;
+      padding: {
+        top: font__px-to-rem( 40 );
+        bottom: font__px-to-rem( 70 );
+        left: 0;
+        right: 0;
+      }
     }
 
+    // element
+    // `.body > .content > .content__breadcrumb`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+    }
+
+    // element
+    // `.body > .content > .content__topic`
+    // block
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
       // [ position ]
       grid-area: topic;
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
     }
 
+    // element
+    // `.body > .content > .content__filter`
     // block
-    // `body > .content > .filter`
-    @include filter() {
+    // `.body > .content > .filter`
+    @include filter( $block: 'content' ) {
       // [ position ]
       grid-area: filter;
-      grid-column: {
-        start: 1;
-        end: 11;
+    }
+
+    // element
+    // `.body > .content > .content__announcement`
+    // block
+    // `.body > .content > .announcement`
+    @include announcement( $block: 'content' ) {
+      // template
+      // `.body > .content > .announcement.announcement--?`
+      &.announcement-- {
+        // modifier
+        // `.body > .content > .announcement.announcement--pinned`
+        &pinned {
+          // [ position ]
+          grid-area: announcement--pinned;
+        }
+
+        // modifier
+        // `.body > .content > .announcement.announcement--normal`
+        &normal {
+          // [ position ]
+          grid-area: announcement--normal;
+        }
       }
     }
 
+    // element
+    // `.body > .content > .content__pages`
     // block
-    // `body > .content > .announcement`
-    @include announcement() {
+    // `.body > .content > .pages`
+    @include pages ( $block: 'content' ) {
       // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
-    }
-
-    // block
-    // `body > .content > .pages`
-    @include pages () {
-      // [ position ]
-      grid-column: {
-        start: 1;
-        end: 11;
-      }
+      grid-area: pages;
+      justify-self: center;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

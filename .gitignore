@@ -16,12 +16,10 @@ package-lock.json
 .npmrc
 .lock-wscript
 
-## Sequelize generated schema
-models/*/tables
-
 ## Settings files
 settings/database/config.js
 settings/server/config.js
+settings/server/content-security-policy.js
 
 # executable
 bin/

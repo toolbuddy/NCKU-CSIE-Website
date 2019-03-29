@@ -1,9 +1,9 @@
-extends /layouts/research.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Research',
         'breadcrumb': {
           'home':   'Home',
@@ -13,17 +13,17 @@ append data
             title: 'Laboratories',
             detail: 'List of all laboratories of department',
             modifier: 'red',
-            href: url( { href: 'research/labs', } ),
+            route: 'research/lab',
           },
           {
             title: 'Publications',
             detail: 'List of all publications of department',
             modifier: 'green',
-            href: url( { href: 'research/publications', } ),
+            route: 'research/publication',
           },
         ],
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '學術研究',
         'breadcrumb': {
           'home':   '首頁',
@@ -33,13 +33,13 @@ append data
             title: '實驗室',
             detail: '資訊所研究實驗室列表',
             modifier: 'red',
-            href: url( { href: 'research/labs', } ),
+            route: 'research/lab',
           },
           {
             title: '發表論文',
             detail: '已發表的論文總覽',
             modifier: 'green',
-            href: url( { href: 'research/publications', } ),
+            route: 'research/publication',
           },
         ],
       },
@@ -47,21 +47,29 @@ append data
     const currentRoute = 'research';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'research/index' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language ].entries )
+  +entries( 'content', i18n[ LANG.id ].entries )
 
 append footer
 

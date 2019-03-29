@@ -12,6 +12,7 @@ html
   head
     meta( charset = 'utf8' )
     meta( name = 'viewport', content = 'width=device-width, initial-scale=1.0' )
+    link( rel = 'icon', type = 'image/png', href = UTILS.staticUrl( { href: 'image/logo/favicon.png' } ) )
 
     //- Title block.
     //-
@@ -29,15 +30,13 @@ html
     block stylesheets
       include /components/common/css.pug
 
-  body
-
+  body.body
     //- Image template module.
     //-
     //- Each page has there own image (`<img>` tags).
     //- Use image template `+image( {image detail} )` to generate `<img>` tag.
     //- Image template module can be found at `static/src/pug/components/common/image.pug`.
     include /components/common/image.pug
-    include /components/common/url.pug
     include /components/common/banner.pug
     include /components/common/breadcrumb.pug
 
@@ -45,17 +44,24 @@ html
     //-
     //- Each page has there own header (`<header>` tags).
     //- Use header template `+header()` to generate `<header>` tag.
-    //- Header template module can be found at `static/src/pug/components/common/header.pug`.
+    //- Header template module can be found at `static/src/pug/components/common/header-.pug`.
     block header
-      include /components/common/header.pug
-      +header()
+      include /components/common/header-base.pug
+      include /components/common/header-small.pug
+      include /components/common/header-medium.pug
+      include /components/common/header-large.pug
+      +header--base( 'body' )
+      +header--small( 'body' )
+      +header--medium( 'body' )
+      +header--large( 'body' )
 
     //- Content block.
     //-
     //- Each page has there own content.
     //- All specific content go to this block.
-    main#content.content
+    main#content.body__content.content
       block content
+        block breadcrumb
 
     //- Footer block.
     //-
@@ -64,7 +70,7 @@ html
     //- Footer template module can be found at `static/src/pug/components/common/footer.pug`.
     block footer
       include /components/common/footer.pug
-      +footer()
+      +footer( 'body' )
 
     //- Scripts block.
     //-

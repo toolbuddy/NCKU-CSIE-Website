@@ -1,28 +1,50 @@
-extends /layouts/resource.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
-        'title':      'Equipment Repair',
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'Equipment Repair',
+        breadcrumb: {
+          home:     'Home',
+          resource: 'Resource',
+        },
       },
-      'zh-TW': {
-        'title':      '修繕登記',
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '修繕登記',
+        breadcrumb: {
+          home:     '首頁',
+          resource: '資源連結',
+        },
       },
     } );
     const currentRoute = 'resource/fix';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'resource/fix' )
 
 append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/not-available.pug
-  +notAvailable()
+  +notAvailable( 'content' )
 
 append footer
 

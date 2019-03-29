@@ -1,43 +1,52 @@
-// component
-// `> .topic`
-@mixin topic () {
-  // block
-  // `> .topic`
-  > .topic {
-    // [ variable ]
-    $tablet: 850px;
+@import 'components/common/font';
 
-    // [ position ]
-    display: flex;
-    justify-content: center;
+// component
+// `> .#{ $block } > .#{ $block }__topic.topic`
+@mixin topic ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__topic`
+  // block
+  // `> .#{ $block } > .topic`
+  > .#{ $block }__topic.topic {
+    // [ variable ]
+    $large: 850px;
+
+    // [ layout ]
+    display: block;
+    text-align: center;
 
     // [ skin ]
     color: #000000;
 
-    // [ customization ]
-    @content;
-
-    // [ RWD: $tablet ]
-    @media screen and ( min-width: $tablet ) {
-      // [ position ]
-      justify-content: flex-start;
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      text-align: left;
 
       // [skin ]
-      border-bottom: solid .0156rem rgba( 0, 0, 0, .3 );
+      border-bottom: solid font__px-to-rem( 1 ) #bfbfbf;
     }
 
     // element
-    // `> .topic > .topic__text`
-
+    // `> .#{ $block } > .topic > .topic__text`
     > .topic__text {
+      // [ layout ]
+      display: inline-block;
+      vertical-align: bottom;
+      line-height: font__px-to-rem( 24 );
+
       // [ skin ]
-      border-bottom: solid .0156rem #213262;
       width: auto;
-      line-height: 1.4rem;
+      padding-bottom: font__px-to-rem( 10 );
+      border-bottom: solid font__px-to-rem( 1 ) #213262;
+      color: #000000;
       font: {
         weight: bold;
-        size: .75rem;
+        size: font__px-to-rem( 24 );
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

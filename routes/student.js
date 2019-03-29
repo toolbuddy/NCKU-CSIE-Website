@@ -8,44 +8,49 @@
  * - `/student/phd`
  */
 
-import path from 'path';
-
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/student`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/index.${ req.query.language }.html` ) );
-} );
+router
+.route( [
+    '/',
+    '/index',
+] )
+.get( staticHtml( 'student/index' ) );
 
 /**
  * Resolve URL `/student/college`.
  */
 
-router.get( /^\/college/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/college.${ req.query.language }.html` ) );
-} );
+router
+.route( '/college' )
+.get( staticHtml( 'student/college' ) );
 
 /**
  * Resolve URL `/student/master`.
  */
 
-router.get( /^\/master$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/master.${ req.query.language }.html` ) );
-} );
+router
+.route( '/master' )
+.get( staticHtml( 'student/master' ) );
 
 /**
  * Resolve URL `/student/phd`.
  */
 
-router.get( /^\/phd$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/student/phd.${ req.query.language }.html` ) );
-} );
+router
+.route( '/phd' )
+.get( staticHtml( 'student/phd' ) );
 
 export default router;

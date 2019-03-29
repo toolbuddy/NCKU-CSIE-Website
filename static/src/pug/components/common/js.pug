@@ -5,4 +5,4 @@
 //- @param {string} src - Link to the JS file.
 
 mixin js( src )
-  script( src=`${ staticHost }/js/${ src }.min.js` )
+  script( src = UTILS.staticUrl( { href: `js/${ src }.min.js` } ) )

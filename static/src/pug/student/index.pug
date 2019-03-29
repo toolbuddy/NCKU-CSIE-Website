@@ -1,57 +1,57 @@
-extends /layouts/student.pug
+extends /layouts/base.pug
 
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
-        'title':     'Student Affairs',
-        'breadcrumb': {
-          'home':    'Home',
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:     'Student Affairs',
+        breadcrumb: {
+          home:    'Home',
         },
-        'entries': [
+        entries: [
           {
             title: 'College',
             detail: 'Information related to undergraduated students, including course, internship, scholarship and more',
             modifier: 'red',
-            href: url( { href: 'student/college', } ),
+            route: 'student/college',
           },
           {
             title: 'Master',
             detail: 'Information related to graduated students, including course, internship, scholarship and more',
             modifier: 'green',
-            href: url( { href: 'student/master', } ),
+            route: 'student/master',
           },
           {
             title: 'Ph.D.',
             detail: 'Information related to Ph.D students, including course, internship, scholarship and more',
             modifier: 'yellow',
-            href: url( { href: 'student/phd', } ),
+            route: 'student/phd',
           },
         ],
       },
-      'zh-TW': {
-        'title':     '學生事務',
-        'breadcrumb': {
-          'home':    '首頁',
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:     '學生事務',
+        breadcrumb: {
+          home:    '首頁',
         },
-        'entries': [
+        entries: [
           {
             title: '大學部',
             detail: '資訊系大學部的相關資訊，包含課程、實習、獎學金等',
             modifier: 'red',
-            href: url( { href: 'student/college', } ),
+            route: 'student/college',
           },
           {
             title: '碩士',
             detail: '資訊所碩士班的相關資訊，包含課程、實習、獎學金等',
             modifier: 'green',
-            href: url( { href: 'student/master', } ),
+            route: 'student/master',
           },
           {
             title: '博士',
             detail: '資訊所博士班的相關資訊，包含課程、實習、獎學金等',
             modifier: 'yellow',
-            href: url( { href: 'student/phd', } ),
+            route: 'student/phd',
           },
         ],
       },
@@ -59,21 +59,29 @@ append data
     const currentRoute = 'student';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'student/index' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
   include /components/common/entries.pug
-  +entries( i18n[ language ].entries )
+  +entries( 'content', i18n[ LANG.id ].entries )
 
 append footer
 

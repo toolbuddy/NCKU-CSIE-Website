@@ -1,47 +1,84 @@
-@mixin banner ( $image ) {
+@import 'components/common/font';
+
+$banner-path: '~image/banner';
+
+// component
+// `> .#{ $block } > .#{ $block }__banner.banner`
+@mixin banner ( $block, $image ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__banner`
   // block
-  // `> .banner`
-  > .banner {
+  // `> .#{ $block } > .banner`
+  > .#{ $block }__banner.banner {
     // [ variable ]
-    $large: 1120px;
+    $large: 600px;
+
+    // [ position ]
+    // This style is set because `.banner__text` need to be position at the center of `.banner`.
+    position: relative;
 
     // [ layout ]
-    display: flex;
-    justify-content: center;
+    display: block;
 
     // [ skin ]
     width: 100%;
-    height: 15.63rem;
-    background: {
-      image: linear-gradient( rgba( 33, 50, 98, .7 ), rgba( 33, 50, 98, .7 ) ), url( $image );
-      position: center;
-      size: cover;
-      repeat: no-repeat;
-    }
+    height: 100%;
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
+    // [ before ]
+    &::before {
+      // [ position ]
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: -2147483647;
+
+      // [ layout ]
+      display: block;
+
       // [ skin ]
-      height: 10.94rem;
+      width: 100%;
+      height: 100%;
+      background: {
+        image: url( '#{ $banner-path }/#{ $image }.jpg' );
+        position: center bottom;
+        repeat: no-repeat;
+        size: cover;
+      }
+      content: '';
     }
 
     // element
-    // `> .banner > .banner__text`
+    // `> .#{ $block } > .banner > .banner__text`
     > .banner__text {
+      // [ position ]
+      position: absolute;
+      top: 50%;
+      transform: translateY( -50% );
+
       // [ layout ]
-      align-self: center;
+      display: block;
+      text-align: center;
+      word: {
+        break: normal;
+        wrap: normal;
+      }
+      line-height: font__px-to-rem( 26 );
 
       // [ skin ]
+      width: 100%;
       color: #ffffff;
       font: {
-        size: .8rem;
+        size: font__px-to-rem( 26 );
         weight: bold;
       }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
+        // [ layout ]
+        line-height: font__px-to-rem( 50 );
+
         // [ skin ]
-        font-size: 1.56rem;
+        font-size: font__px-to-rem( 50 );
       }
     }
   }

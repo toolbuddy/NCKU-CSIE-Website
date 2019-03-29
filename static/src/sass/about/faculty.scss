@@ -1,100 +1,148 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/about/faculty/cards';
-@import 'components/about/faculty/filters';
-@import 'components/common/topic';
-@import 'components/common/footer';
+@import 'components/common/font';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/loading';
+@import 'components/common/no-result';
+@import 'components/common/footer';
+@import 'components/about/faculty/filter';
+@import 'components/about/faculty/cards';
 
-body > {
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #eff3f9 );
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'about/faculty' );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
-    // [variable]
-    $large: 475px;
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 545px;
 
-    // [layout]
+    // [ layout ]
     display: grid;
     grid: {
       template: {
         areas:
           '.'
-          'topic   '
-          'filters '
-          'cards   '
-          'noResult';
+          'breadcrumb'
+          'topic'
+          'faculty';
         columns: 100%;
       }
-      row-gap: 2rem;
+      row-gap: font__px-to-rem( 32 );
     };
 
-    // [skin]
+    // [ skin ]
     width: 100%;
     background-color: #eff3f9;
 
-    // [RWD: $large]
-    @media screen and ( min-width: $large ) {
-      grid: {
-        template: {
-          areas:
-            '. .        .'
-            '. topic    .'
-            '. filters  .'
-            '. cards    .'
-            '. noResult .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 2rem;
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. .          .'
+          '. breadcrumb .'
+          '. topic      .'
+          '. faculty    .'
+          '. .          .';
+        columns: 1fr 8fr 1fr;
       };
     }
 
+    // element
+    // `.body > .content > .content__breadcrumb`
     // block
-    // `body > .content > .topic`
-    @include topic() {
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+
+      // [ skin ]
+      border-left: font__px-to-rem( 32 ) solid transparent;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        border-left: 0;
+      }
+    }
+
+    // element
+    // `.body > .content > .content__topic`
+    // block
+    // `.body > .content > .topic`
+    @include topic( $block: 'content' ) {
+      // [ position ]
       grid-area: topic;
     }
 
+    // element
+    // `.body > .content > .content__faculty`
     // block
-    // `body > .content > .filters`
-    @include filters() {
-      // [position]
-      grid-area: filters;
-    }
+    // `.body > .content > .faculty`
+    > .content__faculty.faculty {
+      // [ position ]
+      grid-area: faculty;
 
-    // block
-    // `body > .content > .cards`
-    @include cards() {
-      // [position]
-      grid-area: cards;
-    }
+      // element
+      // `.body > .content > .faculty > .faculty__filter`
+      // block
+      // `.body > .content > .faculty > .filter`
+      @include filter( $block: 'faculty' );
 
-    // block
-    // `body > .content > .no-result`
-    > .no-result {
-      // [position]
-      grid-area: noResult;
-
-      // [layout]
-      text-align: center;
-
-      // [skin]
-      min-height: 100%;
-
-      // modifier
-      // `body > .content > .no-result--hide`
-      &--hide {
-        // [layout]
-        display: none;
+      // element
+      // `.body > .content > .faculty > .faculty__no-result`
+      // block
+      // `.body > .content > .faculty > .no-result`
+      @include no-result( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
       }
+
+      // element
+      // `.body > .content > .faculty > .faculty__loading`
+      // block
+      // `.body > .content > .faculty > .loading`
+      @include loading( $block: 'faculty' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // element
+      // `.body > .content > .faculty > .faculty__cards`
+      // block
+      // `.body > .content > .faculty > .cards`
+      @include cards ( $block: 'faculty' );
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

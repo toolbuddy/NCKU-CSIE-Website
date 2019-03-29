@@ -1,0 +1,912 @@
+@import 'components/common/font';
+@import 'components/common/icon';
+
+// components
+// `> .#{ $block } > .header`
+@mixin header--medium ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__header`
+  // block
+  // `> .#{ $block } > .header`
+  > .#{ $block }__header.header.header--medium {
+    // [ variable ]
+    $large: 1200px;
+    $medium: 561px;
+    @media screen and ( max-width: $medium ) {
+      display: none;
+    }
+    @media screen and ( min-width: $large ) {
+      display: none;
+    }
+    @media screen and ( min-width: $medium ) and ( max-width: $large ) {
+      // [ variable ]
+      $logo-width: font__px-to-rem( 58 );
+      $logo-height: font__px-to-rem( 44 );
+      $caption-title-font-size: font__px-to-rem( 16 );
+      $caption-subtitle-font-size: font__px-to-rem( 12 );
+      $caption-gap: font__px-to-rem( 4 );
+
+      // [ position ]
+      // This style is set to put `.header__menu` on the right of screen.
+      position: fixed;
+      z-index: 1;
+      top: font__px-to-rem( -100 );
+
+      // [ layout ]
+      display: block;
+      text-align: left;
+      line-height: 0;
+
+      // [ skin ]
+      width: 100%;
+      height: font__px-to-rem( 96 );
+      background-color: #ffffff;
+      box-shadow: 0 font__px-to-rem( 1 ) font__px-to-rem( 2 ) rgba( 0, 0, 0, .25 );
+
+      &.header--active {
+        // [ position ]
+        top: font__px-to-rem( 0 );
+      }
+
+      // element
+      // `> .#{ $block } > .header.header--medium > .header__logo`
+      // block
+      // `> .#{ $block } > .header.header--medium > .logo`
+      > .header__logo.logo {
+        // [ layout ]
+        display: inline-block;
+        margin: {
+          top: font__px-to-rem( 26 );
+          left: font__px-to-rem( 12 );
+          bottom: font__px-to-rem( 26 );
+          right: 0;
+        }
+        vertical-align: top;
+
+        // [ skin ]
+        width: $logo-width;
+        height: $logo-height;
+        background-color: transparent;
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .logo > .logo__image`
+        > .logo__image {
+          // [ layout ]
+          display: inline-block;
+          vertical-align: top;
+
+          // [ skin ]
+          width: 100%;
+          height: auto;
+          background-color: transparent;
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .header.header--medium > .header__caption`
+      // block
+      // `> .#{ $block } > .header.header--medium > .caption`
+      > .header__caption.caption {
+        // [ layout ]
+        display: inline-block;
+        margin: {
+          top: font__px-to-rem( 26 );
+          bottom: font__px-to-rem( 26 );
+          left: font__px-to-rem( 10 );
+        }
+        vertical-align: top;
+
+        // [ skin ]
+        width: auto;
+        height: $logo-height;
+        background-color: transparent;
+        padding: {
+          top: ( $logo-height - $caption-title-font-size - $caption-subtitle-font-size - $caption-gap ) / 2;
+          bottom: ( $logo-height - $caption-title-font-size - $caption-subtitle-font-size - $caption-gap ) / 2;
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .logo > .caption > .caption__title`
+        // block
+        // `> .#{ $block } > .header.header--medium > .logo > .caption > .title`
+        > .caption__title.title {
+          // [ layout ]
+          display: block;
+          margin-bottom: $caption-gap;
+          text-align: left;
+          line-height: $caption-title-font-size;
+
+          // [ skin ]
+          width: auto;
+          height: $caption-title-font-size;
+          color: #212121;
+          background-color: transparent;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .logo > .caption > .title > .title__text`
+          > .title__text {
+            // [ layout ]
+            display: inline-block;
+            vertical-align: top;
+            line-height: $caption-title-font-size;
+
+            // [ skin ]
+            width: auto;
+            height: $caption-title-font-size;
+            background-color: transparent;
+            font: {
+              size: $caption-title-font-size;
+              style: normal;
+              weight: bold;
+            }
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .logo > .caption > .caption__subtitle`
+        // block
+        // `> .#{ $block } > .header.header--medium > .logo > .caption > .subtitle`
+        > .caption__subtitle.subtitle {
+          // [ layout ]
+          display: block;
+          text-align: left;
+          line-height: $caption-subtitle-font-size;
+
+          // [ skin ]
+          width: auto;
+          height: $caption-subtitle-font-size;
+          color: #212121;
+          background-color: transparent;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .logo > .caption > .subtitle > .subtitle__text`
+          > .subtitle__text {
+            // [ layout ]
+            display: inline-block;
+            vertical-align: top;
+            line-height: $caption-subtitle-font-size;
+            word-spacing: font__px-to-rem( 3 );
+
+            // [ skin ]
+            width: auto;
+            height: $caption-subtitle-font-size;
+            border: {
+              color: transparent;
+              style: solid;
+              right-width: font__px-to-rem( 3 );
+            }
+            background-color: transparent;
+            font: {
+              size: $caption-subtitle-font-size;
+              style: normal;
+              weight: normal;
+            }
+          }
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .header.header--medium > .header__menu`
+      > .header__menu {
+        // [ position ]
+        position: absolute;
+        right: font__px-to-rem( 20 );
+        top: 0;
+
+        // [ layout ]
+        display: inline-block;
+        margin: {
+          top: ( $logo-height - font__px-to-rem( 17 ) ) / 2 + font__px-to-rem( 26 );
+          bottom: ( $logo-height - font__px-to-rem( 17 ) ) / 2 + font__px-to-rem( 26 );
+          left: font__px-to-rem( 12 );
+          right: font__px-to-rem( 12 );
+        }
+        line-height: 0;
+
+        // [ skin ]
+        width: font__px-to-rem( 28 );
+        height: font__px-to-rem( 17 );
+        background-color: transparent;
+
+        // [ before & after ]
+        // The look of these elements should be three parallel horizontal lines.
+        &::before, &::after {
+          // [ layout ]
+          display: inline-block;
+          vertical-align: top;
+
+          // [ skin ]
+          width: 100%;
+          border: {
+            color: #757575;
+            style: solid;
+          }
+          background-color: transparent;
+          content: '';
+        }
+
+        // [ before ]
+        &::before {
+          // [ skin ]
+          height: font__px-to-rem( 10 );
+          border: {
+            top-width: font__px-to-rem( 3 );
+            bottom-width: font__px-to-rem( 3 );
+          }
+        }
+
+        // [ after ]
+        &::after {
+          // [ skin ]
+          height: font__px-to-rem( 7 );
+          border-bottom-width: font__px-to-rem( 3 );
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .header.header--medium > .header__navigation`
+      // block
+      // `> .#{ $block } > .header.header--medium > .navigation`
+      > .header__navigation.navigation {
+        // [ variable ]
+        $border-height: font__px-to-rem( 1 );
+        $item-width: font__px-to-rem( 320 );
+        $item-height: font__px-to-rem( 50 ) + $border-height;
+        $font-size: font__px-to-rem( 16 );
+
+        // [ position ]
+        position: fixed;
+        top: 0;
+        right: -1 * $item-width;
+        z-index: 2;
+
+        // [ layout ]
+        overflow-y: auto;
+
+        // [ skin ]
+        width: $item-width;
+        height: 100%;
+        background-color: #213262;
+
+        // [ animation ]
+        transition: right .5s;
+
+        // modifier
+        // `> .#{ $block } > .header.header--medium > .header__navigation > .header__navigation--active`
+        &.header__navigation--active {
+          // [ position ]
+          right: 0;
+
+          // [ layout ]
+          display: block;
+
+          // [ skin ]
+          width: $item-width;
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .navigation > .navigation__search`
+        // block
+        // `> .#{ $block } > .header.header--medium > .navigation > .search`
+        > .navigation__search.search {
+          // [ layout ]
+          display: inline-block;
+          margin: {
+            top: font__px-to-rem( 12 );
+            bottom: font__px-to-rem( 12 );
+            left: font__px-to-rem( 18 );
+            right: font__px-to-rem( 12 );
+          }
+
+          // [ skin ]
+          width: font__px-to-rem( 240 );
+          height: font__px-to-rem( 42 );
+          padding: {
+            left: font__px-to-rem( 10 );
+            right: font__px-to-rem( 10 );
+          }
+          background-color: #1d2d56;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .search > .search__input`
+          > .search__input {
+            // [ layout ]
+            display: inline-block;
+            vertical-align: top;
+            margin-right: font__px-to-rem( 6 );
+
+            // [ skin ]
+            width: font__px-to-rem( 200 );
+            height: 100%;
+            color: #ffffff;
+            background-color: transparent;
+            font: {
+              size: $font-size;
+              style: normal;
+              weight: normal;
+            }
+
+            // [ placeholder ]
+            &::placeholder {
+              // [ skin ]
+              color: #8e96ab;
+              font: {
+                size: $font-size;
+                style: normal;
+                weight: normal;
+              }
+            }
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .search > .search__submit`
+          // block
+          // `> .#{ $block } > .header.header--medium > .navigation > .search > .submit`
+          > .search__submit.submit {
+            // [ layout ]
+            display: inline-block;
+            margin: {
+              top: font__px-to-rem( 14 );
+              bottom: font__px-to-rem( 14 );
+            }
+
+            // [ skin ]
+            width: font__px-to-rem( 14 );
+            height: font__px-to-rem( 14 );
+            background-color: transparent;
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .search > .submit > .submit__image`
+            > .submit__image {
+              // [ layout ]
+              vertical-align: top;
+
+              // [ skin ]
+              width: 100%;
+              height: 100%;
+              filter:
+                invert( 100% )
+                sepia( 0% )
+                saturate( 1% )
+                hue-rotate( 49deg )
+                brightness( 101% )
+                contrast( 101% );
+            }
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .navigation > .navigation__cancel`
+        > .navigation__cancel {
+          // [ position ]
+          position: relative;
+
+          // [ layout ]
+          display: inline-block;
+          margin: {
+            top: font__px-to-rem( 21 );
+            bottom: font__px-to-rem( 21 );
+          }
+          vertical-align: top;
+
+          // [ skin ]
+          width: font__px-to-rem( 24 );
+          height: font__px-to-rem( 24 );
+          background-color: transparent;
+
+          // [ before & after ]
+          // The look of these elements should be a cross.
+          &::before, &::after {
+            // [ position ]
+            // In order to make a cross,
+            // elements should be at the same position first.
+            position: absolute;
+
+            // Transform should happen at middle,
+            // or it will overflow y otherwise.
+            top: 50%;
+            left: 0;
+
+            // [ layout ]
+            display: inline-block;
+
+            // [ skin ]
+            width: 100%;
+            height: font__px-to-rem( 3 );
+            background-color: #ffffff;
+            content: '';
+          }
+
+          // [ before ]
+          &::before {
+            // [ skin ]
+            transform: rotate( 45deg );
+          }
+
+          // [ before ]
+          &::after {
+            // [ skin ]
+            transform: rotate( -45deg );
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .navigation > .navigation__list`
+        // block
+        // `> .#{ $block } > .header.header--medium > .navigation > .list`
+        > .navigation__list.list {
+          // [ layout ]
+          display: block;
+
+          // [ skin ]
+          width: 100%;
+          height: auto;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .list > .list__item`
+          // block
+          // `> .#{ $block } > .header.header--medium > .navigation > .list > .item`
+          > .list__item.item {
+            // [ position ]
+            // This style is set to make `.item__switch` overlap other elements.
+            position: relative;
+
+            // [ layout ]
+            display: block;
+            text-align: left;
+
+            // [ skin ]
+            width: 100%;
+            height: auto;
+            border-top: $border-height solid #415277;
+            background-color: transparent;
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__link`
+            > .item__link {
+              // [ position ]
+              // This style is set to put `.item__link` above `.item__switch`.
+              position: relative;
+              z-index: 5;
+
+              // [ layout ]
+              display: inline-block;
+              vertical-align: top;
+              line-height: $font-size;
+
+              // [ skin ]
+              width: auto;
+              height: $item-height;
+              padding: {
+                top: ( $item-height - $border-height - $font-size ) / 2;
+                bottom: ( $item-height - $border-height - $font-size ) / 2;
+                left: font__px-to-rem( 30 );
+              }
+              color: #8f98ae;
+              background-color: transparent;
+              font: {
+                size: $font-size;
+                style: normal;
+                weight: normal;
+              }
+
+              // modifier
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__link.item__link--no-dropdown`
+              &.item__link--no-dropdown {
+                // [ skin ]
+                width: 100%;
+              }
+            }
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__switch`
+            > .item__switch {
+              // [ position ]
+              // `z-index` is set to put `.item__switch` beneath `.item__link`.
+              position: absolute;
+              text-align: right;
+              left: 0;
+              top: 0;
+              z-index: 4;
+
+              // [ layout ]
+              display: block;
+
+              // [ skin ]
+              width: 100%;
+              height: $item-height;
+              padding-right: font__px-to-rem( 20 );
+              background-color: transparent;
+              cursor: pointer;
+
+              // [ after ]
+              // The look of this element should look like arrow.
+              &::after {
+                // [ layout ]
+                display: inline-block;
+                vertical-align: middle;
+
+                // [ skin ]
+                width: font__px-to-rem( 14 );
+                height: font__px-to-rem( 14 );
+                border: {
+                  color: #8f98ae;
+                  style: solid;
+                  top-width: font__px-to-rem( 3 );
+                  right-width: font__px-to-rem( 3 );
+                }
+                content: '';
+                transform: rotate( 45deg );
+
+                // [ animation ]
+                transition: transform .5s;
+              }
+
+              // modifier
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__switch > .item__switch--active`
+              &.item__switch--active {
+                // [ after ]
+                &::after {
+                  // [ skin ]
+                  transform: rotate( 135deg );
+                }
+              }
+            }
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__dropdown`
+            // block
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown`
+            > .item__dropdown.dropdown {
+              // [ layout ]
+              display: block;
+              overflow: hidden;
+
+              // [ skin ]
+              // In order to trigger `height` transition without knowing actual elements `height`,
+              // `max-height` must be used instead of `height`.
+              width: 100%;
+              max-height: 0;
+              background-color: #1d2d56;
+              opacity: 0;
+
+              // [ animation ]
+              transition: height .5s, padding .5s, opacity .5s;
+
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown > .dropdown__item`
+              // block
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown > .item`
+              > .dropdown__item.item {
+                // [ layout ]
+                display: block;
+                margin-left: font__px-to-rem( 130 ) / $item-width * 100%;
+
+                // [ skin ]
+                width: font__px-to-rem( 180 ) - $border-height;
+                height: font__px-to-rem( 40 );
+                border-left: $border-height solid #404e6e;
+                padding: {
+                  top: font__px-to-rem( 12 );
+                  bottom: font__px-to-rem( 12 );
+                  left: font__px-to-rem( 30 );
+                }
+
+                // element
+                // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown > .item > .item__link`
+                > .item__link {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: $font-size;
+
+                  // [ skin ]
+                  width: 100%;
+                  height: 100%;
+                  color: #ffffff;
+                  font: {
+                    size: $font-size;
+                    style: normal;
+                    weight: normal;
+                  }
+                }
+              }
+
+              // modifier
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__dropdown > .item__dropdown--open`
+              &.item__dropdown--open {
+                // [ skin ]
+                // In order to trigger `max-height` transition,
+                // `max-height` must be larger than possible height.
+                max-height: font__px-to-rem( 10000 );
+                padding: {
+                  top: font__px-to-rem( 20 );
+                  bottom: font__px-to-rem( 20 );
+                }
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .navigation > .navigation__login`
+        // block
+        // `> .#{ $block } > .header.header--medium > .navigation > .login`
+        > .navigation__login.login {
+          // [ layout ]
+          display: block;
+          text-align: left;
+
+          // [ skin ]
+          width: 100%;
+          height: $item-height;
+          border-top: $border-height solid #415277;
+          padding-left: font__px-to-rem( 30 );
+          background-color: transparent;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__image`
+          > .login__image {
+            // [ layout ]
+            display: inline-block;
+            margin-right: font__px-to-rem( 20 );
+
+            // [ skin ]
+            width: font__px-to-rem( 24 );
+            height: $item-height - $border-height;
+            padding: {
+              top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+              bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+            }
+            filter:
+              invert( 100% )
+              opacity( 50% );
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__text`
+          > .login__text {
+            // [ layout ]
+            display: inline-block;
+            vertical-align: top;
+            line-height: $font-size;
+
+            // [ skin ]
+            width: auto;
+            height: $item-height - $border-height;
+            padding: {
+              top: ( $item-height - $border-height - $font-size ) / 2;
+              bottom: ( $item-height - $border-height - $font-size ) / 2;
+            }
+            color: #8f98ae;
+            font-size: $font-size;
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .header.header--medium > .navigation > .navigation__language`
+        // block
+        // `> .#{ $block } > .header.header--medium > .navigation > .language`
+        > .navigation__language.language {
+          // [ position ]
+          // This style is set to put `.language__text` beneath `.language__switch`.
+          position: relative;
+
+          // [ layout ]
+          display: block;
+          text-align: left;
+
+          // [ skin ]
+          width: 100%;
+          height: auto;
+          border: {
+            top: $border-height solid #415277;
+            bottom: $border-height solid #415277;
+          }
+          background-color: transparent;
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__image`
+          > .language__image {
+            // [ position ]
+            position: relative;
+            top: 50%;
+            z-index: 0;
+
+            // [ layout ]
+            display: inline-block;
+            margin-left: font__px-to-rem( 30 );
+
+            // [ skin ]
+            width: font__px-to-rem( 24 );
+            height: $item-height - $border-height;
+            padding: {
+              top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+              bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+            }
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__text`
+          > .language__text {
+            // [ position ]
+            position: relative;
+            top: 0;
+            z-index: 0;
+
+            // [ layout ]
+            display: inline-block;
+            margin-left: font__px-to-rem( 20 );
+            vertical-align: top;
+            line-height: $font-size;
+
+            // [ skin ]
+            width: auto;
+            height: font__px-to-rem( 24 );
+            padding: {
+              top: ( $item-height - font__px-to-rem( 24 ) ) / 2;
+              bottom: ( $item-height - font__px-to-rem( 24 ) ) / 2;
+            }
+            color: #8f98ae;
+            font-size: $font-size;
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__switch`
+          > .language__switch {
+            // [ position ]
+            // `z-index` is set to put `.language__switch` beneath `.item__text`.
+            position: absolute;
+            text-align: right;
+            left: 0;
+            top: 0;
+            z-index: 0;
+
+            // [ layout ]
+            display: inline-block;
+
+            // [ skin ]
+            width: 100%;
+            height: $item-height - $border-height;
+            padding-right: font__px-to-rem( 20 );
+            background-color: transparent;
+
+            &::after {
+              // [ layout ]
+              display: inline-block;
+              vertical-align: middle;
+
+              // [ skin ]
+              width: font__px-to-rem( 14 );
+              height: font__px-to-rem( 14 );
+              border: {
+                color: #8f98ae;
+                style: solid;
+                top-width: font__px-to-rem( 3 );
+                right-width: font__px-to-rem( 3 );
+              }
+              content: '';
+              transform: rotate( 45deg );
+
+              // [ animation ]
+              transition: transform .5s;
+            }
+
+            // modifier
+            // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__switch > .language__switch--active`
+            &.language__switch--active {
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .language > .switch > .switch__icon`
+              &::after {
+                // [ skin ]
+                transform: rotate( 135deg );
+              }
+            }
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__dropdown`
+          // block
+          // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown`
+          > .language__dropdown.dropdown {
+            // [ layout ]
+            display: block;
+            overflow: hidden;
+
+            // [ skin ]
+            // In order to trigger `height` transition without knowing actual elements `height`,
+            // `max-height` must be used instead of `height`.
+            width: 100%;
+            max-height: 0;
+            background-color: #1d2d56;
+            opacity: 0;
+
+            // [ animation ]
+            transition: height .5s, padding .5s, opacity .5s;
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .dropdown__item`
+            // block
+            // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item`
+            > .dropdown__item.item {
+              // [ layout ]
+              display: block;
+
+              // [ skin ]
+              width: 100%;
+              height: $item-height - $border-height;
+              padding-left: font__px-to-rem( 30 );
+
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item > .item__link`
+              // block
+              // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item > .link`
+              > .item__link.link {
+                // [ layout ]
+                display: block;
+                letter-spacing: normal;
+
+                // [ skin ]
+                width: 100%;
+                height: 100%;
+                color: #ffffff;
+
+                // element
+                // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item > .link > .link__image`
+                > .link__image {
+                  // [ layout ]
+                  margin-right: font__px-to-rem( 20 );
+                  vertical-align: top;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 24 );
+                  height: 100%;
+                  padding: {
+                    top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+                    bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
+                  }
+                }
+
+                // element
+                // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item > .link > .link__text`
+                > .link__text {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: $font-size;
+
+                  // [ skin ]
+                  height: 100%;
+                  padding: {
+                    top: ( $item-height - $border-height - $font-size ) / 2;
+                    bottom: ( $item-height - $border-height - $font-size ) / 2;
+                  }
+                  color: #8f98ae;
+                  font-size: $font-size;
+
+                  // modifier
+                  // `> .#{ $block } > .header.header--medium > .navigation > .language > .dropdown > .item > .link > .link__text > .link__text--active`
+                  &.link__text--active {
+                    // [ skin ]
+                    color: #ffffff;
+                  }
+                }
+              }
+            }
+
+            // modifier
+            // `> .#{ $block } > .header.header--medium > .navigation > .language > .language__dropdown.language__dropdown--open`
+            &.language__dropdown--open {
+              // [ skin ]
+              // In order to trigger `max-height` transition,
+              // `max-height` must be larger than possible height.
+              max-height: 10000 / 32 * 1rem;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,17 +1,61 @@
-import header from 'static/src/js/components/common/header/index.js';
-import filters from 'static/src/js/components/about/faculty/filters/index.js';
-import getFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import GetHeaderBase from 'static/src/js/components/common/header-base.js';
+import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
+import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
+import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import GetFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
-header( document.getElementById( 'header' ) );
+try {
+    const headerBase = new GetHeaderBase( {
+        headerDOM:     document.querySelector( '.body__header.header.header--base' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerBase instanceof GetHeaderBase ) )
+        throw new Error( '.header.header--base not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerSmall = new GetHeaderSmall( {
+        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerSmall instanceof GetHeaderSmall ) )
+        throw new Error( '.header.header--small not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerMedium = new GetHeaderMedium( {
+        headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerMedium instanceof GetHeaderMedium ) )
+        throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerLarge = new GetHeaderLarge( {
+        headerDOM:     document.querySelector( '.body__header.header.header--large' ),
+    } );
+    if ( !( headerLarge instanceof GetHeaderLarge ) )
+        throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getFaculty = new GetFactuly( {
+        facultyDOM: document.getElementById( 'faculty' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+    } );
 
-const cards = document.getElementById( 'cards' );
-
-// Construct filter's events on DOM element `#filters`, '#cards`, `#no-result`.
-filters(
-    document.getElementById( 'filters' ),
-    cards,
-    document.getElementById( 'no-result' )
-);
-
-// Get all faculty data from database and append to DOM element `#cards`.
-getFactuly( cards );
+    getFaculty.exec();
+}
+catch ( err ) {
+    console.error( err );
+}

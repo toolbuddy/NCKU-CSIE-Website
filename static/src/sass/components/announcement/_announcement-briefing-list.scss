@@ -1,0 +1,160 @@
+@import 'components/common/font';
+@import 'components/common/no-result';
+@import 'components/common/loading';
+@import 'components/announcement/briefing';
+
+// component
+// `> .#{ $block } > .#{ $block }__announcement.announcement`
+@mixin announcement ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__announcement`
+  // block
+  // `> .#{ $block } > .announcement`
+  > .#{ $block }__announcement.announcement {
+    // [ variable ]
+    $large: 768px;
+
+    // element
+    // `> .#{ $block } > .announcement > .announcement__title`
+    > .announcement__title {
+      // [ layout ]
+      display: inline-block;
+      text-align: left;
+      line-height: font__px-to-rem( 18 );
+
+      // [ skin ]
+      height: font__px-to-rem( 32 );
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+
+      // [ before ]
+      // Yellow flag icon.
+      &::before {
+        // [ layout ]
+        display: inline-block;
+        margin-right: font__px-to-rem( 12 );
+        vertical-align: middle;
+
+        // [ skin ]
+        width: font__px-to-rem( 24 );
+        height: font__px-to-rem( 32 );
+        border: {
+          style: solid;
+          top: {
+            color: #f5c150;
+            width: font__px-to-rem( 32 ) * .8;
+            left-radius: font__px-to-rem( 3 );
+            right-radius: font__px-to-rem( 3 );
+          }
+          bottom: {
+            color: transparent;
+            width: font__px-to-rem( 32 ) * .2;
+          }
+          right: {
+            color: #f5c150;
+            width: font__px-to-rem( 24 ) / 2;
+          }
+          left: {
+            color: #f5c150;
+            width: font__px-to-rem( 24 ) / 2;
+          }
+        }
+        content: '';
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .announcement > .announcement__no-result`
+    // block
+    // `> .#{ $block } > .announcement > .no-result`
+    @include no-result( 'announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
+
+    // element
+    // `> .#{ $block } > .announcement > .announcement__loading`
+    // block
+    // `> .#{ $block } > .announcement > .loading`
+    @include loading( 'announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
+
+    // element
+    // `> .#{ $block } > .announcement > .announcement__briefings`
+    // block
+    // `> .#{ $block } > .announcement > .briefings`
+    > .announcement__briefings.briefings {
+      // [ skin ]
+      margin-top: font__px-to-rem( 22 );
+      transform-origin: top;
+
+      // [ animation ]
+      transition: max-height .5s ease;
+      @keyframes collapse {
+        from {
+          // [ skin ]
+          transform: scaleY( 1 );
+        }
+
+        to {
+          // [ skin ]
+          transform: scaleY( 0 );
+        }
+      }
+      @keyframes expand {
+        from {
+          // [ skin ]
+          transform: scaleY( 0 );
+        }
+
+        to {
+          // [ skin ]
+          transform: scaleY( 1 );
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--hide`
+      &.announcement__briefings--hide {
+        // [ skin ]
+        max-height: 0;
+        transform: scaleY( 0 );
+
+        // [ animation ]
+        animation: {
+          name: collapse;
+          duration: .5s;
+          fill-mode: forwards;
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--show`
+      &.announcement__briefings--show {
+        // [ skin ]
+        max-height: font__px-to-rem( 30000 );
+        transform: scaleY( 1 );
+
+        // [ animation ]
+        animation: {
+          name: expand;
+          duration: .5s;
+          timing-function: ease;
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .announcement > .briefings > .briefings__briefing`
+      // block
+      // `> .#{ $block } > .announcement > .briefings  > .briefing`
+      @include briefing( $block: 'briefings' );
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

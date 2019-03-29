@@ -1,62 +1,86 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/footer';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
 @import 'components/common/entries';
+@import 'components/common/footer';
 
-body > {
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
   // block
-  // `body > .banner`
-  @include banner( 'https://via.placeholder.com/1920x500' );
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
 
+  // element
+  // `.body > .body__banner`
   // block
-  // `body > .breadcrumb`
-  @include breadcrumb( #ffffff );
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'announcement/index' );
 
+  // element
+  // `.body > .body__content`
   // block
-  // `body > .content`
-  > .content {
-    // [ variable ]
-    $large: 475px;
-
-    // [ layout ]
-    display: grid;
-    grid: {
-      template: {
-        areas:
-          '.'
-          'entries'
-          '.';
-        columns: 100%;
-      }
-      row-gap: .6rem;
-    };
-
+  // `.body > .content`
+  > .body__content.content {
     // [ skin ]
     width: 100%;
     background-color: #ffffff;
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
       // [ layout ]
-      grid: {
-        template: {
-          areas:
-            '. . .'
-            '. entries .'
-            '. . .';
-          columns: 1fr 95% 1fr;
-        }
-        row-gap: 3.1rem;
-      };
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1362 );
+      width: 80%;
+      border: {
+        style: solid;
+        top-width: font__px-to-rem( 20 );
+        color: transparent;
+      }
     }
 
+    // element
+    // `.body > .content > .content__entries`
     // block
-    // `body > .content > .entries`
-    @include entries() {
-      // [ position ]
-      grid-area: entries;
+    // `.body > .content > .entries`
+    @include entries( $block: 'content' ) {
+      // [ layout ]
+      margin: {
+        top: font__px-to-rem( 32 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1362 );
+      width: 100%;
+      border-bottom: 10px solid transparent;
     }
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

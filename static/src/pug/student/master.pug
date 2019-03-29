@@ -3,55 +3,72 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
-        'title':     'Master',
-        'topic':     'Master',
-        'pinned':    'Pinned Announcement',
-        'normal':    'Announcement',
-        'breadcrumb': {
-          'home':    'Home',
-          'student': 'Student',
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:     'Master',
+        topic:     'Master',
+        time:   {
+          from: 'Start Date',
+          to:   'End Date',
+        },
+        pinned:    'Pinned Announcement',
+        normal:    'Announcement',
+        breadcrumb: {
+          home:    'Home',
+          student: 'Student',
         },
       },
-      'zh-TW': {
-        'title':     '碩士',
-        'topic':     '碩士',
-        'pinned':    '置頂貼文',
-        'normal':    '一般公告',
-        'breadcrumb': {
-          'home':    '首頁',
-          'student': '學生事務',
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:     '碩士',
+        topic:     '碩士',
+        time:   {
+          from: '開始日期',
+          to:   '結束日期',
+        },
+        pinned:    '置頂貼文',
+        normal:    '一般公告',
+        breadcrumb: {
+          home:    '首頁',
+          student: '學生事務',
         },
       },
     } );
-    const filterModifier = 'master';
-    const filterTags = [
-      'award',
-      'competition',
-      'conference',
-      'exhibition',
-      'international',
-      'internship',
-      'master',
-      'rule',
-      'scholarship',
-      'speech',
-    ];
+    const tags = [
+        'master',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech',
+        'award',
+        'international',
+        'scholarship',
+        'internship',
+        'rule',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/master';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'student/master' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.student, url: 'student' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

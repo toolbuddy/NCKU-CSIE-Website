@@ -3,40 +3,45 @@
  *
  * Including following sub-routes:
  * - `/research`
- * - `/research/labs`
- * - `/research/publications`
+ * - `/research/lab`
+ * - `/research/publication`
  */
-
-import path from 'path';
 
 import express from 'express';
 
-import { projectRoot, } from 'settings/server/config.js';
+import staticHtml from 'routes/utils/static-html.js';
 
-const router = express.Router();
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/research`.
  */
 
-router.get( /^\/$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/index.${ req.query.language }.html` ) );
-} );
+router
+.route( [
+    '/',
+    '/index',
+] )
+.get( staticHtml( 'research/index' ) );
 
 /**
- * Resolve URL `/research/labs`.
+ * Resolve URL `/research/lab`.
  */
 
-router.get( /^\/labs$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/labs.${ req.query.language }.html` ) );
-} );
+router
+.route( '/lab' )
+.get( staticHtml( 'research/lab' ) );
 
 /**
- * Resolve URL `/research/publications`.
+ * Resolve URL `/research/publication`.
  */
 
-router.get( /^\/publications$/, ( req, res ) => {
-    res.sendFile( path.join( projectRoot, `/static/dist/html/research/publications.${ req.query.language }.html` ) );
-} );
+router
+.route( '/publication' )
+.get( staticHtml( 'research/publication' ) );
 
 export default router;

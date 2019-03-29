@@ -3,44 +3,63 @@ extends /layouts/announcement/briefing.pug
 append data
   -
     const i18n = Object.freeze( {
-      'en-US': {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
         'title':    'Recruitments',
         'topic':    'Recruitments',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
         'pinned':   'Pinned Announcement',
         'normal':   'Announcement',
         'breadcrumb': {
-          'home':   'Home',
-          'normal': 'Announcement',
+          'home':         'Home',
+          'announcement': 'Announcement',
         },
       },
-      'zh-TW': {
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title':    '徵人資訊',
         'topic':    '徵人資訊',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
         'pinned':   '置頂貼文',
         'normal':   '一般公告',
         'breadcrumb': {
-          'normal': '系所公告',
-          'home':   '首頁',
+          'home':         '首頁',
+          'announcement': '系所公告',
         },
       },
     } );
-    const filterModifier = 'recruitment';
-    const filterTags = [ 'recruitment', ];
+    const tags = [
+        'recruitment',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'announcement/recruitment';
 
 append title
-  +title( i18n[ language ].title )
+  +title( i18n[ LANG.id ].title )
 
 append stylesheets
   +css( 'announcement/recruitment' )
 
 append header
-  +banner( i18n[ language ].title )
-  +breadcrumb( [
-    { text: i18n[ language ].breadcrumb.home, url: '' },
-    { text: i18n[ language ].breadcrumb.normal, url: 'announcement' },
-    { text: i18n[ language ].title },
-   ] )
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.announcement, route: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
 
 append footer
 

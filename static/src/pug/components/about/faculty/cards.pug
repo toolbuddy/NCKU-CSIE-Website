@@ -1,89 +1,81 @@
-//- Each `cards__card` contains one faculty
-mixin cards__card( profile = {} )
+include /components/common/image.pug
+
+//- Sort faculty based on their showing order.
+- data.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
+each profile in data
   -
     const i18n = Object.freeze( {
-      'en-US': {
-        'more':   'Read more',
-        'email':  'Email',
-        'office': 'Office',
-        'tel':    'Tel',
-        'ext':    'ext.',
-        'lab':    'Lab',
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        more: 'Read more',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' ext. ' ) : '',
       },
-      'zh-TW': {
-        'more':   '更多資訊',
-        'email':  '信箱',
-        'office': '辦公室',
-        'ext':    '分機',
-        'tel':    '電話',
-        'lab':    '實驗室',
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        more: '更多資訊',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' 分機 ' ) : '',
       },
-    } );
-    const filter = Object.freeze( {
-      '資訊系':      '0',
-      'dept. CSIE': '0',
-      '資訊所':      '1',
-      'inst. CSIE': '1',
-      '醫資所':      '2',
-      'IMI':        '2',
-      '製造所':      '3',
-      'IMIS':       '3',
     } );
 
-  section.cards__card.card
-    //- Faculty's photo.
-    img.card__photo(
-      src = `http://www.csie.ncku.edu.tw/ncku_csie/images/teacher/teacher${ profile.profileId }.jpg`,
-      alt = profile.name
+  if profile.name !== null
+    //- Faculty's department id and research-group id.
+    section.cards__card.card(
+      data-department-ids = `${ Array.isArray( profile.department ) ? profile.department.join() : '' }`,
+      data-research-group-ids = `${ Array.isArray( profile.researchGroup ) ? profile.researchGroup.join() : '' }`
     )
+      //- Faculty's photo.
+      if profile.photo !== null
+        +image( {
+            alt: profile.name,
+            className: 'card__photo',
+            src: `faculty/${ profile.photo }`,
+        } )
+      else
+        +image( {
+            alt: profile.name,
+            className: 'card__photo',
+            src: 'faculty/no-photo.png',
+        } )
 
-    //- Faculty's intro.
-    article.card__intro.intro
+      //- Faculty's intro.
+      article.card__intro.intro
 
-      //- Faculty belongs to some departments.
-      if profile.departments
-        aside.intro__departments.departments
-          each department in profile.departments
-            span.departments__department( data = filter[ department.department ] )= department.department
+        //- Faculty belongs to some departments.
+        if Array.isArray( profile.department ) && profile.department.length
+          aside.intro__departments.departments
+            each departmentId in profile.department
+              span.departments__department(
+                data = `${ departmentId }`
+              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
 
-      //- Faculty's name.
-      if profile.name
-        h1.intro__name= profile.name
+        //- Faculty's name.
+        header.intro__name= profile.name
 
-      //- Faculty has some titles.
-      if profile.titles
-        aside.intro__titles.titles
-          each title in profile.titles
-            span( class = 'titles__title' )= title.title
+        //- Faculty has some titles.
+        if Array.isArray( profile.title ) && profile.title.length
+          aside.intro__titles.titles
+            each title in profile.title
+              span.titles__title= title
 
-      //- Faculty's email.
-      if profile.email
-        aside.intro__email.email
-          span.email__text.text= `${ i18n[ language ].email }: `
-            a.text__link( href = `mailto:${ profile.email }` )= profile.email
+        //- Faculty's email.
+        if profile.email !== null
+          a.intro__email( href = `mailto:${ profile.email }` )= profile.email
 
-      //- Faculty owns some offices, including address and phone.
-      if profile.offices
-        each office in profile.offices
-          if office.address
-            address.intro__address= `${ i18n[ language ].office }: ${ office.address }`
-          if office.tel
-            a.intro__phone( href = `tel:${ office.tel }` )= `${ i18n[ language ].tel }: ${ office.tel.split(',').join( ` ${ i18n[ language ].ext } ` ) }`
+        //- Faculty owns some offices, including address and phone.
+        if profile.officeAddress !== null
+          address.intro__office-address= profile.officeAddress
+        if profile.officeTel !== null
+          a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
 
-      //- Faculty run some labs.
-      if profile.labs
-        each lab in profile.labs
-          aside.intro__lab.lab
-            span.lab__text.text= `${ i18n[ language ].lab }: `
-              a.text__link( href = lab.labWeb )= `${ lab.name }`
+        //- Faculty run some labs, including name, web and address.
+        if profile.labName !== null && profile.labWeb !== null
+          a.intro__lab-name.lab-name( href = profile.labWeb )= profile.labName
+        if profile.labAddress !== null
+          address.intro__lab-address= profile.labAddress
 
       //- Faculty's detail information link.
-      p.intro__more
-        a( href = `/about/faculty/${ profile.profileId }?language=${language}` )= i18n[ language ].more
-
-//- main
-    Construct all faculty information with `cards__card`.
-//- Sort faculty based on their showing order.
-- faculty.sort( ( facultyA, facultyB ) => facultyA.position - facultyB.position )
-each profile in faculty
-  +cards__card( profile )
+      if profile.profileId !== null
+        a.card__more( href = UTILS.url( {
+          href: `about/faculty/${ profile.profileId }`,
+          query: {
+            languageId: LANG.id
+          },
+        } ) )= i18n[ LANG.id ].more

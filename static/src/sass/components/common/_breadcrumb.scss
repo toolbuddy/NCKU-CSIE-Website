@@ -1,83 +1,85 @@
-@mixin breadcrumb ( $background-color ) {
+@import 'components/common/font';
+
+// component
+// `> .#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
+@mixin breadcrumb ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__breadcrumb`
   // block
-  // `> .breadcrumb`
-  > .breadcrumb {
+  // `> .#{ $block } > .breadcrumb`
+  > .#{ $block }__breadcrumb.breadcrumb {
     // [ variable ]
-    $large: 1120px;
+    $large: 800px;
+    $font-size: font__px-to-rem( 20 );
 
     // [ dispaly ]
-    display: flex;
-    padding-left: 5%;
+    display: block;
+    line-height: $font-size * 1.2;
 
     // [ skin ]
-    width: 100%;
-    height: 1.34rem;
-    background-color: $background-color;
-
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      // [ display ]
-      padding-left: 20%;
-    }
+    background-color: transparent;
 
     // element
-    // `> .breadcrumb > .breadcrumb__text`
-    > .breadcrumb__text {
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__link`
+    > .breadcrumb__link {
       // [ layout ]
-      display: flex;
-      margin-top: .59rem;
+      display: inline-block;
+      line-height: $font-size;
 
       // [ skin ]
-      font-size: .63rem;
-      color: #757575;
-      text-decoration: unset;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        margin-top: 1.56rem;
-
-        // [ skin ]
-        color: #adacad;
-      }
-
-      // modifier
-      // `> .breadcrumb > .breadcrumb__text > .breadcrumb__text--link`
-      &.breadcrumb__text--link {
-        // [ skin ]
-        color: #6982c0;
-        text-decoration: underline;
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          color: #213262;
-        }
-      }
+      color: #213262;
+      background-color: transparent;
+      font-size: $font-size;
+      text-decoration: underline;
     }
 
     // element
-    // `> .breadcrumb > .breadcrumb__arrow`
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__arrow`
     > .breadcrumb__arrow {
+      // [ variable ]
+      $image-width: font__px-to-rem( 6 );
+      $image-height: $image-width * 1.6;
+      $vertical-align: $font-size - $image-height;
+
       // [ layout ]
+      display: inline-block;
       margin: {
-        top: .9rem;
-        left: .26rem;
-        right: .26rem;
+        top: $vertical-align / 2;
+        bottom: $vertical-align / 2;
+        left: font__px-to-rem( 18 );
+        right: font__px-to-rem( 18 );
       }
+      vertical-align: middle;
 
       // [ skin ]
-      width: .23rem;
-      height: .375rem;
+      width: $image-width;
+      height: $image-height;
+      background-color: transparent;
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
         margin: {
-          top: 1.85rem;
-          left: .94rem;
-          right: .94rem;
+          left: font__px-to-rem( 40 );
+          right: font__px-to-rem( 40 );
         }
       }
     }
+
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__text`
+    > .breadcrumb__text {
+      // [ layout ]
+      display: inline-block;
+      line-height: $font-size;
+
+      // [ skin ]
+      color: #757575;
+      background-color: transparent;
+      font-size: $font-size;
+    }
+
+    // [ customization ]
+    @content;
   }
 }

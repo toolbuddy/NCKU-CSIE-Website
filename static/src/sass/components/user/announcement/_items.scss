@@ -1,0 +1,17 @@
+@mixin items {
+  background-color: rgba( 224, 224, 224, .4 );
+  border: {
+    left: .19rem solid rgba( 153, 153, 153, .4 );
+    radius: .071rem;
+  }
+  padding: .3rem;
+  font: {
+    size: .571rem;
+    style: normal;
+    weight: 500;
+    family: notosanscjktc;
+  }
+  line-height: 1;
+  letter-spacing: normal;
+  color: #757575;
+}

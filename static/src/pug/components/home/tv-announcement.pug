@@ -1,0 +1,20 @@
+include /components/common/image.pug
+-
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      more: 'More...',
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      more: '查看更多...',
+    },
+  } );
+figure.series__show.show.show--hide
+  +image( {
+    alt: data.title,
+    className: 'show__ad',
+    src: `announcement/${ data.image }`,
+  } )
+  figcaption.show__detail.detail
+    header.detail__title= data.title
+    p.detail__content= data.content
+    a.detail__more( href = UTILS.url( { href: `announcement/${ data.announcementId }` } ) )= i18n[ LANG.id ].more

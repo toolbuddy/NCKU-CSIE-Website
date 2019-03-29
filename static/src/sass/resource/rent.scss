@@ -1,15 +1,93 @@
 @import 'components/common/reset';
-@import 'components/common/header';
-@import 'components/common/footer';
+@import 'components/common/header-base';
+@import 'components/common/header-small';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
 @import 'components/common/not-available';
+@import 'components/common/footer';
 
 // block
-// `body`
-body > {
-  > .content {
-    // block
-    // `body > .content > .not-available`
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--small( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body' ,$image: 'resource/rent' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $large: 700px;
+
+    // [ skin ]
     height: 120%;
-    @include not-available();
+    background-color: #ffffff;
+
+    // template
+    // `.body > .content > .content__?.?`
+    %content__element {
+      // [ layout ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1740 );
+      width: 94%;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        width: 84%;
+      }
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ template ]
+      @extend %content__element;
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+
+    // element
+    // `.body > .content > .content__not-available`
+    // block
+    // `.body > .content > .not-available`
+    @include not-available( $block: 'content' );
   }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
 }

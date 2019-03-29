@@ -1,66 +1,97 @@
-import header from 'static/src/js/components/common/header/index.js';
-import briefing from 'static/src/pug/components/announcement/briefing.pug';
-import briefingHot from 'static/src/pug/components/home/briefing-hot.pug';
+import GetHeaderBase from 'static/src/js/components/common/header-base.js';
+import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
+import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
+import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
+import tagUtils from 'models/announcement/utils/tag.js';
+import { GetAllAnnouncement, GetHotAnnouncement, } from 'static/src/js/components/home/get-announcement.js';
+import GetTvAnnouncements from 'static/src/js/components/home/get-tv-announcements.js';
 
-header( document.getElementById( 'header' ) );
+try {
+    const headerBase = new GetHeaderBase( {
+        headerDOM:     document.querySelector( '.body__header.header.header--base' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerBase instanceof GetHeaderBase ) )
+        throw new Error( '.header.header--base not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerSmall = new GetHeaderSmall( {
+        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerSmall instanceof GetHeaderSmall ) )
+        throw new Error( '.header.header--small not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerMedium = new GetHeaderMedium( {
+        headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
+        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
+    } );
+    if ( !( headerMedium instanceof GetHeaderMedium ) )
+        throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const headerLarge = new GetHeaderLarge( {
+        headerDOM:     document.querySelector( '.body__header.header.header--large' ),
+    } );
+    if ( !( headerLarge instanceof GetHeaderLarge ) )
+        throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getTvAnnouncements = new GetTvAnnouncements( {
+        amount:     6,
+        tvDOM:      document.getElementById( 'tv' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+        tags:       tagUtils.supportedOptions,
+    } );
 
-// Normal briefings
-const announcementBriefing = document.getElementById( 'announcement__briefings' );
-announcementBriefing.innerHTML += briefing( {
-    id:      0,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [
-        'college',
-        'speech',
-        'phd',
-    ],
-} );
-announcementBriefing.innerHTML += briefing( {
-    id:      1,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '兩小段內文',
-    tags:    [
-        'recruitment',
-        'faculty',
-        'exhibition',
-    ],
-} );
-announcementBriefing.innerHTML += briefing( {
-    id:      2,
-    title:   '標題二',
-    time:    '2018-2-2 | 15:02',
-    excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-    tags:    [
-        'college',
-        'speech',
-        'phd',
-    ],
-} );
+    getTvAnnouncements.exec();
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getAllAnnouncement = new GetAllAnnouncement( {
+        amount:          3,
+        announcementDOM: document.getElementById( 'announcement' ),
+        from:            new Date( '2019/01/01' ),
+        languageId:      WebLanguageUtils.currentLanguageId,
+        tags:            tagUtils.supportedOptions,
+        to:              new Date( Date.now() ),
+        page:            1,
+    } );
 
-// Hot news briefings
-const announcementBriefingHot = document.getElementById( 'announcement__briefings--hot-news' );
-announcementBriefingHot.innerHTML += briefingHot( {
-    briefings: [
-        {
-            id:      0,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-        },
-        {
-            id:      1,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '兩小段內文',
-        },
-        {
-            id:      2,
-            title:   '標題二',
-            time:    '2018-2-2 | 15:02',
-            excerpt: '一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文一小段內文',
-        },
-    ],
-} );
+    getAllAnnouncement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getHotAnnouncement = new GetHotAnnouncement( {
+        amount:          3,
+        announcementDOM: document.getElementById( 'hot-announcement' ),
+        from:            new Date( '2019/01/01' ),
+        languageId:      WebLanguageUtils.currentLanguageId,
+        tags:            tagUtils.supportedOptions,
+        to:              new Date( Date.now() ),
+        page:            1,
+    } );
+
+    getHotAnnouncement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}
