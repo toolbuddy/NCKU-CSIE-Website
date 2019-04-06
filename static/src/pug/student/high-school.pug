@@ -1,0 +1,76 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:    'For High School Students',
+        breadcrumb: {
+          home:  'Home',
+          student: 'Students',
+        },
+        index: {
+          title: 'For High School Students',
+          link: {
+            introduction: 'Introduction',
+            curriculum:   'Curriculum',
+            event:        'Events',
+            statistics:   'Statistics',
+            alumni:       'Alumni',
+            information:  'Information',
+            qa:           'Q&A',
+            link:         'Links',
+        },
+      },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '高中生專區',
+        breadcrumb: {
+          home:  '首頁',
+          student: '學生事務',
+        },
+        index: {
+          title: '高中生專區',
+          link: {
+            introduction: '本系介紹',
+            curriculum:   '課程資訊',
+            event:        '課外活動',
+            statistics:   '統計數據',
+            alumni:       '傑出系友',
+            information:  '入學資訊',
+            qa:           'Q&A',
+            link:         'FB連結',
+          },
+        },
+      },
+    } );
+    const currentRoute = 'student/high-school';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'student/high-school' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'student/high-school' )

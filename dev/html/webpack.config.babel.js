@@ -95,6 +95,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'resource/sitemap': path.join( pugRoot, 'resource/sitemap.pug' ),
 
         // Route `student`
+        'student/high-school':       path.join( pugRoot, 'student/high-school.pug' ),
         'student/college':       path.join( pugRoot, 'student/college.pug' ),
         'student/index':         path.join( pugRoot, 'student/index.pug' ),
         'student/master':        path.join( pugRoot, 'student/master.pug' ),
