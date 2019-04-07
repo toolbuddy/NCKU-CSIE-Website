@@ -85,6 +85,8 @@ export default async ( opt ) => {
                 },
             ],
             group:  [ 'announcementId', ],
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
             having: Sequelize.where( Sequelize.fn( 'count', Sequelize.col( 'announcement.announcementId' ) ), tags.length ),
         } );
 

@@ -114,9 +114,8 @@ router
             fileId,
             languageId,
         } );
-
         await new Promise( ( resolve, reject ) => {
-            res.download( `${ projectRoot }/static/dist/file/${ data.filePath }`, data.name, ( err ) => {
+            res.download( `${ projectRoot }/static/dist/file/`, data.filePath, ( err ) => {
                 if ( err ) {
                     reject( err );
                     return;
