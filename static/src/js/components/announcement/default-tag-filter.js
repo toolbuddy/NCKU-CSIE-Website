@@ -764,7 +764,13 @@ export default class DefaultTagFilter {
                 throw new Error( 'failed to get all pinned announcement' );
 
             const data = await res.json();
-            data.map( ( briefing ) => {
+
+            let extractTextObj = data;
+            extractTextObj.forEach((ann) => {
+                ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
+            });
+
+            extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
                     color: tagUtils.getTagColorById( tagId ),
                     tag:   tagUtils.getValueById( {
@@ -873,7 +879,13 @@ export default class DefaultTagFilter {
                 throw new Error( 'failed to get all normal announcement' );
 
             const data = await res.json();
-            data.map( ( briefing ) => {
+
+            let extractTextObj = data;
+            extractTextObj.forEach((ann) => {
+                ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
+            });
+            
+            extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
                     color: tagUtils.getTagColorById( tagId ),
                     tag:   tagUtils.getValueById( {

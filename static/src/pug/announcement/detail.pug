@@ -51,7 +51,7 @@ append content
             class = `tags__tag--${ UTILS.announcement.tagUtils.getTagColorById( tagId ) }`
           )= UTILS.announcement.tagUtils.getValueById( { id: tagId, languageId: LANG.id, } )
       h1.headline__title= data.title
-      a.headline__announcer= `公告人員 : ${ data.author }`
+      // a.headline__announcer= `公告人員 : ${ data.author }`
       time.headline__time= new Date( data.updateTime )
     article.announcement__article.article.markdown-body !{ data.content }
     nav.announcement__attachments.attachments
