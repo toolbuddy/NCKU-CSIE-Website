@@ -148,15 +148,15 @@
       }
     }
 
-
     .content__filter.filter {
       display: block;
       width: 85%;
-      margin-top: font__px-to-rem( 20 );
 
-      // text-align: center;
-      margin-left: auto;
-      margin-right: auto;
+      margin: {
+        left:auto;
+        right: auto;
+        top: font__px-to-rem( 20 );
+      }
     }
 
     // element
@@ -195,7 +195,6 @@
         align-items: end;
         margin-bottom: 0;
       }
-
 
       // element
       // `> .#{ $block } > .filter > .time > .time__#{ $element }`

@@ -209,6 +209,7 @@
         }
         transform: translateY( -50% );
         content: '';
+        @include icon__book();
       }
 
       // element
@@ -261,12 +262,6 @@
           // [ skin ]
           font-size: font__px-to-rem( 16 );
         }
-      }
-
-      // [ before ]
-      &::before {
-        // [ icon ]
-        @include icon__book();
       }
     }
 
