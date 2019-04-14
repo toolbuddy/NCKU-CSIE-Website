@@ -86,6 +86,7 @@ export default {
         'resource/sitemap': path.join( sassRoot, 'resource/sitemap.scss' ),
 
         // Route `student`
+        'student/high-school':       path.join( sassRoot, 'student/high-school.scss' ),
         'student/college':       path.join( sassRoot, 'student/college.scss' ),
         'student/index':         path.join( sassRoot, 'student/index.scss' ),
         'student/master':        path.join( sassRoot, 'student/master.scss' ),

@@ -74,6 +74,7 @@ export default {
         'resource/sitemap': path.join( jsSrcRoot, 'resource/sitemap.js' ),
 
         // Route `student`
+        'student/high-school':       path.join( jsSrcRoot, 'student/high-school.js' ),
         'student/college':       path.join( jsSrcRoot, 'student/college.js' ),
         'student/index':         path.join( jsSrcRoot, 'student/index.js' ),
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),

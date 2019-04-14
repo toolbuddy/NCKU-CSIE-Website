@@ -3,6 +3,7 @@
  *
  * Including following sub-routes:
  * - `/student`
+ * - `/studetn/high-school`
  * - `/student/college`
  * - `/student/master`
  * - `/student/phd`
@@ -28,6 +29,15 @@ router
     '/index',
 ] )
 .get( staticHtml( 'student/index' ) );
+
+/**
+ * Resolve URL `/student/high-school`.
+ */
+
+router
+.route( '/high-school' )
+.get( staticHtml( 'student/high-school' ) );
+
 
 /**
  * Resolve URL `/student/college`.

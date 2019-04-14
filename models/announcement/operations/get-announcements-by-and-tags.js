@@ -100,6 +100,8 @@ export default async ( opt ) => {
             ],
             group:    '`announcement`.`announcementId`',
             having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
             offset:   amount * ( page - 1 ),
             limit:    amount,
 

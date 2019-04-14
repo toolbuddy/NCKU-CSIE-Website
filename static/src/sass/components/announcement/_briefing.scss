@@ -91,7 +91,7 @@
       word-wrap: break-word;
 
       // [ skin ]
-      height: font__px-to-rem( 16 ) * 1.2;
+      height: min-content;
       color: #000000;
       font-size: font__px-to-rem( 16 );
 

@@ -51,7 +51,7 @@ try {
         pagesDOM:              document.getElementById( 'pages' ),
         scrollTopDOM:          document.getElementById( 'announcement--normal' ),
         amount:                6,
-        from:                  new Date( '2019/01/01' ),
+        from:                  new Date( '1999/03/21' ),
         to:                    new Date( Date.now() ),
         page:                  1,
         visiblePageNum:        2,

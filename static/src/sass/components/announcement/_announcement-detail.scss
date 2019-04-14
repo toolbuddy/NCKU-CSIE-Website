@@ -159,6 +159,11 @@
         left: font__px-to-rem( 10 );
         right: font__px-to-rem( 10 );
       }
+
+      td, p {
+        line-height: font__px-to-rem( 20 );
+      }
+      overflow: scroll;
     }
 
     // element
@@ -191,6 +196,7 @@
         background-color: #6982c0;
         font-size: font__px-to-rem( 16 );
         box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 2 ) 0 #7c79ad;
+        line-height: font__px-to-rem( 20 );
 
         // [ before ]
         &::before {

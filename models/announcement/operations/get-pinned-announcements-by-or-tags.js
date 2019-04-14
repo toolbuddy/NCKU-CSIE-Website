@@ -85,6 +85,8 @@ export default async ( opt ) => {
                 },
             ],
             group: '`announcement`.`announcementId`',
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
         } );
 
         if ( !data.length ) {

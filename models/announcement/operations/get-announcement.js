@@ -45,7 +45,6 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-
         const data = await Announcement.findOne( {
             attributes: [
                 'announcementId',
@@ -87,7 +86,6 @@ export default async ( opt ) => {
                             model:      FileI18n,
                             as:         'fileI18n',
                             attributes: [
-                                'filePath',
                                 'name',
                             ],
                             where: {
@@ -98,7 +96,6 @@ export default async ( opt ) => {
                 },
             ],
         } );
-
         if ( !data ) {
             const error = new Error( 'no result' );
             error.status = 404;
@@ -118,7 +115,6 @@ export default async ( opt ) => {
             tags:           data.tag.map( tag => tag.typeId ),
             files:          data.file.map( file => ( {
                 fileId: file.fileId,
-                path:   file.fileI18n[ 0 ].filePath,
                 name:   file.fileI18n[ 0 ].name,
             } ) ),
         };
