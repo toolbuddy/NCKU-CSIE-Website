@@ -4,7 +4,7 @@ mixin header--medium( belongBlock )
   include /components/common/image.pug
   - const i18n = headerI18n();
 
-  header.header.header--medium( class = `${ belongBlock }__header header--active` )
+  header.header.header--medium( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
       +image( {

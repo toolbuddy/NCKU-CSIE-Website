@@ -35,6 +35,15 @@ $banner-path: '~image/banner';
       // [ layout ]
       display: block;
 
+      // margin-top: font__px-to-rem( 70 );
+      // @media screen and( max-width: 1200px ) {
+      //   margin-top: font__px-to-rem( 96 );
+      // }
+      // @media screen and( max-width: 560px ) {
+      //   margin-top: font__px-to-rem( 83 );
+      // }
+
+
       // [ skin ]
       width: 100%;
       height: 100%;
