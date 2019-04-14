@@ -60,7 +60,6 @@ export default async ( opt ) => {
             category:      publication.category,
             international: publication.international,
             refereed:      publication.refereed,
-
             title:         publication.publicationI18n[ 0 ].title,
             authors:       publication.publicationI18n[ 0 ].authors,
         } ) );
