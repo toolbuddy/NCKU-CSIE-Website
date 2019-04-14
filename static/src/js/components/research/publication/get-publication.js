@@ -11,7 +11,6 @@ import { host, staticHost, } from 'settings/server/config.js';
 import cardHTML from 'static/src/pug/components/research/publication/card.pug';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import { async, } from 'q';
 
 export default class GetPublications {
     /**
