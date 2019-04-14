@@ -12,7 +12,6 @@ append data
         index: {
           title: 'For High School Students',
           link: {
-            introduction: 'Introduction',
             curriculum:   'Curriculum',
             event:        'Events',
             statistics:   'Statistics',
@@ -32,7 +31,6 @@ append data
         index: {
           title: '高中生專區',
           link: {
-            introduction: '本系介紹',
             curriculum:   '課程資訊',
             event:        '課外活動',
             statistics:   '統計數據',
@@ -69,6 +67,78 @@ append breadcrumb
   )
 
 append content
+  include /components/common/topic.pug
+  include /components/about/intro/ieet-i18n.pug
+  include /components/student/high-school/link.pug
+
+  section.content__index.index
+    +topic( 'index', i18n[ LANG.id ].index.title )
+    each value, key in i18n[ LANG.id ].index.link
+      a.index__link( href = `#${ key }` )= value
+
+  section#curriculum.content__curriculum.curriculum
+    +topic( 'curriculum', i18n[ LANG.id ].index.link.curriculum )
+    section.curriculum__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          header.paragraph__title= ieetI18n()[ LANG.id ][1].context[0].title
+          if typeof ieetI18n()[ LANG.id ][1].context[0].image !== 'undefined'
+            figure.paragraph__concept.concept
+              +image( {
+                alt: ieetI18n()[ LANG.id ][1].context[0].image.alt,
+                className: ieetI18n()[ LANG.id ][1].context[0].image.className,
+                src: ieetI18n()[ LANG.id ][1].context[0].image.src,
+              } )
+          else
+            each paragraph in ieetI18n()[ LANG.id ][1].context[0].paragraph
+              if paragraph.type === 'text'
+                p.paragraph__text= paragraph.text
+              else if paragraph.type === 'list'
+                ul.paragraph__list.list
+                  each list in paragraph.list
+                    li.list__text= list
+              else
+                p.paragraph__list-description= paragraph.listDescription
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          header.paragraph__title= ieetI18n()[ LANG.id ][1].aspect
+          a.paragraph__link( href = ieetI18n()[ LANG.id ][2].link )= ieetI18n()[ LANG.id ][2].context
+
+  section#event.content__event.event
+    +topic( 'event', i18n[ LANG.id ].index.link.event )
+    section.event__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          p.paragraph__list-description= '施工中'
+
+  section#statistics.content__statistics.statistics
+    +topic( 'statistics', i18n[ LANG.id ].index.link.statistics )
+    section.statistics__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          p.paragraph__list-description= '施工中'
+
+  section#information.content__information.information
+    +topic( 'information', i18n[ LANG.id ].index.link.information )
+    section.information__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          p.paragraph__list-description= '施工中'
+
+  section#qa.content__qa.qa
+    +topic( 'qa', i18n[ LANG.id ].index.link.qa )
+    section.qa__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          p.paragraph__list-description= '施工中'
+
+  section#link.content__link.link
+    +topic( 'link', i18n[ LANG.id ].index.link.link )
+    section.link__goal.goal
+      article.goal__context.context
+        article.context__paragraph.paragraph
+          each linkContent in linkI18n()[ LANG.id ]
+            a.paragraph__link( href = linkContent.link )= linkContent.content
 
 append footer
 

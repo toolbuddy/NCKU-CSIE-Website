@@ -765,10 +765,10 @@ export default class DefaultTagFilter {
 
             const data = await res.json();
 
-            let extractTextObj = data;
-            extractTextObj.forEach((ann) => {
-                ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
-            });
+            const extractTextObj = data;
+            extractTextObj.forEach( ( ann ) => {
+                ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+            } );
 
             extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
@@ -880,11 +880,11 @@ export default class DefaultTagFilter {
 
             const data = await res.json();
 
-            let extractTextObj = data;
-            extractTextObj.forEach((ann) => {
-                ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
-            });
-            
+            const extractTextObj = data;
+            extractTextObj.forEach( ( ann ) => {
+                ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+            } );
+
             extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
                     color: tagUtils.getTagColorById( tagId ),

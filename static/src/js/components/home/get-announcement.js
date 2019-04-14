@@ -97,10 +97,10 @@ export class GetAllAnnouncement {
     }
 
     render ( data ) {
-        let extractTextObj = data;
-        extractTextObj.forEach((ann) => {
-            ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
-        });
+        const extractTextObj = data;
+        extractTextObj.forEach( ( ann ) => {
+            ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+        } );
         extractTextObj.forEach( ( briefing ) => {
             this.DOM.briefings.innerHTML += briefingHTML( {
                 briefing,
@@ -158,10 +158,10 @@ export class GetHotAnnouncement extends GetAllAnnouncement {
     }
 
     render ( data ) {
-        let extractTextObj = data;
-        extractTextObj.forEach((ann) => {
-            ann.content = ((new DOMParser).parseFromString(ann.content, "text/html")).documentElement.textContent.trim();
-        });
+        const extractTextObj = data;
+        extractTextObj.forEach( ( ann ) => {
+            ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+        } );
         extractTextObj.forEach( ( briefing, index ) => {
             this.DOM.briefings.innerHTML += hotAnnouncementBriefingHTML( {
                 briefing,

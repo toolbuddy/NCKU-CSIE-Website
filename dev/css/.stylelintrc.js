@@ -387,7 +387,7 @@ module.exports = {
         'scss/at-extend-no-missing-placeholder': true,
 
         // Require named parameters in SCSS function call rule.
-        'scss/at-function-named-arguments': [ 'always',
+        'scss/at-function-named-arguments': [ 'never',
             { ignore: [ 'single-argument', ], }, ],
 
         // There must always be exactly one space
