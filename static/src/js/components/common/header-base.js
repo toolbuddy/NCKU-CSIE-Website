@@ -154,10 +154,15 @@ export default class GetHeaderBase {
         let prevScrollpos = window.pageYOffset;
         window.addEventListener( 'scroll', () => {
             const currentScrollPos = window.pageYOffset;
-            if ( prevScrollpos > currentScrollPos )
+            if ( prevScrollpos < currentScrollPos && currentScrollPos > 91 )
                 classAdd( this.DOM.header, 'header--active' );
             else
                 classRemove( this.DOM.header, 'header--active' );
+
+            if ( currentScrollPos > 91 )
+                classAdd( this.DOM.header, 'header--fixed' );
+            else
+                classRemove( this.DOM.header, 'header--fixed' );
             prevScrollpos = currentScrollPos;
         } );
     }

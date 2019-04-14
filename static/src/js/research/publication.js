@@ -1,7 +1,8 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
-import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import GetPublications from 'static/src/js/components/research/publication/get-publication.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -10,17 +11,6 @@ try {
     } );
     if ( !( headerBase instanceof GetHeaderBase ) )
         throw new Error( '.header.header--base not found.' );
-}
-catch ( err ) {
-    console.error( err );
-}
-try {
-    const headerSmall = new GetHeaderSmall( {
-        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
-        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-    } );
-    if ( !( headerSmall instanceof GetHeaderSmall ) )
-        throw new Error( '.header.header--small not found.' );
 }
 catch ( err ) {
     console.error( err );
@@ -42,6 +32,17 @@ try {
     } );
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
+    const getPublications = new GetPublications( {
+        publicationDOM: document.getElementById( 'publication' ),
+        languageId:     WebLanguageUtils.currentLanguageId,
+    } );
+
+    getPublications.exec();
 }
 catch ( err ) {
     console.error( err );

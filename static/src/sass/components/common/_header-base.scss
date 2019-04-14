@@ -9,8 +9,11 @@
   // block
   // `> .#{ $block } > .header`
   > .#{ $block }__header.header.header--base {
+    transition: top .5s;
+
     // [ variable ]
-    $small: 321px;
+    // $small: 321px;
+    $small: 561px;
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
     $caption-title-font-size: font__px-to-rem( 16 );
@@ -24,7 +27,7 @@
     // This style is set to put `.header__menu` on the right of screen.
     position: fixed;
     z-index: 1;
-    top: font__px-to-rem( -150 );
+    top: font__px-to-rem( 0 );
 
     // [ layout ]
     display: block;
@@ -39,7 +42,11 @@
 
     &.header--active {
       // [ position ]
-      top: font__px-to-rem( 0 );
+      top: font__px-to-rem( -96 );
+    }
+
+    &.header--fixed {
+      position: fixed;
     }
 
     // element
@@ -49,7 +56,8 @@
     > .header__logo.logo {
       // [ layout ]
       display: block;
-      margin-top: font__px-to-rem( 26 );
+      margin-top: font__px-to-rem( 0 );
+      padding-top: font__px-to-rem( 8 );
       text-align: center;
 
       // [ skin ]
@@ -77,8 +85,8 @@
       // [ layout ]
       display: inline-block;
       margin: {
-        top: font__px-to-rem( 30 );
-        bottom: font__px-to-rem( 26 );
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 12 );
       }
       line-height: 0;
 
@@ -136,7 +144,7 @@
       // [ position ]
       position: fixed;
       top: 0;
-      right: -1 * $item-width;
+      right: -2 * $item-width;
       z-index: 2;
 
       // [ layout ]
@@ -146,6 +154,9 @@
       width: 100%;
       height: 100%;
       background-color: #213262;
+      @media screen and( min-width: 320px ) {
+        width: font__px-to-rem( 320 );
+      }
 
       // [ animation ]
       transition: right .5s;
@@ -161,6 +172,9 @@
 
         // [ skin ]
         width: 100%;
+        @media screen and( min-width: 320px ) {
+          width: font__px-to-rem( 320 );
+        }
       }
 
       // element

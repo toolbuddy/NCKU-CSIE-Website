@@ -9,6 +9,8 @@
   // block
   // `> .#{ $block } > .header`
   > .#{ $block }__header.header.header--medium {
+    transition: top .5s;
+
     // [ variable ]
     $large: 1200px;
     $medium: 561px;
@@ -30,7 +32,7 @@
       // This style is set to put `.header__menu` on the right of screen.
       position: fixed;
       z-index: 1;
-      top: font__px-to-rem( -100 );
+      top: font__px-to-rem( 0 );
 
       // [ layout ]
       display: block;
@@ -45,7 +47,11 @@
 
       &.header--active {
         // [ position ]
-        top: font__px-to-rem( 0 );
+        top: font__px-to-rem( -96 );
+      }
+
+      &.header--fixed {
+        position: fixed;
       }
 
       // element
