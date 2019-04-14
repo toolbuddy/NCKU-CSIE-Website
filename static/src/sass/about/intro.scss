@@ -1,6 +1,5 @@
 @import 'components/common/reset';
 @import 'components/common/header-base';
-@import 'components/common/header-small';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
 @import 'components/common/not-available';
@@ -22,7 +21,6 @@
   // block
   // `.body > .header`
   @include header--base( $block: 'body' );
-  @include header--small( $block: 'body' );
   @include header--medium( $block: 'body' );
   @include header--large( $block: 'body' );
 

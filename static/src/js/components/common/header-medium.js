@@ -153,10 +153,15 @@ export default class GetHeaderMedium {
         let prevScrollpos = window.pageYOffset;
         window.addEventListener( 'scroll', () => {
             const currentScrollPos = window.pageYOffset;
-            if ( prevScrollpos > currentScrollPos )
+            if ( prevScrollpos < currentScrollPos && currentScrollPos > 96 )
                 classAdd( this.DOM.header, 'header--active' );
             else
                 classRemove( this.DOM.header, 'header--active' );
+
+            if ( currentScrollPos > 96 )
+                classAdd( this.DOM.header, 'header--fixed' );
+            else
+                classRemove( this.DOM.header, 'header--fixed' );
             prevScrollpos = currentScrollPos;
         } );
     }

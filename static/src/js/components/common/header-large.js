@@ -90,10 +90,15 @@ export default class GetHeaderLarge {
         let prevScrollpos = window.pageYOffset;
         window.addEventListener( 'scroll', () => {
             const currentScrollPos = window.pageYOffset;
-            if ( prevScrollpos > currentScrollPos )
+            if ( prevScrollpos < currentScrollPos && currentScrollPos > 70 )
                 classAdd( this.DOM.header, 'header--active' );
             else
                 classRemove( this.DOM.header, 'header--active' );
+
+            if ( currentScrollPos > 70 )
+                classAdd( this.DOM.header, 'header--fixed' );
+            else
+                classRemove( this.DOM.header, 'header--fixed' );
             prevScrollpos = currentScrollPos;
         } );
     }
