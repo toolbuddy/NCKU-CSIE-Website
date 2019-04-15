@@ -1,0 +1,125 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'Resource',
+        breadcrumb: {
+          home:     'Home',
+        },
+        entries: [
+          {
+            title: 'Rule',
+            detail: 'Rules of department, graduation requirements and documents',
+            modifier: 'red',
+            route: 'resource/rule',
+          },
+          {
+            title: 'Rent',
+            detail: 'Borrow things from department',
+            modifier: 'green',
+            route: 'resource/rent',
+          },
+          {
+            title: 'Fix',
+            detail: 'Reporting broken equipment or classroom',
+            modifier: 'yellow',
+            route: 'resource/fix',
+          },
+          {
+            title: 'IEET',
+            detail: 'Fill in survey form for classes',
+            modifier: 'blue',
+            route: 'resource/ieet',
+          },
+          {
+            title: 'Sitemap',
+            detail: 'Navigation for the website',
+            modifier: 'purple',
+            route: 'resource/sitemap',
+          },
+          {
+            title: 'Alumni',
+            detail: 'Graduation students information',
+            modifier: 'gray',
+            route: 'resource/alumni',
+          },
+        ],
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '資源連結',
+        breadcrumb: {
+          home:     '首頁',
+        },
+        entries: [
+          {
+            title: '法規彙編',
+            detail: '系所規範、畢業辦法與表單文件',
+            modifier: 'red',
+            route: 'resource/rule',
+          },
+          {
+            title: '線上租借',
+            detail: '系所租借設備或場地',
+            modifier: 'green',
+            route: 'resource/rent',
+          },
+          {
+            title: '修繕登記',
+            detail: '租借設備維修、報銷與教室場地修繕登記',
+            modifier: 'yellow',
+            route: 'resource/fix',
+          },
+          {
+            title: 'IEET工程認證',
+            detail: '工程認證目標與問卷填寫',
+            modifier: 'blue',
+            route: 'resource/ieet',
+          },
+          {
+            title: '網站地圖',
+            detail: '網站空間的概觀',
+            modifier: 'purple',
+            route: 'resource/sitemap',
+          },
+          {
+            title: '系友專區',
+            detail: '畢業資訊填寫與系友相關資訊',
+            modifier: 'gray',
+            route: 'resource/alumni',
+          },
+        ],
+      },
+    } );
+    const currentRoute = 'resource';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'resource/index' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/entries.pug
+  +entries( 'content', i18n[ LANG.id ].entries )
+
+append footer
+
+append scripts
+  +js( 'resource/index' )

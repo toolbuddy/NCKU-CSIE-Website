@@ -1,0 +1,57 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title': 'Home',
+        'topic': 'Latest News',
+        'more':  'more...',
+        'hot':   'Hot News',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title': '首頁',
+        'topic': '最新消息',
+        'more':  '更多資訊...',
+        'hot':   '最近熱門',
+      },
+    } );
+    const currentRoute = '';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'home/index' )
+
+append header
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  section#tv.content__tv.tv
+    +noResult( 'tv' )
+    +loading( 'tv' )
+    nav.tv__series.series
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#announcement.content__announcement.announcement
+    +noResult( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
+    aside.announcement__more.more
+      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
+  section#hot-announcement.content__hot-announcement.hot-announcement
+    header.hot-announcement__title.title= i18n[ LANG.id ].hot
+    +noResult( 'hot-announcement' )
+    +loading( 'hot-announcement' )
+    nav.hot-announcement__briefings.briefings
+
+append footer
+
+append scripts
+  +js( 'home/index' )

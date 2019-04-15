@@ -1,0 +1,115 @@
+@import 'components/common/font';
+
+// components
+// `> .#{ $block } > .#{ $block }__no-result.no-result`
+@mixin no-result ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__no-result`
+  // block
+  // `> .#{ $block } > .no-result`
+  > .#{ $block }__no-result.no-result {
+    // [ layout ]
+    display: block;
+    text-align: center;
+
+    // [ skin ]
+    width: auto;
+
+    // modifier
+    // `> .#{ $block } > .no-result.no-result--hidden`
+    &.no-result--hidden {
+      // [ layout ]
+      display: none;
+    }
+
+    // element
+    // `> .#{ $block } > .no-result > .no-result__image`
+    > .no-result__image {
+      // [ layout ]
+      display: block;
+      margin: {
+        top: font__px-to-rem( 100 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 74 );
+      height: auto;
+    }
+
+    // element
+    // `> .#{ $block } > .no-result > .no-result__caption`
+    > .no-result__caption {
+      // [ layout ]
+      display: block;
+      line-height: font__px-to-rem( 16 );
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 16 );
+      color: #adacad;
+      font-size: font__px-to-rem( 16 );
+    }
+
+    // element
+    // `> .#{ $block } > .no-result > .no-result__suggestion`
+    // block
+    // `> .#{ $block } > .no-result > .suggestion`
+    > .no-result__suggestion.suggestion {
+      // [ layout ]
+      display: block;
+      text-align: center;
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: auto;
+
+      // template
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__?`
+      %suggestion__element {
+        // [ layout ]
+        display: inline;
+        line-height: font__px-to-rem( 16 );
+        vertical-align: top;
+
+        // [ skin ]
+        color: #adacad;
+        font-size: font__px-to-rem( 16 );
+      }
+
+      // element
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__text`
+      > .suggestion__text {
+        // [ template ]
+        @extend %suggestion__element;
+      }
+
+      // element
+      // `> .#{ $block } > .no-result > .suggestion > .suggestion__link`
+      > .suggestion__link {
+        // [ template ]
+        @extend %suggestion__element;
+
+        // [ layout ]
+        white-space: nowrap;
+
+        // [ skin ]
+        text-decoration: underline;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

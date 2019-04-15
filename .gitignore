@@ -1,3 +1,41 @@
-.git-credentials
-package-lock.json
+#############################
+# Project generated files
+#############################
+
+## Editor files
 *.swp
+.vscode
+
+## Git extension files
+.git-credentials
+
+## Npm files
+node_modules
+npm-debug.log
+package-lock.json
+.npmrc
+.lock-wscript
+
+## Settings files
+settings/database/config.js
+settings/server/config.js
+settings/server/content-security-policy.js
+
+# executable
+bin/
+
+## Static files
+static/dist/
+
+#############################
+# OS generated files
+#############################
+
+## Mac OS
+.DS_Store
+.DS_Store?
+
+## Windows
+.Trashes
+ehthumbs.db
+Thumbs.db

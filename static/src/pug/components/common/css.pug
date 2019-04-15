@@ -1,0 +1,13 @@
+//- Stylesheet template module.
+//-
+//- Template for stylesheet `<link>` tags.
+//- No need to rewrite all attributes each time.
+//- @param {string} href - Link to the CSS file.
+
+mixin css( href )
+  link(
+    rel = 'stylesheet',
+    type = 'text/css',
+    media = 'screen',
+    href = UTILS.staticUrl( { href: `css/${ href }.min.css` } )
+  )

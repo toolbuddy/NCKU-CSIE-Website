@@ -1,0 +1,260 @@
+@import 'components/common/font.scss';
+@import 'components/common/icon.scss';
+
+// component
+// `> .#{ $block } > .#{ $block }__cards.cards`
+@mixin cards ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__cards`
+  // block
+  // `> .#{ $block } > .cards`
+  > .#{ $block }__cards.cards {
+    // [ variable ]
+    $small: 500px;
+
+    // [ layout ]
+    display: block;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    width: 100%;
+    height: auto;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    // element
+    // `> .#{ $block } > .cards > .cards__card`
+    // block
+    // `> .#{ $block } > .cards > .card`
+    > .cards__card.card {
+      // [ layout ]
+      display: block;
+      margin-bottom: font__px-to-rem( 20 );
+
+      // [ skin ]
+      width: 100%;
+      height: auto;
+      border: {
+        width: font__px-to-rem( 30 );
+        color: #ffffff;
+        style: solid;
+      }
+      background-color: #ffffff;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+        margin: {
+          bottom: font__px-to-rem( 22 );
+          left: font__px-to-rem( 11 );
+          right: font__px-to-rem( 11 );
+        }
+
+        // [ skin ]
+        width: font__px-to-rem( 500 );
+        border-width: font__px-to-rem( 40 );
+      }
+
+      > .card__title {
+        // [ layout ]
+        display: block;
+        text-align: center;
+        line-height: font__px-to-rem( 24 );
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+        font: {
+          size: font__px-to-rem( 24 );
+          style: normal;
+          weight: bold;
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .cards > .card > .card__info`
+      // block
+      // `> .#{ $block } > .cards > .card > .info`
+      > .card__info.info {
+        // [ layout ]
+        display: block;
+        margin-top: font__px-to-rem( 30 );
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+
+        // template
+        // `> .#{ $block } > .cards > .card > .info > .info__?`
+        %info__element {
+          // [ variable ]
+          $before-gap: font__px-to-rem( 36 );
+          $icon-size: font__px-to-rem( 24 );
+
+          // [ position ]
+          position: relative;
+
+          // [ layout ]
+          display: block;
+          margin: {
+            bottom: font__px-to-rem( 16 );
+            left: $before-gap;
+          }
+          line-height: $icon-size;
+
+          // [ skin ]
+          color: #000000;
+          font: {
+            size: font__px-to-rem( 16 );
+            style: normal;
+            weight: normal;
+          }
+
+          // [ before ]
+          &::before {
+            // [ position ]
+            position: absolute;
+            top: 0;
+            left: -1 * $before-gap;
+
+            // [ layout ]
+            display: inline-block;
+
+            // [ skin ]
+            content: '';
+            width: $icon-size;
+            height: $icon-size;
+            background: {
+              position: center;
+              size: contain;
+              repeat: no-repeat;
+            }
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .info > .info__lab-address`
+        > .info__lab-address {
+          // [ template ]
+          @extend %info__element;
+
+          // [ layout ]
+          word-break: normal;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__location();
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .info > .info__lab-tel`
+        > .info__lab-tel {
+          // [ template ]
+          @extend %info__element;
+
+          // [ layout ]
+          word-break: break-all;
+          text-decoration: underline;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__phone();
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .info > .info__lab-web`
+        > .info__lab-web {
+          // [ template ]
+          @extend %info__element;
+
+          // [ layout ]
+          word-break: break-all;
+
+          // [ skin ]
+          text-decoration: underline;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__www();
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .info > .info__advise`
+        // block
+        // `> .#{ $block } > .cards > .card > .info > .advise`
+        > .info__advise.advise {
+          // [ template ]
+          @extend %info__element;
+
+          // [ layout ]
+          margin-bottom: 0;
+          word-break: normal;
+
+          // [ before ]
+          &::before {
+            // [ icon ]
+            @include icon__user();
+          }
+
+          // element
+          // `> .#{ $block } > .cards > .card > .info > .advise > .advise__title`
+          > .advise__title {
+            // [ layout ]
+            display: inline-block;
+            margin-right: font__px-to-rem( 8 );
+            line-height: font__px-to-rem( 16 );
+
+            // [ skin ]
+            width: auto;
+            height: auto;
+            color: #000000;
+            font: {
+              size: font__px-to-rem( 16 );
+              style: normal;
+              weight: normal;
+            }
+          }
+
+          // element
+          // `> .#{ $block } > .cards > .card > .info > .advise > .advise__adviser`
+          > .advise__adviser {
+            // [ layout ]
+            display: inline-block;
+            line-height: font__px-to-rem( 16 );
+
+            // [ skin ]
+            width: auto;
+            height: auto;
+            color: #000000;
+            font: {
+              size: font__px-to-rem( 16 );
+              style: normal;
+              weight: normal;
+            }
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

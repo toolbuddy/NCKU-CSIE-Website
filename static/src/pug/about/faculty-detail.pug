@@ -1,0 +1,651 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:   'Detail',
+        faculty: 'Faculties',
+        breadcrumb: {
+          home:    'Home',
+          about:   'About',
+          faculty: 'Faculty',
+        },
+        email: 'Email:',
+        office: {
+          address:   'Office:',
+          fax:       'Fax:',
+          tel:       'Tel:',
+          telNumber: data.profile.officeTel.split( ',' ).join( ' ext. ' ),
+        },
+        lab: {
+          name:      'Laboratory:',
+          tel:       'Lab Tel:',
+          telNumber: data.profile.labTel.split( ',' ).join( ' ext. ' ),
+        },
+        personalWeb: 'Personal Website:',
+        specialty:   'Specialty:',
+        education:   {
+          topic: 'Education',
+          now:   'now',
+        },
+        experience:  {
+          topic: 'Experiences',
+          now:   'now',
+        },
+        award:       'Received Awards',
+        publication: {
+          topic: 'Publications',
+          international: {
+            refereed: 'Refereed International ',
+            normal:   'International ',
+          },
+          intranational: {
+            refereed: 'Refereed Intranational ',
+            normal:   'Intranational ',
+          },
+        },
+        patent: {
+          topic:    'Patent',
+          name:     'Patent',
+          nation:   'Nation',
+          owner:    'Owner',
+          inventor: 'Inventor',
+          certi:    'Certification Number',
+          apply:    'Applying Date',
+          duration: 'Duration',
+        },
+        technologyTransfer: {
+          topic:            'Technology Transfer',
+          technology:       'Technology',
+          patent:           'Patent',
+          authorizingParty: 'Authorizing Party',
+          authorizedParty: 'Authorized Party',
+          duration:         'Duration',
+        },
+        project: {
+          topic:    'Project',
+          name:     'Project',
+          duration: 'Duration',
+          support:  'Sponser',
+        },
+        conference: 'Conference',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:   '詳細資料',
+        faculty: '師資陣容',
+        breadcrumb: {
+          home:    '首頁',
+          about:   '關於本系',
+          faculty: '師資陣容',
+        },
+        email: '信箱：',
+        office: {
+          address:   '辦公室：',
+          fax:       '傳真：',
+          tel:       '聯絡電話：',
+          telNumber: data.profile.officeTel.split( ',' ).join( ' 分機 ' ),
+        },
+        lab: {
+          name:      '實驗室：',
+          tel:       '實驗室電話：',
+          telNumber: data.profile.labTel.split( ',' ).join( ' 分機 ' ),
+        },
+        personalWeb: '個人網頁：',
+        specialty:   '專長領域：',
+        education:   {
+          topic: '學歷',
+          now:   '現在',
+        },
+        experience:  {
+          topic: '經歷',
+          now:   '現在',
+        },
+        award:       '榮譽及獲獎',
+        publication: {
+          topic: '著作',
+          international: {
+            refereed: 'Refereed 國際',
+            normal:   '國際',
+          },
+          intranational: {
+            refereed: 'Refereed 國內',
+            normal:   '國內',
+          },
+        },
+        patent: {
+          topic:    '專利',
+          name:     '專利名稱',
+          nation:   '國別',
+          owner:    '專利權人',
+          inventor: '發明人',
+          certi:   '專利號碼',
+          apply:    '申請日期',
+          duration: '專利期間',
+        },
+        technologyTransfer: {
+          topic:            '技術轉移',
+          technology:       '技術名稱',
+          patent:           '專利名稱',
+          authorizingParty: '授權單位',
+          authorizedParty:  '接受單位',
+          duration:         '合約期間',
+        },
+        project: {
+          topic:    '研究計畫',
+          name:     '計畫名稱',
+          duration: '起訖日期',
+          support:  '補助單位',
+        },
+        conference: '參與會議',
+      },
+    } );
+    const currentRoute = 'about/faculty-detail';
+
+append title
+  +title( data.profile.name )
+
+append stylesheets
+  +css( 'about/faculty-detail' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].breadcrumb.faculty, route: 'about/faculty' },
+      { text: data.profile.name },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+
+  //- If faculty didn't have a name, then there is no point to show it.
+  if data.profile.name !== null
+    section.content__profile.profile
+      figure.profile__photo-container.photo-container
+        if data.profile.photo !== null
+          +image( {
+            alt: data.profile.name,
+            className: 'photo-container__photo',
+            src: `faculty/${ data.profile.photo }`,
+          } )
+        else
+          +image( {
+            alt: data.profile.name,
+            className: 'photo-container__photo',
+            src: `faculty/no-photo.png`,
+          } )
+
+      //- Faculty's information.
+      section.profile__info.info
+        //- Faculty's name.
+        header.info__name= data.profile.name
+
+        //- Faculty has some titles.
+        if Array.isArray( data.title ) && data.title.length
+          aside.info__titles.titles
+            each titleObj in data.title
+              span.titles__title= titleObj.title
+
+        //- Faculty belongs to some departments.
+        if Array.isArray( data.department ) && data.department.length
+          aside.info__departments.departments
+            each department in data.department
+              span.departments__department= department
+
+        //- Faculty's email.
+        if data.profile.email !== null
+          aside.info__email.email
+            span.email__text= i18n[ LANG.id ].email
+            a.email__address( href = `mailto:${ data.profile.email }` )= data.profile.email
+
+        //- Faculty owns some offices which have an address.
+        if data.profile.officeAddress !== null
+          aside.info__office-address.office-address
+            span.office-address__text= i18n[ LANG.id ].office.address
+            address.office-address__info= data.profile.officeAddress
+
+        //- Faculty owns some offices which have a telephone number.
+        if data.profile.officeTel !== null
+          aside.info__office-tel.office-tel
+            span.office-tel__text= i18n[ LANG.id ].office.tel
+            a.office-tel__number( href = `tel:${ data.profile.officeTel }` )= i18n[ LANG.id ].office.telNumber
+
+        //- Faculty owns some offices which have a fax.
+        if data.profile.fax !== null
+          aside.info__fax.fax
+            span.fax__text= i18n[ LANG.id ].office.fax
+            a.fax__number( href = `tel:${ data.profile.fax }` )= data.profile.fax
+
+        //- Faculty owns some labs which have a name, address and even a website.
+        if data.profile.labName !== null
+          aside.info__lab.lab
+            span.lab__text= i18n[ LANG.id ].lab.name
+            if data.profile.labWeb !== null
+              a.lab__name.lab__name--link( href = data.profile.labWeb )= data.profile.labName
+            else
+              span.lab__name= data.profile.labName
+            if data.profile.labAddress !== null
+              address.lab__address= data.profile.labAddress
+
+        //- Faculty owns some labs which have a telephone number.
+        if data.profile.labTel !== null
+          aside.info__lab-tel.lab-tel
+            span.lab-tel__text= i18n[ LANG.id ].lab.tel
+            a.lab-tel__number( href = `tel:${ data.profile.labTel }` )= i18n[ LANG.id ].lab.telNumber
+
+        //- Faculty owns some personal website.
+        if data.profile.personalWeb !== null
+          aside.info__personal-web.personal-web
+            span.personal-web__text= i18n[ LANG.id ].personalWeb
+            a.personal-web__address( href = data.profile.personalWeb )= data.profile.personalWeb
+
+        //- Faculty has some specialties.
+        if Array.isArray( data.specialty ) && data.specialty.length
+          aside.info__specialties.specialties
+            span.specialties__text= i18n[ LANG.id ].specialty
+            each specialty in data.specialty
+              span.specialties__specialty= specialty
+
+  //- Faculty has some education history.
+  if Array.isArray( data.education ) && data.education.length
+    section.content__education.education
+      +topic( 'education', i18n[ LANG.id ].education.topic )
+      each educationObj in data.education
+        article.education__context.context
+          //- If there is no start time, then there must be no end time.
+          if educationObj.from !== null
+            time.context__time.time
+              time.time__year= educationObj.from
+              hr.time__till
+              if educationObj.to !== null
+                time.time__year= educationObj.to
+              //- If there is no end time, then it must be still studying.
+              else
+                time.time__year= i18n[ LANG.id ].education.now
+          ul.context__list.list
+            if educationObj.nation !== null
+              +image( {
+                alt: educationObj.nation,
+                className: 'list__image',
+                src: `icon/${ educationObj.nation }`,
+              } )
+            if educationObj.school !== null
+              li.list__item= educationObj.school
+            if educationObj.major !== null
+              li.list__item= educationObj.major
+            if educationObj.degree !== null
+              li.list__item.list__item--blue= educationObj.degree
+
+  //- Faculty has some experiences.
+  if Array.isArray( data.experience ) && data.experience.length
+    section.content__experience.experience
+      +topic( 'experience', i18n[ LANG.id ].experience.topic )
+      each experienceObj in data.experience
+        article.experience__context.context
+          //- If there is no start time, then there must be no end time.
+          if experienceObj.from !== null
+            time.context__time.time
+              time.time__year= experienceObj.from
+              hr.time__till
+              if experienceObj.to !== null
+                time.time__year= experienceObj.to
+              //- If there is no end time, then it must be still studying.
+              else
+                time.time__year= i18n[ LANG.id ].experience.now
+          ul.context__list.list
+            if experienceObj.organization !== null
+              li.list__item= experienceObj.organization
+            if experienceObj.department !== null
+              li.list__item= experienceObj.department
+            if experienceObj.title !== null
+              li.list__item.list__item--blue= experienceObj.title
+
+  //- Faculty has some awards.
+  if Array.isArray( data.award ) && data.award.length
+    section.content__award.award
+      +topic( 'award', i18n[ LANG.id ].award )
+      //- Sort awards list based on time.
+      -
+        data.award.sort( ( awardA, awardB ) => {
+          if (
+            awardA.receivedYear !== null &&
+            awardB.receivedYear !== null &&
+            awardA.receivedYear !== awardB.receivedYear
+          )
+            return awardB.receivedYear - awardA.receivedYear;
+          else if (
+            awardA.receivedMonth !== null &&
+            awardB.receivedMonth !== null &&
+            awardA.receivedMonth !== awardB.receivedMonth
+          )
+            return awardB.receivedMonth - awardA.receivedMonth;
+          else if (
+            awardA.receivedDay !== null &&
+            awardB.receivedDay !== null &&
+            awardA.receivedDay !== awardB.receivedDay
+          )
+            return awardB.receivedDay - awardA.receivedDay;
+          return 0;
+        } );
+        let currentYear = data.award[ 0 ].receivedYear;
+      each awardObj, index in data.award
+        if awardObj.receivedYear !== currentYear || index === 0
+          - currentYear = awardObj.receivedYear
+          aside.award__title= awardObj.receivedYear
+        //- If there is no award at all, then there is no point to show it.
+        if awardObj.award !== null
+          article.award__context.context
+            main.context__main= awardObj.award
+            if awardObj.receivedYear !== null
+              time.context__time= awardObj.receivedYear
+            if awardObj.receivedMonth !== null
+              time.context__time= awardObj.receivedMonth
+            if awardObj.receivedDay !== null
+              time.context__time= awardObj.receivedDay
+
+  //- Faculty has some publications.
+  //- Divided publications into 12 groups based on the following label:
+  //- - international: `true` or `false` (2 possibilities)
+  //- - refereed:      `true` or `false` (2 possibilities)
+  //- - category:      `0` or `1` or `2` (3 possibilities, may change when there are more categories)
+  if Array.isArray( data.publication ) && data.publication.length
+    section.content__publication.publication
+      +topic( 'publication', i18n[ LANG.id ].publication.topic )
+      //- Sort publications list based on time.
+      -
+        data.publication.sort( ( publicationA, publicationB ) => {
+          if (
+            publicationA.issueYear !== null &&
+            publicationB.issueYear !== null &&
+            publicationA.issueYear !== publicationB.issueYear
+          )
+            return publicationB.issueYear - publicationA.issueYear;
+          else if (
+            publicationA.issueDate !== null &&
+            publicationB.issueDate !== null &&
+            publicationA.issueDate !== publicationB.issueDate
+          )
+            return publicationB.issueDate - publicationA.issueDate;
+          return 0;
+        } );
+        const publication = {
+          international: {
+            refereed: {},
+            normal: {},
+          },
+          intranational: {
+            refereed: {},
+            normal: {},
+          },
+        };
+        UTILS.faculty.publicationCategoryUtils.supportedId.forEach( id => {
+          publication.international.refereed[ id ] = data.publication.filter( publication => {
+            return publication.international && publication.refereed && publication.category === id;
+          } );
+          publication.international.normal[ id ] = data.publication.filter( publication => {
+            return publication.international && !publication.refereed && publication.category === id;
+          } );
+          publication.intranational.refereed[ id ] = data.publication.filter( publication => {
+            return !publication.international && publication.refereed && publication.category === id;
+          } );
+          publication.intranational.normal[ id ] = data.publication.filter( publication => {
+            return !publication.international && !publication.refereed && publication.category === id;
+          } );
+        } )
+
+      //- Publications which are international and refereed.
+      each id in UTILS.faculty.publicationCategoryUtils.supportedId
+        if Array.isArray( publication.international.refereed[ id ] ) && publication.international.refereed[ id ].length
+          -
+            const title = `${
+              i18n[ LANG.id ].publication.international.refereed
+            }${
+              UTILS.faculty.publicationCategoryUtils.getValueById( { id, languageId: LANG.id } )
+            }`;
+          aside.publication__title= title
+          each publicationObj in publication.international.refereed[ id ]
+            //- If there is no title at all, then there is no point to show it.
+            if publicationObj.title !== null
+              article.publication__context.context
+                main.context__main= publicationObj.title
+                if publicationObj.author !== null
+                  main.context__main= publicationObj.author
+                if publicationObj.issueYear !== null
+                  time.context__time= publicationObj.issueYear
+                if publicationObj.issueDate !== null
+                  time.context__time= publicationObj.issueDate
+
+      //- Publications which are international and not refereed.
+      each id in UTILS.faculty.publicationCategoryUtils.supportedId
+        if Array.isArray( publication.international.normal[ id ] ) && publication.international.normal[ id ].length
+          -
+            const title = `${
+              i18n[ LANG.id ].publication.international.normal
+            }${
+              UTILS.faculty.publicationCategoryUtils.getValueById( { id, languageId: LANG.id } )
+            }`;
+          aside.publication__title= title
+          each publicationObj in publication.international.normal[ id ]
+            //- If there is no title at all, then there is no point to show it.
+            if publicationObj.title !== null
+              article.publication__context.context
+                main.context__main= publicationObj.title
+                if publicationObj.author !== null
+                  main.context__main= publicationObj.author
+                if publicationObj.issueYear !== null
+                  time.context__time= publicationObj.issueYear
+                if publicationObj.issueDate !== null
+                  time.context__time= publicationObj.issueDate
+
+      //- Publications which are intranational and refereed.
+      each id in UTILS.faculty.publicationCategoryUtils.supportedId
+        if Array.isArray( publication.intranational.refereed[ id ] ) && publication.intranational.refereed[ id ].length
+          -
+            const title = `${
+              i18n[ LANG.id ].publication.intranational.refereed
+            }${
+              UTILS.faculty.publicationCategoryUtils.getValueById( { id, languageId: LANG.id } )
+            }`;
+          aside.publication__title= title
+          each publicationObj in publication.intranational.refereed[ id ]
+            //- If there is no title at all, then there is no point to show it.
+            if publicationObj.title !== null
+              article.publication__context.context
+                main.context__main= publicationObj.title
+                if publicationObj.author !== null
+                  main.context__main= publicationObj.author
+                if publicationObj.issueYear !== null
+                  time.context__time= publicationObj.issueYear
+                if publicationObj.issueDate !== null
+                  time.context__time= publicationObj.issueDate
+
+      //- Publications which are intranational and not refereed.
+      each id in UTILS.faculty.publicationCategoryUtils.supportedId
+        if Array.isArray( publication.intranational.normal[ id ] ) && publication.intranational.normal[ id ].length
+          -
+            const title = `${
+              i18n[ LANG.id ].publication.intranational.normal
+            }${
+              UTILS.faculty.publicationCategoryUtils.getValueById( { id, languageId: LANG.id } )
+            }`;
+          aside.publication__title= title
+          each publicationObj in publication.intranational.normal[ id ]
+            //- If there is no title at all, then there is no point to show it.
+            if publicationObj.title !== null
+              article.publication__context.context
+                main.context__main= publicationObj.title
+                if publicationObj.author !== null
+                  main.context__main= publicationObj.author
+                if publicationObj.issueYear !== null
+                  time.context__time= publicationObj.issueYear
+                if publicationObj.issueDate !== null
+                  time.context__time= publicationObj.issueDate
+
+  mixin row__col( value )
+    if value !== null
+      td.row__col= value
+    else
+      td.row__col
+
+  mixin row__col--image( src )
+    if src !== null
+      td.row__col.col
+        +image( {
+          alt: src,
+          className: 'col__image',
+          src: `icon/${ src }`,
+        } )
+    else
+      td.row__col
+
+  mixin row__col--time( time )
+    if time !== null && UTILS.ValidateUtils.isValidDate( new Date( time ) )
+      -
+        const year = new Date( time ).getFullYear();
+        const month = new Date( time ).getMonth() + 1;
+        const day = new Date( time ).getDay();
+      td.row__col= `${ year }.${ month }.${ day }`
+    else
+      td.row__col
+
+  mixin row__col--duration( from, to )
+    //- If there is no from time, then there must be no end time.
+    if from !== null && UTILS.ValidateUtils.isValidDate( new Date( from ) )
+      -
+        const fromYear = new Date( from ).getFullYear();
+        const fromMonth = new Date( from ).getMonth() + 1;
+        const fromDay = new Date( from ).getDay();
+      td.row__col.col
+        time.col__time= `${ fromYear }.${ fromMonth }.${ fromDay }`
+        span.col__till |
+        if to !== null && UTILS.ValidateUtils.isValidDate( new Date( to ) )
+          -
+            const toYear = new Date( to ).getFullYear();
+            const toMonth = new Date( to ).getMonth() + 1;
+            const toDay = new Date( to ).getDay();
+          time.col__time= `${ toYear }.${ toMonth }.${ toDay }`
+        else
+          time.col__time
+    else
+      td.row__col
+
+  mixin row__col--list( list )
+    if Array.isArray( list ) && list.length
+      td.row__col.col
+        ul.col__list.list
+          each item in list
+            li.list__item= item
+    else
+      td.row__col
+
+  //- Faculty has own some patent.
+  if Array.isArray( data.patent ) && data.patent.length
+    section.content__patent.patent
+      +topic( 'patent', i18n[ LANG.id ].patent.topic )
+      table.patent__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__col= i18n[ LANG.id ].patent.name
+            th.row__col= i18n[ LANG.id ].patent.nation
+            th.row__col= i18n[ LANG.id ].patent.owner
+            th.row__col= i18n[ LANG.id ].patent.inventor
+            th.row__col= i18n[ LANG.id ].patent.certi
+            th.row__col= i18n[ LANG.id ].patent.apply
+            th.row__col= i18n[ LANG.id ].patent.duration
+        tbody.table__body.body
+          each patentObj in data.patent
+            //- If there is no patent at all, then there is no point to show it.
+            if patentObj.patent !== null
+              tr.body__row.row
+                +row__col( patentObj.patent )
+                +row__col--image( patentObj.nation )
+                +row__col( patentObj.patentOwner )
+                +row__col( patentObj.inventor )
+                +row__col( patentObj.certificationNumber )
+                +row__col--time( patentObj.applicationDate )
+                +row__col--duration( patentObj.issueDate, patentObj.expireDate )
+
+  //- Faculty has some technology transfer.
+  if Array.isArray( data.technologyTransfer ) && data.technologyTransfer.length
+    section.content__technology-transfer.technology-transfer
+      +topic( 'technology-transfer', i18n[ LANG.id ].technologyTransfer.topic )
+      table.technology-transfer__table.table
+        thead.table__head.head
+          tr.head__row.row
+            th.row__col= i18n[ LANG.id ].technologyTransfer.technology
+            th.row__col= i18n[ LANG.id ].technologyTransfer.patent
+            th.row__col= i18n[ LANG.id ].technologyTransfer.authorizingParty
+            th.row__col= i18n[ LANG.id ].technologyTransfer.authorizedParty
+            th.row__col= i18n[ LANG.id ].technologyTransfer.duration
+        tbody.table__body.body
+          each technologyTransferObj in data.technologyTransfer
+            //- If there is no technology at all, then there is no point to show it.
+            if technologyTransferObj.technology !== null
+              tr.body__row.row
+                +row__col( technologyTransferObj.technology )
+                +row__col--list( technologyTransferObj.patent )
+                +row__col( technologyTransferObj.authorizingParty )
+                +row__col( technologyTransferObj.authorizedParty )
+                +row__col--duration( technologyTransferObj.from, technologyTransferObj.to )
+
+  //- Faculty has some projects.
+  if Array.isArray( data.project ) && data.project.length
+    section.content__project.project
+      +topic( 'project', i18n[ LANG.id ].project.topic )
+      each id in UTILS.faculty.projectCategoryUtils.supportedId
+        article.project__title= UTILS.faculty.projectCategoryUtils.getValueById( { id, languageId: LANG.id } )
+        table.project__table.table
+          thead.table__head.head
+            tr.head__row.row
+              th.row__col= i18n[ LANG.id ].project.name
+              th.row__col= i18n[ LANG.id ].project.duration
+              th.row__col= i18n[ LANG.id ].project.support
+          tbody.table__body.body
+            each projectObj in data.project
+              //- If there is no name at all, then there is no point to show it.
+              if projectObj.name !== null
+                tr.body__row.row
+                  +row__col( projectObj.name )
+                  +row__col--duration( projectObj.from, projectObj.to )
+                  +row__col( projectObj.support )
+
+  //- Faculty has participate some conferences.
+  if Array.isArray( data.conference ) && data.conference.length
+    section.content__conference.conference
+      +topic( 'conference', i18n[ LANG.id ].conference )
+      //- Sort conferences list based on time.
+      -
+        data.conference.sort( ( conferenceA, conferenceB ) => {
+          if (
+            conferenceA.hostYear !== null &&
+            conferenceB.hostYear !== null &&
+            conferenceA.hostYear !== conferenceB.hostYear
+          )
+            return conferenceB.hostYear - conferenceA.hostYear;
+          return 0;
+        } );
+        let currentYear = data.conference[ 0 ].hostYear;
+      each conferenceObj, index in data.conference
+        if conferenceObj.hostYear !== currentYear || index === 0
+          - currentYear = conferenceObj.hostYear
+          aside.conference__title= conferenceObj.hostYear
+        //- If there is no conference at all, then there is no point to show it.
+        if conferenceObj.conference !== null
+          article.conference__context.context
+            main.context__main= conferenceObj.conference
+            if conferenceObj.title !== null
+              main.context__main= conferenceObj.title
+            if conferenceObj.hostYear !== null
+              time.context__time= conferenceObj.hostYear
+
+append footer
+
+append scripts
+  +js( 'about/faculty-detail' )

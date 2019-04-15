@@ -1,0 +1,150 @@
+// component
+// `> .#{ $block } > .#{ $block }__pages.pages`
+@mixin pages ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__pages`
+  // block
+  // `> .#{ $block } > .pages`
+  > .#{ $block }__pages.pages {
+    // [ variable ]
+    $small: 650px;
+    $large: 850px;
+
+    // template
+    // `> .#{ $block } > .pages > .pages__?`
+    %pages__element {
+      // [ variable ]
+      $size: 1.41rem;
+
+      // [ skin ]
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      background-color: transparent;
+      vertical-align: middle;
+    }
+
+    // element
+    // `> .#{ $block } > .pages > .pages__control`
+    > .pages__control {
+      // [ template ]
+      @extend %pages__element;
+
+      // [ skin ]
+      border: .0312rem solid #32477d;
+      padding-bottom: .05rem;
+      color: #32477d;
+      font-size: .9375rem;
+      cursor: pointer;
+
+      // modifier
+      // `> .#{ $block } > .pages > pages__control.pages__control--hidden`
+      &.pages__control--hidden {
+        // [ skin ]
+        visibility: hidden;
+      }
+
+      // modifier
+      // `> .#{ $block } > .pages > pages__control.pages__control--forward`
+      &.pages__control--forward {
+        // [ layout ]
+        margin-right: 1rem;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          margin-right: 3rem;
+        }
+      }
+
+      // modifier
+      // `> .#{ $block } > .pages > pages__control.pages__control--backward`
+      &.pages__control--backward {
+        // [ layout ]
+        margin-left: 1rem;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          margin-left: 3rem;
+        }
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .pages > .pages__page`
+    > .pages__page {
+      // [ template ]
+      @extend %pages__element;
+
+      // [ layout ]
+      display: none;
+
+      // [ skin ]
+      font-size: .625rem;
+      color: #999999;
+
+      // [ interaction ]
+      transition: background-color .3s;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
+
+      // [ interaction ]
+      &:hover:not( .pages__page--active ) {
+        // [ skin ]
+        cursor: pointer;
+      }
+
+      // modifier
+      // `> .#{ $block } > .pages > .pages__page.pages__page--active`
+      &.pages__page--active {
+        // [ layout ]
+        display: inline-block;
+
+        // [ skin ]
+        color: #ffffff;
+        background-color: #213262;
+        box-shadow: 0 .0937rem .125rem 0 #213262;
+      }
+
+      // modifier
+      // `> .#{ $block } > .pages > .pages__page.pages__page--hidden`
+      &.pages__page--hidden {
+        display: none;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .pages > .pages__extra`
+    > .pages__extra {
+      // [ template ]
+      @extend %pages__element;
+
+      // [ layout ]
+      display: none;
+
+      // [ skin ]
+      font-size: .625rem;
+      color: #999999;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        display: inline-block;
+      }
+
+      // modifier
+      // `> .#{ $block } > .pages > .pages__extra.pages__extra--hidden`
+      &.pages__extra--hidden {
+        display: none;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

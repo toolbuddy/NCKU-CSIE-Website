@@ -1,0 +1,15 @@
+@mixin font--notosanstc () {
+  @import url( 'https://fonts.googleapis.com/earlyaccess/notosanstc.css' );
+}
+
+// function
+// Base font size.
+@function font__base-font-size () {
+  @return 32px;
+}
+
+// function
+// Convert px into rem.
+@function font__px-to-rem ( $px ) {
+  @return $px * 1px / font__base-font-size() * 1rem;
+}

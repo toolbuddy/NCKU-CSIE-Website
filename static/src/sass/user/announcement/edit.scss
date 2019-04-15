@@ -1,0 +1,65 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/announcement/breadcrumb';
+@import 'components/user/announcement/tags';
+@import 'components/user/announcement/edit';
+
+body > .content {
+  // [ variable ]
+  $small: 450px;
+  $medium: 675px;
+  $large: 976px;
+
+  // [layout]
+  display: grid;
+
+  grid-template: {
+    areas:
+      ' . edit__breadcrumb . '
+      ' . edit__top . '
+      ' . edit__tags . '
+      ' . edit__editor . '
+      ' . edit__submit . ';
+    columns: 5 100vw 0;
+  }
+
+  // [ RWD: $small ]
+  @media screen and ( max-width: $small ) {
+    background-color: rgba( 224, 224, 224, .1 );
+  }
+
+  // [ RWD: $small ]
+  @media screen and ( min-width: $small ) {
+    // [ layout ]
+    grid-template-columns: 8vw 84vw 8vw;
+  }
+
+  // [ RWD: $medium ]
+  @media screen and ( min-width: $medium ) {
+    // [ layout ]
+    grid-template-columns: 1fr 18.75rem 1fr;
+  }
+
+  // [ RWD: $large ]
+  @media screen and ( min-width: $large ) {
+    // [ layout ]
+    grid-template-columns: 1fr 25.881rem 1fr;
+  }
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+  @include edit();
+
+  // block
+  // `body > .breadcrumb`
+  @include breadcrumb( #ffffff );
+}

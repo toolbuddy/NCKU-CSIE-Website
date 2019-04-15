@@ -1,0 +1,15 @@
+#############################
+# Project root path: ../../
+#############################
+
+# Frontend ECMAScripts
+../../static/js/**/*.js
+
+# NodeJS modules
+**/node_modules
+
+# Squelize generated schema
+**/models/**/tables
+
+# bin/
+../../bin

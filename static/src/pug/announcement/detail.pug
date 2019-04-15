@@ -1,0 +1,67 @@
+extends /layouts/announcement/announcement.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':    'Announcement Detail',
+        'breadcrumb': {
+          'home':   'Home',
+          'normal': 'Announcement',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '公告內容',
+        'breadcrumb': {
+          'normal': '系所公告',
+          'home':   '首頁',
+        },
+      },
+    } );
+    const currentRoute = `announcement/${ data.announcementId }`;
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'announcement/detail' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.normal, route: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  section.content__announcement.announcement
+    header.announcement__headline.headline
+      aside.headline__tags.tags
+        each tagId in data.tags
+          button.tags__tag(
+            class = `tags__tag--${ UTILS.announcement.tagUtils.getTagColorById( tagId ) }`
+          )= UTILS.announcement.tagUtils.getValueById( { id: tagId, languageId: LANG.id, } )
+      h1.headline__title= data.title
+      // a.headline__announcer= `公告人員 : ${ data.author }`
+      time.headline__time= new Date( data.updateTime )
+    article.announcement__article.article.markdown-body !{ data.content }
+    nav.announcement__attachments.attachments
+      - data.files.sort( ( fileA, fileB ) => fileA.name.length - fileB.name.length )
+      each fileObj in data.files
+        a.attachments__attachment(
+          href = UTILS.url( { href: `announcement/${ data.announcementId }/file/${ fileObj.fileId }` } )
+        )= fileObj.name
+
+append footer
+
+append scripts
+  +js( 'announcement/detail' )

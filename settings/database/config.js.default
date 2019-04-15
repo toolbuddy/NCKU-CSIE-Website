@@ -1,0 +1,22 @@
+/**
+ * Database settings module.
+ * @namespace
+ * @readonly
+ * @property {string} username   - Database server user account.
+ * @property {string} password   - Database server user password.
+ * @property {string} domainName - Database server domain name/IP.
+ * @property {number} port       - Database server port.
+ * @property {string} dialce     - Database server protocol.
+ */
+
+const config = {
+    'username':   '',
+    'password':   '',
+    'domainName': 'localhost',
+    'port':       3306,
+    'dialect':    'mysql',
+};
+
+Object.freeze( config );
+
+module.exports = config;

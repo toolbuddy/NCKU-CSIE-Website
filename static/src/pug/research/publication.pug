@@ -1,0 +1,77 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'Publications',
+        topic: 'All Publications',
+        from: 'From',
+        to: 'To',
+        breadcrumb: {
+          home:     'Home',
+          research: 'Research',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '發表著作',
+        topic: '著作列表',
+        from: '開始年份',
+        to: '結束年份',
+        breadcrumb: {
+          home:     '首頁',
+          research: '學術研究',
+        },
+      },
+    } );
+    const currentRoute = 'research/publication';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'research/publication' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#filter.content__filter.filter
+    article.filter__time.time
+      aside.time__from.from
+        label.from__text= i18n[LANG.id].from
+        span.from__input.input
+          input.input__year( type = 'number', value = '2007', placeholder = 'yyyy' )
+      aside.time__to.to
+        label.to__text= i18n[LANG.id].to
+        span.to__input.input
+          input.input__year( type = 'number', value = '2019', placeholder = 'yyyy' )
+
+  section#publication.content__publication.publication
+    +noResultWithImage( 'publication' )
+    +loading( 'publication' )
+    section.publication__cards.cards
+
+append footer
+
+append scripts
+  +js( 'research/publication' )

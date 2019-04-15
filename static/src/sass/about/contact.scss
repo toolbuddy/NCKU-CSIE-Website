@@ -1,0 +1,187 @@
+@import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
+
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'about/contact' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 768px;
+    $large: 1300px;
+
+    // [ layout ]
+    display: grid;
+    grid: {
+      template: {
+        areas:
+          '. .          .'
+          '. breadcrumb .'
+          '. map        .'
+          '. drive      .'
+          '. train      .'
+          '. thsr       .'
+          '. .          .';
+        columns: 1fr 13fr 1fr;
+        rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
+      }
+      row-gap: font__px-to-rem( 32 );
+    };
+
+    // [ skin ]
+    width: 100%;
+    background-color: #f2f4f7;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template-rows: font__px-to-rem( 16 ) repeat( 5, minmax( auto, min-content ) ) font__px-to-rem( 50 );
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: grid;
+      grid: {
+        template: {
+          areas:
+            '.  .          .          .'
+            '.  breadcrumb breadcrumb .'
+            '.  map        drive      .'
+            '.  map        train      .'
+            '.  map        thsr       .'
+            '.  .          .          .';
+          columns: 1fr 6fr 4fr 1fr;
+          rows: font__px-to-rem( 32 ) repeat( 4, minmax( auto, min-content ) ) font__px-to-rem( 100 );
+        }
+        column-gap: font__px-to-rem( 64 );
+        row-gap: font__px-to-rem( 32 );
+      };
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+    }
+
+    // element
+    // `.body > .content > .content__map`
+    // block
+    // `.body > .content > .map`
+    > .content__map.map {
+      // [ position ]
+      grid-area: map;
+
+      // [ skin ]
+      min-height: font__px-to-rem( 480 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        min-height: font__px-to-rem( 640 );
+      }
+    }
+
+    // element
+    // `.body > .content > .content__traffic`
+    // block
+    // `.body > .content > .traffic`
+    > .content__traffic.traffic {
+      // element
+      // `.body > .content > .content__traffic`
+      // block
+      // `.body > .content > .traffic`
+      @include topic( $block: 'traffic' );
+
+      // template
+      // `.body > .content > .traffic.traffic--?`
+      &.traffic-- {
+        // modifier
+        // `.body > .content > .traffic.traffic--thsr`
+        &thsr {
+          // [ position ]
+          grid-area: thsr;
+        }
+
+        // modifier
+        // `.body > .content > .traffic.traffic--train`
+        &train {
+          // [ position ]
+          grid-area: train;
+        }
+
+        // modifier
+        // `.body > .content > .traffic.traffic--drive`
+        &drive {
+          // [ position ]
+          grid-area: drive;
+        }
+      }
+
+      > .traffic__direction {
+        // [ layout ]
+        display: inline-block;
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 14 ) * 1.2;
+
+        // [ skin ]
+        border: solid font__px-to-rem( 1 ) #adacad;
+        border-radius: font__px-to-rem( 3 );
+        padding: font__px-to-rem( 3 );
+        color: #adacad;
+        font: {
+          size: font__px-to-rem( 14 );
+          weight: bold;
+        }
+      }
+
+      // element
+      // `.body > .content > .traffic > .traffic__text.`
+      > .traffic__text {
+        // [ layout ]
+        margin-top: font__px-to-rem( 16 );
+        line-height: font__px-to-rem( 16 ) * 1.2;
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

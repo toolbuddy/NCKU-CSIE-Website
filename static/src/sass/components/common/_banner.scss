@@ -1,0 +1,93 @@
+@import 'components/common/font';
+
+$banner-path: '~image/banner';
+
+// component
+// `> .#{ $block } > .#{ $block }__banner.banner`
+@mixin banner ( $block, $image ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__banner`
+  // block
+  // `> .#{ $block } > .banner`
+  > .#{ $block }__banner.banner {
+    // [ variable ]
+    $large: 600px;
+
+    // [ position ]
+    // This style is set because `.banner__text` need to be position at the center of `.banner`.
+    position: relative;
+
+    // [ layout ]
+    display: block;
+
+    // [ skin ]
+    width: 100%;
+    height: 100%;
+
+    // [ before ]
+    &::before {
+      // [ position ]
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: -2147483647;
+
+      // [ layout ]
+      display: block;
+
+      // margin-top: font__px-to-rem( 70 );
+      // @media screen and( max-width: 1200px ) {
+      //   margin-top: font__px-to-rem( 96 );
+      // }
+      // @media screen and( max-width: 560px ) {
+      //   margin-top: font__px-to-rem( 83 );
+      // }
+
+      // [ skin ]
+      width: 100%;
+      height: 100%;
+      background: {
+        image: url( '#{ $banner-path }/#{ $image }.jpg' );
+        position: center bottom;
+        repeat: no-repeat;
+        size: cover;
+      }
+      content: '';
+    }
+
+    // element
+    // `> .#{ $block } > .banner > .banner__text`
+    > .banner__text {
+      // [ position ]
+      position: absolute;
+      top: 50%;
+      transform: translateY( -50% );
+
+      // [ layout ]
+      display: block;
+      text-align: center;
+      word: {
+        break: normal;
+        wrap: normal;
+      }
+      line-height: font__px-to-rem( 26 );
+
+      // [ skin ]
+      width: 100%;
+      color: #ffffff;
+      font: {
+        size: font__px-to-rem( 26 );
+        weight: bold;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        line-height: font__px-to-rem( 50 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 50 );
+      }
+    }
+  }
+}

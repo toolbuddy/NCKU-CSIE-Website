@@ -1,0 +1,132 @@
+@import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import 'components/common/footer';
+@import 'components/announcement/tags';
+@import 'components/announcement/announcement-detail';
+@import '~thirdPartyLib/github-markdown-css/github-markdown.css';
+
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'announcement/detail' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $small: 560px;
+    $medium: 768px;
+    $large: 1080px;
+
+    // [ layout ]
+    display: grid;
+    grid: {
+      row-gap: font__px-to-rem( 32 );
+      template: {
+        areas:
+          '. .            .'
+          '. breadcrumb   .'
+          '. announcement .'
+          '. .            .';
+        columns: 5% 90% 5%;
+      }
+    };
+
+    // [ skin ]
+    background-color: #ffffff;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ layout ]
+      grid-template-columns: 10% 80% 10%;
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template-columns: 15% 70% 15%;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template-columns: 1fr font__px-to-rem( 950 ) 1fr;
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ position ]
+      grid-area: breadcrumb;
+    }
+
+    // block
+    // `.body > .content > .announcement`
+    @include announcement( 'content' ) {
+      // [ position ]
+      grid-area: announcement;
+    }
+  }
+
+  .markdown-body {
+    ul {
+      list-style: {
+        type: disc;
+        position: inside;
+      }
+    }
+
+    ol {
+      list-style: {
+        type: decimal;
+        position: inside;
+      }
+    }
+
+    ul ul, ol ul {
+      list-style: {
+        type: circle;
+        position: inside;
+      }
+      margin-left: font__px-to-rem( 15 );
+    }
+
+    ol ol, ul ol {
+      list-style: {
+        type: lower-latin;
+        position: inside;
+      }
+      margin-left: font__px-to-rem( 15 );
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

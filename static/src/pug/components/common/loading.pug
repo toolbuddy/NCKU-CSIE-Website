@@ -1,0 +1,54 @@
+//- Loading content template module.
+
+mixin loading( belongBlock, size = 100 )
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'loading': 'Loading',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'loading': '載入中',
+      },
+    } );
+
+    //- Given any two points (x1,y1) (x2,y2),
+    //- substitude into formula `y=ax+b` can get a unique line.
+    //- With the line we can get unique point on the line by given one of the x or y coordinate.
+    const a = ( x1, y1, x2, y2 ) => ( y1 - y2 ) / ( x1 - x2 );
+    const b = ( x1, y1, x2, y2 ) => y1 - a( x1, y1, x2, y2 ) * x1;
+    const x = ( x1, y1, x2, y2, y ) => ( y - b( x1, y1, x2, y2 ) ) / a( x1, y1, x2, y2 );
+    const points = {
+      imageA: {
+        x: size / 2,
+        y: 0,
+      },
+      imageB: {
+        x: x( size / 2, 0, size, size * Math.sqrt( 3 ) / 2, size * 0.2886 ),
+        y: size * 0.2886,
+      },
+      imageC: {
+        x: x( size / 2, 0, 0, size * Math.sqrt( 3 ) / 2, size * 0.3790 ),
+        y: size * 0.3790,
+      },
+      imageD: {
+        x: x( size / 2, 0, size, size * Math.sqrt( 3 ) / 2, size * 0.5224 ),
+        y: size * 0.5224,
+      },
+      bottomLeft: {
+        x: 0,
+        y: size * Math.sqrt( 3 ) / 2,
+      },
+      bottomRight: {
+        x: size,
+        y: size * Math.sqrt( 3 ) / 2,
+      },
+    };
+    const pointsToString = ( p1, p2, p3 ) => `${ p1.x },${ p1.y },${ p2.x },${ p2.y },${ p3.x },${ p3.y }`;
+
+  figure.loading( class = `${ belongBlock }__loading` )
+    svg.loading__image.image( width = `${ size }`, height = `${ size }` )
+      polygon.image__a( points = pointsToString( points.imageA, points.bottomLeft, points.bottomRight ) )
+      polygon.image__b( points = pointsToString( points.imageB, points.bottomLeft, points.bottomRight ) )
+      polygon.image__c( points = pointsToString( points.imageC, points.bottomLeft, points.bottomRight ) )
+      polygon.image__d( points = pointsToString( points.imageD, points.bottomLeft, points.bottomRight ) )
+    figcaption.loading__caption= i18n[ LANG.id ].loading
