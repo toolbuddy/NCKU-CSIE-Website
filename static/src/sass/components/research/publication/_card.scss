@@ -1,0 +1,271 @@
+@import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/icon';
+
+// component
+// `> .#{ $block } > .#{ $block }__cards.cards`
+@mixin cards ( $block ) {
+  > .#{ $block }__cards.cards {
+    $small: 850px;
+
+    // [ position ]
+    position: relative;
+
+    // [ layout ]
+    display: block;
+
+    // margin-bottom: font__px-to-rem( 30 );
+    line-height: 0;
+
+    // [ skin ]
+    width: auto;
+    height: auto;
+
+    // border: {
+    //   color: #ffffff;
+    //   style: solid;
+    //   top-width: font__px-to-rem( 26 );
+    //   bottom-width: font__px-to-rem( 26 );
+    //   left-width: font__px-to-rem( 26 );
+    //   right-width: font__px-to-rem( 26 );
+    //   radius: font__px-to-rem( 8 );
+    // }
+    // padding-bottom: font__px-to-rem( 20 );
+    background-color: #ffffff;
+    box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 24 ) #dbdbdb, 0 font__px-to-rem( 8 ) font__px-to-rem( 10 ) #cccccc;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      // border: {
+      //   left-width: font__px-to-rem( 20 );
+      //   right-width: font__px-to-rem( 20 );
+      // }
+
+      // padding-left: font__px-to-rem( 46 );
+    }
+
+    // [ before ]
+    &::before {
+      // [ position ]
+      position: absolute;
+      top: 50%;
+      left: font__px-to-rem( 0 );
+
+      // [ layout ]
+      display: inline-block;
+
+      // [ skin ]
+      width: font__px-to-rem( 28 );
+      height: font__px-to-rem( 28 );
+      background: {
+        position: center;
+        size: contain;
+        repeat: no-repeat;
+      }
+      transform: translateY( -50% );
+      content: '';
+    }
+
+    // element
+    // `.body > .content > .? > .context > .context__main`
+    > .context__main {
+      // [ layout ]
+      display: inline;
+      margin: {
+        top: font__px-to-rem( 4 );
+        bottom: font__px-to-rem( 4 );
+        right: font__px-to-rem( 8 );
+      }
+      vertical-align: top;
+      line-height: font__px-to-rem( 18 );
+
+      // [ skin ]
+      font-size: font__px-to-rem( 14 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        line-height: font__px-to-rem( 20 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+      }
+    }
+
+    // element
+    // `.body > .content > .? > .context > .context__time`
+    > .context__time {
+      // [ layout ]
+      display: inline;
+      margin: {
+        top: font__px-to-rem( 4 );
+        bottom: font__px-to-rem( 4 );
+        right: font__px-to-rem( 8 );
+      }
+      vertical-align: top;
+      line-height: font__px-to-rem( 18 );
+
+      // [ skin ]
+      font-size: font__px-to-rem( 14 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        line-height: font__px-to-rem( 20 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+      }
+    }
+
+    // element
+    // `.body > .content > .publication > .publication__title`
+    > .publication__title {
+      // [ layout ]
+      display: block;
+      margin: {
+        top: font__px-to-rem( 30 );
+        bottom: font__px-to-rem( 16 );
+      }
+      line-height: font__px-to-rem( 14 );
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 14 );
+      color: #000000;
+      font: {
+        size: font__px-to-rem( 14 );
+        weight: bold;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        line-height: font__px-to-rem( 18 );
+
+        // [ skin ]
+        height: font__px-to-rem( 18 );
+        font-size: font__px-to-rem( 18 );
+      }
+    }
+
+    // element
+    // `.body > .content > .publication > .publication__context`
+    // block
+    // `.body > .content > .publication > .context`
+    > .publication__context.context {
+      // [ position ]
+      position: relative;
+
+      // [ layout ]
+      display: block;
+      margin-bottom: font__px-to-rem( 16 );
+      line-height: 0;
+
+      // [ skin ]
+      width: auto;
+      height: auto;
+      border: {
+        color: #ffffff;
+        style: solid;
+        top-width: font__px-to-rem( 26 );
+        bottom-width: font__px-to-rem( 26 );
+        left-width: font__px-to-rem( 26 );
+        right-width: font__px-to-rem( 26 );
+        radius: font__px-to-rem( 8 );
+      }
+      padding-left: font__px-to-rem( 56 );
+      background-color: #ffffff;
+      box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 24 ) #dbdbdb, 0 font__px-to-rem( 8 ) font__px-to-rem( 10 ) #cccccc;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        border: {
+          left-width: font__px-to-rem( 20 );
+          right-width: font__px-to-rem( 20 );
+        }
+        padding-left: font__px-to-rem( 46 );
+      }
+
+      // [ before ]
+      &::before {
+        // [ position ]
+        position: absolute;
+        top: 50%;
+        left: font__px-to-rem( 0 );
+
+        // [ layout ]
+        display: inline-block;
+
+        // [ skin ]
+        width: font__px-to-rem( 28 );
+        height: font__px-to-rem( 28 );
+        background: {
+          position: center;
+          size: contain;
+          repeat: no-repeat;
+        }
+        transform: translateY( -50% );
+        content: '';
+        @include icon__book();
+      }
+
+      // element
+      // `.body > .content > .? > .context > .context__main`
+      > .context__main {
+        // [ layout ]
+        display: inline;
+        margin: {
+          top: font__px-to-rem( 4 );
+          bottom: font__px-to-rem( 4 );
+          right: font__px-to-rem( 8 );
+        }
+        vertical-align: top;
+        line-height: font__px-to-rem( 18 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 14 );
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          line-height: font__px-to-rem( 20 );
+
+          // [ skin ]
+          font-size: font__px-to-rem( 16 );
+        }
+      }
+
+      // element
+      // `.body > .content > .? > .context > .context__time`
+      > .context__time {
+        // [ layout ]
+        display: inline;
+        margin: {
+          top: font__px-to-rem( 4 );
+          bottom: font__px-to-rem( 4 );
+          right: font__px-to-rem( 8 );
+        }
+        vertical-align: top;
+        line-height: font__px-to-rem( 18 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 14 );
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          line-height: font__px-to-rem( 20 );
+
+          // [ skin ]
+          font-size: font__px-to-rem( 16 );
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

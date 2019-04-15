@@ -72,7 +72,6 @@ router
             announcementId: Number( req.params.announcementId ),
             languageId:     req.query.languageId,
         } );
-
         res.locals.UTILS.announcement = {
             tagUtils,
         };
@@ -116,7 +115,7 @@ router
         } );
 
         await new Promise( ( resolve, reject ) => {
-            res.download( `${ projectRoot }/static/dist/file/${ data.filePath }`, data.name, ( err ) => {
+            res.download( `${ projectRoot }/static/dist/file/${ data.announcementId }/${ data.name }`, data.name, ( err ) => {
                 if ( err ) {
                     reject( err );
                     return;

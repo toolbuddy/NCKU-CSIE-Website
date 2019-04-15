@@ -1,5 +1,4 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
-import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import GetFactuly from 'static/src/js/components/about/faculty/get-faculty.js';
@@ -12,17 +11,6 @@ try {
     } );
     if ( !( headerBase instanceof GetHeaderBase ) )
         throw new Error( '.header.header--base not found.' );
-}
-catch ( err ) {
-    console.error( err );
-}
-try {
-    const headerSmall = new GetHeaderSmall( {
-        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
-        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-    } );
-    if ( !( headerSmall instanceof GetHeaderSmall ) )
-        throw new Error( '.header.header--small not found.' );
 }
 catch ( err ) {
     console.error( err );

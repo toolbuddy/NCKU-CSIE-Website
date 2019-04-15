@@ -98,6 +98,8 @@ export default async ( opt ) => {
                 },
             ],
             group:    '`announcement`.`announcementId`',
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
             offset:   amount * ( page - 1 ),
             limit:    amount,
 

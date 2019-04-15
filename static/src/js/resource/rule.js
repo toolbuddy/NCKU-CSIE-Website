@@ -1,7 +1,6 @@
 import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
-import GetHeaderSmall from 'static/src/js/components/common/header-small.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 
@@ -12,17 +11,6 @@ try {
     } );
     if ( !( headerBase instanceof GetHeaderBase ) )
         throw new Error( '.header.header--base not found.' );
-}
-catch ( err ) {
-    console.error( err );
-}
-try {
-    const headerSmall = new GetHeaderSmall( {
-        headerDOM:     document.querySelector( '.body__header.header.header--small' ),
-        allHeaderDOMs: document.querySelectorAll( '.body__header.header' ),
-    } );
-    if ( !( headerSmall instanceof GetHeaderSmall ) )
-        throw new Error( '.header.header--small not found.' );
 }
 catch ( err ) {
     console.error( err );
@@ -63,7 +51,7 @@ try {
         pagesDOM:              document.getElementById( 'pages' ),
         scrollTopDOM:          document.getElementById( 'announcement--normal' ),
         amount:                6,
-        from:                  new Date( '2019/01/01' ),
+        from:                  new Date( '1999/03/21' ),
         to:                    new Date( Date.now() ),
         page:                  1,
         visiblePageNum:        2,

@@ -18,23 +18,23 @@ const router = express.Router( {
 } );
 
 /**
- * Resolve URL `/auto/login`.
+ * Resolve URL `/auth/login`.
  */
 
 router
 .route( '/login' )
-.get( staticHtml( 'research/index' ) );
+.get( staticHtml( 'resource/fix' ) );
 
 /**
- * Resolve URL `/research/labs`.
+ * Resolve URL `/auth/logout`.
  */
 
 router
 .route( '/logout' )
-.get( staticHtml( 'research/labs' ) );
+.get( staticHtml( 'resource/fix' ) );
 
 /**
- * Resolve URL `/research/publications`.
+ * Resolve URL `/auth/report`.
  */
 
 router

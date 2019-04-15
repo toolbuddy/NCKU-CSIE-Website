@@ -72,7 +72,11 @@ export default class GetTvAnnouncements {
     }
 
     render ( data ) {
-        data.forEach( ( show ) => {
+        const extractTextObj = data;
+        extractTextObj.forEach( ( ann ) => {
+            ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+        } );
+        extractTextObj.forEach( ( show ) => {
             try {
                 this.DOM.series.innerHTML += tvAnnouncementHTML( {
                     data: show,

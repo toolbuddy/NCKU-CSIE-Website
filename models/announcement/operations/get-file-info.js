@@ -32,6 +32,7 @@ export default async ( opt ) => {
         const data = await File.findOne( {
             attributes: [
                 'fileId',
+                'announcementId',
             ],
             where: {
                 announcementId,
@@ -43,7 +44,6 @@ export default async ( opt ) => {
                     as:         'fileI18n',
                     attributes: [
                         'name',
-                        'filePath',
                     ],
                     where: {
                         fileId,
@@ -52,7 +52,6 @@ export default async ( opt ) => {
                 },
             ],
         } );
-
         if ( !data ) {
             const error = new Error( 'no result' );
             error.status = 404;
@@ -60,8 +59,8 @@ export default async ( opt ) => {
         }
 
         return {
-            name:     data.fileI18n[ 0 ].name,
-            filePath: data.fileI18n[ 0 ].filePath,
+            name:           data.fileI18n[ 0 ].name,
+            announcementId: data.announcementId,
         };
     }
     catch ( err ) {
