@@ -29,7 +29,11 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'about/award' );
+  @include banner( $block: 'body', $image: 'about/award' ) {
+    &::before {
+      filter: blur( .1rem );
+    }
+  }
 
   // element
   // `.body > .body__content`

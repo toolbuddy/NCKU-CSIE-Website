@@ -72,6 +72,7 @@ export default {
         'resource/rent':    path.join( jsSrcRoot, 'resource/rent.js' ),
         'resource/rule':    path.join( jsSrcRoot, 'resource/rule.js' ),
         'resource/sitemap': path.join( jsSrcRoot, 'resource/sitemap.js' ),
+        'resource/link':    path.join( jsSrcRoot, 'resource/link.js' ),
 
         // Route `student`
         'student/high-school':       path.join( jsSrcRoot, 'student/high-school.js' ),

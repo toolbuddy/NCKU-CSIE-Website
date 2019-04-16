@@ -31,7 +31,11 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'research/publication' );
+  @include banner( $block: 'body' ,$image: 'research/publication' ) {
+    &::before {
+      filter: blur( .07rem );
+    }
+  }
 
   // element
   // `.body > .body__content`

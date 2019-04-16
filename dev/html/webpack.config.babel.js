@@ -93,6 +93,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'resource/rent':    path.join( pugRoot, 'resource/rent.pug' ),
         'resource/rule':    path.join( pugRoot, 'resource/rule.pug' ),
         'resource/sitemap': path.join( pugRoot, 'resource/sitemap.pug' ),
+        'resource/link':    path.join( pugRoot, 'resource/link.pug' ),
 
         // Route `student`
         'student/high-school':       path.join( pugRoot, 'student/high-school.pug' ),

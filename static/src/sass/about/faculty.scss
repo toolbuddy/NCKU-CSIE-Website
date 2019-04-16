@@ -38,7 +38,7 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $small: 545px;
+    $small: 409px;
 
     // [ layout ]
     display: grid;
@@ -51,7 +51,7 @@
           'faculty';
         columns: 100%;
       }
-      row-gap: font__px-to-rem( 32 );
+      row-gap: font__px-to-rem( 24 );
     };
 
     // [ skin ]
@@ -81,7 +81,7 @@
       grid-area: breadcrumb;
 
       // [ skin ]
-      border-left: font__px-to-rem( 32 ) solid transparent;
+      border-left: font__px-to-rem( 24 ) solid transparent;
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
@@ -118,7 +118,7 @@
       // `.body > .content > .faculty > .no-result`
       @include no-result( $block: 'faculty' ) {
         // [ layout ]
-        margin-top: font__px-to-rem( 64 );
+        margin-top: font__px-to-rem( 48 );
       }
 
       // element
@@ -127,7 +127,7 @@
       // `.body > .content > .faculty > .loading`
       @include loading( $block: 'faculty' ) {
         // [ layout ]
-        margin-top: font__px-to-rem( 64 );
+        margin-top: font__px-to-rem( 48 );
       }
 
       // element

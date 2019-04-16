@@ -159,22 +159,23 @@
           'sitemap__link--contact'
           'sitemap__title--research'
           'sitemap__link--lab'
-          'sitemap__link--group'
           'sitemap__link--publication'
           'sitemap__title--student'
-          'sitemap__link--course'
+          'sitemap__link--highSchool'
           'sitemap__link--college'
           'sitemap__link--master'
           'sitemap__link--phd'
-          'sitemap__link--scholar'
-          'sitemap__link--exchange'
-          'sitemap__link--intern'
           'sitemap__title--announce'
           'sitemap__link--all'
           'sitemap__link--activity'
           'sitemap__link--recruit'
           'sitemap__title--resource'
-          'sitemap__link--resource';
+          'sitemap__link--rule'
+          'sitemap__link--rent'
+          'sitemap__link--fix'
+          'sitemap__link--alumni'
+          'sitemap__link--link'
+          ;
       }
       display: grid;
       text-align: center;
@@ -185,8 +186,8 @@
         grid-template-areas:
           'sitemap__title--home    sitemap__title--about    sitemap__title--research'
           'sitemap__link--home     sitemap__link--intro     sitemap__link--lab'
-          '.                       sitemap__link--faculty   sitemap__link--group'
-          '.                       sitemap__link--staff     sitemap__link--publication'
+          '.                       sitemap__link--faculty   sitemap__link--publication'
+          '.                       sitemap__link--staff     .'
           '.                       sitemap__link--award     .'
           '.                       sitemap__link--contact   .'
           '.                       .                        .'
@@ -194,13 +195,13 @@
           'sitemap__hr             sitemap__hr              sitemap__hr'
           'sitemap__title--student sitemap__title--announce sitemap__title--resource'
           '.                       .                        .'
-          'sitemap__link--course   sitemap__link--all       sitemap__link--resource'
-          'sitemap__link--college  sitemap__link--activity  .'
-          'sitemap__link--master   sitemap__link--recruit   .'
-          'sitemap__link--phd      .                        .'
-          'sitemap__link--scholar  .                        .'
-          'sitemap__link--exchange .                        .'
-          'sitemap__link--intern   .                        .';
+          'sitemap__link--highSchool sitemap__link--all     sitemap__link--rule'
+          'sitemap__link--college  sitemap__link--activity  sitemap__link--rent'
+          'sitemap__link--master   sitemap__link--recruit   sitemap__link--fix'
+          'sitemap__link--phd      .                        sitemap__link--alumni'
+          '.                       .                        sitemap__link--link'
+          '.                       .                        .'
+          '.                       .                        .';
       }
 
       // [ RWD: $large ]
@@ -210,13 +211,13 @@
           'sitemap__title--home sitemap__title--about  sitemap__title--research   sitemap__title--student sitemap__title--announce sitemap__title--resource .'
           'sitemap__hr          sitemap__hr            sitemap__hr                sitemap__hr             sitemap__hr              sitemap__hr              .'
           '.                    .                      .                          .                       .                        .                        .'
-          'sitemap__link--home  sitemap__link--intro   sitemap__link--lab         sitemap__link--course   sitemap__link--all       sitemap__link--resource  .'
-          '.                    sitemap__link--faculty sitemap__link--group       sitemap__link--college  sitemap__link--activity  .                        .'
-          '.                    sitemap__link--staff   sitemap__link--publication sitemap__link--master   sitemap__link--recruit   .                        .'
-          '.                    sitemap__link--award   .                          sitemap__link--phd      .                        .                        .'
-          '.                    sitemap__link--contact .                          sitemap__link--scholar  .                        .                        .'
-          '.                    .                      .                          sitemap__link--exchange .                        .                        .'
-          '.                    .                      .                          sitemap__link--intern   .                        .                        .';
+          'sitemap__link--home  sitemap__link--intro   sitemap__link--lab         sitemap__link--highSchool sitemap__link--all     sitemap__link--rule      .'
+          '.                    sitemap__link--faculty sitemap__link--publication sitemap__link--college  sitemap__link--activity  sitemap__link--rent      .'
+          '.                    sitemap__link--staff   .                          sitemap__link--master   sitemap__link--recruit   sitemap__link--fix       .'
+          '.                    sitemap__link--award   .                          sitemap__link--phd      .                        sitemap__link--alumni    .'
+          '.                    sitemap__link--contact .                          .                       .                        sitemap__link--link      .'
+          '.                    .                      .                          .                       .                        .                        .'
+          '.                    .                      .                          .                       .                        .                        .';
       }
 
       // element
@@ -369,24 +370,17 @@
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--groups
-          &groups {
-            // [ position ]
-            grid-area: sitemap__link--group;
-          }
-
-          // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publications
-          &publications {
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publication
+          &publication {
             // [ position ]
             grid-area: sitemap__link--publication;
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--course
-          &course {
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--highSchool
+          &highSchool {
             // [ position ]
-            grid-area: sitemap__link--course;
+            grid-area: sitemap__link--highSchool;
           }
 
           // modifier
@@ -411,27 +405,6 @@
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--scholarship
-          &scholarship {
-            // [ position ]
-            grid-area: sitemap__link--scholar;
-          }
-
-          // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--international
-          &international {
-            // [ position ]
-            grid-area: sitemap__link--exchange;
-          }
-
-          // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--internship
-          &internship {
-            // [ position ]
-            grid-area: sitemap__link--intern;
-          }
-
-          // modifier
           // `.body > .content > .sitemap > .sitemap__link.sitemap__link--all
           &all {
             // [ position ]
@@ -453,10 +426,38 @@
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--resource
-          &resource {
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--rule
+          &rule {
             // [ position ]
-            grid-area: sitemap__link--resource;
+            grid-area: sitemap__link--rule;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--rent
+          &rent {
+            // [ position ]
+            grid-area: sitemap__link--rent;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--fix
+          &fix {
+            // [ position ]
+            grid-area: sitemap__link--fix;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--alumni
+          &alumni {
+            // [ position ]
+            grid-area: sitemap__link--alumni;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--link
+          &link {
+            // [ position ]
+            grid-area: sitemap__link--link;
           }
         }
       }
