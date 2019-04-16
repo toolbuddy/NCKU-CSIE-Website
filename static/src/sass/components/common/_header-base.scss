@@ -34,6 +34,17 @@
     text-align: center;
     line-height: 0;
 
+    ::-webkit-scrollbar {
+      width: 0;
+    }
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+
+    /* stylelint-disable */
+    scrollbar-width: none;
+
+    /* stylelint-enable */
+
     // [ skin ]
     width: 100%;
     height: auto;
