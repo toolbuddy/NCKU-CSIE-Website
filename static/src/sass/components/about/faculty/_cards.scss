@@ -185,7 +185,7 @@
           display: block;
           text-align: center;
           margin-bottom: font__px-to-rem( 24 );
-          line-height: font__px-to-rem( 10.5 );
+          line-height: font__px-to-rem( 14 );
           word: {
             wrap: normal;
             break: normal;
@@ -200,8 +200,8 @@
           // `> .#{ $block } > .cards > .card > .intro > .departments > .departments__department`
           > .departments__department {
             // [ variable ]
-            $min-height: font__px-to-rem( 21 );
-            $font-size: font__px-to-rem( 10.5 );
+            $min-height: font__px-to-rem( 28 );
+            $font-size: font__px-to-rem( 14 );
             $padding-vertical-align: ( $min-height - $font-size ) / 2;
 
             // [ layout ]
@@ -240,12 +240,12 @@
           // [ layout ]
           display: block;
           text-align: center;
-          line-height: font__px-to-rem( 25 );
-          margin-bottom: font__px-to-rem( 4.5 );
+          line-height: font__px-to-rem( 33 );
+          margin-bottom: font__px-to-rem( 6 );
 
           // [ skin ]
           font: {
-            size: font__px-to-rem( 15 );
+            size: font__px-to-rem( 20 );
             weight: bold;
           }
 
@@ -265,7 +265,7 @@
           // [ layout ]
           display: block;
           text-align: center;
-          margin-bottom: font__px-to-rem( 4.5 );
+          margin-bottom: font__px-to-rem( 6 );
 
           // [ RWD: $medium ]
           @media screen and ( min-width: $medium ) {
@@ -284,7 +284,7 @@
               right: font__px-to-rem( 3 );
               bottom: font__px-to-rem( 3 );
             }
-            line-height: font__px-to-rem( 10.5 );
+            line-height: font__px-to-rem( 14 );
 
             // [ skin ]
             min-height: font__px-to-rem( 21 );
@@ -294,9 +294,9 @@
               color: #adacad;
               radius: font__px-to-rem( 3 );
             }
-            padding: font__px-to-rem( 3.75 ) font__px-to-rem( 3.75 );
+            padding: font__px-to-rem( 5 ) font__px-to-rem( 5 );
             color: #adacad;
-            font-size: font__px-to-rem( 10.5 );
+            font-size: font__px-to-rem( 14 );
           }
         }
 
@@ -313,13 +313,13 @@
           // [ layout ]
           display: block;
           margin: {
-            bottom: font__px-to-rem( 12 );
+            bottom: font__px-to-rem( 16 );
             left: $before-gap;
           }
           line-height: $icon-size;
 
           // [ skin ]
-          font-size: font__px-to-rem( 12 );
+          font-size: font__px-to-rem( 16 );
 
           // [ before ]
           &::before {
@@ -427,7 +427,7 @@
 
           // [ skin ]
           color: #757575;
-          font-size: font__px-to-rem( 10.5 );
+          font-size: font__px-to-rem( 14 );
         }
       }
 
@@ -436,7 +436,7 @@
       > .card__more {
         // [ variable ]
         $color: #8caae2;
-        $font-size: font__px-to-rem( 12 );
+        $font-size: font__px-to-rem( 16 );
 
         // [ position ]
         position: absolute;
