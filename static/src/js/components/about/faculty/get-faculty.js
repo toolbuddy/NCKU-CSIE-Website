@@ -92,6 +92,11 @@ export default class GetFaculty {
 
         this.eventLock = false;
 
+        let firstDeptFilter = this.DOM.filter.department.filter(obj => obj.id === 0);
+        if(!firstDeptFilter.length)
+            throw new Error( 'DOM not found.' );
+        classAdd( firstDeptFilter[0].node, `department__tag--active` );
+
         return this;
     }
 
