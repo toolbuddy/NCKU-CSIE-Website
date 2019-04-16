@@ -23,7 +23,7 @@ const router = express.Router( {
 
 router
 .route( '/login' )
-.get( staticHtml( 'resource/fix' ) );
+.get( staticHtml( 'auth/login' ) );
 
 /**
  * Resolve URL `/auth/logout`.

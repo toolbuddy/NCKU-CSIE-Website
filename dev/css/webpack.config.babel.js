@@ -87,7 +87,7 @@ export default {
         'resource/link':    path.join( sassRoot, 'resource/link.scss' ),
 
         // Route `student`
-        'student/high-school':       path.join( sassRoot, 'student/high-school.scss' ),
+        'student/high-school':   path.join( sassRoot, 'student/high-school.scss' ),
         'student/college':       path.join( sassRoot, 'student/college.scss' ),
         'student/index':         path.join( sassRoot, 'student/index.scss' ),
         'student/master':        path.join( sassRoot, 'student/master.scss' ),
@@ -96,6 +96,9 @@ export default {
         // Route `user`
         'user/index':             path.join( sassRoot, 'user/index.scss' ),
         'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
+
+        // Route `auth`
+        'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
     },
 
     /**
