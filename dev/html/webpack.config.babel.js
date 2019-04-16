@@ -96,7 +96,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'resource/link':    path.join( pugRoot, 'resource/link.pug' ),
 
         // Route `student`
-        'student/high-school':       path.join( pugRoot, 'student/high-school.pug' ),
+        'student/high-school':   path.join( pugRoot, 'student/high-school.pug' ),
         'student/college':       path.join( pugRoot, 'student/college.pug' ),
         'student/index':         path.join( pugRoot, 'student/index.pug' ),
         'student/master':        path.join( pugRoot, 'student/master.pug' ),
@@ -107,6 +107,9 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'user/announcement/index': path.join( pugRoot, 'user/announcement/index.pug' ),
         'user/announcement/add':   path.join( pugRoot, 'user/announcement/add.pug' ),
         'user/announcement/edit':  path.join( pugRoot, 'user/announcement/edit.pug' ),
+
+        // Route `auth`
+        'auth/login':              path.join( pugRoot, 'auth/login.pug' ),
     },
 
     /**

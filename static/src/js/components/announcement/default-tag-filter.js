@@ -767,7 +767,11 @@ export default class DefaultTagFilter {
 
             const extractTextObj = data;
             extractTextObj.forEach( ( ann ) => {
-                ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+                try{
+                    ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+                }catch( err ){
+                    console.error( err );
+                }
             } );
 
             extractTextObj.map( ( briefing ) => {
@@ -882,7 +886,11 @@ export default class DefaultTagFilter {
 
             const extractTextObj = data;
             extractTextObj.forEach( ( ann ) => {
-                ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+                try{
+                    ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
+                }catch( err ){
+                    console.error( err );
+                }
             } );
 
             extractTextObj.map( ( briefing ) => {

@@ -75,7 +75,7 @@ export default {
         'resource/link':    path.join( jsSrcRoot, 'resource/link.js' ),
 
         // Route `student`
-        'student/high-school':       path.join( jsSrcRoot, 'student/high-school.js' ),
+        'student/high-school':   path.join( jsSrcRoot, 'student/high-school.js' ),
         'student/college':       path.join( jsSrcRoot, 'student/college.js' ),
         'student/index':         path.join( jsSrcRoot, 'student/index.js' ),
         'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
@@ -86,6 +86,9 @@ export default {
         'user/announcement/index': path.join( jsSrcRoot, 'user/announcement/index.js' ),
         'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
         'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),
+
+        // Route `auth`
+        'auth/login':              path.join( jsSrcRoot, 'auth/login.js' ),
     },
 
     /**
