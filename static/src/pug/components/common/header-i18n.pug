@@ -138,13 +138,6 @@
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
-          ieet: {
-            text: 'IEET',
-            route: UTILS.url( {
-              href : 'resource/ieet',
-              query: { languageId: LANG.getLanguageId( 'en-US' ) },
-            } ),
-          },
           index: {
             text: 'Resource',
             route: UTILS.url( {
@@ -172,6 +165,13 @@
               href : 'resource/sitemap',
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
+          },
+          link: {
+            text: 'Links',
+            route: UTILS.url({
+              href: 'resource/link',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            }),
           },
         },
         student: {
@@ -349,13 +349,6 @@
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
-          ieet: {
-            text: 'IEET工程認證',
-            route: UTILS.url( {
-              href : 'resource/ieet',
-              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-            } ),
-          },
           index: {
             text: '資源連結',
             route: UTILS.url( {
@@ -383,6 +376,13 @@
               href : 'resource/sitemap',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
+          },
+          link: {
+            text: '相關連結',
+            route: UTILS.url({
+              href: 'resource/link',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            }),
           },
         },
         student: {

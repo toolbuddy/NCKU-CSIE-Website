@@ -47,7 +47,9 @@ router
 
 router
 .route( '/rent' )
-.get( staticHtml( 'resource/rent' ) );
+.get( ( req, res ) => {
+    res.redirect( 'http://www.csie.ncku.edu.tw/Class2014/' );
+} );
 
 /**
  * Resolve URL `/resource/fix`.
@@ -55,7 +57,9 @@ router
 
 router
 .route( '/fix' )
-.get( staticHtml( 'resource/fix' ) );
+.get( ( req, res ) => {
+    res.redirect( 'https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform' );
+} );
 
 /**
  * Resolve URL `/resource/ieet`.
@@ -79,6 +83,16 @@ router
 
 router
 .route( '/alumni' )
-.get( staticHtml( 'resource/alumni' ) );
+.get( ( req, res ) => {
+    res.redirect( 'http://www.csie.ncku.edu.tw/classmate/index.php' );
+} );
+
+/**
+ * Resolve URL `/resource/link`.
+ */
+
+router
+.route( '/link' )
+.get( staticHtml( 'resource/link' ) );
 
 export default router;

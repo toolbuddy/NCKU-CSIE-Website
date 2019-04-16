@@ -84,6 +84,7 @@ export default {
         'resource/rent':    path.join( sassRoot, 'resource/rent.scss' ),
         'resource/rule':    path.join( sassRoot, 'resource/rule.scss' ),
         'resource/sitemap': path.join( sassRoot, 'resource/sitemap.scss' ),
+        'resource/link':    path.join( sassRoot, 'resource/link.scss' ),
 
         // Route `student`
         'student/high-school':       path.join( sassRoot, 'student/high-school.scss' ),

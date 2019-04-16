@@ -89,5 +89,8 @@ $banner-path: '~image/banner';
         font-size: font__px-to-rem( 50 );
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }
