@@ -31,6 +31,17 @@ append data
                     link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
                 },
             },
+            statistics:{
+                starPlan: {
+                    title: 'Star Plan',
+                },
+                gsat: {
+                    title: 'General Scholastic Ability Test',
+                },
+                ast: {
+                    title: 'Advanced Subjects Test',
+                },
+            }
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -61,6 +72,17 @@ append data
                     link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
                 },
             },
+            statistics:{
+                starPlan: {
+                    title: '繁星計畫',
+                },
+                gsat: {
+                    title: '大學學科能力測驗(學測)',
+                },
+                ast: {
+                    title: '大學入學指定科目考試(指考)',
+                },
+            }
         },
       },
     } );
@@ -110,7 +132,12 @@ append content
     section.statistics__goal.goal
       article.goal__context.context
         article.context__paragraph.paragraph
-          p.paragraph__list-description= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.starPlan.title
+          p.paragraph__text= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.gsat.title
+          p.paragraph__text= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.ast.title
+          p.paragraph__text= '施工中'
 
   section#event.content__event.event
     +topic( 'event', i18n[ LANG.id ].index.link.event )
