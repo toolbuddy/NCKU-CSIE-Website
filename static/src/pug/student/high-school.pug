@@ -14,12 +14,35 @@ append data
           link: {
             curriculum:   'Curriculum',
             statistics:   'Statistics',
-            information:  'Information',
             event:        'Events',
             qa:           'Q&A',
             link:         'Links',
+          },
         },
-      },
+        content:{
+            curriculum:{
+                imageCaption: 'Course Map',
+                introduction:{
+                    text: 'Introduction of NCKU CSIE',
+                    link: 'http://localhost:3001/about/intro?languageId=0',
+                },
+                courseMap:{
+                    text: 'Link to the course map',
+                    link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
+                },
+            },
+            statistics:{
+                starPlan: {
+                    title: 'Star Plan',
+                },
+                gsat: {
+                    title: 'General Scholastic Ability Test',
+                },
+                ast: {
+                    title: 'Advanced Subjects Test',
+                },
+            }
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         title: '高中生專區',
@@ -32,11 +55,34 @@ append data
           link: {
             curriculum:   '課程資訊',
             statistics:   '統計數據',
-            information:  '入學資訊',
             event:        '課外活動',
             qa:           'Q&A',
             link:         'FB連結',
           },
+        },
+        content:{
+            curriculum:{
+                imageCaption: '課程資訊地圖',
+                introduction:{
+                    text: '系所介紹',
+                    link: 'http://localhost:3001/about/intro?languageId=0',
+                },
+                courseMap:{
+                    text: '課程地圖連結',
+                    link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
+                },
+            },
+            statistics:{
+                starPlan: {
+                    title: '繁星計畫',
+                },
+                gsat: {
+                    title: '大學學科能力測驗(學測)',
+                },
+                ast: {
+                    title: '大學入學指定科目考試(指考)',
+                },
+            }
         },
       },
     } );
@@ -66,7 +112,6 @@ append breadcrumb
 
 append content
   include /components/common/topic.pug
-  include /components/about/intro/ieet-i18n.pug
   include /components/student/high-school/link.pug
 
   section.content__index.index
@@ -79,22 +124,20 @@ append content
     section.curriculum__goal.goal
       article.goal__context.context
         article.context__paragraph.paragraph
-          header.paragraph__title= ieetI18n()[ LANG.id ][1].aspect
-          a.paragraph__link( href = ieetI18n()[ LANG.id ][2].link )= ieetI18n()[ LANG.id ][2].context
+          a.paragraph__link( href = i18n[ LANG.id ].content.curriculum.introduction.link )= i18n[ LANG.id ].content.curriculum.introduction.text
+          a.paragraph__link( href = i18n[ LANG.id ].content.curriculum.courseMap.link )= i18n[ LANG.id ].content.curriculum.courseMap.text
 
   section#statistics.content__statistics.statistics
     +topic( 'statistics', i18n[ LANG.id ].index.link.statistics )
     section.statistics__goal.goal
       article.goal__context.context
         article.context__paragraph.paragraph
-          p.paragraph__list-description= '施工中'
-
-  section#information.content__information.information
-    +topic( 'information', i18n[ LANG.id ].index.link.information )
-    section.information__goal.goal
-      article.goal__context.context
-        article.context__paragraph.paragraph
-          p.paragraph__list-description= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.starPlan.title
+          p.paragraph__text= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.gsat.title
+          p.paragraph__text= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.ast.title
+          p.paragraph__text= '施工中'
 
   section#event.content__event.event
     +topic( 'event', i18n[ LANG.id ].index.link.event )
