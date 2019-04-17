@@ -268,7 +268,7 @@
             > .paragraph__link {
               // [ layout ]
               display: block;
-              margin-bottom: font__px-to-rem( 60 );
+              margin-bottom: font__px-to-rem( 20 );
               text: {
                 align: left;
                 decoration: underline;
@@ -386,87 +386,6 @@
       // block
       // `.body > .content > .curriculum > .goal`
       > .statistics__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
-        // block
-        // `.body > .content > .curriculum > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
-              // [ layout ]
-              margin-top: font__px-to-rem( 60 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
-              // [ layout ]
-              margin-top: font__px-to-rem( 48 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
-
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
-            }
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__information`
-    // block
-    // `.body > .content > .information`
-    > .content__information.information {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .information > .information__topic`
-      // block
-      // `.body > .content > .information > .topic`
-      @include topic( $block: 'information' );
-
-      // element
-      // `.body > .content > .curriculum > .curriculum__goal`
-      // block
-      // `.body > .content > .curriculum > .goal`
-      > .information__goal.goal {
         // [ layout ]
         display: block;
         margin: {
