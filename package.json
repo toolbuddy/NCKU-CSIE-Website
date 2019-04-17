@@ -68,6 +68,8 @@
     "@babel/polyfill": "^7.0.0",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
+    "d3": "^5.9.2",
+    "d3-scale": "^3.0.0",
     "deep-freeze": "0.0.1",
     "express": "^4.16.4",
     "ftp": "^0.3.10",
