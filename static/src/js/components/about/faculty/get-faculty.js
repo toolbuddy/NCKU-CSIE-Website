@@ -298,17 +298,17 @@ export default class GetFaculty {
             this.renderCard( await this.fetchData() );
             this.subscribeFilterEvent();
 
-            // trigger department-tag-0
-            let firstDeptFilter = this.DOM.filter.department.filter(obj => obj.id === 0);
-            if(!firstDeptFilter.length)
+            // Trigger department-tag-0
+            const firstDeptFilter = this.DOM.filter.department.filter( obj => obj.id === 0 );
+            if ( !firstDeptFilter.length )
                 throw new Error( 'DOM not found.' );
-            this.filterEvent({
-                which:{ 
-                    jsName: 'department', 
-                    dataName: 'department', 
-                }, 
-                filterObj:firstDeptFilter[0]
-            });
+            this.filterEvent( {
+                which: {
+                    jsName:   'department',
+                    dataName: 'department',
+                },
+                filterObj: firstDeptFilter[ 0 ],
+            } );
 
             this.renderLoadingSucceed();
         }

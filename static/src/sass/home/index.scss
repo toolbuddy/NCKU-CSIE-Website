@@ -3,6 +3,7 @@
 @import 'components/common/header-base';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
+@import 'components/common/banner';
 @import 'components/common/topic';
 @import 'components/common/no-result';
 @import 'components/common/loading';
@@ -39,8 +40,8 @@
         '.  topic            .'
         '.  announcement     .'
         '.  hot-announcement .'
-        '.  .                .';
-      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 );
+        'high-school high-school high-school';
+      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) 50vh;
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
     }
 
@@ -53,8 +54,8 @@
           '.  .            .  .                .'
           '.  topic        .  hot-announcement .'
           '.  announcement .  hot-announcement .'
-          '.  .            .  .                .';
-        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 );
+          'high-school high-school high-school high-school high-school';
+        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) 40vh;
         columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
       }
       align-items: start;
@@ -168,6 +169,55 @@
           }
         }
       }
+    }
+
+    > .content__high-school.high-school {
+      // [ position ]
+      grid-area: high-school;
+
+      // [ layout ]
+      margin-top: 7rem;
+
+      > .high-school__banner {
+        width: 100%;
+        height: 50%;
+
+        > .banner__text {
+          margin-top: 1rem;
+          padding: {
+            top: font__px-to-rem( 200 );
+            bottom: font__px-to-rem( 200 );
+          }
+          color: white;
+
+          // [ position ]
+          top: 50%;
+          transform: translateY( -50% );
+          text-align: center;
+          font: {
+            size: font__px-to-rem( 26 );
+            weight: bold;
+          }
+          line-height: font__px-to-rem( 26 );
+          background: {
+            image: url( '~image/banner/student/high-school.jpg' );
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            line-height: font__px-to-rem( 50 );
+
+            // [ skin ]
+            font-size: font__px-to-rem( 50 );
+          }
+        }
+      }
+
+      // filter: blur( .1rem ) brightness( .9 );
     }
 
     // element

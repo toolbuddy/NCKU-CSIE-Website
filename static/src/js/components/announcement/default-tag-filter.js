@@ -767,9 +767,10 @@ export default class DefaultTagFilter {
 
             const extractTextObj = data;
             extractTextObj.forEach( ( ann ) => {
-                try{
+                try {
                     ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
-                }catch( err ){
+                }
+                catch ( err ) {
                     console.error( err );
                 }
             } );
@@ -886,9 +887,10 @@ export default class DefaultTagFilter {
 
             const extractTextObj = data;
             extractTextObj.forEach( ( ann ) => {
-                try{
+                try {
                     ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
-                }catch( err ){
+                }
+                catch ( err ) {
                     console.error( err );
                 }
             } );
