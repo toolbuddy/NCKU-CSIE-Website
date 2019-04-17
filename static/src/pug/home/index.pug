@@ -8,12 +8,14 @@ append data
         'topic': 'Latest News',
         'more':  'more...',
         'hot':   'Hot News',
+        'highSchool': 'For High School Students',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
         'more':  '更多資訊...',
         'hot':   '最近熱門',
+        'highSchool': '高中生專區',
       },
     } );
     const currentRoute = '';
@@ -51,6 +53,10 @@ append content
     +loading( 'hot-announcement' )
     nav.hot-announcement__briefings.briefings
 
+  section#high-school.content__high-school.high-school
+    figure.high-school__banner.banner
+      h1.banner__text
+        a.banner__text(href='http://140.116.245.105:3000/student/high-school')= i18n[ LANG.id ].highSchool
 append footer
 
 append scripts
