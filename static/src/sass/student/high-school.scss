@@ -382,9 +382,9 @@
       @include topic( $block: 'statistics' );
 
       // element
-      // `.body > .content > .curriculum > .curriculum__goal`
+      // `.body > .content > .statistics > .statistics__goal`
       // block
-      // `.body > .content > .curriculum > .goal`
+      // `.body > .content > .statistics > .goal`
       > .statistics__goal.goal {
         // [ layout ]
         display: block;
@@ -397,9 +397,9 @@
         width: 98%;
 
         // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
+        // `.body > .content > .statistics > .goal > .goal__context`
         // block
-        // `.body > .content > .curriculum > .goal > .context`
+        // `.body > .content > .statistics > .goal > .context`
         > .goal__context.context {
           // [ template ]
           @extend %block__context;
@@ -411,26 +411,32 @@
           width: 100%;
 
           // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
+          // `.body > .content > .statistics > .goal > .context > .context__paragraph`
           // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
+          // `.body > .content > .statistics > .goal > .context > .paragraph`
           > .context__paragraph.paragraph {
+
+            /* stylelint-disable */
+            width: 100% !important;
+
+            /* stylelint-enable */
+
             // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
+            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
             > .paragraph__title:not( :first-of-type ) {
               // [ layout ]
               margin-top: font__px-to-rem( 60 );
             }
 
             // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
+            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__text`
             > .paragraph__text {
               // [ layout ]
               margin-top: font__px-to-rem( 20 );
             }
 
             // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
+            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__text`
             > .paragraph__list-description {
               // [ layout ]
               display: block;
@@ -442,6 +448,71 @@
               height: auto;
               color: #757575;
               font-size: font__px-to-rem( 20 );
+            }
+
+            // element
+            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__plot`
+            > .paragraph__plot {
+              display: inline-block;
+              width: 100%;
+              max-width: font__px-to-rem( 500 );
+
+              > .plot__lineChart {
+                fill: none;
+                stroke: steelblue;
+                stroke-width: font__px-to-rem( 2 );
+                width: 100%;
+                max-width: font__px-to-rem( 500 );
+                min-width: font__px-to-rem( 300 );
+
+                > .lineChart__axis {
+                  font: {
+                    size: font__px-to-rem( 20 );
+                    weight: 500;
+                  }
+                  color: #aaaaaa;
+                  stroke: #444444;
+                  stroke-width: font__px-to-rem( .5 );
+                }
+
+                > .lineChart__label {
+                  font: {
+                    size: font__px-to-rem( 25 );
+                    weight: 500;
+                  }
+                  fill: #ff8800;
+                  text-anchor: middle;
+                  stroke-width: 0;
+                }
+
+                > .lineChart__axisLabel {
+                  font: {
+                    size: font__px-to-rem( 20 );
+                    weight: 500;
+                  }
+                  fill: #444444;
+                  text-anchor: start;
+                  stroke-width: 0;
+                }
+
+                > .lineChart__title {
+                  font: {
+                    size: font__px-to-rem( 40 );
+                    weight: 500;
+                  }
+                  fill: steelblue;
+                  text-anchor: middle;
+                  stroke-width: 0;
+                }
+              }
+
+              > .plot__boxChart {
+                stroke: steelblue;
+                stroke-width: font__px-to-rem( 2 );
+                width: 100%;
+                max-width: font__px-to-rem( 500 );
+                min-width: font__px-to-rem( 300 );
+              }
             }
           }
         }

@@ -32,15 +32,10 @@ append data
                 },
             },
             statistics:{
-                starPlan: {
-                    title: 'Star Plan',
-                },
-                gsat: {
-                    title: 'General Scholastic Ability Test',
-                },
-                ast: {
-                    title: 'Advanced Subjects Test',
-                },
+                starPlan: 'Star Plan',
+                gsat: 'General Scholastic Ability Test',
+                ast: 'Advanced Subjects Test',
+                foreignIndi: 'Indigenous Students and Foreign Students',
             }
         },
       },
@@ -73,15 +68,10 @@ append data
                 },
             },
             statistics:{
-                starPlan: {
-                    title: '繁星計畫',
-                },
-                gsat: {
-                    title: '大學學科能力測驗(學測)',
-                },
-                ast: {
-                    title: '大學入學指定科目考試(指考)',
-                },
+                starPlan: '繁星計畫',
+                gsat: '大學學科能力測驗(學測)',
+                ast: '大學入學指定科目考試(指考)',
+                foreignIndi: '原住民與外籍生錄取人數',
             }
         },
       },
@@ -132,12 +122,24 @@ append content
     section.statistics__goal.goal
       article.goal__context.context
         article.context__paragraph.paragraph
-          p.paragraph__title= i18n[ LANG.id ].content.statistics.starPlan.title
-          p.paragraph__text= '施工中'
-          p.paragraph__title= i18n[ LANG.id ].content.statistics.gsat.title
-          p.paragraph__text= '施工中'
-          p.paragraph__title= i18n[ LANG.id ].content.statistics.ast.title
-          p.paragraph__text= '施工中'
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.starPlan
+          figure#starPlanStudentNum.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--starPlanStudentNum
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.gsat
+          figure#gsatStudentNum.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--gsatStudentNum
+          figure#gsatMinScore.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--gsatMinScore
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.ast
+          figure#astStudentNum.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--astStudentNum
+          figure#astMinScore.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--astMinScore
+          p.paragraph__title= i18n[ LANG.id ].content.statistics.foreignIndi
+          figure#indigenousStudentNum.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--indigenousStudentNum
+          figure#foreignStudentNum.paragraph__plot.plot
+            svg.plot__lineChart.plot__lineChart--foreignStudentNum
 
   section#event.content__event.event
     +topic( 'event', i18n[ LANG.id ].index.link.event )
@@ -165,3 +167,5 @@ append footer
 
 append scripts
   +js( 'student/high-school' )
+  script( src = "https://d3js.org/d3.v5.js" )
+
