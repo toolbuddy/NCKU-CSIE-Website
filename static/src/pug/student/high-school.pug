@@ -36,7 +36,39 @@ append data
                 gsat: 'General Scholastic Ability Test',
                 ast: 'Advanced Subjects Test',
                 foreignIndi: 'Indigenous Students and Foreign Students',
-            }
+            },
+            event:[
+                {
+                    text: 'Waking Lion',
+                    imgSrc: 'event/lion.jpg',
+                    id: 'lion',
+                },
+                {
+                    text: 'CSIE Camp',
+                    imgSrc: 'event/csiecamp.jpg',
+                    id: 'csiecamp',
+                },
+                {
+                    text: 'CSIE Week',
+                    imgSrc: 'event/csieweek.jpg',
+                    id: 'csieweek',
+                },
+                {
+                    text: 'CSIE BBQ',
+                    imgSrc: 'event/sand.jpg',
+                    id: 'sand',
+                },
+                {
+                    text: 'Sports Team',
+                    imgSrc: 'event/sport.jpg',
+                    id: 'sport',
+                },
+                {
+                    text: 'TangYuan Festival',
+                    imgSrc: 'event/tangyuan.jpg',
+                    id: 'tangyuan',
+                },
+            ],
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -72,7 +104,39 @@ append data
                 gsat: '大學學科能力測驗(學測)',
                 ast: '大學入學指定科目考試(指考)',
                 foreignIndi: '原住民與外籍生錄取人數',
-            }
+            },
+            event:[
+                {
+                    text: '醒獅團程式教學',
+                    imgSrc: 'event/lion.jpg',
+                    id: 'lion',
+                },
+                {
+                    text: '資訊營',
+                    imgSrc: 'event/csiecamp.jpg',
+                    id: 'csiecamp',
+                },
+                {
+                    text: '資訊週',
+                    imgSrc: 'event/csieweek.jpg',
+                    id: 'csieweek',
+                },
+                {
+                    text: '系砂鍋',
+                    imgSrc: 'event/sand.jpg',
+                    id: 'sand',
+                },
+                {
+                    text: '系隊',
+                    imgSrc: 'event/sport.jpg',
+                    id: 'sport',
+                },
+                {
+                    text: '湯圓會',
+                    imgSrc: 'event/tangyuan.jpg',
+                    id: 'tangyuan',
+                },
+            ],
         },
       },
     } );
@@ -103,6 +167,7 @@ append breadcrumb
 append content
   include /components/common/topic.pug
   include /components/student/high-school/link.pug
+  include /components/common/image.pug
 
   section.content__index.index
     +topic( 'index', i18n[ LANG.id ].index.title )
@@ -146,7 +211,11 @@ append content
     section.event__goal.goal
       article.goal__context.context
         article.context__paragraph.paragraph
-          p.paragraph__list-description= '施工中'
+          each eventContent in i18n[ LANG.id ].content.event
+            figure.paragraph__eventImg.eventImg
+              span.eventImg__helper
+              +image( { alt: eventContent.text, className: `eventImg__img`, src: eventContent.imgSrc } )
+              figcaption.eventImg__caption= eventContent.text
 
   section#qa.content__qa.qa
     +topic( 'qa', i18n[ LANG.id ].index.link.qa )
@@ -154,6 +223,7 @@ append content
       article.goal__context.context
         article.context__paragraph.paragraph
           p.paragraph__list-description= '施工中'
+          
 
   section#link.content__link.link
     +topic( 'link', i18n[ LANG.id ].index.link.link )
