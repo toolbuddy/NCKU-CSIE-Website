@@ -349,18 +349,37 @@
             }
 
             // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
+            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__eventImg`
+            > .paragraph__eventImg {
+              display: inline-block;
+              width: font__px-to-rem( 350 );
+              height: font__px-to-rem( 400 );
+              margin: {
+                left: font__px-to-rem( 50 );
+                bottom: font__px-to-rem( 50 );
+              }
 
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
+              > .eventImg__helper {
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+              }
+
+              > .eventImg__img {
+                display: inline-block;
+                vertical-align: middle;
+                filter: contrast( 180% ) opacity( .85 );
+                max: {
+                  width: font__px-to-rem( 350 );
+                  height: font__px-to-rem( 350 );
+                }
+              }
+
+              > .eventImg__caption {
+                text-align: center;
+                color: #444444;
+                font-size: font__px-to-rem( 20 );
+              }
             }
           }
         }
