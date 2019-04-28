@@ -56,7 +56,7 @@ append content
   section#high-school.content__high-school.high-school
     figure.high-school__banner.banner
       h1.banner__text
-        a.banner__text(href='http://140.116.245.105:3000/student/high-school')= i18n[ LANG.id ].highSchool
+        a.banner__text( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
 append footer
 
 append scripts

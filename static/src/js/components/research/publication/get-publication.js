@@ -112,7 +112,7 @@ export default class GetPublications {
     renderCards ( data ) {
         try {
             this.DOM.cards.innerHTML = '';
-            data.sort( ( publication1, publication2 ) => publication1.issueYear - publication2.issueYear );
+            data.sort( ( publication1, publication2 ) => publication2.issueYear - publication1.issueYear );
             data.forEach( ( data ) => {
                 try {
                     this.DOM.cards.innerHTML += cardHTML( {
