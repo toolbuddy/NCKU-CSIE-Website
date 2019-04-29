@@ -15,7 +15,6 @@ append data
             curriculum:   'Curriculum',
             statistics:   'Statistics',
             event:        'Events',
-            qa:           'Q&A',
             link:         'Links',
           },
         },
@@ -27,8 +26,12 @@ append data
                     link: 'http://localhost:3001/about/intro?languageId=0',
                 },
                 courseMap:{
-                    text: 'Link to the course map',
+                    text: 'Link to the course map of CSIE',
                     link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
+                },
+                aiCourseMap:{
+                    text: 'Course Map of AI Program',
+                    imgSrc: 'student/ai.png',
                 },
             },
             statistics:{
@@ -83,7 +86,6 @@ append data
             curriculum:   '課程資訊',
             statistics:   '統計數據',
             event:        '課外活動',
-            qa:           'Q&A',
             link:         'FB連結',
           },
         },
@@ -95,8 +97,12 @@ append data
                     link: UTILS.url( { href : 'about/intro' } ),
                 },
                 courseMap:{
-                    text: '課程地圖連結',
+                    text: '資訊系課程地圖',
                     link: 'http://course-query.acad.ncku.edu.tw/crm/course_map/department.php?dept=F7',
+                },
+                aiCourseMap:{
+                    text: '人工智慧學分學程課程地圖',
+                    imgSrc: 'student/ai.png',
                 },
             },
             statistics:{
@@ -180,7 +186,11 @@ append content
       article.goal__context.context
         article.context__paragraph.paragraph
           a.paragraph__link( href = i18n[ LANG.id ].content.curriculum.introduction.link )= i18n[ LANG.id ].content.curriculum.introduction.text
+          p.paragraph__title= i18n[ LANG.id ].content.curriculum.courseMap.text
           a.paragraph__link( href = i18n[ LANG.id ].content.curriculum.courseMap.link )= i18n[ LANG.id ].content.curriculum.courseMap.text
+          p.paragraph__title= i18n[ LANG.id ].content.curriculum.aiCourseMap.text
+          figure.paragraph__mapImg
+            +image( { alt: i18n[ LANG.id ].content.curriculum.aiCourseMap.text, className: `mapImg__img`, src: i18n[ LANG.id ].content.curriculum.aiCourseMap.imgSrc } )
 
   section#statistics.content__statistics.statistics
     +topic( 'statistics', i18n[ LANG.id ].index.link.statistics )
