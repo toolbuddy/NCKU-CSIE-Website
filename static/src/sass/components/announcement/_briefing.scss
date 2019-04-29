@@ -147,5 +147,8 @@
         align-self: end;
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

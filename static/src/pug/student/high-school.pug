@@ -190,7 +190,11 @@ append content
           a.paragraph__link( href = i18n[ LANG.id ].content.curriculum.courseMap.link )= i18n[ LANG.id ].content.curriculum.courseMap.text
           p.paragraph__title= i18n[ LANG.id ].content.curriculum.aiCourseMap.text
           figure.paragraph__mapImg
-            +image( { alt: i18n[ LANG.id ].content.curriculum.aiCourseMap.text, className: `mapImg__img`, src: i18n[ LANG.id ].content.curriculum.aiCourseMap.imgSrc } )
+            +image( {
+              alt: i18n[ LANG.id ].content.curriculum.aiCourseMap.text,
+              className: `mapImg__img`,
+              src: i18n[ LANG.id ].content.curriculum.aiCourseMap.imgSrc,
+            } )
 
   section#statistics.content__statistics.statistics
     +topic( 'statistics', i18n[ LANG.id ].index.link.statistics )
@@ -233,7 +237,6 @@ append content
       article.goal__context.context
         article.context__paragraph.paragraph
           p.paragraph__list-description= '施工中'
-          
 
   section#link.content__link.link
     +topic( 'link', i18n[ LANG.id ].index.link.link )
