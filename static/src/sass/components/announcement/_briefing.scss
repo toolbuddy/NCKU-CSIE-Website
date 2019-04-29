@@ -9,21 +9,22 @@
   // `> .#{ $block } > .briefing`
   > .#{ $block }__briefing.briefing {
     // [ variable ]
-    $large: 768px;
+    $large: 992px;
 
     // [ layout ]
     display: grid;
     grid-template: {
       areas:
-        'briefing__tags  briefing__tags  briefing__tags'
         'briefing__title briefing__title briefing__title'
+        'briefing__tags  briefing__tags  briefing__tags'
         'briefing__time  briefing__time  .';
-      rows: repeat( 2, min-content ) font__px-to-rem( 20 );
+      rows: min-content font__px-to-rem( 48 ) 1fr;
       columns: 13fr 2fr 5fr;
     }
     margin-bottom: font__px-to-rem( 14 );
 
     // [ skin ]
+    width: 100%;
     border-radius: font__px-to-rem( 6 );
     padding: {
       top: font__px-to-rem( 16 );
@@ -50,14 +51,15 @@
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid-template-areas:
-        'briefing__tags    briefing__tags  briefing__tags'
-        'briefing__title   briefing__title .'
-        'briefing__article .               briefing__time';
+        'briefing__title   briefing__title briefing__title'
+        'briefing__article briefing__article briefing__article'
+        'briefing__tags    briefing__tags  briefing__time';
 
       // [ skin ]
+      width: font__px-to-rem( 424 );
       padding: {
         top: font__px-to-rem( 26 );
-        bottom: font__px-to-rem( 26 );
+        bottom: font__px-to-rem( 15 );
         left: font__px-to-rem( 32 );
         right: font__px-to-rem( 32 );
       }
@@ -73,6 +75,7 @@
 
       // [ layout ]
       display: block;
+      align-self: end;
     }
 
     // element
@@ -83,10 +86,7 @@
 
       // [ layout ]
       display: block;
-      margin: {
-        top: font__px-to-rem( 15 );
-        bottom: font__px-to-rem( 15 );
-      }
+      margin-bottom: font__px-to-rem( 15 );
       line-height: font__px-to-rem( 16 ) * 1.2;
       word-wrap: break-word;
 
@@ -107,6 +107,7 @@
     > .briefing__article {
       // [ layout ]
       display: none;
+      margin-bottom: font__px-to-rem( 15 );
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {

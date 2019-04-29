@@ -75,7 +75,7 @@
       grid: {
         row-gap: font__px-to-rem( 60 );
         template: {
-          columns: 1fr font__px-to-rem( 950 ) 1fr;
+          columns: 1fr 8fr 1fr;
           areas:
             '. breadcrumb           .'
             '. topic                .'

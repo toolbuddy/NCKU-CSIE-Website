@@ -33,7 +33,7 @@
   // `.body > .banner`
   @include banner( $block: 'body' ,$image: 'research/publication' ) {
     &::before {
-      filter: blur( .07rem );
+      filter: blur( .15rem );
     }
   }
 
