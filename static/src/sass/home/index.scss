@@ -113,11 +113,27 @@
         // [ layout ]
         margin-top: font__px-to-rem( 22 );
 
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          justify-content: center;
+        }
+
         // element
         // `.body > .content > .announcement > .briefings > .briefings__briefing`
         // block
         // `.body > .content > .announcement > .briefings > .briefing`
-        @include briefing( $block: 'briefings' );
+        @include briefing( $block: 'briefings' ) {
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            margin: {
+              right: auto;
+              left: auto;
+            }
+            width: 90%;
+          }
+        }
       }
 
       // element
