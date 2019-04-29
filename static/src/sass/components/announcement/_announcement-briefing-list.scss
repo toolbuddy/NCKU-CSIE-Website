@@ -12,7 +12,7 @@
   // `> .#{ $block } > .announcement`
   > .#{ $block }__announcement.announcement {
     // [ variable ]
-    $large: 768px;
+    $large: 992px;
 
     // element
     // `> .#{ $block } > .announcement > .announcement__title`
@@ -135,6 +135,15 @@
       // modifier
       // `> .#{ $block } > .announcement > .announcement__briefings.announcement__briefings--show`
       &.announcement__briefings--show {
+        // [ layout ]
+        display: grid;
+        grid: {
+          template-columns: none;
+          column-gap: 0;
+          row-gap: font__px-to-rem( 5 );
+        }
+        justify-content: center;
+
         // [ skin ]
         max-height: font__px-to-rem( 30000 );
         transform: scaleY( 1 );
@@ -144,6 +153,14 @@
           name: expand;
           duration: .5s;
           timing-function: ease;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          grid: {
+            template-columns: repeat( auto-fit, 12rem );
+            column-gap: font__px-to-rem( 56 );
+          }
         }
       }
 

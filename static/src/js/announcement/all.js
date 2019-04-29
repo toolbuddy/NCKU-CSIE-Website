@@ -61,7 +61,7 @@ try {
         announcementNormalDOM: document.getElementById( 'announcement--normal' ),
         pagesDOM:              document.getElementById( 'pages' ),
         scrollTopDOM:          document.getElementById( 'announcement--normal' ),
-        amount:                6,
+        amount:                15,
         from:                  new Date( '1999/03/21' ),
         to:                    new Date( Date.now() ),
         page:                  1,

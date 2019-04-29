@@ -194,7 +194,7 @@
           > .context__paragraph.paragraph {
             // element
             // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
+            > .paragraph__title {
               // [ layout ]
               margin-top: font__px-to-rem( 60 );
             }
@@ -268,7 +268,10 @@
             > .paragraph__link {
               // [ layout ]
               display: block;
-              margin-bottom: font__px-to-rem( 20 );
+              margin: {
+                bottom: font__px-to-rem( 20 );
+                left: font__px-to-rem( 40 );
+              }
               text: {
                 align: left;
                 decoration: underline;
@@ -280,6 +283,16 @@
               height: font__px-to-rem( 20 );
               color: #395dff;
               font-size: font__px-to-rem( 20 );
+            }
+
+            // element
+            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__mapImg`
+            > .paragraph__mapImg {
+              > .mapImg__img {
+                // [ skin ]
+                width: 100%;
+                min-width: 20rem;
+              }
             }
           }
         }
@@ -551,6 +564,7 @@
       // block
       // `.body > .content > .qa > .topic`
       @include topic( $block: 'qa' );
+      display: none;
 
       // element
       // `.body > .content > .curriculum > .curriculum__goal`
