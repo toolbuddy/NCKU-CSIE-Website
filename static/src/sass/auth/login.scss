@@ -75,12 +75,6 @@
         style: solid;
       }
     }
-
-    // element
-    // `.body > .content > .content__not-available`
-    // block
-    // `.body > .content > .not-available`
-    @include not-available( $block: 'content' );
   }
 
   // element
