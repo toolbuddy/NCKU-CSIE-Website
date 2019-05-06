@@ -1,0 +1,14 @@
+@mixin input-block () {
+  > .login__block {
+    width: 359.4px;
+    height: 50.6px;
+    margin: {
+      top: .5rem;
+      bottom: .5rem;
+      right: auto;
+      left: auto;
+    }
+    border-radius: 3px;
+    background-color: rgba( 224, 224, 224, .4 );
+  }
+}

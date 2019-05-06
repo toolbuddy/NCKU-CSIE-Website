@@ -6,9 +6,8 @@
 @import 'components/common/breadcrumb';
 @import 'components/common/not-available';
 @import 'components/common/footer';
+@import 'components/auth/input-block';
 
-// block
-// `.body`
 .body {
   // [ skin ]
   background-color: #ffffff;
@@ -56,6 +55,81 @@
       @media screen and ( min-width: $large ) {
         // [ skin ]
         width: 84%;
+      }
+    }
+
+    // `.body > .content > .content__login`
+    > .content__login {
+      // [ layout ]
+      height: 100%;
+      width: 100%;
+      display: grid;
+      grid-template: {
+        areas:
+          '.    '
+          'login'
+          '.    ';
+        rows: 1fr 3fr 1fr;
+      }
+
+      // `.body > .content > .content__login > .login__form`
+      > .login__form {
+        // [ position ]
+        grid-area: login;
+        margin: {
+          left: auto;
+          right: auto;
+        }
+        width: 483px;
+        display: block;
+
+        // [ skin ]
+        background-color: rgba( 224, 224, 224, .1 );
+        border: {
+          left: solid .3px #757575;
+          right: solid .3px #757575;
+          bottom: solid .3px #757575;
+          top: solid 5.6px #999999;
+          radius: 3px;
+        }
+        @include input-block();
+
+        // `.body > .content > .content__login > .login__form > .login__headline`
+        > .login__headline {
+          // [ layout ]
+          display: block;
+          height: auto;
+          margin: {
+            top: 1rem;
+            bottom: .5rem;
+            left: auto;
+            right: auto;
+          }
+
+          // [ skin ]
+          line-height: normal;
+          text-align: center;
+          font-size: .857rem;
+          padding: 0;
+        }
+
+        // `.body > .content > .content__login > .login__form > .login__password--forget`
+        > .login__password--forget {
+          //[ layout ]
+          display: block;
+
+          //[ skin ]
+          line-height: normal;
+        }
+
+        // `.body > .content > .content__login > .login__form > .login__button`
+        > .login__button {
+          //[ layout ]
+          display: block;
+
+          //[ skin ]
+          line-height: normal;
+        }
       }
     }
 
