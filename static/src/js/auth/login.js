@@ -34,3 +34,16 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
+let btn = document.querySelector( '.input__send' );
+btn.addEventListener( 'click', () => {
+    console.log('btn clicked');
+    fetch( 'http://localhost:3000/auth/login', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers:{
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({data: 'hello'}),
+    } )
+});

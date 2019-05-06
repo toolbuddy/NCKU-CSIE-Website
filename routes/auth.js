@@ -23,7 +23,16 @@ const router = express.Router( {
 
 router
 .route( '/login' )
-.get( staticHtml( 'auth/login' ) );
+.get( staticHtml( 'auth/login' ) )
+.post( ( req, res ) => {
+    res.cookie( 'sessionId', 'm_cookie_123', { path: '/auth/login', maxAge: 600000, } );
+    console.log( 'set cookie done' );
+    console.log( req.cookies );
+    console.log( req.body );
+    console.log( req.cookies.sessionId );
+    const getData = JSON.parse( req.body );
+    console.log( getData );
+} );
 
 /**
  * Resolve URL `/auth/logout`.
