@@ -1,0 +1,43 @@
+@mixin input-block () {
+  > .login__block {
+    // [ layout ] 
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    // [ position ]
+    width: 11.23rem;
+    height: 1.58rem;
+    margin: {
+      top: .5rem;
+      bottom: .5rem;
+      right: auto;
+      left: auto;
+    }
+
+    // [ skin ]
+    border: {
+      radius: .107rem;
+      left: solid .2rem #999999;
+    }
+    background-color: rgba( 224, 224, 224, .4 );
+
+    > .login__block--input {
+      // [ position ]
+      width: 90%;
+
+      // [ skin ]
+      background: rgba( 224, 224, 224, .1 );
+      font: {
+        family: notosanscjktc;
+        size: .643rem;
+        weight: normal;
+        style: normal;
+        stretch: normal;
+      }
+      line-height: 1.33;
+      letter-spacing: normal;
+      color: #757575;
+    }
+  }
+}

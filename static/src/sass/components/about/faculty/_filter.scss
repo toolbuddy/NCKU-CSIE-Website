@@ -82,7 +82,7 @@
         // [ interaction ]
         &:hover {
           // [ skin ]
-          background-color: lighten( $color: #f67057, $amount: 10% );
+          background-color: lighten( #f67057, 10% );
         }
 
         // [ RWD: $small ]
@@ -133,7 +133,7 @@
         // [ interaction ]
         &:hover {
           // [ skin ]
-          background-color: lighten( $color: #8caae2, $amount: 10% );
+          background-color: lighten( #8caae2, 10% );
         }
 
         // [ RWD: $small ]
