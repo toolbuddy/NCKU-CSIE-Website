@@ -44,6 +44,5 @@ btn.addEventListener( 'click', () => {
         headers:{
             'Content-Type':'application/json',
         },
-        body: JSON.stringify({data: 'hello'}),
     } )
 });

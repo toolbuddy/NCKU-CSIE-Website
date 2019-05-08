@@ -1,11 +1,11 @@
 import chai from 'chai';
 
-import ProjectUtils from 'models/faculty/utils/project.js';
+import ProjectUtils from 'models/faculty/utils/project-category.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
 const expect = chai.expect;
 
-describe('models/faculty/utils/projectCategory.js', () => {
+describe('models/faculty/utils/project-category.js', () => {
     context('ProjectUtils.defaultProjectCategory', ()=>{
         it('should return value `undefined` when `languageId` is invalid', ()=>{
             expect(ProjectUtils.defaultProjectCategory(true)).to.be.undefined;

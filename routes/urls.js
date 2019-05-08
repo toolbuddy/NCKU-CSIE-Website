@@ -15,6 +15,13 @@ import path from 'path';
 
 import express from 'express';
 
+import cookieParser from 'cookie-parser';
+
+// Import { userDb, } from 'models/common/utils/connect.js';
+// import expressSession from 'express-session';
+// import * as connectSequelize from 'connect-session-sequelize';
+// const SequelizeStore = connectSequelize( expressSession.Store );
+
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
@@ -27,12 +34,37 @@ import staticHtml from 'routes/utils/static-html.js';
 import student from 'routes/student.js';
 import user from 'routes/user.js';
 
-import { host, staticHost, projectRoot, } from 'settings/server/config.js';
+import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
+
 const app = express();
+
+app.use( cookieParser() );
+
+/*
+App.use( expressSession( {
+    cookie: {
+        maxAge:   24 * 60 * 60 * 1000,
+        path:     '/',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure:   false,
+    },
+    name:              'sessionId',
+    secret,
+    saveUninitialized: true,
+    resave:            false,
+
+    store:             new SequelizeStore( {
+        db:    userDb,
+        table: 'session',
+    } ),
+
+} ) );
+*/
 
 /**
  * Set HTML template engine.

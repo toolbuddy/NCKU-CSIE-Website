@@ -1,11 +1,11 @@
 import chai from 'chai';
 
-import PublicationUtils from 'models/faculty/utils/publication.js';
+import PublicationUtils from 'models/faculty/utils/publication-category.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
 const expect = chai.expect;
 
-describe('models/faculty/utils/publicationCategory.js', () => {
+describe('models/faculty/utils/publication-category.js', () => {
     context('PublicationUtils.defaultPublicationCategory', ()=>{
         it('should return value `undefined` when `languageId` is invalid', ()=>{
             expect(PublicationUtils.defaultPublicationCategory(true)).to.be.undefined;

@@ -25,13 +25,25 @@ router
 .route( '/login' )
 .get( staticHtml( 'auth/login' ) )
 .post( ( req, res ) => {
-    res.cookie( 'sessionId', 'm_cookie_123', { path: '/auth/login', maxAge: 600000, } );
+    console.log( 'in route auth/login' );
+
+    res.cookie( 'sessionId', 'm_cookie_123456', { path: '/', maxAge: 600000, } );
     console.log( 'set cookie done' );
+
     console.log( req.cookies );
-    console.log( req.body );
     console.log( req.cookies.sessionId );
-    const getData = JSON.parse( req.body );
-    console.log( getData );
+
+    /*
+    Console.log( req.session );
+    console.log( req.sessionId );
+    console.log( req.session.cookie );
+    */
+
+    console.log( req.body );
+    console.log( req.body.account );
+    console.log( req.body.password );
+
+    res.redirect( '/index' );
 } );
 
 /**

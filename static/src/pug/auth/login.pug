@@ -59,12 +59,12 @@ append breadcrumb
 
 append content
   section.content__login
-    form.login__form
+    form.login__form( method='POST', action=UTILS.url( { href : 'auth/login' } ) )
       h1.login__headline= i18n[ LANG.id ].content.headline
-      +input_block( 'text', 'account', i18n[LANG.id].content.account )
-      +input_block( 'text', 'password', i18n[LANG.id].content.password )
+      +input_block( 'text', 'account', i18n[LANG.id].content.account, 'account' )
+      +input_block( 'text', 'password', i18n[LANG.id].content.password, 'password' )
       p.login__password--forget= i18n[LANG.id].content.forget
-      button.login__button= i18n[LANG.id].content.login
+      button.login__button(type='submit')= i18n[LANG.id].content.login
 
 append footer
 
