@@ -17,4 +17,14 @@
     letter-spacing: normal;
     color: #6982c0;
   }
+
+  > .message--light-color {
+    // [ skin ]
+    color: #399dff;
+  }
+
+  > .message--hide {
+    // [ layout ]
+    display: none;
+  }
 }
