@@ -1,0 +1,20 @@
+@mixin message {
+  > .message {
+    // [ layout ]
+    display: inline-block;
+
+    // [ position ]
+    margin-left: font__px-to-rem( 19 );
+
+    // [ skin ]
+    font: {
+      size: font__px-to-rem( 14 );
+      weight: normal;
+      style: normal;
+      stretch: normal;
+    }
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #6982c0;
+  }
+}

@@ -1,5 +1,6 @@
 extends /layouts/base.pug
 include /components/auth/input-block.pug
+include /components/auth/message.pug
 
 append data
   -
@@ -16,6 +17,7 @@ append data
           password: 'password',
           forget:   'forget password?',
           login:    'login',
+          error:    'invalid user name or bad password',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -30,6 +32,7 @@ append data
           password: '密碼',
           forget:   '忘記密碼?',
           login:    '登入',
+          error:    '帳號或密碼錯誤'
         },
       },
     } );
@@ -63,7 +66,10 @@ append content
       h1.form__headline= i18n[ LANG.id ].content.headline
       +input_block( 'text', 'account', i18n[LANG.id].content.account )
       +input_block( 'text', 'password', i18n[LANG.id].content.password )
-      p.form__password--forget= i18n[LANG.id].content.forget
+      session.form__message
+        +message( 'forget', i18n[LANG.id].content.forget )
+        +message( 'error',  i18n[LANG.id].content.error )
+      br
       button.form__button= i18n[LANG.id].content.login
 
 append footer

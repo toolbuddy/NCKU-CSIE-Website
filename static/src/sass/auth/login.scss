@@ -7,6 +7,7 @@
 @import 'components/common/not-available';
 @import 'components/common/footer';
 @import 'components/auth/input-block';
+@import 'components/auth/message';
 
 .body {
   // [ skin ]
@@ -33,6 +34,7 @@
   > .body__content.content {
     // [ variable ]
     $large: 700px;
+    $small: 516px;
 
     // [ skin ]
     height: 120%;
@@ -69,7 +71,19 @@
           '.    '
           'login'
           '.    ';
-        rows: 1fr auto 3fr;
+        rows: font__px-to-rem( 64 ) auto 1fr;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            '.    '
+            'login'
+            '.    ';
+          rows: 1fr auto 4fr;
+        }
       }
 
       // `.body > .content > .content__login > .login__form`
@@ -80,28 +94,34 @@
           left: auto;
           right: auto;
         }
-        width: font__px-to-rem( 483 );
+        width: 100%;
         display: block;
 
-        // [ skin ]
-        background-color: rgba( 224, 224, 224, .1 );
-        border: {
-          left: solid .5px #757575;
-          right: solid .5px #757575;
-          bottom: solid .5px #757575;
-          top: solid 5.6px #999999;
-          radius: 3px;
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          width: font__px-to-rem( 483 );
+
+          // [ skin ]
+          background-color: rgba( 224, 224, 224, .1 );
+          border: {
+            left: solid .5px #757575;
+            right: solid .5px #757575;
+            bottom: solid .5px #757575;
+            top: solid 5.6px #999999;
+            radius: 3px;
+          }
         }
         @include input-block();
 
         // `.body > .content > .content__login > .login__form > .form__headline`
         > .form__headline {
           // [ layout ]
-          display: block;
+          display: none;
           height: auto;
           margin: {
-            top: font__px-to-rem( 34.8 ) ;
-            bottom: font__px-to-rem( 33.7 );
+            top: font__px-to-rem( 30 ) ;
+            bottom: font__px-to-rem( 30 );
             left: auto;
             right: auto;
           }
@@ -111,29 +131,30 @@
           text-align: center;
           font-size: font__px-to-rem( 24 );
           padding: 0;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            display: block;
+          }
         }
 
-        // `.body > .content > .content__login > .login__form > .login__password--forget`
-        > .form__password--forget {
+        > .form__message {
           // [ layout ]
           display: block;
 
           // [ position ]
+          width: 85%;
           margin: {
-            left: font__px-to-rem( 86.5 );
+            left: auto;
+            right: auto;
             bottom: font__px-to-rem( 21.4 );
           }
-
-          // [ skin ]
-          font: {
-            size: font__px-to-rem( 14 );
-            weight: normal;
-            style: normal;
-            stretch: normal;
+          @media screen and ( min-width: $small ) {
+            // [ position ]
+            width: auto;
+            margin-left: font__px-to-rem( 54 );
           }
-          line-height: 1.71;
-          letter-spacing: normal;
-          color: #399dff;
+          @include message();
         }
 
         // `.body > .content > .content__login > .login__form > .login__button`
@@ -144,7 +165,7 @@
           // [ position ]
           position: relative;
           z-index: 10;
-          width: font__px-to-rem( 359.4 );
+          width: 80%;
           height: font__px-to-rem( 50.6 );
           margin: {
             right: auto;
@@ -156,7 +177,7 @@
           line-height: normal;
           letter-spacing: normal;
           border-radius: .167rem;
-          box-shadow: 0 12px 12px nanpx rgba( 0, 0, 0, .25 );
+          box-shadow: 0 12px 12px rgba( 0, 0, 0, .25 );
           background-color: #adacad;
           font: {
             size: font__px-to-rem( 18 );
@@ -165,6 +186,9 @@
             stretch: normal;
           }
           color: #ffffff;
+          @media screen and ( min-width: $small ) {
+            width: font__px-to-rem( 359.4 );
+          }
         }
       }
     }
