@@ -69,39 +69,39 @@
           '.    '
           'login'
           '.    ';
-        rows: 1fr auto 1fr;
+        rows: 1fr auto 3fr;
       }
 
       // `.body > .content > .content__login > .login__form`
-      > .login__form {
+      > .login__form.form {
         // [ position ]
         grid-area: login;
         margin: {
           left: auto;
           right: auto;
         }
-        width: 15.09rem;
+        width: font__px-to-rem( 483 );
         display: block;
 
         // [ skin ]
         background-color: rgba( 224, 224, 224, .1 );
         border: {
-          left: solid .3px #757575;
-          right: solid .3px #757575;
-          bottom: solid .3px #757575;
+          left: solid .5px #757575;
+          right: solid .5px #757575;
+          bottom: solid .5px #757575;
           top: solid 5.6px #999999;
           radius: 3px;
         }
         @include input-block();
 
-        // `.body > .content > .content__login > .login__form > .login__headline`
-        > .login__headline {
+        // `.body > .content > .content__login > .login__form > .form__headline`
+        > .form__headline {
           // [ layout ]
           display: block;
           height: auto;
           margin: {
-            top: 1rem;
-            bottom: .5rem;
+            top: font__px-to-rem( 34.8 ) ;
+            bottom: font__px-to-rem( 33.7 );
             left: auto;
             right: auto;
           }
@@ -109,25 +109,24 @@
           // [ skin ]
           line-height: normal;
           text-align: center;
-          font-size: .857rem;
+          font-size: font__px-to-rem( 24 );
           padding: 0;
         }
 
         // `.body > .content > .content__login > .login__form > .login__password--forget`
-        > .login__password--forget {
+        > .form__password--forget {
           // [ layout ]
           display: block;
 
           // [ position ]
           margin: {
-            left: 2.703rem;
-            bottom: .5rem;
+            left: font__px-to-rem( 86.5 );
+            bottom: font__px-to-rem( 21.4 );
           }
 
           // [ skin ]
           font: {
-            family: notosanscjktc;
-            size: .5rem;
+            size: font__px-to-rem( 14 );
             weight: normal;
             style: normal;
             stretch: normal;
@@ -138,19 +137,19 @@
         }
 
         // `.body > .content > .content__login > .login__form > .login__button`
-        > .login__button {
+        > .form__button {
           // [ layout ]
           display: block;
 
           // [ position ]
           position: relative;
           z-index: 10;
-          width: 11.23rem;
-          height: 1.807rem;
+          width: font__px-to-rem( 359.4 );
+          height: font__px-to-rem( 50.6 );
           margin: {
             right: auto;
             left: auto;
-            bottom: 1.886rem;
+            bottom: font__px-to-rem( 48 );
           }
 
           // [ skin ]
@@ -160,8 +159,7 @@
           box-shadow: 0 12px 12px nanpx rgba( 0, 0, 0, .25 );
           background-color: #adacad;
           font: {
-            family: notosanscjktc;
-            size: .643rem;
+            size: font__px-to-rem( 18 );
             weight: normal;
             style: normal;
             stretch: normal;

@@ -1,16 +1,16 @@
 @mixin input-block () {
-  > .login__block {
+  > .form__block {
     // [ layout ] 
     display: flex;
     align-content: center;
     justify-content: center;
 
     // [ position ]
-    width: 11.23rem;
-    height: 1.58rem;
+    width: font__px-to-rem( 359.4 );
+    height: font__px-to-rem( 50.6 );
     margin: {
-      top: .5rem;
-      bottom: .5rem;
+      top: font__px-to-rem( 11.7 );
+      bottom: font__px-to-rem( 22.4 );
       right: auto;
       left: auto;
     }
@@ -22,15 +22,14 @@
     }
     background-color: rgba( 224, 224, 224, .4 );
 
-    > .login__block--input {
+    > .form__block--input {
       // [ position ]
       width: 90%;
 
       // [ skin ]
       background: rgba( 224, 224, 224, .1 );
       font: {
-        family: notosanscjktc;
-        size: .643rem;
+        size: font__px-to-rem( 18 );
         weight: normal;
         style: normal;
         stretch: normal;

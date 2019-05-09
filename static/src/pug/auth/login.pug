@@ -58,13 +58,13 @@ append breadcrumb
   )
 
 append content
-  section.content__login
-    form.login__form
-      h1.login__headline= i18n[ LANG.id ].content.headline
+  section.content__login.login
+    form.login__form.form
+      h1.form__headline= i18n[ LANG.id ].content.headline
       +input_block( 'text', 'account', i18n[LANG.id].content.account )
       +input_block( 'text', 'password', i18n[LANG.id].content.password )
-      p.login__password--forget= i18n[LANG.id].content.forget
-      button.login__button= i18n[LANG.id].content.login
+      p.form__password--forget= i18n[LANG.id].content.forget
+      button.form__button= i18n[LANG.id].content.login
 
 append footer
 
