@@ -65,7 +65,7 @@ append content
     form.login__form.form
       h1.form__headline= i18n[ LANG.id ].content.headline
       +input_block( 'text', 'account', i18n[LANG.id].content.account )
-      +input_block( 'text', 'password', i18n[LANG.id].content.password )
+      +input_block( 'password', 'password', i18n[LANG.id].content.password )
       session.form__message
         +message( 'forget', i18n[LANG.id].content.forget )
         +message( 'error',  i18n[LANG.id].content.error )
