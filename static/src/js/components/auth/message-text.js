@@ -3,10 +3,6 @@ export default class MessageText {
         this.DOM = DOM;
     }
 
-    forgetMessage () {
-        this.DOM.classList.add( 'message--forget' );
-    }
-
     hideMessage () {
         this.DOM.classList.add( 'message--hide' );
     }
@@ -17,7 +13,7 @@ export default class MessageText {
 
     setForgetMessage () {
         window.addEventListener( 'DOMContentLoaded', () => {
-            this.forgetMessage();
+            this.DOM.classList.add( 'message--forget' );
         } );
     }
 

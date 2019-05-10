@@ -189,6 +189,16 @@
           @media screen and ( min-width: $small ) {
             width: font__px-to-rem( 359.4 );
           }
+
+          &--enable {
+            // [ skin ]
+            background-color: #213262;
+
+            &:hover {
+              // [ skin ]
+              cursor: pointer;
+            }
+          }
         }
       }
     }
