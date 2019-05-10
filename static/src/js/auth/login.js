@@ -39,13 +39,20 @@ try {
     const messageForget = new ControlMessageText(
         document.querySelector( '#message--forget' )
     );
+    if ( !( messageForget instanceof ControlMessageText ) )
+        throw new Error( '#message--forget not found.' );
+    messageForget.setForgetMessage();
+}
+catch ( err ) {
+    console.error( err );
+}
+try {
     const messageError = new ControlMessageText(
         document.querySelector( '#message--error' )
     );
-    if ( !( messageForget instanceof ControlMessageText ) )
-        throw new Error( '#message--forget not found.' );
-    document.addEventListener( 'DOMContentLoaded', () => {
-        messageForget.lightenForget();
+    if ( !( messageError instanceof ControlMessageText ) )
+        throw new Error( '#message--error not found.' );
+    window.addEventListener( 'DOMContentLoaded', () => {
         messageError.hideMessage();
     } );
 }

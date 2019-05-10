@@ -16,15 +16,21 @@
     line-height: 1.71;
     letter-spacing: normal;
     color: #6982c0;
-  }
 
-  > .message--light-color {
-    // [ skin ]
-    color: #399dff;
-  }
+    &--hide {
+      // [ layout ]
+      display: none;
+    }
 
-  > .message--hide {
-    // [ layout ]
-    display: none;
+    &--forget {
+      // [ skin ]
+      color: #399dff;
+
+      &:hover {
+        // [ skin ]
+        color: #6982c0;
+        cursor: pointer;
+      }
+    }
   }
 }

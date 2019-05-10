@@ -1,17 +1,29 @@
 export default class MessageText {
-    constructor ( opt ) {
-        this.opt = opt;
+    constructor ( DOM ) {
+        this.DOM = DOM;
     }
 
-    lightenForget () {
-        this.opt.classList.add( 'message--light-color' );
-    }
-
-    darkenForget () {
-        this.opt.classList.remove( 'message--light-color' );
+    forgetMessage () {
+        this.DOM.classList.add( 'message--forget' );
     }
 
     hideMessage () {
-        this.opt.classList.add( 'message--hide' );
+        this.DOM.classList.add( 'message--hide' );
+    }
+
+    showMessage () {
+        this.DOM.classList.remove( 'message--hide' );
+    }
+
+    setForgetMessage () {
+        window.addEventListener( 'DOMContentLoaded', () => {
+            this.forgetMessage();
+        } );
+    }
+
+    setErrorMessage () {
+        window.addEventListener( 'DOMContentLoaded', () => {
+            this.hideMessage();
+        } );
     }
 }
