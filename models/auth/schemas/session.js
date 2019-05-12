@@ -3,7 +3,7 @@ import { user, } from 'models/common/utils/connect.js';
 
 const Session = user.define( 'session', {
     sid: {
-        type:       Sequelize.STRING( 36 ),
+        type:       Sequelize.STRING( 45 ),
         primaryKey: true,
         allowNull:  false,
     },
@@ -15,8 +15,8 @@ const Session = user.define( 'session', {
         type:       Sequelize.TEXT,
         allowNull:  true,
     },
-    testcol: {
-        type:      Sequelize.STRING( 45 ),
+    userId: {
+        type:      Sequelize.INTEGER.UNSIGNED,
         allowNull:  true,
     },
 } );

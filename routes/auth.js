@@ -8,8 +8,11 @@
  */
 
 import express from 'express';
-
 import staticHtml from 'routes/utils/static-html.js';
+
+import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
+import updateAdmin from 'models/auth/operations/update-admin.js';
+import saveSession from 'models/auth/operations/save-session.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -24,26 +27,51 @@ const router = express.Router( {
 router
 .route( '/login' )
 .get( staticHtml( 'auth/login' ) )
-.post( ( req, res ) => {
+.post( async ( req, res ) => {
     console.log( 'in route auth/login' );
 
-    res.cookie( 'sessionId', 'm_cookie_123456', { path: '/', maxAge: 600000, } );
-    console.log( 'set cookie done' );
+    try {
+        const data = await getAdminByAccount( {
+            account: req.body.account,
+        } );
+        if ( data.password === req.body.password ) {
+            // Store the new cookie in the user.
+            req.session.ctrl = '';
 
-    console.log( req.cookies );
-    console.log( req.cookies.sessionId );
+            // Store new session in database
+            const result = await saveSession( {
+                sid:     req.session.id,
+                expires: req.session.cookie.maxAge + Date.now(),
+                userId:  Number( data.userId ),
+            } );
 
-    /*
-    Console.log( req.session );
-    console.log( req.sessionId );
-    console.log( req.session.cookie );
-    */
+            // Update user session id in database
+            await updateAdmin( {
+                userId:   Number( data.userId ),
+                account:  data.account,
+                password: data.password,
+                role:     data.role,
+                sid:      result.sid,
+                isValid:  data.isValid,
+                name:     data.name,
+            } );
 
-    console.log( req.body );
-    console.log( req.body.account );
-    console.log( req.body.password );
+            console.log( 'log in successfully' );
 
-    res.redirect( '/index' );
+            res.redirect( '/index' );
+        }
+        else {
+            // Wrong account or password, should show warning message
+            console.log( 'wrong account or password' );
+        }
+    }
+    catch ( error ) {
+        if ( error.status === 404 )
+            console.log( 'wrong account or password' );
+
+        else
+            console.error( error );
+    }
 } );
 
 /**

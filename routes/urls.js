@@ -14,19 +14,15 @@
 import path from 'path';
 
 import express from 'express';
-
 import cookieParser from 'cookie-parser';
-
-// Import { userDb, } from 'models/common/utils/connect.js';
-// import expressSession from 'express-session';
-// import * as connectSequelize from 'connect-session-sequelize';
-// const SequelizeStore = connectSequelize( expressSession.Store );
+import expressSession from 'express-session';
 
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
 import home from 'routes/home.js';
 import language from 'routes/utils/language.js';
+import checkSession from 'routes/utils/check-session.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
 import staticFile from 'routes/static.js';
@@ -44,10 +40,9 @@ const app = express();
 
 app.use( cookieParser() );
 
-/*
-App.use( expressSession( {
+app.use( expressSession( {
     cookie: {
-        maxAge:   24 * 60 * 60 * 1000,
+        maxAge:   365 * 24 * 60 * 60 * 1000,
         path:     '/',
         httpOnly: true,
         sameSite: 'lax',
@@ -55,16 +50,12 @@ App.use( expressSession( {
     },
     name:              'sessionId',
     secret,
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave:            false,
-
-    store:             new SequelizeStore( {
-        db:    userDb,
-        table: 'session',
-    } ),
-
+    unset:             'destroy',
+    rolling:           false,
+    proxy:             false,
 } ) );
-*/
 
 /**
  * Set HTML template engine.
@@ -132,6 +123,8 @@ app.use( ( req, res, next ) => {
     };
     next();
 } );
+
+app.use( checkSession );
 
 /**
  * Resolve URL `/`.
