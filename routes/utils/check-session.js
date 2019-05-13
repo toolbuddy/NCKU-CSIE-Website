@@ -26,6 +26,7 @@ import { secret, } from 'settings/server/config.js';
 export default async function ( req, res, next ) {
     console.log( 'get query:' );
     const cookie = req.cookies.sessionId;
+    res.locals.unparsedId = cookie;
 
     // Console.log( req.session.id ); // New sid
 
@@ -41,6 +42,9 @@ export default async function ( req, res, next ) {
             sid:     req.session.id,
             expires: req.session.cookie.maxAge + Date.now(),
         } );
+
+        res.locals.unparsedSid = req.session.id;
+
         next();
     }
     else {
@@ -69,6 +73,8 @@ export default async function ( req, res, next ) {
                     sid:     req.session.id,
                     expires: req.session.cookie.maxAge + Date.now(),
                 } );
+
+                res.locals.unparsedSid = req.session.id;
             }
             else if ( data.userId !== null ) {
                 const result = await getAdminByUserId( {
@@ -97,6 +103,8 @@ export default async function ( req, res, next ) {
                     sid:     req.session.id,
                     expires: req.session.cookie.maxAge + Date.now(),
                 } );
+
+                res.locals.unparsedSid = req.session.id;
             }
             else
                 console.error( error );

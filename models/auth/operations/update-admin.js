@@ -43,7 +43,6 @@ export default async ( opt ) => {
                 userId,
             },
         } );
-
         return result;
     }
     catch ( err ) {

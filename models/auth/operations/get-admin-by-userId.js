@@ -31,6 +31,8 @@ export default async ( opt ) => {
                 'password',
                 'role',
                 'sid',
+                'isValid',
+                'name',
             ],
             where: {
                 userId,
@@ -49,6 +51,8 @@ export default async ( opt ) => {
             password:   data.password,
             role:       data.role,
             sid:        data.sid,
+            isValid:    data.isValid,
+            name:       data.name,
         };
     }
     catch ( err ) {
