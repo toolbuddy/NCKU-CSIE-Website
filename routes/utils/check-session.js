@@ -35,15 +35,21 @@ export default async function ( req, res, next ) {
         console.log( 'No session id - is a visitor' );
 
         // Store the cookie in the user.
-        req.session.ctrl = '';
+        const newSid = req.session.id;
+        req.session.ctrl = newSid;
+
+        console.log( 'new id(cur id):' );
+        console.log( newSid );
+        console.log( req.session.id );
+        console.log( req.session.ctrl );
 
         // Store new session in database
         await saveSession( {
-            sid:     req.session.id,
+            sid:     newSid,
             expires: req.session.cookie.maxAge + Date.now(),
         } );
 
-        res.locals.unparsedSid = req.session.id;
+        res.locals.unparsedSid = newSid;
 
         next();
     }
@@ -57,6 +63,11 @@ export default async function ( req, res, next ) {
             throw error;
         }
 
+        console.log( 'cur id:' );
+        console.log( sid );
+        console.log( req.session.id );
+        console.log( req.session.ctrl );
+
         // Get session data in the database.
         try {
             const data = await getSession( {
@@ -66,15 +77,19 @@ export default async function ( req, res, next ) {
             // Check `expires`
             if ( data.expires < Date.now() ) {
                 console.log( 'is a expire X user' );
-                req.session.ctrl = '';
+                req.session.regenerate( async ( err ) => {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
 
-                // Store new session in database
-                await saveSession( {
-                    sid:     req.session.id,
-                    expires: req.session.cookie.maxAge + Date.now(),
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    res.locals.unparsedSid = req.session.id;
                 } );
-
-                res.locals.unparsedSid = req.session.id;
             }
             else if ( data.userId !== null ) {
                 const result = await getAdminByUserId( {
@@ -96,15 +111,19 @@ export default async function ( req, res, next ) {
                 console.log( 'is a strange user(got cookie, but cookie is not in the database)' );
 
                 // No corresponding session id in the database
-                req.session.ctrl = '';
+                req.session.regenerate( async ( err ) => {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
 
-                // Store new session in database
-                await saveSession( {
-                    sid:     req.session.id,
-                    expires: req.session.cookie.maxAge + Date.now(),
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    res.locals.unparsedSid = req.session.id;
                 } );
-
-                res.locals.unparsedSid = req.session.id;
             }
             else
                 console.error( error );

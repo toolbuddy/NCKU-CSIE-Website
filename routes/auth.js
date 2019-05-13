@@ -40,30 +40,41 @@ router
         } );
         if ( data.password === req.body.password ) {
             // Store the new cookie in the user.
-            const newSid = req.session.id;
-            req.session.ctrl = newSid;
+            console.log( 'old sid:' );
+            console.log( res.locals.unparsedId );
+            console.log( req.session.id );
+            console.log( req.session.ctrl );
 
-            // Store new session in database
-            const result = await saveSession( {
-                sid:     newSid,
-                expires: req.session.cookie.maxAge + Date.now(),
-                userId:  Number( data.userId ),
+            req.session.regenerate( async ( err ) => {
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+                console.log( 'in generate: new sid:' );
+                console.log( newSid );
+                console.log( req.session.id );
+                console.log( req.session.ctrl );
+
+                // Store new session in database
+                const result = await saveSession( {
+                    sid:     req.session.id,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                    userId:  Number( data.userId ),
+                } );
+
+                // Update user session id in database
+                await updateAdmin( {
+                    userId:   Number( data.userId ),
+                    account:  data.account,
+                    password: data.password,
+                    role:     data.role,
+                    sid:      result.sid,
+                    isValid:  data.isValid,
+                    name:     data.name,
+                } );
+
+                req.session.save();
+                console.log( 'log in successfully' );
+                res.redirect( '/index' );
             } );
-
-            // Update user session id in database
-            await updateAdmin( {
-                userId:   Number( data.userId ),
-                account:  data.account,
-                password: data.password,
-                role:     data.role,
-                sid:      result.sid,
-                isValid:  data.isValid,
-                name:     data.name,
-            } );
-
-            console.log( 'log in successfully' );
-
-            res.redirect( '/index' );
         }
         else {
             // Wrong account or password, should show warning message
@@ -120,24 +131,32 @@ router
         } );
 
         // Give a new sid cookie
-        req.session.ctrl = '';
-        const newSid = req.session.id;
-        console.log( 'new sid:' );
-        console.log( newSid );
+        console.log( 'old sid:' );
+        console.log( sid );
+        console.log( req.session.ctrl );
+        req.session.regenerate( async ( err ) => {
+            const newSid = req.session.id;
+            req.session.ctrl = newSid;
 
-        // Store new session in database
-        await saveSession( {
-            sid:     newSid,
-            expires: req.session.cookie.maxAge + Date.now(),
+            console.log( 'in generate, new sid:' );
+            console.log( newSid );
+            console.log( req.session.id );
+            console.log( req.session.ctrl );
+
+            // Store new session in database
+            await saveSession( {
+                sid:     newSid,
+                expires: req.session.cookie.maxAge + Date.now(),
+            } );
+
+            req.session.save();
+            console.log( 'log out successfully' );
+            res.redirect( '/index' );
         } );
-
-        console.log( 'log out successfully' );
     }
     catch ( error ) {
         console.error( error );
     }
-
-    res.redirect( '/index' );
 } );
 
 /**
