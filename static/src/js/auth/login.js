@@ -4,6 +4,10 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import ControlMessageText from 'static/src/js/components/auth/message-text.js';
 import ControlButton from 'static/src/js/components/auth/button-control.js';
 
+/*
+Header
+*/
+
 try {
     const headerBase = new GetHeaderBase( {
         headerDOM:     document.querySelector( '.body__header.header.header--base' ),
@@ -36,19 +40,11 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
 /*
-let btn = document.querySelector( '.input__send' );
-btn.addEventListener( 'click', () => {
-    console.log('btn clicked');
-    fetch( 'http://localhost:3000/auth/login', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers:{
-            'Content-Type':'application/json',
-        },
-    } )
-});
+login messages
 */
+
 try {
     const messageForget = new ControlMessageText(
         document.querySelector( '#message--forget' )
@@ -60,6 +56,7 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
 try {
     const messageError = new ControlMessageText(
         document.querySelector( '#message--error' )
@@ -71,6 +68,7 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
 try {
     const submitButton = new ControlButton(
         document.querySelector( '#form__block--account' ),
