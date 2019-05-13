@@ -1,3 +1,3 @@
-mixin input_block( inputType, type, value, name)
-    section.login__block
-        input( id=`login__block--${ type }` class="login__block--input" type=`${ inputType }` value= `${ value }` name=`${name}` )
+mixin input_block( inputType, modifier, placeholder)
+  section.form__block
+    input( id=`form__block--${ modifier }` class="form__block--input" type=`${ inputType }` placeholder=`${ placeholder }` )

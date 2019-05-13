@@ -7,6 +7,7 @@
 @import 'components/common/not-available';
 @import 'components/common/footer';
 @import 'components/auth/input-block';
+@import 'components/auth/message';
 
 .body {
   // [ skin ]
@@ -33,6 +34,7 @@
   > .body__content.content {
     // [ variable ]
     $large: 700px;
+    $small: 516px;
 
     // [ skin ]
     height: 120%;
@@ -69,39 +71,57 @@
           '.    '
           'login'
           '.    ';
-        rows: 1fr auto 1fr;
+        rows: font__px-to-rem( 64 ) auto 1fr;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            '.    '
+            'login'
+            '.    ';
+          rows: 1fr auto 4fr;
+        }
       }
 
       // `.body > .content > .content__login > .login__form`
-      > .login__form {
+      > .login__form.form {
         // [ position ]
         grid-area: login;
         margin: {
           left: auto;
           right: auto;
         }
-        width: 15.09rem;
+        width: 100%;
         display: block;
 
-        // [ skin ]
-        background-color: rgba( 224, 224, 224, .1 );
-        border: {
-          left: solid .3px #757575;
-          right: solid .3px #757575;
-          bottom: solid .3px #757575;
-          top: solid 5.6px #999999;
-          radius: 3px;
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          width: font__px-to-rem( 483 );
+
+          // [ skin ]
+          background-color: rgba( 224, 224, 224, .1 );
+          border: {
+            left: solid .5px #757575;
+            right: solid .5px #757575;
+            bottom: solid .5px #757575;
+            top: solid 5.6px #999999;
+            radius: 3px;
+          }
         }
         @include input-block();
 
-        // `.body > .content > .content__login > .login__form > .login__headline`
-        > .login__headline {
+        // `.body > .content > .content__login > .login__form > .form__headline`
+        > .form__headline {
           // [ layout ]
-          display: block;
+          display: none;
           height: auto;
           margin: {
-            top: 1rem;
-            bottom: .5rem;
+            top: font__px-to-rem( 30 ) ;
+            bottom: font__px-to-rem( 30 );
             left: auto;
             right: auto;
           }
@@ -109,64 +129,76 @@
           // [ skin ]
           line-height: normal;
           text-align: center;
-          font-size: .857rem;
+          font-size: font__px-to-rem( 24 );
           padding: 0;
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            display: block;
+          }
         }
 
-        // `.body > .content > .content__login > .login__form > .login__password--forget`
-        > .login__password--forget {
+        > .form__message {
           // [ layout ]
           display: block;
 
           // [ position ]
+          width: 85%;
           margin: {
-            left: 2.703rem;
-            bottom: .5rem;
+            left: auto;
+            right: auto;
+            bottom: font__px-to-rem( 21.4 );
           }
-
-          // [ skin ]
-          font: {
-            family: notosanscjktc;
-            size: .5rem;
-            weight: normal;
-            style: normal;
-            stretch: normal;
+          @media screen and ( min-width: $small ) {
+            // [ position ]
+            width: auto;
+            margin-left: font__px-to-rem( 54 );
           }
-          line-height: 1.71;
-          letter-spacing: normal;
-          color: #399dff;
+          @include message();
         }
 
         // `.body > .content > .content__login > .login__form > .login__button`
-        > .login__button {
+        > .form__button {
           // [ layout ]
           display: block;
 
           // [ position ]
           position: relative;
           z-index: 10;
-          width: 11.23rem;
-          height: 1.807rem;
+          width: 80%;
+          height: font__px-to-rem( 50.6 );
           margin: {
             right: auto;
             left: auto;
-            bottom: 1.886rem;
+            bottom: font__px-to-rem( 48 );
           }
 
           // [ skin ]
           line-height: normal;
           letter-spacing: normal;
           border-radius: .167rem;
-          box-shadow: 0 12px 12px nanpx rgba( 0, 0, 0, .25 );
+          box-shadow: 0 12px 12px rgba( 0, 0, 0, .25 );
           background-color: #adacad;
           font: {
-            family: notosanscjktc;
-            size: .643rem;
+            size: font__px-to-rem( 18 );
             weight: normal;
             style: normal;
             stretch: normal;
           }
           color: #ffffff;
+          @media screen and ( min-width: $small ) {
+            width: font__px-to-rem( 359.4 );
+          }
+
+          &--enable {
+            // [ skin ]
+            background-color: #213262;
+
+            &:hover {
+              // [ skin ]
+              cursor: pointer;
+            }
+          }
         }
       }
     }
