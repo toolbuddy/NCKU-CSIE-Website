@@ -4,33 +4,29 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'User Settings',
+        title:      'User Profile',
         breadcrumb: {
           home:     'Home',
           user:     'User',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '使用者設定',
+        title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
         },
       },
     } );
-    const currentRoute = 'user/index';
+    const currentRoute = 'user/profile';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/index' )
+  +css( 'user/profile' )
 
 append header
-  +banner(
-    'body',
-    i18n[ LANG.id ].title
-  )
 
 append breadcrumb
   +breadcrumb(
@@ -47,4 +43,4 @@ append content
 append footer
 
 append scripts
-  +js( 'user/index' )
+  +js( 'user/profile' )

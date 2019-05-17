@@ -4,6 +4,19 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--large ( $block ) {
+  // [ variable ]
+  $large: 1201px;
+
+  .headerSpace--large {
+    background-color: white;
+    height: font__px-to-rem( 70 );
+    top: 0;
+    display: block;
+    @media screen and ( max-width: $large ) {
+      display: none;
+    }
+  }
+
   // element
   // `> .#{ $block } > .#{ $block }__header`
   // block

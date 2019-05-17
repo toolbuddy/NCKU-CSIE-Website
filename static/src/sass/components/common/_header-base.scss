@@ -4,6 +4,19 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--base ( $block ) {
+  // [ variable ]
+  $small: 561px;
+
+  .headerSpace--base {
+    background-color: white;
+    height: font__px-to-rem( 83 );
+    top: 0;
+    display: block;
+    @media screen and ( min-width: $small ) {
+      display: none;
+    }
+  }
+
   // element
   // `> .#{ $block } > .#{ $block }__header`
   // block
@@ -12,8 +25,6 @@
     transition: top .5s;
 
     // [ variable ]
-    // $small: 321px;
-    $small: 561px;
     $logo-width: font__px-to-rem( 58 );
     $logo-height: font__px-to-rem( 44 );
     $caption-title-font-size: font__px-to-rem( 16 );

@@ -2,7 +2,6 @@
 @import 'components/common/header-base';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
-@import 'components/common/banner';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
 
@@ -19,12 +18,6 @@
   @include header--base( $block: 'body' );
   @include header--medium( $block: 'body' );
   @include header--large( $block: 'body' );
-
-  // element
-  // `.body > .body__banner`
-  // block
-  // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'resource/rent' );
 
   // element
   // `.body > .body__content`

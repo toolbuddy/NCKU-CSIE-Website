@@ -33,7 +33,15 @@ router
 
 router
 .route( '/profile' )
-.get( staticHtml( 'user/index' ) );
+.get( staticHtml( 'user/profile' ) );
+
+/**
+ * Resolve URL `/user/resetPassword`.
+ */
+
+router
+.route( '/resetPassword' )
+.get( staticHtml( 'user/resetPassword' ) );
 
 /**
  * Resolve URL `/user/announcement`.
