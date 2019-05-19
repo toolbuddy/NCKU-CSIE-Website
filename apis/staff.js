@@ -9,6 +9,7 @@ import express from 'express';
 import cors from 'cors';
 
 import getStaff from 'models/staff/operations/get-staff.js';
+import getStaffMiniProfile from 'models/staff/operations/get-staff-mini-profile.js';
 
 const apis = express.Router();
 
@@ -19,6 +20,23 @@ const apis = express.Router();
 apis.get( '/', cors(), async ( req, res, next ) => {
     try {
         const data = await getStaff( Number( req.query.languageId ) );
+        res.json( data );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
+/**
+ * Resolve URL `/api/staff/miniProfile`.
+ */
+
+apis.get( '/miniProfile', cors(), async ( req, res, next ) => {
+    try {
+        const data = await getStaffMiniProfile( {
+            languageId: 0,
+            profileId:  1,
+        } );
         res.json( data );
     }
     catch ( error ) {
