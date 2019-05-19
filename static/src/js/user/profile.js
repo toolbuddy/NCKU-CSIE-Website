@@ -1,6 +1,8 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
+import { host, } from 'settings/server/config.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -13,6 +15,7 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
 try {
     const headerMedium = new GetHeaderMedium( {
         headerDOM:     document.querySelector( '.body__header.header.header--medium' ),
@@ -24,6 +27,7 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
 try {
     const headerLarge = new GetHeaderLarge( {
         headerDOM:     document.querySelector( '.body__header.header.header--large' ),
@@ -34,3 +38,21 @@ try {
 catch ( err ) {
     console.error( err );
 }
+
+console.log('get profile data:');
+
+(async() => {
+    const queryString = [
+        `profileId=${ 1 }`,
+        `languageId=${ WebLanguageUtils.currentLanguageId }`,
+    ].join( '&' );
+    
+    let res = null;
+    res = await window.fetch( `${ host }/api/staff/miniProfile?${ queryString }` );
+    if ( !res.ok )
+        throw new Error( 'failed to get all normal announcement' );
+    const data = await res.json();
+    console.log(data);
+
+})();
+
