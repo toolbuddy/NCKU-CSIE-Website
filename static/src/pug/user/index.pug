@@ -4,13 +4,21 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        'title': 'Personal Page',
+        title:      'User Settings',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User',
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title': '個人頁面',
+        title:      '使用者設定',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者',
+        },
       },
     } );
-    const currentRoute = 'user';
+    const currentRoute = 'user/index';
 
 append title
   +title( i18n[ LANG.id ].title )
@@ -19,14 +27,22 @@ append stylesheets
   +css( 'user/index' )
 
 append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
 
 append content
-  nav
-    li
-      ul
-        a( href = '/user/profile' ) 個人資料
-      ul
-        a( href = '/user/announcement' ) 公告管理
 
 append footer
 

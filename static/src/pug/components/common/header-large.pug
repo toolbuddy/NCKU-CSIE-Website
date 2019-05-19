@@ -4,6 +4,7 @@ mixin header--large( belongBlock )
   include /components/common/image.pug
   - const i18n = headerI18n();
 
+  section.headerSpace--large
   header.header.header--large( class = `${ belongBlock }__header` )
     //- Logo
     a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )

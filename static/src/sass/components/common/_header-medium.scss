@@ -4,6 +4,23 @@
 // components
 // `> .#{ $block } > .header`
 @mixin header--medium ( $block ) {
+  // [ variable ]
+  $large: 1200px;
+  $medium: 561px;
+
+  .headerSpace--medium {
+    background-color: white;
+    height: font__px-to-rem( 96 );
+    top: 0;
+    display: block;
+    @media screen and ( max-width: $medium ) {
+      display: none;
+    }
+    @media screen and ( min-width: $large ) {
+      display: none;
+    }
+  }
+
   // element
   // `> .#{ $block } > .#{ $block }__header`
   // block

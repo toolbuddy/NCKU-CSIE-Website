@@ -14,12 +14,15 @@
 import path from 'path';
 
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import expressSession from 'express-session';
 
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
 import home from 'routes/home.js';
 import language from 'routes/utils/language.js';
+import checkSession from 'routes/utils/check-session.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
 import staticFile from 'routes/static.js';
@@ -27,12 +30,32 @@ import staticHtml from 'routes/utils/static-html.js';
 import student from 'routes/student.js';
 import user from 'routes/user.js';
 
-import { host, staticHost, projectRoot, } from 'settings/server/config.js';
+import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
+
 const app = express();
+
+app.use( cookieParser() );
+
+app.use( expressSession( {
+    cookie: {
+        maxAge:   7 * 24 * 60 * 60 * 1000,
+        path:     '/',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure:   false,
+    },
+    name:              'sessionId',
+    secret,
+    saveUninitialized: false,
+    resave:            false,
+    unset:             'destroy',
+    rolling:           false,
+    proxy:             false,
+} ) );
 
 /**
  * Set HTML template engine.
@@ -100,6 +123,8 @@ app.use( ( req, res, next ) => {
     };
     next();
 } );
+
+app.use( checkSession );
 
 /**
  * Resolve URL `/`.
