@@ -42,7 +42,7 @@ catch ( err ) {
 }
 
 /*
-login messages
+Login messages
 */
 
 try {

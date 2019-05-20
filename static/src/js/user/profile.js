@@ -39,20 +39,19 @@ catch ( err ) {
     console.error( err );
 }
 
-console.log('get profile data:');
+console.log( 'get profile data:' );
 
-(async() => {
+( async () => {
     const queryString = [
         `profileId=${ 1 }`,
         `languageId=${ WebLanguageUtils.currentLanguageId }`,
     ].join( '&' );
-    
+
     let res = null;
     res = await window.fetch( `${ host }/api/staff/miniProfile?${ queryString }` );
     if ( !res.ok )
         throw new Error( 'failed to get all normal announcement' );
     const data = await res.json();
-    console.log(data);
-
-})();
+    console.log( data );
+} )();
 

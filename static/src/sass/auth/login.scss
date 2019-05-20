@@ -37,8 +37,14 @@
     $small: 516px;
 
     // [ skin ]
-    height: 120%;
+    height: 60%;
     background-color: #ffffff;
+
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      height: 100%;
+    }
 
     // template
     // `.body > .content > .content__?.?`
@@ -71,19 +77,7 @@
           '.    '
           'login'
           '.    ';
-        rows: font__px-to-rem( 64 ) auto 1fr;
-      }
-
-      // [ RWD: $small ]
-      @media screen and ( min-width: $small ) {
-        // [ layout ]
-        grid-template: {
-          areas:
-            '.    '
-            'login'
-            '.    ';
-          rows: 1fr auto 4fr;
-        }
+        rows: 1fr auto 2fr;
       }
 
       // `.body > .content > .content__login > .login__form`
