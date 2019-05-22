@@ -52,6 +52,7 @@ try {
     if ( !( messageForget instanceof ControlMessageText ) )
         throw new Error( '#message--forget not found.' );
     messageForget.setForgetMessage();
+    messageForget.hideMessage();
 }
 catch ( err ) {
     console.error( err );
