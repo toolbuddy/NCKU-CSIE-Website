@@ -4,6 +4,7 @@
  * Including following sub-routes:
  * - `/user`
  * - `/user/profile`
+ * - `/user/publication`
  * - `/user/announcement`
  * - `/user/announcement/add`
  * - `/user/announcement/edit/[id]`
@@ -34,6 +35,14 @@ router
 router
 .route( '/profile' )
 .get( staticHtml( 'user/profile' ) );
+
+/**
+ * Resolve URL `/user/publication`.
+ */
+
+router
+.route( '/publication' )
+.get( staticHtml( 'user/publication' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.

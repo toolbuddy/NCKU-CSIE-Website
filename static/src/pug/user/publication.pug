@@ -1,0 +1,46 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'Publication ',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '著作',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者',
+        },
+      },
+    } );
+    const currentRoute = 'user/publication';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/publication' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'user/publication' )

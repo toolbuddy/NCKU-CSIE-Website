@@ -85,6 +85,7 @@ export default {
         'user/index':              path.join( jsSrcRoot, 'user/index.js' ),
         'user/profile':            path.join( jsSrcRoot, 'user/profile.js' ),
         'user/resetPassword':      path.join( jsSrcRoot, 'user/resetPassword.js' ),
+        'user/publication':        path.join( jsSrcRoot, 'user/publication.js' ),
         'user/announcement/index': path.join( jsSrcRoot, 'user/announcement/index.js' ),
         'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
         'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),

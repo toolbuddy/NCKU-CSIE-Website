@@ -97,6 +97,7 @@ export default {
         'user/index':             path.join( sassRoot, 'user/index.scss' ),
         'user/profile':           path.join( sassRoot, 'user/profile.scss' ),
         'user/resetPassword':     path.join( sassRoot, 'user/resetPassword.scss' ),
+        'user/publication':       path.join( sassRoot, 'user/publication.scss' ),
         'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
 
         // Route `auth`
