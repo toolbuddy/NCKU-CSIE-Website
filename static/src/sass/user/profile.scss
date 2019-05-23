@@ -4,6 +4,7 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
+@import 'components/user/navigation-bar';
 
 // block
 // `.body`
@@ -50,6 +51,12 @@
         width: 84%;
       }
     }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include navigation-bar();
 
     // element
     // `.body > .content > .content__breadcrumb`

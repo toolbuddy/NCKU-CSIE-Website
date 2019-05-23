@@ -1,4 +1,7 @@
 extends /layouts/base.pug
+include /components/user/navigation-bar.pug
+include /components/user/nav-block.pug
+include /components/common/topic.pug
 
 append data
   -
@@ -9,12 +12,18 @@ append data
           home:     'Home',
           user:     'User',
         },
+        content: {
+          topic: '教師資料維護',
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
+        },
+        content: {
+          topic: '教師資料維護',
         },
       },
     } );
@@ -39,6 +48,14 @@ append breadcrumb
   )
 
 append content
+  +navigation-bar( content )
+  main.content__information.information
+    +topic( information, i18n[ LANG.id ].content.topic )
+    section.information__profile
+    section.information__education
+    section.information__experience
+    
+
 
 append footer
 

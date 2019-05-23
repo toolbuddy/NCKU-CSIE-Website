@@ -1,0 +1,47 @@
+// set all the tags in the correct position
+@mixin navigation-bar () {
+  // .content > .content__navigation.navigation
+  > .navigation {
+    // [ layout ]
+    display: block;
+
+    // [ skin ]
+    width: font__px-to-rem( 259 );
+
+    // .content > .content__navigation.navigation > .navigation__title
+    > .navigation__title {
+      // [ layout ]
+      display: block;
+
+      // .content > .content__navigation.navigation > .navigation__block
+      > .title__word {
+        // [ skin ]
+        line-height: normal;
+      }
+    }
+
+    // .content > .content__navigation.navigation > .navigation__block
+    > .navigation__block {
+      // [ layout ]
+      display: block;
+
+      // .content > .content__navigation.navigation > .navigation__block > .block__number
+      > .block__number {
+        // [ layout ]
+        display: inline-block;
+
+        // [ skin ]
+        line-height: normal;
+      }
+
+      // .content > .content__navigation.navigation > .navigation__block > .block__content
+      > .block__content {
+        // [ layout ]
+        display: inline-block;
+
+        // [ skin ]
+        line-height: normal;
+      }
+    }
+  }
+}
