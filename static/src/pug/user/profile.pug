@@ -2,6 +2,7 @@ extends /layouts/base.pug
 include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
 include /components/user/input-block.pug 
+include /components/user/button.pug
 include /components/common/topic.pug
 
 append data
@@ -29,6 +30,8 @@ append data
             lab_name_en:     'Lab Name',
             lab_location_ch: '實驗室位置',
             lab_location_en: 'Lab Location',
+            lab_tel:         '實驗室電話 / Lab Tel',
+            lab_web:         '實驗室網站 / Lab Web',
             phone:           '聯絡電話 / Office Tel',
             email:           'Email',
             fax:             '傳真 / Fax',
@@ -59,6 +62,8 @@ append data
             lab_name_en:     'Lab Name',
             lab_location_ch: '實驗室位置',
             lab_location_en: 'Lab Location',
+            lab_tel:         '實驗室電話 / Lab Tel',
+            lab_web:         '實驗室網站 / Lab Web',
             phone:           '聯絡電話 / Office Tel',
             email:           'Email',
             fax:             '傳真 / Fax',
@@ -96,16 +101,44 @@ append content
       +local-topic( 'profile', i18n[ LANG.id ].content.profile.topic )
       section.profile__personal.personal
         section.personal__name
-          +input-block( 'namr', i18n[LANG.id].content.profile.name_ch, 'name_ch' )
+          +input-block( 'name', i18n[LANG.id].content.profile.name_ch, 'name_ch' )
           +input-block( 'name', i18n[LANG.id].content.profile.name_en, 'name_en' )
         section.personal__title
-          +input-block( 'title', i18n[LANG.id].content.profile.title_ch, 'title_ch', true, '副教授' )
-          +input-block( 'title', i18n[LANG.id].content.profile.title_ch, 'title_ch' )
+          +button( 'title', 'add' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', '副教授' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en' )
+          +button( 'title', 'delete' )
+      section.profile__choose.choose
+        section.choose__department.department
+          p.department__title= i18n[ LANG.id ].content.profile.department
+          each departmentId in UTILS.faculty.departmentUtils.supportedId
+            button.department__tag(
+              data-department-id = `${ departmentId }`
+            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+        section.choose__research.research
+          p.research__title= i18n[ LANG.id ].content.profile.research
+          each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+            button.research-group__tag(
+              data-research-group-id = `${ researchGroupId }`,
+            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
       section.profile__image
-      section.profile__chooice
-      section.profile__lab
-    section.information__education
-    section.information__experience
+      section.profile__work
+        section.work__office.office
+          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', "Ex.資訊系新館大樓12F 65C11" )
+          +input-block( 'office', i18n[ LANG.id ].content.profile.title_en, 'office_en' )
+        section.work__lab-name.lab-name
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', "Ex.智慧型知識管理實驗室" )
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_en' )
+        section.work__lab-location.lab-location
+          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', "Ex.資訊系新館大樓9F 65903" )
+          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_en, 'lab-location_en' )
+        section.work__lab-tel.lab-tel
+          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel' )
+        section.work__lab-web
+
+
+    article.information__education
+    article.information__experience
 
 append footer
 
