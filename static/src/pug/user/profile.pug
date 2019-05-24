@@ -32,11 +32,12 @@ append data
             lab_location_en: 'Lab Location',
             lab_tel:         '實驗室電話 / Lab Tel',
             lab_web:         '實驗室網站 / Lab Web',
-            phone:           '聯絡電話 / Office Tel',
+            office_tel:      '聯絡電話 / Office Tel',
             email:           'Email',
             fax:             '傳真 / Fax',
-            web:             '個人網站 / Personal Web',
-            specilty:        '專長領域 / Specilty',
+            personal_web:    '個人網站 / Personal Web',
+            specilty_ch:     '專長領域',
+            specilty_en:     'Specilty',
           },
         },
       },
@@ -64,11 +65,12 @@ append data
             lab_location_en: 'Lab Location',
             lab_tel:         '實驗室電話 / Lab Tel',
             lab_web:         '實驗室網站 / Lab Web',
-            phone:           '聯絡電話 / Office Tel',
+            office_tel:      '聯絡電話 / Office Tel',
             email:           'Email',
             fax:             '傳真 / Fax',
-            web:             '個人網站 / Personal Web',
-            specilty:        '專長領域 / Specilty',
+            personal_web:    '個人網站 / Personal Web',
+            specilty_ch:     '專長領域',
+            specilty_en:     'Specilty',
           },
         },
       },
@@ -101,21 +103,23 @@ append content
       +local-topic( 'profile', i18n[ LANG.id ].content.profile.topic )
       section.profile__personal.personal
         section.personal__name
-          +input-block( 'name', i18n[LANG.id].content.profile.name_ch, 'name_ch' )
-          +input-block( 'name', i18n[LANG.id].content.profile.name_en, 'name_en' )
+          +input-block( 'name', i18n[LANG.id].content.profile.name_ch, 'name_ch', true )
+          +input-block( 'name', i18n[LANG.id].content.profile.name_en, 'name_en', true )
         section.personal__title
           +button( 'title', 'add' )
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', '副教授' )
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, '副教授' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true )
           +button( 'title', 'delete' )
       section.profile__choose.choose
         section.choose__department.department
+          p.department__required= '*'
           p.department__title= i18n[ LANG.id ].content.profile.department
           each departmentId in UTILS.faculty.departmentUtils.supportedId
             button.department__tag(
               data-department-id = `${ departmentId }`
             )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
         section.choose__research.research
+          p.research__required= '*'
           p.research__title= i18n[ LANG.id ].content.profile.research
           each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
             button.research-group__tag(
@@ -124,18 +128,40 @@ append content
       section.profile__image
       section.profile__work
         section.work__office.office
-          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', "Ex.資訊系新館大樓12F 65C11" )
+          aside.office__image
+          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, "Ex.資訊系新館大樓12F 65C11" )
           +input-block( 'office', i18n[ LANG.id ].content.profile.title_en, 'office_en' )
-        section.work__lab-name.lab-name
-          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', "Ex.智慧型知識管理實驗室" )
+        section.work__lab-name.lab-name         
+          aside.lab-name__image
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', false, "Ex.智慧型知識管理實驗室" )
           +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_en' )
         section.work__lab-location.lab-location
-          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', "Ex.資訊系新館大樓9F 65903" )
+          aside.lab-location__image
+          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', false, "Ex.資訊系新館大樓9F 65903" )
           +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_en, 'lab-location_en' )
         section.work__lab-tel.lab-tel
-          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel' )
-        section.work__lab-web
-
+          aside.lab-tel__image
+          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true )
+        section.work__lab-web.lab-web
+          aside.lab-web__image
+          +input-block( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web' )
+        section.work__office-tel.office-tel
+          aside.office-tel__image
+          +input-block( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true )
+        section.work__email.email
+          aside.email__image
+          +input-block( 'email', i18n[ LANG.id ].content.profile.email, 'email' )
+        section.work__fax.fax
+          aside.fax__image
+          +input-block( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax' )
+        section.work__personal-web.personal-web
+          aside.personal-web__image
+          +input-block( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web')
+        section.work__specilty
+          +button( 'specilty', 'add' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en' )
+          +button( 'specilty', 'delete' )
 
     article.information__education
     article.information__experience
