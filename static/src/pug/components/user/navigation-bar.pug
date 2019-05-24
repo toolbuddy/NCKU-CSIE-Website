@@ -34,4 +34,6 @@ mixin navigation-bar( belongBlock )
     section.navigation__title
       h.title__word= i18n[LANG.id].title
     each val, index in i18n[LANG.id].nav
-      +nav-block( val, index, n++)
+      section.navigation__block.block( id=`navigation__${index}` )
+        p.block__number= `${ n++ }`
+        p.block__content= `${ val }`

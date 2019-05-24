@@ -1,0 +1,8 @@
+mixin input-block( belongBlock, title, modifier, add=false, placeholder="" )
+  section.block( class= `${ belongBlock }__block` )
+    p.block__title= `${ title }`
+    input.block__input( 
+      id=`block__input--${ modifier }` 
+      name=`${ modifier }`
+      type=`text` 
+      placeholder=`${ placeholder }` )
