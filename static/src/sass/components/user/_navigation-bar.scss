@@ -5,43 +5,113 @@
     // [ layout ]
     display: block;
 
+    // [ position ]
+    margin: {
+      left:  auto;
+      right: auto;
+      top:   font__px-to-rem( 50 );
+    }
+
     // [ skin ]
-    width: font__px-to-rem( 259 );
+    width: font__px-to-rem( 230 );
+    height: font__px-to-rem( 720 );
+    border-radius: 6px;
+    box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
 
     // .content > .content__navigation.navigation > .navigation__title
     > .navigation__title {
       // [ layout ]
-      display: block;
+      display: flex;
+      align-items: center;
+
+      // [ skin ]
+      height: font__px-to-rem( 84 );
+      width: 100%;
 
       // .content > .content__navigation.navigation > .navigation__block
       > .title__word {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
         // [ skin ]
-        line-height: normal;
+        width: auto;
+        font: {
+          size: font__px-to-rem( 24 );
+          weight: normal;
+          style: normal;
+          stretch: normal;
+        }
+        text-align: center;
+        line-height: 1.33;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
       }
     }
 
     // .content > .content__navigation.navigation > .navigation__block
     > .navigation__block {
       // [ layout ]
-      display: block;
+      display: inline-flex;
+
+      // [ skin ]
+      height: font__px-to-rem( 76 );
 
       // .content > .content__navigation.navigation > .navigation__block > .block__number
       > .block__number {
         // [ layout ]
         display: inline-block;
+        align-self: center;
+        justify-self: center;
+
+        // [ position ]
+        margin: {
+          left:   auto;
+          right:  auto;
+        }
 
         // [ skin ]
-        line-height: normal;
+        width: font__px-to-rem( 70 );
+        font: {
+          family: roboto;
+          size: font__px-to-rem( 24 );
+          weight: bold;
+          style: normal;
+          stretch: normal;
+        }
+        text-align: center;
+        line-height: 1.33;
+        letter-spacing: normal;
+        color: #adacad;
       }
 
       // .content > .content__navigation.navigation > .navigation__block > .block__content
       > .block__content {
         // [ layout ]
         display: inline-block;
+        align-self: center;
+        justify-self: left;
 
         // [ skin ]
-        line-height: normal;
+        width: font__px-to-rem( 150 );
+        font: {
+          size: font__px-to-rem( 16 );
+          weight: bold;
+          style: normal;
+          stretch: normal;
+        }
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
       }
     }
+
+    // [ customization ]
+    @content;
   }
 }

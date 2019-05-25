@@ -96,9 +96,9 @@ append breadcrumb
   )
 
 append content
-  +navigation-bar( content )
+  +navigation-bar( 'content' )
   main.content__information.information
-    +topic( information, i18n[ LANG.id ].content.topic )
+    +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile
       +local-topic( 'profile', i18n[ LANG.id ].content.profile.topic )
       section.profile__personal.personal

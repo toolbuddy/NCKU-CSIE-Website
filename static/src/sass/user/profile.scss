@@ -28,8 +28,19 @@
     // [ variable ]
     $large: 700px;
 
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' breadcrumb breadcrumb  breadcrumb '
+        ' navigation information .          ';
+      columns: 1fr 2.6fr 1fr;
+      rows: auto auto;
+    }
+
     // [ skin ]
-    height: 120%;
+    height: auto;
+    width: 100%;
     background-color: #ffffff;
 
     // template
@@ -52,11 +63,21 @@
       }
     }
 
-    // element
-    // `.body > .content > .content__breadcrumb`
     // block
-    // `.body > .content > .breadcrumb`
-    @include navigation-bar();
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__information
+    > .content__information {
+      // [ layout ]
+      grid-area: information;
+    }
 
     // element
     // `.body > .content > .content__breadcrumb`
@@ -65,6 +86,9 @@
     @include breadcrumb( $block: 'content' ) {
       // [ template ]
       @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
 
       // [ skin ]
       border: {
