@@ -1,0 +1,64 @@
+// component
+// `> .#{ $block } > .#{ $block }__block.block`
+@mixin input-block ( $block ) {
+  // `> .#{ $block } > .block`
+  > .#{ $block }__block.block {
+    // [ layout ]
+    display: inline-block;
+
+    // `> .#{ $block } > .block > .block__require`
+    > .block__required {
+      // [ layout ]
+      display: inline-block;
+
+      // [ position ]
+      margin-left: font__px-to-rem( 12 );
+
+      // [ skin ]
+      font-size: 3px;
+      color: red;
+    }
+
+    // `> .#{ $block } > .block > .block__title`
+    > .block__title {
+      // [ layout ]
+      display: inline-block;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 7 );
+        left: font__px-to-rem( 4.6 );
+      }
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 16 );
+        weight: normal;
+        style: normal;
+        stretch: normal;
+      }
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: #757575;
+    }
+
+    // `> .#{ $block } > .block > .block__input`
+    > .block__input {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      margin-bottom: font__px-to-rem( 25 );
+
+      // [ layout ]
+      width: 90%;
+      height: font__px-to-rem( 46 );
+      border-radius: font__px-to-rem( 33 );
+      border: solid 1px #adacad;
+      background-color: #ffffff;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

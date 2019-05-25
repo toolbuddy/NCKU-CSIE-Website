@@ -1,0 +1,12 @@
+// component
+// `> .#{ $block } > .#{ $block }__button`
+@mixin input-block ( $block ) {
+  // `> .#{ $block } > .block`
+  > .#{ $block }__button {
+    // [ layout ]
+    display: inline-block;
+
+    // [ customization ]
+    @content;
+  }
+}

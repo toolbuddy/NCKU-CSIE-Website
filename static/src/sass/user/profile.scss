@@ -4,7 +4,10 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
+@import 'components/common/topic';
 @import 'components/user/navigation-bar';
+@import 'components/user/local-topic';
+@import 'components/user/input-block';
 
 // block
 // `.body`
@@ -34,7 +37,7 @@
       areas:
         ' breadcrumb breadcrumb  breadcrumb '
         ' navigation information .          ';
-      columns: 1fr 2.6fr 1fr;
+      columns: 1fr 2.6fr .8fr;
       rows: auto auto;
     }
 
@@ -77,6 +80,89 @@
     > .content__information {
       // [ layout ]
       grid-area: information;
+
+      // [ position ]
+      margin: {
+        top: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 1020 );
+
+      // element
+      // `.body > .content > .content__information > .information__topic`
+      @include topic( information ) {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        margin-left: font__px-to-rem( 31.5 );
+
+        // [ akin ]
+        width: 100%;
+        height: auto;
+      }
+
+      > .information__profile.profile {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:
+            ' topic    topic  topic '
+            ' personal .      image '
+            ' choose   choose image '
+            ' work     work   work  ';
+          columns: 5fr 1fr 2fr;
+        }
+
+        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+        @include local-topic( profile ) {
+          // [ layout ]
+          grid-area: topic;
+
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+        }
+
+        // `.body > .content > .content__information > .information__profile > .profile__personal`
+        > .profile__personal {
+          // [ layout ]
+          grid-area: personal;
+          display: grid;
+          grid-template: {
+            areas:
+              ' .     name '
+              ' title title';
+            columns: font__px-to-rem( 31.5 ) 1fr;
+          }
+
+          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__name`
+          > .personal__name {
+            // [ layout ]
+            grid-area: name;
+            display: block;
+
+            // [ element ]
+            @include input-block( name ) {
+              width: 49%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__title`
+          > .personal__title {
+            // [ layout ]
+            grid-area: title;
+            display: block;
+
+            // [ element ]
+            @include input-block( title ) {
+              width: 49%;
+            }
+          }
+        }
+      }
     }
 
     // element

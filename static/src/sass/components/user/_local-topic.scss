@@ -1,0 +1,31 @@
+// component
+// `> .#{ $block } > .#{ $block }__topic`
+@mixin local-topic ( $block ) {
+  // `> .#{ block }` > .topic
+  > .#{ $block }__topic.topic {
+    // [ layout ]
+    display: flex;
+
+    // [ skin ]
+    height: font__px-to-rem( 107 );
+
+    > .topic__word {
+      // [ layout ]
+      align-self: center;
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+        style: normal;
+        stretch: normal;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    // [ customization ]
+    @content;
+  }
+}
