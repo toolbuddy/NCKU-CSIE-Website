@@ -4,54 +4,67 @@
   // `> .#{ $block } > .block`
   > .#{ $block }__block.block {
     // [ layout ]
-    display: inline-block;
-
-    // `> .#{ $block } > .block > .block__require`
-    > .block__required {
-      // [ layout ]
-      display: inline-block;
-
-      // [ position ]
-      margin-left: font__px-to-rem( 12 );
-
-      // [ skin ]
-      font-size: 3px;
-      color: red;
+    display: inline-grid;
+    grid-template: {
+      areas:
+        ' .       title '
+        ' button1 input ';
+      columns: font__px-to-rem( 31.5 ) auto;
     }
 
-    // `> .#{ $block } > .block > .block__title`
     > .block__title {
       // [ layout ]
-      display: inline-block;
+      grid-area: title;
+      display: block;
 
-      // [ position ]
-      margin: {
-        bottom: font__px-to-rem( 7 );
-        left: font__px-to-rem( 4.6 );
+      // `> .#{ $block } > .block > .block__require`
+      > .title__required {
+        // [ layout ]
+        display: inline-block;
+
+        // [ position ]
+        margin-left: font__px-to-rem( 12 );
+
+        // [ skin ]
+        font-size: 3px;
+        color: red;
       }
 
-      // [ skin ]
-      font: {
-        size: font__px-to-rem( 16 );
-        weight: normal;
-        style: normal;
-        stretch: normal;
+      // `> .#{ $block } > .block > .block__title`
+      > .title__content {
+        // [ layout ]
+        display: inline-block;
+
+        // [ position ]
+        margin: {
+          bottom: font__px-to-rem( 7 );
+          left: font__px-to-rem( 4.6 );
+        }
+
+        // [ skin ]
+        font: {
+          size: font__px-to-rem( 16 );
+          weight: normal;
+          style: normal;
+          stretch: normal;
+        }
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: #757575;
       }
-      line-height: 1.5;
-      letter-spacing: normal;
-      color: #757575;
     }
 
     // `> .#{ $block } > .block > .block__input`
     > .block__input {
       // [ layout ]
-      display: block;
+      display: inline-block;
+      grid-area: input;
 
       // [ position ]
       margin-bottom: font__px-to-rem( 25 );
 
       // [ layout ]
-      width: 90%;
+      width: 100%;
       height: font__px-to-rem( 46 );
       border-radius: font__px-to-rem( 33 );
       border: solid 1px #adacad;

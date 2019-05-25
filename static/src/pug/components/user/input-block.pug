@@ -1,10 +1,14 @@
-mixin input-block( belongBlock, title, modifier, required=false, placeholder="" )
+mixin input-block( belongBlock, title, modifier, required=false,  type="",placeholder="" )
   section.block( class= `${ belongBlock }__block` )
-    if required
-      p.block__required= '*'
-    else
-      p.block__required= '&nbsp;'
-    p.block__title= `${ title }`
+    article.block__title
+      if type=='add'
+        +button( title, 'add' )
+      if required
+        p.title__required= '*'
+      else
+        p.title__required= '&nbsp;'
+      p.title__content= `${ title }`
+
     input.block__input( 
       id=`block__input--${ modifier }` 
       name=`${ modifier }`

@@ -133,7 +133,7 @@
           display: grid;
           grid-template: {
             areas:
-              ' .     name '
+              ' name  name '
               ' title title';
             columns: font__px-to-rem( 31.5 ) 1fr;
           }

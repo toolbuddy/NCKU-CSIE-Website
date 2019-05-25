@@ -106,10 +106,8 @@ append content
           +input-block( 'name', i18n[LANG.id].content.profile.name_ch, 'name_ch', true )
           +input-block( 'name', i18n[LANG.id].content.profile.name_en, 'name_en', true )
         section.personal__title
-          +button( 'title', 'add' )
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, '副教授' )
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true )
-          +button( 'title', 'delete' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, 'add', '副教授' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true, 'delete' )
       section.profile__choose.choose
         section.choose__department.department
           p.department__required= '*'
@@ -128,40 +126,29 @@ append content
       section.profile__image
       section.profile__work
         section.work__office.office
-          aside.office__image
-          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, "Ex.資訊系新館大樓12F 65C11" )
+          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, 'image', "Ex.資訊系新館大樓12F 65C11" )
           +input-block( 'office', i18n[ LANG.id ].content.profile.title_en, 'office_en' )
         section.work__lab-name.lab-name         
-          aside.lab-name__image
-          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', false, "Ex.智慧型知識管理實驗室" )
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', false, 'image', "Ex.智慧型知識管理實驗室" )
           +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_en' )
         section.work__lab-location.lab-location
-          aside.lab-location__image
-          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', false, "Ex.資訊系新館大樓9F 65903" )
+          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', false, 'image', "Ex.資訊系新館大樓9F 65903" )
           +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_en, 'lab-location_en' )
         section.work__lab-tel.lab-tel
-          aside.lab-tel__image
-          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true )
+          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true, 'image' )
         section.work__lab-web.lab-web
-          aside.lab-web__image
-          +input-block( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web' )
+          +input-block( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web', false, 'image' )
         section.work__office-tel.office-tel
-          aside.office-tel__image
-          +input-block( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true )
+          +input-block( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true, 'image' )
         section.work__email.email
-          aside.email__image
-          +input-block( 'email', i18n[ LANG.id ].content.profile.email, 'email' )
+          +input-block( 'email', i18n[ LANG.id ].content.profile.email, 'email', false, 'image' )
         section.work__fax.fax
-          aside.fax__image
-          +input-block( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax' )
+          +input-block( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax', false, image )
         section.work__personal-web.personal-web
-          aside.personal-web__image
-          +input-block( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web')
+          +input-block( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web', false, 'image')
         section.work__specilty
-          +button( 'specilty', 'add' )
-          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch' )
-          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en' )
-          +button( 'specilty', 'delete' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch', false, 'add' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en', false, 'delete' )
 
     article.information__education
     article.information__experience
