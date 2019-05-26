@@ -7,9 +7,9 @@
     display: inline-grid;
     grid-template: {
       areas:
-        ' .       title '
-        ' button1 input ';
-      columns: font__px-to-rem( 31.5 ) auto;
+        ' .      title .     '
+        ' image1 input image2';
+      columns: font__px-to-rem( 31.5 ) auto font__px-to-rem( 10 );
     }
 
     > .block__title {
@@ -54,21 +54,125 @@
       }
     }
 
+    // `> .#{ $block } > .block > .block__button--add`
+    > .block__button--add {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image1;
+
+      // [ skin ]
+      width: 100%;
+      height: font__px-to-rem( 46 );
+
+      > .block__button--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+      }
+    }
+
+    // `> .#{ $block } > .block > .block__image`
+    > .block__image {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image1;
+
+      // [ skin ]
+      width: 100%;
+      height: font__px-to-rem( 46 );
+
+      > .block__image--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+      }
+    }
+
     // `> .#{ $block } > .block > .block__input`
     > .block__input {
       // [ layout ]
-      display: inline-block;
+      display: inline-flex;
       grid-area: input;
 
       // [ position ]
       margin-bottom: font__px-to-rem( 25 );
 
-      // [ layout ]
+      // [ skin ]
       width: 100%;
       height: font__px-to-rem( 46 );
       border-radius: font__px-to-rem( 33 );
       border: solid 1px #adacad;
       background-color: #ffffff;
+      font: {
+        size: font__px-to-rem( 16 );
+        weight: normal;
+        style: normal;
+        stretch: normal;
+      }
+      line-height: 1.5;
+      letter-spacing: normal;
+
+      // `> .#{ $block } > .block > .block__input > .block__input--content`
+      > .block__input--content {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        width: 90%;
+      }
+    }
+
+    // `> .#{ $block } > .block > .block__input`
+    > .block__button--delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image2;
+
+      // [ skin ]
+      width: font__px-to-rem( 31.5 );
+      height: font__px-to-rem( 46 );
+
+      > .block__button--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+      }
     }
 
     // [ customization ]

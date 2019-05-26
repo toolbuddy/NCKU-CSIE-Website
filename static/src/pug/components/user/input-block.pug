@@ -1,16 +1,38 @@
-mixin input-block( belongBlock, title, modifier, required=false,  type="",placeholder="" )
+mixin input-block( belongBlock, title, modifier, required=false, type="",placeholder="" )
   section.block( class= `${ belongBlock }__block` )
     article.block__title
-      if type=='add'
-        +button( title, 'add' )
       if required
         p.title__required= '*'
       else
-        p.title__required= '&nbsp;'
+        p.title__required= ' \u00A0 '
       p.title__content= `${ title }`
+    
+    if type=='add'
+      button( class='block__button--add' id=`${ belongBlock }__add` )
+        +image( {
+          alt:       '>',
+          className: `block__button--img`,
+          src:       'icon/arrow-right.png',
+        } )
+    else if type!='delete' && type!=''
+      aside( class='block__image' )
+        +image( {
+          alt:       '>',
+          className: `block__image--img`,
+          src:       `icon/${ type }.png`,
+        } )
 
-    input.block__input( 
-      id=`block__input--${ modifier }` 
-      name=`${ modifier }`
-      type=`text` 
-      placeholder=`${ placeholder }` )
+    section.block__input
+      input.block__input--content( 
+        id=`block__input--${ modifier }` 
+        name=`${ modifier }`
+        type=`text` 
+        placeholder=`${ placeholder }` )
+    
+    if type=='delete'
+      button( class='block__button--delete' id=`${ belongBlock }__delete` )
+        +image( {
+          alt:       '>',
+          className: `block__button--img`,
+          src:       'icon/arrow-right.png',
+        } )
