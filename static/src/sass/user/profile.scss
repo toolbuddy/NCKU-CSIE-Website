@@ -13,6 +13,9 @@
 // block
 // `.body`
 .body {
+  // [ variable ]
+  $input-height-small: 30;
+
   // [ skin ]
   background-color: #ffffff;
 
@@ -351,32 +354,45 @@
           display: grid;
           grid-template: {
             areas:
-              'button duration_from duration_line duration_to nation school major degree';
-            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 3.3fr 5fr 5fr 3fr;
+              'add duration_from duration_line duration_to nation school major degree delete';
+            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
+          }
+
+          // [ element ]
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__?`
+          %detail__element {
+            // [ layout ]
+            display: block;
+
+            > .block {
+              // [ layout ]
+              display: inline-block;
+
+              // [ skin ]
+              width: 90%;
+
+              // [ element ]
+              @include input-title( block );
+              @include input-block( $input-height-small );
+            }
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-from`
           > .detail__duration-from {
             // [ layout ]
-            display: block;
             grid-area: duration_from;
 
             // [ element ]
-            @include input( duration-from, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-to`
           > .detail__duration-to {
             // [ layout ]
-            display: block;
             grid-area: duration_to;
 
             // [ element ]
-            @include input( duration-to, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-line`
@@ -394,49 +410,37 @@
           // `.body > .content > .content__information > .information__education > .education__detail > .detail__nation`
           > .detail__nation {
             // [ layout ]
-            display: block;
             grid-area: nation;
 
             // [ element ]
-            @include input( nation, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > .detail__school`
           > .detail__school {
             // [ layout ]
-            display: block;
             grid-area: school;
 
             // [ element ]
-            @include input( school, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > .detail__major`
           > .detail__major {
             // [ layout ]
-            display: block;
             grid-area: major;
 
             // [ element ]
-            @include input( major, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > .detail__degree`
           > .detail__degree {
             // [ layout ]
-            display: block;
             grid-area: degree;
 
             // [ element ]
-            @include input( degree, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
         }
       }
@@ -465,35 +469,48 @@
           display: grid;
           grid-template: {
             areas:
-              'button duration_from duration_line duration_to organization department title';
-            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 5.8fr 7.5fr 3fr;
+              'add duration_from duration_line duration_to organization department title delete';
+            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-from`
-          > .detail__duration-from {
+          // [ element ]
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__?`
+          %detail__element {
             // [ layout ]
             display: block;
+
+            > .block {
+              // [ layout ]
+              display: inline-block;
+
+              // [ skin ]
+              width: 90%;
+
+              // [ element ]
+              @include input-title( block );
+              @include input-block( $input-height-small );
+            }
+          }
+
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__duraction-from`
+          > .detail__duration-from {
+            // [ layout ]
             grid-area: duration_from;
 
             // [ element ]
-            @include input( duration-from, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-to`
+          // `.body > .content > .content__information > .information__experience> .experience__detail > detail__duraction-to`
           > .detail__duration-to {
             // [ layout ]
-            display: block;
             grid-area: duration_to;
 
             // [ element ]
-            @include input( duration-to, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-line`
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__duraction-line`
           > .detail__duration-line {
             // [ layout ]
             display: block;
@@ -505,40 +522,31 @@
             border-bottom: 2px solid gray;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__organization`
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__organization`
           > .detail__organization {
             // [ layout ]
-            display: block;
             grid-area: organization;
 
             // [ element ]
-            @include input( organization, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__department`
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__department`
           > .detail__department {
             // [ layout ]
-            display: block;
             grid-area: department;
 
             // [ element ]
-            @include input( department, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__title`
+          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__title`
           > .detail__title {
             // [ layout ]
-            display: block;
             grid-area: title;
 
             // [ element ]
-            @include input( title, 30, 0 ) {
-              width: 90%;
-            }
+            @extend %detail__element;
           }
         }
       }
