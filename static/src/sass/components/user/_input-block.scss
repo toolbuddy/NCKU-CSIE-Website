@@ -6,11 +6,17 @@
     grid-area: input;
 
     // [ position ]
-    margin-bottom: font__px-to-rem( 25 );
+    width: 100%;
+    margin: {
+      bottom: font__px-to-rem( 25 );
+      right: auto;
+      left: auto;
+    }
+    height: font__px-to-rem( $height );
+    justify-self: center;
+    align-self: center;
 
     // [ skin ]
-    width: 100%;
-    height: font__px-to-rem( $height );
     border-radius: font__px-to-rem( 33 );
     border: solid 1px #adacad;
     background-color: #ffffff;
@@ -37,5 +43,8 @@
       // [ skin ]
       width: 90%;
     }
+
+    // [ customization ]
+    @content;
   }
 }

@@ -2,6 +2,7 @@ extends /layouts/base.pug
 include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
 include /components/user/input-block.pug 
+include /components/user/button.pug
 include /components/common/topic.pug
 
 append data
@@ -147,8 +148,10 @@ append content
           +input-block( 'name', i18n[LANG.id].content.profile.name_ch, 'name_ch', true )
           +input-block( 'name', i18n[LANG.id].content.profile.name_en, 'name_en', true )
         section.personal__title
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, 'add', '副教授' )
-          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true, 'delete' )
+          +button( 'title', 'add' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, '副教授' )
+          +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true )
+          +button( 'title', 'delete' )
       section.profile__filter.filter
         section.filter__department.department
           aside.department__title
@@ -170,46 +173,93 @@ append content
           button.image__change= i18n[ LANG.id ].content.profile.image
       section.profile__work
         section.work__office.office
-          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, 'location', "Ex.資訊系新館大樓12F 65C11" )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/location.png`,
+          } )
+          +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, "Ex.資訊系新館大樓12F 65C11" )
           +input-block( 'office', i18n[ LANG.id ].content.profile.title_en, 'office_en' )
-        section.work__lab-name.lab-name         
-          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', false, 'laboratory', "Ex.智慧型知識管理實驗室" )
-          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_en' )
+        section.work__lab-name.lab-name  
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/laboratory.png`,
+          } )       
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_ch, 'lab-name_ch', false, "Ex.智慧型知識管理實驗室" )
+          +input-block( 'lab-name', i18n[ LANG.id ].content.profile.lab_name_en, 'lab-name_en' )
         section.work__lab-location.lab-location
-          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', false, 'laboratory', "Ex.資訊系新館大樓9F 65903" )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/laboratory.png`,
+          } )  
+          +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_ch, 'lab-location_ch', false, "Ex.資訊系新館大樓9F 65903" )
           +input-block( 'lab-location', i18n[ LANG.id ].content.profile.lab_location_en, 'lab-location_en' )
         section.work__lab-tel.lab-tel
-          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true, 'laboratory' )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/laboratory.png`,
+          } )  
+          +input-block( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true )
         section.work__lab-web.lab-web
-          +input-block( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web', false, 'laboratory' )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/laboratory.png`,
+          } )  
+          +input-block( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web' )
         section.work__office-tel.office-tel
-          +input-block( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true, 'phone' )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/phone.png`,
+          } )  
+          +input-block( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true )
         section.work__email.email
-          +input-block( 'email', i18n[ LANG.id ].content.profile.email, 'email', false, 'envelope' )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/envelope.png`,
+          } )  
+          +input-block( 'email', i18n[ LANG.id ].content.profile.email, 'email' )
         section.work__fax.fax
-          +input-block( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax', false, 'printer' )
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/printer.png`,
+          } )  
+          +input-block( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax' )
         section.work__personal-web.personal-web
-          +input-block( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web', false, 'user')
+          +image( {
+            alt:       '>',
+            className: `block__image`,
+            src:       `icon/user.png`,
+          } )  
+          +input-block( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web', false )
         section.work__specilty
-          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch', false, 'add' )
-          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en', false, 'delete' )
+          +button( 'specilty', 'add' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch' )
+          +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en' )
+          +button( 'specilty', 'delete' )
 
     article.information__education.education
       +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
       section.education__detail
         section.detail__duration-from
-          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false )
+          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from' )
         section.detail__duration-line
         section.detail__duration-to
-          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false )
+          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to' )
         section.detail__nation
           +input-block( 'nation', i18n[ LANG.id ].content.education.nation , 'nation')
         section.detail__school
-          +input-block( 'school', i18n[ LANG.id ].content.education.school_ch, 'school-ch', false, '', '國立台灣大學' )
-          +input-block( 'school', i18n[ LANG.id ].content.education.school_en, 'school-en', false, '', 'The Ohio State University' )
+          +input-block( 'school', i18n[ LANG.id ].content.education.school_ch, 'school-ch', false, '國立台灣大學' )
+          +input-block( 'school', i18n[ LANG.id ].content.education.school_en, 'school-en', false, 'The Ohio State University' )
         section.detail__major
-          +input-block( 'major', i18n[ LANG.id ].content.education.major_ch, 'school-ch', false, '', '電機工程' )
-          +input-block( 'major', i18n[ LANG.id ].content.education.major_en, 'school-en', false, '', 'Computer and Informat' )
+          +input-block( 'major', i18n[ LANG.id ].content.education.major_ch, 'school-ch', false, '電機工程' )
+          +input-block( 'major', i18n[ LANG.id ].content.education.major_en, 'school-en', false, 'Computer and Informat' )
         section.detail__degree 
           +input-block( 'degree', i18n[ LANG.id ].content.education.degree, 'degree' )
     article.information__experience

@@ -1,0 +1,23 @@
+@mixin input_image ( $belong_block) {
+  > .#{ $belong_block }__image {
+    // [ layout ]
+    align-self: center;
+    justify-self: center;
+
+    // [ position ]
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    height: font__px-to-rem( 20 );
+    width: auto;
+    line-height: normal;
+    filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+
+    // [ customization ]
+    @content;
+  }
+}

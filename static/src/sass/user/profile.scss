@@ -7,7 +7,10 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
-@import 'components/user/input';
+@import 'components/user/input-title';
+@import 'components/user/input-block';
+@import 'components/user/input-image';
+@import 'components/user/input-button';
 @import 'components/user/filter';
 
 // block
@@ -15,6 +18,7 @@
 .body {
   // [ variable ]
   $input-height-small: 30;
+  $input-height-large: 46;
 
   // [ skin ]
   background-color: #ffffff;
@@ -137,26 +141,54 @@
           grid-area: personal;
           display: block;
 
+          %personal__element {
+            // [ layout ]
+            display: grid;
+            grid: {
+              template: {
+                areas: ' image1 input1 input2 image2 ';
+                columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
+              }
+              column-gap: font__px-to-rem( 20 );
+            }
+            @include input-image( block );
+            @include input-button();
+
+            > .personal__empty {
+              display: block;
+            }
+
+            > .block {
+              // [ element ]
+              @include input-title( block );
+              @include input-block( $input-height-large ) {
+                width: 100%;
+              }
+            }
+          }
+
           // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__name`
           > .personal__name {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( name ) {
-              width: 49%;
+            @extend %personal__element;
+
+            // [ layout ]
+            grid: {
+              template: {
+                areas: ' input1 input2 image2 ';
+                columns: 1fr 1fr font__px-to-rem( 30 );
+              }
+              column-gap: font__px-to-rem( 20 );
             }
+
+            // [ position ]
+            margin-left: font__px-to-rem( 50 );
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__title`
           > .personal__title {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( title ) {
-              width: 49%;
-            }
+            @extend %personal__element;
           }
         }
 
@@ -221,114 +253,86 @@
           // [ layout ]
           grid-area: work;
 
+          %work__element {
+            // [ layout ]
+            display: grid;
+            grid: {
+              template: {
+                areas: ' image1 input1 input2 image2 ';
+                columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
+              }
+              column-gap: font__px-to-rem( 20 );
+            }
+            @include input-image( block );
+            @include input-button();
+
+            > .block {
+              // [ element ]
+              @include input-title( block );
+              @include input-block( $input-height-large ) {
+                width: 100%;
+              }
+            }
+          }
+
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__office`
           > .work__office {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( office ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-name`
           > .work__lab-name {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( lab-name ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-location`
           > .work__lab-location {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( lab-location ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-tel`
           > .work__lab-tel {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( lab-tel ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-web`
           > .work__lab-web {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( lab-web ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__office-tel`
           > .work__office-tel {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( office-tel ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__email`
           > .work__email {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( email ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__fax`
           > .work__fax {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( fax ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__personal-web`
           > .work__personal-web {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( personal-web ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
 
           // `.body > .content > .content__information > .information__profile > .profile__work > .work__specilty`
           > .work__specilty {
-            // [ layout ]
-            display: block;
-
             // [ element ]
-            @include input( specilty ) {
-              width: 49%;
-            }
+            @extend %work__element;
           }
         }
       }

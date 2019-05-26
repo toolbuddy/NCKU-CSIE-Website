@@ -1,0 +1,29 @@
+@mixin input_button () {
+  > .block__button {
+    // [ layout ]
+    display: inline-flex;
+    align-content: center;
+    justify-content: center;
+
+    > .block__button-img {
+      // [ layout ]
+      display: inline-block;
+      align-self: center;
+      justify-self: center;
+
+      // [ position ]
+      height: font__px-to-rem( 20 );
+      width: auto;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      line-height: normal;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

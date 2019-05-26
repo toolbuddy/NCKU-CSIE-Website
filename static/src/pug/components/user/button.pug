@@ -1,0 +1,7 @@
+mixin button( belongBlock, type ) 
+  button( class=`block__button` id=`${ belongBlock }__${ type }` )
+    +image( {
+        alt:       '>',
+        className: `block__button--img`,
+        src:       'icon/arrow-right.png',
+    } )
