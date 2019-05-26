@@ -1,3 +1,5 @@
+@import 'components/user/input-title';
+
 // component
 // `> .#{ $block } > .#{ $block }__block.block`
 @mixin input-block ( $block ) {
@@ -9,50 +11,11 @@
       areas:
         ' .      title .     '
         ' image1 input image2';
-      columns: font__px-to-rem( 31.5 ) auto font__px-to-rem( 10 );
+      columns: font__px-to-rem( 50 ) auto font__px-to-rem( 10 );
     }
 
-    > .block__title {
-      // [ layout ]
-      grid-area: title;
-      display: block;
-
-      // `> .#{ $block } > .block > .block__require`
-      > .title__required {
-        // [ layout ]
-        display: inline-block;
-
-        // [ position ]
-        margin-left: font__px-to-rem( 12 );
-
-        // [ skin ]
-        font-size: 3px;
-        color: red;
-      }
-
-      // `> .#{ $block } > .block > .block__title`
-      > .title__content {
-        // [ layout ]
-        display: inline-block;
-
-        // [ position ]
-        margin: {
-          bottom: font__px-to-rem( 7 );
-          left: font__px-to-rem( 4.6 );
-        }
-
-        // [ skin ]
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: normal;
-          style: normal;
-          stretch: normal;
-        }
-        line-height: 1.5;
-        letter-spacing: normal;
-        color: #757575;
-      }
-    }
+    // `> .#{ $block } > .block > .block__title`
+    @include input-title( block );
 
     // `> .#{ $block } > .block > .block__button--add`
     > .block__button--add {
@@ -105,6 +68,7 @@
         height: font__px-to-rem( 20 );
         width: auto;
         line-height: normal;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
       }
     }
 

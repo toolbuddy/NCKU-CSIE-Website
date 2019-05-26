@@ -8,6 +8,7 @@
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
 @import 'components/user/input-block';
+@import 'components/user/filter';
 
 // block
 // `.body`
@@ -83,7 +84,7 @@
 
       // [ position ]
       margin: {
-        top: font__px-to-rem( 30 );
+        top: font__px-to-rem( 50 );
         left: auto;
         right: auto;
       }
@@ -112,7 +113,7 @@
           areas:
             ' topic    topic  topic '
             ' personal .      image '
-            ' choose   choose image '
+            ' filter   filter image '
             ' work     work   work  ';
           columns: 5fr 1fr 2fr;
         }
@@ -155,16 +156,12 @@
           }
         }
 
-        // `.body > .content > .content__information > .information__profile > .profile__choose`
-        > .profile__choose {
-          // [ layout ]
-          grid-area: choose;
-          display: grid;
-          grid-template: {
-            areas:
-              ' name  name '
-              ' title title';
-            columns: font__px-to-rem( 31.5 ) 1fr;
+        // `.body > .content > .content__information > .information__profile > .profile__filter `
+        @include filter( profile ) {
+          // `.body > .content > .content__information > .information__profile > .profile__filter `
+          > .profile__filter {
+            // [ layout ]
+            grid-area: filter;
           }
         }
 

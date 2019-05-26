@@ -107,17 +107,19 @@ append content
         section.personal__title
           +input-block( 'title', i18n[ LANG.id ].content.profile.title_ch, 'title_ch', true, 'add', '副教授' )
           +input-block( 'title', i18n[ LANG.id ].content.profile.title_en, 'title_en', true, 'delete' )
-      section.profile__choose.choose
-        section.choose__department.department
-          p.department__required= '*'
-          p.department__title= i18n[ LANG.id ].content.profile.department
+      section.profile__filter.filter
+        section.filter__department.department
+          aside.department__title
+            p.title__required= '*'
+            p.title__content= i18n[ LANG.id ].content.profile.department
           each departmentId in UTILS.faculty.departmentUtils.supportedId
             button.department__tag(
               data-department-id = `${ departmentId }`
             )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
-        section.choose__research.research
-          p.research__required= '*'
-          p.research__title= i18n[ LANG.id ].content.profile.research
+        section.filter__research-group.research-group
+          aside.research-group__title
+            p.title__required= '*'
+            p.title__content= i18n[ LANG.id ].content.profile.research
           each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
             button.research-group__tag(
               data-research-group-id = `${ researchGroupId }`,
