@@ -13,6 +13,10 @@
       // [ layout ]
       align-self: center;
 
+      // [ position ]
+      width: 100%;
+      padding-bottom: 10px;
+
       // [ skin ]
       font: {
         size: font__px-to-rem( 18 );

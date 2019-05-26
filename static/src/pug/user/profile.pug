@@ -16,6 +16,7 @@ append data
         content: {
           topic: '教師資料維護',
           profile: {
+            image:           '編輯相片',
             topic:           '個人資料 / Profile',
             name_ch:         '姓名',
             name_en:         'name',
@@ -38,6 +39,26 @@ append data
             specilty_ch:     '專長領域',
             specilty_en:     'Specilty',
           },
+          education: {
+            topic:         '學歷 / Education',
+            duration_from: '從 / From',
+            duration_to:   '至 / To',
+            nation:        '國家 / Nation',
+            school_ch:     '學校',
+            school_en:     'School', 
+            major_ch:      '主修',
+            major_en:      'Major',
+            degree:        'Degree',
+          },
+          experience: {
+            topic:           '經歷 / Experience',
+            organization_ch: '任職單位',
+            organization_en: 'Organization',
+            department_ch:   '任職部門',
+            department_en:   'Department',
+            title_ch:        '職位',
+            title_en:        'title',
+          },
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -49,6 +70,7 @@ append data
         content: {
           topic: '教師資料維護',
           profile: {
+            image:           '編輯相片',
             topic:           '個人資料 / Profile',
             name_ch:         '姓名',
             name_en:         'name',
@@ -70,6 +92,26 @@ append data
             personal_web:    '個人網站 / Personal Web',
             specilty_ch:     '專長領域',
             specilty_en:     'Specilty',
+          },
+          education: {
+            topic:         '學歷 / Education',
+            duration_from: '從 / From',
+            duration_to:   '至 / To',
+            nation:        '國家 / Nation',
+            school_ch:     '學校',
+            school_en:     'School', 
+            major_ch:      '主修',
+            major_en:      'Major',
+            degree:        '學位',
+          },
+          experience: {
+            topic:           '經歷 / Experience',
+            organization_ch: '任職單位',
+            organization_en: 'Organization',
+            department_ch:   '任職部門',
+            department_en:   'Department',
+            title_ch:        '職位',
+            title_en:        'title',
           },
         },
       },
@@ -125,6 +167,7 @@ append content
               data-research-group-id = `${ researchGroupId }`,
             )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
       section.profile__image
+          button.image__change= i18n[ LANG.id ].content.profile.image
       section.profile__work
         section.work__office.office
           +input-block( 'office', i18n[ LANG.id ].content.profile.office_ch, 'office_ch', false, 'location', "Ex.資訊系新館大樓12F 65C11" )
@@ -151,8 +194,41 @@ append content
           +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_ch, 'specilty_ch', false, 'add' )
           +input-block( 'specilty', i18n[ LANG.id ].content.profile.specilty_en, 'specilty_en', false, 'delete' )
 
-    article.information__education
+    article.information__education.education
+      +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
+      section.education__detail
+        section.detail__duration-from
+          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false )
+        section.detail__duration-line
+        section.detail__duration-to
+          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false )
+        section.detail__nation
+          +input-block( 'nation', i18n[ LANG.id ].content.education.nation , 'nation')
+        section.detail__school
+          +input-block( 'school', i18n[ LANG.id ].content.education.school_ch, 'school-ch', false, '', '國立台灣大學' )
+          +input-block( 'school', i18n[ LANG.id ].content.education.school_en, 'school-en', false, '', 'The Ohio State University' )
+        section.detail__major
+          +input-block( 'major', i18n[ LANG.id ].content.education.major_ch, 'school-ch', false, '', '電機工程' )
+          +input-block( 'major', i18n[ LANG.id ].content.education.major_en, 'school-en', false, '', 'Computer and Informat' )
+        section.detail__degree 
+          +input-block( 'degree', i18n[ LANG.id ].content.education.degree, 'degree' )
     article.information__experience
+      +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
+      section.experience__detail
+        section.detail__duration-from
+          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from' )
+        section.detail__duration-line
+        section.detail__duration-to
+          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to' )
+        section.detail__organization
+          +input-block( 'organization', i18n[ LANG.id ].content.experience.organization_ch, 'organization-ch' )
+          +input-block( 'organization', i18n[ LANG.id ].content.experience.organization_en, 'organization-en' )
+        section.detail__department
+          +input-block( 'department', i18n[ LANG.id ].content.experience.department_ch, 'department-ch' )
+          +input-block( 'department', i18n[ LANG.id ].content.experience.department_en, 'department-en' ) 
+        section.detail__title
+          +input-block( 'title', i18n[ LANG.id ].content.experience.title_ch, 'title-ch' ) 
+          +input-block( 'title', i18n[ LANG.id ].content.experience.title_en, 'title-en' ) 
 
 append footer
 

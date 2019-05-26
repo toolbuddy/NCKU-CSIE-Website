@@ -7,7 +7,7 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
-@import 'components/user/input-block';
+@import 'components/user/input';
 @import 'components/user/filter';
 
 // block
@@ -30,17 +30,28 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $large: 700px;
+    $large: 1500px;
 
     // [ layout ]
     display: grid;
     grid-template: {
       areas:
-        ' breadcrumb breadcrumb  breadcrumb '
-        ' navigation information .          ';
-      columns: 1fr 2.6fr .8fr;
-      rows: auto auto;
+        ' breadcrumb breadcrumb  '
+        ' navigation information ';
+      columns: font__px-to-rem( 280 ) auto;
     }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  breadcrumb '
+          ' navigation information .          ';
+        columns: 1.2fr 2.6fr .8fr;
+        rows: auto auto;
+      }
+    }
+
 
     // [ skin ]
     height: auto;
@@ -59,12 +70,6 @@
       // [ skin ]
       max-width: font__px-to-rem( 1740 );
       width: 94%;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ skin ]
-        width: 84%;
-      }
     }
 
     // block
@@ -80,17 +85,12 @@
     // `.body` > .content > .content__information
     > .content__information {
       // [ layout ]
+      display: block;
       grid-area: information;
 
       // [ position ]
-      margin: {
-        top: font__px-to-rem( 50 );
-        left: auto;
-        right: auto;
-      }
-
-      // [ skin ]
-      width: font__px-to-rem( 1020 );
+      width: font__px-to-rem( 980 );
+      margin-top: font__px-to-rem( 80 );
 
       // element
       // `.body > .content > .content__information > .information__topic`
@@ -106,6 +106,7 @@
         height: auto;
       }
 
+      // `.body > .content > .content__information > .information__profile`
       > .information__profile.profile {
         // [ layout ]
         display: grid;
@@ -139,7 +140,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( name ) {
+            @include input( name ) {
               width: 49%;
             }
           }
@@ -150,7 +151,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( title ) {
+            @include input( title ) {
               width: 49%;
             }
           }
@@ -168,7 +169,48 @@
         // `.body > .content > .content__information > .information__profile > .profile__image`
         > .profile__image {
           // [ layout ]
+          display: block;
           grid-area: image;
+
+          // [ position ]
+          position: relative;
+          width: font__px-to-rem( 255 );
+          height: font__px-to-rem( 255 );
+          margin: {
+            left: auto;
+            right: auto;
+          }
+
+          // [ skin ]
+          border-radius: 50%;
+          background-color: red;
+          background-clip: border-box;
+          overflow: hidden;
+
+          // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
+          > .image__change {
+            // [ layout ]
+            display: block;
+            position: absolute;
+
+            // [ position ]
+            width: 100%;
+            height: 35%;
+            bottom: 0;
+
+            // [ skin ]
+            background-color: rgba( 0, 0, 0, .54 );
+            font: {
+              size: font__px-to-rem( 16 );
+              weight: normal;
+              style: normal;
+              stretch: normal;
+            }
+            text-align: center;
+            line-height: 1.5;
+            letter-spacing: 3.2px;
+            color: rgba( 255, 255, 255, .76 );
+          }
         }
 
         // `.body > .content > .content__information > .information__profile > .profile__work`
@@ -182,7 +224,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( office ) {
+            @include input( office ) {
               width: 49%;
             }
           }
@@ -193,7 +235,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( lab-name ) {
+            @include input( lab-name ) {
               width: 49%;
             }
           }
@@ -204,7 +246,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( lab-location ) {
+            @include input( lab-location ) {
               width: 49%;
             }
           }
@@ -215,7 +257,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( lab-tel ) {
+            @include input( lab-tel ) {
               width: 49%;
             }
           }
@@ -226,7 +268,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( lab-web ) {
+            @include input( lab-web ) {
               width: 49%;
             }
           }
@@ -237,7 +279,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( office-tel ) {
+            @include input( office-tel ) {
               width: 49%;
             }
           }
@@ -248,7 +290,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( email ) {
+            @include input( email ) {
               width: 49%;
             }
           }
@@ -259,7 +301,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( fax ) {
+            @include input( fax ) {
               width: 49%;
             }
           }
@@ -270,7 +312,7 @@
             display: block;
 
             // [ element ]
-            @include input-block( personal-web ) {
+            @include input( personal-web ) {
               width: 49%;
             }
           }
@@ -281,8 +323,221 @@
             display: block;
 
             // [ element ]
-            @include input-block( specilty ) {
+            @include input( specilty ) {
               width: 49%;
+            }
+          }
+        }
+      }
+
+      // `.body > .content > .content__information > .information__education`
+      > .information__education {
+        // [ layout ]
+        display: block;
+
+        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+        @include local-topic( education ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+
+          > .topic__word {
+            // [ skin ]
+            border-bottom: 2px solid lightgray;
+          }
+        }
+
+        > .education__detail {
+          // [ layout ]
+          display: grid;
+          grid-template: {
+            areas:
+              'button duration_from duration_line duration_to nation school major degree';
+            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 3.3fr 5fr 5fr 3fr;
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-from`
+          > .detail__duration-from {
+            // [ layout ]
+            display: block;
+            grid-area: duration_from;
+
+            // [ element ]
+            @include input( duration-from, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-to`
+          > .detail__duration-to {
+            // [ layout ]
+            display: block;
+            grid-area: duration_to;
+
+            // [ element ]
+            @include input( duration-to, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-line`
+          > .detail__duration-line {
+            // [ layout ]
+            display: block;
+            grid-area: duration_line;
+
+            // [ skin ]
+            height: font__px-to-rem( 47 );
+            width: font__px-to-rem( 30 );
+            border-bottom: 2px solid gray;
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > .detail__nation`
+          > .detail__nation {
+            // [ layout ]
+            display: block;
+            grid-area: nation;
+
+            // [ element ]
+            @include input( nation, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > .detail__school`
+          > .detail__school {
+            // [ layout ]
+            display: block;
+            grid-area: school;
+
+            // [ element ]
+            @include input( school, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > .detail__major`
+          > .detail__major {
+            // [ layout ]
+            display: block;
+            grid-area: major;
+
+            // [ element ]
+            @include input( major, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > .detail__degree`
+          > .detail__degree {
+            // [ layout ]
+            display: block;
+            grid-area: degree;
+
+            // [ element ]
+            @include input( degree, 30, 0 ) {
+              width: 90%;
+            }
+          }
+        }
+      }
+
+      // `.body > .content > .content__information > .information__experience`
+      > .information__experience {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        margin-bottom: font__px-to-rem( 100 );
+
+        // `.body > .content > .content__information > .information__experience > .experience__topic`
+        @include local-topic( experience ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+
+          > .topic__word {
+            // [ skin ]
+            border-bottom: 2px solid lightgray;
+          }
+        }
+
+        > .experience__detail {
+          // [ layout ]
+          display: grid;
+          grid-template: {
+            areas:
+              'button duration_from duration_line duration_to organization department title';
+            columns: font__px-to-rem( 50 ) 2.5fr 1fr 2.5fr 5.8fr 7.5fr 3fr;
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-from`
+          > .detail__duration-from {
+            // [ layout ]
+            display: block;
+            grid-area: duration_from;
+
+            // [ element ]
+            @include input( duration-from, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-to`
+          > .detail__duration-to {
+            // [ layout ]
+            display: block;
+            grid-area: duration_to;
+
+            // [ element ]
+            @include input( duration-to, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-line`
+          > .detail__duration-line {
+            // [ layout ]
+            display: block;
+            grid-area: duration_line;
+
+            // [ skin ]
+            height: font__px-to-rem( 47 );
+            width: font__px-to-rem( 30 );
+            border-bottom: 2px solid gray;
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__organization`
+          > .detail__organization {
+            // [ layout ]
+            display: block;
+            grid-area: organization;
+
+            // [ element ]
+            @include input( organization, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__department`
+          > .detail__department {
+            // [ layout ]
+            display: block;
+            grid-area: department;
+
+            // [ element ]
+            @include input( department, 30, 0 ) {
+              width: 90%;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__education > .education__detail > detail__title`
+          > .detail__title {
+            // [ layout ]
+            display: block;
+            grid-area: title;
+
+            // [ element ]
+            @include input( title, 30, 0 ) {
+              width: 90%;
             }
           }
         }

@@ -1,0 +1,122 @@
+@import 'components/user/input-title';
+@import 'components/user/input-block';
+
+// component
+// `> .#{ $block } > .#{ $block }__block.block`
+@mixin input ( $block, $input... ) {
+  // [ variable ]
+  $input_height: 0;
+  $image_width: 0;
+  @if length( $input ) == 0 {
+    $input_height: 46 ;
+    $image_width: 50;
+  }
+  @else if length( $input ) == 1 {
+    $input_height: nth( $input, 1 );
+    $image_width: 50;
+  }@else {
+    $input_height: nth( $input, 1 );
+    $image_width: nth( $input, 2 );
+  }
+
+  // `> .#{ $block } > .block`
+  > .#{ $block }__block.block {
+    // [ layout ]
+    display: inline-grid;
+    grid-template: {
+      areas:
+        ' .      title .     '
+        ' image1 input image2';
+      columns: font__px-to-rem( $image_width ) auto font__px-to-rem( 5 );
+    }
+
+    // `> .#{ $block } > .block > .block__title`
+    @include input-title( block );
+
+    // `> .#{ $block } > .block > .block__button--add`
+    > .block__button--add {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image1;
+
+      // [ skin ]
+      width: 100%;
+      height: font__px-to-rem( 46 );
+
+      > .block__button--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+      }
+    }
+
+    // `> .#{ $block } > .block > .block__image`
+    > .block__image {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image1;
+
+      // [ skin ]
+      width: 100%;
+      height: font__px-to-rem( 46 );
+
+      > .block__image--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+      }
+    }
+    @include input-block( $input_height );
+
+    // `> .#{ $block } > .block > .block__input`
+    > .block__button--delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: image2;
+
+      // [ skin ]
+      width: font__px-to-rem( 31.5 );
+      height: font__px-to-rem( 46 );
+
+      > .block__button--img {
+        // [ layout ]
+        align-self: center;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        line-height: normal;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}
