@@ -29,23 +29,23 @@ mixin nation-dropdown( belongBlock )
   section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` )
     each val, index in i18n[ LANG.id ].nation
       if n++ == 1
-        article.nation-dropdown__button.nation-dropdown__button--show( id=`nation__${ val }` )
+        article.nation-dropdown__button.nation-dropdown__button--top( id=`nation__${ val }` )
           +image( {
             alt:       '>',
-            className: `button__img`,
+            className: `button__flag`,
             src:       `icon/${ index }.png`,
           } )
           p.button__content= `${ val }`
           +image( {
             alt:       '>',
-            className: `button__img`,
+            className: `button__arrow`,
             src:       `icon/arrow-right.png`,
           } )
       else
         article.nation-dropdown__button( id=`nation__${ val }` )
           +image( {
             alt:       '>',
-            className: `button__img`,
+            className: `button__flag`,
             src:       `icon/${ index }.png`,
           } )
           p.button__content= `${ val }`

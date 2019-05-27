@@ -256,7 +256,9 @@ append content
         section.detail__duration-to
           +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to' )
         section.detail__nation
-          +input-block( 'nation', i18n[ LANG.id ].content.education.nation , 'nation')
+          aside.nation__title
+            p.title__content= i18n[ LANG.id ].content.education.nation 
+          +nation-dropdown( 'education' )
         section.detail__school
           +input-block( 'school', i18n[ LANG.id ].content.education.school_ch, 'school-ch', false, '國立台灣大學' )
           +input-block( 'school', i18n[ LANG.id ].content.education.school_en, 'school-en', false, 'The Ohio State University' )

@@ -11,6 +11,7 @@
 @import 'components/user/input-block';
 @import 'components/user/input-image';
 @import 'components/user/input-button';
+@import 'components/user/nation-dropdown';
 @import 'components/user/filter';
 
 // block
@@ -204,12 +205,22 @@
         // `.body > .content > .content__information > .information__profile > .profile__image`
         > .profile__image {
           // [ layout ]
-          display: block;
-          grid-area: image;
+          display: grid;
+          grid: {
+            area: image;
+            template: {
+              areas:
+                ' image image  image '
+                ' .     nation .      ';
+              cloumns: 1fr font__px-to-rem( 126 ) 1fr;
+              rows: font__px-to-rem( 300 ) auto;
+            }
+          }
 
           > .image__frame {
             // [ layout ]
             display: block;
+            grid-area: image;
 
             // [ position ]
             position: relative;
@@ -250,6 +261,9 @@
               letter-spacing: 3.2px;
               color: rgba( 255, 255, 255, .76 );
             }
+          }
+          @include nation-dropdown( image ) {
+            grid-area: nation;
           }
         }
 
@@ -422,7 +436,12 @@
             grid-area: nation;
 
             // [ element ]
-            @extend %detail__element;
+            @include input-title( nation );
+            @include nation-dropdown( education ) {
+              width: font__px-to-rem( 126 );
+              position: absolute;
+              z-index: 1;
+            }
           }
 
           // `.body > .content > .content__information > .information__education > .education__detail > .detail__school`
