@@ -45,24 +45,13 @@
       areas:
         ' breadcrumb breadcrumb  '
         ' navigation information ';
-      columns: font__px-to-rem( 280 ) auto;
+      columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
     }
 
     // [ skin ]
     height: auto;
     width: 100%;
     background-color: #ffffff;
-
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      grid-template: {
-        areas:
-          ' breadcrumb breadcrumb  breadcrumb '
-          ' navigation information .          ';
-        columns: 1.2fr 2.6fr .8fr;
-        rows: auto auto;
-      }
-    }
 
     // template
     // `.body > .content > .content__?.?`
@@ -101,6 +90,7 @@
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         max-width: font__px-to-rem( 1080 );
+        margin-left: font__px-to-rem( 50 );
       }
 
       // element
@@ -381,7 +371,7 @@
           grid-template: {
             areas:
               'add duration_from duration_line duration_to nation school major degree delete';
-            columns: font__px-to-rem( 50 ) 2fr 1fr 2fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
+            columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
           }
 
           // [ element ]
@@ -429,7 +419,7 @@
 
             // [ skin ]
             height: font__px-to-rem( 47 );
-            width: font__px-to-rem( 30 );
+            width: font__px-to-rem( 20 );
             border-bottom: 2px solid gray;
           }
 
@@ -501,7 +491,7 @@
           grid-template: {
             areas:
               'add duration_from duration_line duration_to organization department title delete';
-            columns: font__px-to-rem( 50 ) 2fr 1fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
+            columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
           }
 
           // [ element ]
@@ -549,7 +539,7 @@
 
             // [ skin ]
             height: font__px-to-rem( 47 );
-            width: font__px-to-rem( 30 );
+            width: font__px-to-rem( 20 );
             border-bottom: 2px solid gray;
           }
 
