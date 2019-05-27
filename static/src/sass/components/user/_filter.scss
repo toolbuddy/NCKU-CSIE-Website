@@ -3,11 +3,25 @@
 // component
 // `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
+  // [ variable ]
+  $large: 1200;
+
   // element
   // `> .#{ $block } > .#{ $block }__filter`
   // block
   // `> .#{ $block } > .filter`
   > .#{ $block }__filter.filter {
+    //  [ position ]
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ RWD: large ]
+    @media screen and ( min-width: 1300 ) {
+      margin-left: 0;
+    }
+
     // template
     // `> .#{ $block } > .filter > .? > .?__tag`
     %block__tag {
@@ -123,7 +137,6 @@
       // [ layout ]
       text-align: left;
       margin-bottom: font__px-to-rem( 2 );
-      padding-left: font__px-to-rem( 23 );
 
       // element
       // `> .#{ $block } > .filter > .research > .research__title`

@@ -2,8 +2,11 @@
 @mixin navigation-bar () {
   // .content > .content__navigation.navigation
   > .navigation {
+    // [ variable ]
+    $large: 1200px;
+
     // [ layout ]
-    display: block;
+    display: none;
 
     // [ position ]
     margin: {
@@ -17,6 +20,11 @@
     height: font__px-to-rem( 720 );
     border-radius: 6px;
     box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      display: block;
+    }
 
     // .content > .content__navigation.navigation > .navigation__title
     > .navigation__title {
