@@ -1,0 +1,38 @@
+mixin nation-dropdown( belongBlock )
+  - 
+    let n = 1;
+    const nation = Object.freeze( {
+      tw: '台灣';
+      us: 'USA';
+      cn: '中国';
+      gb: 'UK';
+      jp: '日本国';
+      de: 'DE';
+      au: 'AU';
+    } );
+
+  section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` )
+    each val, index in nation
+      if n++ == 1
+        article.nation-dropdown__button.nation-dropdown__button--show( id=`nation__${ val }` )
+          +image( {
+            alt:       '>',
+            className: `button__img`,
+            src:       `icon/${ index }.png`,
+          } )
+          p.button__content= `${ val }`
+          +image( {
+            alt:       '>',
+            className: `button__img`,
+            src:       `icon/arrow-right.png`,
+          } )
+      else
+        article.nation-dropdown__button( id=`nation__${ val }` )
+          +image( {
+            alt:       '>',
+            className: `button__img`,
+            src:       `icon/${ index }.png`,
+          } )
+          p.button__content= `${ val }`
+
+
