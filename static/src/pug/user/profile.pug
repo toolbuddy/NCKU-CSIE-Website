@@ -3,6 +3,7 @@ include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
 include /components/user/input-block.pug 
 include /components/user/button.pug
+include /components/user/nation-dropdown.pug
 include /components/common/topic.pug
 
 append data
@@ -170,7 +171,9 @@ append content
               data-research-group-id = `${ researchGroupId }`,
             )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
       section.profile__image
-          button.image__change= i18n[ LANG.id ].content.profile.image
+        section.image__frame
+          button.frame__button= i18n[ LANG.id ].content.profile.image
+        +nation-dropdown( 'image' )
       section.profile__work
         section.work__office.office
           +image( {
@@ -284,4 +287,3 @@ append footer
 
 append scripts
   +js( 'user/profile' )
-  

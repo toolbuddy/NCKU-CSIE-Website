@@ -1,18 +1,33 @@
 mixin nation-dropdown( belongBlock )
   - 
-    let n = 1;
-    const nation = Object.freeze( {
-      tw: '台灣';
-      us: 'USA';
-      cn: '中国';
-      gb: 'UK';
-      jp: '日本国';
-      de: 'DE';
-      au: 'AU';
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        nation: {
+          tw: '台灣',
+          us: 'USA',
+          cn: '中国',
+          gb: 'UK',
+          jp: '日本国',
+          de: 'DE',
+          au: 'AU',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        nation: {
+          tw: '台灣',
+          us: 'USA',
+          cn: '中国',
+          gb: 'UK',
+          jp: '日本国',
+          de: 'DE',
+          au: 'AU',
+        },
+      },
     } );
+    n = 1;
 
   section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` )
-    each val, index in nation
+    each val, index in i18n[ LANG.id ].nation
       if n++ == 1
         article.nation-dropdown__button.nation-dropdown__button--show( id=`nation__${ val }` )
           +image( {

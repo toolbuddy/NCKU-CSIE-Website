@@ -207,44 +207,49 @@
           display: block;
           grid-area: image;
 
-          // [ position ]
-          position: relative;
-          width: font__px-to-rem( 255 );
-          height: font__px-to-rem( 255 );
-          margin: {
-            left: auto;
-            right: auto;
-          }
-
-          // [ skin ]
-          border-radius: 50%;
-          background-color: red;
-          background-clip: border-box;
-          overflow: hidden;
-
-          // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
-          > .image__change {
+          > .image__frame {
             // [ layout ]
             display: block;
-            position: absolute;
 
             // [ position ]
-            width: 100%;
-            height: 35%;
-            bottom: 0;
+            position: relative;
+            width: font__px-to-rem( 255 );
+            height: font__px-to-rem( 255 );
+            margin: {
+              left: auto;
+              right: auto;
+            }
 
             // [ skin ]
-            background-color: rgba( 0, 0, 0, .54 );
-            font: {
-              size: font__px-to-rem( 16 );
-              weight: normal;
-              style: normal;
-              stretch: normal;
+            border-radius: 50%;
+            background-color: red;
+            background-clip: border-box;
+            overflow: hidden;
+
+            // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
+            > .frame__button {
+              // [ layout ]
+              display: block;
+              position: absolute;
+
+              // [ position ]
+              width: 100%;
+              height: 35%;
+              bottom: 0;
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
             }
-            text-align: center;
-            line-height: 1.5;
-            letter-spacing: 3.2px;
-            color: rgba( 255, 255, 255, .76 );
           }
         }
 
