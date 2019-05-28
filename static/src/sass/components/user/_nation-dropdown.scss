@@ -13,7 +13,9 @@
       right: auto ;
     }
 
+    // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown--content`
     > .nation-dropdown__content {
+      // [ position ]
       position: absolute;
       z-index: 1;
 
@@ -88,6 +90,11 @@
         border-radius: font__px-to-rem( 33 );
         border: solid 1px #adacad;
         background-color: #ffffff;
+      }
+
+      > .content__button--show {
+        // [ layout ]
+        display: grid;
       }
     }
 

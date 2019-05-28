@@ -1,5 +1,5 @@
 mixin button( belongBlock, type ) 
-  button( class=`block__button` id=`${ belongBlock }__${ type }` )
+  button( class=`block__button block__button--${ type }` id=`${ belongBlock }__${ type }` )
     +image( {
         alt:       '>',
         className: `block__button--img`,

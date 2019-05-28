@@ -250,6 +250,8 @@ append content
     article.information__education.education
       +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
       section.education__detail
+        +button( 'education', 'add' )
+        +button( 'education', 'delete' )
         section.detail__duration-from
           +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, 'Ex.1996' )
         section.detail__duration-line
@@ -270,6 +272,8 @@ append content
     article.information__experience
       +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
       section.experience__detail
+        +button( 'experience', 'add' )
+        +button( 'experience', 'delete' )
         section.detail__duration-from
           +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, '2000' )
         section.detail__duration-line

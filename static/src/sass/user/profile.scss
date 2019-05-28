@@ -406,7 +406,7 @@
               // [ element ]
               @include input-title( block );
               @include input-block( $input-height-large ) {
-                width: 90%;
+                width: 95%;
               }
 
               // [ RWD: $small ]
@@ -418,61 +418,51 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__office`
           > .work__office {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-name`
           > .work__lab-name {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-location`
           > .work__lab-location {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-tel`
           > .work__lab-tel {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__lab-web`
           > .work__lab-web {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__office-tel`
           > .work__office-tel {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__email`
           > .work__email {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__fax`
           > .work__fax {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__personal-web`
           > .work__personal-web {
             // [ element ]
             @extend %work__element;
           }
 
-          // `.body > .content > .content__information > .information__profile > .profile__work > .work__specilty`
           > .work__specilty {
             display: grid;
             grid-template: {
@@ -514,7 +504,7 @@
               // [ RWD: $small ]
               @media screen and ( min-width: $small ) {
                 @include input-block( $input-height-large ) {
-                  width: 90%;
+                  width: 100%;
                 }
               }
             }
@@ -529,8 +519,11 @@
 
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
         @include local-topic( education ) {
-          // [ position ]
-          margin-left: font__px-to-rem( 31.5 );
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ position ]
+            margin-left: font__px-to-rem( 31.5 );
+          }
 
           > .topic__word {
             // [ skin ]
@@ -568,8 +561,10 @@
           @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
-                'add duration_from duration_line duration_to nation school major degree delete';
+                'add duration_from duration_line duration_to nation school major degree delete'
+                '.   duration_from duration_line duration_to nation school major degree .     ';
               columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
+              rows: 1fr 1fr;
             }
           }
 
@@ -591,8 +586,16 @@
               @include input-block( $input-height-small );
             }
           }
+          @include input-button ();
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-from`
+          > .block__button--add {
+            grid-area: add;
+          }
+
+          > .block__button--delete {
+            grid-area: delete;
+          }
+
           > .detail__duration-from {
             // [ layout ]
             grid-area: duration_from;
@@ -601,7 +604,6 @@
             @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-to`
           > .detail__duration-to {
             // [ layout ]
             grid-area: duration_to;
@@ -610,7 +612,6 @@
             @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__duraction-line`
           > .detail__duration-line {
             // [ layout ]
             display: block;
@@ -622,7 +623,6 @@
             border-bottom: 2px solid gray;
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > .detail__nation`
           > .detail__nation {
             // [ layout ]
             grid-area: nation;
@@ -632,7 +632,6 @@
             @include nation-dropdown( education );
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > .detail__school`
           > .detail__school {
             // [ layout ]
             grid-area: school;
@@ -640,7 +639,6 @@
             // [ element ]
             @extend %detail__element;
 
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__department > .block`
             > .block {
               width: 100%;
               padding-right: 2.5%;
@@ -664,7 +662,6 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > .detail__major`
           > .detail__major {
             // [ layout ]
             grid-area: major;
@@ -672,7 +669,6 @@
             // [ element ]
             @extend %detail__element;
 
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__department > .block`
             > .block {
               width: 100%;
               padding-right: 2.5%;
@@ -696,7 +692,6 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__education > .education__detail > .detail__degree`
           > .detail__degree {
             // [ layout ]
             grid-area: degree;
@@ -717,8 +712,11 @@
 
         // `.body > .content > .content__information > .information__experience > .experience__topic`
         @include local-topic( experience ) {
-          // [ position ]
-          margin-left: font__px-to-rem( 31.5 );
+          // [ RWD: $small ]
+          @media screen and ( min-width: $small ) {
+            // [ position ]
+            margin-left: font__px-to-rem( 31.5 );
+          }
 
           > .topic__word {
             // [ skin ]
@@ -754,8 +752,10 @@
           @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
-                'add duration_from duration_line duration_to organization department title delete';
+                'add duration_from duration_line duration_to organization department title delete'
+                '.   duration_from duration_line duration_to organization department title .     ';
               columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
+              rows: 1fr 1fr;
             }
           }
 
@@ -783,7 +783,14 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__duraction-from`
+          > .block__button--add {
+            grid-area: add;
+          }
+
+          > .block__button--delete {
+            grid-area: delete;
+          }
+
           > .detail__duration-from {
             // [ layout ]
             grid-area: duration_from;
@@ -792,7 +799,6 @@
             @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__experience> .experience__detail > detail__duraction-to`
           > .detail__duration-to {
             // [ layout ]
             grid-area: duration_to;
@@ -801,7 +807,6 @@
             @extend %detail__element;
           }
 
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__duraction-line`
           > .detail__duration-line {
             // [ layout ]
             display: block;
@@ -813,7 +818,6 @@
             border-bottom: 2px solid gray;
           }
 
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__organization`
           > .detail__organization {
             // [ layout ]
             grid-area: organization;
@@ -845,7 +849,6 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__department`
           > .detail__department {
             // [ layout ]
             grid-area: department;
@@ -853,8 +856,6 @@
             // [ element ]
             @extend %detail__element;
 
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__department > .block`
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__organization > .block`
             > .block {
               width: 100%;
               padding-right: 2.5%;
@@ -878,7 +879,6 @@
             }
           }
 
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__title`
           > .detail__title {
             // [ layout ]
             grid-area: title;
@@ -886,8 +886,6 @@
             // [ element ]
             @extend %detail__element;
 
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__title > .block`
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__organization > .block`
             > .block {
               width: 100%;
               padding-right: 2.5%;
