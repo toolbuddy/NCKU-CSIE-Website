@@ -4,7 +4,8 @@
 // `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
   // [ variable ]
-  $large: 1200;
+  $large: 1200px;
+  $small: 650px;
 
   // element
   // `> .#{ $block } > .#{ $block }__filter`
@@ -12,13 +13,20 @@
   // `> .#{ $block } > .filter`
   > .#{ $block }__filter.filter {
     //  [ position ]
+    display: block;
     margin: {
       left: auto;
       right: auto;
     }
 
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      padding-left: font__px-to-rem( 30 );
+    }
+
     // [ RWD: large ]
-    @media screen and ( min-width: 1300 ) {
+    @media screen and ( min-width: 1300px ) {
       margin-left: 0;
     }
 
@@ -69,7 +77,6 @@
 
     // [ layout ]
     margin-bottom: font__px-to-rem( 32 );
-    padding-left: font__px-to-rem( 23 );
 
     // element
     // `> .#{ $block } > .filter > .filter__department`
@@ -79,7 +86,6 @@
       // [ layout ]
       text-align: left;
       margin-bottom: font__px-to-rem( 15 );
-      padding-left: font__px-to-rem( 23 );
 
       // element
       // `> .#{ $block } > .filter > .department > .department__title`
@@ -92,11 +98,11 @@
         @extend %block__tag;
 
         // [ variable ]
-        $small: 450px;
+        $small: 650px;
         $large: 1100px;
 
         // [ skin ]
-        min-width: 90%;
+        min-width: 100%;
         border-color: #f67057;
         color: #f67057;
         background-color: #ffffff;
@@ -110,7 +116,7 @@
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
           // [ layout ]
-          min-width: 90 / 2 * 1%;
+          min-width: 95 / 2 * 1%;
         }
 
         // [ RWD: $large ]
@@ -149,11 +155,11 @@
         @extend %block__tag;
 
         // [ variable ]
-        $small: 500px;
+        $small: 650px;
         $large: 1270px;
 
         // [ skin ]
-        width: 90%;
+        min-width: 100%;
         border-color: #8caae2;
         color: #8caae2;
         background-color: #ffffff;

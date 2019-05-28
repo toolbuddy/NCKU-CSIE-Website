@@ -1,6 +1,9 @@
 // component
 // `> .#{ $block } > .#{ $block }__topic`
 @mixin local-topic ( $block ) {
+  //[ variable ]
+  $small: 600px;
+
   // `> .#{ block }` > .topic
   > .#{ $block }__topic.topic {
     // [ layout ]
@@ -24,9 +27,15 @@
         style: normal;
         stretch: normal;
       }
+      text-align: center;
       line-height: normal;
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
+
+      // [ RWD: small ]
+      @media screen and ( min-width: $small ) {
+        text-align: left;
+      }
     }
 
     // [ customization ]

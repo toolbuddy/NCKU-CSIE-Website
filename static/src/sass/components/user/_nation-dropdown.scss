@@ -8,90 +8,86 @@
     width: 100%;
     height: font__px-to-rem( 30 );
     margin: {
+      bottom: font__px-to-rem( 30 );
       left: auto;
-      right: auto;
-    }
-    overflow: hidden;
-
-    // [ skin ]
-    border-radius: font__px-to-rem( 15 );
-    border: solid 1px #adacad;
-    background-color: #ffffff;
-
-    &:hover {
-      height: font__px-to-rem( 30*7 );
+      right: auto ;
     }
 
-    > .nation-dropdown__button--top {
-      // [ layout ]
-      display: block;
+    > .nation-dropdown__content {
+      position: absolute;
+      z-index: 1;
 
-      // [ skin ]
-      border-radius: font__px-to-rem( 33 );
-      border: solid 1px #adacad;
-      background-color: #ffffff;
-    }
-
-    // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button`
-    > .nation-dropdown__button {
-      // [ layout ]
-      display: grid;
-      grid: {
-        template: {
-          areas: ' . flag content arrow . ';
-          columns: font__px-to-rem( 5 ) 1fr 3fr 1fr font__px-to-rem( 5 );
+      // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button`
+      > .content__button {
+        // [ layout ]
+        display: none;
+        grid: {
+          template: {
+            areas: ' . flag content arrow . ';
+            columns: font__px-to-rem( 5 ) 1fr 3fr 1fr font__px-to-rem( 5 );
+          }
+          gap: font__px-to-rem( 3 );
         }
-        gap: font__px-to-rem( 3 );
-      }
-      align-content: center;
-      justify-content: center;
-
-      // [ position ]
-      width: 100%;
-      height: font__px-to-rem( 30 );
-
-      // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
-      > .button__flag {
-        // [ layout ]
-        grid-area: flag;
-
-        // [ position ]
-        height: font__px-to-rem( 21 );
-        width: font__px-to-rem( 21 );
-      }
-
-
-      // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
-      > .button__content {
-        // [ layout ]
-        grid-area: content;
+        align-content: center;
+        justify-content: center;
 
         // [ position ]
         width: 100%;
+        height: font__px-to-rem( 30 );
 
-        // [ skin ]
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: normal;
-          style: normal;
-          stretch: normal;
+        // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
+        > .button__flag {
+          // [ layout ]
+          grid-area: flag;
+
+          // [ position ]
+          height: font__px-to-rem( 21 );
+          width: font__px-to-rem( 21 );
         }
-        text-align: center;
-        line-height: 1.5;
-        letter-spacing: normal;
-        color: #000000;
+
+
+        // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
+        > .button__content {
+          // [ layout ]
+          grid-area: content;
+
+          // [ position ]
+          width: 100%;
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 16 );
+            weight: normal;
+            style: normal;
+            stretch: normal;
+          }
+          text-align: center;
+          line-height: 1.5;
+          letter-spacing: normal;
+          color: #000000;
+        }
+
+        // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__arrow`
+        > .button__arrow {
+          // [ layout ]
+          display: block;
+          grid-area: arrow;
+          align-self: center;
+
+          // [ position ]
+          height: font__px-to-rem( 15 );
+          width: font__px-to-rem( 15 );
+        }
       }
 
-      // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__arrow`
-      > .button__arrow {
+      > .content__button--top {
         // [ layout ]
-        display: block;
-        grid-area: arrow;
-        align-self: center;
+        display: grid;
 
-        // [ position ]
-        height: font__px-to-rem( 15 );
-        width: font__px-to-rem( 15 );
+        // [ skin ]
+        border-radius: font__px-to-rem( 33 );
+        border: solid 1px #adacad;
+        background-color: #ffffff;
       }
     }
 

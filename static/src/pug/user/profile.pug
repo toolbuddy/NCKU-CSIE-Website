@@ -251,10 +251,10 @@ append content
       +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
       section.education__detail
         section.detail__duration-from
-          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from' )
+          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, 'Ex.1996' )
         section.detail__duration-line
         section.detail__duration-to
-          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to' )
+          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false, 'Ex.2000' )
         section.detail__nation
           aside.nation__title
             p.title__content= i18n[ LANG.id ].content.education.nation 
@@ -271,10 +271,10 @@ append content
       +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
       section.experience__detail
         section.detail__duration-from
-          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from' )
+          +input-block( 'duration-from', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, '2000' )
         section.detail__duration-line
         section.detail__duration-to
-          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to' )
+          +input-block( 'duration-to', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false, '2004' )
         section.detail__organization
           +input-block( 'organization', i18n[ LANG.id ].content.experience.organization_ch, 'organization-ch' )
           +input-block( 'organization', i18n[ LANG.id ].content.experience.organization_en, 'organization-en' )

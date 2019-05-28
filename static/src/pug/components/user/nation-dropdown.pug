@@ -27,27 +27,28 @@ mixin nation-dropdown( belongBlock )
     n = 1;
 
   section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` )
-    each val, index in i18n[ LANG.id ].nation
-      if n++ == 1
-        article.nation-dropdown__button.nation-dropdown__button--top( id=`nation__${ val }` )
-          +image( {
-            alt:       '>',
-            className: `button__flag`,
-            src:       `icon/${ index }.png`,
-          } )
-          p.button__content= `${ val }`
-          +image( {
-            alt:       '>',
-            className: `button__arrow`,
-            src:       `icon/arrow-right.png`,
-          } )
-      else
-        article.nation-dropdown__button( id=`nation__${ val }` )
-          +image( {
-            alt:       '>',
-            className: `button__flag`,
-            src:       `icon/${ index }.png`,
-          } )
-          p.button__content= `${ val }`
+    section.nation-dropdown__content.content
+      each val, index in i18n[ LANG.id ].nation
+        if n++ == 1
+          article.content__button.content__button--top( id=`nation__${ val }` )
+            +image( {
+              alt:       '>',
+              className: `button__flag`,
+              src:       `icon/${ index }.png`,
+            } )
+            p.button__content= `${ val }`
+            +image( {
+              alt:       '>',
+              className: `button__arrow`,
+              src:       `icon/arrow-right.png`,
+            } )
+        else
+          article.content__button( id=`nation__${ val }` )
+            +image( {
+              alt:       '>',
+              className: `button__flag`,
+              src:       `icon/${ index }.png`,
+            } )
+            p.button__content= `${ val }`
 
 
