@@ -43,6 +43,7 @@
 
         // [ skin ]
         background: #ffffff;
+        border-radius: font__px-to-rem( 33 );
 
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
         > .button__flag {
@@ -95,9 +96,9 @@
 
         // [ skin ]
         border-radius: font__px-to-rem( 33 );
-        border: solid 1px #adacad;
-        background-color: #ffffff;
+        border-bottom: solid 1px #adacad;
       }
+
 
       > .content__button--show {
         // [ layout ]

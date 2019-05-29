@@ -4,6 +4,7 @@
  * Including following sub-routes:
  * - `/user`
  * - `/user/profile`
+ * - `/user/award`
  * - `/user/publication`
  * - `/user/announcement`
  * - `/user/announcement/add`
@@ -35,6 +36,14 @@ router
 router
 .route( '/profile' )
 .get( staticHtml( 'user/profile' ) );
+
+/**
+ * Resolve URL `/user/award`.
+ */
+
+router
+.route( '/award' )
+.get( staticHtml( 'user/award' ) );
 
 /**
  * Resolve URL `/user/publication`.

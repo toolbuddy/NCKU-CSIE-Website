@@ -1,0 +1,16 @@
+@import 'components/user/input-title';
+@import 'components/user/input-block';
+
+// component
+// `> .#{ $block } > .#{ $block }__block`
+@mixin input ( $belongBlock, $modifier, $inputHeight ) {
+  // `> .#{ $block } > .#{ $block }__block`
+  > .#{ $belongBlock }__block--#{ $modifier } {
+    // [ element ]  
+    @include input-title( block );
+    @include input-block( $inputHeight );
+
+    // [ customization ]
+    @content;
+  }
+}

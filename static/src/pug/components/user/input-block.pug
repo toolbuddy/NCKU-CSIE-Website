@@ -1,5 +1,5 @@
 mixin input-block( belongBlock, title, modifier, required=false, placeholder="" )
-  section.block( class=`${ belongBlock }__block` )
+  section.block( class=`${ belongBlock }__block ${ belongBlock }__block--${ modifier }` )
     aside.block__title
       if required
         p.title__required= '*'
