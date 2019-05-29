@@ -200,13 +200,13 @@
         }
 
         // [ element ]
-        @include input-button( add ) {
+        @include input-button( 'award', 'add' ) {
           // [ layout ]
           grid-area: add;
         }
 
         // [ element ]
-        @include input-button( delete ) {
+        @include input-button( 'award', 'delete' ) {
           // [ layout ]
           grid-area: delete;
         }

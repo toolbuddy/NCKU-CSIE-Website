@@ -1,7 +1,7 @@
 mixin button( belongBlock, type ) 
-  button( class=`block__button block__button--${ type }` id=`${ belongBlock }__${ type }` )
+  button.input-button( class=`${ belongBlock }__input-button--${ type }` id=`${ belongBlock }__input-button--${ type }` )
     +image( {
         alt:       '>',
-        className: `block__button--img`,
+        className: `input-button__image`,
         src:       'icon/arrow-right.png',
     } )

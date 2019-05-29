@@ -5,9 +5,9 @@
 // `> .#{ $block } > .#{ $block }__block`
 @mixin input ( $belongBlock, $modifier, $inputHeight ) {
   // `> .#{ $block } > .#{ $block }__block`
-  > .#{ $belongBlock }__block--#{ $modifier } {
+  > .input.#{ $belongBlock }__input--#{ $modifier } {
     // [ element ]  
-    @include input-title( block );
+    @include input-title( input );
     @include input-block( $inputHeight );
 
     // [ customization ]

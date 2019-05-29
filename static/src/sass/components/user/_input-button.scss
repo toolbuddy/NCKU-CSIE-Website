@@ -1,11 +1,11 @@
-@mixin input_button ( $type ) {
-  > .block__button.block__button--#{ $type } {
+@mixin input_button ( $belongBlock, $type ) {
+  > .input-button.#{ $belongBlock }__input-button--#{ $type } {
     // [ layout ]
     display: inline-flex;
     align-content: center;
     justify-content: center;
 
-    > .block__button-img {
+    > .input-button__image {
       // [ layout ]
       display: inline-block;
       align-self: center;

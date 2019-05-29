@@ -1,6 +1,6 @@
 @mixin input-block ( $height ) {
   // `> .#{ $block } > .block > .block__input`
-  > .block__input {
+  > .input__input-block.input-block {
     // [ layout ]
     display: inline-flex;
     grid-area: input;
@@ -30,7 +30,7 @@
     letter-spacing: normal;
 
     // `> .#{ $block } > .block > .block__input > .block__input--content`
-    > .block__input--content {
+    > .input-block__text {
       // [ layout ]
       align-self: center;
 

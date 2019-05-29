@@ -10,6 +10,7 @@
 @import 'components/user/input-title';
 @import 'components/user/input-block';
 @import 'components/user/input-image';
+@import 'components/user/input';
 @import 'components/user/input-button';
 @import 'components/user/nation-dropdown';
 @import 'components/user/filter';
@@ -179,38 +180,11 @@
           %personal__element {
             // [ layout ]
             display: grid;
-            grid: {
-              template: {
-                areas: ' image1 input1 input2 image2 ';
-                columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
-              }
-              column-gap: font__px-to-rem( 20 );
-            }
-            @include input-image( block );
-            @include input-button( test );
-
-            > .personal__empty {
-              display: block;
-            }
-
-            > .block {
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-large ) {
-                width: 100%;
-              }
-            }
-          }
-
-          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__name`
-          > .personal__name {
-            // [ layout ]
-            display: grid;
             grid-template: {
               areas:
-                'input1'
-                'input2';
-              columns: auto;
+                'add input1 delete'
+                '.   input2 .     ';
+              columns: font__px-to-rem( 30 ) auto font__px-to-rem( 30 );
             }
 
             // [ position ]
@@ -219,74 +193,50 @@
               left: auto;
               right: auto;
             }
-
-            // [ element ]
-            @include input-image( block );
-            @include input-button( test );
-
-
-            // [ RWD: $small ]
             @media screen and ( min-width: $small ) {
               grid: {
                 template: {
-                  areas: ' input1 input2 image2 ';
-                  columns: 1fr 1fr font__px-to-rem( 30 );
-                }
-                column-gap: font__px-to-rem( 20 );
-              }
-
-              // [ position ]
-              margin-left: font__px-to-rem( 50 );
-              width: 93%;
-            }
-
-            > .block {
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-large ) {
-                width: 100%;
-              }
-            }
-          }
-
-          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__title`
-          > .personal__title {
-            // [ layout ]
-            display: grid;
-            grid-template: {
-              areas:
-                ' image1 input1 image2 '
-                ' image1 input2 image2 ';
-              columns: .5fr 9fr .5fr;
-            }
-
-            > #title__add {
-              grid-area: image1;
-            }
-
-            > #title__delete {
-              grid-area: image2;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              grid: {
-                template: {
-                  areas: ' image1 input1 input2 image2 ';
+                  areas: ' add input1 input2 delete ';
                   columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
                 }
                 column-gap: font__px-to-rem( 20 );
               }
             }
-            @include input-image( block );
-            @include input-button( test );
+          }
 
-            > .block {
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-large ) {
-                width: 100%;
-              }
+          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__name`
+          > .personal__name {
+            // [ element ]
+            @extend %personal__element;
+            @include input( 'name', 'name-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input( 'name', 'name-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+          }
+
+          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__title`
+          > .personal__title {
+            // [ element ]
+            @extend %personal__element;
+            @include input( 'title', 'title-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input( 'title', 'title-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+            @include input-button( 'title', 'add' ) {
+              // [ layout ]
+              grid-area: add;
+            }
+            @include input-button( 'title', 'delete' ) {
+              // [ layout ]
+              grid-area: delete;
             }
           }
         }
@@ -363,7 +313,7 @@
               color: rgba( 255, 255, 255, .76 );
             }
           }
-          @include nation-dropdown( image ) {
+          @include nation-dropdown( 'image' ) {
             grid-area: nation;
           }
         }
@@ -378,14 +328,9 @@
             display: grid;
             grid-template: {
               areas:
-                ' image1 input1 '
-                ' image1 input2 ';
-              columns: font__px-to-rem( 30 ) 1fr ;
-            }
-
-            > .block__image {
-              grid-area: image1;
-              margin-top: font__px-to-rem( 5 );
+                ' image1 input1 image2'
+                ' .      input2 .     ';
+              columns: font__px-to-rem( 30 ) 1fr font__px-to-rem( 30 );
             }
 
             // [ RWD: $small ]
@@ -397,23 +342,6 @@
                   columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
                 }
                 column-gap: font__px-to-rem( 20 );
-              }
-            }
-            @include input-image( block );
-            @include input-button( test );
-
-            > .block {
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-large ) {
-                width: 95%;
-              }
-
-              // [ RWD: $small ]
-              @media screen and ( min-width: $small ) {
-                @include input-block( $input-height-large ) {
-                  width: 100%;
-                }
               }
             }
           }
@@ -421,92 +349,150 @@
           > .work__office {
             // [ element ]
             @extend %work__element;
+            @include input( 'office', 'office-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input( 'office', 'office-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+            @include input-image( 'office' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__lab-name {
             // [ element ]
             @extend %work__element;
+            @include input( 'lab-name', 'lab-name-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input( 'lab-name', 'lab-name-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+            @include input-image( 'lab-name' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__lab-location {
             // [ element ]
             @extend %work__element;
+            @include input( 'lab-location', 'lab-location-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input( 'lab-location', 'lab-location-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+            @include input-image( 'lab-location' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__lab-tel {
             // [ element ]
             @extend %work__element;
+            @include input( 'lab-tel', 'lab-tel', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'lab-tel' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__lab-web {
             // [ element ]
             @extend %work__element;
+            @include input( 'lab-web', 'lab-web', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'lab-web' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__office-tel {
             // [ element ]
             @extend %work__element;
+            @include input( 'office-tel', 'office-tel', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'office-tel' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__email {
             // [ element ]
             @extend %work__element;
+            @include input( 'email', 'email', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'email' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__fax {
             // [ element ]
             @extend %work__element;
+            @include input( 'fax', 'fax', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'fax' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__personal-web {
             // [ element ]
             @extend %work__element;
+            @include input( 'personal-web', 'personal-web', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
+            }
+            @include input-image( 'personal-web' ) {
+              // [ layout ]
+              grid-area: image1;
+            }
           }
 
           > .work__specilty {
-            display: grid;
-            grid-template: {
-              areas:
-                ' image1 input1 image2'
-                ' image1 input2 image2';
-              columns: font__px-to-rem( 30 ) 1fr font__px-to-rem( 30 );
+            // [ element ]
+            @extend %work__element;
+            @include input( 'specilty', 'specilty-zh', $input-height-large ) {
+              // [ layout ]
+              grid-area: input1;
             }
-
-            > #specilty__add {
+            @include input( 'specilty', 'specilty-en', $input-height-large ) {
+              // [ layout ]
+              grid-area: input2;
+            }
+            @include input-button( 'specilty', add ) {
+              // [ layout ]
               grid-area: image1;
             }
-
-            > #specilty__delete {
+            @include input-button( 'specilty', 'delete' ) {
+              // [ layout ]
               grid-area: image2;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              display: grid;
-              grid: {
-                template: {
-                  areas: ' image1 input1 input2 image2 ';
-                  columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
-                }
-                column-gap: font__px-to-rem( 20 );
-              }
-            }
-            @include input-image( block );
-            @include input-button( test );
-
-            > .block {
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-large ) {
-                width: 100%;
-              }
-
-              // [ RWD: $small ]
-              @media screen and ( min-width: $small ) {
-                @include input-block( $input-height-large ) {
-                  width: 100%;
-                }
-              }
             }
           }
         }
@@ -518,7 +504,7 @@
         display: block;
 
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-        @include local-topic( education ) {
+        @include local-topic( 'education' ) {
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             // [ position ]
@@ -535,25 +521,30 @@
           // [ layout ]
           display: grid;
 
-          grid-template: {
-            areas:
-              'add duration_from duration_line duration_to delete '
-              '.   nation        nation        .           .      '
-              '.   school        school        school      .      '
-              '.   major         major         major       .      '
-              '.   degree        degree        .           .      ';
-            columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+          grid: {
+            template: {
+              areas:
+                'add duration-from duration-line duration-to delete '
+                '.   nation        nation        .           .      '
+                '.   school-zh     school-zh     school-zh   .      '
+                '.   school-en     school-en     school-en   .      '
+                '.   major-zh      major-zh      major-zh    .      '
+                '.   major-en      major-en      major-en    .      '
+                '.   degree        degree        .           .      ';
+              columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+            }
+            gap: font__px-to-rem( 5 );
           }
 
           // [ RWD: $small ]
           @media screen and ( min-width: $small ) {
             grid-template: {
               areas:
-                'add duration_from duration_line duration_to nation .       delete'
-                '.   school        school        school      school  school .     '
-                '.   major         major         major       major   major  .     '
-                '.   degree        degree        .          .        .      .     ';
-              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 4fr 1.8fr font__px-to-rem( 50 );
+                'add duration-from duration-line duration-to nation     .         delete'
+                '.   school-zh     school-zh     school-zh   school-en  school-en .     '
+                '.   major-zh      major-zh      major-zh    major-en   major-en  .     '
+                '.   degree        degree        .           .          .         .     ';
+              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 4fr .8fr font__px-to-rem( 50 );
             }
           }
 
@@ -561,61 +552,55 @@
           @media screen and ( min-width: $large ) {
             grid-template: {
               areas:
-                'add duration_from duration_line duration_to nation school major degree delete'
-                '.   duration_from duration_line duration_to nation school major degree .     ';
+                'add duration-from duration-line duration-to nation school-zh major-zh degree delete'
+                '.   duration-from duration-line duration-to nation school-en major-en degree .     ';
               columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
               rows: 1fr 1fr;
             }
           }
 
           // [ element ]
-          // `.body > .content > .content__information > .information__education > .education__detail > detail__?`
-          %detail__element {
+          @include input-button( 'education', 'add' ) {
             // [ layout ]
-            display: block;
-
-            > .block {
-              // [ layout ]
-              display: inline-block;
-
-              // [ skin ]
-              width: 95%;
-
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-small );
-            }
-          }
-          @include input-button ( test );
-
-          > .block__button--add {
             grid-area: add;
           }
-
-          > .block__button--delete {
+          @include input-button( 'education', 'delete' ) {
+            // [ layout ]
             grid-area: delete;
           }
-
-          > .detail__duration-from {
+          @include input( 'education', 'duration-from', $input-height-small ) {
             // [ layout ]
-            grid-area: duration_from;
-
-            // [ element ]
-            @extend %detail__element;
+            grid-area: duration-from;
           }
-
-          > .detail__duration-to {
+          @include input( 'education', 'duration-to', $input-height-small ) {
             // [ layout ]
-            grid-area: duration_to;
-
-            // [ element ]
-            @extend %detail__element;
+            grid-area: duration-to;
+          }
+          @include input( 'education', 'school-zh', $input-height-small ) {
+            // [ layout ]
+            grid-area: school-zh;
+          }
+          @include input( 'education', 'school-en', $input-height-small ) {
+            // [ layout ]
+            grid-area: school-en;
+          }
+          @include input( 'education', 'major-zh', $input-height-small ) {
+            // [ layout ]
+            grid-area: major-zh;
+          }
+          @include input( 'education', 'major-en', $input-height-small ) {
+            // [ layout ]
+            grid-area: major-en;
+          }
+          @include input( 'education', 'degree', $input-height-small ) {
+            // [ layout ]
+            grid-area: degree;
           }
 
           > .detail__duration-line {
             // [ layout ]
             display: block;
-            grid-area: duration_line;
+            grid-area: duration-line;
 
             // [ skin ]
             height: font__px-to-rem( 47 );
@@ -630,74 +615,6 @@
             // [ element ]
             @include input-title( nation );
             @include nation-dropdown( education );
-          }
-
-          > .detail__school {
-            // [ layout ]
-            grid-area: school;
-
-            // [ element ]
-            @extend %detail__element;
-
-            > .block {
-              width: 100%;
-              padding-right: 2.5%;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              // [ position ]
-              > .block {
-                width: 50%;
-                padding-right: 2.5%;
-              }
-            }
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              // [ position ]
-              > .block {
-                width: 90%;
-              }
-            }
-          }
-
-          > .detail__major {
-            // [ layout ]
-            grid-area: major;
-
-            // [ element ]
-            @extend %detail__element;
-
-            > .block {
-              width: 100%;
-              padding-right: 2.5%;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              // [ position ]
-              > .block {
-                width: 50%;
-                padding-right: 2.5%;
-              }
-            }
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              // [ position ]
-              > .block {
-                width: 90%;
-              }
-            }
-          }
-
-          > .detail__degree {
-            // [ layout ]
-            grid-area: degree;
-
-            // [ element ]
-            @extend %detail__element;
           }
         }
       }
@@ -727,35 +644,47 @@
         > .experience__detail {
           // [ layout ]
           display: grid;
-          grid-template: {
-            areas:
-              'add duration_from duration_line duration_to  delete'
-              '.   organization  organization  organization .     '
-              '.   department    department    department   .     '
-              '.   title         title         title        .     ';
-            columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+          grid: {
+            template: {
+              areas:
+                'add duration-from   duration-line   duration-to     delete'
+                '.   organization-zh organization-zh organization-zh .     '
+                '.   organization-en organization-en organization-en .     '
+                '.   department-zh  department-zh    department-zh   .     '
+                '.   department-en  department-en    department-en   .     '
+                '.   title-zh       title-zh         title-zh        .     '
+                '.   title-en       title-en         title-en        .     ';
+              columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+            }
+            gap: font__px-to-rem( 5 );
           }
 
           // [ RWD: $large ]
           @media screen and ( min-width: $small ) {
-            grid-template: {
-              areas:
-                'add duration_from duration_line duration_to  .            delete'
-                '.   organization  organization  organization organization .     '
-                '.   department    department    department   department   .     '
-                '.   title         title         title        .            .     ';
-              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr font__px-to-rem( 50 );
+            grid: {
+              template: {
+                areas:
+                  'add duration-from   duration-line   duration-line   duration-to     .               delete'
+                  '.   organization-zh organization-zh organization-zh organization-zh organization-en .     '
+                  '.   department-zh   department-zh   department-zh   department-zh   department-en   .     '
+                  '.   title-zh        title-zh        title-en        title-en        .               .     ';
+                columns: font__px-to-rem( 50 ) 2fr .4fr .4fr 2fr 4.8fr font__px-to-rem( 50 );
+              }
+              gap: font__px-to-rem( 5 );
             }
           }
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
-            grid-template: {
-              areas:
-                'add duration_from duration_line duration_to organization department title delete'
-                '.   duration_from duration_line duration_to organization department title .     ';
-              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
-              rows: 1fr 1fr;
+            grid: {
+              template: {
+                areas:
+                  'add duration-from duration-line duration-to organization-zh department-zh title-zh delete'
+                  '.   .             .             .           organization-en department-en title-en .     ';
+                columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
+                rows: 1fr 1fr;
+              }
+              gap: font__px-to-rem( 5 );
             }
           }
 
@@ -769,144 +698,59 @@
             @media screen and ( min-width: $large ) {
               display: block;
             }
-
-            > .block {
-              // [ layout ]
-              display: inline-block;
-
-              // [ skin ]
-              width: 95%;
-
-              // [ element ]
-              @include input-title( block );
-              @include input-block( $input-height-small );
-            }
           }
 
-          > .block__button--add {
+          // [ element ]
+          @include input-button( 'experience', 'add' ) {
+            // [ layout ]
             grid-area: add;
           }
-
-          > .block__button--delete {
+          @include input-button( 'experience', 'delete' ) {
+            // [ layout ]
             grid-area: delete;
           }
-
-          > .detail__duration-from {
+          @include input( 'experience', 'duration-from', $input-height-small ) {
             // [ layout ]
-            grid-area: duration_from;
-
-            // [ element ]
-            @extend %detail__element;
+            grid-area: duration-from;
           }
-
-          > .detail__duration-to {
+          @include input( 'experience', 'duration-to', $input-height-small ) {
             // [ layout ]
-            grid-area: duration_to;
-
-            // [ element ]
-            @extend %detail__element;
+            grid-area: duration-to;
+          }
+          @include input( 'experience', 'organization-zh', $input-height-small ) {
+            // [ layout ]
+            grid-area: organization-zh;
+          }
+          @include input( 'experience', 'organization-en', $input-height-small ) {
+            // [ layout ]
+            grid-area: organization-en;
+          }
+          @include input( 'experience', 'department-zh', $input-height-small ) {
+            // [ layout ]
+            grid-area: department-zh;
+          }
+          @include input( 'experience', 'department-en', $input-height-small ) {
+            // [ layout ]
+            grid-area: department-en;
+          }
+          @include input( 'experience', 'title-zh', $input-height-small ) {
+            // [ layout ]
+            grid-area: title-zh;
+          }
+          @include input( 'experience', 'title-en', $input-height-small ) {
+            // [ layout ]
+            grid-area: title-en;
           }
 
           > .detail__duration-line {
             // [ layout ]
             display: block;
-            grid-area: duration_line;
+            grid-area: duration-line;
 
             // [ skin ]
             height: font__px-to-rem( 47 );
-            width: font__px-to-rem( 20 );
+            width: 100%;
             border-bottom: 2px solid gray;
-          }
-
-          > .detail__organization {
-            // [ layout ]
-            grid-area: organization;
-
-            // [ element ]
-            @extend %detail__element;
-
-            // `.body > .content > .content__information > .information__experience > .experience__detail > detail__organization > .block`
-            > .block {
-              width: 100%;
-              padding-right: 2.5%;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              // [ position ]
-              > .block {
-                width: 50%;
-                padding-right: 2.5%;
-              }
-            }
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              // [ position ]
-              > .block {
-                width: 90%;
-              }
-            }
-          }
-
-          > .detail__department {
-            // [ layout ]
-            grid-area: department;
-
-            // [ element ]
-            @extend %detail__element;
-
-            > .block {
-              width: 100%;
-              padding-right: 2.5%;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              // [ position ]
-              > .block {
-                width: 50%;
-                padding-right: 2.5%;
-              }
-            }
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              // [ position ]
-              > .block {
-                width: 90%;
-              }
-            }
-          }
-
-          > .detail__title {
-            // [ layout ]
-            grid-area: title;
-
-            // [ element ]
-            @extend %detail__element;
-
-            > .block {
-              width: 100%;
-              padding-right: 2.5%;
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              // [ position ]
-              > .block {
-                width: 50%;
-                padding-right: 2.5%;
-              }
-            }
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              // [ position ]
-              > .block {
-                width: 90%;
-              }
-            }
           }
         }
       }

@@ -1,5 +1,5 @@
-@mixin input_image ( $belong_block) {
-  > .#{ $belong_block }__image {
+@mixin input_image ( $belongBlock ) {
+  > .#{ $belongBlock }__image {
     // [ layout ]
     align-self: center;
     justify-self: center;
