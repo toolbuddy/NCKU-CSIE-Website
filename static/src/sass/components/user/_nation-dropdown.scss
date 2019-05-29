@@ -19,6 +19,10 @@
       position: absolute;
       z-index: 1;
 
+      // [ skin ]
+      border-radius: 15px;
+      border: solid 1px #adacad;
+
       // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button`
       > .content__button {
         // [ layout ]
@@ -36,6 +40,9 @@
         // [ position ]
         width: 100%;
         height: font__px-to-rem( 30 );
+
+        // [ skin ]
+        background: #ffffff;
 
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
         > .button__flag {

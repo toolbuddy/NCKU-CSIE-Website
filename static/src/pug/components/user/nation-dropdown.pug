@@ -1,4 +1,4 @@
-mixin nation-dropdown( belongBlock )
+mixin nation-dropdown( belongBlock, belongItem )
   - 
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -26,7 +26,7 @@ mixin nation-dropdown( belongBlock )
     } );
     n = 1;
 
-  section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` )
+  section.nation-dropdown( class=`${ belongBlock }__nation-dropdown` id=`${ belongBlock }__nation-dropdown`)
     section.nation-dropdown__content.content
       each val, index in i18n[ LANG.id ].nation
         if n++ == 1

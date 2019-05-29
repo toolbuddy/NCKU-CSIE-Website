@@ -3,6 +3,7 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
+import DropdownControl from 'static/src/js/components/user/nation-dropdown';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -34,6 +35,17 @@ try {
     } );
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const userNation = new DropdownControl(
+        document.querySelectorAll( '.nation-dropdown__content' )
+    );
+    if ( !( userNation instanceof DropdownControl ) )
+        throw new Error( 'DropdownControl not founs' );
 }
 catch ( err ) {
     console.error( err );
