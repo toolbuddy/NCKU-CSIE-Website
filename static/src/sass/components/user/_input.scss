@@ -3,9 +3,9 @@
 
 // component
 // `> .#{ $block } > .#{ $block }__block`
-@mixin input ( $belongBlock, $modifier, $inputHeight ) {
+@mixin input ( $block, $modifier, $inputHeight ) {
   // `> .#{ $block } > .#{ $block }__block`
-  > .input.#{ $belongBlock }__input--#{ $modifier } {
+  > .input.#{ $block }__input--#{ $modifier } {
     // [ element ]  
     @include input-title( input );
     @include input-block( $inputHeight );

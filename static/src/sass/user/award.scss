@@ -9,7 +9,6 @@
 @import 'components/user/input';
 @import 'components/user/input-button';
 
-
 // block
 // `.body`
 .body {
@@ -95,7 +94,7 @@
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
-        //[ position ]
+        // [ position ]
         width: 80%;
       }
 
@@ -113,7 +112,7 @@
 
       // element
       // `.body > .content > .content__main > .main__topic`
-      @include topic( main ) {
+      @include topic( 'main' ) {
         // [ layout ]
         display: block;
 
@@ -182,31 +181,31 @@
         }
 
         // [ element ]
-        @include input( award, award-zh, $input-height-small ) {
+        @include input( $block: 'award', $modifier: 'award-zh', $inputHeight: $input-height-small ) {
           // [ layout ]
           grid-area: award-zh;
         }
 
         // [ element ]
-        @include input( award, award-en, $input-height-small ) {
+        @include input( $block: 'award', $modifier: 'award-en', $inputHeight: $input-height-small ) {
           // [ layout ]
           grid-area: award-en;
         }
 
         // [ element ]
-        @include input( award, received-date, $input-height-small ) {
+        @include input( $block: 'award', $modifier: 'received-date', $inputHeight: $input-height-small ) {
           // [ layout ]
           grid-area: date;
         }
 
         // [ element ]
-        @include input-button( 'award', 'add' ) {
+        @include input-button( $block: 'award', $type: 'add' ) {
           // [ layout ]
           grid-area: add;
         }
 
         // [ element ]
-        @include input-button( 'award', 'delete' ) {
+        @include input-button( $block: 'award', $type: 'delete' ) {
           // [ layout ]
           grid-area: delete;
         }

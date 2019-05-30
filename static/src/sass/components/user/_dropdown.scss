@@ -1,6 +1,6 @@
-@mixin dropdown ( $belongBlock ) {
+@mixin dropdown ( $block ) {
   // `> .#{ belongBlock } > .{ belongBlock }__dropdown.dropdown`
-  > .dropdown.#{ $belongBlock }__dropdown {
+  > .dropdown.#{ $block }__dropdown {
     // [ layout ]
     display: block;
 
@@ -67,10 +67,11 @@
         display: flex;
 
         // [ skin ]
-        border-radius: font__px-to-rem( 33 );
-        border-bottom: solid 1px #adacad;
+        border: {
+          radius: font__px-to-rem( 33 );
+          bottom: solid 1px #adacad;
+        }
       }
-
 
       > .content__button--show {
         // [ layout ]

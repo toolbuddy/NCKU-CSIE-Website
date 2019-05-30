@@ -1,5 +1,5 @@
-@mixin input_button ( $belongBlock, $type ) {
-  > .input-button.#{ $belongBlock }__input-button--#{ $type } {
+@mixin input_button ( $block, $type ) {
+  > .input-button.#{ $block }__input-button--#{ $type } {
     // [ layout ]
     display: inline-flex;
     align-content: center;

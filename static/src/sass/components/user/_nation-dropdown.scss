@@ -55,7 +55,6 @@
           width: font__px-to-rem( 21 );
         }
 
-
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
         > .button__content {
           // [ layout ]
@@ -95,10 +94,11 @@
         display: grid;
 
         // [ skin ]
-        border-radius: font__px-to-rem( 33 );
-        border-bottom: solid 1px #adacad;
+        border: {
+          radius: font__px-to-rem( 33 );
+          bottom: solid 1px #adacad;
+        }
       }
-
 
       > .content__button--show {
         // [ layout ]

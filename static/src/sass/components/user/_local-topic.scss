@@ -1,7 +1,7 @@
 // component
 // `> .#{ $block } > .#{ $block }__topic`
 @mixin local-topic ( $block ) {
-  //[ variable ]
+  // [ variable ]
   $small: 600px;
 
   // `> .#{ block }` > .topic

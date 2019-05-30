@@ -17,6 +17,7 @@
     margin: {
       left: auto;
       right: auto;
+      bottom: font__px-to-rem( 32 );
     }
 
     // [ RWD: $small ]
@@ -74,9 +75,6 @@
         font-size: font__px-to-rem( 18 );
       }
     }
-
-    // [ layout ]
-    margin-bottom: font__px-to-rem( 32 );
 
     // element
     // `> .#{ $block } > .filter > .filter__department`

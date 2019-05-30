@@ -1,5 +1,5 @@
-@mixin input_image ( $belongBlock ) {
-  > .#{ $belongBlock }__image {
+@mixin input_image ( $block ) {
+  > .#{ $block }__image {
     // [ layout ]
     align-self: center;
     justify-self: center;
@@ -15,7 +15,6 @@
     width: auto;
     line-height: normal;
     filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
-
 
     // [ customization ]
     @content;

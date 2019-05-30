@@ -46,6 +46,14 @@ router
 .get( staticHtml( 'user/award' ) );
 
 /**
+ * Resolve URL `/user/conference`.
+ */
+
+router
+.route( '/conference' )
+.get( staticHtml( 'user/conference' ) );
+
+/**
  * Resolve URL `/user/publication`.
  */
 
