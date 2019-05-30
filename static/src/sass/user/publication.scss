@@ -4,6 +4,12 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/navigation-bar';
+@import 'components/user/input';
+@import 'components/user/local-topic';
+@import 'components/user/input-button';
+@import 'components/user/dropdown';
 
 // block
 // `.body`
@@ -25,11 +31,34 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $large: 700px;
+    $large: 1200px;
+    $small: 600px;
+    $input-height-small: 30;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' . breadcrumb  .'
+        ' . main        .';
+      columns: 1fr 20fr 1fr;
+    }
 
     // [ skin ]
-    height: 120%;
+    height: auto;
+    width: 100%;
     background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  '
+          ' navigation main        ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+      }
+    }
 
     // template
     // `.body > .content > .content__?.?`
@@ -51,6 +80,211 @@
       }
     }
 
+    // `.body` > .content > .content__main
+    > .content__main {
+      // [ layout ]
+      display: block;
+      grid-area: main;
+
+      // [ position ]
+      width: 95%;
+      margin: {
+        top: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: 80%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        max-width: font__px-to-rem( 1000 );
+        width: 95%;
+        margin: {
+          top: font__px-to-rem( 80 );
+          bottom: font__px-to-rem( 80 );
+          left: 0;
+        }
+      }
+
+      // element
+      // `.body > .content > .content__main > .main__topic`
+      @include topic( 'main' ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        width: 95%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: font__px-to-rem( 20 );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+        }
+      }
+
+      // `.body > .content > .content__main > .main__topic`      
+      @include local-topic( $block: 'main' ) {
+        // [ skin ]
+        border: none;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+        }
+      }
+
+      // `.body > .content > .content__main > .main__publication`      
+      > .main__publication.publication {
+        // [ layout ]
+        display: grid;
+        grid: {
+          template: {
+            areas:
+              'add .             issue-time    .             delete'
+              '.   authors-zh    authors-zh    authors-zh    .     '
+              '.   ahthors-en    authors-en    authors-en    .     '
+              '.   title-zh      title-zh      title-zh      .     '
+              '.   title-en      title-en      title-en      .     '
+              '.   .             category      .             .     '
+              '.   international international international .     '
+              '.   refereed      refereed      refereed      .     ';
+            columns: font__px-to-rem( 30 ) 1fr font__px-to-rem( 150 ) 1fr font__px-to-rem( 30 );
+          }
+          gap: font__px-to-rem( 5 );
+        }
+
+        // [ position ]
+        width: 100%;
+        margin: {
+          top: font__px-to-rem( 5 );
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          width: 90%;
+
+          // [ layout ]
+          display: grid;
+          grid-template: {
+            areas:
+              'add issue-time    category      delete'
+              '.   authors-zh    authors-zh    .     '
+              '.   ahthors-en    authors-en    .     '
+              '.   title-zh      title-zh      .     '
+              '.   title-en      title-en      .     '
+              '.   international international .     '
+              '.   refereed      refereed      .     ';
+            columns: font__px-to-rem( 30 ) 1fr  1fr font__px-to-rem( 30 );
+          }
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid: {
+            template: {
+              areas:
+                'add issue-time    authors-zh   title-zh      title-zh delete'
+                '.   .             authors-en   title-en      title-en .     '
+                '.   .             category     international refereed .     ';
+              columns: font__px-to-rem( 50 ) font__px-to-rem( 150 ) font__px-to-rem( 150 ) 1fr 1fr font__px-to-rem( 50 );
+            }
+            gap: font__px-to-rem( 5 );
+          }
+
+          // [ position ]
+          width: 100%;
+        }
+
+        // [ element ]
+        @include input( $block: 'publication', $modifier: 'authors-zh', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: authors-zh;
+        }
+
+        // [ element ]
+        @include input( $block: 'publication', $modifier: 'authors-en', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: authors-en;
+        }
+
+        // [ element ]
+        @include input( $block: 'publication', $modifier: 'title-zh', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: title-zh;
+        }
+
+        // [ element ]
+        @include input( $block: 'publication', $modifier: 'title-en', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: title-en;
+        }
+
+        // [ element ]
+        @include dropdown( $block: 'publication', $width: 150) {
+          // [ layout ]
+          grid-area: category;
+        }
+
+        // [ element ]
+        @include input( $block: 'publication', $modifier: 'issue-time', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: issue-time;
+        }
+
+        // [ element ]
+        @include input-button( $block: 'publication', $type: 'add' ) {
+          // [ layout ]
+          grid-area: add;
+        }
+
+        // [ element ]
+        @include input-button( $block: 'publication', $type: 'delete' ) {
+          // [ layout ]
+          grid-area: delete;
+        }
+
+        > .project__duration-line {
+          // [ layout ]
+          display: block;
+          grid-area: duration-line;
+
+          // [ skin ]
+          height: font__px-to-rem( 47 );
+          width: 100% ;
+          border-bottom: 2px solid gray;
+        }
+      }
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
     // element
     // `.body > .content > .content__breadcrumb`
     // block
@@ -58,6 +292,9 @@
     @include breadcrumb( $block: 'content' ) {
       // [ template ]
       @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
 
       // [ skin ]
       border: {
