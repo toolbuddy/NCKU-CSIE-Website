@@ -7,8 +7,8 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/input';
-@import 'components/user/input-button';
 @import 'components/user/local-topic';
+@import 'components/user/input-button';
 
 // block
 // `.body`
@@ -103,7 +103,7 @@
       @media screen and ( min-width: $large ) {
         // [ skin ]
         max-width: font__px-to-rem( 1000 );
-        width: 80%;
+        width: 95%;
         margin: {
           top: font__px-to-rem( 80 );
           bottom: font__px-to-rem( 80 );
@@ -147,16 +147,22 @@
         }
       }
 
-      // `.body > .content > .content__main > .main__award`      
-      > .main__award.award {
+      // `.body > .content > .content__main > .main__project`      
+      > .main__project.project {
         // [ layout ]
         display: grid;
-        grid-template: {
-          areas:
-            'add date     delete'
-            '.   award-zh .     '
-            '.   award-en .     ';
-          columns: font__px-to-rem( 30 ) 1fr font__px-to-rem( 30 );
+        grid: {
+          template: {
+            areas:
+              'add duration-from duration-line duration-to  delete'
+              '.   name-zh       name-zh       name-zh      .     '
+              '.   name-en       name-en       name-en      .     '
+              '.   support-zh    support-zh    support-zh   .     '
+              '.   support-en    support-en    support-en   .     '
+              '.   category      category      category     .     ';
+            columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+          }
+          gap: font__px-to-rem( 5 );
         }
 
         // [ position ]
@@ -169,13 +175,20 @@
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
+          // [ position ]
+          width: 90%;
+
           // [ layout ]
+          display: grid;
           grid-template: {
             areas:
-              'add date     delete'
-              '.   award-zh .     '
-              '.   award-en .     ';
-            columns: font__px-to-rem( 50 ) minmax( 400, 800 ) font__px-to-rem( 50 );
+              'add duration-from duration-line duration-to  .          delete'
+              '.   name-zh       name-zh       name-zh      name-zh    .     '
+              '.   name-en       name-en       name-en      name-en    .     '
+              '.   support-zh    support-zh    support-zh   support-zh .     '
+              '.   support-en    support-en    support-en   support-en .     '
+              '.   category      category      category     .          .     ';
+            columns: font__px-to-rem( 30 ) font__px-to-rem( 80 ) font__px-to-rem( 20 ) font__px-to-rem( 80 ) 1fr font__px-to-rem( 30 );
           }
         }
 
@@ -185,42 +198,80 @@
           grid: {
             template: {
               areas:
-                'add date award-zh delete'
-                '.   .    award-en .     ';
-              columns: font__px-to-rem( 50 ) 1fr 3fr font__px-to-rem( 50 );
+                'add duration-from duration-line duration-to name-zh support-zh delete'
+                '.   category      category      category    name-en support-en .     ';
+              columns: font__px-to-rem( 50 ) font__px-to-rem( 80 ) font__px-to-rem( 20 ) font__px-to-rem( 80 ) 3fr 1fr font__px-to-rem( 50 );
             }
             gap: font__px-to-rem( 5 );
           }
+
+          // [ position ]
+          width: 100%;
         }
 
         // [ element ]
-        @include input( $block: 'award', $modifier: 'award-zh', $inputHeight: $input-height-small ) {
+        @include input( $block: 'project', $modifier: 'name-zh', $inputHeight: $input-height-small ) {
           // [ layout ]
-          grid-area: award-zh;
+          grid-area: name-zh;
         }
 
         // [ element ]
-        @include input( $block: 'award', $modifier: 'award-en', $inputHeight: $input-height-small ) {
+        @include input( $block: 'project', $modifier: 'name-en', $inputHeight: $input-height-small ) {
           // [ layout ]
-          grid-area: award-en;
+          grid-area: name-en;
         }
 
         // [ element ]
-        @include input( $block: 'award', $modifier: 'received-date', $inputHeight: $input-height-small ) {
+        @include input( $block: 'project', $modifier: 'support-zh', $inputHeight: $input-height-small ) {
           // [ layout ]
-          grid-area: date;
+          grid-area: support-zh;
         }
 
         // [ element ]
-        @include input-button( $block: 'award', $type: 'add' ) {
+        @include input( $block: 'project', $modifier: 'support-en', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: support-en;
+        }
+
+        // [ element ]
+        @include input( $block: 'project', $modifier: 'category', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: category;
+        }
+
+        // [ element ]
+        @include input( $block: 'project', $modifier: 'duration-from', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: duration-from;
+        }
+
+        // [ element ]
+        @include input( $block: 'project', $modifier: 'duration-to', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: duration-to;
+        }
+
+        // [ element ]
+        @include input-button( $block: 'project', $type: 'add' ) {
           // [ layout ]
           grid-area: add;
         }
 
         // [ element ]
-        @include input-button( $block: 'award', $type: 'delete' ) {
+        @include input-button( $block: 'project', $type: 'delete' ) {
           // [ layout ]
           grid-area: delete;
+        }
+
+        > .project__duration-line {
+          // [ layout ]
+          display: block;
+          grid-area: duration-line;
+
+          // [ skin ]
+          height: font__px-to-rem( 47 );
+          width: 100% ;
+          border-bottom: 2px solid gray;
         }
       }
     }

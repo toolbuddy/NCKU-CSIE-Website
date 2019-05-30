@@ -623,7 +623,7 @@
 
             // [ element ]
             @include input-title( 'degree' );
-            @include dropdown( 'education' );
+            @include dropdown( $block: 'education', $width: 130 );
           }
         }
       }

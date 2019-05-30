@@ -100,6 +100,7 @@ export default {
         'user/award':             path.join( sassRoot, 'user/award.scss' ),
         'user/publication':       path.join( sassRoot, 'user/publication.scss' ),
         'user/conference':        path.join( sassRoot, 'user/conference.scss' ),
+        'user/project':           path.join( sassRoot, 'user/project.scss' ),
         'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
 
         // Route `auth`

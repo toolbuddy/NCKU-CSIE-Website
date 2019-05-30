@@ -2,9 +2,13 @@
 @import 'components/common/header-base';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
-@import 'components/common/banner';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/navigation-bar';
+@import 'components/user/input';
+@import 'components/user/local-topic';
+@import 'components/user/input-button';
 
 // block
 // `.body`
@@ -21,22 +25,39 @@
   @include header--large( $block: 'body' );
 
   // element
-  // `.body > .body__banner`
-  // block
-  // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'resource/rent' );
-
-  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $large: 700px;
+    $large: 1200px;
+    $small: 600px;
+    $input-height-small: 30;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' . breadcrumb  .'
+        ' . main        .';
+      columns: 1fr 20fr 1fr;
+    }
 
     // [ skin ]
-    height: 120%;
+    height: auto;
+    width: 100%;
     background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  '
+          ' navigation main        ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+      }
+    }
 
     // template
     // `.body > .content > .content__?.?`
@@ -58,6 +79,175 @@
       }
     }
 
+    // `.body` > .content > .content__main
+    > .content__main {
+      // [ layout ]
+      display: block;
+      grid-area: main;
+
+      // [ position ]
+      width: 95%;
+      margin: {
+        top: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: 80%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ skin ]
+        max-width: font__px-to-rem( 1000 );
+        width: 95%;
+        margin: {
+          top: font__px-to-rem( 80 );
+          bottom: font__px-to-rem( 80 );
+          left: 0;
+        }
+      }
+
+      // element
+      // `.body > .content > .content__main > .main__topic`
+      @include topic( 'main' ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        width: 95%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: font__px-to-rem( 20 );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+        }
+      }
+
+      // `.body > .content > .content__main > .main__topic`      
+      @include local-topic( $block: 'main' ) {
+        // [ skin ]
+        border: none;
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          margin-left: font__px-to-rem( 31.5 );
+        }
+      }
+
+      // `.body > .content > .content__main > .main__conference`      
+      > .main__conference.conference {
+        // [ layout ]
+        display: grid;
+        grid: {
+          template: {
+            areas:
+              'add year          year          delete'
+              '.   conference-zh conference-zh .     '
+              '.   conference-en conference-en .     '
+              '.   title-zh      title-en      .     ';
+            columns: font__px-to-rem( 30 ) .5fr .5fr font__px-to-rem( 30 );
+          }
+          gap: font__px-to-rem( 5 );
+        }
+
+        // [ position ]
+        width: 100%;
+        margin: {
+          top: font__px-to-rem( 5 );
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ position ]
+          width: 90%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid: {
+            template: {
+              areas:
+                'add year conference-zh title-zh delete'
+                '.   .    conference-en title-en .     ';
+              columns: font__px-to-rem( 50 ) 1fr 3fr 1fr font__px-to-rem( 50 );
+            }
+            gap: font__px-to-rem( 5 );
+          }
+
+          // [ position ]
+          width: 100%;
+        }
+
+        // [ element ]
+        @include input( $block: 'conference', $modifier: 'conference-zh', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: conference-zh;
+        }
+
+        // [ element ]
+        @include input( $block: 'conference', $modifier: 'conference-en', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: conference-en;
+        }
+
+        // [ element ]
+        @include input( $block: 'conference', $modifier: 'title-zh', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: title-zh;
+        }
+
+        // [ element ]
+        @include input( $block: 'conference', $modifier: 'title-en', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: title-en;
+        }
+
+        // [ element ]
+        @include input( $block: 'conference', $modifier: 'host-year', $inputHeight: $input-height-small ) {
+          // [ layout ]
+          grid-area: year;
+        }
+
+        // [ element ]
+        @include input-button( $block: 'conference', $type: 'add' ) {
+          // [ layout ]
+          grid-area: add;
+        }
+
+        // [ element ]
+        @include input-button( $block: 'conference', $type: 'delete' ) {
+          // [ layout ]
+          grid-area: delete;
+        }
+      }
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
     // element
     // `.body > .content > .content__breadcrumb`
     // block
@@ -65,6 +255,9 @@
     @include breadcrumb( $block: 'content' ) {
       // [ template ]
       @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
 
       // [ skin ]
       border: {

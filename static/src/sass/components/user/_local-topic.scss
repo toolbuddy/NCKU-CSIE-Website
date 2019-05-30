@@ -5,14 +5,14 @@
   $small: 600px;
 
   // `> .#{ block }` > .topic
-  > .#{ $block }__topic.topic {
+  > .#{ $block }__local-topic.local-topic {
     // [ layout ]
     display: flex;
 
     // [ skin ]
     height: font__px-to-rem( 107 );
 
-    > .topic__word {
+    > .local-topic__word {
       // [ layout ]
       align-self: center;
 

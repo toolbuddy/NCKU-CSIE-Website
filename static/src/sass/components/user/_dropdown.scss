@@ -1,4 +1,4 @@
-@mixin dropdown ( $block ) {
+@mixin dropdown ( $block, $width ) {
   // `> .#{ belongBlock } > .{ belongBlock }__dropdown.dropdown`
   > .dropdown.#{ $block }__dropdown {
     // [ layout ]
@@ -32,7 +32,7 @@
 
         // [ position ]
         position: relative;
-        width: font__px-to-rem( 130 );
+        width: font__px-to-rem( $width );
         height: font__px-to-rem( 30 );
 
         // [ skin ]

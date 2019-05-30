@@ -10,43 +10,41 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Conference',
+        title:      'Project',
         breadcrumb: {
           home:     'Home',
           user:     'User',
         },
         content: {
           topic: '教師資料維護',
-          conference: {
-            host_year:  '舉行時間 / Host Year',
-            conference: 'Conference',
-            title:      'title',
+          project: {
+            name:     'Name',
+            support: 'Support',
           },
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '參與會議',
+        title:      '專案',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
         },
         content: {
           topic: '教師資料維護',
-          conference: {
-            host_year:  '舉行時間 / Host Year',
-            conference: '會議名稱',
-            title:      '職稱',
+          project: {
+            name:    '專案名稱',
+            support: '補助單位',
           },
-        },        
+        }       
       },
     } );
-    const currentRoute = 'user/conference';
+    const currentRoute = 'user/project';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/conference' )
+  +css( 'user/project' )
 
 append header
 
@@ -64,17 +62,20 @@ append content
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
-    +local-topic( 'main', '參與會議 / Conference' )
-    article.main__conference.conference
-      +button( 'conference', 'add' )
-      +button( 'conference', 'delete' )
-      +input( 'conference', i18n[ LANG.id ].content.conference.host_year, 'host-year' )
-      +input( 'conference', i18n[ 0 ].content.conference.conference, 'conference-zh' )
-      +input( 'conference', i18n[ 1 ].content.conference.conference, 'conference-en' )
-      +input( 'conference', i18n[ 0 ].content.conference.title, 'title-zh' )
-      +input( 'conference', i18n[ 1 ].content.conference.title, 'title-en' )
+    +local-topic( 'main', '專案 / Project' )
+    article.main__project.project
+      +button( 'project', 'add' )
+      +button( 'project', 'delete' )
+      +input( 'project', '從 / From', 'duration-from' )
+      aside.project__duration-line
+      +input( 'project', '至 / To', 'duration-to' )
+      +input( 'project', '投稿對象 / Category', 'category' )
+      +input( 'project', i18n[ 0 ].content.project.name, 'name-zh' )
+      +input( 'project', i18n[ 1 ].content.project.name, 'name-en' )
+      +input( 'project', i18n[ 0 ].content.project.support, 'support-zh' )
+      +input( 'project', i18n[ 1 ].content.project.support, 'support-en' )
 
 append footer
 
 append scripts
-  +js( 'user/conference' )
+  +js( 'user/project' )
