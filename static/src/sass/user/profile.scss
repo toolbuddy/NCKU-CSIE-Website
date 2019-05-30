@@ -13,6 +13,7 @@
 @import 'components/user/input';
 @import 'components/user/input-button';
 @import 'components/user/nation-dropdown';
+@import 'components/user/dropdown';
 @import 'components/user/filter';
 
 // block
@@ -46,7 +47,7 @@
       areas:
         ' . breadcrumb  .'
         ' . information .';
-      columns: 1fr 20fr 1fr;
+      columns: 1fr 50fr 1fr;
     }
 
     // [ skin ]
@@ -184,11 +185,11 @@
               areas:
                 'add input1 delete'
                 '.   input2 .     ';
-              columns: font__px-to-rem( 30 ) auto font__px-to-rem( 30 );
+              columns: font__px-to-rem( 27 ) auto font__px-to-rem( 27 );
             }
 
             // [ position ]
-            width: 90%;
+            width: 100%;
             margin: {
               left: auto;
               right: auto;
@@ -330,7 +331,7 @@
               areas:
                 ' image1 input1 image2'
                 ' .      input2 .     ';
-              columns: font__px-to-rem( 30 ) 1fr font__px-to-rem( 30 );
+              columns: font__px-to-rem( 27 ) 1fr font__px-to-rem( 27 );
             }
 
             // [ RWD: $small ]
@@ -531,7 +532,7 @@
                 '.   major-zh      major-zh      major-zh    .      '
                 '.   major-en      major-en      major-en    .      '
                 '.   degree        degree        .           .      ';
-              columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+              columns: font__px-to-rem( 27 ) 2fr .8fr 2fr font__px-to-rem( 27 );
             }
             gap: font__px-to-rem( 5 );
           }
@@ -616,6 +617,15 @@
             @include input-title( nation );
             @include nation-dropdown( education );
           }
+
+          > .detail__degree {
+            // [ layout ]
+            grid-area: degree;
+
+            //[ element ]
+            @include input-title( 'degree' );
+            @include dropdown( 'education' );
+          }
         }
       }
 
@@ -654,7 +664,7 @@
                 '.   department-en  department-en    department-en   .     '
                 '.   title-zh       title-zh         title-zh        .     '
                 '.   title-en       title-en         title-en        .     ';
-              columns: font__px-to-rem( 30 ) 2fr .8fr 2fr font__px-to-rem( 30 );
+              columns: font__px-to-rem( 27 ) 2fr .8fr 2fr font__px-to-rem( 27 );
             }
             gap: font__px-to-rem( 5 );
           }

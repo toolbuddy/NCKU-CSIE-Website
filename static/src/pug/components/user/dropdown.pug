@@ -1,0 +1,13 @@
+mixin dropdown( belongBlock, content ) 
+  - let n = 1
+  section.dropdown( class=`${ belongBlock }__dropdown` )
+    section.dropdown__content.content
+      each val, index in content
+        if n++ == 1
+          button.content__button.content__button--top( id=`${ belongBlock }__${ index }` )
+            p.button__text= `${ val }`
+        else
+          button.content__button( id=`${ belongBlock }__${ index }` )
+            p.button__text= `${ val }`
+          
+    

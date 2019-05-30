@@ -3,7 +3,7 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
-import DropdownControl from 'static/src/js/components/user/nation-dropdown';
+import DropdownControl from 'static/src/js/components/user/dropdown';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -46,6 +46,17 @@ try {
     );
     if ( !( userNation instanceof DropdownControl ) )
         throw new Error( 'DropdownControl not founs' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const degreeDropdown = new DropdownControl(
+        document.querySelectorAll( ' .dropdown__content' )
+    );
+    if ( !( degreeDropdown instanceof DropdownControl ) )
+        throw new Error( 'degreeDropdown not founs' );
 }
 catch ( err ) {
     console.error( err );

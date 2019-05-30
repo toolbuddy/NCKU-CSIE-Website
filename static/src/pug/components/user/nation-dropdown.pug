@@ -30,7 +30,7 @@ mixin nation-dropdown( belongBlock, belongItem )
     section.nation-dropdown__content.content
       each val, index in i18n[ LANG.id ].nation
         if n++ == 1
-          article.content__button.content__button--top( id=`nation__${ val }` )
+          article.content__button.content__button--top( id=`nation__${ index }` )
             +image( {
               alt:       '>',
               className: `button__flag`,

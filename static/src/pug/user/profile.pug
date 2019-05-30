@@ -3,6 +3,7 @@ include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
 include /components/user/input.pug
 include /components/user/button.pug
+include /components/user/dropdown.pug
 include /components/user/nation-dropdown.pug
 include /components/common/topic.pug
 
@@ -43,6 +44,11 @@ append data
             school:        'School', 
             major:         'Major',
             degree:        'Degree',
+            degree_dropdown: {
+              bachelor:    'Bachelor',
+              master:      'Master',
+              phd:         'Ph. D.',
+            },
           },
           experience: {
             topic:        '經歷 / Experience',
@@ -86,6 +92,11 @@ append data
             school:        '學校',
             major:         '主修',
             degree:        '學位',
+            degree_dropdown: {
+              bachelor:    '學士',
+              master:      '碩士',
+              phd:         '博士',
+            },
           },
           experience: {
             topic:        '經歷 / Experience',
@@ -241,7 +252,10 @@ append content
         +input( 'education', i18n[ 1 ].content.education.school, 'school-en', false, 'The Ohio State University' )
         +input( 'education', i18n[ 0 ].content.education.major, 'major-zh', false, '電機工程' )
         +input( 'education', i18n[ 1 ].content.education.major, 'major-en', false, 'Computer and Informat' )
-        +input( 'education', i18n[ LANG.id ].content.education.degree, 'degree' )
+        section.detail__degree
+          aside.degree__title
+            p.title__content= i18n[ LANG.id ].content.education.degree
+          +dropdown( 'education', i18n[ LANG.id ].content.education.degree_dropdown )
     article.information__experience
       +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
       section.experience__detail
