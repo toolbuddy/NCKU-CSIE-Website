@@ -23,6 +23,11 @@
       line-height: normal;
     }
 
+    &--hide {
+      // [ layout ]
+      display: none;
+    }
+
     // [ customization ]
     @content;
   }

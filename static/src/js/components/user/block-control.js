@@ -1,17 +1,32 @@
 export default class BlockControl {
-    constructor ( button, isTitle ) {
-        this.isTitle = isTitle;
-        if ( button.id.indexOf( 'add' ) != -1 ) {
+    addButtonEvent ( button, isTitle = true ) {
+        if ( button.id.indexOf( 'add' ) !== -1 ) {
             button.addEventListener( 'click', ( element ) => {
-                const blockId  = element.target.parentNode.parentNode.id;
-                const parentId = element.target.parentNode.parentNode.parentNode.id;
-                this.addBlock( blockId, parentId, this.isTitle );
+                let block  = element.target.parentNode.parentNode;
+                let parentId = element.target.parentNode.parentNode.parentNode.id;
+
+                if ( element.target.className.indexOf( 'image' ) == -1 ) {
+                    block = element.target.parentNode;
+                    parentId = element.target.parentNode.parentNode.id;
+                }
+
+                this.addBlock( block, parentId, isTitle );
+            } );
+        }
+        else {
+            button.addEventListener( 'click', ( element ) => {
+                let block  = element.target.parentNode.parentNode;
+
+                if ( element.target.className.indexOf( 'image' ) == -1 )
+                    block = element.target.parentNode;
+
+                this.removeBlock( block );
             } );
         }
     }
 
-    addBlock ( blockId, parentId, isTitle ) {
-        const blockNode = document.getElementById( blockId ).cloneNode( true );
+    addBlock ( block, parentId, isTitle ) {
+        const blockNode = block.cloneNode( true );
 
         const map = Array.prototype.map;
 
@@ -27,6 +42,12 @@ export default class BlockControl {
             obj.value = '';
         } );
 
+        this.addButtonEvent( blockNode.getElementsByClassName( 'input-button--delete' )[ 0 ] );
+
         document.getElementById( parentId ).appendChild( blockNode );
+    }
+
+    removeBlock ( block ) {
+        block.remove();
     }
 }
