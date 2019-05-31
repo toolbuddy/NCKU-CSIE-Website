@@ -4,6 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
 import DropdownControl from 'static/src/js/components/user/dropdown';
+import BlockControl from 'static/src/js/components/user/block-control';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -57,6 +58,54 @@ try {
     );
     if ( !( degreeDropdown instanceof DropdownControl ) )
         throw new Error( 'degreeDropdown not founs' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const titleBlockControl = new BlockControl(
+        document.getElementById( 'title__input-button--add' ),
+        false,
+    );
+    if ( !( titleBlockControl instanceof BlockControl ) )
+        throw new Error( 'titleBlockControl not founs' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const speciltyBlockControl = new BlockControl(
+        document.getElementById( 'specilty__input-button--add' ),
+        false,
+    );
+    if ( !( speciltyBlockControl instanceof BlockControl ) )
+        throw new Error( 'speciltyBlockControl not founs' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const educationBlockControl = new BlockControl(
+        document.getElementById( 'education__input-button--add' ),
+        true,
+    );
+    if ( !( educationBlockControl instanceof BlockControl ) )
+        throw new Error( 'educationBlockControl not founs' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const experienceBlockControl = new BlockControl(
+        document.getElementById( 'experience__input-button--add' ),
+        true,
+    );
+    if ( !( experienceBlockControl instanceof BlockControl ) )
+        throw new Error( 'experienceBlockControl not founds' );
 }
 catch ( err ) {
     console.error( err );

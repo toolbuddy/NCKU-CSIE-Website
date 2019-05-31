@@ -133,11 +133,11 @@ append content
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile
       +local-topic( 'profile', i18n[ LANG.id ].content.profile.topic )
-      section.profile__personal.personal
+      section.profile__personal.personal#profile__personal
         section.personal__name
           +input( 'name', i18n[ 0 ].content.profile.name, 'name-zh', true )
           +input( 'name', i18n[ 1 ].content.profile.name, 'name-en', true )
-        section.personal__title
+        section.personal__title#personal__title
           +button( 'title', 'add' )
           +input( 'title', i18n[ 0 ].content.profile.title, 'title-zh', true, '副教授' )
           +input( 'title', i18n[ 1 ].content.profile.title, 'title-en', true )
@@ -163,7 +163,7 @@ append content
         section.image__frame
           button.frame__button= i18n[ LANG.id ].content.profile.image
         +nation-dropdown( 'image' )
-      section.profile__work
+      section.profile__work#profile__work
         section.work__office.office
           +image( {
             alt:       '>',
@@ -230,15 +230,15 @@ append content
             src:       `icon/user.png`,
           } )  
           +input( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web', false )
-        section.work__specilty
+        section.work__specilty#work__specilty
           +button( 'specilty', 'add' )
           +input( 'specilty', i18n[ 0 ].content.profile.specilty, 'specilty-zh' )
           +input( 'specilty', i18n[ 1 ].content.profile.specilty, 'specilty-en' )
           +button( 'specilty', 'delete' )
 
-    article.information__education.education
+    article.information__education.education#information__education
       +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
-      section.education__detail
+      section.education__detail#education__detail
         +button( 'education', 'add' )
         +button( 'education', 'delete' )
         +input( 'education', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, 'Ex.1996' )
@@ -256,9 +256,9 @@ append content
           aside.degree__title
             p.title__content= i18n[ LANG.id ].content.education.degree
           +dropdown( 'education', i18n[ LANG.id ].content.education.degree_dropdown )
-    article.information__experience
+    article.information__experience#information__experience
       +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
-      section.experience__detail
+      section.experience__detail#experience__detail
         +button( 'experience', 'add' )
         +button( 'experience', 'delete' )
         +input( 'experience', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, '2000' )
