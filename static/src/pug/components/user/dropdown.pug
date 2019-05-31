@@ -4,10 +4,10 @@ mixin dropdown( belongBlock, content )
     section.dropdown__content.content
       each val, index in content
         if n++ == 1
-          button.content__button.content__button--top( id=`${ belongBlock }__${ index }` )
+          button.content__button.content__button--top( class=`${ belongBlock }__${ index }` id=`${ belongBlock }__${ index }` )
             p.button__text= `${ val }`
         else
-          button.content__button( id=`${ belongBlock }__${ index }` )
+          button.content__button( class=`${ belongBlock }__${ index }` id=`${ belongBlock }__${ index }` )
             p.button__text= `${ val }`
           
     

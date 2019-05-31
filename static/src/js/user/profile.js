@@ -42,22 +42,11 @@ catch ( err ) {
 }
 
 try {
-    const userNation = new DropdownControl(
-        document.querySelectorAll( '.nation-dropdown__content' )
-    );
-    if ( !( userNation instanceof DropdownControl ) )
-        throw new Error( 'DropdownControl not founs' );
-}
-catch ( err ) {
-    console.error( err );
-}
-
-try {
-    const degreeDropdown = new DropdownControl(
-        document.querySelectorAll( ' .dropdown__content ' )
-    );
-    if ( !( degreeDropdown instanceof DropdownControl ) )
+    const dropdownControl = new DropdownControl();
+    if ( !( dropdownControl instanceof DropdownControl ) )
         throw new Error( 'degreeDropdown not founs' );
+    dropdownControl.setDropdownEvent( document.querySelectorAll( ' .dropdown__content ' ) );
+    dropdownControl.setDropdownEvent( document.querySelectorAll( '.nation-dropdown__content' ) );
 }
 catch ( err ) {
     console.error( err );
