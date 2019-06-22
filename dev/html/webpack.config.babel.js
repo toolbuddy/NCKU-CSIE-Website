@@ -112,6 +112,9 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
 
         // Route `auth`
         'auth/login':              path.join( pugRoot, 'auth/login.pug' ),
+
+        // Route `developer`
+        'developer/index':              path.join( pugRoot, 'developer/index.pug' ),
     },
 
     /**

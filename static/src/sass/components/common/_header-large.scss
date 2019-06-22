@@ -5,7 +5,7 @@
 // `> .#{ $block } > .header`
 @mixin header--large ( $block ) {
   // [ variable ]
-  $large: 1201px;
+  $large: 1305px;
 
   .headerSpace--large {
     background-color: white;
@@ -23,7 +23,7 @@
   // `> .#{ $block } > .header.header--large`
   > .#{ $block }__header.header.header--large {
     // [ variable ]
-    $large: 1201px;
+    $large: 1305px;
     transition: top .5s;
     @media screen and ( max-width: $large ) {
       display: none;

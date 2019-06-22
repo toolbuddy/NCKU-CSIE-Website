@@ -35,13 +35,14 @@
     display: grid;
     grid-template: {
       areas:
-        'tv tv               tv'
-        '.  .                .'
-        '.  topic            .'
-        '.  announcement     .'
-        '.  hot-announcement .'
-        'high-school high-school high-school';
-      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) 50vh;
+        'tv          tv               tv'
+        '.           .                .'
+        '.           topic            .'
+        '.           announcement     .'
+        '.           hot-announcement .'
+        'high-school high-school      high-school'
+        'master      master           master';
+      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) 50vh 80vh;
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
     }
 
@@ -50,12 +51,13 @@
       // [ layout ]
       grid-template: {
         areas:
-          'tv tv           tv tv               tv'
-          '.  .            .  .                .'
-          '.  topic        .  hot-announcement .'
-          '.  announcement .  hot-announcement .'
-          'high-school high-school high-school high-school high-school';
-        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) 40vh;
+          'tv          tv           tv          tv               tv'
+          '.           .            .           .                .'
+          '.           topic        .           hot-announcement .'
+          '.           announcement .           hot-announcement .'
+          'high-school high-school  high-school high-school      high-school'
+          'master      master       master      master           master';
+        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) font__px-to-rem( 352 ) font__px-to-rem( 448 );
         columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
       }
       align-items: start;
@@ -188,52 +190,274 @@
     }
 
     > .content__high-school.high-school {
+      // [ variable ]
+      $area-height: font__px-to-rem( 352 );
+      $text-top-space: font__px-to-rem( -176 );
+
       // [ position ]
       grid-area: high-school;
 
       // [ layout ]
-      margin-top: 7rem;
+      width: 100%;
+      height: $area-height;
+      overflow: hidden;
 
       > .high-school__banner {
         width: 100%;
-        height: 50%;
+        height: $area-height;
+        filter: blur( .05rem ) brightness( .7 );
+        background: {
+          image: url( '~image/banner/student/high-school.jpg' );
+          attachment: fixed;
+          position: center bottom;
+          repeat: no-repeat;
+          size: cover;
+        }
+      }
 
-        > .banner__text {
-          margin-top: 1rem;
-          padding: {
-            top: font__px-to-rem( 200 );
-            bottom: font__px-to-rem( 200 );
-          }
-          color: white;
+      > .high-school__text {
+        color: white;
 
-          // [ position ]
-          top: 50%;
-          transform: translateY( -50% );
-          text-align: center;
+        // [ position ]
+        transform: translateY( -50% );
+        text-align: center;
+        position: relative;
+        top: $text-top-space;
+
+        > .text__link {
           font: {
-            size: font__px-to-rem( 26 );
-            weight: bold;
+            size: font__px-to-rem( 36 );
+            weight: 500;
           }
-          line-height: font__px-to-rem( 26 );
-          background: {
-            image: url( '~image/banner/student/high-school.jpg' );
-            position: center bottom;
-            repeat: no-repeat;
-            size: cover;
-          }
+          line-height: font__px-to-rem( 42 );
 
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
             // [ layout ]
-            line-height: font__px-to-rem( 50 );
+            line-height: font__px-to-rem( 60 );
 
             // [ skin ]
             font-size: font__px-to-rem( 50 );
           }
         }
       }
+    }
 
-      // filter: blur( .1rem ) brightness( .9 );
+    > .content__master.master {
+      // [ variable ]
+      $area-height: font__px-to-rem( 224 );
+      $text-top-space: font__px-to-rem( -112 );
+
+      // [ position ]
+      grid-area: master;
+
+      // [ layout ]
+      margin-top: font__px-to-rem( 267 );
+      width: 100%;
+      display: block;
+      overflow: hidden;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 300 );
+      }
+
+      > .master__imi {
+        // [ layout ]
+        width: 50%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        > .imi__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/imi.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .imi__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
+
+      > .master__imis {
+        // [ layout ]
+        width: 50%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        > .imis__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/imis.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .imis__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
+
+      > .master__msic {
+        // [ layout ]
+        width: 50%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        > .msic__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/msic.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .msic__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
+
+      > .master__ai {
+        // [ layout ]
+        width: 50%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        > .ai__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/ai.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .ai__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
     }
 
     // element

@@ -43,32 +43,86 @@ append data
             event:[
                 {
                     text: 'Waking Lion',
-                    imgSrc: 'event/lion.jpg',
+                    imgDir: 'event/lion/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                    ],
                     id: 'lion',
                 },
                 {
                     text: 'CSIE Camp',
-                    imgSrc: 'event/csiecamp.jpg',
+                    imgDir: 'event/csiecamp/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'csiecamp',
                 },
                 {
                     text: 'CSIE Week',
-                    imgSrc: 'event/csieweek.jpg',
+                    imgDir: 'event/csieweek/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'csieweek',
                 },
                 {
                     text: 'CSIE BBQ',
-                    imgSrc: 'event/sand.jpg',
+                    imgDir: 'event/sand/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                        '9.jpg',
+                        '10.jpg',
+                        '11.jpg',
+                    ],
                     id: 'sand',
                 },
                 {
                     text: 'Sports Team',
-                    imgSrc: 'event/sport.jpg',
+                    imgDir: 'event/sport/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'sport',
                 },
                 {
                     text: 'TangYuan Festival',
-                    imgSrc: 'event/tangyuan.jpg',
+                    imgDir: 'event/tangyuan/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.png',
+                        '4.png',
+                        '5.png',
+                    ],
                     id: 'tangyuan',
                 },
             ],
@@ -116,32 +170,86 @@ append data
             event:[
                 {
                     text: '醒獅團程式教學',
-                    imgSrc: 'event/lion.jpg',
+                    imgDir: 'event/lion/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                    ],
                     id: 'lion',
                 },
                 {
                     text: '資訊營',
-                    imgSrc: 'event/csiecamp.jpg',
+                    imgDir: 'event/csiecamp/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'csiecamp',
                 },
                 {
                     text: '資訊週',
-                    imgSrc: 'event/csieweek.jpg',
+                    imgDir: 'event/csieweek/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'csieweek',
                 },
                 {
-                    text: '系砂鍋',
-                    imgSrc: 'event/sand.jpg',
+                    text: '系砂控',
+                    imgDir: 'event/sand/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                        '9.jpg',
+                        '10.jpg',
+                        '11.jpg',
+                    ],
                     id: 'sand',
                 },
                 {
                     text: '系隊',
-                    imgSrc: 'event/sport.jpg',
+                    imgDir: 'event/sport/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.jpg',
+                        '4.jpg',
+                        '5.jpg',
+                        '6.jpg',
+                        '7.jpg',
+                        '8.jpg',
+                    ],
                     id: 'sport',
                 },
                 {
                     text: '湯圓會',
-                    imgSrc: 'event/tangyuan.jpg',
+                    imgDir: 'event/tangyuan/',
+                    imgSrc: [
+                        '1.jpg',
+                        '2.jpg',
+                        '3.png',
+                        '4.png',
+                        '5.png',
+                    ],
                     id: 'tangyuan',
                 },
             ],
@@ -229,10 +337,11 @@ append content
       article.goal__context.context
         article.context__paragraph.paragraph
           each eventContent in i18n[ LANG.id ].content.event
-            figure.paragraph__eventImg.eventImg
-              span.eventImg__helper
-              +image( { alt: eventContent.text, className: `eventImg__img`, src: eventContent.imgSrc } )
-              figcaption.eventImg__caption= eventContent.text
+            article.paragraph__title= eventContent.text
+            each eventImg in eventContent.imgSrc
+              figure.paragraph__eventImg.eventImg
+                span.eventImg__helper
+                +image( { alt: eventContent.text, className: `eventImg__img`, src: `${ eventContent.imgDir }${ eventImg }` } )
 
   section#qa.content__qa.qa
     +topic( 'qa', i18n[ LANG.id ].index.link.qa )

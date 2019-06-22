@@ -91,6 +91,9 @@ export default {
 
         // Route `auth`
         'auth/login':              path.join( jsSrcRoot, 'auth/login.js' ),
+
+        // Route `developer`
+        'developer/index':              path.join( jsSrcRoot, 'developer/index.js' ),
     },
 
     /**

@@ -1,0 +1,105 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/banner';
+@import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
+
+// block
+// `.body`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__banner`
+  // block
+  // `.body > .banner`
+  @include banner( $block: 'body', $image: 'resource/index' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ skin ]
+    width: 100%;
+    background-color: #ffffff;
+    padding: {
+      top: font__px-to-rem( 70 );
+      bottom: font__px-to-rem( 70 );
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      margin-top: 0;
+
+      // [ skin ]
+      border-top: font__px-to-rem( 50 ) solid transparent;
+    }
+
+    // template
+    // `.body > .content > .content__?.?`
+    %content__element {
+      // [ layout ]
+      display: block;
+      margin: {
+        top: font__px-to-rem( 70 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1400 );
+      width: 80%;
+      height: auto;
+    }
+
+    > .content__type.type {
+      // [ template ]
+      @extend %content__element;
+
+      // element
+      // `.body > .content > .type > .type__topic`
+      @include topic( $block: 'type' );
+
+      > .type__link.link {
+        > .link__img {
+          display: inline;
+          vertical-align: middle;
+          max: {
+            width: font__px-to-rem( 100 );
+            height: font__px-to-rem( 100 );
+          }
+          margin: {
+            right: font__px-to-rem( 20 );
+            top: font__px-to-rem( 20 );
+          }
+        }
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

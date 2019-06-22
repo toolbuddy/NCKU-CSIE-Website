@@ -766,6 +766,7 @@ export default class DefaultTagFilter {
             const data = await res.json();
 
             const extractTextObj = data;
+            extractTextObj.sort( ( announcement1, announcement2 ) => announcement2.updateTime - announcement1.updateTime );
             extractTextObj.forEach( ( ann ) => {
                 try {
                     ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();
@@ -886,6 +887,7 @@ export default class DefaultTagFilter {
             const data = await res.json();
 
             const extractTextObj = data;
+            extractTextObj.sort( ( announcement1, announcement2 ) => announcement2.updateTime - announcement1.updateTime );
             extractTextObj.forEach( ( ann ) => {
                 try {
                     ann.content = ( ( new DOMParser() ).parseFromString( ann.content, 'text/html' ) ).documentElement.textContent.trim();

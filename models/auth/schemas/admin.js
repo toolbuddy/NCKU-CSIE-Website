@@ -32,6 +32,13 @@ const Admin = user.define( 'admin', {
         allowNull:    false,
         defaultValue: '1',
     },
+    name: {
+        type:       Sequelize.STRING( 255 ),
+    },
+    salt: {
+        type:       Sequelize.STRING( 20 ),
+        allowNull:  false,
+    },
 
 } );
 

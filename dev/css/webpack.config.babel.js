@@ -101,6 +101,9 @@ export default {
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
+
+        // Route `developer`
+        'developer/index':             path.join( sassRoot, 'developer/index.scss' ),
     },
 
     /**

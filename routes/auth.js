@@ -8,6 +8,7 @@
  */
 
 import express from 'express';
+import md5 from 'md5';
 import staticHtml from 'routes/utils/static-html.js';
 import cookieParser from 'cookie-parser';
 
@@ -38,7 +39,7 @@ router
         const data = await getAdminByAccount( {
             account: req.body.account,
         } );
-        if ( data.password === req.body.password ) {
+        if ( data.password === md5( req.body.password + data.salt ) ) {
             // Store the new cookie in the user.
             console.log( 'old sid:' );
             console.log( res.locals.unparsedId );

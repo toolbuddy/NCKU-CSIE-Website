@@ -28,6 +28,7 @@ import resource from 'routes/resource.js';
 import staticFile from 'routes/static.js';
 import staticHtml from 'routes/utils/static-html.js';
 import student from 'routes/student.js';
+import developer from 'routes/developer.js';
 import user from 'routes/user.js';
 
 import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
@@ -167,6 +168,12 @@ app.use( '/resource', resource );
  */
 
 app.use( '/student', student );
+
+/**
+ * Resolve URL `/developer`.
+ */
+
+app.use( '/developer', developer );
 
 /**
  * Resolve URL `/user`.

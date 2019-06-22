@@ -107,7 +107,10 @@
       line-height: font__px-to-rem( 18 );
 
       // [ skin ]
-      font-size: font__px-to-rem( 14 );
+      font: {
+        size: font__px-to-rem( 14 );
+        weight: bold;
+      }
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
@@ -115,7 +118,10 @@
         line-height: font__px-to-rem( 20 );
 
         // [ skin ]
-        font-size: font__px-to-rem( 16 );
+        font: {
+          size: font__px-to-rem( 16 );
+          weight: bold;
+        }
       }
     }
 
@@ -252,7 +258,10 @@
         line-height: font__px-to-rem( 18 );
 
         // [ skin ]
-        font-size: font__px-to-rem( 14 );
+        font: {
+          size: font__px-to-rem( 14 );
+          weight: bold;
+        }
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
@@ -260,7 +269,10 @@
           line-height: font__px-to-rem( 20 );
 
           // [ skin ]
-          font-size: font__px-to-rem( 16 );
+          font: {
+            size: font__px-to-rem( 16 );
+            weight: bold;
+          }
         }
       }
     }

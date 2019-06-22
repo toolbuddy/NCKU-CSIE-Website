@@ -33,6 +33,7 @@ export default async ( opt ) => {
                 'sid',
                 'isValid',
                 'name',
+                'salt',
             ],
             where: {
                 account,
@@ -53,6 +54,7 @@ export default async ( opt ) => {
             sid:        data.sid,
             isValid:    data.isValid,
             name:       data.name,
+            salt:       data.salt,
         };
     }
     catch ( err ) {
