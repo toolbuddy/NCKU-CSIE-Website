@@ -7,11 +7,7 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
-@import 'components/user/input-title';
 @import 'components/user/input-block';
-@import 'components/user/input-image';
-@import 'components/user/input';
-@import 'components/user/input-button';
 @import 'components/user/nation-dropdown';
 @import 'components/user/dropdown';
 @import 'components/user/filter';
@@ -97,9 +93,10 @@
       grid-area: information;
 
       // [ position ]
-      width: 95%;
+      width: 90%;
       margin: {
         top: font__px-to-rem( 80 );
+        bottom: font__px-to-rem( 80 );
         left: auto;
         right: auto;
       }
@@ -117,7 +114,7 @@
         display: block;
 
         // [ skin ]
-        width: 95%;
+        width: 100%;
         height: auto;
 
         // position
@@ -125,119 +122,72 @@
           left: auto;
           right: auto;
         }
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ position ]
-          margin-left: font__px-to-rem( 31.5 );
-        }
       }
 
       // `.body > .content > .content__information > .information__profile`
       > .information__profile.profile {
         // [ layout ]
-        display: grid;
+        display: block;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
 
-        grid-template: {
-          areas:
-            ' topic    topic    topic '
-            ' image    image    image  '
-            ' personal personal personal '
-            ' filter   filter   filter '
-            ' work     work     work  ';
-          columns: 1fr 12fr 1fr;
+        // [ position ]
+
+        // [ skin ]
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          width: 95%;
         }
 
-        // [ RWD: $large ]
+        // [ RWD: $small ]
         @media screen and ( min-width: $large ) {
-          grid-template: {
-            areas:
-              ' topic    topic  topic '
-              ' personal .      image '
-              ' filter   filter image '
-              ' work     work   work  ';
-            columns: 5fr 1fr 2fr;
-          }
+          // [ layout ]
+          max-width: font__px-to-rem( 1200 );
         }
 
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-        @include local-topic( profile ) {
-          // [ layout ]
-          grid-area: topic;
+        @include local-topic( profile );
+        @include input-block( $block: 'profile', $modifier: 'name' );
+        @include input-block( $block: 'profile', $modifier: 'title' );
+        @include input-block( $block: 'profile', $modifier: 'office' );
+        @include input-block( $block: 'profile', $modifier: 'lab-name' );
+        @include input-block( $block: 'profile', $modifier: 'lab-location' );
+        @include input-block( $block: 'profile', $modifier: 'lab-tel' );
+        @include input-block( $block: 'profile', $modifier: 'lab-web' );
+        @include input-block( $block: 'profile', $modifier: 'office-tel' );
+        @include input-block( $block: 'profile', $modifier: 'email' );
+        @include input-block( $block: 'profile', $modifier: 'fax' );
+        @include input-block( $block: 'profile', $modifier: 'personal-web' );
+        @include input-block( $block: 'profile', $modifier: 'specilty' );
+        @include input-block( $block: 'profile', $modifier: 'department' ) {
+          > .input-block.profile__input-block--department {
+            // [ layout ]
+            height: auto;
 
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            // [ position ]
-            margin-left: font__px-to-rem( 31.5 );
+            > .input-block__block.block > .block__content {
+              display: block;
+              height: auto;
+              padding-top: font__px-to-rem( 20 );
+              padding-bottom: font__px-to-rem( 20 );
+            }
           }
         }
-
-        // `.body > .content > .content__information > .information__profile > .profile__personal`
-        > .profile__personal {
-          // [ layout ]
-          grid-area: personal;
-          display: block;
-
-          %personal__element {
+        @include input-block( $block: 'profile', $modifier: 'research' ) {
+          > .input-block.profile__input-block--research {
             // [ layout ]
-            display: grid;
-            grid-template: {
-              areas:
-                'add input1 delete'
-                '.   input2 .     ';
-              columns: font__px-to-rem( 27 ) auto font__px-to-rem( 27 );
-            }
+            height: auto;
 
-            // [ position ]
-            width: 100%;
-            margin: {
-              left: auto;
-              right: auto;
-            }
-            @media screen and ( min-width: $small ) {
-              grid: {
-                template: {
-                  areas: ' add input1 input2 delete ';
-                  columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
-                }
-                column-gap: font__px-to-rem( 20 );
-              }
-            }
-          }
-
-          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__name`
-          > .personal__name {
-            // [ element ]
-            @extend %personal__element;
-            @include input( $block: 'name', $modifier: 'name-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'name', $modifier: 'name-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-          }
-
-          // `.body > .content > .content__information > .information__profile > .profile__personal > .personal__title`
-          > .personal__title {
-            // [ element ]
-            @extend %personal__element;
-            @include input( $block: 'title', $modifier: 'title-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'title', $modifier: 'title-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-            @include input-button( $block: 'title', $type: 'add' ) {
-              // [ layout ]
-              grid-area: add;
-            }
-            @include input-button( $block: 'title', $type: 'delete' ) {
-              // [ layout ]
-              grid-area: delete;
+            > .input-block__block.block > .block__content {
+              display: block;
+              height: auto;
+              width: auto;
+              margin-left: auto;
+              margin-right: auto;
+              padding-top: font__px-to-rem( 20 );
+              padding-bottom: font__px-to-rem( 20 );
             }
           }
         }
@@ -317,451 +267,6 @@
             grid-area: nation;
           }
         }
-
-        // `.body > .content > .content__information > .information__profile > .profile__work`
-        > .profile__work {
-          // [ layout ]
-          grid-area: work;
-
-          %work__element {
-            // [ layout ]
-            display: grid;
-            grid-template: {
-              areas:
-                ' image1 input1 image2'
-                ' .      input2 .     ';
-              columns: font__px-to-rem( 27 ) 1fr font__px-to-rem( 27 );
-            }
-
-            // [ RWD: $small ]
-            @media screen and ( min-width: $small ) {
-              display: grid;
-              grid: {
-                template: {
-                  areas: ' image1 input1 input2 image2 ';
-                  columns: font__px-to-rem( 30 ) 1fr 1fr font__px-to-rem( 30 );
-                }
-                column-gap: font__px-to-rem( 20 );
-              }
-            }
-          }
-
-          > .work__office {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'office', $modifier: 'office-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'office', $modifier: 'office-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-            @include input-image( $block: 'office' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__lab-name {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'lab-name', $modifier: 'lab-name-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'lab-name', $modifier: 'lab-name-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-            @include input-image( $block: 'lab-name' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__lab-location {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'lab-location', $modifier: 'lab-location-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'lab-location', $modifier: 'lab-location-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-            @include input-image( $block: 'lab-location' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__lab-tel {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'lab-tel', $modifier: 'lab-tel', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'lab-tel' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__lab-web {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'lab-web', $modifier: 'lab-web', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'lab-web' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__office-tel {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'office-tel', $modifier: 'office-tel', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'office-tel' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__email {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'email', $modifier: 'email', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'email' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__fax {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'fax', $modifier: 'fax', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'fax' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__personal-web {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'personal-web', $modifier: 'personal-web', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input-image( $block: 'personal-web' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-          }
-
-          > .work__specilty {
-            // [ element ]
-            @extend %work__element;
-            @include input( $block: 'specilty', $modifier: 'specilty-zh', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input1;
-            }
-            @include input( $block: 'specilty', $modifier: 'specilty-en', $inputHeight: $input-height-large ) {
-              // [ layout ]
-              grid-area: input2;
-            }
-            @include input-button( $block: 'specilty', $type: 'add' ) {
-              // [ layout ]
-              grid-area: image1;
-            }
-            @include input-button( $block: 'specilty', $type: 'delete' ) {
-              // [ layout ]
-              grid-area: image2;
-            }
-          }
-        }
-      }
-
-      // `.body > .content > .content__information > .information__education`
-      > .information__education {
-        // [ layout ]
-        display: block;
-
-        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-        @include local-topic( 'education' ) {
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            // [ position ]
-            margin-left: font__px-to-rem( 31.5 );
-          }
-
-          > .topic__word {
-            // [ skin ]
-            border-bottom: 2px solid lightgray;
-          }
-        }
-
-        > .education__detail {
-          // [ layout ]
-          display: grid;
-
-          grid: {
-            template: {
-              areas:
-                'add duration-from duration-line duration-to delete '
-                '.   nation        nation        .           .      '
-                '.   school-zh     school-zh     school-zh   .      '
-                '.   school-en     school-en     school-en   .      '
-                '.   major-zh      major-zh      major-zh    .      '
-                '.   major-en      major-en      major-en    .      '
-                '.   degree        degree        .           .      ';
-              columns: font__px-to-rem( 27 ) 2fr .8fr 2fr font__px-to-rem( 27 );
-            }
-            gap: font__px-to-rem( 5 );
-          }
-
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            grid-template: {
-              areas:
-                'add duration-from duration-line duration-to nation     .         delete'
-                '.   school-zh     school-zh     school-zh   school-en  school-en .     '
-                '.   major-zh      major-zh      major-zh    major-en   major-en  .     '
-                '.   degree        degree        .           .          .         .     ';
-              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 4fr .8fr font__px-to-rem( 50 );
-            }
-          }
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            grid-template: {
-              areas:
-                'add duration-from duration-line duration-to nation school-zh major-zh degree delete'
-                '.   duration-from duration-line duration-to nation school-en major-en degree .     ';
-              columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 3.3fr 5fr 5fr 3fr font__px-to-rem( 50 );
-              rows: 1fr 1fr;
-            }
-          }
-
-          // [ element ]
-          @include input-button( $block: 'education', $type: 'add' ) {
-            // [ layout ]
-            grid-area: add;
-          }
-          @include input-button( $block: 'education', $type: 'delete' ) {
-            // [ layout ]
-            grid-area: delete;
-          }
-          @include input( $block: 'education', $modifier: 'duration-from', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: duration-from;
-          }
-          @include input( $block: 'education', $modifier: 'duration-to', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: duration-to;
-          }
-          @include input( $block: 'education', $modifier: 'school-zh', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: school-zh;
-          }
-          @include input( $block: 'education', $modifier: 'school-en', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: school-en;
-          }
-          @include input( $block: 'education', $modifier: 'major-zh', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: major-zh;
-          }
-          @include input( $block: 'education', $modifier: 'major-en', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: major-en;
-          }
-          @include input( $block: 'education', $modifier: 'degree', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: degree;
-          }
-
-          > .detail__duration-line {
-            // [ layout ]
-            display: block;
-            grid-area: duration-line;
-
-            // [ skin ]
-            height: font__px-to-rem( 47 );
-            width: 100% ;
-            border-bottom: 2px solid gray;
-          }
-
-          > .detail__nation {
-            // [ layout ]
-            grid-area: nation;
-
-            // [ element ]
-            @include input-title( 'nation' );
-            @include nation-dropdown( 'education' );
-          }
-
-          > .detail__degree {
-            // [ layout ]
-            grid-area: degree;
-
-            // [ element ]
-            @include input-title( 'degree' );
-            @include dropdown( $block: 'education', $width: 130 );
-          }
-        }
-      }
-
-      // `.body > .content > .content__information > .information__experience`
-      > .information__experience {
-        // [ layout ]
-        display: block;
-
-        // [ position ]
-        margin-bottom: font__px-to-rem( 100 );
-
-        // `.body > .content > .content__information > .information__experience > .experience__topic`
-        @include local-topic( 'experience' ) {
-          // [ RWD: $small ]
-          @media screen and ( min-width: $small ) {
-            // [ position ]
-            margin-left: font__px-to-rem( 31.5 );
-          }
-
-          > .topic__word {
-            // [ skin ]
-            border-bottom: 2px solid lightgray;
-          }
-        }
-
-        > .experience__detail {
-          // [ layout ]
-          display: grid;
-          grid: {
-            template: {
-              areas:
-                'add duration-from   duration-line   duration-to     delete'
-                '.   organization-zh organization-zh organization-zh .     '
-                '.   organization-en organization-en organization-en .     '
-                '.   department-zh  department-zh    department-zh   .     '
-                '.   department-en  department-en    department-en   .     '
-                '.   title-zh       title-zh         title-zh        .     '
-                '.   title-en       title-en         title-en        .     ';
-              columns: font__px-to-rem( 27 ) 2fr .8fr 2fr font__px-to-rem( 27 );
-            }
-            gap: font__px-to-rem( 5 );
-          }
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $small ) {
-            grid: {
-              template: {
-                areas:
-                  'add duration-from   duration-line   duration-line   duration-to     .               delete'
-                  '.   organization-zh organization-zh organization-zh organization-zh organization-en .     '
-                  '.   department-zh   department-zh   department-zh   department-zh   department-en   .     '
-                  '.   title-zh        title-zh        title-en        title-en        .               .     ';
-                columns: font__px-to-rem( 50 ) 2fr .4fr .4fr 2fr 4.8fr font__px-to-rem( 50 );
-              }
-              gap: font__px-to-rem( 5 );
-            }
-          }
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            grid: {
-              template: {
-                areas:
-                  'add duration-from duration-line duration-to organization-zh department-zh title-zh delete'
-                  '.   .             .             .           organization-en department-en title-en .     ';
-                columns: font__px-to-rem( 50 ) 2fr .8fr 2fr 5.8fr 7.5fr 3fr font__px-to-rem( 50 );
-                rows: 1fr 1fr;
-              }
-              gap: font__px-to-rem( 5 );
-            }
-          }
-
-          // [ element ]
-          // `.body > .content > .content__information > .information__experience > .experience__detail > detail__?`
-          %detail__element {
-            // [ layout ]
-            display: inline-block;
-
-            // [ RWD: $large ]
-            @media screen and ( min-width: $large ) {
-              display: block;
-            }
-          }
-
-          // [ element ]
-          @include input-button( $block: 'experience', $type: 'add' ) {
-            // [ layout ]
-            grid-area: add;
-          }
-          @include input-button( $block: 'experience', $type: 'delete' ) {
-            // [ layout ]
-            grid-area: delete;
-          }
-          @include input( $block: 'experience', $modifier: 'duration-from', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: duration-from;
-          }
-          @include input( $block: 'experience', $modifier: 'duration-to', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: duration-to;
-          }
-          @include input( $block: 'experience', $modifier: 'organization-zh', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: organization-zh;
-          }
-          @include input( $block: 'experience', $modifier: 'organization-en', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: organization-en;
-          }
-          @include input( $block: 'experience', $modifier: 'department-zh', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: department-zh;
-          }
-          @include input( $block: 'experience', $modifier: 'department-en', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: department-en;
-          }
-          @include input( $block: 'experience', $modifier: 'title-zh', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: title-zh;
-          }
-          @include input( $block: 'experience', $modifier: 'title-en', $inputHeight: $input-height-small ) {
-            // [ layout ]
-            grid-area: title-en;
-          }
-
-          > .detail__duration-line {
-            // [ layout ]
-            display: block;
-            grid-area: duration-line;
-
-            // [ skin ]
-            height: font__px-to-rem( 47 );
-            width: 100%;
-            border-bottom: 2px solid gray;
-          }
-        }
       }
     }
 
@@ -783,6 +288,64 @@
         color: transparent;
         style: solid;
       }
+    }
+
+    // `.body > .content > .content__information > .information__experience`
+    .information__experience.experience {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+
+      // [ position ]
+
+      // [ skin ]
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
+      @include local-topic( 'experience' );
+      @include input-block( $block: 'experience', $modifier: 'experience' );
+    }
+
+    // `.body > .content > .content__information > .information__education`
+    .information__education.education {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+
+      // [ position ]
+
+      // [ skin ]
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+      @include local-topic( 'education' );
+      @include input-block( $block: 'education', $modifier: 'education' );
     }
   }
 

@@ -5,6 +5,7 @@ include /components/user/input.pug
 include /components/user/button.pug
 include /components/user/dropdown.pug
 include /components/user/nation-dropdown.pug
+include /components/user/input-block.pug
 include /components/common/topic.pug
 
 append data
@@ -20,7 +21,6 @@ append data
           topic: '教師資料維護',
           profile: {
             image:        '編輯相片',
-            topic:        '個人資料 / Profile',
             name:         'name',
             title:        'title',
             department:   '系所別（可複選）',
@@ -28,19 +28,19 @@ append data
             office:       'office',
             lab_name:     'Lab Name',
             lab_location: 'Lab Location',
-            lab_tel:      '實驗室電話 / Lab Tel',
-            lab_web:      '實驗室網站 / Lab Web',
-            office_tel:   '聯絡電話 / Office Tel',
+            lab_tel:      'Lab Tel',
+            lab_web:      'Lab Web',
+            office_tel:   'Office Tel',
             email:        'Email',
-            fax:          '傳真 / Fax',
-            personal_web: '個人網站 / Personal Web',
+            fax:          'Fax',
+            personal_web: 'Personal Web',
             specilty:     'Specilty',
           },
           education: {
-            topic:         '學歷 / Education',
-            duration_from: '從 / From',
-            duration_to:   '至 / To',
-            nation:        '國家 / Nation',
+            topic:         'Education',
+            duration_from: 'From',
+            duration_to:   'To',
+            nation:        'Nation',
             school:        'School', 
             major:         'Major',
             degree:        'Degree',
@@ -56,6 +56,11 @@ append data
             department:   'Department',
             title:        'title',
           },
+          button: {
+            edit: 'edit',
+            add:  'add',
+            remove: 'remove',
+          },
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -68,7 +73,6 @@ append data
           topic: '教師資料維護',
           profile: {
             image:        '編輯相片',
-            topic:        '個人資料 / Profile',
             name:         '姓名',
             title:        '職稱',
             department:   '系所別（可複選）',
@@ -76,19 +80,19 @@ append data
             office:       '辦公室',
             lab_name:     '實驗室名稱',
             lab_location: '實驗室位置',
-            lab_tel:      '實驗室電話 / Lab Tel',
-            lab_web:      '實驗室網站 / Lab Web',
-            office_tel:   '聯絡電話 / Office Tel',
+            lab_tel:      '實驗室電話',
+            lab_web:      '實驗室網站',
+            office_tel:   '聯絡電話',
             email:        'Email',
-            fax:          '傳真 / Fax',
-            personal_web: '個人網站 / Personal Web',
+            fax:          '傳真',
+            personal_web: '個人網站',
             specilty:     '專長領域',
           },
           education: {
-            topic:         '學歷 / Education',
-            duration_from: '從 / From',
-            duration_to:   '至 / To',
-            nation:        '國家 / Nation',
+            topic:         '學歷',
+            duration_from: '從',
+            duration_to:   '至',
+            nation:        '國家',
             school:        '學校',
             major:         '主修',
             degree:        '學位',
@@ -99,10 +103,15 @@ append data
             },
           },
           experience: {
-            topic:        '經歷 / Experience',
+            topic:        '經歷',
             organization: '任職單位',
             department:   '任職部門',
             title:        '職位',
+          },
+          button: {
+            edit: '編輯',
+            add:  '新增',
+            remove: '刪除',
           },
         },
       },
@@ -132,144 +141,66 @@ append content
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile
-      +local-topic( 'profile', i18n[ LANG.id ].content.profile.topic )
-      section.profile__personal.personal#profile__personal
-        section.personal__name
-          +input( 'name', i18n[ 0 ].content.profile.name, 'name-zh', true )
-          +input( 'name', i18n[ 1 ].content.profile.name, 'name-en', true )
-        section.personal__title#personal__title
-          +button( 'title', 'add' )
-          +input( 'title', i18n[ 0 ].content.profile.title, 'title-zh', true, '副教授' )
-          +input( 'title', i18n[ 1 ].content.profile.title, 'title-en', true )
-          +button( 'title', 'delete' )
-      section.profile__filter.filter
-        section.filter__department.department
-          aside.department__title
-            p.title__required= '*'
-            p.title__content= i18n[ LANG.id ].content.profile.department
-          each departmentId in UTILS.faculty.departmentUtils.supportedId
-            button.department__tag(
-              data-department-id = `${ departmentId }`
-            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
-        section.filter__research-group.research-group
-          aside.research-group__title
-            p.title__required= '*'
-            p.title__content= i18n[ LANG.id ].content.profile.research
-          each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
-            button.research-group__tag(
-              data-research-group-id = `${ researchGroupId }`,
-            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+      +local-topic( 'profile', '個人資料 / Profile' )
       section.profile__image
         section.image__frame
           button.frame__button= i18n[ LANG.id ].content.profile.image
         +nation-dropdown( 'image' )
-      section.profile__work#profile__work
-        section.work__office.office
-          +image( {
-            alt:       '>',
-            className: `office__image`,
-            src:       `icon/location.png`,
-          } )
-          +input( 'office', i18n[ 0 ].content.profile.office, 'office-zh', false, "Ex.資訊系新館大樓12F 65C11" )
-          +input( 'office', i18n[ 1 ].content.profile.office, 'office-en' )
-        section.work__lab-name.lab-name  
-          +image( {
-            alt:       '>',
-            className: `lab-name__image`,
-            src:       `icon/laboratory.png`,
-          } )       
-          +input( 'lab-name', i18n[ 0 ].content.profile.lab_name, 'lab-name-zh', false, "Ex.智慧型知識管理實驗室" )
-          +input( 'lab-name', i18n[ 1 ].content.profile.lab_name, 'lab-name-en' )
-        section.work__lab-location.lab-location
-          +image( {
-            alt:       '>',
-            className: `lab-location__image`,
-            src:       `icon/laboratory.png`,
-          } )  
-          +input( 'lab-location', i18n[ 0 ].content.profile.lab_location, 'lab-location-zh', false, "Ex.資訊系新館大樓9F 65903" )
-          +input( 'lab-location', i18n[ 1 ].content.profile.lab_location, 'lab-location-en' )
-        section.work__lab-tel.lab-tel
-          +image( {
-            alt:       '>',
-            className: `lab-tel__image`,
-            src:       `icon/laboratory.png`,
-          } )  
-          +input( 'lab-tel', i18n[ LANG.id ].content.profile.lab_tel, 'lab-tel', true )
-        section.work__lab-web.lab-web
-          +image( {
-            alt:       '>',
-            className: `lab-web__image`,
-            src:       `icon/laboratory.png`,
-          } )  
-          +input( 'lab-web', i18n[ LANG.id ].content.profile.lab_web, 'lab-web' )
-        section.work__office-tel.office-tel
-          +image( {
-            alt:       '>',
-            className: `office-tel__image`,
-            src:       `icon/phone.png`,
-          } )  
-          +input( 'office-tel', i18n[ LANG.id ].content.profile.office_tel, 'office-tel', true )
-        section.work__email.email
-          +image( {
-            alt:       '>',
-            className: `email__image`,
-            src:       `icon/envelope.png`,
-          } )  
-          +input( 'email', i18n[ LANG.id ].content.profile.email, 'email' )
-        section.work__fax.fax
-          +image( {
-            alt:       '>',
-            className: `fax__image`,
-            src:       `icon/printer.png`,
-          } )  
-          +input( 'fax', i18n[ LANG.id ].content.profile.fax, 'fax' )
-        section.work__personal-web.personal-web
-          +image( {
-            alt:       '>',
-            className: `personal-web__image`,
-            src:       `icon/user.png`,
-          } )  
-          +input( 'personal-web', i18n[ LANG.id ].content.profile.personal_web, 'personal-web', false )
-        section.work__specilty#work__specilty
-          +button( 'specilty', 'add' )
-          +input( 'specilty', i18n[ 0 ].content.profile.specilty, 'specilty-zh' )
-          +input( 'specilty', i18n[ 1 ].content.profile.specilty, 'specilty-en' )
-          +button( 'specilty', 'delete' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.title, '教授', 'title', true, true )
+      section.input-block.profile__input-block.profile__input-block--department
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.profile.department
+          article.block__content
+            each departmentId in UTILS.faculty.departmentUtils.supportedId
+              button.content__tag--department(
+                data-department-id = `${ departmentId }`
+              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+      section.input-block.profile__input-block.profile__input-block--research
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.profile.research
+          article.block__content
+            each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+              button.content__tag--research(
+                data-research-group-id = `${ researchGroupId }`,
+              )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.specilty, '教授', 'specilty', true, true )
 
     article.information__education.education#information__education
-      +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
-      section.education__detail#education__detail
-        +button( 'education', 'add' )
-        +button( 'education', 'delete' )
-        +input( 'education', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, 'Ex.1996' )
-        section.detail__duration-line
-        +input( 'education', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false, 'Ex.2000' )
-        section.detail__nation
-          aside.nation__title
-            p.title__content= i18n[ LANG.id ].content.education.nation 
-          +nation-dropdown( 'education' )
-        +input( 'education', i18n[ 0 ].content.education.school, 'school-zh', false, '國立台灣大學' )
-        +input( 'education', i18n[ 1 ].content.education.school, 'school-en', false, 'The Ohio State University' )
-        +input( 'education', i18n[ 0 ].content.education.major, 'major-zh', false, '電機工程' )
-        +input( 'education', i18n[ 1 ].content.education.major, 'major-en', false, 'Computer and Informat' )
-        section.detail__degree
-          aside.degree__title
-            p.title__content= i18n[ LANG.id ].content.education.degree
-          +dropdown( 'education', i18n[ LANG.id ].content.education.degree_dropdown )
-    article.information__experience#information__experience
-      +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )  
-      section.experience__detail#experience__detail 
-        +button( 'experience', 'add' )
-        +button( 'experience', 'delete' )
-        +input( 'experience', i18n[ LANG.id ].content.education.duration_from, 'duration-from', false, '2000' )
-        section.detail__duration-line
-        +input( 'experience', i18n[ LANG.id ].content.education.duration_to, 'duration-to', false, '2004' )
-        +input( 'experience', i18n[ 0 ].content.experience.organization, 'organization-zh' )
-        +input( 'experience', i18n[ 1 ].content.experience.organization, 'organization-en' )
-        +input( 'experience', i18n[ 0 ].content.experience.department, 'department-zh' )
-        +input( 'experience', i18n[ 1 ].content.experience.department, 'department-en' ) 
-        +input( 'experience', i18n[ 0 ].content.experience.title, 'title-zh' ) 
-        +input( 'experience', i18n[ 1 ].content.experience.title, 'title-en' ) 
+      +local-topic( 'education', '學歷 / Education' )
+      section.input-block.education__input-block--education
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.education.topic
+          article.block__content
+            p.content__word.content__word--school= '台灣大學'
+            p.content__word.content__word--major=  '電機工程系'
+            p.content__word.content__word--degree= '碩士'
+            button.content__edit.content__edit--education= i18n[ LANG.id ].content.button.edit
+        aside.input-block__add.add
+          button.add__button#add__button--education= i18n[ LANG.id ].content.button.add
+
+    article.information__experience.experience#information__experience
+      +local-topic( 'experience', '經歷 / Experience' ) 
+      section.input-block.experience__input-block--experience
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.experience.topic
+          article.block__content
+            p.content__word.content__word--organization= '成功大學'
+            p.content__word.content__word--department=  '資訊工程系'
+            p.content__word.content__word--title= '教授'
+            button.content__edit.content__edit--experience= i18n[ LANG.id ].content.button.edit
+        aside.input-block__add.add
+          button.add__button#add__button--experience= i18n[ LANG.id ].content.button.add
 
 append footer
 

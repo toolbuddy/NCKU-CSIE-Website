@@ -1,7 +1,6 @@
 extends /layouts/base.pug
 include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
-include /components/user/input.pug
 include /components/user/button.pug
 include /components/user/nation-dropdown.pug
 include /components/common/topic.pug
@@ -60,10 +59,10 @@ append breadcrumb
 
 append content
   +navigation-bar( 'content' )
-  main.content__main
+  main.content__main#content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     +local-topic( 'main', '榮譽及獲獎 / Award' )
-    article.main__award.award
+    article.main__award.award#main__award
       +button( 'award', 'add' )
       +button( 'award', 'delete' )
       +input( 'award', i18n[ LANG.id ].content.award.received_date, 'received-date' )

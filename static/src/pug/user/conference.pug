@@ -62,10 +62,10 @@ append breadcrumb
 
 append content
   +navigation-bar( 'content' )
-  main.content__main
+  main.content__main#content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     +local-topic( 'main', '參與會議 / Conference' )
-    article.main__conference.conference
+    article.main__conference.conference#main__conference
       +button( 'conference', 'add' )
       +button( 'conference', 'delete' )
       +input( 'conference', i18n[ LANG.id ].content.conference.host_year, 'host-year' )

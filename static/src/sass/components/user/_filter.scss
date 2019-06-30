@@ -1,5 +1,3 @@
-@import 'components/user/input-title';
-
 // component
 // `> .#{ $block } > .#{ $block }__filter.filter`
 @mixin filter ( $block ) {
@@ -86,10 +84,6 @@
       margin-bottom: font__px-to-rem( 15 );
 
       // element
-      // `> .#{ $block } > .filter > .department > .department__title`
-      @include input-title( department );
-
-      // element
       // `> .#{ $block } > .filter > .department > .department__tag`
       > .department__tag {
         // [ template ]
@@ -141,10 +135,6 @@
       // [ layout ]
       text-align: left;
       margin-bottom: font__px-to-rem( 2 );
-
-      // element
-      // `> .#{ $block } > .filter > .research > .research__title`
-      @include input-title( research-group );
 
       // element
       // `> .#{ $block } > .filter > .research-group > .research-group__tag`

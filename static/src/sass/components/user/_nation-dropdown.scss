@@ -31,15 +31,13 @@
         grid: {
           template: {
             areas: ' . flag content arrow . ';
-            columns: font__px-to-rem( 5 ) 1fr 3fr 1fr font__px-to-rem( 5 );
+            columns: font__px-to-rem( 5 ) font__px-to-rem( 15 ) 3fr 1fr font__px-to-rem( 5 );
           }
           gap: font__px-to-rem( 3 );
         }
-        align-content: center;
-        justify-content: center;
 
         // [ position ]
-        width: 100%;
+        width: font__px-to-rem( 130 );
         height: font__px-to-rem( 30 );
 
         // [ skin ]
@@ -49,16 +47,20 @@
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
         > .button__flag {
           // [ layout ]
+          display: inline-block;
           grid-area: flag;
+          align-self: center;
 
           // [ position ]
           height: font__px-to-rem( 21 );
-          width: font__px-to-rem( 21 );
+          width: auto;
+          padding-top: font__px-to-rem( 5 );
         }
 
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__img`
         > .button__content {
           // [ layout ]
+          display: inline-block;
           grid-area: content;
 
           // [ position ]
@@ -80,30 +82,35 @@
         // `> .#{ belongBlock } > .{ belongBlock }__nation-dropdown.nation-dropdown > .nation-dropdown__button > .button__arrow`
         > .button__arrow {
           // [ layout ]
-          display: block;
+          display: none;
           grid-area: arrow;
           align-self: center;
 
           // [ position ]
           height: font__px-to-rem( 15 );
-          width: font__px-to-rem( 15 );
+          width: auto;
         }
       }
 
       > .content__button--top {
         // [ layout ]
-        display: grid;
+        display: block;
 
         // [ skin ]
         border: {
           radius: font__px-to-rem( 33 );
           bottom: solid 1px #adacad;
         }
+
+        > .button__arrow {
+          // [ layout ]
+          display: inline-block;
+        }
       }
 
       > .content__button--show {
         // [ layout ]
-        display: grid;
+        display: block;
       }
     }
 

@@ -6,9 +6,7 @@
 @import 'components/common/footer';
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
-@import 'components/user/input';
 @import 'components/user/local-topic';
-@import 'components/user/input-button';
 
 // block
 // `.body`
@@ -149,92 +147,6 @@
 
       // `.body > .content > .content__main > .main__conference`      
       > .main__conference.conference {
-        // [ layout ]
-        display: grid;
-        grid: {
-          template: {
-            areas:
-              'add year          year          delete'
-              '.   conference-zh conference-zh .     '
-              '.   conference-en conference-en .     '
-              '.   title-zh      title-en      .     ';
-            columns: font__px-to-rem( 30 ) .5fr .5fr font__px-to-rem( 30 );
-          }
-          gap: font__px-to-rem( 5 );
-        }
-
-        // [ position ]
-        width: 100%;
-        margin: {
-          top: font__px-to-rem( 5 );
-          left: auto;
-          right: auto;
-        }
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ position ]
-          width: 90%;
-        }
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          grid: {
-            template: {
-              areas:
-                'add year conference-zh title-zh delete'
-                '.   .    conference-en title-en .     ';
-              columns: font__px-to-rem( 50 ) 1fr 3fr 1fr font__px-to-rem( 50 );
-            }
-            gap: font__px-to-rem( 5 );
-          }
-
-          // [ position ]
-          width: 100%;
-        }
-
-        // [ element ]
-        @include input( $block: 'conference', $modifier: 'conference-zh', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: conference-zh;
-        }
-
-        // [ element ]
-        @include input( $block: 'conference', $modifier: 'conference-en', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: conference-en;
-        }
-
-        // [ element ]
-        @include input( $block: 'conference', $modifier: 'title-zh', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: title-zh;
-        }
-
-        // [ element ]
-        @include input( $block: 'conference', $modifier: 'title-en', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: title-en;
-        }
-
-        // [ element ]
-        @include input( $block: 'conference', $modifier: 'host-year', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: year;
-        }
-
-        // [ element ]
-        @include input-button( $block: 'conference', $type: 'add' ) {
-          // [ layout ]
-          grid-area: add;
-        }
-
-        // [ element ]
-        @include input-button( $block: 'conference', $type: 'delete' ) {
-          // [ layout ]
-          grid-area: delete;
-        }
       }
     }
 

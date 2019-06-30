@@ -6,8 +6,6 @@
 @import 'components/common/footer';
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
-@import 'components/user/input';
-@import 'components/user/input-button';
 @import 'components/user/local-topic';
 
 // block
@@ -191,36 +189,6 @@
             }
             gap: font__px-to-rem( 5 );
           }
-        }
-
-        // [ element ]
-        @include input( $block: 'award', $modifier: 'award-zh', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: award-zh;
-        }
-
-        // [ element ]
-        @include input( $block: 'award', $modifier: 'award-en', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: award-en;
-        }
-
-        // [ element ]
-        @include input( $block: 'award', $modifier: 'received-date', $inputHeight: $input-height-small ) {
-          // [ layout ]
-          grid-area: date;
-        }
-
-        // [ element ]
-        @include input-button( $block: 'award', $type: 'add' ) {
-          // [ layout ]
-          grid-area: add;
-        }
-
-        // [ element ]
-        @include input-button( $block: 'award', $type: 'delete' ) {
-          // [ layout ]
-          grid-area: delete;
         }
       }
     }
