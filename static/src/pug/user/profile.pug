@@ -6,6 +6,7 @@ include /components/user/button.pug
 include /components/user/dropdown.pug
 include /components/user/nation-dropdown.pug
 include /components/user/input-block.pug
+include /components/user/insert.pug
 include /components/common/topic.pug
 
 append data
@@ -137,6 +138,7 @@ append breadcrumb
   )
 
 append content
+  +insert()      
   +navigation-bar( 'content' )
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )

@@ -4,7 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
 import DropdownControl from 'static/src/js/components/user/dropdown.js';
-import BlockControl from 'static/src/js/components/user/block-control.js';
+import ModifyData from 'static/src/js/components/user/modify-data.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -53,14 +53,27 @@ catch ( err ) {
 }
 
 try {
-    const blockControl = new BlockControl();
-    if ( !( blockControl instanceof BlockControl ) )
-        throw new Error( 'titleBlockControl not founs' );
+    const modifyData = new ModifyData();
+    if ( !( modifyData instanceof ModifyData ) )
+        throw new Error( 'modifyData not founds' );
 
-    blockControl.addButtonEvent( document.getElementById( 'title__input-button--add' ), false );
-    blockControl.addButtonEvent( document.getElementById( 'specilty__input-button--add' ), false );
-    blockControl.addButtonEvent( document.getElementById( 'experience__input-button--add' ) );
-    blockControl.addButtonEvent( document.getElementById( 'education__input-button--add' ) );
+    const inputBlock = document.getElementsByClassName( 'profile__input-block' );
+    Array.from( inputBlock ).forEach( ( element ) => {
+        console.log( element.getAttribute( 'modifier' ) );
+        if ( element.getElementsByClassName( 'content__edit' )[ 0 ] !== undefined ) {
+            element.getElementsByClassName( 'content__edit' )[ 0 ].addEventListener( 'click', () => {
+                modifyData.initializeModifyFrom( 'profile', element.getAttribute( 'modifier' ) )
+                .then( modifyData.setModifyFrom( 'profile', element.getAttribute( 'modifier' ) ) );
+            } );
+        }
+    } );
+
+    /*
+    Document.getElementsByClassName( 'content__edit--name' )[ 0 ].addEventListener( 'click', () => {
+        modifyData.initializeModifyFrom( 'profile', 'name' )
+        .then( modifyData.setModifyFrom( 'profile', 'name' ) );
+    } );
+    */
 }
 catch ( err ) {
     console.error( err );

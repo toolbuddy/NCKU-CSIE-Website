@@ -16,7 +16,7 @@ mixin input-block( belongBlock, title, content, modifier, remove=false, add=fals
         },
       },
     } );
-  section.input-block(class=`${belongBlock}__input-block ${belongBlock}__input-block--${modifier}`)
+  section.input-block(class=`${belongBlock}__input-block ${belongBlock}__input-block--${modifier}` modifier=`${modifier}` )
     main.input-block__block.block
       h1.block__title=`${title}`
       article.block__content

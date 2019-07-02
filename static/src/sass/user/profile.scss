@@ -11,6 +11,7 @@
 @import 'components/user/nation-dropdown';
 @import 'components/user/dropdown';
 @import 'components/user/filter';
+@import 'components/user/insert';
 
 // block
 // `.body`
@@ -192,18 +193,6 @@
           }
         }
 
-        // `.body > .content > .content__information > .information__profile > .profile__filter `
-        @include filter( profile ) {
-          // `.body > .content > .content__information > .information__profile > .profile__filter `
-          > .profile__filter {
-            // [ layout ]
-            grid-area: filter;
-            @media screen and ( min-width: $large ) {
-              padding-left: font__px-to-rem( 30 );
-            }
-          }
-        }
-
         // `.body > .content > .content__information > .information__profile > .profile__image`
         > .profile__image {
           // [ layout ]
@@ -327,10 +316,6 @@
       margin-left: auto;
       margin-right: auto;
 
-      // [ position ]
-
-      // [ skin ]
-
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
         // [ layout ]
@@ -347,6 +332,7 @@
       @include local-topic( 'education' );
       @include input-block( $block: 'education', $modifier: 'education' );
     }
+    @include insert();
   }
 
   // element

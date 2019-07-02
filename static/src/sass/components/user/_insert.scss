@@ -1,0 +1,166 @@
+@mixin insert () {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .insert {
+    // [ layout ]
+    position: fixed;
+    width: 100%;
+    height: 110vh;
+    z-index: 100;
+
+    // [ skin ]
+    background-color: rgba( 0, 0, 0, .2 );
+
+    > .insert__block {
+      // [ layout ]
+      display: block;
+      position: relative;
+      margin: {
+        top: font__px-to-rem( 150 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ position ]
+      width: font__px-to-rem( 400 );
+      height: auto;
+
+      // [ skin ]
+      background-color: white;
+
+      > .block__title {
+        // [ layout ]
+        display: block;
+        width: 100%;
+        height: font__px-to-rem( 80 );
+
+        // [ skin ]
+        background-color: beige;
+
+        > .title__word {
+          // [ position ]
+          padding: {
+            top: font__px-to-rem( 30 );
+            bottom: font__px-to-rem( 30 );
+          }
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+            style: normal;
+            stretch: normal;
+          }
+          text-align: center;
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+      }
+
+      > .block__input {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas: 'flag content';
+          columns: font__px-to-rem( 50 ) 1fr;
+        }
+        margin: {
+          top: font__px-to-rem( 20 );
+          bottom: font__px-to-rem( 20 );
+          left: auto;
+          right: auto;
+        }
+
+        // [ position ]
+        width: 95%;
+
+        > .input__flag {
+          // [ layout ]
+          display: inline-block;
+          grid-area: flag;
+
+          // [ position ]
+          width: 95%;
+          height: auto;
+        }
+
+        > .input__content {
+          // [ layout ]
+          display: block;
+          grid-area: content;
+
+          // [ position ]
+          width: 90%;
+          height: font__px-to-rem( 50 );
+          margin: {
+            left: auto;
+            right: auto;
+          }
+
+          // [ skin ]
+          border-radius: 15px;
+          border: solid 1px #adacad;
+        }
+      }
+
+      > .block__button {
+        // [ layout ]
+        display: flex;
+        justify-content: flex-end;
+        margin: {
+          top: font__px-to-rem( 20 );
+          bottom: font__px-to-rem( 20 );
+        }
+        height: font__px-to-rem( 50 );
+
+        // [ templete ]
+        %button__item {
+          // [ layout ]
+          width: font__px-to-rem( 70 );
+          height: font__px-to-rem( 30 );
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+            style: normal;
+            stretch: normal;
+          }
+          text-align: center;
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .button__item--cancel {
+          // [ templete ]
+          @extend %button__item;
+
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          background-color: white;
+        }
+
+        > .button__item--check {
+          // [ templete ]
+          @extend %button__item;
+
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  > .insert--hide {
+    display: none;
+  }
+
+  // [ customization ]
+  @content;
+}
