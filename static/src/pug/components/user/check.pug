@@ -1,7 +1,0 @@
-mixin check( block, type, description )
-  article.check( class=`${ block }__check` )
-    aside.check__box.box
-      input.box__input( id=`${ block }__${ type }--input` type="radio" name=`${ type }` )
-      section.box__image( id= `${ block }__${ type }--image` )
-    aside.check__title
-      p.title__content= `${ description }`

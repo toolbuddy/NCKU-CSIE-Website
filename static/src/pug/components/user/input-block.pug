@@ -19,11 +19,11 @@ mixin input-block( belongBlock, title, content, modifier, remove=false, add=fals
   section.input-block(class=`${belongBlock}__input-block ${belongBlock}__input-block--${modifier}` modifier=`${modifier}` )
     main.input-block__block.block
       h1.block__title=`${title}`
-      article.block__content
-        p.content__word=`${content}`
+      article.block__content.content
+        p.content__word( data-type=`${modifier}` )=`${content}`
         if remove
           button.content__remove(class=`content__remove--${modifier}`)= i18n[ LANG.id ].button.remove
-        button.content__edit(class=`content__edit--${modifier}`)= i18n[ LANG.id ].button.edit
+        button.content__modify(class=`content__modify--${modifier}`)= i18n[ LANG.id ].button.edit
     if add
       aside.input-block__add.add
         button.add__button(id=`add__button--${modifier}`)= i18n[ LANG.id ].button.add

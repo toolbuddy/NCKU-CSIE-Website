@@ -4,7 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
 import DropdownControl from 'static/src/js/components/user/dropdown.js';
-import ModifyData from 'static/src/js/components/user/modify-data.js';
+import GetUserDetail from 'static/src/js/components/user/get-user-detail';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -53,27 +53,13 @@ catch ( err ) {
 }
 
 try {
-    const modifyData = new ModifyData();
-    if ( !( modifyData instanceof ModifyData ) )
-        throw new Error( 'modifyData not founds' );
-
-    const inputBlock = document.getElementsByClassName( 'profile__input-block' );
-    Array.from( inputBlock ).forEach( ( element ) => {
-        console.log( element.getAttribute( 'modifier' ) );
-        if ( element.getElementsByClassName( 'content__edit' )[ 0 ] !== undefined ) {
-            element.getElementsByClassName( 'content__edit' )[ 0 ].addEventListener( 'click', () => {
-                modifyData.initializeModifyFrom( 'profile', element.getAttribute( 'modifier' ) )
-                .then( modifyData.setModifyFrom( 'profile', element.getAttribute( 'modifier' ) ) );
-            } );
-        }
+    const getUserDetail = new GetUserDetail( {
+        profileDOM: document.getElementById( 'profile' ),
+        languageId: WebLanguageUtils.currentLanguageId,
+        profileId:  24,
     } );
 
-    /*
-    Document.getElementsByClassName( 'content__edit--name' )[ 0 ].addEventListener( 'click', () => {
-        modifyData.initializeModifyFrom( 'profile', 'name' )
-        .then( modifyData.setModifyFrom( 'profile', 'name' ) );
-    } );
-    */
+    getUserDetail.exec();
 }
 catch ( err ) {
     console.error( err );
@@ -94,4 +80,3 @@ console.log( 'get profile data:' );
     const data = await res.json();
     console.log( data );
 } )();
-

@@ -1,13 +1,11 @@
 extends /layouts/base.pug
+include /components/common/topic.pug
 include /components/user/navigation-bar.pug
 include /components/user/local-topic.pug
-include /components/user/input.pug
-include /components/user/button.pug
 include /components/user/dropdown.pug
 include /components/user/nation-dropdown.pug
 include /components/user/input-block.pug
 include /components/user/insert.pug
-include /components/common/topic.pug
 
 append data
   -
@@ -142,7 +140,7 @@ append content
   +navigation-bar( 'content' )
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
-    article.information__profile.profile
+    article.information__profile.profile#profile
       +local-topic( 'profile', '個人資料 / Profile' )
       section.profile__image
         section.image__frame
@@ -167,7 +165,7 @@ append content
                 data-research-group-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
 
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
