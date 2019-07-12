@@ -152,7 +152,10 @@
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
         @include local-topic( profile );
         @include input-block( $block: 'profile', $modifier: 'name' );
-        @include input-block( $block: 'profile', $modifier: 'title' );
+
+        > .profile__title {
+          @include input-block( $block: 'title', $modifier: 'title' );
+        }
         @include input-block( $block: 'profile', $modifier: 'office-location' );
         @include input-block( $block: 'profile', $modifier: 'lab-name' );
         @include input-block( $block: 'profile', $modifier: 'lab-location' );

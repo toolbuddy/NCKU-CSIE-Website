@@ -7,6 +7,7 @@ import UrlUtils from 'static/src/js/utils/url.js';
 import cardHTML from 'static/src/pug/components/about/faculty/cards.pug';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
+import LanguageUtils from 'models/common/utils/language.js';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -24,7 +25,7 @@ export default class GetUserDetail {
             languageId: opt.languageId,
         };
 
-        const profileQuerySelector = block => `.profile__input-block--${ block }`;
+        const profileQuerySelector = block => `.profile__${ block }`;
         const profileTextQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`;
         const profileModifyQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`;
 
@@ -41,9 +42,34 @@ export default class GetUserDetail {
             personalWeb:   'personal-web',
         };
 
+        this.i18n = Object.freeze( {
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                button: {
+                    add:    'add',
+                    remove: 'remove',
+                    modify: 'modify',
+                },
+                topic: {
+                    title:     'title',
+                    specialty: 'specialty',
+                },
+            },
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                button: {
+                    add:    '新增',
+                    remove: '刪除',
+                    modify: '編輯',
+                },
+                topic: {
+                    title:     '職稱',
+                    specialty: '專長領域',
+                },
+            },
+        } );
+
         this.profileDOM = {
-            profile: {},
-            tag:     {},
+            profile:  {},
+            tagBlock: opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
         };
 
         Object.keys( profile ).map( ( key ) => {
@@ -77,11 +103,44 @@ export default class GetUserDetail {
         Object.keys( this.profileDOM.profile ).map( ( key ) => {
             this.profileDOM.profile[ key ].text.innerHTML = res.profile[ key ];
         } );
+
+        this.renderTagInputBlock( res.title );
+    }
+
+    renderTagInputBlock ( res ) {
+        try {
+            this.profileDOM.tagBlock.innerHTML = '';
+            res.forEach( ( res, index ) => {
+                try {
+                    const data = {
+                        modifier: 'title',
+                        id:        index,
+                        content:   res.title,
+                        topic:     this.i18n[ this.config.languageId ].topic.title,
+                        button:   {
+                            remove: this.i18n[ this.config.languageId ].button.remove,
+                            modify: this.i18n[ this.config.languageId ].button.modify,
+                            add:    this.i18n[ this.config.languageId ].button.add,
+                        },
+                    };
+                    this.profileDOM.tagBlock.innerHTML += dynamicInputBlock( {
+                        data,
+                    } );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
+        catch ( err ) {
+            throw err;
+        }
     }
 
     async exec () {
         console.log( this.fetchData() );
         console.log( this.profileDOM );
+        console.log( this.i18n[ 0 ] );
         await this.setData();
     }
 }
