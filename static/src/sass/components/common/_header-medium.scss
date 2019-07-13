@@ -5,7 +5,7 @@
 // `> .#{ $block } > .header`
 @mixin header--medium ( $block ) {
   // [ variable ]
-  $large: 1200px;
+  $large: 1305px;
   $medium: 561px;
 
   .headerSpace--medium {
@@ -29,7 +29,7 @@
     transition: top .5s;
 
     // [ variable ]
-    $large: 1200px;
+    $large: 1305px;
     $medium: 561px;
     @media screen and ( max-width: $medium ) {
       display: none;

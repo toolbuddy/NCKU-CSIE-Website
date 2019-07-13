@@ -8,6 +8,7 @@
  */
 
 import express from 'express';
+import md5 from 'md5';
 import staticHtml from 'routes/utils/static-html.js';
 import cookieParser from 'cookie-parser';
 
@@ -38,7 +39,7 @@ router
         const data = await getAdminByAccount( {
             account: req.body.account,
         } );
-        if ( data.password === req.body.password ) {
+        if ( data.password === md5( req.body.password + data.salt ) ) {
             // Store the new cookie in the user.
             console.log( 'old sid:' );
             console.log( res.locals.unparsedId );
@@ -55,20 +56,22 @@ router
 
                 // Store new session in database
                 const result = await saveSession( {
-                    sid:     req.session.id,
+                    sid:     newSid,
                     expires: req.session.cookie.maxAge + Date.now(),
                     userId:  Number( data.userId ),
                 } );
 
                 // Update user session id in database
                 await updateAdmin( {
-                    userId:   Number( data.userId ),
+                    userId:   Number( result.userId ),
                     account:  data.account,
                     password: data.password,
                     role:     data.role,
                     sid:      result.sid,
                     isValid:  data.isValid,
                     name:     data.name,
+                    salt:     data.salt,
+                    roleId:   data.roleId,
                 } );
 
                 req.session.save();
@@ -128,6 +131,7 @@ router
             sid:      null,
             isValid:  result.isValid,
             name:     result.name,
+            roleId:   result.roleId,
         } );
 
         // Give a new sid cookie

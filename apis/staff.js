@@ -28,14 +28,14 @@ apis.get( '/', cors(), async ( req, res, next ) => {
 } );
 
 /**
- * Resolve URL `/api/staff/miniProfile`.
+ * Resolve URL `/api/staff/miniProfile/[id]`.
  */
 
-apis.get( '/miniProfile', cors(), async ( req, res, next ) => {
+apis.get( '/miniProfile/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getStaffMiniProfile( {
-            languageId: 0,
-            profileId:  1,
+            languageId: Number( req.query.languageId ),
+            profileId:  Number( req.params.profileId ),
         } );
         res.json( data );
     }

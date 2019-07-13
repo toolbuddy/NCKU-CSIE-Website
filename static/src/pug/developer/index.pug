@@ -1,0 +1,302 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':    'Developer',
+        'breadcrumb': {
+          'home':   'Home',
+        },
+        'imgDir': 'developer/',
+        'sections': [
+            {
+                'title': 'Designers',
+                'members': [
+                    {
+                        'name': 'lanhsincheng',
+                        'imgUrl': 'lanhsincheng.png',
+                        'link': 'https://github.com/lanhsincheng',
+                    },
+                    {
+                        'name': 'Cindy',
+                        'imgUrl': 'Cindy.jpg',
+                        'link': 'https://www.facebook.com/cindy461022',
+                    },
+                ],
+            },
+            {
+                'title': 'Active Developers',
+                'members': [
+                    {
+                        'name': 'ProFatXuanAll',
+                        'imgUrl': 'ProFatXuanAll.png',
+                        'link': 'https://github.com/ProFatXuanAll',
+                    },
+                    {
+                        'name': 'Rispolyv0n',
+                        'imgUrl': 'Rispolyv0n.jpeg',
+                        'link': 'https://github.com/Rispolyv0n',
+                    },
+                    {
+                        'name': 'AmyLin0210',
+                        'imgUrl': 'AmyLin0210.jpeg',
+                        'link': 'https://github.com/AmyLin0210',
+                    },
+                ],
+            },
+            {
+                'title': 'Participants',
+                'members': [
+                    {
+                        'name': 'kaeteyaruyo',
+                        'imgUrl': 'kaeteyaruyo.png',
+                        'link': 'https://github.com/kaeteyaruyo',
+                    },
+                    {
+                        'name': 'danielian1121',
+                        'imgUrl': 'danielian1121.jpeg',
+                        'link': 'https://github.com/danielian1121',
+                    },
+                    {
+                        'name': 'ya-sin',
+                        'imgUrl': 'ya-sin.png',
+                        'link': 'https://github.com/ya-sin',
+                    },
+                    {
+                        'name': 'yellow951321',
+                        'imgUrl': 'yellow951321.png',
+                        'link': 'https://github.com/yellow951321',
+                    },
+                    {
+                        'name': 'aqwefghnm',
+                        'imgUrl': 'aqwefghnm.png',
+                        'link': 'https://github.com/aqwefghnm',
+                    },
+                    {
+                        'name': 'eecheng87',
+                        'imgUrl': 'eecheng87.png',
+                        'link': 'https://github.com/eecheng87',
+                    },
+                    {
+                        'name': 'IsabelTseng',
+                        'imgUrl': 'IsabelTseng.png',
+                        'link': 'https://github.com/IsabelTseng',
+                    },
+                    {
+                        'name': 'Kazumachi124170',
+                        'imgUrl': 'Kazumachi124170.png',
+                        'link': 'https://github.com/Kazumachi124170',
+                    },
+                    {
+                        'name': 'k32367mdbf',
+                        'imgUrl': 'k32367mdbf.jpeg',
+                        'link': 'https://github.com/k32367mdbf',
+                    },
+                    {
+                        'name': 'wang0630',
+                        'imgUrl': 'wang0630.jpeg',
+                        'link': 'https://github.com/wang0630',
+                    },
+                    {
+                        'name': 'Darkborderman',
+                        'imgUrl': 'Darkborderman.png',
+                        'link': 'https://github.com/Darkborderman',
+                    },
+                    {
+                        'name': 'd4n1elchen',
+                        'imgUrl': 'd4n1elchen.jpeg',
+                        'link': 'https://github.com/d4n1elchen',
+                    },
+                ],
+            },
+            {
+                'title': 'Organization - Toolbuddy',
+                'members': [
+                    {
+                        'name': 'Toolbuddy',
+                        'imgUrl': 'Toolbuddy.png',
+                        'link': 'https://github.com/toolbuddy',
+                    },
+                ],
+            },
+            {
+                'title': 'Founder of Toolbuddy',
+                'members': [
+                    {
+                        'name': 'kevinbird61',
+                        'imgUrl': 'kevinbird61.jpeg',
+                        'link': 'https://github.com/kevinbird61',
+                    },
+                ],
+            },
+        ],
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '開發者',
+        'breadcrumb': {
+          'home':   '首頁',
+        },
+        'imgDir': 'developer/',
+        'sections': [
+            {
+                'title': '設計人員',
+                'members': [
+                    {
+                        'name': 'lanhsincheng',
+                        'imgUrl': 'lanhsincheng.png',
+                        'link': 'https://github.com/lanhsincheng',
+                    },
+                    {
+                        'name': 'Cindy',
+                        'imgUrl': 'Cindy.jpg',
+                        'link': 'https://www.facebook.com/cindy461022',
+                    },
+                ],
+            },
+            {
+                'title': '開發人員',
+                'members': [
+                    {
+                        'name': 'ProFatXuanAll',
+                        'imgUrl': 'ProFatXuanAll.png',
+                        'link': 'https://github.com/ProFatXuanAll',
+                    },
+                    {
+                        'name': 'Rispolyv0n',
+                        'imgUrl': 'Rispolyv0n.jpeg',
+                        'link': 'https://github.com/Rispolyv0n',
+                    },
+                    {
+                        'name': 'AmyLin0210',
+                        'imgUrl': 'AmyLin0210.jpeg',
+                        'link': 'https://github.com/AmyLin0210',
+                    },
+                ],
+            },
+            {
+                'title': '參與人員',
+                'members': [
+                    {
+                        'name': 'kaeteyaruyo',
+                        'imgUrl': 'kaeteyaruyo.png',
+                        'link': 'https://github.com/kaeteyaruyo',
+                    },
+                    {
+                        'name': 'danielian1121',
+                        'imgUrl': 'danielian1121.jpeg',
+                        'link': 'https://github.com/danielian1121',
+                    },
+                    {
+                        'name': 'ya-sin',
+                        'imgUrl': 'ya-sin.png',
+                        'link': 'https://github.com/ya-sin',
+                    },
+                    {
+                        'name': 'yellow951321',
+                        'imgUrl': 'yellow951321.png',
+                        'link': 'https://github.com/yellow951321',
+                    },
+                    {
+                        'name': 'aqwefghnm',
+                        'imgUrl': 'aqwefghnm.png',
+                        'link': 'https://github.com/aqwefghnm',
+                    },
+                    {
+                        'name': 'eecheng87',
+                        'imgUrl': 'eecheng87.png',
+                        'link': 'https://github.com/eecheng87',
+                    },
+                    {
+                        'name': 'IsabelTseng',
+                        'imgUrl': 'IsabelTseng.png',
+                        'link': 'https://github.com/IsabelTseng',
+                    },
+                    {
+                        'name': 'Kazumachi124170',
+                        'imgUrl': 'Kazumachi124170.png',
+                        'link': 'https://github.com/Kazumachi124170',
+                    },
+                    {
+                        'name': 'k32367mdbf',
+                        'imgUrl': 'k32367mdbf.jpeg',
+                        'link': 'https://github.com/k32367mdbf',
+                    },
+                    {
+                        'name': 'wang0630',
+                        'imgUrl': 'wang0630.jpeg',
+                        'link': 'https://github.com/wang0630',
+                    },
+                    {
+                        'name': 'Darkborderman',
+                        'imgUrl': 'Darkborderman.png',
+                        'link': 'https://github.com/Darkborderman',
+                    },
+                    {
+                        'name': 'd4n1elchen',
+                        'imgUrl': 'd4n1elchen.jpeg',
+                        'link': 'https://github.com/d4n1elchen',
+                    },
+                ],
+            },
+            {
+                'title': '創辦組織 - Toolbuddy',
+                'members': [
+                    {
+                        'name': 'Toolbuddy',
+                        'imgUrl': 'Toolbuddy.png',
+                        'link': 'https://github.com/toolbuddy',
+                    },
+                ],
+            },
+            {
+                'title': 'Toolbuddy 創立人員',
+                'members': [
+                    {
+                        'name': 'kevinbird61',
+                        'imgUrl': 'kevinbird61.jpeg',
+                        'link': 'https://github.com/kevinbird61',
+                    },
+                ],
+            },
+        ],
+      },
+    } );
+    const currentRoute = 'developer';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'developer/index' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+
+  each sec in i18n[ LANG.id ].sections
+    section.content__type.type
+      +topic( 'type', sec.title )
+      each memb in sec.members
+        a.type__link.link(href= memb.link)
+          +image( { alt: memb.name, className: `link__img`, src: `${ i18n[ LANG.id ].imgDir }${ memb.imgUrl }` } )
+
+append footer
+
+append scripts
+  +js( 'developer/index' )

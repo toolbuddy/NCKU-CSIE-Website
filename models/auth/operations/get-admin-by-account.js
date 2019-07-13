@@ -1,6 +1,7 @@
 import {
     Admin,
 } from 'models/auth/operations/associations.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -21,8 +22,11 @@ export default async ( opt ) => {
             account = null,
         } = opt || {};
 
-        // Validate
-        console.log( 'should validate' );
+        if ( !ValidateUtils.isValidString( account ) ) {
+            const error = new Error( 'invalid account' );
+            error.status = 400;
+            throw error;
+        }
 
         const data = await Admin.findOne( {
             attributes: [
@@ -33,6 +37,8 @@ export default async ( opt ) => {
                 'sid',
                 'isValid',
                 'name',
+                'salt',
+                'roleId',
             ],
             where: {
                 account,
@@ -53,6 +59,8 @@ export default async ( opt ) => {
             sid:        data.sid,
             isValid:    data.isValid,
             name:       data.name,
+            salt:       data.salt,
+            roleId:     data.roleId,
         };
     }
     catch ( err ) {

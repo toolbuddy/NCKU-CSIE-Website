@@ -14,11 +14,11 @@ const Admin = user.define( 'admin', {
         unique:    true,
     },
     password: {
-        type:       Sequelize.STRING( 20 ),
+        type:       Sequelize.STRING( 255 ),
         allowNull:  false,
     },
     role: {
-        type:         Sequelize.INTEGER.UNSIGNED,
+        type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         defaultValue: '0',
     },
@@ -31,6 +31,19 @@ const Admin = user.define( 'admin', {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         defaultValue: '1',
+    },
+    name: {
+        type:       Sequelize.STRING( 20 ),
+        allowNull:    false,
+    },
+    salt: {
+        type:       Sequelize.STRING( 50 ),
+        allowNull:  false,
+    },
+    roleId: {
+        type:         Sequelize.INTEGER.UNSIGNED,
+        allowNull:    false,
+        defaultValue: '0',
     },
 
 } );

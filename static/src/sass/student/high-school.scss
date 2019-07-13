@@ -356,9 +356,18 @@
 
             // element
             // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
+            > .paragraph__title {
               // [ layout ]
-              margin-top: font__px-to-rem( 48 );
+              display: block;
+              margin-bottom: font__px-to-rem( 60 );
+              text-align: left;
+              line-height: font__px-to-rem( 24 );
+
+              // [ skin ]
+              width: auto;
+              height: font__px-to-rem( 24 );
+              color: #399dff;
+              font-size: font__px-to-rem( 24 );
             }
 
             // element
@@ -381,17 +390,11 @@
               > .eventImg__img {
                 display: inline-block;
                 vertical-align: middle;
-                filter: contrast( 180% ) opacity( .85 );
+                filter: contrast( 140% ) opacity( .85 );
                 max: {
                   width: font__px-to-rem( 350 );
                   height: font__px-to-rem( 350 );
                 }
-              }
-
-              > .eventImg__caption {
-                text-align: center;
-                color: #444444;
-                font-size: font__px-to-rem( 20 );
               }
             }
           }
@@ -512,7 +515,7 @@
                     size: font__px-to-rem( 25 );
                     weight: 500;
                   }
-                  fill: #ea6d55;
+                  fill: #ffbb00;
                   text-anchor: middle;
                   stroke-width: 0;
                 }

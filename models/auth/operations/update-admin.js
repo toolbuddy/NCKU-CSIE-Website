@@ -1,6 +1,7 @@
 import {
     Admin,
 } from 'models/auth/operations/associations.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -25,10 +26,49 @@ export default async ( opt ) => {
             sid = null,
             isValid = null,
             name = null,
+            roleId = null,
         } = opt || {};
 
-        // Validate
-        console.log( 'should validate' );
+        if ( userId && !ValidateUtils.isValidId( userId ) ) {
+            const error = new Error( 'invalid user id' );
+            error.status = 400;
+            throw error;
+        }
+        if ( account && !ValidateUtils.isValidString( account ) ) {
+            const error = new Error( 'invalid account' );
+            error.status = 400;
+            throw error;
+        }
+        if ( password && !ValidateUtils.isValidString( password ) ) {
+            const error = new Error( 'invalid password' );
+            error.status = 400;
+            throw error;
+        }
+        if ( role && !ValidateUtils.isValidId( role ) ) {
+            const error = new Error( 'invalid user role' );
+            error.status = 400;
+            throw error;
+        }
+        if ( sid && !ValidateUtils.isValidString( sid ) ) {
+            const error = new Error( 'invalid user sid' );
+            error.status = 400;
+            throw error;
+        }
+        if ( isValid && !ValidateUtils.isValidBoolean( isValid ) ) {
+            const error = new Error( 'invalid isValid' );
+            error.status = 400;
+            throw error;
+        }
+        if ( name && !ValidateUtils.isValidString( name ) ) {
+            const error = new Error( 'invalid name' );
+            error.status = 400;
+            throw error;
+        }
+        if ( roleId && !ValidateUtils.isValidId( roleId ) ) {
+            const error = new Error( 'invalid user roleId' );
+            error.status = 400;
+            throw error;
+        }
 
         const result = await Admin.update( {
             account,
@@ -37,6 +77,7 @@ export default async ( opt ) => {
             sid,
             isValid,
             name,
+            roleId,
         },
         {
             where: {

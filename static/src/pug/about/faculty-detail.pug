@@ -262,10 +262,15 @@ append content
           //- If there is no start time, then there must be no end time.
           if educationObj.from !== null
             time.context__time.time
-              time.time__year= educationObj.from
+              if educationObj.to === 0
+                time.time__year= '-'
+              else
+                time.time__year= educationObj.from
               hr.time__till
-              if educationObj.to !== null
+              if educationObj.to !== null && educationObj.to !== 0
                 time.time__year= educationObj.to
+              else if educationObj.to === 0
+                time.time__year= '-'
               //- If there is no end time, then it must be still studying.
               else
                 time.time__year= i18n[ LANG.id ].education.now

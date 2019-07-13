@@ -5,6 +5,7 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
 import DropdownControl from 'static/src/js/components/user/dropdown.js';
 import GetUserDetail from 'static/src/js/components/user/get-user-detail';
+import cookieParser from 'cookie-parser';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -41,16 +42,7 @@ catch ( err ) {
     console.error( err );
 }
 
-try {
-    const dropdownControl = new DropdownControl();
-    if ( !( dropdownControl instanceof DropdownControl ) )
-        throw new Error( 'degreeDropdown not founs' );
-    dropdownControl.setDropdownEvent( document.querySelectorAll( ' .dropdown__content ' ) );
-    dropdownControl.setDropdownEvent( document.querySelectorAll( '.nation-dropdown__content' ) );
-}
-catch ( err ) {
-    console.error( err );
-}
+console.log( '(Assume this is header) get profile data:' );
 
 try {
     const getUserDetail = new GetUserDetail( {
@@ -71,14 +63,13 @@ console.log( 'get profile data:' );
 
 ( async () => {
     const queryString = [
-        `profileId=${ 1 }`,
         `languageId=${ WebLanguageUtils.currentLanguageId }`,
     ].join( '&' );
 
     let res = null;
-    res = await window.fetch( `${ host }/api/staff/miniProfile?${ queryString }` );
+    res = await window.fetch( `${ host }/api/user/miniProfile?${ queryString }` );
     if ( !res.ok )
-        throw new Error( 'failed to get all normal announcement' );
+        throw new Error( 'failed to get user mini profile' );
     const data = await res.json();
     console.log( data );
 } )();

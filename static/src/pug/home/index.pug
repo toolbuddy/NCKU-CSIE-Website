@@ -9,6 +9,10 @@ append data
         'more':  'more...',
         'hot':   'Hot News',
         'highSchool': 'For High School Students',
+        'imi': '',
+        'imis': '',
+        'msic': '',
+        'ai': '',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
@@ -16,6 +20,10 @@ append data
         'more':  '更多資訊...',
         'hot':   '最近熱門',
         'highSchool': '高中生專區',
+        'imi': '醫資所',
+        'imis': '製造所',
+        'msic': '多媒體學程',
+        'ai': '人工智慧學程',
       },
     } );
     const currentRoute = '';
@@ -54,9 +62,28 @@ append content
     nav.hot-announcement__briefings.briefings
 
   section#high-school.content__high-school.high-school
-    figure.high-school__banner.banner
-      h1.banner__text
-        a.banner__text( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
+    figure.high-school__banner
+    h1.high-school__text.text
+      a.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
+
+  section#master.content__master.master
+    span.master__imi.imi
+      figure.imi__banner
+      h1.imi__text.text
+        a.text__link( href = 'http://www.imi.ncku.edu.tw/' )= i18n[ LANG.id ].imi
+    span.master__imis.imis
+      figure.imis__banner
+      h1.imis__text.text
+        a.text__link( href = 'http://www.imis.ncku.edu.tw/' )= i18n[ LANG.id ].imis
+    span.master__msic.msic
+      figure.msic__banner
+      h1.msic__text.text
+        a.text__link( href = 'http://www.csie.ncku.edu.tw/msic/msic.php' )= i18n[ LANG.id ].msic
+    span.master__ai.ai
+      figure.ai__banner
+      h1.ai__text.text
+        a.text__link( href = UTILS.url( { href : '/' } ) )= i18n[ LANG.id ].ai
+
 append footer
 
 append scripts
