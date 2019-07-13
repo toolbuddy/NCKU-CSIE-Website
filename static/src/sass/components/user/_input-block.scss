@@ -204,6 +204,11 @@
         color: rgba( 28, 81, 134, .87 );
         background-color: white;
       }
+
+      > .add__button--hidden {
+        // [ layout ]
+        display: none;
+      }
     }
   }
 

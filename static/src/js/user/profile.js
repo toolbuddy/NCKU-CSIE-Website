@@ -54,9 +54,11 @@ catch ( err ) {
 
 try {
     const getUserDetail = new GetUserDetail( {
-        profileDOM: document.getElementById( 'profile' ),
-        languageId: WebLanguageUtils.currentLanguageId,
-        profileId:  24,
+        profileDOM:    document.getElementById( 'profile' ),
+        educationDOM:  document.getElementById( 'education' ),
+        experienceDOM: document.getElementById( 'experience' ),
+        languageId:    WebLanguageUtils.currentLanguageId,
+        profileId:     24,
     } );
 
     getUserDetail.exec();

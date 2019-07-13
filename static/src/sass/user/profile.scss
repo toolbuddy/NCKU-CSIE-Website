@@ -156,6 +156,10 @@
         > .profile__title {
           @include input-block( $block: 'title', $modifier: 'title' );
         }
+
+        > .profile__specialty {
+          @include input-block( $block: 'specialty', $modifier: 'specialty' );
+        }
         @include input-block( $block: 'profile', $modifier: 'office-location' );
         @include input-block( $block: 'profile', $modifier: 'lab-name' );
         @include input-block( $block: 'profile', $modifier: 'lab-location' );
@@ -283,7 +287,7 @@
     }
 
     // `.body > .content > .content__information > .information__experience`
-    .information__experience.experience {
+    .information__experience-block.experience-block {
       // [ layout ]
       display: block;
       width: 95%;
@@ -307,12 +311,15 @@
       }
 
       // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
-      @include local-topic( 'experience' );
-      @include input-block( $block: 'experience', $modifier: 'experience' );
+      @include local-topic( 'experience-block' );
+
+      > .experience-block__experience.experience {
+        @include input-block( $block: 'experience', $modifier: 'experience' );
+      }
     }
 
     // `.body > .content > .content__information > .information__education`
-    .information__education.education {
+    .information__education-block.education-block {
       // [ layout ]
       display: block;
       width: 95%;
@@ -332,8 +339,11 @@
       }
 
       // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-      @include local-topic( 'education' );
-      @include input-block( $block: 'education', $modifier: 'education' );
+      @include local-topic( 'education-block' );
+
+      > .education {
+        @include input-block( $block: 'education', $modifier: 'education' );
+      }
     }
     @include insert();
   }

@@ -1,11 +1,12 @@
 - 
 section.input-block(class=`${ data.modifier }__input-block ${ data.modifier }__input-block--${ data.modifier }` id=`${ data.modifier }-${ data.id }` )
   main.input-block__block.block
-    if title !== null
+    if data.index === 0
       h1.block__title= data.topic
     article.block__content.content
       p.content__word= data.content
       button.content__remove(class=`content__remove--${ data.modifier }`)= data.button.remove
       button.content__modify(class=`content__modify--${ data.modifier }`)= data.button.modify
-  aside.input-block__add.add
-    button.add__button( id=`add__button--${ data.modifier }-${ data.id }` )= data.button.add
+  if data.index === 0 
+    aside.input-block__add.add
+      button.add__button( id=`add__button--${ data.modifier }-${ data.id }` )= data.button.add

@@ -174,33 +174,15 @@ append content
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.specilty, '教授', 'specilty', true, true )
+      section.profile__specialty.specialty
 
-    article.information__education.education#information__education
-      +local-topic( 'education', '學歷 / Education' )
-      section.input-block.education__input-block--education
-        main.input-block__block.block
-          h1.block__title= i18n[ LANG.id ].content.education.topic
-          article.block__content
-            p.content__word.content__word--school= '台灣大學'
-            p.content__word.content__word--major=  '電機工程系'
-            p.content__word.content__word--degree= '碩士'
-            button.content__edit.content__edit--education= i18n[ LANG.id ].content.button.edit
-        aside.input-block__add.add
-          button.add__button#add__button--education= i18n[ LANG.id ].content.button.add
+    article.information__education-block.education-block
+      +local-topic( 'education-block', '學歷 / Education' )
+      section.education-block__education.education#education
 
-    article.information__experience.experience#information__experience
-      +local-topic( 'experience', '經歷 / Experience' ) 
-      section.input-block.experience__input-block--experience
-        main.input-block__block.block
-          h1.block__title= i18n[ LANG.id ].content.experience.topic
-          article.block__content
-            p.content__word.content__word--organization= '成功大學'
-            p.content__word.content__word--department=  '資訊工程系'
-            p.content__word.content__word--title= '教授'
-            button.content__edit.content__edit--experience= i18n[ LANG.id ].content.button.edit
-        aside.input-block__add.add
-          button.add__button#add__button--experience= i18n[ LANG.id ].content.button.add
+    article.information__experience-block.experience-block
+      +local-topic( 'experience-block', '經歷 / Experience' ) 
+      section.experience-block__experience.experience#experience
 
 append footer
 

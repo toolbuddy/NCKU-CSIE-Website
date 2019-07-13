@@ -68,9 +68,13 @@ export default class GetUserDetail {
         } );
 
         this.profileDOM = {
-            profile:  {},
-            tagBlock: opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
+            profile:        {},
+            titleBlock:     opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
+            specialtyBlock: opt.profileDOM.querySelector( profileQuerySelector( 'specialty' ), ),
         };
+
+        this.educationDOM = opt.educationDOM;
+        this.experienceDOM = opt.experienceDOM;
 
         Object.keys( profile ).map( ( key ) => {
             this.profileDOM.profile[ key ] = {};
@@ -104,17 +108,21 @@ export default class GetUserDetail {
             this.profileDOM.profile[ key ].text.innerHTML = res.profile[ key ];
         } );
 
-        this.renderTagInputBlock( res.title );
+        this.renderTitleInputBlock( res.title );
+        this.renderSpecialtyInputBlock( res.specialty );
+        this.renderEducationInputBlock( res.education );
+        this.renderExperienceInputBlock( res.experience );
     }
 
-    renderTagInputBlock ( res ) {
+    renderTitleInputBlock ( res ) {
         try {
-            this.profileDOM.tagBlock.innerHTML = '';
+            this.profileDOM.titleBlock.innerHTML = '';
             res.forEach( ( res, index ) => {
                 try {
                     const data = {
                         modifier: 'title',
                         id:        index,
+                        index,
                         content:   res.title,
                         topic:     this.i18n[ this.config.languageId ].topic.title,
                         button:   {
@@ -123,7 +131,100 @@ export default class GetUserDetail {
                             add:    this.i18n[ this.config.languageId ].button.add,
                         },
                     };
-                    this.profileDOM.tagBlock.innerHTML += dynamicInputBlock( {
+                    this.profileDOM.titleBlock.innerHTML += dynamicInputBlock( {
+                        data,
+                    } );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
+        catch ( err ) {
+            throw err;
+        }
+    }
+
+    renderSpecialtyInputBlock ( res ) {
+        try {
+            this.profileDOM.specialtyBlock.innerHTML = '';
+            res.forEach( ( res, index ) => {
+                try {
+                    const data = {
+                        modifier: 'specialty',
+                        id:        index,
+                        index,
+                        content:   res,
+                        topic:     this.i18n[ this.config.languageId ].topic.specialty,
+                        button:   {
+                            remove: this.i18n[ this.config.languageId ].button.remove,
+                            modify: this.i18n[ this.config.languageId ].button.modify,
+                            add:    this.i18n[ this.config.languageId ].button.add,
+                        },
+                    };
+                    this.profileDOM.specialtyBlock.innerHTML += dynamicInputBlock( {
+                        data,
+                    } );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
+        catch ( err ) {
+            throw err;
+        }
+    }
+
+    renderEducationInputBlock ( res ) {
+        try {
+            this.educationDOM.innerHTML = '';
+            res.forEach( ( res, index ) => {
+                try {
+                    const data = {
+                        modifier: 'education',
+                        id:        index,
+                        index,
+                        content:   `${ res.school } ${ res.major } ${ res.degree }`,
+                        topic:     '',
+                        button:   {
+                            remove: this.i18n[ this.config.languageId ].button.remove,
+                            modify: this.i18n[ this.config.languageId ].button.modify,
+                            add:    this.i18n[ this.config.languageId ].button.add,
+                        },
+                    };
+                    this.educationDOM.innerHTML += dynamicInputBlock( {
+                        data,
+                    } );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
+        catch ( err ) {
+            throw err;
+        }
+    }
+
+    renderExperienceInputBlock ( res ) {
+        try {
+            this.experienceDOM.innerHTML = '';
+            res.forEach( ( res, index ) => {
+                try {
+                    const data = {
+                        modifier: 'experience',
+                        id:        index,
+                        index,
+                        content:   `${ res.organization } ${ res.department } ${ res.title }`,
+                        topic:     '',
+                        button:   {
+                            remove: this.i18n[ this.config.languageId ].button.remove,
+                            modify: this.i18n[ this.config.languageId ].button.modify,
+                            add:    this.i18n[ this.config.languageId ].button.add,
+                        },
+                    };
+                    this.experienceDOM.innerHTML += dynamicInputBlock( {
                         data,
                     } );
                 }
