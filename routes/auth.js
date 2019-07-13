@@ -56,20 +56,22 @@ router
 
                 // Store new session in database
                 const result = await saveSession( {
-                    sid:     req.session.id,
+                    sid:     newSid,
                     expires: req.session.cookie.maxAge + Date.now(),
                     userId:  Number( data.userId ),
                 } );
 
                 // Update user session id in database
                 await updateAdmin( {
-                    userId:   Number( data.userId ),
+                    userId:   Number( result.userId ),
                     account:  data.account,
                     password: data.password,
                     role:     data.role,
                     sid:      result.sid,
                     isValid:  data.isValid,
                     name:     data.name,
+                    salt:     data.salt,
+                    roleId:   data.roleId,
                 } );
 
                 req.session.save();
@@ -129,6 +131,7 @@ router
             sid:      null,
             isValid:  result.isValid,
             name:     result.name,
+            roleId:   result.roleId,
         } );
 
         // Give a new sid cookie

@@ -33,7 +33,18 @@ router
 
 router
 .route( '/profile' )
-.get( staticHtml( 'user/profile' ) );
+.get( staticHtml( 'user/profile' ) )
+.post( async ( req, res ) => {
+    console.log( 'in route user/profile post' );
+    try {
+        console.log( 'should fix!' );
+
+        // Check updating faculty or staff -> call the corresponding model operation
+    }
+    catch ( error ) {
+        console.error( error );
+    }
+} );
 
 /**
  * Resolve URL `/user/resetPassword`.

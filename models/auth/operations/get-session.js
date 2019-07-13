@@ -1,13 +1,14 @@
 import {
     Session,
 } from 'models/auth/operations/associations.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function for getting a specific session information by the sid of the session.
  *
  * @async
- * @param {number} [sid=1]                   - Id of the requested announcement.
- * @returns {object}                           Related information of the requested announcement, including:
+ * @param {number} [sid=1]                   - sid of the requested session.
+ * @returns {object}                         - Related information of the requested session, including:
  * - sid
  * - expires
  * - data
@@ -21,8 +22,11 @@ export default async ( opt ) => {
             sid = null,
         } = opt || {};
 
-        // Validate data
-        console.log( 'should validate data' );
+        if ( !ValidateUtils.isValidString( sid ) ) {
+            const error = new Error( 'invalid sid' );
+            error.status = 400;
+            throw error;
+        }
 
         const data = await Session.findOne( {
             attributes: [

@@ -3,6 +3,7 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
+import cookieParser from 'cookie-parser';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -39,18 +40,17 @@ catch ( err ) {
     console.error( err );
 }
 
-console.log('get profile data:');
+console.log('(Assume this is header) get profile data:');
 
 (async() => {
     const queryString = [
-        `profileId=${ 1 }`,
         `languageId=${ WebLanguageUtils.currentLanguageId }`,
     ].join( '&' );
     
     let res = null;
-    res = await window.fetch( `${ host }/api/staff/miniProfile?${ queryString }` );
+    res = await window.fetch( `${ host }/api/user/miniProfile?${ queryString }` );
     if ( !res.ok )
-        throw new Error( 'failed to get all normal announcement' );
+        throw new Error( 'failed to get user mini profile' );
     const data = await res.json();
     console.log(data);
 
