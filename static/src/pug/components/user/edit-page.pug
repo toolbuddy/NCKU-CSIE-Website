@@ -1,15 +1,7 @@
 -
-  section.edit-page
-    section.edit-page__block
-      article.block__title
-        section.title__word= data.topic
-      article.block__input
-        +image( {
-            alt:       '>',
-            className: `input__flag`,
-            src:       `icon/tw.png`,
-            } )
-        input.input__content
-      article.block__button
-        button.button__item.button__item--cancel= i18n[ LANG.id ].button.cancel
-        button.button__item.button__item--check=  i18n[ LANG.id ].button.check
+section.edit-page
+  from.edit-page__block
+    main.block__content#content
+    article.block__button
+      button.button__item.button__item--cancel= data.button.cancel
+      button.button__item.button__item--check( type="submit" )=  data.button.check

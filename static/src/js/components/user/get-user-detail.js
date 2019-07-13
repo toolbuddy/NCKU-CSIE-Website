@@ -4,10 +4,11 @@ import { host, staticHost, } from 'settings/server/config.js';
 import departmentUtils from 'models/faculty/utils/department.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import UrlUtils from 'static/src/js/utils/url.js';
-import cardHTML from 'static/src/pug/components/about/faculty/cards.pug';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
 import LanguageUtils from 'models/common/utils/language.js';
+import editPage from 'static/src/pug/components/user/edit-page.pug';
+import editPageText from 'static/src/pug/components/user/edit-page-text.pug';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -28,18 +29,52 @@ export default class GetUserDetail {
         const profileQuerySelector = block => `.profile__${ block }`;
         const profileTextQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`;
         const profileModifyQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`;
+        this.flagTW = `${ host }/static/static/src/image/icon/tw.png`;
+        this.flagUS = `${ host }/static/static/src/image/icon/us.png`;
 
-        const profile = {
-            name:          'name',
-            officeAddress: 'office-location',
-            labName:       'lab-name',
-            labAddress:    'lab-location',
-            labTel:        'lab-tel',
-            labWeb:        'lab-web',
-            officeTel:     'office-tel',
-            email:         'email',
-            fax:           'fax',
-            personalWeb:   'personal-web',
+        this.profile = {
+            name: {
+                classModifier: 'name',
+                editPage:      [
+                    {
+                        type:     'text',
+                        language: 'zh-TW',
+                        content:  'name',
+                    },
+                    {
+                        type:     'text',
+                        language: 'en-US',
+                        content:  'name',
+                    },
+                ],
+            },
+            officeAddress: {
+                classModifier: 'office-location',
+            },
+            labName:    {
+                classModifier:   'lab-name',
+            },
+            labAddress:  {
+                classModifier:   'lab-location',
+            },
+            labTel:    {
+                classModifier:    'lab-tel',
+            },
+            labWeb:     {
+                classModifier: 'lab-web',
+            },
+            officeTel:  {
+                classModifier:  'office-tel',
+            },
+            email:   {
+                classModifier:   'email',
+            },
+            fax:     {
+                classModifier:   'fax',
+            },
+            personalWeb:  {
+                classModifier: 'personal-web',
+            },
         };
 
         this.i18n = Object.freeze( {
@@ -68,7 +103,6 @@ export default class GetUserDetail {
         } );
 
         this.profileDOM = {
-            profile:        {},
             titleBlock:     opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
             specialtyBlock: opt.profileDOM.querySelector( profileQuerySelector( 'specialty' ), ),
         };
@@ -76,10 +110,10 @@ export default class GetUserDetail {
         this.educationDOM = opt.educationDOM;
         this.experienceDOM = opt.experienceDOM;
 
-        Object.keys( profile ).map( ( key ) => {
-            this.profileDOM.profile[ key ] = {};
-            this.profileDOM.profile[ key ].text = opt.profileDOM.querySelector( profileTextQuerySelector( profile[ key ] ) );
-            this.profileDOM.profile[ key ].modify = opt.profileDOM.querySelector( profileModifyQuerySelector( profile[ key ] ) );
+        Object.keys( this.profile ).map( ( key ) => {
+            this.profile[ key ].DOM = {};
+            this.profile[ key ].DOM.text = opt.profileDOM.querySelector( profileTextQuerySelector( this.profile[ key ].classModifier ) );
+            this.profile[ key ].DOM.modifier = opt.profileDOM.querySelector( profileModifyQuerySelector( this.profile[ key ].classModifier ) );
         } );
     }
 
@@ -104,8 +138,8 @@ export default class GetUserDetail {
     async setData () {
         const res = await this.fetchData();
 
-        Object.keys( this.profileDOM.profile ).map( ( key ) => {
-            this.profileDOM.profile[ key ].text.innerHTML = res.profile[ key ];
+        Object.keys( this.profile ).map( ( key ) => {
+            this.profile[ key ].DOM.text.innerHTML = res.profile[ key ];
         } );
 
         this.renderTitleInputBlock( res.title );
@@ -238,10 +272,12 @@ export default class GetUserDetail {
         }
     }
 
+    subscribeModifyEvent ( modifier, DOM ) {
+
+    }
+
     async exec () {
         console.log( this.fetchData() );
-        console.log( this.profileDOM );
-        console.log( this.i18n[ 0 ] );
         await this.setData();
     }
 }

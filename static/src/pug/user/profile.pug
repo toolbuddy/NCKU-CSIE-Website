@@ -164,17 +164,16 @@ append content
               button.content__tag--research(
                 data-research-group-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
-
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
       section.profile__specialty.specialty
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
 
     article.information__education-block.education-block
       +local-topic( 'education-block', '學歷 / Education' )
