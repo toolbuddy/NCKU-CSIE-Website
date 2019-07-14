@@ -5,8 +5,8 @@ section.input-block(class=`${ data.modifier }__input-block ${ data.modifier }__i
       h1.block__title= data.topic
     article.block__content.content
       p.content__word= data.content
-      button.content__remove(class=`content__remove--${ data.modifier }`)= data.button.remove
-      button.content__modify(class=`content__modify--${ data.modifier }`)= data.button.modify
+      button.content__remove(class=`content__remove--${ data.modifier }-${ data.id }`)= data.button.remove
+      button.content__modify(class=`content__modify--${ data.modifier }-${ data.id }`)= data.button.modify
   if data.index === 0 
     aside.input-block__add.add
-      button.add__button( id=`add__button--${ data.modifier }-${ data.id }` )= data.button.add
+      button.add__button( id=`add__button--${ data.modifier }` )= data.button.add

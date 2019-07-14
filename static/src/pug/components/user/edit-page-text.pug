@@ -1,4 +1,9 @@
 -
-if flag !== null
-  img.input__flag( src= flag alt= '>' )
-input.input__content( placeholder= data.content type="text" name=`${ modifier }-${ languageId }-${ id }`)
+article.content__input#input
+  if flag !== null 
+    img.input__flag( src= flag alt= '>' )
+  input.input__content( 
+    placeholder= content 
+    type="text" 
+    name=name 
+  )
