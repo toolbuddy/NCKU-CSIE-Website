@@ -7,8 +7,8 @@ import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
 import LanguageUtils from 'models/common/utils/language.js';
-import editPage from 'static/src/pug/components/user/edit-page.pug';
-import editPageText from 'static/src/pug/components/user/edit-page-text.pug';
+import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
+import editPageTextHTML from 'static/src/pug/components/user/edit-page-text.pug';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -83,22 +83,48 @@ export default class GetUserDetail {
                     add:    'add',
                     remove: 'remove',
                     modify: 'modify',
+                    cancel: 'cancel',
+                    check:  'check',
                 },
                 topic: {
-                    title:     'title',
-                    specialty: 'specialty',
+                    name:          'name',
+                    title:         'title',
+                    specialty:     'specialty',
+                    officeAddress: 'office address',
+                    officeTel:     'office tel',
+                    labName:       'lab name',
+                    labAddress:    'lab address',
+                    labTel:        'lab tel',
+                    labWeb:        'lab web',
+                    email:         'email',
+                    personalWeb:   'personal web',
+                    fax:           'fax',
                 },
+                modify: 'modify your ',
             },
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                 button: {
                     add:    '新增',
                     remove: '刪除',
                     modify: '編輯',
+                    cancel: '取消',
+                    check:  '確認',
                 },
                 topic: {
-                    title:     '職稱',
-                    specialty: '專長領域',
+                    name:          '姓名',
+                    title:         '職稱',
+                    specialty:     '專長領域',
+                    officeAddress: '辦公室位置',
+                    officeTel:     '辦公室電話',
+                    labName:       '實驗室名稱',
+                    labAddress:    '實驗室位置',
+                    labTel:        '實驗室電話',
+                    labWeb:        '實驗室網站',
+                    email:         'email',
+                    personalWeb:   '個人網站',
+                    fax:           '傳真',
                 },
+                modify: '變更您的',
             },
         } );
 
@@ -109,6 +135,7 @@ export default class GetUserDetail {
 
         this.educationDOM = opt.educationDOM;
         this.experienceDOM = opt.experienceDOM;
+        this.editPageDOM = opt.editPageDOM;
 
         Object.keys( this.profile ).map( ( key ) => {
             this.profile[ key ].DOM = {};
@@ -117,13 +144,24 @@ export default class GetUserDetail {
         } );
     }
 
-    get queryApi () {
-        return `${ host }/api/faculty/${ this.config.profileId }?profileId=${ this.config.profileId }&languageId=${ this.config.languageId }`;
+    async setEditPageWindow ( key ) {
+        this.editPageDOM.innerHTML = '';
+        this.editPageDOM.innerHTML += editPageHTML( {
+            cancel: this.i18n[ this.config.languageId ].button.cancel,
+            check:  this.i18n[ this.config.languageId ].button.check,
+            topic:  `${ this.i18n[ this.config.languageId ].modify }${ this.i18n[ this.config.languageId ].topic[ key ] }`,
+        } );
+        return;
     }
 
-    async fetchData () {
+    queryApi ( lang ) {
+        console.log( `language: ${ lang }` );
+        return `${ host }/api/faculty/${ this.config.profileId }?profileId=${ this.config.profileId }&languageId=${ lang }`;
+    }
+
+    async fetchData ( lang ) {
         try {
-            const res = await fetch( this.queryApi );
+            const res = await fetch( this.queryApi( lang ) );
 
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
@@ -136,10 +174,36 @@ export default class GetUserDetail {
     }
 
     async setData () {
-        const res = await this.fetchData();
+        const res = await this.fetchData( this.config.languageId );
 
         Object.keys( this.profile ).map( ( key ) => {
             this.profile[ key ].DOM.text.innerHTML = res.profile[ key ];
+            this.profile[ key ].DOM.modifier.addEventListener( 'click', async () => {
+                await this.setEditPageWindow( key );
+
+                const data = {
+                    'zh-TW': await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
+                    'en-US': await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
+                };
+
+                /*
+                Const data = {
+                    'zh-TW': await this.fetchData( 0 ),
+                    'en-US': await this.fetchData( 1 ),
+                };
+                const editPageContent = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__content' );
+                const editPageCheck = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' );
+                const editPageCancek = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' );
+                this.profile[ key ].editPage.forEach( ( element ) => {
+                    if ( element.type === 'text' ) {
+                        editPageContent += editPageTextHTML( {
+                            topic:  `變更您的${ this.i18n[ LanguageUtils.getLanguageId( this.config.languageId ) ].topic[ key ] }`,
+
+                        } );
+                    }
+                } );
+                */
+            } );
         } );
 
         this.renderTitleInputBlock( res.title );
@@ -270,10 +334,6 @@ export default class GetUserDetail {
         catch ( err ) {
             throw err;
         }
-    }
-
-    subscribeModifyEvent ( modifier, DOM ) {
-
     }
 
     async exec () {

@@ -49,6 +49,7 @@ try {
         profileDOM:    document.getElementById( 'profile' ),
         educationDOM:  document.getElementById( 'education' ),
         experienceDOM: document.getElementById( 'experience' ),
+        editPageDOM:   document.getElementById( 'edit-page' ),
         languageId:    WebLanguageUtils.currentLanguageId,
         profileId:     24,
     } );

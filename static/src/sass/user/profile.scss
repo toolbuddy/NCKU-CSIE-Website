@@ -11,7 +11,7 @@
 @import 'components/user/nation-dropdown';
 @import 'components/user/dropdown';
 @import 'components/user/filter';
-@import 'components/user/insert';
+@import 'components/user/edit-page';
 
 // block
 // `.body`
@@ -130,12 +130,10 @@
         // [ layout ]
         display: block;
         width: 95%;
-        margin-left: auto;
-        margin-right: auto;
-
-        // [ position ]
-
-        // [ skin ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
@@ -178,8 +176,10 @@
             > .input-block__block.block > .block__content {
               display: block;
               height: auto;
-              padding-top: font__px-to-rem( 20 );
-              padding-bottom: font__px-to-rem( 20 );
+              padding: {
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
+              }
             }
           }
         }
@@ -192,10 +192,14 @@
               display: block;
               height: auto;
               width: auto;
-              margin-left: auto;
-              margin-right: auto;
-              padding-top: font__px-to-rem( 20 );
-              padding-bottom: font__px-to-rem( 20 );
+              margin: {
+                left: auto;
+                right: auto;
+              }
+              padding: {
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
+              }
             }
           }
         }
@@ -291,12 +295,10 @@
       // [ layout ]
       display: block;
       width: 95%;
-      margin-left: auto;
-      margin-right: auto;
-
-      // [ position ]
-
-      // [ skin ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
@@ -323,8 +325,10 @@
       // [ layout ]
       display: block;
       width: 95%;
-      margin-left: auto;
-      margin-right: auto;
+      margin: {
+        left: auto;
+        right: auto;
+      }
 
       // [ RWD: $small ]
       @media screen and ( min-width: $small ) {
@@ -345,7 +349,22 @@
         @include input-block( $block: 'education', $modifier: 'education' );
       }
     }
-    @include insert();
+
+    > .content__edit-page.edit-page {
+      position: fixed;
+      width: 100%;
+
+      // [ componment ]
+      @include edit-page();
+    }
+
+    > .content__edit-page--hidden {
+      display: none;
+    }
+
+    > .content__edit-page--show {
+      display: block;
+    }
   }
 
   // element

@@ -1,7 +1,4 @@
 -
-article.content__title
-  section.title__word= data.topic
-article.content__input#input
-  if data.flag !== null
-    img.input__flag( src= data.flag alt= '>' )
-  input.input__content( placeholder= data.content type="text" name=`${data.modifier}-${data.id}-${data.language}`)
+if flag !== null
+  img.input__flag( src= flag alt= '>' )
+input.input__content( placeholder= data.content type="text" name=`${ modifier }-${ languageId }-${ id }`)

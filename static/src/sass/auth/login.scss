@@ -77,9 +77,6 @@
           '.    '
           'login'
           '.    ';
-<<<<<<< HEAD
-        rows: 1fr auto 2fr;
-=======
         rows: font__px-to-rem( 64 ) auto 1fr;
       }
 
@@ -93,7 +90,6 @@
             '.    ';
           rows: 1fr auto 1fr;
         }
->>>>>>> f1e166824085976a02742f60b4d4e7eadf00d4c2
       }
 
       // `.body > .content > .content__login > .login__form`

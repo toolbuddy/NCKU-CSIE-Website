@@ -1,7 +1,10 @@
 -
-section.edit-page
-  from.edit-page__block
-    main.block__content#content
-    article.block__button
-      button.button__item.button__item--cancel= data.button.cancel
-      button.button__item.button__item--check( type="submit" )=  data.button.check
+section.edit-page__window.window
+  from.window__from.from
+    main.from__content.content#content
+      article.content__title
+        h1.title__word= topic
+      article.content__input#input
+    article.from__button.button
+      button.button__item.button__item--cancel= cancel
+      button.button__item.button__item--check( type="submit" )=  check
