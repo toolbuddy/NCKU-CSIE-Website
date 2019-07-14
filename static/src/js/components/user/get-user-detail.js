@@ -99,8 +99,8 @@ export default class GetUserDetail {
             },
         };
 
-        this.title = {
-            editPage: [
+        this.editPage = {
+            title: [
                 this.editPageText( true, 'title' ),
             ],
         };
@@ -210,30 +210,33 @@ export default class GetUserDetail {
         }
     }
 
-    async setEditPageInput () {
+    async setEditPageInput ( modifier, id ) { // Modifier: 'title', id: 'titleId'
         const data = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
         };
 
-        data[ this.config.languageId ].title.forEach( ( element, index ) => {
-            const modifyButtonDOM = this.profileDOM.titleBlock.querySelector( this.modifyButtonQuerySelector( 'title', element.titleId ) );
-            console.log( modifyButtonDOM );
+        data[ this.config.languageId ][ modifier ].forEach( ( element, index ) => {
+            const modifyButtonDOM = this.profileDOM.titleBlock.querySelector( this.modifyButtonQuerySelector( modifier, element[ id ] ) );
 
             modifyButtonDOM.addEventListener( 'click', async () => {
-                await this.setEditPageWindow( 'title' );
+                await this.setEditPageWindow( modifier );
                 const editPage = {
                     content: this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__content' ),
                     check:   this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
                     cancel:  this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
                 };
+                const content = {
+                    title:     languageId => data[ languageId ].title[ index ].title,
+                    specialty: languageId => data[ languageId ].specialty[ index ].specialty,
+                };
 
-                this.title.editPage.forEach( ( item ) => {
+                this.editPage[ modifier ].forEach( ( item ) => {
                     item.languageId.forEach( ( languageId ) => {
                         editPage.content.innerHTML += editPageTextHTML( {
-                            flag:       ( this.title.editPage.flag ) ? this.flag[ languageId ] : null,
-                            content:    data[ languageId ].title[ index ].title,
-                            name:    `title_${ languageId }_${ element.titleId }`,
+                            flag:       ( this.editPage[ modifier ].flag ) ? this.flag[ languageId ] : null,
+                            content:    content[ modifier ]( languageId ),
+                            name:    `${ modifier }_${ languageId }_${ element[ id ] }`,
                         } );
                     } );
                 } );
@@ -303,7 +306,7 @@ export default class GetUserDetail {
         this.renderEducationInputBlock( res.education );
         this.renderExperienceInputBlock( res.experience );
 
-        await this.setEditPageInput();
+        await this.setEditPageInput( 'title', 'titleId' );
     }
 
     async renderTitleInputBlock ( res ) {
