@@ -3,6 +3,7 @@ import degreeUtils from 'models/faculty/utils/degree.js';
 import departmentUtils from 'models/faculty/utils/department.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import {
     AwardI18n,
     Award,
@@ -43,19 +44,12 @@ export default async ( opt ) => {
             profileId = null,
         } = opt;
 
-        /**
-         * Invalid query parameters.
-         * Handle with 400 bad request.
-         *
-         * @todo use validator to check `profileId`.
-         */
-
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
         }
-        if ( typeof ( profileId ) !== 'number' || !Number.isInteger( profileId ) ) {
+        if ( !ValidateUtils.isValidId( profileId ) ) {
             const error = new Error( 'invalid profile id' );
             error.status = 400;
             throw error;

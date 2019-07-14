@@ -1,5 +1,6 @@
 import LanguageUtils from 'models/common/utils/language.js';
 import nationUtils from 'models/faculty/utils/nation.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import {
     AwardI18n,
     Award,
@@ -40,19 +41,12 @@ export default async ( opt ) => {
             languageId = null,
         } = opt;
 
-        /**
-         * Invalid query parameters.
-         * Handle with 400 bad request.
-         *
-         * @todo use validator to check `profileId`.
-         */
-
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
         }
-        if ( typeof ( profileId ) !== 'number' || !Number.isInteger( profileId ) ) {
+        if ( !ValidateUtils.isValidId( profileId ) ) {
             const error = new Error( 'invalid profile id' );
             error.status = 400;
             throw error;
@@ -293,6 +287,7 @@ export default async ( opt ) => {
             SpecialtyI18n.findAll( {
                 attributes: [
                     'specialty',
+                    'specialtyId',
                 ],
                 where: {
                     language: languageId,
