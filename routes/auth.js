@@ -46,37 +46,42 @@ router
             console.log( req.session.id );
             console.log( req.session.ctrl );
 
-            req.session.regenerate( async ( err ) => {
-                const newSid = req.session.id;
-                req.session.ctrl = newSid;
-                console.log( 'in generate: new sid:' );
-                console.log( newSid );
-                console.log( req.session.id );
-                console.log( req.session.ctrl );
+            req.session.regenerate( async () => {
+                try {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
+                    console.log( 'in generate: new sid:' );
+                    console.log( newSid );
+                    console.log( req.session.id );
+                    console.log( req.session.ctrl );
 
-                // Store new session in database
-                const result = await saveSession( {
-                    sid:     newSid,
-                    expires: req.session.cookie.maxAge + Date.now(),
-                    userId:  Number( data.userId ),
-                } );
+                    // Store new session in database
+                    const result = await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                        userId:  Number( data.userId ),
+                    } );
 
-                // Update user session id in database
-                await updateAdmin( {
-                    userId:   Number( result.userId ),
-                    account:  data.account,
-                    password: data.password,
-                    role:     data.role,
-                    sid:      result.sid,
-                    isValid:  data.isValid,
-                    name:     data.name,
-                    salt:     data.salt,
-                    roleId:   data.roleId,
-                } );
+                    // Update user session id in database
+                    await updateAdmin( {
+                        userId:   Number( result.userId ),
+                        account:  data.account,
+                        password: data.password,
+                        role:     data.role,
+                        sid:      result.sid,
+                        isValid:  data.isValid,
+                        name:     data.name,
+                        salt:     data.salt,
+                        roleId:   data.roleId,
+                    } );
 
-                req.session.save();
-                console.log( 'log in successfully' );
-                res.redirect( '/index' );
+                    req.session.save();
+                    console.log( 'log in successfully' );
+                    res.redirect( '/index' );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
             } );
         }
         else {
@@ -138,24 +143,29 @@ router
         console.log( 'old sid:' );
         console.log( sid );
         console.log( req.session.ctrl );
-        req.session.regenerate( async ( err ) => {
-            const newSid = req.session.id;
-            req.session.ctrl = newSid;
+        req.session.regenerate( async () => {
+            try {
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
 
-            console.log( 'in generate, new sid:' );
-            console.log( newSid );
-            console.log( req.session.id );
-            console.log( req.session.ctrl );
+                console.log( 'in generate, new sid:' );
+                console.log( newSid );
+                console.log( req.session.id );
+                console.log( req.session.ctrl );
 
-            // Store new session in database
-            await saveSession( {
-                sid:     newSid,
-                expires: req.session.cookie.maxAge + Date.now(),
-            } );
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
 
-            req.session.save();
-            console.log( 'log out successfully' );
-            res.redirect( '/index' );
+                req.session.save();
+                console.log( 'log out successfully' );
+                res.redirect( '/index' );
+            }
+            catch ( err ) {
+                console.error( err );
+            }
         } );
     }
     catch ( error ) {

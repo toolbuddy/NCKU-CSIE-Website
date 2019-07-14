@@ -220,7 +220,7 @@ export default async ( opt ) => {
                     profileId,
                 },
             } ),
-            ProfileI18n.findAll( {
+            ProfileI18n.findOne( {
                 attributes: [
                     'labAddress',
                     'labName',
