@@ -10,6 +10,7 @@ import LanguageUtils from 'models/common/utils/language.js';
 import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
 import editPageTextHTML from 'static/src/pug/components/user/edit-page-text.pug';
 import degreeUtils from 'models/faculty/utils/degree.js';
+import { async, } from 'q';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -31,8 +32,7 @@ export default class GetUserDetail {
         const profileTextQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`;
         const profileModifyQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`;
         this.modifyButtonQuerySelector = ( block, id ) => `.input-block__block > .block__content > .content__modify--${ block }-${ id }`;
-        this.flagTW = `${ host }/static/static/src/image/icon/tw.png`;
-        this.flagUS = `${ host }/static/static/src/image/icon/us.png`;
+        this.addButtonQuerySelector = block => `.profile__input-block--${ block } > .input-block__block > .block__add > .add__button`;
 
         this.flag = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/src/image/icon/tw.png`,
@@ -103,6 +103,9 @@ export default class GetUserDetail {
             title: [
                 this.editPageText( true, 'title' ),
             ],
+            specialty: [
+                this.editPageText( true, 'specialty' ),
+            ],
         };
 
         this.i18n = Object.freeze( {
@@ -128,7 +131,12 @@ export default class GetUserDetail {
                     personalWeb:   'personal web',
                     fax:           'fax',
                 },
+                placeholder: {
+                    title:     'ex. Professor',
+                    specialty: 'ex. Machine Learning',
+                },
                 modify: 'modify your ',
+                add:    'add your ',
             },
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                 button: {
@@ -152,18 +160,24 @@ export default class GetUserDetail {
                     personalWeb:   '個人網站',
                     fax:           '傳真',
                 },
+                placeholder: {
+                    title:     'ex. 教授',
+                    specialty: 'ex. 機器學習',
+                },
                 modify: '變更您的',
+                add:    '新增您的',
             },
         } );
 
-        this.profileDOM = {
-            titleBlock:     opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
-            specialtyBlock: opt.profileDOM.querySelector( profileQuerySelector( 'specialty' ), ),
+        this.DOM = {
+            block: {
+                title:      opt.profileDOM.querySelector( profileQuerySelector( 'title' ) ),
+                specialty:  opt.profileDOM.querySelector( profileQuerySelector( 'specialty' ), ),
+                education:  opt.educationDOM,
+                experience: opt.experienceDOM,
+                editPage:   opt.editPageDOM,
+            },
         };
-
-        this.educationDOM = opt.educationDOM;
-        this.experienceDOM = opt.experienceDOM;
-        this.editPageDOM = opt.editPageDOM;
 
         Object.keys( this.profile ).map( ( key ) => {
             this.profile[ key ].DOM = {};
@@ -173,9 +187,9 @@ export default class GetUserDetail {
     }
 
     async setEditPageWindow ( key ) {
-        classRemove( this.editPageDOM, 'content__edit-page--hidden' );
-        this.editPageDOM.innerHTML = '';
-        this.editPageDOM.innerHTML += editPageHTML( {
+        classRemove( this.DOM.block.editPage, 'content__edit-page--hidden' );
+        this.DOM.block.editPage.innerHTML = '';
+        this.DOM.block.editPage.innerHTML += editPageHTML( {
             cancel: this.i18n[ this.config.languageId ].button.cancel,
             check:  this.i18n[ this.config.languageId ].button.check,
             topic:  `${ this.i18n[ this.config.languageId ].modify }${ this.i18n[ this.config.languageId ].topic[ key ] }`,
@@ -184,24 +198,20 @@ export default class GetUserDetail {
     }
 
     closeEditPageWindow () {
-        classAdd( this.editPageDOM, 'content__edit-page--hidden' );
+        classAdd( this.DOM.block.editPage, 'content__edit-page--hidden' );
     }
 
-    setEditPageWindowContent ( modifier, id, index, content, topic, DOM ) {
+    setEditPageWindowContent ( info ) {
         try {
             const data = {
-                modifier,
-                id,
-                index,
-                content,
-                topic,
+                info,
                 button:   {
                     remove: this.i18n[ this.config.languageId ].button.remove,
                     modify: this.i18n[ this.config.languageId ].button.modify,
                     add:    this.i18n[ this.config.languageId ].button.add,
                 },
             };
-            DOM.innerHTML += dynamicInputBlock( {
+            data.info.DOM.innerHTML += dynamicInputBlock( {
                 data,
             } );
         }
@@ -210,48 +220,62 @@ export default class GetUserDetail {
         }
     }
 
-    async setEditPageInput ( modifier, id ) { // Modifier: 'title', id: 'titleId'
-        const data = {
+    async setEditPageItems ( info, buttonType ) {
+        await this.setEditPageWindow( info.modifier );
+        const editPage = {
+            content: this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
+            check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
+            cancel:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
+        };
+        const content = {
+            title:     languageId => info.res[ languageId ].title[ info.index ].title,
+            specialty: languageId => info.res[ languageId ].specialty[ info.index ].specialty,
+        };
+
+        this.editPage[ info.modifier ].forEach( ( editPageItem ) => {
+            editPageItem.languageId.forEach( ( languageId ) => {
+                editPage.content.innerHTML += editPageTextHTML( {
+                    flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
+                    content:    content[ info.modifier ]( languageId ),
+                    name:    `${ info.modifier }_${ languageId }_${ info.res[ languageId ][ info.modifier ][ info.index ].id }`,
+                } );
+            } );
+        } );
+        editPage.cancel.addEventListener( 'click', () => {
+            this.closeEditPageWindow();
+        } );
+        editPage.check.addEventListener( 'click', () => {
+            this.closeEditPageWindow();
+        } );
+    }
+
+    async setEditPageInput ( modifier, id ) {
+        const res = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
         };
 
-        data[ this.config.languageId ][ modifier ].forEach( ( element, index ) => {
-            const modifyButtonDOM = this.profileDOM.titleBlock.querySelector( this.modifyButtonQuerySelector( modifier, element[ id ] ) );
+        const addButtonDOM = this.addButtonQuerySelector( modifier );
+        console.log( addButtonDOM );
+        addButtonDOM.addEventListener( 'click', async () => {
+
+        } );
+
+        res[ this.config.languageId ][ modifier ].forEach( ( resModifier, index ) => {
+            const modifyButtonDOM = this.DOM.block[ modifier ].querySelector( this.modifyButtonQuerySelector( modifier, resModifier[ id ] ) );
 
             modifyButtonDOM.addEventListener( 'click', async () => {
-                await this.setEditPageWindow( modifier );
-                const editPage = {
-                    content: this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__content' ),
-                    check:   this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
-                    cancel:  this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
-                };
-                const content = {
-                    title:     languageId => data[ languageId ].title[ index ].title,
-                    specialty: languageId => data[ languageId ].specialty[ index ].specialty,
-                };
-
-                this.editPage[ modifier ].forEach( ( item ) => {
-                    item.languageId.forEach( ( languageId ) => {
-                        editPage.content.innerHTML += editPageTextHTML( {
-                            flag:       ( this.editPage[ modifier ].flag ) ? this.flag[ languageId ] : null,
-                            content:    content[ modifier ]( languageId ),
-                            name:    `${ modifier }_${ languageId }_${ element[ id ] }`,
-                        } );
-                    } );
-                } );
-                editPage.cancel.addEventListener( 'click', () => {
-                    this.closeEditPageWindow();
-                } );
-                editPage.check.addEventListener( 'click', () => {
-                    this.closeEditPageWindow();
-                } );
+                this.setEditPageItems( {
+                    index,
+                    modifier,
+                    id,
+                    res,
+                }, 'modify' );
             } );
         } );
     }
 
     queryApi ( lang ) {
-        console.log( `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ lang }` );
         return `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ lang }`;
     }
 
@@ -282,9 +306,9 @@ export default class GetUserDetail {
                     [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
                 };
 
-                const editPageContent = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__content' );
-                const editPageCheck = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' );
-                const editPageCancel = this.editPageDOM.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' );
+                const editPageContent = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' );
+                const editPageCheck = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' );
+                const editPageCancel = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' );
                 this.profile[ key ].editPage.languageId.forEach( ( languageId ) => {
                     editPageContent.innerHTML += editPageTextHTML( {
                         flag:       ( this.profile[ key ].editPage.flag ) ? this.flag[ languageId ] : null,
@@ -302,20 +326,26 @@ export default class GetUserDetail {
         } );
 
         await this.renderTitleInputBlock( res.title );
-        this.renderSpecialtyInputBlock( res.specialty );
-        this.renderEducationInputBlock( res.education );
-        this.renderExperienceInputBlock( res.experience );
+        await this.renderSpecialtyInputBlock( res.specialty );
+        await this.renderEducationInputBlock( res.education );
+        await this.renderExperienceInputBlock( res.experience );
 
         await this.setEditPageInput( 'title', 'titleId' );
+        await this.setEditPageInput( 'specialty', 'specialtyId' );
     }
 
     async renderTitleInputBlock ( res ) {
         try {
-            this.profileDOM.titleBlock.innerHTML = '';
+            this.DOM.block.title.innerHTML = '';
             res.forEach( ( res, index ) => {
-                const topic = this.i18n[ this.config.languageId ].topic.title;
-                const DOM = this.profileDOM.titleBlock;
-                this.setEditPageWindowContent( 'title', res.titleId, index, res.title, topic, DOM );
+                this.setEditPageWindowContent( {
+                    modifier: 'title',
+                    id:       res.titleId,
+                    index,
+                    content:  res.title,
+                    topic:    this.i18n[ this.config.languageId ].topic.title,
+                    DOM:      this.DOM.block.title,
+                } );
             } );
         }
         catch ( err ) {
@@ -323,13 +353,18 @@ export default class GetUserDetail {
         }
     }
 
-    renderSpecialtyInputBlock ( res ) {
+    async renderSpecialtyInputBlock ( res ) {
         try {
-            this.profileDOM.specialtyBlock.innerHTML = '';
+            this.DOM.block.specialty.innerHTML = '';
             res.forEach( ( res, index ) => {
-                const topic = this.i18n[ this.config.languageId ].topic.specialty;
-                const DOM = this.profileDOM.specialtyBlock;
-                this.setEditPageWindowContent( 'specialty', index, index, res.specialty, topic, DOM );
+                this.setEditPageWindowContent( {
+                    modifier: 'specialty',
+                    id:       res.specialtyId,
+                    index,
+                    content:  res.specialty,
+                    topic:    this.i18n[ this.config.languageId ].topic.specialty,
+                    DOM:      this.DOM.block.specialty,
+                } );
             } );
         }
         catch ( err ) {
@@ -337,12 +372,18 @@ export default class GetUserDetail {
         }
     }
 
-    renderEducationInputBlock ( res ) {
+    async renderEducationInputBlock ( res ) {
         try {
-            this.educationDOM.innerHTML = '';
+            this.DOM.block.education.innerHTML = '';
             res.forEach( ( res, index ) => {
-                const content = `${ res.school } ${ res.major } ${ degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ] }`;
-                this.setEditPageWindowContent( 'education', res.educationId, index, content, '', this.educationDOM );
+                this.setEditPageWindowContent( {
+                    modifier: 'education',
+                    id:       res.educationId,
+                    index,
+                    content:  `${ res.school } ${ res.major } ${ degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ] }`,
+                    topic:    '',
+                    DOM:      this.DOM.block.education,
+                } );
             } );
         }
         catch ( err ) {
@@ -350,12 +391,18 @@ export default class GetUserDetail {
         }
     }
 
-    renderExperienceInputBlock ( res ) {
+    async renderExperienceInputBlock ( res ) {
         try {
-            this.experienceDOM.innerHTML = '';
+            this.DOM.block.experience.innerHTML = '';
             res.forEach( ( res, index ) => {
-                const content = `${ res.organization } ${ res.department } ${ res.title }`;
-                this.setEditPageWindowContent( 'experience', res.experienceId, index, content, '', this.experienceDOM );
+                this.setEditPageWindowContent( {
+                    modifier: 'experience',
+                    id:       res.experienceId,
+                    index,
+                    content:  `${ res.organization } ${ res.department } ${ res.title }`,
+                    topic:    '',
+                    DOM:      this.DOM.block.experience,
+                } );
             } );
         }
         catch ( err ) {
