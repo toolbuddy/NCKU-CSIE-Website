@@ -1,0 +1,22 @@
+-
+article.content__input#input
+  if type === 'text'
+    section.input__text
+      if flag !== null 
+        img.input__flag( src= flag alt= '>' )
+      if content !== null
+        input.input__content( 
+          placeholder= content 
+          type="text" 
+          name=name 
+        )
+  else if type === 'time'
+    article.input__time.time
+      aside.time__from.from
+        label.from__text= data.from
+        span.from__input.input
+          input.input__year( type = 'number', value = '2015', placeholder = 'yyyy' )
+      aside.time__to.to
+        label.to__text= data.to
+        span.to__input.input
+          input.input__year( type = 'number', value = '2019', placeholder = 'yyyy' )

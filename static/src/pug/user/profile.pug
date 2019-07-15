@@ -5,7 +5,6 @@ include /components/user/local-topic.pug
 include /components/user/dropdown.pug
 include /components/user/nation-dropdown.pug
 include /components/user/input-block.pug
-include /components/user/insert.pug
 
 append data
   -
@@ -136,7 +135,6 @@ append breadcrumb
   )
 
 append content
-  section.content__edit-page.edit-page#edit-page
   +navigation-bar( 'content' )
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
@@ -182,6 +180,7 @@ append content
     article.information__experience-block.experience-block
       +local-topic( 'experience-block', '經歷 / Experience' ) 
       section.experience-block__experience.experience#experience
+  section.content__edit-page.edit-page#edit-page
 
 append footer
 

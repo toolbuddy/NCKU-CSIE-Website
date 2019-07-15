@@ -70,48 +70,244 @@
         }
 
         > .content__input {
-          // [ layout ]
-          display: grid;
-          grid-template: {
-            areas: 'flag content';
-            columns: font__px-to-rem( 50 ) 1fr;
-          }
-          margin: {
-            top: font__px-to-rem( 20 );
-            bottom: font__px-to-rem( 20 );
-            left: auto;
-            right: auto;
-          }
-
-          // [ position ]
-          width: 95%;
-
-          > .input__flag {
-            // [ layout ]
-            display: inline-block;
-            grid-area: flag;
+          .input__time.time {
+            $small: 220px;
+            $large: 1100px;
 
             // [ position ]
-            width: 95%;
+            grid: {
+              area: filter__time;
+              template-columns: repeat( auto-fill, font__px-to-rem( 154 ) );
+            }
+
+            // [ layout ]
+            display: grid;
+            justify-content: right;
+            margin-bottom: font__px-to-rem( 26 );
+
+            // [ skin ]
+            width: 100%;
             height: auto;
+            font-size: font__px-to-rem( 14 );
+
+            // [ RWD: $small ]
+            @media screen and ( min-width: $small ) {
+              // [ layout ]
+              grid-template-columns: repeat( 2, font__px-to-rem( 90 ) );
+            }
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              align-items: end;
+              margin-bottom: 0;
+            }
+
+            // element
+            // `> .#{ $block } > .filter > .time > .time__#{ $element }`
+            // block
+            // `> .#{ $block } > .filter > .time > .#{ $element }`
+            > .time__from.from {
+              // [ skin ]
+              width: 100%;
+              height: auto;
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
+              .from__text {
+                // [ layout ]
+                display: inline-block;
+                margin-left: font__px-to-rem( 16 );
+                text-align: center;
+                vertical-align: bottom;
+                line-height: font__px-to-rem( 14 );
+
+                // [ skin ]
+                width: auto;
+                height: font__px-to-rem( 14 );
+                font-size: font__px-to-rem( 14 );
+              }
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
+              // block
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
+              .from__input.input {
+                // [ layout ]
+                display: block;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 6 );
+                  left: font__px-to-rem( 6 );
+                  right: font__px-to-rem( 20 );
+                }
+
+                // [ skin ]
+                width: font__px-to-rem( 80 );
+                height: font__px-to-rem( 32 );
+                border: font__px-to-rem( 1 ) solid #757575;
+                border-radius: font__px-to-rem( 32 );
+                padding: {
+                  left: font__px-to-rem( 8 );
+                  right: font__px-to-rem( 4 );
+                }
+                text-align: center;
+
+                // template
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+                %input__element {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: font__px-to-rem( 14 );
+
+                  // [ skin ]
+                  height: font__px-to-rem( 30 );
+                  padding: {
+                    top: font__px-to-rem( 8 );
+                    bottom: font__px-to-rem( 8 );
+                  }
+                  background-color: transparent;
+                  font-size: font__px-to-rem( 14 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+                > .input__year {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 48 );
+                }
+              }
+            }
+
+            // element
+            // `> .#{ $block } > .filter > .time > .time__to`
+            // block
+            // `> .#{ $block } > .filter > .time > .to`
+            > .time__to.to {
+              // [ skin ]
+              width: 100%;
+              height: auto;
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
+              .to__text {
+                // [ layout ]
+                display: inline-block;
+                margin-left: font__px-to-rem( 16 );
+                text-align: center;
+                vertical-align: bottom;
+                line-height: font__px-to-rem( 14 );
+
+                // [ skin ]
+                width: auto;
+                height: font__px-to-rem( 14 );
+                font-size: font__px-to-rem( 14 );
+              }
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
+              // block
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
+              .to__input.input {
+                // [ layout ]
+                display: block;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 6 );
+                  left: font__px-to-rem( 6 );
+                  right: font__px-to-rem( 20 );
+                }
+
+                // [ skin ]
+                width: font__px-to-rem( 80 );
+                height: font__px-to-rem( 32 );
+                border: font__px-to-rem( 1 ) solid #757575;
+                border-radius: font__px-to-rem( 32 );
+                padding: {
+                  left: font__px-to-rem( 8 );
+                  right: font__px-to-rem( 4 );
+                }
+                text-align: center;
+
+                // template
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+                %input__element {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: font__px-to-rem( 14 );
+
+                  // [ skin ]
+                  height: font__px-to-rem( 30 );
+                  padding: {
+                    top: font__px-to-rem( 8 );
+                    bottom: font__px-to-rem( 8 );
+                  }
+                  background-color: transparent;
+                  font-size: font__px-to-rem( 14 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+                > .input__year {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 48 );
+                }
+              }
+            }
           }
 
-          > .input__content {
+          > .input__text {
             // [ layout ]
-            display: block;
-            grid-area: content;
-
-            // [ position ]
-            width: 90%;
-            height: font__px-to-rem( 50 );
+            display: grid;
+            grid-template: {
+              areas: 'flag content';
+              columns: font__px-to-rem( 50 ) 1fr;
+            }
             margin: {
+              top: font__px-to-rem( 20 );
+              bottom: font__px-to-rem( 20 );
               left: auto;
               right: auto;
             }
 
-            // [ skin ]
-            border-radius: 15px;
-            border: solid 1px #adacad;
+            // [ position ]
+            width: 95%;
+
+            > .input__flag {
+              // [ layout ]
+              display: inline-block;
+              grid-area: flag;
+
+              // [ position ]
+              width: 95%;
+              height: auto;
+            }
+
+            > .input__content {
+              // [ layout ]
+              display: block;
+              grid-area: content;
+
+              // [ position ]
+              width: 90%;
+              height: font__px-to-rem( 50 );
+              margin: {
+                left: auto;
+                right: auto;
+              }
+
+              // [ skin ]
+              border-radius: 15px;
+              border: solid 1px #adacad;
+            }
           }
         }
       }
