@@ -63,6 +63,10 @@ export default class GetUserDetail {
         this.editPageTime = {
             type: 'time',
         };
+        this.editPageLocalTopic = content => ( {
+            content,
+            type:    'local-topic',
+        } );
 
         this.profile = {
             name: {
@@ -116,6 +120,19 @@ export default class GetUserDetail {
             ],
             education: [
                 this.editPageTime,
+                this.editPageLocalTopic( 'school' ),
+                this.editPageText( true, 'school' ),
+                this.editPageLocalTopic( 'major' ),
+                this.editPageText( true, 'major' ),
+            ],
+            experience: [
+                this.editPageTime,
+                this.editPageLocalTopic( 'organization' ),
+                this.editPageText( true, 'organization' ),
+                this.editPageLocalTopic( 'department' ),
+                this.editPageText( true, 'department' ),
+                this.editPageLocalTopic( 'title' ),
+                this.editPageText( true, 'title' ),
             ],
         };
 
@@ -142,10 +159,24 @@ export default class GetUserDetail {
                     personalWeb:   'personal web',
                     fax:           'fax',
                     education:     'education',
+                    experience:    'experience',
+                },
+                education: {
+                    school: 'school',
+                    major:  'major',
+                },
+                experience: {
+                    organization: 'organization',
+                    department:   'department',
+                    title:        'title',
                 },
                 default: {
-                    title:     'ex. Professor',
-                    specialty: 'ex. Machine Learning',
+                    title:        'ex. Professor',
+                    specialty:    'ex. Machine Learning',
+                    organization: 'ex. Nation Cheng Kung University',
+                    department:   'ex. CSIE',
+                    school:       'ex. Nation Cheng Kung University',
+                    major:        'ex. CSIE',
                 },
                 time: {
                     from: 'from',
@@ -177,10 +208,24 @@ export default class GetUserDetail {
                     personalWeb:   '個人網站',
                     fax:           '傳真',
                     education:     '學歷',
+                    experience:    '經歷',
+                },
+                education: {
+                    school: '學校',
+                    major:  '主修',
+                },
+                experience: {
+                    organization: '任職單位',
+                    department:   '任職部門',
+                    title:        '職位',
                 },
                 default: {
-                    title:     'ex. 教授',
-                    specialty: 'ex. 機器學習',
+                    title:        'ex. 教授',
+                    specialty:    'ex. 機器學習',
+                    organization: 'ex. 國立成功大學',
+                    department:   'ex. 資訊工程學系',
+                    school:       'ex. 國立成功大學',
+                    major:        'ex. 資訊工程學系',
                 },
                 time: {
                     from: '從',
@@ -252,35 +297,36 @@ export default class GetUserDetail {
         };
         const content = {
             modify: {
-                title:     languageId => info.res[ languageId ].title[ info.index ].title,
-                specialty: languageId => info.res[ languageId ].specialty[ info.index ].specialty,
-            },
-            add: {
-                title:     languageId => this.i18n[ languageId ].default.title,
-                specialty: languageId => this.i18n[ languageId ].default.title,
+                title:        languageId => info.res[ languageId ].title[ info.index ].title,
+                specialty:    languageId => info.res[ languageId ].specialty[ info.index ].specialty,
+                organization: languageId => info.res[ languageId ].experience[ info.index ].organization,
+                department:   languageId => info.res[ languageId ].experience[ info.index ].department,
+                school:       languageId => info.res[ languageId ].education[ info.index ].school,
+                major:        languageId => info.res[ languageId ].education[ info.index ].major,
             },
         };
         const name = {
-            modify:  ( modifier, languageId, id ) => `${ buttonType }_${ modifier }_${ languageId }_${ id }`,
-            add:    ( modifier, languageId ) => `${ buttonType }_${ modifier }_${ languageId }`,
+            modify:  ( modifier, type, languageId, id ) => `${ buttonType }_${ modifier }_${ type }_${ languageId }_${ id }`,
+            add:    ( modifier, type, languageId ) => `${ buttonType }_${ modifier }_${ type }_${ languageId }`,
         };
 
         this.editPage[ info.modifier ].forEach( ( editPageItem ) => {
             if ( editPageItem.type === 'text' ) {
                 editPageItem.languageId.forEach( ( languageId ) => {
                     if ( buttonType === 'modify' ) {
+                        console.log( content[ buttonType ][ editPageItem.content ] );
                         editPage.content.innerHTML += editPageContentHTML( {
                             flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                            content:    content[ buttonType ][ info.modifier ]( languageId ),
-                            name:       name[ buttonType ]( info.modifier, languageId, info.res[ languageId ][ info.modifier ][ info.index ].id ),
+                            content:    content[ buttonType ][ editPageItem.content ]( languageId ),
+                            name:       name[ buttonType ]( info.modifier, editPageItem.content, languageId, info.res[ languageId ][ info.modifier ][ info.index ][ `${ info.modifier }Id` ] ),
                             type:       editPageItem.type,
                         } );
                     }
                     else if ( buttonType === 'add' ) {
                         editPage.content.innerHTML += editPageContentHTML( {
                             flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                            content:    content[ buttonType ][ info.modifier ]( languageId ),
-                            name:       name[ buttonType ]( info.modifier, languageId ),
+                            content:    this.i18n[ languageId ].default[ editPage.content ],
+                            name:       name[ buttonType ]( info.modifier, editPageItem.content, languageId ),
                             type:       editPageItem.type,
                         } );
                     }
@@ -307,6 +353,14 @@ export default class GetUserDetail {
                         name_from:  `add_${ info.modifier }_from`,
                         name_to:    `add_${ info.modifier }_to`,
                         type:       editPageItem.type,
+                    } );
+                }
+            }
+            else if ( editPageItem.type === 'local-topic' ) {
+                if ( buttonType === 'add' || buttonType === 'modify' ) {
+                    editPage.content.innerHTML += editPageContentHTML( {
+                        local_topic: this.i18n[ this.config.languageId ][ info.modifier ][ editPageItem.content ],
+                        type:        editPageItem.type,
                     } );
                 }
             }
@@ -416,6 +470,7 @@ export default class GetUserDetail {
         await this.setEditPageInput( 'title', 'titleId' );
         await this.setEditPageInput( 'specialty', 'specialtyId' );
         await this.setEditPageInput( 'education', 'educationId' );
+        await this.setEditPageInput( 'experience', 'experienceId' );
 
         this.status.isAddEventListener = true;
     }
