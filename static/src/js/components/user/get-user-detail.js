@@ -10,7 +10,7 @@ import LanguageUtils from 'models/common/utils/language.js';
 import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
 import editPageContentHTML from 'static/src/pug/components/user/edit-page-content.pug';
 import degreeUtils from 'models/faculty/utils/degree.js';
-import { async, } from 'q';
+import nationUtils from 'models/faculty/utils/nation.js';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -40,8 +40,8 @@ export default class GetUserDetail {
         this.addButtonQuerySelector = block => `.input-block__add > .add__button`;
 
         this.flag = {
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/src/image/icon/tw.png`,
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/src/image/icon/tw.png`,
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
         };
 
         this.editPageText = ( i18n, content ) => {
@@ -66,6 +66,10 @@ export default class GetUserDetail {
         this.editPageLocalTopic = content => ( {
             content,
             type:    'local-topic',
+        } );
+        this.editPageDropdown = content => ( {
+            content,
+            type: 'dropdown',
         } );
 
         this.profile = {
@@ -147,6 +151,7 @@ export default class GetUserDetail {
                 },
                 topic: {
                     name:          'name',
+                    nation:        'naiton',
                     title:         'title',
                     specialty:     'specialty',
                     officeAddress: 'office address',
@@ -196,6 +201,7 @@ export default class GetUserDetail {
                 },
                 topic: {
                     name:          '姓名',
+                    nation:        '國籍',
                     title:         '職稱',
                     specialty:     '專長領域',
                     officeAddress: '辦公室位置',
@@ -245,6 +251,9 @@ export default class GetUserDetail {
                 experience: opt.experienceDOM,
                 editPage:   opt.editPageDOM,
             },
+            nation:       opt.profileDOM.querySelector( profileQuerySelector( 'nation' ) ),
+            nationText:   opt.profileDOM.querySelector( profileTextQuerySelector( 'nation' ) ),
+            nationModify: opt.profileDOM.querySelector( profileModifyQuerySelector( 'nation' ) ),
         };
 
         Object.keys( this.profile ).map( ( key ) => {
@@ -258,6 +267,7 @@ export default class GetUserDetail {
         classRemove( this.DOM.block.editPage, 'content__edit-page--hidden' );
         this.DOM.block.editPage.innerHTML = '';
         this.DOM.block.editPage.innerHTML += editPageHTML( {
+            url:    `${ host }/user/profile`,
             cancel: this.i18n[ this.config.languageId ].button.cancel,
             check:  this.i18n[ this.config.languageId ].button.check,
             topic:  `${ this.i18n[ this.config.languageId ][ buttonType ] }${ this.i18n[ this.config.languageId ].topic[ key ] }`,
@@ -314,7 +324,6 @@ export default class GetUserDetail {
             if ( editPageItem.type === 'text' ) {
                 editPageItem.languageId.forEach( ( languageId ) => {
                     if ( buttonType === 'modify' ) {
-                        console.log( content[ buttonType ][ editPageItem.content ] );
                         editPage.content.innerHTML += editPageContentHTML( {
                             flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
                             content:    content[ buttonType ][ editPageItem.content ]( languageId ),
@@ -430,6 +439,7 @@ export default class GetUserDetail {
 
     async setData () {
         const res = await this.fetchData( this.config.languageId );
+
         Object.keys( this.profile ).map( ( key ) => {
             this.profile[ key ].DOM.text.innerHTML = res.profile[ key ];
             if ( !this.status.isAddEventListener ) {
@@ -447,7 +457,7 @@ export default class GetUserDetail {
                         editPageContent.innerHTML += editPageContentHTML( {
                             flag:       ( this.profile[ key ].editPage.flag ) ? this.flag[ languageId ] : null,
                             content:    data[ languageId ].profile[ key ],
-                            name:    `profile_${ key }_${ languageId }`,
+                            name:    `modify_profile_${ key }_${ languageId }`,
                             type:    this.profile[ key ].editPage.type,
                         } );
                     } );
@@ -462,6 +472,7 @@ export default class GetUserDetail {
             }
         } );
 
+        await this.setNationData( res );
         await this.renderTitleInputBlock( res.title );
         await this.renderSpecialtyInputBlock( res.specialty );
         await this.renderEducationInputBlock( res.education );
@@ -473,6 +484,31 @@ export default class GetUserDetail {
         await this.setEditPageInput( 'experience', 'experienceId' );
 
         this.status.isAddEventListener = true;
+    }
+
+    async setNationData ( res ) {
+        this.DOM.nationText.innerHTML = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res.profile.nation ] ];
+        this.DOM.nationModify.addEventListener( 'click', async () => {
+            await this.setEditPageWindow( 'nation', 'modify' );
+            const editPage = {
+                content:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
+                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
+                cancel:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
+            };
+
+            editPage.content.innerHTML += editPageContentHTML( {
+                data:  nationUtils.i18n[ this.config.languageId ],
+                name:    `modify_profile_nation`,
+                type:    'dropdown',
+            } );
+            editPage.cancel.addEventListener( 'click', () => {
+                this.closeEditPageWindow();
+            } );
+            editPage.check.addEventListener( 'click', async () => {
+                await this.setData();
+                this.closeEditPageWindow();
+            } );
+        } );
     }
 
     async renderTitleInputBlock ( res ) {
@@ -553,6 +589,7 @@ export default class GetUserDetail {
 
     async exec () {
         console.log( this.fetchData( this.config.languageId ) );
+        console.log( UrlUtils.serverUrl( 'static/src/image/icon/tw.png' ) );
         await this.setData();
     }
 }

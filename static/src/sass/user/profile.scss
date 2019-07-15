@@ -158,6 +158,7 @@
         > .profile__specialty {
           @include input-block( $block: 'specialty', $modifier: 'specialty' );
         }
+        @include input-block( $block: 'profile', $modifier: 'nation' );
         @include input-block( $block: 'profile', $modifier: 'office-location' );
         @include input-block( $block: 'profile', $modifier: 'lab-name' );
         @include input-block( $block: 'profile', $modifier: 'lab-location' );

@@ -23,3 +23,9 @@ article.content__input#input
   else if type === 'local-topic'
     section.input__local-topic.local-topic  
       p.local-topic= local_topic
+  else if type === 'dropdown'
+    section.input__dropdown.dropdown
+      button.dropdown__top= '請選擇'
+      article.dropdown__content
+        each val, index in data
+          button.content__item( value= index, name= name  )= val
