@@ -62,8 +62,6 @@ export default class GetUserDetail {
         };
         this.editPageTime = {
             type: 'time',
-            from,
-            to,
         };
 
         this.profile = {
@@ -268,9 +266,9 @@ export default class GetUserDetail {
         };
 
         this.editPage[ info.modifier ].forEach( ( editPageItem ) => {
-            editPageItem.languageId.forEach( ( languageId ) => {
-                if ( buttonType === 'modify' ) {
-                    if ( editPageItem.type === 'text' ) {
+            if ( editPageItem.type === 'text' ) {
+                editPageItem.languageId.forEach( ( languageId ) => {
+                    if ( buttonType === 'modify' ) {
                         editPage.content.innerHTML += editPageContentHTML( {
                             flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
                             content:    content[ buttonType ][ info.modifier ]( languageId ),
@@ -278,16 +276,40 @@ export default class GetUserDetail {
                             type:       editPageItem.type,
                         } );
                     }
-                }
-                else if ( buttonType === 'add' ) {
+                    else if ( buttonType === 'add' ) {
+                        editPage.content.innerHTML += editPageContentHTML( {
+                            flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
+                            content:    content[ buttonType ][ info.modifier ]( languageId ),
+                            name:       name[ buttonType ]( info.modifier, languageId ),
+                            type:       editPageItem.type,
+                        } );
+                    }
+                } );
+            }
+            else if ( editPageItem.type === 'time' ) {
+                if ( buttonType === 'modify' ) {
                     editPage.content.innerHTML += editPageContentHTML( {
-                        flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                        content:    content[ buttonType ][ info.modifier ]( languageId ),
-                        name:       name[ buttonType ]( info.modifier, languageId ),
+                        from:       this.i18n[ this.config.languageId ].time.from,
+                        to:         this.i18n[ this.config.languageId ].time.to,
+                        from_value:       info.res[ this.config.languageId ][ info.modifier ][ info.index ].from,
+                        to_value:         info.res[ this.config.languageId ][ info.modifier ][ info.index ].to,
+                        name_from:  `modify_${ info.modifier }_from_${ info.res[ this.config.languageId ][ info.modifier ][ info.index ].id }`,
+                        name_to:    `modify_${ info.modifier }_to_${ info.res[ this.config.languageId ][ info.modifier ][ info.index ].id }`,
                         type:       editPageItem.type,
                     } );
                 }
-            } );
+                else if ( buttonType === 'add' ) {
+                    editPage.content.innerHTML += editPageContentHTML( {
+                        from:       this.i18n[ this.config.languageId ].time.from,
+                        to:         this.i18n[ this.config.languageId ].time.to,
+                        from_value:    1999,
+                        to_value:      2000,
+                        name_from:  `add_${ info.modifier }_from`,
+                        name_to:    `add_${ info.modifier }_to`,
+                        type:       editPageItem.type,
+                    } );
+                }
+            }
         } );
         editPage.cancel.addEventListener( 'click', () => {
             this.closeEditPageWindow();
@@ -393,8 +415,7 @@ export default class GetUserDetail {
 
         await this.setEditPageInput( 'title', 'titleId' );
         await this.setEditPageInput( 'specialty', 'specialtyId' );
-
-        // Await this.setEditPageInput( 'education', 'educationId' );
+        await this.setEditPageInput( 'education', 'educationId' );
 
         this.status.isAddEventListener = true;
     }

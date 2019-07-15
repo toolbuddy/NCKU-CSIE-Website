@@ -13,10 +13,13 @@ article.content__input#input
   else if type === 'time'
     article.input__time.time
       aside.time__from.from
-        label.from__text= data.from
+        label.from__text= from
         span.from__input.input
-          input.input__year( type = 'number', value = '2015', placeholder = 'yyyy' )
+          input.input__year( type = 'number', value = from_value, placeholder = 'yyyy' name= name_from)
       aside.time__to.to
-        label.to__text= data.to
+        label.to__text= to
         span.to__input.input
-          input.input__year( type = 'number', value = '2019', placeholder = 'yyyy' )
+          input.input__year( type = 'number', value = to_value, placeholder = 'yyyy' name= name_to)
+  else if type === 'localTopic'
+    section.input__local-topic.local-topic  
+      p.local-topic= local-topic
