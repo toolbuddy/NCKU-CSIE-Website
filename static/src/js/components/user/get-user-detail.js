@@ -75,75 +75,17 @@ export default class GetUserDetail {
             } ),
         };
 
-        this.editPageText = ( i18n, content ) => {
-            if ( i18n ) {
-                return {
-                    type:       'text',
-                    languageId: LanguageUtils.supportedLanguageId,
-                    content,
-                    flag:       true,
-                };
-            }
-            return {
-                type:       'text',
-                languageId: [ this.config.languageId, ],
-                content,
-                flag:       false,
-            };
-        };
-        this.editPageTime = {
-            type: 'time',
-        };
-        this.editPageLocalTopic = content => ( {
-            content,
-            type:    'local-topic',
-        } );
-        this.editPageDropdown = content => ( {
-            content,
-            type: 'dropdown',
-        } );
-
-        this.profile = {
-            name: {
-                classModifier: 'name',
-                editPage:      this.editPageText( true, 'name' ),
-            },
-            officeAddress: {
-                classModifier: 'office-location',
-                editPage:      this.editPageText( true, 'officeAddress' ),
-            },
-            labName:    {
-                classModifier:   'lab-name',
-                editPage:      this.editPageText( true, 'labName' ),
-            },
-            labAddress:  {
-                classModifier:   'lab-location',
-                editPage:      this.editPageText( true, 'labAddress' ),
-            },
-            labTel:    {
-                classModifier:    'lab-tel',
-                editPage:      this.editPageText( false, 'labTel' ),
-            },
-            labWeb:     {
-                classModifier: 'lab-web',
-                editPage:      this.editPageText( false, 'labWeb' ),
-            },
-            officeTel:  {
-                classModifier:  'office-tel',
-                editPage:      this.editPageText( false, 'labTel' ),
-            },
-            email:   {
-                classModifier:   'email',
-                editPage:      this.editPageText( false, 'email' ),
-            },
-            fax:     {
-                classModifier:   'fax',
-                editPage:      this.editPageText( false, 'fax' ),
-            },
-            personalWeb:  {
-                classModifier: 'personal-web',
-                editPage:      this.editPageText( false, 'personalWeb' ),
-            },
+        this.classModifier = {
+            name:          'name',
+            officeAddress:  'office-location',
+            labName:       'lab-name',
+            labAddress:    'lab-location',
+            labTel:        'lab-tel',
+            labWeb:        'lab-web',
+            officeTel:     'office-tel',
+            email:         'email',
+            fax:           'fax',
+            personalWeb:   'personal-web',
         };
 
         this.editPage = {
@@ -356,15 +298,16 @@ export default class GetUserDetail {
                 experience: opt.experienceDOM,
                 editPage:   opt.editPageDOM,
             },
+            profile:      {},
             nation:       opt.profileDOM.querySelector( profileQuerySelector( 'nation' ) ),
             nationText:   opt.profileDOM.querySelector( profileTextQuerySelector( 'nation' ) ),
             nationModify: opt.profileDOM.querySelector( profileModifyQuerySelector( 'nation' ) ),
         };
 
-        Object.keys( this.profile ).map( ( key ) => {
-            this.profile[ key ].DOM = {};
-            this.profile[ key ].DOM.text = opt.profileDOM.querySelector( profileTextQuerySelector( this.profile[ key ].classModifier ) );
-            this.profile[ key ].DOM.modifier = opt.profileDOM.querySelector( profileModifyQuerySelector( this.profile[ key ].classModifier ) );
+        Object.keys( this.classModifier ).map( ( key ) => {
+            this.DOM.profile[ key ] = {},
+            this.DOM.profile[ key ].text = opt.profileDOM.querySelector( profileTextQuerySelector( this.classModifier[ key ] ) );
+            this.DOM.profile[ key ].modifier = opt.profileDOM.querySelector( profileModifyQuerySelector( this.classModifier[ key ] ) );
         } );
     }
 
@@ -416,8 +359,14 @@ export default class GetUserDetail {
         const isProfile = ( info.dbTable === 'profile' ) ? true : false;
         const editPage = await this.setEditPageWindow( ( isProfile ) ? info.dbTableItem : info.dbTable, buttonType );
 
-        if ( buttonType === 'remove' )
+        if ( buttonType === 'remove' ) {
+            editPage.content.innerHTML += editPageContentHTML( {
+                val:  `${ info.dbTable }_${ info.id }`,
+                name: `delete_${ info.dbTable }_${ info.id }`,
+                type: 'remove',
+            } );
             return;
+        }
 
         const name = {
             modify: data => `update_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }_${ data.id }`,
@@ -529,7 +478,7 @@ export default class GetUserDetail {
                 this.setEditPageItems( {
                     index,
                     dbTable,
-                    id,
+                    id: dbTableElement[ id ],
                     res,
                 }, 'modify' );
             } );
@@ -537,7 +486,7 @@ export default class GetUserDetail {
             removeButtonDOM.addEventListener( 'click', async () => {
                 this.setEditPageItems( {
                     dbTable,
-                    id,
+                    id: dbTableElement[ id ],
                     res,
                 }, 'remove' );
             } );
@@ -565,10 +514,10 @@ export default class GetUserDetail {
     async setData () {
         const res = await this.fetchData( this.config.languageId );
 
-        Object.keys( this.profile ).map( ( key ) => {
-            this.profile[ key ].DOM.text.innerHTML = res.profile[ key ];
+        Object.keys( this.classModifier ).map( ( key ) => {
+            this.DOM.profile[ key ].text.innerHTML = res.profile[ key ];
             if ( !this.status.isAddEventListener ) {
-                this.profile[ key ].DOM.modifier.addEventListener( 'click', async () => {
+                this.DOM.profile[ key ].modifier.addEventListener( 'click', async () => {
                     const data = {
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),

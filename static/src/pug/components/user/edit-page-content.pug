@@ -27,5 +27,9 @@ article.content__input#input
     section.input__dropdown.dropdown
       button.dropdown__top= '請選擇'
       article.dropdown__content
-        each val, index in data
-          button.content__item( value= index, name= name  )= val
+        each val, index in data  
+          input.content__item( type = 'button', value= val, name= name  )
+  else if type === 'remove'
+    section.input__remove.remove
+      input.delete__item( type = 'hidden', value= val, name= name )
+      
