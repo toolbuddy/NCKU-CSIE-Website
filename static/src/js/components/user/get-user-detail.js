@@ -20,6 +20,9 @@ export default class GetUserDetail {
         if (
             !opt.profileDOM ||
             !ValidateUtils.isDomElement( opt.profileDOM ) ||
+            !ValidateUtils.isDomElement( opt.educationDOM ) ||
+            !ValidateUtils.isDomElement( opt.experienceDOM ) ||
+            !ValidateUtils.isDomElement( opt.editPageDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
         )
             throw new TypeError( 'invalid arguments' );
@@ -71,6 +74,7 @@ export default class GetUserDetail {
             } ),
             dropdown: dbTableItem => ( {
                 dbTableItem,
+                dropdownItem,
                 type: 'dropdown',
             } ),
         };
@@ -322,9 +326,9 @@ export default class GetUserDetail {
                 topic:  `${ this.i18n[ this.config.languageId ][ buttonType ] }${ this.i18n[ this.config.languageId ].topic[ dbItem ] }`,
             } );
             return {
-                content: this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
-                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
-                cancel:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
+                content: this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__content' ),
+                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--check' ),
+                cancel:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--cancel' ),
             };
         }
         catch ( err ) {
@@ -356,141 +360,155 @@ export default class GetUserDetail {
     }
 
     async setEditPageItems ( info, buttonType ) {
-        const isProfile = ( info.dbTable === 'profile' ) ? true : false;
-        const editPage = await this.setEditPageWindow( ( isProfile ) ? info.dbTableItem : info.dbTable, buttonType );
+        try {
+            const isProfile = ( info.dbTable === 'profile' ) ? true : false;
+            const editPage = await this.setEditPageWindow( ( isProfile ) ? info.dbTableItem : info.dbTable, buttonType );
+            window.scrollTo( 0, 0 );
 
-        if ( buttonType === 'remove' ) {
-            editPage.content.innerHTML += editPageContentHTML( {
-                val:  `${ info.dbTable }_${ info.id }`,
-                name: `delete_${ info.dbTable }_${ info.id }`,
-                type: 'remove',
-            } );
-            return;
-        }
+            if ( buttonType === 'remove' ) {
+                editPage.content.innerHTML += editPageContentHTML( {
+                    val:  `${ info.dbTable }_${ info.id }`,
+                    name: `delete_${ info.dbTable }_${ info.id }`,
+                    type: 'remove',
+                } );
+                return;
+            }
 
-        const name = {
-            modify: data => `update_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }_${ data.id }`,
-            add:    data => `add_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }`,
-        };
+            const name = {
+                modify: data => `update_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }_${ data.id }`,
+                add:    data => `add_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }`,
+            };
 
-        const editPageElements = ( isProfile ) ? this.editPage.profile[ info.dbTableItem ] : this.editPage[ info.dbTable ];
+            const editPageElements = ( isProfile ) ? this.editPage.profile[ info.dbTableItem ] : this.editPage[ info.dbTable ];
 
-        editPageElements.forEach( ( editPageItem ) => {
-            switch ( editPageItem.type ) {
-                case 'text':
-                    editPageItem.languageId.forEach( ( languageId ) => {
-                        let elementContent = this.i18n[ languageId ].default[ info.dbTable ][ editPageItem.dbTableItem ];
+            editPageElements.forEach( ( editPageItem ) => {
+                switch ( editPageItem.type ) {
+                    case 'text':
+                        editPageItem.languageId.forEach( ( languageId ) => {
+                            const placeholder = this.i18n[ languageId ].default[ info.dbTable ][ editPageItem.dbTableItem ];
+                            let elementContent;
+                            if ( buttonType === 'modify' ) {
+                                let data;
+                                if ( isProfile )
+                                    data = info.res[ languageId ].profile[ editPageItem.dbTableItem ];
+                                else
+                                    data = info.res[ languageId ][ info.dbTable ][ info.index ][ editPageItem.dbTableItem ];
+                                elementContent = ( !ValidateUtils.isValidString( data ) ) ? '' : data;
+                                console.log( data );
+                            }
+
+                            const elementName = name[ buttonType ]( {
+                                dbTable:     info.dbTable,
+                                dbTableItem: editPageItem.dbTableItem,
+                                languageId,
+                                id:          ( buttonType === 'modify' ) ? info.id : null,
+                            } );
+
+                            editPage.content.innerHTML += editPageContentHTML( {
+                                flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
+                                value:    elementContent,
+                                placeholder,
+                                name:       elementName,
+                                type:       editPageItem.type,
+                            } );
+                        } );
+                        break;
+                    case 'time':
+                        let elementFrom = '';
                         if ( buttonType === 'modify' ) {
-                            let data;
-                            if ( isProfile )
-                                data = info.res[ languageId ].profile[ editPageItem.dbTableItem ];
-                            else
-                                data = info.res[ languageId ][ info.dbTable ][ info.index ][ editPageItem.dbTableItem ];
-                            elementContent = ( ValidateUtils.isValidString( data ) ) ? elementContent : data;
+                            const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].from;
+                            elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementFrom : data;
                         }
 
-                        const elementName = name[ buttonType ]( {
+                        const elementTo = '';
+                        if ( buttonType === 'modify' ) {
+                            const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].to;
+                            elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementTo : data;
+                        }
+
+                        const elementNameFrom = name[ buttonType ]( {
                             dbTable:     info.dbTable,
-                            dbTableItem: editPageItem.dbTableItem,
-                            languageId,
+                            dbTableItem: 'from',
+                            languageId:  this.config.languageId,
+                            id:          ( buttonType === 'modify' ) ? info.id : null,
+                        } );
+
+                        const elementNameTo = name[ buttonType ]( {
+                            dbTable:     info.dbTable,
+                            dbTableItem: 'from',
+                            languageId:  this.config.languageId,
                             id:          ( buttonType === 'modify' ) ? info.id : null,
                         } );
 
                         editPage.content.innerHTML += editPageContentHTML( {
-                            flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                            content:    elementContent,
-                            name:       elementName,
-                            type:       editPageItem.type,
+                            from:       this.i18n[ this.config.languageId ].time.from,
+                            to:         this.i18n[ this.config.languageId ].time.to,
+                            from_value:  elementFrom,
+                            to_value:    elementTo,
+                            name_from:   elementNameFrom,
+                            name_to:     elementNameTo,
+                            type:        editPageItem.type,
                         } );
-                    } );
-                    break;
-                case 'time':
-                    let elementFrom = '';
-                    if ( buttonType === 'modify' ) {
-                        const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].from;
-                        elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementFrom : data;
-                    }
-
-                    const elementTo = '';
-                    if ( buttonType === 'modify' ) {
-                        const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].to;
-                        elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementTo : data;
-                    }
-
-                    const elementNameFrom = name[ buttonType ]( {
-                        dbTable:     info.dbTable,
-                        dbTableItem: 'from',
-                        languageId:  this.config.languageId,
-                        id:          ( buttonType === 'modify' ) ? info.id : null,
-                    } );
-
-                    const elementNameTo = name[ buttonType ]( {
-                        dbTable:     info.dbTable,
-                        dbTableItem: 'from',
-                        languageId:  this.config.languageId,
-                        id:          ( buttonType === 'modify' ) ? info.id : null,
-                    } );
-
-                    editPage.content.innerHTML += editPageContentHTML( {
-                        from:       this.i18n[ this.config.languageId ].time.from,
-                        to:         this.i18n[ this.config.languageId ].time.to,
-                        from_value:  elementFrom,
-                        to_value:    elementTo,
-                        name_from:   elementNameFrom,
-                        name_to:     elementNameTo,
-                        type:        editPageItem.type,
-                    } );
-                    break;
-                case 'local-topic':
-                    editPage.content.innerHTML += editPageContentHTML( {
-                        local_topic: this.i18n[ this.config.languageId ][ info.dbTable ][ editPageItem.dbTableItem ],
-                        type:        editPageItem.type,
-                    } );
-            }
-        } );
-        editPage.cancel.addEventListener( 'click', () => {
-            this.closeEditPageWindow();
-        } );
-        editPage.check.addEventListener( 'click', async () => {
-            await this.setData();
-            this.closeEditPageWindow();
-        } );
+                        break;
+                    case 'local-topic':
+                        editPage.content.innerHTML += editPageContentHTML( {
+                            local_topic: this.i18n[ this.config.languageId ][ info.dbTable ][ editPageItem.dbTableItem ],
+                            type:        editPageItem.type,
+                        } );
+                }
+            } );
+            editPage.cancel.addEventListener( 'click', () => {
+                this.closeEditPageWindow();
+            } );
+            editPage.check.addEventListener( 'click', async () => {
+                await this.setData();
+                this.closeEditPageWindow();
+            } );
+        }
+        catch ( err ) {
+            console.log( err );
+        }
     }
 
     async setEditPageInput ( dbTable, id ) {
-        const res = {
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
-        };
+        try {
+            const res = {
+                [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
+                [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
+            };
 
-        const addButtonDOM = this.DOM.block[ dbTable ].querySelector( this.addButtonQuerySelector( dbTable ) );
-        addButtonDOM.addEventListener( 'click', async () => {
-            this.setEditPageItems( {
-                dbTable,
-            }, 'add' );
-        } );
-
-        res[ this.config.languageId ][ dbTable ].forEach( ( dbTableElement, index ) => {
-            const modifyButtonDOM = this.DOM.block[ dbTable ].querySelector( this.modifyButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
-            const removeButtonDOM = this.DOM.block[ dbTable ].querySelector( this.removeButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
-
-            modifyButtonDOM.addEventListener( 'click', async () => {
-                this.setEditPageItems( {
-                    index,
-                    dbTable,
-                    id: dbTableElement[ id ],
-                    res,
-                }, 'modify' );
-            } );
-
-            removeButtonDOM.addEventListener( 'click', async () => {
+            const addButtonDOM = this.DOM.block[ dbTable ].querySelector( this.addButtonQuerySelector( dbTable ) );
+            addButtonDOM.addEventListener( 'click', async () => {
                 this.setEditPageItems( {
                     dbTable,
-                    id: dbTableElement[ id ],
-                    res,
-                }, 'remove' );
+                }, 'add' );
             } );
-        } );
+
+            res[ this.config.languageId ][ dbTable ].forEach( ( dbTableElement, index ) => {
+                const modifyButtonDOM = this.DOM.block[ dbTable ].querySelector( this.modifyButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
+                const removeButtonDOM = this.DOM.block[ dbTable ].querySelector( this.removeButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
+
+                modifyButtonDOM.addEventListener( 'click', async () => {
+                    this.setEditPageItems( {
+                        index,
+                        dbTable,
+                        id: dbTableElement[ id ],
+                        res,
+                    }, 'modify' );
+                } );
+
+                removeButtonDOM.addEventListener( 'click', async () => {
+                    this.setEditPageItems( {
+                        dbTable,
+                        id: dbTableElement[ id ],
+                        res,
+                    }, 'remove' );
+                } );
+            } );
+        }
+        catch ( err ) {
+            console.log( err );
+        }
     }
 
     queryApi ( lang ) {
@@ -551,9 +569,9 @@ export default class GetUserDetail {
         this.DOM.nationModify.addEventListener( 'click', async () => {
             await this.setEditPageWindow( 'nation', 'modify' );
             const editPage = {
-                content:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
-                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
-                cancel:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
+                content:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__content' ),
+                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--check' ),
+                cancel:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--cancel' ),
             };
 
             editPage.content.innerHTML += editPageContentHTML( {
