@@ -11,6 +11,7 @@ import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
 import editPageContentHTML from 'static/src/pug/components/user/edit-page-content.pug';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import nationUtils from 'models/faculty/utils/nation.js';
+import { conditionalExpression, } from 'babel-types';
 
 export default class GetUserDetail {
     constructor ( opt ) {
@@ -42,6 +43,36 @@ export default class GetUserDetail {
         this.flag = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
+        };
+
+        this.editPageType = {
+            text:  ( i18n, dbTableItem ) => {
+                if ( i18n ) {
+                    return {
+                        type:       'text',
+                        languageId: LanguageUtils.supportedLanguageId,
+                        dbTableItem,
+                        flag:       true,
+                    };
+                }
+                return {
+                    type:       'text',
+                    languageId: [ this.config.languageId, ],
+                    dbTableItem,
+                    flag:       false,
+                };
+            },
+            time: {
+                type: 'time',
+            },
+            localTopic: dbTableItem => ( {
+                dbTableItem,
+                type:    'local-topic',
+            } ),
+            dropdown: dbTableItem => ( {
+                dbTableItem,
+                type: 'dropdown',
+            } ),
         };
 
         this.editPageText = ( i18n, content ) => {
@@ -116,27 +147,59 @@ export default class GetUserDetail {
         };
 
         this.editPage = {
+            profile: {
+                name: [
+                    this.editPageType.text( true, 'name' ),
+                ],
+                officeAddress: [
+                    this.editPageType.text( true, 'officeAddress' ),
+                ],
+                labName:       [
+                    this.editPageType.text( true, 'labName' ),
+                ],
+                labAddress:  [
+                    this.editPageType.text( true, 'labAddress' ),
+                ],
+                labTel:  [
+                    this.editPageType.text( false, 'labTel' ),
+                ],
+                labWeb:  [
+                    this.editPageType.text( false, 'labWeb' ),
+                ],
+                officeTel: [
+                    this.editPageType.text( false, 'officeTel' ),
+                ],
+                email:    [
+                    this.editPageType.text( false, 'email' ),
+                ],
+                fax:    [
+                    this.editPageType.text( false, 'fax' ),
+                ],
+                personalWeb:  [
+                    this.editPageType.text( false, 'personalWeb' ),
+                ],
+            },
             title: [
-                this.editPageText( true, 'title' ),
+                this.editPageType.text( true, 'title' ),
             ],
             specialty: [
-                this.editPageText( true, 'specialty' ),
+                this.editPageType.text( true, 'specialty' ),
             ],
             education: [
-                this.editPageTime,
-                this.editPageLocalTopic( 'school' ),
-                this.editPageText( true, 'school' ),
-                this.editPageLocalTopic( 'major' ),
-                this.editPageText( true, 'major' ),
+                this.editPageType.time,
+                this.editPageType.localTopic( 'school' ),
+                this.editPageType.text( true, 'school' ),
+                this.editPageType.localTopic( 'major' ),
+                this.editPageType.text( true, 'major' ),
             ],
             experience: [
-                this.editPageTime,
-                this.editPageLocalTopic( 'organization' ),
-                this.editPageText( true, 'organization' ),
-                this.editPageLocalTopic( 'department' ),
-                this.editPageText( true, 'department' ),
-                this.editPageLocalTopic( 'title' ),
-                this.editPageText( true, 'title' ),
+                this.editPageType.time,
+                this.editPageType.localTopic( 'organization' ),
+                this.editPageType.text( true, 'organization' ),
+                this.editPageType.localTopic( 'department' ),
+                this.editPageType.text( true, 'department' ),
+                this.editPageType.localTopic( 'title' ),
+                this.editPageType.text( true, 'title' ),
             ],
         };
 
@@ -176,20 +239,41 @@ export default class GetUserDetail {
                     title:        'title',
                 },
                 default: {
-                    title:        'ex. Professor',
-                    specialty:    'ex. Machine Learning',
-                    organization: 'ex. Nation Cheng Kung University',
-                    department:   'ex. CSIE',
-                    school:       'ex. Nation Cheng Kung University',
-                    major:        'ex. CSIE',
+                    profile: {
+                        name:          'ex. Sam Wang',
+                        officeAddress: 'ex. 65xxx, 12F, CSIE new building',
+                        officeTel:     'ex. 06-xxxxxxx',
+                        labName:       'please input your lab name',
+                        labAddress:    'ex. 65xxx, 5F, CSIE new building',
+                        labTel:        'ex. 06-xxxxxxx',
+                        labWeb:        'ex. https//xxxxxxxxx',
+                        email:         'ex. example@xxxxxxxx',
+                        personalWeb:   'ex. https//xxxxxxxxx',
+                        fax:           'please input your fax number',
+                    },
+                    title: {
+                        title:        'ex. Professor',
+                    },
+                    specialty: {
+                        specialty:    'ex. Machine Learning',
+                    },
+                    experience: {
+                        organization: 'ex. Nation Cheng Kung University',
+                        department:   'ex. CSIE',
+                        title:        'ex. Professor',
+                    },
+                    education: {
+                        school:       'ex. Nation Cheng Kung University',
+                        major:        'ex. CSIE',
+                    },
                 },
                 time: {
                     from: 'from',
                     to:   'to',
                 },
-                modify: 'modify your ',
+                modify: 'update your ',
                 add:    'add your ',
-                remove: 'remove your ',
+                remove: 'delete your ',
             },
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                 button: {
@@ -226,12 +310,33 @@ export default class GetUserDetail {
                     title:        '職位',
                 },
                 default: {
-                    title:        'ex. 教授',
-                    specialty:    'ex. 機器學習',
-                    organization: 'ex. 國立成功大學',
-                    department:   'ex. 資訊工程學系',
-                    school:       'ex. 國立成功大學',
-                    major:        'ex. 資訊工程學系',
+                    profile: {
+                        name:          'ex. 王小明',
+                        officeAddress: 'ex. 資訊系新館 65xxx',
+                        officeTel:     'ex. 06-xxxxxxx',
+                        labName:       'ex. xxx實驗室',
+                        labAddress:    'ex. 資訊系新館 65xxx',
+                        labTel:        'ex. 06-xxxxxxx',
+                        labWeb:        'ex. https//xxxxxxxxx',
+                        email:         'ex. example@xxxxxxxx',
+                        personalWeb:   'ex. https//xxxxxxxxx',
+                        fax:           '請輸入您的傳真號碼',
+                    },
+                    title:  {
+                        title:      'ex. 教授',
+                    },
+                    specialty:  {
+                        specialty: 'ex. 機器學習',
+                    },
+                    experience: {
+                        organization: 'ex. 國立成功大學',
+                        department:   'ex. 資訊工程學系',
+                        title:        'ex. 教授',
+                    },
+                    education: {
+                        school:       'ex. 國立成功大學',
+                        major:        'ex. 資訊工程學系',
+                    },
                 },
                 time: {
                     from: '從',
@@ -263,16 +368,25 @@ export default class GetUserDetail {
         } );
     }
 
-    async setEditPageWindow ( key, buttonType ) {
-        classRemove( this.DOM.block.editPage, 'content__edit-page--hidden' );
-        this.DOM.block.editPage.innerHTML = '';
-        this.DOM.block.editPage.innerHTML += editPageHTML( {
-            url:    `${ host }/user/profile`,
-            cancel: this.i18n[ this.config.languageId ].button.cancel,
-            check:  this.i18n[ this.config.languageId ].button.check,
-            topic:  `${ this.i18n[ this.config.languageId ][ buttonType ] }${ this.i18n[ this.config.languageId ].topic[ key ] }`,
-        } );
-        return;
+    async setEditPageWindow ( dbItem, buttonType ) {
+        try {
+            classRemove( this.DOM.block.editPage, 'content__edit-page--hidden' );
+            this.DOM.block.editPage.innerHTML = '';
+            this.DOM.block.editPage.innerHTML += editPageHTML( {
+                url:    `${ host }/user/profile`,
+                cancel: this.i18n[ this.config.languageId ].button.cancel,
+                check:  this.i18n[ this.config.languageId ].button.check,
+                topic:  `${ this.i18n[ this.config.languageId ][ buttonType ] }${ this.i18n[ this.config.languageId ].topic[ dbItem ] }`,
+            } );
+            return {
+                content: this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
+                check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
+                cancel:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
+            };
+        }
+        catch ( err ) {
+            console.log( err );
+        }
     }
 
     closeEditPageWindow () {
@@ -299,79 +413,90 @@ export default class GetUserDetail {
     }
 
     async setEditPageItems ( info, buttonType ) {
-        await this.setEditPageWindow( info.modifier, buttonType );
-        const editPage = {
-            content: this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' ),
-            check:   this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' ),
-            cancel:  this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' ),
-        };
-        const content = {
-            modify: {
-                title:        languageId => info.res[ languageId ].title[ info.index ].title,
-                specialty:    languageId => info.res[ languageId ].specialty[ info.index ].specialty,
-                organization: languageId => info.res[ languageId ].experience[ info.index ].organization,
-                department:   languageId => info.res[ languageId ].experience[ info.index ].department,
-                school:       languageId => info.res[ languageId ].education[ info.index ].school,
-                major:        languageId => info.res[ languageId ].education[ info.index ].major,
-            },
-        };
+        const isProfile = ( info.dbTable === 'profile' ) ? true : false;
+        const editPage = await this.setEditPageWindow( ( isProfile ) ? info.dbTableItem : info.dbTable, buttonType );
+
+        if ( buttonType === 'remove' )
+            return;
+
         const name = {
-            modify:  ( modifier, type, languageId, id ) => `${ buttonType }_${ modifier }_${ type }_${ languageId }_${ id }`,
-            add:    ( modifier, type, languageId ) => `${ buttonType }_${ modifier }_${ type }_${ languageId }`,
+            modify: data => `update_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }_${ data.id }`,
+            add:    data => `add_${ data.dbTable }_${ data.dbTableItem }_${ data.languageId }`,
         };
 
-        this.editPage[ info.modifier ].forEach( ( editPageItem ) => {
-            if ( editPageItem.type === 'text' ) {
-                editPageItem.languageId.forEach( ( languageId ) => {
+        const editPageElements = ( isProfile ) ? this.editPage.profile[ info.dbTableItem ] : this.editPage[ info.dbTable ];
+
+        editPageElements.forEach( ( editPageItem ) => {
+            switch ( editPageItem.type ) {
+                case 'text':
+                    editPageItem.languageId.forEach( ( languageId ) => {
+                        let elementContent = this.i18n[ languageId ].default[ info.dbTable ][ editPageItem.dbTableItem ];
+                        if ( buttonType === 'modify' ) {
+                            let data;
+                            if ( isProfile )
+                                data = info.res[ languageId ].profile[ editPageItem.dbTableItem ];
+                            else
+                                data = info.res[ languageId ][ info.dbTable ][ info.index ][ editPageItem.dbTableItem ];
+                            elementContent = ( ValidateUtils.isValidString( data ) ) ? elementContent : data;
+                        }
+
+                        const elementName = name[ buttonType ]( {
+                            dbTable:     info.dbTable,
+                            dbTableItem: editPageItem.dbTableItem,
+                            languageId,
+                            id:          ( buttonType === 'modify' ) ? info.id : null,
+                        } );
+
+                        editPage.content.innerHTML += editPageContentHTML( {
+                            flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
+                            content:    elementContent,
+                            name:       elementName,
+                            type:       editPageItem.type,
+                        } );
+                    } );
+                    break;
+                case 'time':
+                    let elementFrom = '';
                     if ( buttonType === 'modify' ) {
-                        editPage.content.innerHTML += editPageContentHTML( {
-                            flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                            content:    content[ buttonType ][ editPageItem.content ]( languageId ),
-                            name:       name[ buttonType ]( info.modifier, editPageItem.content, languageId, info.res[ languageId ][ info.modifier ][ info.index ][ `${ info.modifier }Id` ] ),
-                            type:       editPageItem.type,
-                        } );
+                        const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].from;
+                        elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementFrom : data;
                     }
-                    else if ( buttonType === 'add' ) {
-                        editPage.content.innerHTML += editPageContentHTML( {
-                            flag:       ( editPageItem.flag ) ? this.flag[ languageId ] : null,
-                            content:    this.i18n[ languageId ].default[ editPage.content ],
-                            name:       name[ buttonType ]( info.modifier, editPageItem.content, languageId ),
-                            type:       editPageItem.type,
-                        } );
+
+                    const elementTo = '';
+                    if ( buttonType === 'modify' ) {
+                        const data = info.res[ this.config.languageId ][ info.dbTable ][ info.index ].to;
+                        elementFrom = ( ValidateUtils.isPositiveInteger( data ) ) ? elementTo : data;
                     }
-                } );
-            }
-            else if ( editPageItem.type === 'time' ) {
-                if ( buttonType === 'modify' ) {
+
+                    const elementNameFrom = name[ buttonType ]( {
+                        dbTable:     info.dbTable,
+                        dbTableItem: 'from',
+                        languageId:  this.config.languageId,
+                        id:          ( buttonType === 'modify' ) ? info.id : null,
+                    } );
+
+                    const elementNameTo = name[ buttonType ]( {
+                        dbTable:     info.dbTable,
+                        dbTableItem: 'from',
+                        languageId:  this.config.languageId,
+                        id:          ( buttonType === 'modify' ) ? info.id : null,
+                    } );
+
                     editPage.content.innerHTML += editPageContentHTML( {
                         from:       this.i18n[ this.config.languageId ].time.from,
                         to:         this.i18n[ this.config.languageId ].time.to,
-                        from_value:       info.res[ this.config.languageId ][ info.modifier ][ info.index ].from,
-                        to_value:         info.res[ this.config.languageId ][ info.modifier ][ info.index ].to,
-                        name_from:  `modify_${ info.modifier }_from_${ info.res[ this.config.languageId ][ info.modifier ][ info.index ].id }`,
-                        name_to:    `modify_${ info.modifier }_to_${ info.res[ this.config.languageId ][ info.modifier ][ info.index ].id }`,
-                        type:       editPageItem.type,
-                    } );
-                }
-                else if ( buttonType === 'add' ) {
-                    editPage.content.innerHTML += editPageContentHTML( {
-                        from:       this.i18n[ this.config.languageId ].time.from,
-                        to:         this.i18n[ this.config.languageId ].time.to,
-                        from_value:    1999,
-                        to_value:      2000,
-                        name_from:  `add_${ info.modifier }_from`,
-                        name_to:    `add_${ info.modifier }_to`,
-                        type:       editPageItem.type,
-                    } );
-                }
-            }
-            else if ( editPageItem.type === 'local-topic' ) {
-                if ( buttonType === 'add' || buttonType === 'modify' ) {
-                    editPage.content.innerHTML += editPageContentHTML( {
-                        local_topic: this.i18n[ this.config.languageId ][ info.modifier ][ editPageItem.content ],
+                        from_value:  elementFrom,
+                        to_value:    elementTo,
+                        name_from:   elementNameFrom,
+                        name_to:     elementNameTo,
                         type:        editPageItem.type,
                     } );
-                }
+                    break;
+                case 'local-topic':
+                    editPage.content.innerHTML += editPageContentHTML( {
+                        local_topic: this.i18n[ this.config.languageId ][ info.dbTable ][ editPageItem.dbTableItem ],
+                        type:        editPageItem.type,
+                    } );
             }
         } );
         editPage.cancel.addEventListener( 'click', () => {
@@ -383,27 +508,27 @@ export default class GetUserDetail {
         } );
     }
 
-    async setEditPageInput ( modifier, id ) {
+    async setEditPageInput ( dbTable, id ) {
         const res = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
         };
 
-        const addButtonDOM = this.DOM.block[ modifier ].querySelector( this.addButtonQuerySelector( modifier ) );
+        const addButtonDOM = this.DOM.block[ dbTable ].querySelector( this.addButtonQuerySelector( dbTable ) );
         addButtonDOM.addEventListener( 'click', async () => {
             this.setEditPageItems( {
-                modifier,
+                dbTable,
             }, 'add' );
         } );
 
-        res[ this.config.languageId ][ modifier ].forEach( ( resModifier, index ) => {
-            const modifyButtonDOM = this.DOM.block[ modifier ].querySelector( this.modifyButtonQuerySelector( modifier, resModifier[ id ] ) );
-            const removeButtonDOM = this.DOM.block[ modifier ].querySelector( this.removeButtonQuerySelector( modifier, resModifier[ id ] ) );
+        res[ this.config.languageId ][ dbTable ].forEach( ( dbTableElement, index ) => {
+            const modifyButtonDOM = this.DOM.block[ dbTable ].querySelector( this.modifyButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
+            const removeButtonDOM = this.DOM.block[ dbTable ].querySelector( this.removeButtonQuerySelector( dbTable, dbTableElement[ id ] ) );
 
             modifyButtonDOM.addEventListener( 'click', async () => {
                 this.setEditPageItems( {
                     index,
-                    modifier,
+                    dbTable,
                     id,
                     res,
                 }, 'modify' );
@@ -411,7 +536,7 @@ export default class GetUserDetail {
 
             removeButtonDOM.addEventListener( 'click', async () => {
                 this.setEditPageItems( {
-                    modifier,
+                    dbTable,
                     id,
                     res,
                 }, 'remove' );
@@ -444,30 +569,16 @@ export default class GetUserDetail {
             this.profile[ key ].DOM.text.innerHTML = res.profile[ key ];
             if ( !this.status.isAddEventListener ) {
                 this.profile[ key ].DOM.modifier.addEventListener( 'click', async () => {
-                    await this.setEditPageWindow( key, 'modify' );
-
                     const data = {
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
                     };
-                    const editPageContent = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__content' );
-                    const editPageCheck = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--check' );
-                    const editPageCancel = this.DOM.block.editPage.querySelector( '.edit-page__window > .window__from > .from__button > .button__item--cancel' );
-                    this.profile[ key ].editPage.languageId.forEach( ( languageId ) => {
-                        editPageContent.innerHTML += editPageContentHTML( {
-                            flag:       ( this.profile[ key ].editPage.flag ) ? this.flag[ languageId ] : null,
-                            content:    data[ languageId ].profile[ key ],
-                            name:    `modify_profile_${ key }_${ languageId }`,
-                            type:    this.profile[ key ].editPage.type,
-                        } );
-                    } );
-                    editPageCancel.addEventListener( 'click', () => {
-                        this.closeEditPageWindow();
-                    } );
-                    editPageCheck.addEventListener( 'click', async () => {
-                        await this.setData();
-                        this.closeEditPageWindow();
-                    } );
+                    this.setEditPageItems( {
+                        dbTable:     'profile',
+                        dbTableItem: key,
+                        id:          this.config.profileId,
+                        res:         data,
+                    }, 'modify' );
                 } );
             }
         } );
