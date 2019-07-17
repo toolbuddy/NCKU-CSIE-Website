@@ -172,4 +172,28 @@ apis.get( '/miniProfile/:userId', cors(), async ( req, res, next ) => {
     }
 } );
 
+/**
+ * Resolve URL `/api/user/updateProfile/[id]`.
+ */
+
+apis.get( '/updateProfile/:userId', cors(), async ( req, res, next ) => {
+    try {
+        const userData = await getAdminByUserId( {
+            userId: Number( req.params.userId ),
+        } );
+
+        if ( userData.role === roleUtils.getIdByOption( 'faculty' ) ) {
+            // update faculty data
+        }
+        else if ( userData.role === roleUtils.getIdByOption( 'staff' ) ) {
+            // update staff data
+        }
+        else
+            console.error( 'Invalid role.' );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
 export default apis;
