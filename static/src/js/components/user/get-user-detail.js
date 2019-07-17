@@ -311,6 +311,12 @@ export default class GetUserDetail {
                 experience: opt.experienceDOM,
                 editPage:   opt.editPageDOM,
             },
+            add: {
+                title:      opt.profileDOM.querySelector( '.title__local-topic > .local-topic__add > .add__button' ),
+                specialty:  opt.profileDOM.querySelector( '.specialty__local-topic > .local-topic__add > .add__button' ),
+                education:  opt.educationAddDOM,
+                experience: opt.experienceAddDOM,
+            },
             profile:      {},
             nation:       opt.profileDOM.querySelector( profileQuerySelector( 'nation' ) ),
             nationText:   opt.profileDOM.querySelector( profileTextQuerySelector( 'nation' ) ),
@@ -632,8 +638,7 @@ export default class GetUserDetail {
                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
             };
 
-            const addButtonDOM = this.DOM.block[ dbTable ].querySelector( this.addButtonQuerySelector( dbTable ) );
-            addButtonDOM.addEventListener( 'click', async () => {
+            this.DOM.add[ dbTable ].addEventListener( 'click', async () => {
                 this.setEditPageItems( {
                     dbTable,
                 }, 'add' );
@@ -802,6 +807,7 @@ export default class GetUserDetail {
 
     async exec () {
         console.log( this.fetchData( this.config.languageId ) );
+        console.log( this.DOM.add );
         await this.setData();
     }
 }

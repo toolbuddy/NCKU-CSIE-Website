@@ -155,6 +155,8 @@
         > .profile__specialty {
           @include input-block( $block: 'specialty', $modifier: 'specialty' );
         }
+        @include local-topic( 'title' );
+        @include local-topic( 'specialty' );
         @include input-block( $block: 'profile', $modifier: 'nation' );
         @include input-block( $block: 'profile', $modifier: 'office-location' );
         @include input-block( $block: 'profile', $modifier: 'lab-name' );

@@ -46,12 +46,14 @@ console.log( '(Assume this is header) get profile data:' );
 
 try {
     const getUserDetail = new GetUserDetail( {
-        profileDOM:    document.getElementById( 'profile' ),
-        educationDOM:  document.getElementById( 'education' ),
-        experienceDOM: document.getElementById( 'experience' ),
-        editPageDOM:   document.getElementById( 'edit-page' ),
-        languageId:    WebLanguageUtils.currentLanguageId,
-        profileId:     24,
+        profileDOM:       document.getElementById( 'profile' ),
+        educationDOM:     document.getElementById( 'education' ),
+        experienceDOM:    document.getElementById( 'experience' ),
+        editPageDOM:      document.getElementById( 'edit-page' ),
+        educationAddDOM:  document.getElementById( 'add__button--education-block' ),
+        experienceAddDOM: document.getElementById( 'add__button--experience-block' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        profileId:        24,
     } );
 
     getUserDetail.exec();

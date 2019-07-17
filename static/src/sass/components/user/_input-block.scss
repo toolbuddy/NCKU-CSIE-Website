@@ -2,18 +2,26 @@
   // `> .#{ $block } > .#{ $block }__input-block`
   > .input-block.#{ $block }__input-block--#{ $modifier } {
     // [ variable ]
-    $large: 710px;
+    $large: 750px;
 
     // [ layout ]
     display: grid;
     grid-template: {
-      areas: 'content add';
-      columns: 1fr font__px-to-rem( 50 );
+      areas: 'add'
+        'content';
     }
 
     // [ position ]
     width: 100%;
     height: font__px-to-rem( 80 );
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas: 'content add';
+        columns: 1fr font__px-to-rem( 50 );
+      }
+    }
 
     // `> .#{ $block } > .#{ $block }__input-block` > .block
     > .input-block__block.block {
@@ -90,7 +98,7 @@
             stretch: normal;
           }
           text-align: center;
-          line-height: normal;
+          line-height: font__px-to-rem( 25 );
           letter-spacing: normal;
         }
 
@@ -102,8 +110,8 @@
           text-align: center;
           white-space: normal;
           word: {
-            wrap: normal;
-            break: normal;
+            wrap: break-all;
+            break: break-all;
           }
 
           // [ skin ]
@@ -124,13 +132,20 @@
           // [ template ]
           @extend %content__word;
 
+          // [ position ]
+          max-width: 80%;
+
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );
+          overflow: auto;
         }
 
         > .content__modify {
           // [ template ]
           @extend %content__word;
+
+          // [ position ]
+          width: font__px-to-rem( 40 );
 
           // [ skin ]
           font: {
@@ -150,6 +165,9 @@
         > .content__remove {
           // [ template ]
           @extend %content__word;
+
+          // [ position ]
+          width: font__px-to-rem( 40 );
 
           // [ skin ]
           font: {
@@ -228,44 +246,6 @@
             cursor: pointer;
           }
         }
-      }
-    }
-
-    // `> .#{ $block } > .#{ $block }__block` > .add
-    > .input-block__add.add {
-      // [ layout ]
-      display: flex;
-      grid-area: add;
-
-      > .add__button {
-        // [ layout ]
-        display: inline-block;
-        width: auto;
-        margin-left: font__px-to-rem( 15 );
-
-        // [ skin ]
-        font: {
-          size: font__px-to-rem( 15 );
-          weight: bold;
-          style: normal;
-          stretch: normal;
-        }
-        text-align: center;
-        line-height: normal;
-        letter-spacing: normal;
-        color: rgba( 28, 81, 134, .87 );
-        background-color: white;
-
-        &:hover {
-          // [ skin ]
-          color: rgba( 5, 34, 63, .87 );
-          cursor: pointer;
-        }
-      }
-
-      > .add__button--hidden {
-        // [ layout ]
-        display: none;
       }
     }
   }

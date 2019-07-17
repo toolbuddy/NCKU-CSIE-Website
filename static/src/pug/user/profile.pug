@@ -142,7 +142,7 @@ append content
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile#profile
-      +local-topic( 'profile', '個人資料 / Profile' )
+      +local-topic( 'profile', '個人資料 / Profile', false )
       form.profile__image.image( method= 'post' )
         section.image__frame.frame
           label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
@@ -154,7 +154,6 @@ append content
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
-      section.profile__title.title
       section.input-block.profile__input-block.profile__input-block--department
         main.input-block__block.block
           h1.block__title= i18n[ LANG.id ].content.profile.department
@@ -171,20 +170,23 @@ append content
               button.content__tag--research(
                 data-research-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
-      section.profile__specialty.specialty
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
+      +local-topic( 'title',i18n[ LANG.id ].content.profile.title, true )
+      section.profile__title.title
+      +local-topic( 'specialty',i18n[ LANG.id ].content.profile.specilty, true )
+      section.profile__specialty.specialty
 
     article.information__education-block.education-block
-      +local-topic( 'education-block', '學歷 / Education' )
+      +local-topic( 'education-block', '學歷 / Education', true )
       section.education-block__education.education#education
 
     article.information__experience-block.experience-block
-      +local-topic( 'experience-block', '經歷 / Experience' ) 
+      +local-topic( 'experience-block', '經歷 / Experience', true ) 
       section.experience-block__experience.experience#experience
   section.content__edit-page.edit-page#edit-page
 
