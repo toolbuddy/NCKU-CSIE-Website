@@ -5,35 +5,22 @@
     $large: 750px;
 
     // [ layout ]
-    display: grid;
-    grid-template: {
-      areas: 'add'
-        'content';
-    }
+    display: flex;
+    align-content: flex-end;
 
     // [ position ]
     width: 100%;
     height: font__px-to-rem( 80 );
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
-      grid-template: {
-        areas: 'content add';
-        columns: 1fr font__px-to-rem( 50 );
-      }
-    }
-
     // `> .#{ $block } > .#{ $block }__input-block` > .block
     > .input-block__block.block {
       // [ layout ]
       display: grid;
-      grid: {
-        area: content;
-        template: {
-          areas: 'title'
-            'content';
-        }
-      }
+      grid-template-areas:
+        'title'
+        'content';
+
+      // [ position ]
       width: 100%;
 
       // [ skin ]

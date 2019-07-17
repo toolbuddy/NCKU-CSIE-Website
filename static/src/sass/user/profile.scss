@@ -17,7 +17,8 @@
 .body {
   // [ variable ]
   $large: 1200px;
-  $small: 710px;
+  $medium: 710px;
+  $small: 535px;
 
   // [ skin ]
   background-color: #ffffff;
@@ -132,13 +133,13 @@
           right: auto;
         }
 
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
           // [ layout ]
           width: 95%;
         }
 
-        // [ RWD: $small ]
+        // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           max-width: font__px-to-rem( 1200 );
@@ -357,13 +358,13 @@
         right: auto;
       }
 
-      // [ RWD: $small ]
-      @media screen and ( min-width: $small ) {
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
         // [ layout ]
         width: 95%;
       }
 
-      // [ RWD: $small ]
+      // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
         max-width: font__px-to-rem( 1200 );
@@ -387,8 +388,8 @@
         right: auto;
       }
 
-      // [ RWD: $small ]
-      @media screen and ( min-width: $small ) {
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
         // [ layout ]
         width: 95%;
       }
