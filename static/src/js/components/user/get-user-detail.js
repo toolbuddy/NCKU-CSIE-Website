@@ -324,8 +324,9 @@ export default class GetUserDetail {
         } );
 
         this.DOM.profile.image = {
-            block:  opt.profileDOM.querySelector( '.profile__image' ),
-            button: opt.profileDOM.querySelector( '.profile__image > .image__frame > .frame__upload' ),
+            block:   opt.profileDOM.querySelector( '.profile__image' ),
+            button:  opt.profileDOM.querySelector( '.profile__image > .image__frame > .frame__upload' ),
+            preview: opt.profileDOM.querySelector( '.profile__image > .image__frame' ),
         };
 
         this.DOM.department = Array
@@ -370,6 +371,32 @@ export default class GetUserDetail {
 
     closeEditPageWindow () {
         classAdd( this.DOM.block.editPage, 'content__edit-page--hidden' );
+    }
+
+    setImage ( res ) {
+        try {
+            if ( ValidateUtils.isValidString( res.profile.photo ) ) {
+                const photoUrl = `${ host }/static/image/faculty/${ res.profile.photo }`;
+                this.DOM.profile.image.preview.style.backgroundImage = `url('${ photoUrl }')`;
+                this.DOM.profile.image.button.name = `modify_profile_photo_0_${ this.config.profileId }`;
+                this.DOM.profile.block.action = `${ host }/user/profile`;
+            }
+
+            this.DOM.profile.image.button.addEventListener( 'change', () => {
+                const input = this.DOM.profile.image.button;
+                if ( input.files && input.files[ 0 ] ) {
+                    const reader = new FileReader();
+
+                    reader.onload = ( e ) => {
+                        this.DOM.profile.image.preview.style.backgroundImage = `url('${ e.target.result }')`;
+                    };
+                    reader.readAsDataURL( input.files[ 0 ] );
+                }
+            } );
+        }
+        catch ( err ) {
+            console.log( err );
+        }
     }
 
     setTags ( res ) {
@@ -682,6 +709,7 @@ export default class GetUserDetail {
         } );
 
         this.setTags( res );
+        this.setImage( res );
 
         await this.renderTitleInputBlock( res.title );
         await this.renderSpecialtyInputBlock( res.specialty );

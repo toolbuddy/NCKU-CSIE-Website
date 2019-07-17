@@ -1,6 +1,9 @@
 @mixin input-block ( $block, $modifier ) {
   // `> .#{ $block } > .#{ $block }__input-block`
   > .input-block.#{ $block }__input-block--#{ $modifier } {
+    // [ variable ]
+    $large: 710px;
+
     // [ layout ]
     display: grid;
     grid-template: {
@@ -19,8 +22,8 @@
       grid: {
         area: content;
         template: {
-          areas: 'title content';
-          columns: 1fr 4fr;
+          areas: 'title'
+            'content';
         }
       }
       width: 100%;
@@ -28,6 +31,18 @@
       // [ skin ]
       border-bottom: solid font__px-to-rem( 2 ) #adacad;
       border-radius: font__px-to-rem( 3 );
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid: {
+          area: content;
+          template: {
+            areas: 'title content';
+            columns: 1fr 4fr;
+          }
+        }
+      }
 
       // `> .#{ $block } > .#{ $block }__input-block` > .block > .block__title
       > .block__title {
@@ -44,7 +59,6 @@
           style: normal;
           stretch: normal;
         }
-        text-align: center;
         line-height: normal;
         letter-spacing: normal;
         color: rgba( 0, 0, 0, .87 );

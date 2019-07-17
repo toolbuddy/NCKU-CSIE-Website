@@ -75,14 +75,14 @@ append data
             name:         '姓名',
             title:        '職稱',
             nation:       '國籍',
-            department:   '系所別（可複選）',
-            research:     '研究群 (可複選)',
-            office:       '辦公室',
+            department:   '系所別',
+            research:     '研究群',
+            office:       '辦公室位置',
             lab_name:     '實驗室名稱',
             lab_location: '實驗室位置',
             lab_tel:      '實驗室電話',
             lab_web:      '實驗室網站',
-            office_tel:   '聯絡電話',
+            office_tel:   '辦公室電話',
             email:        'Email',
             fax:          '傳真',
             personal_web: '個人網站',
@@ -143,7 +143,7 @@ append content
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile#profile
       +local-topic( 'profile', '個人資料 / Profile' )
-      form.profile__image.image
+      form.profile__image.image( method= 'post' )
         section.image__frame.frame
           label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
           input.frame__upload#frame__upload( type= 'file' )
@@ -151,6 +151,9 @@ append content
           button.check__button= i18n[ LANG.id ].content.profile.image_check
       +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
       section.profile__title.title
       section.input-block.profile__input-block.profile__input-block--department
         main.input-block__block.block
@@ -168,9 +171,6 @@ append content
               button.content__tag--research(
                 data-research-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
       section.profile__specialty.specialty
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
