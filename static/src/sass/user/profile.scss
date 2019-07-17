@@ -4,10 +4,24 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/navigation-bar';
+@import 'components/user/local-topic';
+@import 'components/user/input-block';
+@import 'components/user/nation-dropdown';
+@import 'components/user/dropdown';
+@import 'components/user/filter';
+@import 'components/user/edit-page';
 
 // block
 // `.body`
 .body {
+  // [ variable ]
+  $input-height-small: 30;
+  $input-height-large: 46;
+  $large: 1200px;
+  $small: 600px;
+
   // [ skin ]
   background-color: #ffffff;
 
@@ -24,12 +38,30 @@
   // block
   // `.body > .content`
   > .body__content.content {
-    // [ variable ]
-    $large: 700px;
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' . breadcrumb  .'
+        ' . information .';
+      columns: 1fr 50fr 1fr;
+    }
 
     // [ skin ]
-    height: 120%;
+    height: auto;
+    width: 100%;
     background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  '
+          ' navigation information ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+      }
+    }
 
     // template
     // `.body > .content > .content__?.?`
@@ -43,11 +75,199 @@
       // [ skin ]
       max-width: font__px-to-rem( 1740 );
       width: 94%;
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__information
+    > .content__information {
+      // [ layout ]
+      display: block;
+      grid-area: information;
+
+      // [ position ]
+      width: 90%;
+      margin: {
+        top: font__px-to-rem( 80 );
+        bottom: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
+        max-width: font__px-to-rem( 1080 );
+        margin-left: 0;
+      }
+
+      // element
+      // `.body > .content > .content__information > .information__topic`
+      @include topic( information ) {
+        // [ layout ]
+        display: block;
+
         // [ skin ]
-        width: 84%;
+        width: 100%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+        }
+      }
+
+      // `.body > .content > .content__information > .information__profile`
+      > .information__profile.profile {
+        // [ layout ]
+        display: block;
+        width: 95%;
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          // [ layout ]
+          width: 95%;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          max-width: font__px-to-rem( 1200 );
+        }
+
+        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+        @include local-topic( profile );
+        @include input-block( $block: 'profile', $modifier: 'name' );
+
+        > .profile__title {
+          @include input-block( $block: 'title', $modifier: 'title' );
+        }
+
+        > .profile__specialty {
+          @include input-block( $block: 'specialty', $modifier: 'specialty' );
+        }
+        @include input-block( $block: 'profile', $modifier: 'nation' );
+        @include input-block( $block: 'profile', $modifier: 'office-location' );
+        @include input-block( $block: 'profile', $modifier: 'lab-name' );
+        @include input-block( $block: 'profile', $modifier: 'lab-location' );
+        @include input-block( $block: 'profile', $modifier: 'lab-tel' );
+        @include input-block( $block: 'profile', $modifier: 'lab-web' );
+        @include input-block( $block: 'profile', $modifier: 'office-tel' );
+        @include input-block( $block: 'profile', $modifier: 'email' );
+        @include input-block( $block: 'profile', $modifier: 'fax' );
+        @include input-block( $block: 'profile', $modifier: 'personal-web' );
+        @include input-block( $block: 'profile', $modifier: 'specilty' );
+        @include input-block( $block: 'profile', $modifier: 'department' ) {
+          > .input-block.profile__input-block--department {
+            // [ layout ]
+            height: auto;
+
+            > .input-block__block.block > .block__content {
+              display: block;
+              height: auto;
+              padding: {
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
+              }
+            }
+          }
+        }
+        @include input-block( $block: 'profile', $modifier: 'research' ) {
+          > .input-block.profile__input-block--research {
+            // [ layout ]
+            height: auto;
+
+            > .input-block__block.block > .block__content {
+              display: block;
+              height: auto;
+              width: auto;
+              margin: {
+                left: auto;
+                right: auto;
+              }
+              padding: {
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
+              }
+            }
+          }
+        }
+
+        // `.body > .content > .content__information > .information__profile > .profile__image`
+        > .profile__image {
+          // [ layout ]
+          display: grid;
+          grid: {
+            area: image;
+            template: {
+              areas:
+                ' image image  image '
+                ' .     nation .      ';
+              columns: 1fr font__px-to-rem( 126 ) 1fr;
+              rows: font__px-to-rem( 300 ) auto;
+            }
+          }
+
+          > .image__frame {
+            // [ layout ]
+            display: block;
+            grid-area: image;
+
+            // [ position ]
+            position: relative;
+            width: font__px-to-rem( 255 );
+            height: font__px-to-rem( 255 );
+            margin: {
+              left: auto;
+              right: auto;
+            }
+
+            // [ skin ]
+            border-radius: 50%;
+            background-color: gray;
+            overflow: hidden;
+
+            // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
+            > .frame__button {
+              // [ layout ]
+              display: block;
+              position: absolute;
+
+              // [ position ]
+              width: 100%;
+              height: 35%;
+              bottom: 0;
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+            }
+          }
+          @include nation-dropdown( 'image' ) {
+            grid-area: nation;
+          }
+        }
       }
     }
 
@@ -59,6 +279,9 @@
       // [ template ]
       @extend %content__element;
 
+      // [ layout ]
+      grid-area: breadcrumb;
+
       // [ skin ]
       border: {
         top-width: font__px-to-rem( 32 );
@@ -66,6 +289,82 @@
         color: transparent;
         style: solid;
       }
+    }
+
+    // `.body > .content > .content__information > .information__experience`
+    .information__experience-block.experience-block {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
+      @include local-topic( 'experience-block' );
+
+      > .experience-block__experience.experience {
+        @include input-block( $block: 'experience', $modifier: 'experience' );
+      }
+    }
+
+    // `.body > .content > .content__information > .information__education`
+    .information__education-block.education-block {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+      @include local-topic( 'education-block' );
+
+      > .education {
+        @include input-block( $block: 'education', $modifier: 'education' );
+      }
+    }
+
+    > .content__edit-page.edit-page {
+      position: absolute;
+      width: 100%;
+
+      // [ componment ]
+      @include edit-page();
+    }
+
+    > .content__edit-page--hidden {
+      display: none;
+    }
+
+    > .content__edit-page--show {
+      display: block;
     }
   }
 

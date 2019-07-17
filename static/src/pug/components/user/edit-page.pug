@@ -1,0 +1,9 @@
+-
+section.edit-page__window.window
+  form.window__form.form( action= url, method='POST')
+    main.form__content.content#content
+      article.content__title
+        h1.title__word= topic
+    article.form__button.button
+      button.button__item.button__item--cancel= cancel
+      input.button__item.button__item--check( type="submit" value= check)

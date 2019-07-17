@@ -1,4 +1,9 @@
 extends /layouts/base.pug
+include /components/common/topic.pug
+include /components/user/navigation-bar.pug
+include /components/user/local-topic.pug
+include /components/user/dropdown.pug
+include /components/user/input-block.pug
 
 append data
   -
@@ -9,12 +14,104 @@ append data
           home:     'Home',
           user:     'User',
         },
+        content: {
+          topic: '教師資料維護',
+          profile: {
+            image:        'select picture',
+            name:         'name',
+            title:        'title',
+            nation:       'nation',
+            department:   '系所別（可複選）',
+            research:     '研究群 (可複選)',
+            office:       'office',
+            lab_name:     'Lab Name',
+            lab_location: 'Lab Location',
+            lab_tel:      'Lab Tel',
+            lab_web:      'Lab Web',
+            office_tel:   'Office Tel',
+            email:        'Email',
+            fax:          'Fax',
+            personal_web: 'Personal Web',
+            specilty:     'Specilty',
+          },
+          education: {
+            topic:         'Education',
+            duration_from: 'From',
+            duration_to:   'To',
+            nation:        'Nation',
+            school:        'School', 
+            major:         'Major',
+            degree:        'Degree',
+            degree_dropdown: {
+              bachelor:    'Bachelor',
+              master:      'Master',
+              phd:         'Ph. D.',
+            },
+          },
+          experience: {
+            topic:        '經歷 / Experience',
+            organization: 'Organization',
+            department:   'Department',
+            title:        'title',
+          },
+          button: {
+            edit: 'edit',
+            add:  'add',
+            remove: 'remove',
+          },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
+        },
+        content: {
+          topic: '教師資料維護',
+          profile: {
+            image:        '編輯相片',
+            name:         '姓名',
+            title:        '職稱',
+            nation:       '國籍',
+            department:   '系所別（可複選）',
+            research:     '研究群 (可複選)',
+            office:       '辦公室',
+            lab_name:     '實驗室名稱',
+            lab_location: '實驗室位置',
+            lab_tel:      '實驗室電話',
+            lab_web:      '實驗室網站',
+            office_tel:   '聯絡電話',
+            email:        'Email',
+            fax:          '傳真',
+            personal_web: '個人網站',
+            specilty:     '專長領域',
+          },
+          education: {
+            topic:         '學歷',
+            duration_from: '從',
+            duration_to:   '至',
+            nation:        '國家',
+            school:        '學校',
+            major:         '主修',
+            degree:        '學位',
+            degree_dropdown: {
+              bachelor:    '學士',
+              master:      '碩士',
+              phd:         '博士',
+            },
+          },
+          experience: {
+            topic:        '經歷',
+            organization: '任職單位',
+            department:   '任職部門',
+            title:        '職位',
+          },
+          button: {
+            edit: '編輯',
+            add:  '新增',
+            remove: '刪除',
+          },
         },
       },
     } );
@@ -39,6 +136,52 @@ append breadcrumb
   )
 
 append content
+  +navigation-bar( 'content' )
+  main.content__information.information
+    +topic( 'information', i18n[ LANG.id ].content.topic )
+    article.information__profile.profile#profile
+      +local-topic( 'profile', '個人資料 / Profile' )
+      section.profile__image
+        section.image__frame
+          button.frame__button= i18n[ LANG.id ].content.profile.image
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
+      section.profile__title.title
+      section.input-block.profile__input-block.profile__input-block--department
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.profile.department
+          article.block__content
+            each departmentId in UTILS.faculty.departmentUtils.supportedId
+              button.content__tag--department(
+                data-department-id = `${ departmentId }`
+              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+      section.input-block.profile__input-block.profile__input-block--research
+        main.input-block__block.block
+          h1.block__title= i18n[ LANG.id ].content.profile.research
+          article.block__content
+            each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+              button.content__tag--research(
+                data-research-group-id = `${ researchGroupId }`,
+              )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
+      section.profile__specialty.specialty
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
+
+    article.information__education-block.education-block
+      +local-topic( 'education-block', '學歷 / Education' )
+      section.education-block__education.education#education
+
+    article.information__experience-block.experience-block
+      +local-topic( 'experience-block', '經歷 / Experience' ) 
+      section.experience-block__experience.experience#experience
+  section.content__edit-page.edit-page#edit-page
 
 append footer
 

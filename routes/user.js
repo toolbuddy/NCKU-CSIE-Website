@@ -4,6 +4,8 @@
  * Including following sub-routes:
  * - `/user`
  * - `/user/profile`
+ * - `/user/award`
+ * - `/user/publication`
  * - `/user/announcement`
  * - `/user/announcement/add`
  * - `/user/announcement/edit/[id]`
@@ -45,6 +47,38 @@ router
         console.error( error );
     }
 } );
+
+/**
+ * Resolve URL `/user/award`.
+ */
+
+router
+.route( '/award' )
+.get( staticHtml( 'user/award' ) );
+
+/**
+ * Resolve URL `/user/project`.
+ */
+
+router
+.route( '/project' )
+.get( staticHtml( 'user/project' ) );
+
+/**
+ * Resolve URL `/user/conference`.
+ */
+
+router
+.route( '/conference' )
+.get( staticHtml( 'user/conference' ) );
+
+/**
+ * Resolve URL `/user/publication`.
+ */
+
+router
+.route( '/publication' )
+.get( staticHtml( 'user/publication' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.

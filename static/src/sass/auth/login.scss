@@ -40,6 +40,12 @@
     height: 60%;
     background-color: #ffffff;
 
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      height: 100%;
+    }
+
     // template
     // `.body > .content > .content__?.?`
     %content__element {

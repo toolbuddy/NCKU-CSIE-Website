@@ -1,0 +1,12 @@
+- 
+section.input-block(class=`${ data.info.modifier }__input-block ${ data.info.modifier }__input-block--${ data.info.modifier }` id=`${ data.modifier }-${ data.id }` )
+  main.input-block__block.block 
+    if data.info.index === 0
+      h1.block__title= data.info.topic
+    article.block__content.content
+      p.content__word= data.info.content
+      button.content__remove(class=`content__remove--${ data.info.modifier }-${ data.info.id }`)= data.button.remove
+      button.content__modify(class=`content__modify--${ data.info.modifier }-${ data.info.id }`)= data.button.modify
+  if data.info.index === 0 
+    aside.input-block__add.add
+      button.add__button( id=`add__button--${ data.info.modifier }` )= data.button.add

@@ -1,12 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import ControlMessageText from 'static/src/js/components/auth/message-text.js';
-import ControlButton from 'static/src/js/components/auth/button-control.js';
-
-/*
-Header
-*/
+import BlockControl from 'static/src/js/components/user/block-control.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -41,44 +36,12 @@ catch ( err ) {
     console.error( err );
 }
 
-/*
-Login messages
-*/
-
 try {
-    const messageForget = new ControlMessageText(
-        document.querySelector( '#message--forget' )
-    );
-    if ( !( messageForget instanceof ControlMessageText ) )
-        throw new Error( '#message--forget not found.' );
-    messageForget.setForgetMessage();
-    messageForget.hideMessage();
-}
-catch ( err ) {
-    console.error( err );
-}
+    const blockControl = new BlockControl();
+    if ( !( blockControl instanceof BlockControl ) )
+        throw new Error( 'titleBlockControl not founs' );
 
-try {
-    const messageError = new ControlMessageText(
-        document.querySelector( '#message--error' )
-    );
-    if ( !( messageError instanceof ControlMessageText ) )
-        throw new Error( '#message--error not found.' );
-    messageError.setErrorMessage();
-}
-catch ( err ) {
-    console.error( err );
-}
-
-try {
-    const submitButton = new ControlButton(
-        document.querySelector( '#form__block--account' ),
-        document.querySelector( '#form__block--password' ),
-        document.querySelector( '#form__button' )
-    );
-    if ( !( submitButton instanceof ControlButton ) )
-        throw new Error( '#message--error not found.' );
-    submitButton.setButton();
+    blockControl.addButtonEvent( document.getElementById( 'award__input-button--add' ) );
 }
 catch ( err ) {
     console.error( err );

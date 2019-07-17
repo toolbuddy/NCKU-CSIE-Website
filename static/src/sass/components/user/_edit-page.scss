@@ -1,0 +1,445 @@
+@mixin edit-page () {
+  // `> .edit-page > .edit-page__window`
+  > .edit-page__window.window {
+    // [ layout ]
+    position: absolute;
+    width: 100%;
+    height: 110vh;
+    z-index: 100;
+
+    // [ skin ]
+    background-color: rgba( 0, 0, 0, .2 );
+
+    // `> .edit-page > .edit-page__window > .window__from`
+    > .window__form.form {
+      // [ layout ]
+      display: block;
+      height: 40vh;
+      width: 40vw;
+      margin: {
+        right: auto;
+        left: auto;
+      }
+
+      // `> .edit-page > .edit-page__window > .window__from > .from__content` 
+      > .form__content {
+        // [ layout ]
+        display: block;
+        position: relative;
+        margin: {
+          top: font__px-to-rem( 50 );
+          left: auto;
+          right: auto;
+        }
+
+        // [ position ]
+        width: font__px-to-rem( 450 );
+        height: auto;
+
+        // [ skin ]
+        background-color: white;
+        border: 2 solid white;
+        border-radius: font__px-to-rem( 10 );
+        padding-bottom: font__px-to-rem( 10 );
+
+        > .content__title {
+          // [ layout ]
+          display: block;
+          width: 100%;
+          height: font__px-to-rem( 60 );
+
+          // [ skin ]
+          background-color: beige;
+          border-radius: font__px-to-rem( 10 );
+
+          > .title__word {
+            // [ position ]
+            padding: {
+              top: font__px-to-rem( 20 );
+              bottom: font__px-to-rem( 20 );
+            }
+
+            // [ skin ]
+            font: {
+              size: font__px-to-rem( 18 );
+              weight: bold;
+              style: normal;
+              stretch: normal;
+            }
+            text-align: center;
+            line-height: normal;
+            letter-spacing: normal;
+            color: rgba( 0, 0, 0, .87 );
+          }
+        }
+
+        > .content__input {
+          .input__local-topic.local-topic {
+            // [ layout ]
+            display: flex;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+            margin: {
+              top: font__px-to-rem( 15 );
+              bottom: font__px-to-rem( 10 );
+            }
+
+            // [ skin ]
+            background-color: white;
+
+            > .local-topic__text {
+              // [ layout ]
+              display: block;
+
+              // [ position ]
+              width: 70%;
+
+              // [ skin ]
+              font: {
+                size: font__px-to-rem( 18 );
+                weight: bold;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: normal;
+              letter-spacing: normal;
+              color: rgba( 0, 0, 0, .87 );
+              border-bottom: 1px solid gray;
+            }
+          }
+
+          .input__time.time {
+            $small: 220px;
+            $large: 1100px;
+
+            // [ position ]
+            grid-template-columns: repeat( auto-fill, font__px-to-rem( 154 ) );
+
+            // [ layout ]
+            display: grid;
+            justify-content: center;
+            margin: {
+              bottom: font__px-to-rem( 10 );
+              top: font__px-to-rem( 10 );
+            }
+
+            // [ skin ]
+            width: 100%;
+            height: auto;
+            font-size: font__px-to-rem( 14 );
+
+            // [ RWD: $small ]
+            @media screen and ( min-width: $small ) {
+              // [ layout ]
+              grid-template-columns: repeat( 2, font__px-to-rem( 90 ) );
+            }
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              align-items: end;
+              margin-bottom: 0;
+            }
+
+            // element
+            // `> .#{ $block } > .filter > .time > .time__#{ $element }`
+            // block
+            // `> .#{ $block } > .filter > .time > .#{ $element }`
+            > .time__from.from {
+              // [ skin ]
+              width: 100%;
+              height: auto;
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
+              .from__text {
+                // [ layout ]
+                display: inline-block;
+                margin-left: font__px-to-rem( 16 );
+                line-height: font__px-to-rem( 18 );
+
+                // [ skin ]
+                width: auto;
+                height: font__px-to-rem( 18 );
+
+                font: {
+                  size: font__px-to-rem( 18 );
+                  weight: bold;
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: normal;
+                letter-spacing: normal;
+                color: rgba( 0, 0, 0, .87 );
+              }
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
+              // block
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
+              .from__input.input {
+                // [ layout ]
+                display: block;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 6 );
+                  left: font__px-to-rem( 6 );
+                  right: font__px-to-rem( 20 );
+                }
+
+                // [ skin ]
+                width: font__px-to-rem( 80 );
+                height: font__px-to-rem( 32 );
+                border: font__px-to-rem( 1 ) solid #757575;
+                border-radius: font__px-to-rem( 32 );
+                padding: {
+                  left: font__px-to-rem( 8 );
+                  right: font__px-to-rem( 4 );
+                }
+                text-align: center;
+
+                // template
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+                %input__element {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: font__px-to-rem( 14 );
+
+                  // [ skin ]
+                  height: font__px-to-rem( 30 );
+                  padding: {
+                    top: font__px-to-rem( 8 );
+                    bottom: font__px-to-rem( 8 );
+                  }
+                  background-color: transparent;
+                  font-size: font__px-to-rem( 14 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+                > .input__year {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 48 );
+                }
+              }
+            }
+
+            // element
+            // `> .#{ $block } > .filter > .time > .time__to`
+            // block
+            // `> .#{ $block } > .filter > .time > .to`
+            > .time__to.to {
+              // [ skin ]
+              width: 100%;
+              height: auto;
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`
+              .to__text {
+                // [ layout ]
+                display: inline-block;
+                margin-left: font__px-to-rem( 25 );
+                line-height: font__px-to-rem( 18 );
+
+                // [ skin ]
+                width: auto;
+                height: font__px-to-rem( 18 );
+
+                font: {
+                  size: font__px-to-rem( 18 );
+                  weight: bold;
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: normal;
+                letter-spacing: normal;
+                color: rgba( 0, 0, 0, .87 );
+              }
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
+              // block
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
+              .to__input.input {
+                // [ layout ]
+                display: block;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 13 );
+                  left: font__px-to-rem( 6 );
+                  right: font__px-to-rem( 20 );
+                }
+
+                // [ skin ]
+                width: font__px-to-rem( 80 );
+                height: font__px-to-rem( 32 );
+                border: font__px-to-rem( 1 ) solid #757575;
+                border-radius: font__px-to-rem( 32 );
+                padding: {
+                  left: font__px-to-rem( 8 );
+                  right: font__px-to-rem( 4 );
+                }
+                text-align: center;
+
+                // template
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+                %input__element {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: font__px-to-rem( 14 );
+
+                  // [ skin ]
+                  height: font__px-to-rem( 30 );
+                  padding: {
+                    top: font__px-to-rem( 8 );
+                    bottom: font__px-to-rem( 8 );
+                  }
+                  background-color: transparent;
+                  font-size: font__px-to-rem( 14 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+                > .input__year {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 48 );
+                }
+              }
+            }
+          }
+
+          > .input__text {
+            // [ layout ]
+            display: grid;
+            grid-template: {
+              areas: 'flag . content';
+              columns: font__px-to-rem( 40 ) font__px-to-rem( 5 ) 1fr;
+            }
+            margin: {
+              left: auto;
+              right: auto;
+            }
+
+            padding: {
+              top: font__px-to-rem( 10 );
+              bottom: font__px-to-rem( 10 );
+            }
+
+            // [ skin ]
+            background-color: white;
+
+            // [ position ]
+            width: 85%;
+
+            > .input__flag {
+              // [ layout ]
+              grid-area: flag;
+              display: inline-flex;
+              justify-self: center;
+              align-self: center;
+
+              // [ position ]
+              width: 95%;
+              height: auto;
+            }
+
+            > .input__content {
+              // [ layout ]
+              display: flex;
+              grid-area: content;
+              align-self: center;
+              justify-self: center;
+
+              // [ position ]
+              width: 90%;
+              height: font__px-to-rem( 40 );
+
+              // [ skin ]
+              border-radius: 15px;
+              border: solid 1px #adacad;
+              font: {
+                size: font__px-to-rem( 18 );
+                weight: bold;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: normal;
+              letter-spacing: normal;
+              color: rgba( 0, 0, 0, .87 );
+            }
+          }
+        }
+      }
+
+      > .form__button.button {
+        // [ layout ]
+        display: flex;
+        justify-content: flex-end;
+        margin: {
+          top: font__px-to-rem( 20 );
+          bottom: font__px-to-rem( 20 );
+        }
+        height: font__px-to-rem( 50 );
+
+        // [ templete ]
+        %button__item {
+          // [ layout ]
+          width: font__px-to-rem( 70 );
+          height: font__px-to-rem( 30 );
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+            style: normal;
+            stretch: normal;
+          }
+          text-align: center;
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .button__item--cancel {
+          // [ templete ]
+          @extend %button__item;
+
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          background-color: white;
+        }
+
+        > .button__item--check {
+          // [ templete ]
+          @extend %button__item;
+
+          // [ layout ]
+          display: inline-block;
+
+          // [ skin ]
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  // [ customization ]
+  @content;
+}
