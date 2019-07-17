@@ -159,6 +159,19 @@
           }
         }
 
+        > .content__tag--department--active {
+          // [ skin ]
+          background-color: lighten( #f67057, 10% );
+          color: white;
+
+          // [ interaction ]
+          &:hover {
+            color: #f67057;
+            background-color: #ffffff;
+            cursor: pointer;
+          }
+        }
+
         > .content__tag--research {
           // [ template ]
           @extend %content__tag;
@@ -173,6 +186,19 @@
             // [ skin ]
             background-color: lighten( #8caae2, 10% );
             color: white;
+            cursor: pointer;
+          }
+        }
+
+        > .content__tag--research--active {
+          // [ skin ]
+          background-color: lighten( #8caae2, 10% );
+          color: white;
+
+          // [ interaction ]
+          &:hover {
+            color: #8caae2;
+            background-color: #ffffff;
             cursor: pointer;
           }
         }

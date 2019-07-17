@@ -26,10 +26,11 @@ article.content__input#input
       p.local-topic__text= local_topic
   else if type === 'dropdown'
     section.input__dropdown.dropdown
-      button.dropdown__top= '請選擇'
+      section.dropdown__top= '請選擇'
       article.dropdown__content
+        input.content__submit( type = 'hidden' )
         each val, index in data  
-          input.content__item( type = 'button', value= val, name= name  )
+          section.content__item( value= index  )= val
   else if type === 'remove'
     section.input__remove.remove
       input.delete__item( type = 'hidden', value= val, name= name )

@@ -161,7 +161,7 @@ append content
           article.block__content
             each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
               button.content__tag--research(
-                data-research-group-id = `${ researchGroupId }`,
+                data-research-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
