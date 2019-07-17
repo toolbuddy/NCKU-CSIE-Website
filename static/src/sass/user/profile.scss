@@ -213,9 +213,45 @@
             template: {
               areas:
                 ' image image  image '
-                ' .     nation .      ';
+                ' .     check .      ';
               columns: 1fr font__px-to-rem( 126 ) 1fr;
               rows: font__px-to-rem( 300 ) auto;
+            }
+          }
+          margin-bottom: font__px-to-rem( 20 );
+
+          > .image__check.check {
+            // [ layout ]
+            display: flex;
+            grid-area: check;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+
+            > .check__button {
+              // [ position ]
+              width: font__px-to-rem( 100 );
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+              border-radius: font__px-to-rem( 10 );
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+              }
             }
           }
 
@@ -238,6 +274,11 @@
             background-color: gray;
             overflow: hidden;
 
+            > .frame__upload {
+              // [ layout ]
+              display: none;
+            }
+
             // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
             > .frame__button {
               // [ layout ]
@@ -246,8 +287,13 @@
 
               // [ position ]
               width: 100%;
-              height: 35%;
+              height: 30%;
               bottom: 0;
+
+              padding: {
+                top: 5%;
+                bottom: 5%;
+              }
 
               // [ skin ]
               background-color: rgba( 0, 0, 0, .54 );
@@ -261,6 +307,13 @@
               line-height: 1.5;
               letter-spacing: 3.2px;
               color: rgba( 255, 255, 255, .76 );
+
+              &:hover {
+                // [ skin ]
+                background-color: rgba( 255, 255, 255, .5 );
+                color: black;
+                cursor: pointer;
+              }
             }
           }
           @include nation-dropdown( 'image' ) {

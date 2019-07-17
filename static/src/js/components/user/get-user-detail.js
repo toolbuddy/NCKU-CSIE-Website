@@ -140,6 +140,8 @@ export default class GetUserDetail {
                 this.editPageType.text( true, 'school' ),
                 this.editPageType.localTopic( 'major' ),
                 this.editPageType.text( true, 'major' ),
+                this.editPageType.localTopic( 'degree' ),
+                this.editPageType.dropdown( 'degree', degreeUtils.i18n[ this.config.languageId ] ),
             ],
             experience: [
                 this.editPageType.time,
@@ -179,6 +181,7 @@ export default class GetUserDetail {
                     experience:    'experience',
                 },
                 education: {
+                    degree: 'degree',
                     school: 'school',
                     major:  'major',
                 },
@@ -199,6 +202,7 @@ export default class GetUserDetail {
                         email:         'ex. example@xxxxxxxx',
                         personalWeb:   'ex. https//xxxxxxxxx',
                         fax:           'please input your fax number',
+                        nation:        0,
                     },
                     title: {
                         title:        'ex. Professor',
@@ -207,6 +211,7 @@ export default class GetUserDetail {
                         specialty:    'ex. Machine Learning',
                     },
                     experience: {
+                        degree:       0,
                         organization: 'ex. Nation Cheng Kung University',
                         department:   'ex. CSIE',
                         title:        'ex. Professor',
@@ -250,6 +255,7 @@ export default class GetUserDetail {
                     experience:    '經歷',
                 },
                 education: {
+                    degree: '學位',
                     school: '學校',
                     major:  '主修',
                 },
@@ -317,6 +323,11 @@ export default class GetUserDetail {
             this.DOM.profile[ key ].modifier = opt.profileDOM.querySelector( profileModifyQuerySelector( this.classModifier[ key ] ) );
         } );
 
+        this.DOM.profile.image = {
+            block:  opt.profileDOM.querySelector( '.profile__image' ),
+            button: opt.profileDOM.querySelector( '.profile__image > .image__frame > .frame__upload' ),
+        };
+
         this.DOM.department = Array
         .from( opt.profileDOM.querySelectorAll( `.input-block > .input-block__block > .block__content > .content__tag--department` ) )
         .map( node => ( {
@@ -370,13 +381,22 @@ export default class GetUserDetail {
             } );
             this.DOM[ dbTable ].forEach( ( element ) => {
                 element.node.addEventListener( 'click', ( DOM ) => {
+                    const data = {};
                     if ( element.selected ) {
                         classRemove( element.node, `content__tag--${ this.DOM[ dbTable ][ element.id ].classModifier }--active` );
                         element.selected = false;
+                        const name = `delete_${ dbTable }_${ this.config.profileId }`;
+                        Object.defineProperty( data, name, {
+                            value: element.id,
+                        } );
                     }
                     else {
                         classAdd( element.node, `content__tag--${ this.DOM[ dbTable ][ element.id ].classModifier }--active` );
                         element.selected = true;
+                        const name = `add_${ dbTable }_${ this.config.profileId }`;
+                        Object.defineProperty( data, name, {
+                            value: element.id,
+                        } );
                     }
                 } );
             } );
@@ -409,10 +429,21 @@ export default class GetUserDetail {
             window.scrollTo( 0, 0 );
 
             if ( buttonType === 'remove' ) {
+                const dbTable = info.res[ this.config.languageId ][ info.dbTable ][ info.index ];
+                const content = {
+                    education:  `${ dbTable.school } ${ dbTable.major } ${ degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ dbTable.degree ] ] }`,
+                    experience: `${ dbTable.organization } ${ dbTable.department } ${ dbTable.title }`,
+                    title:      `${ dbTable.title }`,
+                    specialty:  `${ dbTable.specialty }`,
+                };
                 editPage.content.innerHTML += editPageContentHTML( {
                     val:  `${ info.dbTable }_${ info.id }`,
                     name: `delete_${ info.dbTable }_${ info.id }`,
                     type: 'remove',
+                } );
+                editPage.content.innerHTML += editPageContentHTML( {
+                    local_topic: content[ info.dbTable ],
+                    type:        'local-topic',
                 } );
                 return;
             }
@@ -500,16 +531,56 @@ export default class GetUserDetail {
                         } );
                         break;
                     case 'dropdown':
+                        let top;
+                        if ( buttonType === 'modify' ) {
+                            if ( isProfile )
+                                top = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ info.res[ this.config.languageId ].profile.nation ] ];
+                            else
+                                top = degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ info.res[ this.config.languageId ][ info.dbTable ][ info.index ].degree ] ];
+                        }
+                        else if ( isProfile )
+                            top = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ 0 ] ];
+                        else
+                            top = degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ 0 ] ];
+                        console.log( this.i18n[ this.config.languageId ].education.degree );
+
                         const elementName = name[ buttonType ]( {
                             dbTable:     info.dbTable,
                             dbTableItem: editPageItem.dbTableItem,
                             languageId:  this.config.languageId,
                             id:          ( buttonType === 'modify' ) ? info.id : null,
                         } );
+
+                        let value = 0;
+                        if ( buttonType === 'modify' )
+                            value = ( isProfile ) ? info.res[ this.config.languageId ].profile.nation : info.res[ this.config.languageId ][ info.dbTable ][ info.index ][ editPageItem.dbTableItem ];
+
                         editPage.content.innerHTML += editPageContentHTML( {
+                            top,
                             data:    editPageItem.dropdownItem,
                             name:    elementName,
+                            value,
                             type:    'dropdown',
+                        } );
+                        const dropdownTop = editPage.content.querySelector( '.input__dropdown > .dropdown__top' );
+                        const dropdownItems = editPage.content.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
+                        const dropdownSubmit = editPage.content.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
+                        dropdownTop.addEventListener( 'click', () => {
+                            classAdd( editPage.content.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                        } );
+                        dropdownItems.forEach( ( item ) => {
+                            item.addEventListener( 'click', ( element ) => {
+                                const newValue = element.target.getAttribute( 'value' );
+                                if ( isProfile ) {
+                                    dropdownTop.innerHTML = nationUtils.i18n[ this.config.languageId ][ newValue ];
+                                    dropdownSubmit.value = nationUtils.map.indexOf( newValue );
+                                }
+                                else {
+                                    dropdownTop.innerHTML = degreeUtils.i18n[ this.config.languageId ][ newValue ];
+                                    dropdownSubmit.value = degreeUtils.map.indexOf( newValue );
+                                }
+                                classRemove( editPage.content.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                            } );
                         } );
                         break;
                 }
@@ -556,6 +627,7 @@ export default class GetUserDetail {
 
                 removeButtonDOM.addEventListener( 'click', async () => {
                     this.setEditPageItems( {
+                        index,
                         dbTable,
                         id: dbTableElement[ id ],
                         res,
@@ -702,7 +774,6 @@ export default class GetUserDetail {
 
     async exec () {
         console.log( this.fetchData( this.config.languageId ) );
-        console.log( UrlUtils.serverUrl( 'static/src/image/icon/tw.png' ) );
         await this.setData();
     }
 }

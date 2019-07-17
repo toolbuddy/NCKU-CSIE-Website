@@ -125,6 +125,12 @@
           }
           color: rgba( 28, 81, 134, .87 );
           background-color: white;
+
+          &:hover {
+            // [ skin ]
+            color: rgba( 5, 34, 63, .87 );
+            cursor: pointer;
+          }
         }
 
         > .content__remove {
@@ -138,6 +144,12 @@
           }
           color: rgba( 28, 81, 134, .87 );
           background-color: white;
+
+          &:hover {
+            // [ skin ]
+            color: rgba( 5, 34, 63, .87 );
+            cursor: pointer;
+          }
         }
 
         > .content__tag--department {
@@ -229,6 +241,12 @@
         letter-spacing: normal;
         color: rgba( 28, 81, 134, .87 );
         background-color: white;
+
+        &:hover {
+          // [ skin ]
+          color: rgba( 5, 34, 63, .87 );
+          cursor: pointer;
+        }
       }
 
       > .add__button--hidden {

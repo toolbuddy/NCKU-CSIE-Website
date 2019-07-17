@@ -33,6 +33,7 @@ append data
             fax:          'Fax',
             personal_web: 'Personal Web',
             specilty:     'Specilty',
+            image_check:        'Image check'
           },
           education: {
             topic:         'Education',
@@ -86,6 +87,7 @@ append data
             fax:          '傳真',
             personal_web: '個人網站',
             specilty:     '專長領域',
+            image_check:        '確認圖片',
           },
           education: {
             topic:         '學歷',
@@ -141,9 +143,12 @@ append content
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile#profile
       +local-topic( 'profile', '個人資料 / Profile' )
-      section.profile__image
-        section.image__frame
-          button.frame__button= i18n[ LANG.id ].content.profile.image
+      form.profile__image.image
+        section.image__frame.frame
+          label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
+          input.frame__upload#frame__upload( type= 'file' )
+        section.image__check.check
+          button.check__button= i18n[ LANG.id ].content.profile.image_check
       +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
       section.profile__title.title
