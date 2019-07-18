@@ -45,7 +45,10 @@
         display: inline-flex;
         grid-area: title;
         align-self: center;
-        margin-left: font__px-to-rem( 15 );
+        padding-left: font__px-to-rem( 15 );
+
+        // [ position ]
+        width: 100%;
 
         // [ skin ]
         font: {
@@ -87,6 +90,7 @@
           text-align: center;
           line-height: font__px-to-rem( 25 );
           letter-spacing: normal;
+          word-wrap: break-all;
         }
 
         %content__tag {
@@ -120,7 +124,7 @@
           @extend %content__word;
 
           // [ position ]
-          max-width: 80%;
+          max-width: 70%;
 
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );

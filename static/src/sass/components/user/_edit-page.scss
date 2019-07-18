@@ -1,6 +1,9 @@
 @mixin edit-page () {
   // `> .edit-page > .edit-page__window`
   > .edit-page__window.window {
+    // [ variable ]
+    $medium: 550px;
+
     // [ layout ]
     position: absolute;
     width: 100%;
@@ -15,17 +18,23 @@
       // [ layout ]
       display: block;
       height: 40vh;
-      width: 40vw;
+      width: 95%;
       margin: {
         right: auto;
         left: auto;
       }
 
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ layout ]
+        width: font__px-to-rem( 500 );
+      }
+
       // `> .edit-page > .edit-page__window > .window__from > .from__content` 
       > .form__content {
         // [ layout ]
-        display: block;
         position: relative;
+
         margin: {
           top: font__px-to-rem( 50 );
           left: auto;
@@ -33,7 +42,7 @@
         }
 
         // [ position ]
-        width: font__px-to-rem( 450 );
+        width: 100%;
         height: auto;
 
         // [ skin ]
@@ -450,7 +459,13 @@
             background-color: white;
 
             // [ position ]
-            width: 85%;
+            width: 95%;
+
+            // [ RWD: $medium ]
+            @media screen and ( min-width: $medium ) {
+              // [ layout ]
+              width: 85%;
+            }
 
             > .input__flag {
               // [ layout ]
@@ -460,7 +475,7 @@
               align-self: center;
 
               // [ position ]
-              width: 95%;
+              width: 100%;
               height: auto;
             }
 
@@ -520,6 +535,13 @@
           line-height: normal;
           letter-spacing: normal;
           color: rgba( 0, 0, 0, .87 );
+
+          &:hover {
+            // [ skin ]
+            cursor: pointer;
+            background-color: #63707e;
+            color: rgba( 255, 255, 255, .87 );
+          }
         }
 
         > .button__item--cancel {
@@ -528,9 +550,11 @@
 
           // [ layout ]
           display: inline-block;
+          margin-right: font__px-to-rem( 10 );
 
           // [ skin ]
           background-color: white;
+          border-radius: font__px-to-rem( 10 );
         }
 
         > .button__item--check {
@@ -542,6 +566,7 @@
 
           // [ skin ]
           background-color: white;
+          border-radius: font__px-to-rem( 10 );
         }
       }
     }

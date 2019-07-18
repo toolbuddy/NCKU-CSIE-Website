@@ -3,7 +3,6 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { host, } from 'settings/server/config.js';
-import DropdownControl from 'static/src/js/components/user/dropdown.js';
 import GetUserDetail from 'static/src/js/components/user/get-user-detail';
 import cookieParser from 'cookie-parser';
 
