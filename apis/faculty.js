@@ -16,7 +16,6 @@ import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail
 import getLabs from 'models/faculty/operations/get-labs.js';
 import getPublications from 'models/faculty/operations/get-publication.js';
 import getFacultyMiniProfile from 'models/faculty/operations/get-faculty-mini-profile.js';
-import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js'; // to be deleted
 
 const apis = express.Router();
 
@@ -107,23 +106,6 @@ apis.get( '/facultyWithId/:profileId', cors(), async ( req, res, next ) => {
 apis.get( '/miniProfile/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getFacultyMiniProfile( {
-            languageId: Number( req.query.languageId ),
-            profileId:  Number( req.params.profileId ),
-        } );
-        res.json( data );
-    }
-    catch ( error ) {
-        next( error );
-    }
-} );
-
-/**
- * To be deleted: update api
- */
-
-apis.get( '/updateProfile/:profileId', cors(), async ( req, res, next ) => {
-    try {
-        const data = await updateFacultyDetail( {
             languageId: Number( req.query.languageId ),
             profileId:  Number( req.params.profileId ),
         } );

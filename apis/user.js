@@ -17,6 +17,8 @@ import getStaffMiniProfile from 'models/staff/operations/get-staff-mini-profile.
 import getFacultyMiniProfile from 'models/faculty/operations/get-faculty-mini-profile.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import roleUtils from 'models/auth/utils/role.js';
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 
 const apis = express.Router();
 apis.use( cookieParser() );
@@ -183,10 +185,96 @@ apis.get( '/updateProfile/:userId', cors(), async ( req, res, next ) => {
         } );
 
         if ( userData.role === roleUtils.getIdByOption( 'faculty' ) ) {
-            // update faculty data
+            // Update faculty data
+            console.log( 'in api user/updateProfile' );
+            const data = await getFacultyDetailWithId( {
+                languageId: Number( req.query.languageId ),
+                profileId:  userData.roleId,
+            } );
+
+            const updateData = await updateFacultyDetail( {
+                profileId: 3, // UserData.roleId
+                education: [ {
+                    educationId: 7,
+                    nation:      0,
+                    degree:      0,
+                    from:        1974,
+                    to:          1978,
+                }, ],
+                educationI18n: [
+                    {
+                        educationId: 7,
+                        language:    1,
+                        school:      'National Chiao Tung University',
+                        major:       'Control Engineering',
+                    },
+                ],
+                experience: [
+                    {
+                        experienceId: 9,
+                        from:         1993,
+                        to:           null,
+                    },
+                ],
+                experienceI18n: [
+                    {
+                        experienceId: 9,
+                        language:     1,
+                        organization: 'National Cheng Kung University',
+                        department:   'Depart. Of Comp. Science & Inform Engr.',
+                        title:        'Professor',
+                    },
+                ],
+                profile: {
+                    fax:       '2747076',
+                    email:     'ynsun@mail.ncku.edu.tw',
+                    nation:    0,
+                    photo:     '3.jpg',
+                    officeTel: '06-2757575,62526',
+                    labTel:    '06-2757575,62526',
+                    labWeb:    'https://sites.google.com/view/ncku-csie-vslab',
+                    order:     8,
+                },
+
+                // ProfileI18n: {
+                //     name:          'Yung-Nien Sun',
+                //     language:      1,
+                //     officeAddress: '4213, 1F, CSIE building',
+                //     labName:       'Visual System Lab',
+                //     labAddress:    '65702, 7F, CSIE new building',
+                // },
+                specialtyI18n: [
+                    {
+                        specialtyId: 15,
+                        language:    1,
+                        specialty:   'Medical Imaging',
+                    },
+                ],
+                title:     [
+                    {
+                        titleId: 3,
+                        from:    null,
+                        to:      null, // 11946684800
+                    },
+                ],
+                titleI18n: [
+                    {
+                        titleId:  10,
+                        language: 1,
+                        title:    'Distinguished Professor',
+                    },
+                    {
+                        titleId:  11,
+                        language: 1,
+                        title:    '',
+                    },
+                ],
+            } );
+            res.json( 200 );
         }
         else if ( userData.role === roleUtils.getIdByOption( 'staff' ) ) {
-            // update staff data
+            // Update staff data - show user data now
+            res.json( userData );
         }
         else
             console.error( 'Invalid role.' );
