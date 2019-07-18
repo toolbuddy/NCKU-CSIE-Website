@@ -16,20 +16,22 @@ article.content__input#input
       aside.time__from.from
         label.from__text= from
         span.from__input.input
-          input.input__year( type = 'number', value = from_value, placeholder = 'yyyy' name= name_from)
+          input.input__year( type = 'number', value = fromValue, placeholder = 'yyyy' name= nameFrom)
       aside.time__to.to
         label.to__text= to
         span.to__input.input
-          input.input__year( type = 'number', value = to_value, placeholder = 'yyyy' name= name_to)
+          input.input__year( type = 'number', value = toValue, placeholder = 'yyyy' name= nameTo)
   else if type === 'local-topic'
     section.input__local-topic.local-topic  
-      p.local-topic__text= local_topic
+      p.local-topic__text= localTopic
   else if type === 'dropdown'
     section.input__dropdown.dropdown
-      button.dropdown__top= '請選擇'
-      article.dropdown__content
-        each val, index in data  
-          input.content__item( type = 'button', value= val, name= name  )
+      section.dropdown__top= top
+      article.dropdown__button.button
+        input.button__submit( type = 'hidden' name= name value= value )
+        section.button__content.content
+          each val, index in data  
+            section.content__item( value= index  )= val
   else if type === 'remove'
     section.input__remove.remove
       input.delete__item( type = 'hidden', value= val, name= name )

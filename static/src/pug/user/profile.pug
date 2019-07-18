@@ -12,7 +12,7 @@ append data
         title:      'User Profile',
         breadcrumb: {
           home:     'Home',
-          user:     'User',
+          user:     'User Profile',
         },
         content: {
           topic: '教師資料維護',
@@ -33,6 +33,7 @@ append data
             fax:          'Fax',
             personal_web: 'Personal Web',
             specilty:     'Specilty',
+            image_check:        'Image check'
           },
           education: {
             topic:         'Education',
@@ -65,7 +66,7 @@ append data
         title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者',
+          user:     '使用者資料',
         },
         content: {
           topic: '教師資料維護',
@@ -74,18 +75,19 @@ append data
             name:         '姓名',
             title:        '職稱',
             nation:       '國籍',
-            department:   '系所別（可複選）',
-            research:     '研究群 (可複選)',
-            office:       '辦公室',
+            department:   '系所別',
+            research:     '研究群',
+            office:       '辦公室位置',
             lab_name:     '實驗室名稱',
             lab_location: '實驗室位置',
             lab_tel:      '實驗室電話',
             lab_web:      '實驗室網站',
-            office_tel:   '聯絡電話',
+            office_tel:   '辦公室電話',
             email:        'Email',
             fax:          '傳真',
             personal_web: '個人網站',
             specilty:     '專長領域',
+            image_check:        '確認圖片',
           },
           education: {
             topic:         '學歷',
@@ -130,8 +132,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].title },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/profile' },
     ]
   )
 
@@ -140,13 +141,18 @@ append content
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile#profile
-      +local-topic( 'profile', '個人資料 / Profile' )
-      section.profile__image
-        section.image__frame
-          button.frame__button= i18n[ LANG.id ].content.profile.image
+      +local-topic( 'profile', '個人資料 / Profile', false )
+      form.profile__image.image( method= 'post' )
+        section.image__frame.frame
+          label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
+          input.frame__upload#frame__upload( type= 'file' )
+        section.image__check.check
+          button.check__button= i18n[ LANG.id ].content.profile.image_check
       +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
-      section.profile__title.title
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
+      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
       section.input-block.profile__input-block.profile__input-block--department
         main.input-block__block.block
           h1.block__title= i18n[ LANG.id ].content.profile.department
@@ -161,25 +167,25 @@ append content
           article.block__content
             each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
               button.content__tag--research(
-                data-research-group-id = `${ researchGroupId }`,
+                data-research-id = `${ researchGroupId }`,
               )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
-      section.profile__specialty.specialty
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
+      +local-topic( 'title',i18n[ LANG.id ].content.profile.title, true )
+      section.profile__title.title
+      +local-topic( 'specialty',i18n[ LANG.id ].content.profile.specilty, true )
+      section.profile__specialty.specialty
 
     article.information__education-block.education-block
-      +local-topic( 'education-block', '學歷 / Education' )
+      +local-topic( 'education-block', '學歷 / Education', true )
       section.education-block__education.education#education
 
     article.information__experience-block.experience-block
-      +local-topic( 'experience-block', '經歷 / Experience' ) 
+      +local-topic( 'experience-block', '經歷 / Experience', true ) 
       section.experience-block__experience.experience#experience
   section.content__edit-page.edit-page#edit-page
 

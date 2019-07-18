@@ -2,6 +2,7 @@ import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import { host, } from 'settings/server/config.js';
 import GetUserDetail from 'static/src/js/components/user/get-user-detail';
 
 try {
@@ -43,12 +44,14 @@ console.log( '(Assume this is header) get profile data:' );
 
 try {
     const getUserDetail = new GetUserDetail( {
-        profileDOM:    document.getElementById( 'profile' ),
-        educationDOM:  document.getElementById( 'education' ),
-        experienceDOM: document.getElementById( 'experience' ),
-        editPageDOM:   document.getElementById( 'edit-page' ),
-        languageId:    WebLanguageUtils.currentLanguageId,
-        profileId:     24,
+        profileDOM:       document.getElementById( 'profile' ),
+        educationDOM:     document.getElementById( 'education' ),
+        experienceDOM:    document.getElementById( 'experience' ),
+        editPageDOM:      document.getElementById( 'edit-page' ),
+        educationAddDOM:  document.getElementById( 'add__button--education-block' ),
+        experienceAddDOM: document.getElementById( 'add__button--experience-block' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        profileId:        24,
     } );
 
     getUserDetail.exec();
