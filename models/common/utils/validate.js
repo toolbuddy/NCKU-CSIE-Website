@@ -29,6 +29,10 @@ class ValidateUtils {
         return validate.isInteger( bool ) &&
             ( bool === 0 || bool === 1 );
     }
+
+    static isValidArray ( arr ) {
+        return validate.isArray( arr );
+    }
 }
 
 export default ValidateUtils;
