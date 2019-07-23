@@ -17,6 +17,8 @@ import getStaffMiniProfile from 'models/staff/operations/get-staff-mini-profile.
 import getFacultyMiniProfile from 'models/faculty/operations/get-faculty-mini-profile.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import roleUtils from 'models/auth/utils/role.js';
+import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
+import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 
 const apis = express.Router();
 apis.use( cookieParser() );
@@ -144,7 +146,7 @@ apis.get( '/id', cors(), async ( req, res ) => {
  * Resolve URL `/api/user/miniProfile/[id]`.
  */
 
-apis.get( '/miniProfile/:userId', cors(), async ( req, res, next ) => {
+apis.get( '/miniProfile/:userId', cors(), async ( req, res ) => {
     try {
         const userData = await getAdminByUserId( {
             userId: Number( req.params.userId ),
@@ -164,35 +166,159 @@ apis.get( '/miniProfile/:userId', cors(), async ( req, res, next ) => {
             } );
             res.json( data );
         }
-        else
-            console.error( 'Invalid role.' );
+        else {
+            const error = new Error( 'Invalid role' );
+            error.status = 400;
+            throw error;
+        }
     }
     catch ( error ) {
-        next( error );
+        console.error( error );
     }
 } );
 
 /**
- * Resolve URL `/api/user/updateProfile/[id]`.
+ * Resolve URL `/api/user/updateProfile/`.
  */
 
-apis.get( '/updateProfile/:userId', cors(), async ( req, res, next ) => {
+apis.get( '/updateProfile/', cors(), async ( req, res ) => {
     try {
+        console.log( 'todo - valid user & corresponding data (if data id belongs to profile id)' );
+
+        // Get userId from session
+        console.log( 'todo - get (faculty/staff) profileId from session' );
+
+        // Get profileId from user
         const userData = await getAdminByUserId( {
-            userId: Number( req.params.userId ),
+            userId: 0,
         } );
 
         if ( userData.role === roleUtils.getIdByOption( 'faculty' ) ) {
-            // update faculty data
+            console.log( 'in api user/updateProfile' );
+
+            const data = {
+                profileId: 3,
+                add:       {
+                    title: [
+                        {
+                            from: 2018,
+                            to:   2019,
+                            0:    {
+                                title: '測試的title',
+                            },
+                            1: {
+                                title: 'test title',
+                            },
+                        },
+                    ],
+                },
+                update:    {
+                    education: [ {
+                        educationId: 7,
+                        nation:      0,
+                        degree:      0,
+                        from:        1974,
+                        to:          1978,
+                    }, ],
+                    educationI18n: [
+                        {
+                            educationId: 7,
+                            language:    1,
+                            school:      'National Chiao Tung University',
+                            major:       'Control Engineering',
+                        },
+                    ],
+                    experience: [
+                        {
+                            experienceId: 9,
+                            from:         1993,
+                            to:           null,
+                        },
+                    ],
+                    experienceI18n: [
+                        {
+                            experienceId: 9,
+                            language:     1,
+                            organization: 'National Cheng Kung University',
+                            department:   'Depart. Of Comp. Science & Inform Engr.',
+                            title:        'Professor',
+                        },
+                    ],
+                    profile: {
+                        fax:       '2747076',
+                        email:     'ynsun@mail.ncku.edu.tw',
+                        nation:    0,
+                        photo:     '3.jpg',
+                        officeTel: '06-2757575,62526',
+                        labTel:    '06-2757575,62526',
+                        labWeb:    'https://sites.google.com/view/ncku-csie-vslab',
+                        order:     8,
+                    },
+                    profileI18n: [
+                        {
+                            name:          'Yung-Nien Sun',
+                            language:      1,
+                        },
+                    ],
+                    specialtyI18n: [
+                        {
+                            specialtyId: 15,
+                            language:    1,
+                            specialty:   'Medical Imaging',
+                        },
+                    ],
+                    title:     [
+                        {
+                            titleId: 3,
+                            from:    null,
+                            to:      null,
+                        },
+                    ],
+                    titleI18n: [
+                        {
+                            titleId:  10,
+                            language: 1,
+                            title:    'Distinguished Professor',
+                        },
+                    ],
+                },
+                delete: {},
+            };
+
+            // Add faculty data
+            const addData = await addFacultyDetail( {
+                profileId: data.profileId,
+                title:     data.add.title,
+            } );
+
+            // Update faculty data
+            const updateData = await updateFacultyDetail( {
+                profileId:      data.profileId, // UserData.roleId
+                education:      data.update.education,
+                educationI18n:  data.update.educationI18n,
+                experience:     data.update.experience,
+                experienceI18n: data.update.experienceI18n,
+                profile:        data.update.profile,
+                profileI18n:    data.update.profileI18n,
+                specialtyI18n:  data.update.specialtyI18n,
+                title:          data.update.title,
+                titleI18n:      data.update.titleI18n,
+            } );
+
+            res.json( 200 );
         }
         else if ( userData.role === roleUtils.getIdByOption( 'staff' ) ) {
-            // update staff data
+            // Update staff data - show user data now
+            res.json( userData );
         }
-        else
-            console.error( 'Invalid role.' );
+        else {
+            const error = new Error( 'Invalid role' );
+            error.status = 400;
+            throw error;
+        }
     }
     catch ( error ) {
-        next( error );
+        console.error( error );
     }
 } );
 
