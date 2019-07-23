@@ -40,7 +40,7 @@ router
     console.log( 'in route user/profile post' );
     try {
         console.log( 'should fix!' );
-        console.log( res );
+        console.log( req.body );
 
         // Check updating faculty or staff -> call the corresponding model operation
     }

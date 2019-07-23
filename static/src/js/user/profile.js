@@ -52,7 +52,7 @@ try {
         educationAddDOM:  document.getElementById( 'add__button--education-block' ),
         experienceAddDOM: document.getElementById( 'add__button--experience-block' ),
         languageId:       WebLanguageUtils.currentLanguageId,
-        profileId:        24,
+        profileId:        23,
     } );
 
     getUserDetail.exec();
