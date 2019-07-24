@@ -7,20 +7,21 @@ article.info__input#input
       if content !== null
         input.input__content( 
           placeholder= placeholder
-          type= "text" 
+          type= dataType
           value= value
-          name=name 
+          name= name 
+          required= required
         )
   else if type === 'time'
     article.input__time.time
       aside.time__from.from
         label.from__text= from
         span.from__input.input
-          input.input__year( type = 'number', value = fromValue, placeholder = 'yyyy' name= nameFrom)
+          input.input__year( type = 'number', value = valueFrom, placeholder = 'yyyy' name= nameFrom)
       aside.time__to.to
         label.to__text= to
         span.to__input.input
-          input.input__year( type = 'number', value = toValue, placeholder = 'yyyy' name= nameTo)
+          input.input__year( type = 'number', value = valueTo, placeholder = 'yyyy' name= nameTo)
   else if type === 'local-topic'
     section.input__local-topic.local-topic  
       p.local-topic__text= localTopic
@@ -34,5 +35,5 @@ article.info__input#input
             section.content__item( value= index  )= val
   else if type === 'remove'
     section.input__remove.remove
-      input.delete__item( type = 'hidden', value= val, name= name )
+      input.delete__item( type = 'hidden', value= val, name= name, id= id, dbTable= dbTable )
       

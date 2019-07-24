@@ -12,6 +12,7 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 
 import staticHtml from 'routes/utils/static-html.js';
 import { resolve, } from 'q';
@@ -37,7 +38,7 @@ router
 router
 .route( '/profile' )
 .get( staticHtml( 'user/profile' ) )
-.post( async ( req, res ) => {
+.post( cors(), async ( req, res ) => {
     console.log( 'in route user/profile post' );
     try {
         console.log( 'should fix!' );
