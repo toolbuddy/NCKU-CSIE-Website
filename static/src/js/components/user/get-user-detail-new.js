@@ -9,7 +9,7 @@ import editPageContentHTML from 'static/src/pug/components/user/edit-page-conten
 import degreeUtils from 'models/faculty/utils/degree.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 
-export default class GetUserDetail {
+export default class GetUserDetail_NEW {
     constructor ( opt ) {
         opt = opt || {};
 

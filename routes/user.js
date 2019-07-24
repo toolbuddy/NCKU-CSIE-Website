@@ -14,6 +14,7 @@
 import express from 'express';
 
 import staticHtml from 'routes/utils/static-html.js';
+import { resolve, } from 'q';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -41,6 +42,10 @@ router
     try {
         console.log( 'should fix!' );
         console.log( req.body );
+
+        // Console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
+
+        res.send( 'success' );
 
         // Check updating faculty or staff -> call the corresponding model operation
     }
