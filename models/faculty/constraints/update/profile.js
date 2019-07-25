@@ -60,6 +60,10 @@ const ProfileValidationConstraints = {
         presence: false,
         type:     'integer',
     },
+    i18n: {
+        presence: false,
+        type:     'array',
+    },
 };
 
 export default ProfileValidationConstraints;

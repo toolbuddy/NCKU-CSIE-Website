@@ -19,6 +19,7 @@ import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import roleUtils from 'models/auth/utils/role.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
+import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
 
 const apis = express.Router();
 apis.use( cookieParser() );
@@ -199,33 +200,156 @@ apis.get( '/updateProfile/', cors(), async ( req, res ) => {
             const data = {
                 profileId: 3,
                 add:       {
-                    title: [
+                    department: [
+                        2,
+                    ],
+                    education: [
+                        {
+                            nation: 1,
+                            degree: 0,
+                            from:   2018,
+                            to:     2019,
+                            i18n:   [
+                                {
+                                    language: 0,
+                                    school:   '測試school',
+                                    major:    '測試major',
+                                },
+                                {
+                                    language: 1,
+                                    school:   'test school',
+                                    major:    'test major',
+                                },
+                            ],
+                        },
+                        {
+                            nation: 2,
+                            degree: 1,
+                            from:   2017,
+                            to:     2019,
+                            i18n:   [
+                                {
+                                    language: 0,
+                                    school:   '測試school2',
+                                    major:    '測試major2',
+                                },
+                                {
+                                    language: 1,
+                                    school:   'test school2',
+                                    major:    'test major2',
+                                },
+                            ],
+                        },
+                    ],
+                    experience: [
                         {
                             from: 2018,
                             to:   2019,
-                            0:    {
-                                title: '測試的title',
+                            i18n: [
+                                {
+                                    language:     0,
+                                    organization: '測試organization',
+                                    department:   '測試department',
+                                    title:        '測試title',
+                                },
+                                {
+                                    language:     1,
+                                    organization: 'test organization',
+                                    department:   'test department',
+                                    title:        'test title',
+                                },
+                            ],
+                        },
+                        {
+                            from: 2017,
+                            to:   2019,
+                            i18n: [
+                                {
+                                    language:     0,
+                                    organization: '測試organization2',
+                                    department:   '測試department2',
+                                    title:        '測試title2',
+                                },
+                                {
+                                    language:     1,
+                                    organization: 'test organization2',
+                                    department:   'test department2',
+                                    title:        'test title2',
+                                },
+                            ],
+                        },
+                    ],
+                    researchGroup: [
+                        6,
+                    ],
+                    specialtyI18n: [
+                        [
+                            {
+                                language:  0,
+                                specialty: '測試的specialty',
                             },
-                            1: {
-                                title: 'test title',
+                            {
+                                language:  1,
+                                specialty: 'test specialty',
                             },
+                        ],
+                        [
+                            {
+                                language:  0,
+                                specialty: '測試的specialty2',
+                            },
+                            {
+                                language:  1,
+                                specialty: 'test specialty2',
+                            },
+                        ],
+                    ],
+                    title: [
+                        {
+                            from: 2018, // Should be unix time
+                            to:   2019,
+                            i18n: [
+                                {
+                                    language: 0,
+                                    title:    '測試的title',
+                                },
+                                {
+                                    language: 1,
+                                    title:    'test title',
+                                },
+                            ],
+                        },
+                        {
+                            from: 2018, // Should be unix time
+                            to:   2019,
+                            i18n: [
+                                {
+                                    language: 0,
+                                    title:    '測試的title2',
+                                },
+                                {
+                                    language: 1,
+                                    title:    'test title2',
+                                },
+                            ],
                         },
                     ],
                 },
                 update:    {
-                    education: [ {
-                        educationId: 7,
-                        nation:      0,
-                        degree:      0,
-                        from:        1974,
-                        to:          1978,
-                    }, ],
-                    educationI18n: [
+                    education: [
                         {
                             educationId: 7,
-                            language:    1,
-                            school:      'National Chiao Tung University',
-                            major:       'Control Engineering',
+                            nation:      0,
+                            degree:      0,
+                            from:        1974,
+                            to:          1978,
+                            i18n:        [
+                                {
+                                    language:    1,
+                                    school:      'National Chiao Tung University',
+                                    major:       'Control Engineering',
+                                },
+                            ],
                         },
                     ],
                     experience: [
@@ -233,15 +357,14 @@ apis.get( '/updateProfile/', cors(), async ( req, res ) => {
                             experienceId: 9,
                             from:         1993,
                             to:           null,
-                        },
-                    ],
-                    experienceI18n: [
-                        {
-                            experienceId: 9,
-                            language:     1,
-                            organization: 'National Cheng Kung University',
-                            department:   'Depart. Of Comp. Science & Inform Engr.',
-                            title:        'Professor',
+                            i18n:         [
+                                {
+                                    language:     1,
+                                    organization: 'National Cheng Kung University',
+                                    department:   'Depart. Of Comp. Science & Inform Engr.',
+                                    title:        'Professor',
+                                },
+                            ],
                         },
                     ],
                     profile: {
@@ -253,13 +376,13 @@ apis.get( '/updateProfile/', cors(), async ( req, res ) => {
                         labTel:    '06-2757575,62526',
                         labWeb:    'https://sites.google.com/view/ncku-csie-vslab',
                         order:     8,
+                        i18n:      [
+                            {
+                                name:          'Yung-Nien Sun',
+                                language:      1,
+                            },
+                        ],
                     },
-                    profileI18n: [
-                        {
-                            name:          'Yung-Nien Sun',
-                            language:      1,
-                        },
-                    ],
                     specialtyI18n: [
                         {
                             specialtyId: 15,
@@ -272,38 +395,72 @@ apis.get( '/updateProfile/', cors(), async ( req, res ) => {
                             titleId: 3,
                             from:    null,
                             to:      null,
-                        },
-                    ],
-                    titleI18n: [
-                        {
-                            titleId:  10,
-                            language: 1,
-                            title:    'Distinguished Professor',
+                            i18n:    [
+                                {
+                                    language: 1,
+                                    title:    'Distinguished Professor',
+                                },
+                            ],
                         },
                     ],
                 },
-                delete: {},
+                delete: {
+                    department: [
+                        2,
+                    ],
+                    education: [
+                        124,
+                        125,
+                    ],
+                    experience: [
+                        250,
+                        251,
+                    ],
+                    researchGroup: [
+                        6,
+                    ],
+                    specialtyI18n: [
+                        228,
+                        229,
+                    ],
+                    title: [
+                        100,
+                        101,
+                    ],
+                },
             };
 
             // Add faculty data
-            const addData = await addFacultyDetail( {
-                profileId: data.profileId,
-                title:     data.add.title,
-            } );
+            // const addData = await addFacultyDetail( {
+            // profileId:     data.profileId,
+            // Department:    data.add.department,
+            // education:     data.add.education,
+            // Experience:    data.add.experience,
+            // ResearchGroup: data.add.researchGroup,
+            // specialtyI18n: data.add.specialtyI18n,
+            // title:         data.add.title,
+            // } );
 
             // Update faculty data
             const updateData = await updateFacultyDetail( {
                 profileId:      data.profileId, // UserData.roleId
                 education:      data.update.education,
-                educationI18n:  data.update.educationI18n,
                 experience:     data.update.experience,
-                experienceI18n: data.update.experienceI18n,
                 profile:        data.update.profile,
-                profileI18n:    data.update.profileI18n,
                 specialtyI18n:  data.update.specialtyI18n,
                 title:          data.update.title,
-                titleI18n:      data.update.titleI18n,
             } );
+
+            // Delete faculty data
+            // const deleteData = await deleteFacultyDetail( {
+            //     profileId:     data.profileId,
+            //     department:    data.delete.department,
+            //     education:     data.delete.education,
+            //     experience:    data.delete.experience,
+            //     researchGroup: data.delete.researchGroup,
+            //     specialtyI18n: data.delete.specialtyI18n,
+            //     title:         data.delete.title,
+            // } );
 
             res.json( 200 );
         }
@@ -318,7 +475,7 @@ apis.get( '/updateProfile/', cors(), async ( req, res ) => {
         }
     }
     catch ( error ) {
-        console.error( error );
+        throw error;
     }
 } );
 
