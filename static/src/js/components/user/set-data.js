@@ -1,4 +1,4 @@
-import { renderEditPage, } from 'static/src/js/components/user/edit-page.js';
+import EditPage from 'static/src/js/components/user/edit-page.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { classAdd, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
@@ -301,14 +301,16 @@ class SetData {
 
     setAddButtonEvent () {
         this.DOM.addButton.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 editPageConfig: dataEditPageConfig[ this.config.dbTable ],
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
                 buttonMethod:   'add',
             } );
+            const editPageDOM = await editPage.renderEditPage();
+
             editPageDOM.cancel.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
@@ -322,15 +324,17 @@ class SetData {
 
     setUpdateButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 editPageConfig: dataEditPageConfig[ this.config.dbTable ],
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
-                data:           info.res,
+                dbData:         info.res,
                 buttonMethod:   'update',
             } );
+            const editPageDOM = await editPage.renderEditPage();
+
             editPageDOM.cancel.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
@@ -344,15 +348,18 @@ class SetData {
 
     setDeleteButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageConfig: dataEditPageConfig[ this.config.dbTable ],
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
                 id:             info.id,
                 content:        info.content,
                 buttonMethod:   'delete',
             } );
+            const editPageDOM = await editPage.renderEditPage();
+
             editPageDOM.cancel.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();

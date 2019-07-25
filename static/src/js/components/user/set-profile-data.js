@@ -1,4 +1,4 @@
-import { renderEditPage, } from 'static/src/js/components/user/edit-page.js';
+import EditPage from 'static/src/js/components/user/edit-page.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
@@ -146,18 +146,19 @@ export default class SetProfileData {
                 topic:   this.i18n[ LanguageUtils.getLanguageId( 'zh-TW' ) ].topic[ dbTableItem ],
             },
         };
-        const editPageDOM = await renderEditPage( {
-            blockDOM:       this.DOM.editPage,
+        const editPage = new EditPage( {
+            editPageDOM:    this.DOM.editPage,
             dbTable:        'profile',
             editPageConfig: this.editPageConfig[ dbTableItem ],
             languageId:     this.config.languageId,
             dataI18n:       tempDataI18n,
-            data:           {
+            dbData:           {
                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: res[ LanguageUtils.getLanguageId( 'en-US' ) ].profile,
                 [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: res[ LanguageUtils.getLanguageId( 'zh-TW' ) ].profile,
             },
             buttonMethod: 'update',
         } );
+        const editPageDOM = await editPage.renderEditPage();
 
         editPageDOM.cancel.addEventListener( 'click', ( e ) => {
             e.preventDefault();
