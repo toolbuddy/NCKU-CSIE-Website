@@ -12,8 +12,12 @@
  */
 
 import express from 'express';
+import cors from 'cors';
+import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 
 import staticHtml from 'routes/utils/static-html.js';
+import LanguageUtils from 'models/common/utils/language.js';
+import { resolve, } from 'q';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -36,11 +40,121 @@ router
 router
 .route( '/profile' )
 .get( staticHtml( 'user/profile' ) )
-.post( async ( req, res ) => {
+.post( cors(), async ( req, res ) => {
     console.log( 'in route user/profile post' );
     try {
         console.log( 'should fix!' );
-        console.log( res );
+
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+        let uploadData = '';
+
+        if ( data.method === 'add' ) {
+            if ( data.dbTable === 'specialty' ) {
+                uploadData = {
+                    profileId:    data.profileId,
+                    add:       {
+                        specialtyI18n:
+                            Object.keys( data.i18n ).map( ( languageId ) => {
+                                const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                                dbTableItem.languageId = languageId;
+                                return dbTableItem;
+                            } ),
+                    },
+                };
+            }
+            else if ( data.dbTable === 'department' || data.dbTable === 'researchGroup' ) {
+                uploadData = {
+                    profileId:    data.profileId,
+                    add:       {
+                        [ data.dbTable ]: [
+                            data.dbTableItemId,
+                        ],
+                    },
+                };
+            }
+            else {
+                const item = Object.assign( {}, data.item );
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.languageId = languageId;
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+        }
+
+        if ( data.method === 'delete' ) {
+            const dbTable = ( data.dbTable === 'specialty' ) ? 'specialtyI18n' : data.dbTable;
+            uploadData = {
+                profileId:            data.profileId,
+                [ data.method ]: {
+                    [ dbTable ]: [
+                        data.dbTableItemId,
+                    ],
+                },
+            };
+        }
+
+        if ( data.method === 'update' ) {
+            if ( data.dbTable === 'title' || data.dbTable === 'education' || data.dbTable === 'experience' ) {
+                const item = Object.assign( {}, data.item );
+                item[ `${ data.dbTable }Id` ] = data.dbTableItemId;
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.languageId = languageId;
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            if ( data.dbTable === 'specialty' ) {
+                uploadData = {
+                    profileId:    data.profileId,
+                    add:       {
+                        specialtyI18n:
+                            Object.keys( data.i18n ).map( ( languageId ) => {
+                                const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                                dbTableItem.languageId = languageId;
+                                dbTableItem.specialtyId = data.dbTableItemId;
+                                return dbTableItem;
+                            } ),
+                    },
+                };
+            }
+            if ( data.dbTable === 'profile' ) {
+                const item = Object.assign( {}, data.item );
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+        }
+
+        console.log( uploadData );
+
+
+        res.json();
 
         // Check updating faculty or staff -> call the corresponding model operation
     }

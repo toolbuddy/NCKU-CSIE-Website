@@ -1,4 +1,4 @@
-mixin input-block( belongBlock, title, content, modifier, remove=false, add=false )
+mixin input-block( belongBlock, title, content, modifier )
   - 
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -20,10 +20,5 @@ mixin input-block( belongBlock, title, content, modifier, remove=false, add=fals
     main.input-block__block.block
       h1.block__title=`${title}`
       article.block__content.content
-        p.content__word( data-type=`${modifier}` )=`${content}`
-        if remove
-          button.content__remove(class=`content__remove--${modifier}`)= i18n[ LANG.id ].button.remove
+        p.content__word( data-type=`${modifier}` )
         button.content__modify(class=`content__modify--${modifier}`)= i18n[ LANG.id ].button.edit
-    if add
-      aside.input-block__add.add
-        button.add__button(id=`add__button--${modifier}`)= i18n[ LANG.id ].button.add

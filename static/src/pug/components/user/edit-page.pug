@@ -4,6 +4,7 @@ section.edit-page__window.window
     main.form__content.content#content
       article.content__title
         h1.title__word= topic
+      article.content__info#info
     article.form__button.button
-      button.button__item.button__item--cancel= cancel
-      input.button__item.button__item--check( type="submit" value= check)
+      button.button__item.button__item--cancel( formnovalidate )= cancel
+      button.button__item.button__item--check= check
