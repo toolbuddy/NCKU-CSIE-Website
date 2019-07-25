@@ -51,6 +51,7 @@ class EditPage {
             info:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__content > .content__info' ),
             check:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--check' ),
             cancel:  this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--cancel' ),
+            error:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__content > .content__error > .error__message' ),
         };
     }
 
@@ -118,6 +119,7 @@ class EditPage {
         const dropdownItems = editPageInfoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
         const dropdownSubmit = editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
         dropdownTop.addEventListener( 'click', () => {
+            console.log( 'dropdown' );
             classAdd( editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
         } );
         dropdownItems.forEach( ( item ) => {
@@ -165,6 +167,11 @@ class EditPage {
         } );
     }
 
+    setFocus () {
+        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        input[ 0 ].focus();
+    }
+
     async renderEditPage () {
         const editPageContentDOM = await this.renderEditPageWindow();
 
@@ -174,6 +181,7 @@ class EditPage {
         else
             await this.setEditPageInputBlock( editPageContentDOM.info );
 
+        this.setFocus();
 
         return editPageContentDOM;
     }

@@ -299,6 +299,20 @@ class SetData {
         } );
     }
 
+    checkSubmitData ( inputDOM ) {
+        const isValid = true;
+        Array.from( inputDOM ).forEach( ( element ) => {
+            if ( element.getAttribute( required ) !== null ) {
+                if ( !ValidateUtils.isValidString( element.value ) ) {
+                    element.focus();
+                    return '此欄位不可為空';
+                }
+            }
+        } );
+
+        return true;
+    }
+
     setAddButtonEvent () {
         this.DOM.addButton.addEventListener( 'click', async () => {
             const editPage = new EditPage( {

@@ -71,14 +71,19 @@
         align-content: center;
         justify-items: center;
         align-items: center;
+
+        // [ position ]
         width: 100%;
 
         // [ template ]
         %content__word {
           // [ layout ]
           display: inline-flex;
+
+          // [ position ]
           width: auto;
-          margin-right: font__px-to-rem( 10 );
+          height: font__px-to-rem( 25 );
+          padding-right: font__px-to-rem( 10 );
           align-self: center;
 
           // [ skin ]
@@ -88,7 +93,7 @@
             stretch: normal;
           }
           text-align: center;
-          line-height: font__px-to-rem( 25 );
+          line-height: font__px-to-rem( 20 );
           letter-spacing: normal;
           word-wrap: break-all;
         }
@@ -128,7 +133,10 @@
 
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );
-          overflow: auto;
+          overflow: {
+            x: scroll;
+            y: visible;
+          }
         }
 
         > .content__modify {

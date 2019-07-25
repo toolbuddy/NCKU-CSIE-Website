@@ -48,21 +48,55 @@
         // [ layout ]
         grid-area: content;
         position: relative;
+        overflow: auto;
 
         // [ position ]
         width: 100%;
         margin: {
+          top: 3vh;
           left: auto;
           right: auto;
         }
         max-height: 100%;
-        overflow: auto;
 
         // [ skin ]
         background-color: white;
         border: 2 solid white;
         border-radius: font__px-to-rem( 10 );
         padding-bottom: font__px-to-rem( 10 );
+
+        > .content__error {
+          // [ layout ]
+          display: block;
+
+          // [ position ]
+          width: 100%;
+          height: font__px-to-rem( 25 );
+
+          > .error__message {
+            // [ layout ]
+            display: inline-block;
+
+            // [ position ]
+            width: 100%;
+
+            // [ skin ]
+            font: {
+              size: font__px-to-rem( 18 );
+              weight: normal;
+              style: normal;
+              stretch: normal;
+            }
+            text-align: center;
+            line-height: normal;
+            letter-spacing: normal;
+            color: rgba( 228, 15, 15, .87 );
+
+            &--active {
+              display: inline-block;
+            }
+          }
+        }
 
         > .content__title {
           // [ layout ]
@@ -98,9 +132,12 @@
         > .content__info {
           // [ layout ]
           display: block;
+          overflow: scroll;
 
           // [ position ]
           width: 100%;
+          max-height: 85%;
+          padding-top: font__px-to-rem( 20 );
 
           > .info__input {
             // [ layout ]
@@ -116,6 +153,7 @@
               .dropdown__top {
                 // [ layout ]
                 display: block;
+                position: relative;
 
                 // [ position ]
                 width: font__px-to-rem( 120 );
@@ -158,9 +196,11 @@
               .dropdown__button {
                 // [ layout ]
                 display: none;
+                position: relative;
+
+                // [ position ]
                 width: font__px-to-rem( 150 );
                 height: auto;
-
                 margin: {
                   left: auto;
                   right: auto;
@@ -171,21 +211,19 @@
                   // [ layout ]
                   display: block;
                   position: absolute;
+                  z-index: 101;
 
                   // [ skin ]
-                  border: {
-                    top: 1px solid gray;
-                    left: 1px solid gray;
-                    right: 1px solid gray;
-                    bottom: 1px solid gray;;
-                  };
+                  border: 1px solid gray;
                   border-radius: font__px-to-rem( 7 );
                   background-color: #ffffff;
+                  margin-bottom: font__px-to-rem( 10 );
 
                   .content__item {
                     // [ layout ]
                     display: block;
-                    position: relative;
+
+                    // position: relative;
                     width: font__px-to-rem( 150 );
 
                     // [ skin ]
@@ -259,7 +297,7 @@
               $large: 1100px;
 
               // [ position ]
-              grid-template-columns: repeat( auto-fill, font__px-to-rem( 154 ) );
+              grid-template-columns: repeat( auto-fill, font__px-to-rem( 170 ) );
 
               // [ layout ]
               display: grid;
@@ -371,6 +409,12 @@
 
                     // [ skin ]
                     width: font__px-to-rem( 48 );
+
+
+                    &:focus {
+                      // [ skin ]
+                      border: 2px solid rgba( 33, 101, 131, .5 );
+                    }
                   }
                 }
               }
@@ -459,6 +503,12 @@
 
                     // [ skin ]
                     width: font__px-to-rem( 48 );
+
+
+                    &:focus {
+                      // [ skin ]
+                      border: 2px solid rgba( 33, 101, 131, .5 );
+                    }
                   }
                 }
               }
@@ -529,6 +579,11 @@
                 line-height: normal;
                 letter-spacing: normal;
                 color: rgba( 0, 0, 0, .87 );
+
+                &:focus {
+                  // [ skin ]
+                  border: 3px solid rgba( 33, 101, 131, .5 );
+                }
               }
             }
           }
