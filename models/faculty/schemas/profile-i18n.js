@@ -16,7 +16,7 @@ const ProfileI18n = faculty.define( 'profileI18n', {
     },
     name: {
         type:      Sequelize.STRING( 100 ),
-        allowNull: false,
+        allowNull: true,
     },
     officeAddress: {
         type:      Sequelize.STRING( 100 ),
