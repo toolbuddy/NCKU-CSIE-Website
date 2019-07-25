@@ -1,31 +1,28 @@
-import ValidateUtils from 'models/common/utils/validate.js';
+import LanguageUtils from 'models/common/utils/language.js';
 
 const ExperienceValidationConstraints = {
-    experienceId: {
-        presence: {
-            allowEmpty: false,
-        },
-        type: {
-            type: ValidateUtils.isValidId,
-        },
-    },
     from: {
-        presence:     false,
+        presence:     true,
         type:         'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     to: {
-        presence:     false,
+        presence:     true,
         type:         'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     i18n: {
-        presence: false,
+        presence: {
+            allowEmpty: false,
+        },
         type:     'array',
+        length: {
+            is: LanguageUtils.supportedLanguage.length,
+        },
     },
 };
 

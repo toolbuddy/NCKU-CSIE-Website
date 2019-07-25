@@ -1,6 +1,6 @@
 import LanguageUtils from 'models/common/utils/language.js';
 
-const EducationI18nValidationConstraints = {
+const SpecialtyI18nValidationConstraints = {
     language: {
         presence: {
             allowEmpty: false,
@@ -9,20 +9,15 @@ const EducationI18nValidationConstraints = {
             type: LanguageUtils.isSupportedLanguageId,
         },
     },
-    school: {
-        presence: false,
-        type:       'string',
-        length:   {
-            maximum: 100,
+    specialty: {
+        presence: {
+            allowEmpty: false,
         },
-    },
-    major: {
-        presence: false,
         type:       'string',
-        length:   {
+        length: {
             maximum: 100,
         },
     },
 };
 
-export default EducationI18nValidationConstraints;
+export default SpecialtyI18nValidationConstraints;

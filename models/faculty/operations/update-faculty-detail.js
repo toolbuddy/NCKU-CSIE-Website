@@ -28,14 +28,10 @@ export default async ( opt ) => {
         const {
             profileId = null,
             education = null,
-            educationI18n = null,
             experience = null,
-            experienceI18n = null,
             profile = null,
-            profileI18n = null,
             specialtyI18n = null,
             title = null,
-            titleI18n = null,
         } = opt;
 
         if ( !ValidateUtils.isValidId( profileId ) ) {
@@ -49,29 +45,24 @@ export default async ( opt ) => {
                 for ( const data of education ) {
                     if ( typeof ( validate( data, EducationValidationConstraints ) ) !== 'undefined' ) {
                         const error = new Error( 'Invalid education object' );
+                        error.message = '';
                         error.status = 400;
                         throw error;
+                    }
+                    if ( data.i18n ) {
+                        for ( const i18nData of data.i18n ) {
+                            if ( typeof ( validate( i18nData, EducationI18nValidationConstraints ) ) !== 'undefined' ) {
+                                const error = new Error( 'Invalid education object' );
+                                error.message = '';
+                                error.status = 400;
+                                throw error;
+                            }
+                        }
                     }
                 }
             }
             else {
                 const error = new Error( 'Invalid education object' );
-                error.status = 400;
-                throw error;
-            }
-        }
-        if ( educationI18n !== null ) {
-            if ( ValidateUtils.isValidArray( educationI18n ) ) {
-                for ( const data of educationI18n ) {
-                    if ( typeof ( validate( data, EducationI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid educationI18n object' );
-                        error.status = 400;
-                        throw error;
-                    }
-                }
-            }
-            else {
-                const error = new Error( 'Invalid educationI18n object' );
                 error.status = 400;
                 throw error;
             }
@@ -84,26 +75,20 @@ export default async ( opt ) => {
                         error.status = 400;
                         throw error;
                     }
-                }
-            }
-            else {
-                const error = new Error( 'Invalid experience object' );
-                error.status = 400;
-                throw error;
-            }
-        }
-        if ( experienceI18n !== null ) {
-            if ( ValidateUtils.isValidArray( experienceI18n ) ) {
-                for ( const data of experienceI18n ) {
-                    if ( typeof ( validate( data, ExperienceI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid experienceI18n object' );
-                        error.status = 400;
-                        throw error;
+                    if ( data.i18n ) {
+                        for ( const i18nData of data.i18n ) {
+                            if ( typeof ( validate( i18nData, ExperienceI18nValidationConstraints ) ) !== 'undefined' ) {
+                                const error = new Error( 'Invalid experience object' );
+                                error.message = '';
+                                error.status = 400;
+                                throw error;
+                            }
+                        }
                     }
                 }
             }
             else {
-                const error = new Error( 'Invalid experienceI18n object' );
+                const error = new Error( 'Invalid experience object' );
                 error.status = 400;
                 throw error;
             }
@@ -114,21 +99,15 @@ export default async ( opt ) => {
                 error.status = 400;
                 throw error;
             }
-        }
-        if ( profileI18n !== null ) {
-            if ( ValidateUtils.isValidArray( profileI18n ) ) {
-                for ( const data of profileI18n ) {
-                    if ( typeof ( validate( data, ProfileI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid profileI18n object' );
+            if ( profile.i18n ) {
+                for ( const i18nData of profile.i18n ) {
+                    if ( typeof ( validate( i18nData, ProfileI18nValidationConstraints ) ) !== 'undefined' ) {
+                        const error = new Error( 'Invalid profile object' );
+                        error.message = '';
                         error.status = 400;
                         throw error;
                     }
                 }
-            }
-            else {
-                const error = new Error( 'Invalid profileI18n object' );
-                error.status = 400;
-                throw error;
             }
         }
         if ( specialtyI18n !== null ) {
@@ -155,26 +134,20 @@ export default async ( opt ) => {
                         error.status = 400;
                         throw error;
                     }
-                }
-            }
-            else {
-                const error = new Error( 'Invalid title object' );
-                error.status = 400;
-                throw error;
-            }
-        }
-        if ( titleI18n !== null ) {
-            if ( ValidateUtils.isValidArray( titleI18n ) ) {
-                for ( const data of titleI18n ) {
-                    if ( typeof ( validate( data, TitleI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid titleI18n object' );
-                        error.status = 400;
-                        throw error;
+                    if ( data.i18n ) {
+                        for ( const i18nData of data.i18n ) {
+                            if ( typeof ( validate( i18nData, TitleI18nValidationConstraints ) ) !== 'undefined' ) {
+                                const error = new Error( 'Invalid title object' );
+                                error.message = '';
+                                error.status = 400;
+                                throw error;
+                            }
+                        }
                     }
                 }
             }
             else {
-                const error = new Error( 'Invalid titleI18n object' );
+                const error = new Error( 'Invalid title object' );
                 error.status = 400;
                 throw error;
             }
@@ -194,19 +167,19 @@ export default async ( opt ) => {
                         profileId,
                     },
                 } );
-            }
-        }
-        if ( educationI18n ) {
-            for ( const educationI18nInfo of educationI18n ) {
-                await EducationI18n.update( {
-                    school: educationI18nInfo.school,
-                    major:  educationI18nInfo.major,
-                }, {
-                    where: {
-                        educationId: educationI18nInfo.educationId,
-                        language:    educationI18nInfo.language,
-                    },
-                } );
+                if ( educationInfo.i18n ) {
+                    for ( const educationI18nInfo of educationInfo.i18n ) {
+                        await EducationI18n.update( {
+                            school: educationI18nInfo.school,
+                            major:  educationI18nInfo.major,
+                        }, {
+                            where: {
+                                educationId: educationInfo.educationId,
+                                language:    educationI18nInfo.language,
+                            },
+                        } );
+                    }
+                }
             }
         }
         if ( experience ) {
@@ -220,20 +193,20 @@ export default async ( opt ) => {
                         profileId,
                     },
                 } );
-            }
-        }
-        if ( experienceI18n ) {
-            for ( const experienceI18nInfo of experienceI18n ) {
-                await ExperienceI18n.update( {
-                    organization: experienceI18nInfo.organization,
-                    department:   experienceI18nInfo.department,
-                    title:        experienceI18nInfo.title,
-                }, {
-                    where: {
-                        experienceId: experienceI18nInfo.experienceId,
-                        language:     experienceI18nInfo.language,
-                    },
-                } );
+                if ( experienceInfo.i18n ) {
+                    for ( const experienceI18nInfo of experienceInfo.i18n ) {
+                        await ExperienceI18n.update( {
+                            organization: experienceI18nInfo.organization,
+                            department:   experienceI18nInfo.department,
+                            title:        experienceI18nInfo.title,
+                        }, {
+                            where: {
+                                experienceId: experienceInfo.experienceId,
+                                language:     experienceI18nInfo.language,
+                            },
+                        } );
+                    }
+                }
             }
         }
         if ( profile ) {
@@ -252,20 +225,20 @@ export default async ( opt ) => {
                     profileId,
                 },
             } );
-        }
-        if ( profileI18n ) {
-            for ( const profileI18nInfo of profileI18n ) {
-                await ProfileI18n.update( {
-                    name:          profileI18nInfo.name,
-                    officeAddress: profileI18nInfo.officeAddress,
-                    labName:       profileI18nInfo.labName,
-                    labAddress:    profileI18nInfo.labAddress,
-                }, {
-                    where: {
-                        language: profileI18nInfo.language,
-                        profileId,
-                    },
-                } );
+            if ( profile.i18n ) {
+                for ( const profileI18nInfo of profile.i18n ) {
+                    await ProfileI18n.update( {
+                        name:          profileI18nInfo.name,
+                        officeAddress: profileI18nInfo.officeAddress,
+                        labName:       profileI18nInfo.labName,
+                        labAddress:    profileI18nInfo.labAddress,
+                    }, {
+                        where: {
+                            language: profileI18nInfo.language,
+                            profileId,
+                        },
+                    } );
+                }
             }
         }
         if ( specialtyI18n ) {
@@ -292,27 +265,23 @@ export default async ( opt ) => {
                         profileId,
                     },
                 } );
-            }
-        }
-        if ( titleI18n ) {
-            for ( const titleI18nInfo of titleI18n ) {
-                await TitleI18n.update( {
-                    title: titleI18nInfo.title,
-                }, {
-                    where: {
-                        titleId:  titleI18nInfo.titleId,
-                        language: titleI18nInfo.language,
-                    },
-                } );
+                if ( titleInfo.i18n ) {
+                    for ( const titleI18nInfo of titleInfo.i18n ) {
+                        await TitleI18n.update( {
+                            title: titleI18nInfo.title,
+                        }, {
+                            where: {
+                                titleId:  titleInfo.titleId,
+                                language: titleI18nInfo.language,
+                            },
+                        } );
+                    }
+                }
             }
         }
         return;
     }
     catch ( err ) {
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
-        throw error;
+        throw err;
     }
 };
