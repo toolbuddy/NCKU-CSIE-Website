@@ -402,6 +402,11 @@ const dataEditPageConfig = Object.freeze( {
     title: [
         editPageType(
             {
+                type: 'time',
+            }
+        ),
+        editPageType(
+            {
                 type:        'text',
                 dbTableItem: 'title',
                 dataType:    'text',

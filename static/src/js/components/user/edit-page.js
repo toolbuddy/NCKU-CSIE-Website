@@ -1,6 +1,6 @@
 import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
 import editPageContentHTML from 'static/src/pug/components/user/edit-page-content.pug';
-import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
+import { dataI18n, } from 'static/src/js/components/user/data-config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
@@ -13,7 +13,6 @@ import { host, } from 'settings/server/config.js';
 
 async function renderEditPageWindow ( info ) {
     const i18n = dataI18n.editPage;
-    console.log( i18n );
     classRemove( info.blockDOM, 'content__edit-page--hidden' );
     info.blockDOM.innerHTML = '';
     info.blockDOM.innerHTML += editPageHTML( {
@@ -27,10 +26,6 @@ async function renderEditPageWindow ( info ) {
         check:   info.blockDOM.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--check' ),
         cancel:  info.blockDOM.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--cancel' ),
     };
-}
-
-function closeEditPageWindow ( blockDOM ) {
-    classAdd( blockDOM, 'content__edit-page--hidden' );
 }
 
 function setLocalTopic ( info ) {
@@ -49,13 +44,16 @@ function setTextInput ( info ) {
     languageIds.forEach( ( languageId ) => {
         const placeholder = info.contentI18n[ languageId ].default[ info.editPageConfig.dbTableItem ];
         info.editPageInfoDOM.innerHTML += editPageContentHTML( {
-            flag:       ( info.editPageConfig.i18n ) ? flag[ languageId ] : null,
-            value:      ( info.buttonMethod === 'update' ) ? info.data[ languageId ][ info.editPageConfig.dbTableItem ] : '',
+            flag:        ( info.editPageConfig.i18n ) ? flag[ languageId ] : null,
+            value:       ( info.buttonMethod === 'update' ) ? info.data[ languageId ][ info.editPageConfig.dbTableItem ] : '',
             placeholder,
-            name:       ( info.editPageConfig.i18n ) ? `${ info.editPageConfig.dbTableItem }_${ languageId }` : info.editPageConfig.dbTableItem,
-            dataType:   info.editPageConfig.dataType,
-            type:       info.editPageConfig.type,
-            required:   info.editPageConfig.required,
+            name:        ( info.editPageConfig.i18n ) ? `${ info.editPageConfig.dbTableItem }_${ languageId }` : info.editPageConfig.dbTableItem,
+            dataType:    info.editPageConfig.dataType,
+            type:        info.editPageConfig.type,
+            required:    info.editPageConfig.required,
+            dbTableItem: info.editPageConfig.dbTableItem,
+            languageId,
+            i18n:        info.editPageConfig.i18n,
         } );
     } );
 }
@@ -84,9 +82,10 @@ function setDropdownInput ( info ) {
     info.editPageInfoDOM.innerHTML += editPageContentHTML( {
         top,
         value,
-        data:    info.editPageConfig.dropdownItem,
-        name:    info.editPageConfig.dbTableItem,
-        type:    'dropdown',
+        data:        info.editPageConfig.dropdownItem,
+        name:        info.editPageConfig.dbTableItem,
+        dbTableItem: info.editPageConfig.dbTableItem,
+        type:        'dropdown',
     } );
 
     const dropdownTop = info.editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__top' );
@@ -109,6 +108,7 @@ function setDropdownInput ( info ) {
 async function setEditPageInputBlock ( info ) {
     const config = info.editPageConfig;
     const contentI18n = info.dataI18n;
+    info.editPageInfoDOM.innerHTML = '';
     config.forEach( ( element ) => {
         switch ( element.type ) {
             case 'text':
@@ -145,6 +145,8 @@ async function setEditPageInputBlock ( info ) {
                     data:            info.data[ info.languageId ],
                 } );
                 break;
+            default:
+                break;
         }
     } );
 }
@@ -163,7 +165,6 @@ async function setEditPageDeleteBlock ( info ) {
 
 async function renderEditPage ( info ) {
     const contentI18n = info.dataI18n;
-    console.log( info.dataI18n );
     const editPageContentDOM = await renderEditPageWindow( {
         blockDOM:     info.blockDOM,
         topic:        contentI18n[ info.languageId ].topic,

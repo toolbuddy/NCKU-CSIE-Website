@@ -1,6 +1,6 @@
 import { renderEditPage, } from 'static/src/js/components/user/edit-page.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
+import { classAdd, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
@@ -96,6 +96,7 @@ class SetData {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
                     },
+                    id:       res.educationId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.educationId ) ),
@@ -128,6 +129,7 @@ class SetData {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
                     },
+                    id:       res.experienceId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.experienceId ) ),
@@ -160,6 +162,7 @@ class SetData {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
                     },
+                    id:       res.titleId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.titleId ) ),
@@ -192,6 +195,7 @@ class SetData {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
                     },
+                    id:       res.specialtyId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.specialtyId ) ),
@@ -207,6 +211,92 @@ class SetData {
 
     closeEditPageWindow () {
         classAdd( this.DOM.editPage, 'content__edit-page--hidden' );
+    }
+
+    uploadUpdateData ( dbTableItemId ) {
+        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const item = {};
+        const i18n = {
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+        };
+        Array.from( input ).forEach( ( element ) => {
+            if ( element.getAttribute( 'type' ) === 'text' && element.getAttribute( 'i18n' ) !== null )
+                i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+            else
+                item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+        } );
+
+        fetch( `${ host }/user/profile`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                'profileId':    this.config.profileId,
+                'method':       'update',
+                'dbTable':      this.config.dbTable,
+                dbTableItemId,
+                item,
+                i18n,
+            } ),
+        } )
+        .then( async () => {
+            this.exec();
+            this.closeEditPageWindow();
+        } ).catch( ( err ) => {
+            this.closeEditPageWindow();
+            console.error( err );
+        } );
+    }
+
+    uploadAddData () {
+        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const item = {};
+        const i18n = {
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+        };
+        Array.from( input ).forEach( ( element ) => {
+            if ( element.getAttribute( 'type' ) === 'text' && element.getAttribute( 'i18n' ) !== null )
+                i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+            else
+                item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+        } );
+
+        fetch( `${ host }/user/profile`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                profileId:    this.config.profileId,
+                method:       'add',
+                dbTable:      this.config.dbTable,
+                item,
+                i18n,
+            } ),
+        } )
+        .then( async () => {
+            this.exec();
+            this.closeEditPageWindow();
+        } ).catch( ( err ) => {
+            this.closeEditPageWindow();
+            console.error( err );
+        } );
+    }
+
+    uploadDeleteData ( dbTableItemId ) {
+        fetch( `${ host }/user/profile`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                profileId:     this.config.profileId,
+                method:        'delete',
+                dbTable:       this.config.dbTable,
+                dbTableItemId,
+            } ),
+        } )
+        .then( async () => {
+            this.exec();
+            this.closeEditPageWindow();
+        } ).catch( ( err ) => {
+            this.closeEditPageWindow();
+            console.error( err );
+        } );
     }
 
     setAddButtonEvent () {
@@ -225,9 +315,7 @@ class SetData {
             } );
             editPageDOM.check.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                const input = this.DOM.editPage.getElementsByTagName( 'input' );
-                console.log( input );
-                this.closeEditPageWindow();
+                this.uploadAddData();
             } );
         } );
     }
@@ -247,6 +335,10 @@ class SetData {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
+            editPageDOM.check.addEventListener( 'click', ( e ) => {
+                e.preventDefault();
+                this.uploadUpdateData( info.id );
+            } );
         } );
     }
 
@@ -264,6 +356,10 @@ class SetData {
             editPageDOM.cancel.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
+            } );
+            editPageDOM.check.addEventListener( 'click', ( e ) => {
+                e.preventDefault();
+                this.uploadDeleteData( info.id );
             } );
         } );
     }
@@ -286,6 +382,8 @@ class SetData {
                 break;
             case 'specialty':
                 await this.renderSpecialtyBlock( data );
+                break;
+            default:
                 break;
         }
         this.setAddButtonEvent();

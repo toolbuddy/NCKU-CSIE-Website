@@ -2,12 +2,8 @@ import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { host, } from 'settings/server/config.js';
-import GetUserDetail from 'static/src/js/components/user/get-user-detail';
 import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
-import { SetData, SetEducationData, } from 'static/src/js/components/user/set-data.js';
-import { editPageType, EditPage, } from 'static/src/js/components/user/edit-page.js';
-import degreeUtils from 'models/faculty/utils/degree.js';
+import { SetData, } from 'static/src/js/components/user/set-data.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -45,26 +41,6 @@ catch ( err ) {
 }
 
 console.log( '(Assume this is header) get profile data:' );
-
-/*
-Try {
-    const getUserDetail = new GetUserDetail( {
-        profileDOM:       document.getElementById( 'profile' ),
-        educationDOM:     document.getElementById( 'education' ),
-        experienceDOM:    document.getElementById( 'experience' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        educationAddDOM:  document.getElementById( 'add__button--education-block' ),
-        experienceAddDOM: document.getElementById( 'add__button--experience-block' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        profileId:        24,
-    } );
-
-    getUserDetail.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
-*/
 
 try {
     const setProfileData = new SetProfileData( {
