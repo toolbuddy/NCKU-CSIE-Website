@@ -250,9 +250,9 @@ router
             }
         }
 
-        console.log( uploadData );
-        for ( const a of uploadData.update.education )
-            console.log( a );
+        // console.log( uploadData );
+        // for ( const a of uploadData.update.education )
+        //     console.log( a );
 
 
         // Add faculty data
