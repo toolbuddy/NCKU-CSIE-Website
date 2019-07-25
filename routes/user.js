@@ -63,7 +63,6 @@ router
 .route( '/profile' )
 .get( staticHtml( 'user/profile' ) )
 .post( cors(), async ( req, res ) => {
-    console.log( 'in route user/profile post' );
     try {
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
         let uploadData = '';
@@ -73,12 +72,13 @@ router
                 uploadData = {
                     profileId:    data.profileId,
                     add:       {
-                        specialtyI18n:
+                        specialtyI18n: [
                             Object.keys( data.i18n ).map( ( languageId ) => {
                                 const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                                dbTableItem.languageId = languageId;
+                                dbTableItem.language = Number( languageId );
                                 return dbTableItem;
                             } ),
+                        ],
                     },
                 };
             }
@@ -87,16 +87,19 @@ router
                     profileId:    data.profileId,
                     add:       {
                         [ data.dbTable ]: [
-                            data.dbTableItemId,
+                            Number( data.dbTableItemId ),
                         ],
                     },
                 };
             }
-            else {
-                const item = Object.assign( {}, data.item );
+            else if ( data.dbTable === 'title' ) {
+                const item = {
+                    from:    data.item.from === '' ? null : Number( data.item.from ),
+                    to:      data.item.to === '' ? null : Number( data.item.to ),
+                };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
                     const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.languageId = languageId;
+                    dbTableItem.language = Number( languageId );
                     return dbTableItem;
                 } );
                 uploadData = {
@@ -108,6 +111,56 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'experience' ) {
+                const item = {
+                    from:         data.item.from === '' ? null : Number( data.item.from ),
+                    to:           data.item.to === '' ? null : Number( data.item.to ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'education' ) {
+                const item = {
+                    from:         data.item.from === '' ? null : Number( data.item.from ),
+                    to:           data.item.to === '' ? null : Number( data.item.to ),
+                    nation:       0, // Number( data.item.nation ),
+                    degree:       Number( data.item.degree ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+
+            await addFacultyDetail( {
+                profileId:     uploadData.profileId,
+                department:    uploadData.add.department,
+                education:     uploadData.add.education,
+                experience:    uploadData.add.experience,
+                researchGroup: uploadData.add.researchGroup,
+                specialtyI18n: uploadData.add.specialtyI18n,
+                title:         uploadData.add.title,
+            } );
         }
 
         if ( data.method === 'delete' ) {
@@ -116,10 +169,19 @@ router
                 profileId:            data.profileId,
                 [ data.method ]: {
                     [ dbTable ]: [
-                        data.dbTableItemId,
+                        Number( data.dbTableItemId ),
                     ],
                 },
             };
+            await deleteFacultyDetail( {
+                profileId:     uploadData.profileId,
+                department:    uploadData.delete.department,
+                education:     uploadData.delete.education,
+                experience:    uploadData.delete.experience,
+                researchGroup: uploadData.delete.researchGroup,
+                specialtyI18n: uploadData.delete.specialtyI18n,
+                title:         uploadData.delete.title,
+            } );
         }
 
         if ( data.method === 'update' ) {
@@ -216,7 +278,6 @@ router
                 };
             }
             else if ( data.dbTable === 'profile' ) {
-                console.log( 'in profile format' );
                 const item = {
                     fax:         data.item.fax,
                     email:       data.item.email,
@@ -231,7 +292,6 @@ router
                     if ( typeof ( item[ key ] ) === 'undefined' || Number.isNaN( item[ key ] ) || item[ key ] === null )
                         delete item[ key ];
                 } );
-                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -248,45 +308,15 @@ router
                     },
                 };
             }
+            await updateFacultyDetail( {
+                profileId:      uploadData.profileId, // UserData.roleId
+                education:      uploadData.update.education,
+                experience:     uploadData.update.experience,
+                profile:        uploadData.update.profile,
+                specialtyI18n:  uploadData.update.specialtyI18n,
+                title:          uploadData.update.title,
+            } );
         }
-
-        // console.log( uploadData );
-        // for ( const a of uploadData.update.education )
-        //     console.log( a );
-
-
-        // Add faculty data
-        // const addData = await addFacultyDetail( {
-        // profileId:     uploadData.profileId,
-        // Department:    uploadData.add.department,
-        // education:     uploadData.add.education,
-        // Experience:    uploadData.add.experience,
-        // ResearchGroup: uploadData.add.researchGroup,
-        // specialtyI18n: uploadData.add.specialtyI18n,
-        // title:         uploadData.add.title,
-        // } );
-
-        // Update faculty data
-        const updateData = await updateFacultyDetail( {
-            profileId:      uploadData.profileId, // UserData.roleId
-            education:      uploadData.update.education,
-            experience:     uploadData.update.experience,
-            profile:        uploadData.update.profile,
-            specialtyI18n:  uploadData.update.specialtyI18n,
-            title:          uploadData.update.title,
-        } );
-
-        // Delete faculty data
-        // const deleteData = await deleteFacultyDetail( {
-        //     profileId:     uploadData.profileId,
-        //     department:    uploadData.delete.department,
-        //     education:     uploadData.delete.education,
-        //     experience:    uploadData.delete.experience,
-        //     researchGroup: uploadData.delete.researchGroup,
-        //     specialtyI18n: uploadData.delete.specialtyI18n,
-        //     title:         uploadData.delete.title,
-        // } );
-
 
         res.json();
 
