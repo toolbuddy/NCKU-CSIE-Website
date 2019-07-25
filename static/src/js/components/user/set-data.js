@@ -308,6 +308,14 @@ class SetData {
                     return '此欄位不可為空';
                 }
             }
+            if ( element.getAttribute( type ) === 'email' ) {
+                const temp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if ( !temp.test( element.value.toLowerCase() ) )
+                    return 'email 格式錯誤';
+            }
+            if ( element.getAttribute( type ) === '' ) {
+
+            }
         } );
 
         return true;
