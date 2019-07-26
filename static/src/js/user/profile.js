@@ -40,8 +40,6 @@ catch ( err ) {
     console.error( err );
 }
 
-console.log( '(Assume this is header) get profile data:' );
-
 try {
     const setProfileData = new SetProfileData( {
         profileDOM:       document.getElementById( 'profile' ),

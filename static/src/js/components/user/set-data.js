@@ -7,6 +7,7 @@ import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-bloc
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
+import validate from 'validate.js';
 
 class SetData {
     constructor ( opt ) {
@@ -214,6 +215,7 @@ class SetData {
     }
 
     uploadUpdateData ( dbTableItemId ) {
+        this.checkSubmitData();
         const input = this.DOM.editPage.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
@@ -299,26 +301,89 @@ class SetData {
         } );
     }
 
-    checkSubmitData ( inputDOM ) {
-        const isValid = true;
-        Array.from( inputDOM ).forEach( ( element ) => {
-            if ( element.getAttribute( required ) !== null ) {
-                if ( !ValidateUtils.isValidString( element.value ) ) {
-                    element.focus();
-                    return '此欄位不可為空';
-                }
-            }
-            if ( element.getAttribute( type ) === 'email' ) {
-                const temp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if ( !temp.test( element.value.toLowerCase() ) )
-                    return 'email 格式錯誤';
-            }
-            if ( element.getAttribute( type ) === '' ) {
+    checkSubmitData ( errorDOM ) {
+        let isValid = true;
+        const input = this.DOM.editPage.getElementsByTagName( 'input' );
 
+        const constraints = {
+            [ `title_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文職稱是必填欄位',
+                },
+            },
+            [ `title_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文職稱是必填欄位',
+                },
+            },
+            [ `specialty_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文專長領域是必填欄位',
+                },
+            },
+            [ `specialty_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文專長領域是必填欄位',
+                },
+            },
+            [ `school_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文學校是必填欄位',
+                },
+            },
+            [ `school_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文學校是必填欄位',
+                },
+            },
+            [ `major_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文主修是必填欄位',
+                },
+            },
+            [ `major_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文主修是必填欄位',
+                },
+            },
+            [ `organization_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文任職單位是必填欄位',
+                },
+            },
+            [ `organization_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文任職單位是必填欄位',
+                },
+            },
+        };
+
+        Array.from( input ).forEach( ( element ) => {
+            if ( isValid ) {
+                const errors = validate.single( element.value, constraints[ element.name ] );
+                if ( errors ) {
+                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                    isValid = false;
+                }
             }
         } );
 
-        return true;
+        return isValid;
+    }
+
+    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
+        inputDOM.focus();
+        errorDOM.innerHTML = errorMessage;
     }
 
     setAddButtonEvent () {
@@ -339,7 +404,9 @@ class SetData {
             } );
             editPageDOM.check.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.uploadAddData();
+                const isValid = this.checkSubmitData( editPageDOM.error );
+                if ( isValid )
+                    this.uploadAddData();
             } );
         } );
     }
@@ -363,7 +430,10 @@ class SetData {
             } );
             editPageDOM.check.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.uploadUpdateData( info.id );
+
+                const isValid = this.checkSubmitData( editPageDOM.error );
+                if ( isValid )
+                    this.uploadUpdateData( info.id );
             } );
         } );
     }

@@ -318,47 +318,6 @@ router
             } );
         }
 
-<<<<<<< HEAD
-        // Console.log( uploadData );
-        // for ( const a of uploadData.update.education )
-        //     console.log( a );
-
-
-        // Add faculty data
-        // const addData = await addFacultyDetail( {
-        // profileId:     uploadData.profileId,
-        // Department:    uploadData.add.department,
-        // education:     uploadData.add.education,
-        // Experience:    uploadData.add.experience,
-        // ResearchGroup: uploadData.add.researchGroup,
-        // specialtyI18n: uploadData.add.specialtyI18n,
-        // title:         uploadData.add.title,
-        // } );
-
-        // Update faculty data
-        const updateData = await updateFacultyDetail( {
-            profileId:      uploadData.profileId, // UserData.roleId
-            education:      uploadData.update.education,
-            experience:     uploadData.update.experience,
-            profile:        uploadData.update.profile,
-            specialtyI18n:  uploadData.update.specialtyI18n,
-            title:          uploadData.update.title,
-        } );
-
-        // Delete faculty data
-        // const deleteData = await deleteFacultyDetail( {
-        //     profileId:     uploadData.profileId,
-        //     department:    uploadData.delete.department,
-        //     education:     uploadData.delete.education,
-        //     experience:    uploadData.delete.experience,
-        //     researchGroup: uploadData.delete.researchGroup,
-        //     specialtyI18n: uploadData.delete.specialtyI18n,
-        //     title:         uploadData.delete.title,
-        // } );
-
-
-=======
->>>>>>> 29969264a473cf7e9f5da165b5286d78692e30e3
         res.json();
 
         // Check updating faculty or staff -> call the corresponding model operation

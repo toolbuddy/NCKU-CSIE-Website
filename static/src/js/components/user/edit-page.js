@@ -38,7 +38,6 @@ class EditPage {
 
     async renderEditPageWindow () {
         const i18n = dataI18n.editPage;
-        console.log( i18n );
         classRemove( this.DOM.editPage, 'content__edit-page--hidden' );
         this.DOM.editPage.innerHTML = '';
         this.DOM.editPage.innerHTML += editPageHTML( {
@@ -63,11 +62,12 @@ class EditPage {
         const languageIds = ( editPageConfig.i18n ) ? LanguageUtils.supportedLanguageId : [ this.config.languageId, ];
         languageIds.forEach( ( languageId ) => {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
+
             editPageInfoDOM.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
                 value:       ( this.config.buttonMethod === 'update' ) ? this.dbData[ languageId ][ editPageConfig.dbTableItem ] : '',
                 placeholder,
-                name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : editPageConfig.dbTableItem,
+                name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : `${ editPageConfig.dbTableItem }`,
                 dataType:    editPageConfig.dataType,
                 type:        editPageConfig.type,
                 required:    editPageConfig.required,
@@ -103,14 +103,18 @@ class EditPage {
 
     setDropdownInput ( editPageConfig, editPageInfoDOM ) {
         const util = editPageConfig.util;
-        const value = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ] : util.map.indexOf( util.defaultOption );
+
+        let value = util.map.indexOf( util.defaultOption );
+        if ( this.config.buttonMethod === 'update' )
+            value = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
+
         const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
 
         editPageInfoDOM.innerHTML += editPageContentHTML( {
             top,
             value,
             data:        editPageConfig.dropdownItem,
-            name:        editPageConfig.dbTableItem,
+            name:        `${ this.config.dbTable }_${ editPageConfig.dbTableItem }`,
             dbTableItem: editPageConfig.dbTableItem,
             type:        'dropdown',
         } );
@@ -119,7 +123,6 @@ class EditPage {
         const dropdownItems = editPageInfoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
         const dropdownSubmit = editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
         dropdownTop.addEventListener( 'click', () => {
-            console.log( 'dropdown' );
             classAdd( editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
         } );
         dropdownItems.forEach( ( item ) => {

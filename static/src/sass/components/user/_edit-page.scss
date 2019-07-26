@@ -73,6 +73,9 @@
           width: 100%;
           height: font__px-to-rem( 25 );
 
+          // [ skin ]
+          border-top: 2px solid rgba( 0, 0, 0, .2 );
+
           > .error__message {
             // [ layout ]
             display: inline-block;
@@ -102,7 +105,7 @@
           // [ layout ]
           display: block;
           width: 100%;
-          height: font__px-to-rem( 60 );
+          height: font__px-to-rem( 50 );
 
           // [ skin ]
           background-color: beige;
@@ -111,8 +114,8 @@
           > .title__word {
             // [ position ]
             padding: {
-              top: font__px-to-rem( 20 );
-              bottom: font__px-to-rem( 20 );
+              top: font__px-to-rem( 15 );
+              bottom: font__px-to-rem( 15 );
             }
 
             // [ skin ]
@@ -137,7 +140,10 @@
           // [ position ]
           width: 100%;
           max-height: 85%;
-          padding-top: font__px-to-rem( 20 );
+          padding: {
+            top: font__px-to-rem( 10 );
+            bottom: font__px-to-rem( 20 );
+          }
 
           > .info__input {
             // [ layout ]
@@ -162,6 +168,7 @@
                   top: font__px-to-rem( 10 );
                   left: auto;
                   right: auto;
+                  bottom: font__px-to-rem( 10 );
                 }
                 padding: {
                   top: font__px-to-rem( 7 );
@@ -332,7 +339,7 @@
               > .time__from.from {
                 // [ skin ]
                 width: 100%;
-                height: auto;
+                height: 100%;
 
                 // element
                 // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__text`

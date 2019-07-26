@@ -6,7 +6,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
-import { arrayExpression, } from 'babel-types';
+import validate from 'validate.js';
 
 export default class SetProfileData {
     constructor ( opt ) {
@@ -166,8 +166,88 @@ export default class SetProfileData {
         } );
         editPageDOM.check.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            this.uploadProfileData( dbTableItem );
+            const isValid = this.checkSubmitData( editPageDOM.error );
+            if ( isValid )
+                this.uploadProfileData( dbTableItem );
         } );
+    }
+
+    checkSubmitData ( errorDOM ) {
+        let isValid = true;
+        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+
+        const constraints = {
+            [ `name_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文姓名是必填欄位',
+                },
+            },
+            [ `name_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文姓名是必填欄位',
+                },
+            },
+            email: {
+                presence: {
+                    allowEmpty: false,
+                    message:    'email是必填欄位',
+                },
+                email: {
+                    message: 'email格式錯誤',
+                },
+            },
+            fax: {
+                format: {
+                    pattern: '[0-9-()]+',
+                    message: '傳真格式錯誤',
+                },
+            },
+            personalWeb: {
+                url: {
+                    message: '網址格式錯誤',
+                },
+            },
+            [ `officeAddress_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文辦公室位置是必填欄位',
+                },
+            },
+            officeTel: {
+                format: {
+                    pattern: '[0-9-(),]+',
+                    message: '電話格式錯誤',
+                },
+            },
+            labTel: {
+                format: {
+                    pattern: '[0-9-(),]+',
+                    message: '電話格式錯誤',
+                },
+            },
+            labWeb: {
+                url: {
+                    message: '網址格式錯誤',
+                },
+            },
+        };
+
+        Array.from( input ).forEach( ( element ) => {
+            const errors = validate.single( element.value, constraints[ element.name ] );
+            if ( errors ) {
+                this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                isValid = false;
+            }
+        } );
+
+        return isValid;
+    }
+
+    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
+        inputDOM.focus();
+        errorDOM.innerHTML = errorMessage;
     }
 
     async uploadProfileData ( dbTableItem ) {
@@ -194,7 +274,7 @@ export default class SetProfileData {
                 i18n,
             } ),
         } )
-        .then( async ( res ) => {
+        .then( async () => {
             const data = {
                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
                 [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
@@ -275,7 +355,6 @@ export default class SetProfileData {
     }
 
     async exec () {
-        console.log( this.fetchData( this.config.languageId ) );
         await this.setData();
     }
 }
