@@ -70,7 +70,6 @@ class EditPage {
                 name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : `${ editPageConfig.dbTableItem }`,
                 dataType:    editPageConfig.dataType,
                 type:        editPageConfig.type,
-                required:    editPageConfig.required,
                 dbTableItem: editPageConfig.dbTableItem,
                 languageId,
                 i18n:        editPageConfig.i18n,
@@ -128,7 +127,7 @@ class EditPage {
         dropdownItems.forEach( ( item ) => {
             item.addEventListener( 'click', ( element ) => {
                 const newValue = element.target.getAttribute( 'value' );
-                dropdownTop.innerHTML = util.i18n[ this.config.languageId ][ newValue ];
+                dropdownTop.textContent = util.i18n[ this.config.languageId ][ newValue ];
                 dropdownSubmit.value = util.map.indexOf( newValue );
                 classRemove( editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
             } );
@@ -160,11 +159,6 @@ class EditPage {
 
     async setEditPageDeleteBlock ( editPageInfoDOM ) {
         editPageInfoDOM.innerHTML += editPageContentHTML( {
-            val:  'delete',
-            name: 'delete',
-            type: 'remove',
-        } );
-        editPageInfoDOM.innerHTML += editPageContentHTML( {
             localTopic:  this.content,
             type:       'local-topic',
         } );
@@ -172,7 +166,10 @@ class EditPage {
 
     setFocus () {
         const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const val   = input[ 0 ].value;
         input[ 0 ].focus();
+        input[ 0 ].value = '';
+        input[ 0 ].value = val;
     }
 
     async renderEditPage () {
@@ -181,10 +178,10 @@ class EditPage {
         if ( this.config.buttonMethod === 'delete' )
             await this.setEditPageDeleteBlock( editPageContentDOM.info );
 
-        else
+        else {
             await this.setEditPageInputBlock( editPageContentDOM.info );
-
-        this.setFocus();
+            this.setFocus();
+        }
 
         return editPageContentDOM;
     }
@@ -202,7 +199,6 @@ function editPageType ( info ) {
             type:        'text',
             dataType:    info.dataType,
             dbTableItem: info.dbTableItem,
-            required:    info.required,
             i18n:        info.i18n,
         },
         time: {

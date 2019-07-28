@@ -196,8 +196,8 @@
           // [ interaction ]
           &:hover {
             // [ skin ]
-            background-color: lighten( #f67057, 10% );
-            color: white;
+            background-color: rgba( 246, 112, 87, .3 );
+            color: rgba( 255, 255, 255, .87 );
             cursor: pointer;
           }
         }
@@ -205,12 +205,13 @@
         > .content__tag--department--active {
           // [ skin ]
           background-color: lighten( #f67057, 10% );
+          box-shadow: 3px 3px rgba( 246, 112, 87, .3 );
           color: white;
 
           // [ interaction ]
           &:hover {
             color: #f67057;
-            background-color: #ffffff;
+            background-color: rgba( 246, 112, 87, .3 );
             cursor: pointer;
           }
         }
@@ -227,7 +228,7 @@
           // [ interaction ]
           &:hover {
             // [ skin ]
-            background-color: lighten( #8caae2, 10% );
+            background-color: rgba( 140, 170, 226, .3 );
             color: white;
             cursor: pointer;
           }
@@ -236,12 +237,13 @@
         > .content__tag--research--active {
           // [ skin ]
           background-color: lighten( #8caae2, 10% );
+          box-shadow: 3px 3px rgba( 140, 170, 226, .5 );
           color: white;
 
           // [ interaction ]
           &:hover {
             color: #8caae2;
-            background-color: #ffffff;
+            background-color: rgba( 140, 170, 226, .3 );
             cursor: pointer;
           }
         }

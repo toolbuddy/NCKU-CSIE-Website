@@ -304,6 +304,7 @@ class SetData {
     checkSubmitData ( errorDOM ) {
         let isValid = true;
         const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const today = new Date();
 
         const constraints = {
             [ `title_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
@@ -366,6 +367,30 @@ class SetData {
                     message:    '英文任職單位是必填欄位',
                 },
             },
+            from: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '年份是必填欄位',
+                },
+                numericality: {
+                    onlyInteger:       true,
+                    greaterThan:       1900,
+                    lessThanOrEqualTo: today.getFullYear(),
+                    message:           '年份應介於1900~現在',
+                },
+            },
+            to: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '年份是必填欄位',
+                },
+                numericality: {
+                    onlyInteger:       true,
+                    greaterThan:       1900,
+                    lessThanOrEqualTo: today.getFullYear(),
+                    message:           '年份應介於1900~現在',
+                },
+            },
         };
 
         Array.from( input ).forEach( ( element ) => {
@@ -383,7 +408,7 @@ class SetData {
 
     setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
         inputDOM.focus();
-        errorDOM.innerHTML = errorMessage;
+        errorDOM.textContent = errorMessage;
     }
 
     setAddButtonEvent () {
@@ -469,21 +494,23 @@ class SetData {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
         };
 
-        switch ( this.config.dbTable ) {
-            case 'education':
-                await this.renderEducationBlock( data );
-                break;
-            case 'experience':
-                await this.renderExperienceBlock( data );
-                break;
-            case 'title':
-                await this.renderTitleBlock( data );
-                break;
-            case 'specialty':
-                await this.renderSpecialtyBlock( data );
-                break;
-            default:
-                break;
+        if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) ) {
+            switch ( this.config.dbTable ) {
+                case 'education':
+                    await this.renderEducationBlock( data );
+                    break;
+                case 'experience':
+                    await this.renderExperienceBlock( data );
+                    break;
+                case 'title':
+                    await this.renderTitleBlock( data );
+                    break;
+                case 'specialty':
+                    await this.renderSpecialtyBlock( data );
+                    break;
+                default:
+                    break;
+            }
         }
         this.setAddButtonEvent();
     }

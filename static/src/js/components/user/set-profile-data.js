@@ -63,7 +63,7 @@ export default class SetProfileData {
         };
 
         this.department = Array
-        .from( opt.profileDOM.querySelectorAll( `.input-block > .input-block__block > .block__content > .content__tag--department` ) )
+        .from( opt.profileDOM.querySelectorAll( '.input-block > .input-block__block > .block__content > .content__tag--department' ) )
         .map( node => ( {
             node,
             classModifier: 'department',
@@ -72,7 +72,7 @@ export default class SetProfileData {
         } ) );
 
         this.researchGroup = Array
-        .from( opt.profileDOM.querySelectorAll( `.input-block > .input-block__block > .block__content > .content__tag--research` ) )
+        .from( opt.profileDOM.querySelectorAll( '.input-block > .input-block__block > .block__content > .content__tag--research' ) )
         .map( node => ( {
             node,
             classModifier: 'research',
@@ -81,13 +81,13 @@ export default class SetProfileData {
         } ) );
     }
 
-    queryApi ( lang ) {
-        return `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ lang }`;
+    queryApi ( languageId ) {
+        return `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ languageId }`;
     }
 
-    async fetchData ( lang ) {
+    async fetchData ( languageId ) {
         try {
-            const res = await fetch( this.queryApi( lang ) );
+            const res = await fetch( this.queryApi( languageId ) );
 
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
@@ -105,6 +105,8 @@ export default class SetProfileData {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
         };
 
+        console.log( res );
+
         Object.keys( this.classModifier ).forEach( ( key ) => {
             this.setProfileBlock( key, res );
         } );
@@ -121,9 +123,9 @@ export default class SetProfileData {
         const textDOM         = this.DOM.profile.querySelector( this.selector.text( this.classModifier[ dbTableItem ] ) );
         const updateButtonDOM = this.DOM.profile.querySelector( this.selector.update( this.classModifier[ dbTableItem ] ) );
 
-        textDOM.innerHTML = res[ this.config.languageId ].profile[ dbTableItem ];
+        textDOM.textContent = res[ this.config.languageId ].profile[ dbTableItem ];
         if ( dbTableItem === 'nation' )
-            textDOM.innerHTML = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
+            textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
 
 
         updateButtonDOM.addEventListener( 'click', async () => {
@@ -206,7 +208,7 @@ export default class SetProfileData {
             },
             personalWeb: {
                 url: {
-                    message: '網址格式錯誤',
+                    message:    '網址格式錯誤',
                 },
             },
             [ `officeAddress_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
@@ -235,10 +237,12 @@ export default class SetProfileData {
         };
 
         Array.from( input ).forEach( ( element ) => {
-            const errors = validate.single( element.value, constraints[ element.name ] );
-            if ( errors ) {
-                this.setErrorMessage( element, errors[ 0 ], errorDOM );
-                isValid = false;
+            if ( constraints[ element.name ].presence !== null && element.value !== '' ) {
+                const errors = validate.single( element.value, constraints[ element.name ] );
+                if ( errors ) {
+                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                    isValid = false;
+                }
             }
         } );
 
@@ -247,7 +251,7 @@ export default class SetProfileData {
 
     setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
         inputDOM.focus();
-        errorDOM.innerHTML = errorMessage;
+        errorDOM.textContent = errorMessage;
     }
 
     async uploadProfileData ( dbTableItem ) {

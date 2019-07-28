@@ -10,7 +10,6 @@ article.info__input#input
           type= dataType
           value= value
           name= name 
-          required= required
           dbTableItem= dbTableItem
           languageId= languageId
           i18n= i18n
@@ -56,14 +55,4 @@ article.info__input#input
         section.button__content.content
           each val, index in data  
             section.content__item( value= index  )= val
-
-  else if type === 'remove'
-    section.input__remove.remove
-      input.delete__item( 
-        type = 'hidden', 
-        value= val, 
-        name= name, 
-        id= id, 
-        dbTable= dbTable
-      )
       
