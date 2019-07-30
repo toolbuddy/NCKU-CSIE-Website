@@ -242,4 +242,3 @@ export {
     EditPage,
     editPageType,
 };
-

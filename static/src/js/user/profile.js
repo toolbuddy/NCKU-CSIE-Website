@@ -2,6 +2,7 @@ import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import NavigationBar from 'static/src/js/components/user/navigation-bar.js';
 import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
 import { SetData, } from 'static/src/js/components/user/set-data.js';
 
@@ -35,6 +36,18 @@ try {
     } );
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const nevagationBar = new NavigationBar( {
+        navigationDOM: document.getElementById( 'navigation' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+    } );
+
+    nevagationBar.exec();
 }
 catch ( err ) {
     console.error( err );
