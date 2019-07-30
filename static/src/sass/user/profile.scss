@@ -32,9 +32,7 @@
   @include header--large( $block: 'body' );
 
   // element
-  // `.body > .body__content`
-  // block
-  // `.body > .content`
+  // `.body > .body__edit-page`
   > .body__edit-page {
     position: absolute;
     left: 0;
@@ -47,14 +45,10 @@
     @include edit-page();
   }
 
-  > .content__edit-page--hidden {
-    display: none;
-  }
-
-  > .content__edit-page--show {
-    display: block;
-  }
-
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
   > .body__content.content {
     // [ layout ]
     display: grid;
@@ -438,22 +432,6 @@
       > .education {
         @include input-block( $block: 'education', $modifier: 'education' );
       }
-    }
-
-    > .content__edit-page.edit-page {
-      position: absolute;
-      width: 100%;
-
-      // [ componment ]
-      @include edit-page();
-    }
-
-    > .content__edit-page--hidden {
-      display: none;
-    }
-
-    > .content__edit-page--show {
-      display: block;
     }
   }
 
