@@ -43,7 +43,6 @@ catch ( err ) {
 try {
     const setProfileData = new SetProfileData( {
         profileDOM:       document.getElementById( 'profile' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         profileId:        24,
     } );
@@ -57,7 +56,6 @@ catch ( err ) {
 try {
     const setEducationData = new SetData( {
         blockDOM:       document.getElementById( 'education' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
         addButtonDOM:     document.getElementById( 'add__button--education-block' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         dbTable:          'education',
@@ -73,7 +71,6 @@ catch ( err ) {
 try {
     const setExperienceData = new SetData( {
         blockDOM:       document.getElementById( 'experience' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
         addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         dbTable:          'experience',
@@ -91,7 +88,6 @@ catch ( err ) {
 try {
     const setTitleData = new SetData( {
         blockDOM:         document.getElementById( 'title' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
         addButtonDOM:     document.getElementById( 'add__button--title' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         dbTable:          'title',
@@ -109,7 +105,6 @@ catch ( err ) {
 try {
     const setSpecialtyData = new SetData( {
         blockDOM:         document.getElementById( 'specialty' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
         addButtonDOM:     document.getElementById( 'add__button--specialty' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         dbTable:          'specialty',

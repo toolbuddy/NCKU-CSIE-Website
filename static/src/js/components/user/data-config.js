@@ -3,6 +3,7 @@ import degreeUtils from 'models/faculty/utils/degree.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { editPageType, } from 'static/src/js/components/user/edit-page.js';
 import nationUtils from 'models/faculty/utils/nation.js';
+import deepFreeze from 'deep-freeze';
 
 const dataI18n = Object.freeze( {
     profile: {
@@ -410,5 +411,8 @@ const dataEditPageConfig = Object.freeze( {
         ),
     ],
 } );
+
+deepFreeze( dataI18n );
+deepFreeze( dataEditPageConfig );
 
 export { dataI18n, dataEditPageConfig, };

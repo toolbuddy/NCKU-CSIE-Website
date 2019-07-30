@@ -15,7 +15,6 @@ export default class SetProfileData {
         if (
             !opt.profileDOM ||
             !ValidateUtils.isDomElement( opt.profileDOM ) ||
-            !ValidateUtils.isDomElement( opt.editPageDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
             !ValidateUtils.isValidId( opt.profileId )
         )
@@ -23,7 +22,6 @@ export default class SetProfileData {
 
         this.DOM = {
             profile:  opt.profileDOM,
-            editPage: opt.editPageDOM,
         };
 
         this.config = {
@@ -33,9 +31,14 @@ export default class SetProfileData {
         };
 
         this.selector = {
-            node:   block => `.profile__${ block }`,
-            text:   block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`,
-            update: block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`,
+            node:     block => `.profile__${ block }`,
+            text:     block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`,
+            update:   block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`,
+            editPage: {
+                check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+                cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+                error:  '.edit-page__window > .window__form > .form__content > .content__error > .error__message',
+            },
         };
 
         this.editPageConfig = dataEditPageConfig.profile;
@@ -53,6 +56,8 @@ export default class SetProfileData {
             personalWeb:   'personal-web',
             nation:        'nation',
         } );
+
+        this.isAddEventListener = {};
 
         this.i18n = dataI18n.profile;
 
@@ -105,8 +110,6 @@ export default class SetProfileData {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
         };
 
-        console.log( res );
-
         Object.keys( this.classModifier ).forEach( ( key ) => {
             this.setProfileBlock( key, res );
         } );
@@ -116,7 +119,7 @@ export default class SetProfileData {
     }
 
     closeEditPageWindow () {
-        classAdd( this.DOM.editPage, 'content__edit-page--hidden' );
+        document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
     setProfileBlock ( dbTableItem, res ) {
@@ -134,6 +137,7 @@ export default class SetProfileData {
     }
 
     async setUpdateButtonEvent ( dbTableItem, res ) {
+        console.log( 'click' );
         const tempDataI18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                 default: {
@@ -148,8 +152,8 @@ export default class SetProfileData {
                 topic:   this.i18n[ LanguageUtils.getLanguageId( 'zh-TW' ) ].topic[ dbTableItem ],
             },
         };
+        this.isAddEventListener[ dbTableItem ] = true;
         const editPage = new EditPage( {
-            editPageDOM:    this.DOM.editPage,
             dbTable:        'profile',
             editPageConfig: this.editPageConfig[ dbTableItem ],
             languageId:     this.config.languageId,
@@ -160,23 +164,29 @@ export default class SetProfileData {
             },
             buttonMethod: 'update',
         } );
-        const editPageDOM = await editPage.renderEditPage();
+        await editPage.renderEditPage();
 
-        editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const cancelDOM = editPageDOM.querySelector( this.selector.editPage.cancel );
+        const checkDOM = editPageDOM.querySelector( this.selector.editPage.check );
+
+        cancelDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
             this.closeEditPageWindow();
         } );
-        editPageDOM.check.addEventListener( 'click', ( e ) => {
+        checkDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            const isValid = this.checkSubmitData( editPageDOM.error );
+            const isValid = this.checkSubmitData();
             if ( isValid )
                 this.uploadProfileData( dbTableItem );
         } );
     }
 
-    checkSubmitData ( errorDOM ) {
+    checkSubmitData () {
         let isValid = true;
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
+        const errDOM = editPageDOM.querySelector( this.selector.editPage.error );
 
         const constraints = {
             [ `name_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
@@ -189,6 +199,11 @@ export default class SetProfileData {
                 presence: {
                     allowEmpty: false,
                     message:    '英文姓名是必填欄位',
+                },
+            },
+            nation: {
+                presence: {
+                    allowEmpty: false,
                 },
             },
             email: {
@@ -240,7 +255,7 @@ export default class SetProfileData {
             if ( constraints[ element.name ].presence !== null && element.value !== '' ) {
                 const errors = validate.single( element.value, constraints[ element.name ] );
                 if ( errors ) {
-                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                    this.setErrorMessage( element, errors[ 0 ], errDOM );
                     isValid = false;
                 }
             }
@@ -255,7 +270,8 @@ export default class SetProfileData {
     }
 
     async uploadProfileData ( dbTableItem ) {
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},

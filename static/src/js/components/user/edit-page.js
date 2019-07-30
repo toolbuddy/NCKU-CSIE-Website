@@ -16,14 +16,12 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 class EditPage {
     constructor ( opt ) {
         if (
-            !ValidateUtils.isDomElement( opt.editPageDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
         )
             throw new TypeError( 'invalid arguments' );
 
-        this.DOM = {
-            editPage: opt.editPageDOM,
-        };
+        this.DOM = {};
+
         this.config = {
             languageId:    opt.languageId,
             buttonMethod:  opt.buttonMethod,
@@ -34,11 +32,32 @@ class EditPage {
         this.editPageConfig = opt.editPageConfig;
         this.dbData = ( opt.buttonMethod === 'update' ) ? opt.dbData : {};
         this.content = opt.content;
+
+        this.selector = {
+            info:   '.edit-page__window > .window__form > .form__content > .content__info',
+        };
+    }
+
+    async checkEditPageExist () {
+        const editPageDOM = document.getElementById( 'edit-page' );
+
+        if ( ValidateUtils.isDomElement( editPageDOM ) )
+            this.DOM.editPage = editPageDOM;
+
+        else {
+            const newEditPage = document.createElement( 'section' );
+            classAdd( newEditPage, 'body__edit-page' );
+            newEditPage.id = 'edit-page';
+            document.body.appendChild( newEditPage );
+            this.DOM.editPage = newEditPage;
+        }
     }
 
     async renderEditPageWindow () {
+        await this.checkEditPageExist();
+
         const i18n = dataI18n.editPage;
-        classRemove( this.DOM.editPage, 'content__edit-page--hidden' );
+
         this.DOM.editPage.innerHTML = '';
         this.DOM.editPage.innerHTML += editPageHTML( {
             url:    `${ host }/user/profile`,
@@ -46,15 +65,10 @@ class EditPage {
             check:  i18n[ this.config.languageId ].button.check,
             topic:  `${ i18n[ this.config.languageId ].topic[ this.config.buttonMethod ] }${ this.dataI18n[ this.config.languageId ].topic }`,
         } );
-        return {
-            info:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__content > .content__info' ),
-            check:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--check' ),
-            cancel:  this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__button > .button__item--cancel' ),
-            error:   this.DOM.editPage.querySelector( '.edit-page__window > .window__form > .form__content > .content__error > .error__message' ),
-        };
     }
 
-    setTextInput ( editPageConfig, editPageInfoDOM ) {
+    setTextInput ( editPageConfig ) {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const flag = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
@@ -63,7 +77,7 @@ class EditPage {
         languageIds.forEach( ( languageId ) => {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
 
-            editPageInfoDOM.innerHTML += editPageContentHTML( {
+            infoDOM.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
                 value:       ( this.config.buttonMethod === 'update' ) ? this.dbData[ languageId ][ editPageConfig.dbTableItem ] : '',
                 placeholder,
@@ -77,12 +91,13 @@ class EditPage {
         } );
     }
 
-    setTimeInput ( editPageInfoDOM ) {
+    setTimeInput () {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const timeI18n = dataI18n.time[ this.config.languageId ];
         const valueFrom = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].from : null;
         const valueTo = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].to : null;
 
-        editPageInfoDOM.innerHTML += editPageContentHTML( {
+        infoDOM.innerHTML += editPageContentHTML( {
             from:       timeI18n.from,
             to:         timeI18n.to,
             valueFrom,
@@ -93,14 +108,16 @@ class EditPage {
         } );
     }
 
-    setLocalTopic ( topic, editPageInfoDOM ) {
-        editPageInfoDOM.innerHTML += editPageContentHTML( {
+    setLocalTopic ( topic ) {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+        infoDOM.innerHTML += editPageContentHTML( {
             localTopic:   topic,
             type:        'local-topic',
         } );
     }
 
-    setDropdownInput ( editPageConfig, editPageInfoDOM ) {
+    setDropdownInput ( editPageConfig ) {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const util = editPageConfig.util;
 
         let value = util.map.indexOf( util.defaultOption );
@@ -109,47 +126,48 @@ class EditPage {
 
         const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
 
-        editPageInfoDOM.innerHTML += editPageContentHTML( {
+        infoDOM.innerHTML += editPageContentHTML( {
             top,
             value,
             data:        editPageConfig.dropdownItem,
-            name:        `${ this.config.dbTable }_${ editPageConfig.dbTableItem }`,
+            name:        `${ editPageConfig.dbTableItem }`,
             dbTableItem: editPageConfig.dbTableItem,
             type:        'dropdown',
         } );
 
-        const dropdownTop = editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__top' );
-        const dropdownItems = editPageInfoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
-        const dropdownSubmit = editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
+        const dropdownTop = infoDOM.querySelector( '.input__dropdown > .dropdown__top' );
+        const dropdownItems = infoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
+        const dropdownSubmit = infoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
         dropdownTop.addEventListener( 'click', () => {
-            classAdd( editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+            classAdd( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
         } );
         dropdownItems.forEach( ( item ) => {
             item.addEventListener( 'click', ( element ) => {
                 const newValue = element.target.getAttribute( 'value' );
                 dropdownTop.textContent = util.i18n[ this.config.languageId ][ newValue ];
                 dropdownSubmit.value = util.map.indexOf( newValue );
-                classRemove( editPageInfoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                classRemove( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
             } );
         } );
     }
 
-    async setEditPageInputBlock ( editPageInfoDOM ) {
-        editPageInfoDOM.innerHTML = '';
+    async setEditPageInputBlock () {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+        infoDOM.innerHTML = '';
         this.editPageConfig.forEach( ( element ) => {
             switch ( element.type ) {
                 case 'text':
-                    this.setTextInput( element, editPageInfoDOM );
+                    this.setTextInput( element );
                     break;
                 case 'time':
-                    this.setTimeInput( editPageInfoDOM );
+                    this.setTimeInput();
                     break;
                 case 'local-topic':
                     const topic =  this.dataI18n[ this.config.languageId ].localTopic[ element.dbTableItem ];
-                    this.setLocalTopic( topic, editPageInfoDOM );
+                    this.setLocalTopic( topic );
                     break;
                 case 'dropdown':
-                    this.setDropdownInput( element, editPageInfoDOM );
+                    this.setDropdownInput( element );
                     break;
                 default:
                     break;
@@ -157,8 +175,9 @@ class EditPage {
         } );
     }
 
-    async setEditPageDeleteBlock ( editPageInfoDOM ) {
-        editPageInfoDOM.innerHTML += editPageContentHTML( {
+    async setEditPageDeleteBlock () {
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+        infoDOM.innerHTML += editPageContentHTML( {
             localTopic:  this.content,
             type:       'local-topic',
         } );
@@ -173,17 +192,15 @@ class EditPage {
     }
 
     async renderEditPage () {
-        const editPageContentDOM = await this.renderEditPageWindow();
+        await this.renderEditPageWindow();
 
         if ( this.config.buttonMethod === 'delete' )
-            await this.setEditPageDeleteBlock( editPageContentDOM.info );
+            await this.setEditPageDeleteBlock();
 
         else {
-            await this.setEditPageInputBlock( editPageContentDOM.info );
+            await this.setEditPageInputBlock();
             this.setFocus();
         }
-
-        return editPageContentDOM;
     }
 }
 

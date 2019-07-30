@@ -1,6 +1,5 @@
 import EditPage from 'static/src/js/components/user/edit-page.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
@@ -15,7 +14,6 @@ class SetData {
 
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
-            !ValidateUtils.isDomElement( opt.editPageDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
         )
@@ -31,8 +29,13 @@ class SetData {
 
         this.DOM = {
             block:     opt.blockDOM,
-            editPage:  opt.editPageDOM,
             addButton: opt.addButtonDOM,
+        };
+
+        this.selector = {
+            check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+            error:  '.edit-page__window > .window__form > .form__content > .content__error > .error__message',
         };
 
         this.updateButtonQuerySelector = ( block, id ) => `.input-block__block > .block__content > .content__modify--${ block }-${ id }`;
@@ -211,12 +214,13 @@ class SetData {
     }
 
     closeEditPageWindow () {
-        classAdd( this.DOM.editPage, 'content__edit-page--hidden' );
+        document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
     uploadUpdateData ( dbTableItemId ) {
         this.checkSubmitData();
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
@@ -250,7 +254,8 @@ class SetData {
     }
 
     uploadAddData () {
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
@@ -301,9 +306,11 @@ class SetData {
         } );
     }
 
-    checkSubmitData ( errorDOM ) {
+    checkSubmitData () {
         let isValid = true;
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const errorDOM = editPageDOM.querySelector( this.selector.error );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const today = new Date();
 
         const constraints = {
@@ -421,15 +428,19 @@ class SetData {
                 languageId:     this.config.languageId,
                 buttonMethod:   'add',
             } );
-            const editPageDOM = await editPage.renderEditPage();
+            await editPage.renderEditPage();
 
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
+
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                const isValid = this.checkSubmitData( editPageDOM.error );
+                const isValid = this.checkSubmitData();
                 if ( isValid )
                     this.uploadAddData();
             } );
@@ -447,16 +458,19 @@ class SetData {
                 dbData:         info.res,
                 buttonMethod:   'update',
             } );
-            const editPageDOM = await editPage.renderEditPage();
+            await editPage.renderEditPage();
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
 
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
 
-                const isValid = this.checkSubmitData( editPageDOM.error );
+                const isValid = this.checkSubmitData();
                 if ( isValid )
                     this.uploadUpdateData( info.id );
             } );
@@ -475,13 +489,17 @@ class SetData {
                 content:        info.content,
                 buttonMethod:   'delete',
             } );
-            const editPageDOM = await editPage.renderEditPage();
+            await editPage.renderEditPage();
 
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
+
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.uploadDeleteData( info.id );
             } );
