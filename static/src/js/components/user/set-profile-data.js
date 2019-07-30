@@ -65,6 +65,8 @@ export default class SetProfileData {
             block:   opt.profileDOM.querySelector( '.profile__image' ),
             button:  opt.profileDOM.querySelector( '.profile__image > .image__frame > .frame__upload' ),
             preview: opt.profileDOM.querySelector( '.profile__image > .image__frame' ),
+            check:   opt.profileDOM.querySelector( '.profile__image > .image__check' ),
+            cancel:  opt.profileDOM.querySelector( '.profile__image > .image__cancel' ),
         };
 
         this.department = Array
@@ -129,7 +131,6 @@ export default class SetProfileData {
         textDOM.textContent = res[ this.config.languageId ].profile[ dbTableItem ];
         if ( dbTableItem === 'nation' )
             textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
-
 
         updateButtonDOM.addEventListener( 'click', async () => {
             await this.setUpdateButtonEvent( dbTableItem, res );
@@ -313,24 +314,55 @@ export default class SetProfileData {
                 const photoUrl = `${ host }/static/image/faculty/${ res.photo }`;
                 this.imageDOM.preview.style.backgroundImage = `url('${ photoUrl }')`;
                 this.imageDOM.button.name = `modify_profile_photo_0_${ this.config.profileId }`;
-                this.imageDOM.button.setAttribute( 'method', 'update' );
-                this.imageDOM.button.setAttribute( 'dbTable', 'profile' );
-                this.imageDOM.button.setAttribute( 'dbTableItem', 'photo' );
-                this.imageDOM.button.setAttribute( 'languageId', this.config.languageId );
                 this.imageDOM.block.action = `${ host }/user/profile`;
             }
+            else
+                this.imageDOM.preview.style.backgroundImage = '';
 
-            this.imageDOM.button.addEventListener( 'change', () => {
-                const input = this.imageDOM.button;
-                if ( input.files && input.files[ 0 ] ) {
-                    const reader = new FileReader();
+            classAdd( this.imageDOM.check, 'image__button--hide' );
+            classAdd( this.imageDOM.cancel, 'image__button--hide' );
+            classRemove( this.imageDOM.check, 'image__button--active' );
+            classRemove( this.imageDOM.cancel, 'image__button--active' );
 
-                    reader.onload = ( e ) => {
-                        this.imageDOM.preview.style.backgroundImage = `url('${ e.target.result }')`;
-                    };
-                    reader.readAsDataURL( input.files[ 0 ] );
-                }
-            } );
+            if ( !this.isAddEventListener.imageCancel ) {
+                this.imageDOM.cancel.addEventListener( 'click', async ( e ) => {
+                    e.preventDefault();
+                    const dbData = await this.fetchData( this.config.languageId );
+                    const dbProfileData = dbData.profile;
+                    this.setImage( dbProfileData );
+                } );
+                this.isAddEventListener.imageCancel = true;
+            }
+
+            if ( !this.isAddEventListener.imageChange ) {
+                this.imageDOM.button.addEventListener( 'change', () => {
+                    new Promise( ( res, rej ) => {
+                        const input = this.imageDOM.button;
+                        if ( input.files && input.files[ 0 ] ) {
+                            const reader = new FileReader();
+
+                            reader.onload = ( e ) => {
+                                this.imageDOM.preview.style.backgroundImage = `url('${ e.target.result }')`;
+                                res();
+                            };
+                            reader.onabort = ( ( err ) => {
+                                rej( err );
+                            } );
+                            reader.readAsDataURL( input.files[ 0 ] );
+                        }
+                    } )
+                    .then( () => {
+                        classRemove( this.imageDOM.check, 'image__button--hide' );
+                        classRemove( this.imageDOM.cancel, 'image__button--hide' );
+                        classAdd( this.imageDOM.check, 'image__button--active' );
+                        classAdd( this.imageDOM.cancel, 'image__button--active' );
+                    } )
+                    .catch( ( err ) => {
+                        console.error( err );
+                    } );
+                } );
+                this.isAddEventListener.imageChange = true;
+            }
         }
         catch ( err ) {
             console.error( err );

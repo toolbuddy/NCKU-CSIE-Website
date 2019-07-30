@@ -8,8 +8,6 @@
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
 @import 'components/user/input-block';
-@import 'components/user/nation-dropdown';
-@import 'components/user/dropdown';
 @import 'components/user/edit-page';
 
 // block
@@ -234,9 +232,10 @@
             template: {
               areas:
                 ' image image  image '
-                ' .     check .      ';
+                ' .     check .      '
+                ' .     cancel .     ';
               columns: 1fr font__px-to-rem( 126 ) 1fr;
-              rows: font__px-to-rem( 300 ) auto;
+              rows: font__px-to-rem( 300 ) 1fr 1fr;
             }
           }
           margin-bottom: font__px-to-rem( 20 );
@@ -244,7 +243,6 @@
 
           > .image__check.check {
             // [ layout ]
-            display: flex;
             grid-area: check;
             align-content: center;
             justify-content: center;
@@ -255,6 +253,7 @@
             > .check__button {
               // [ position ]
               width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
 
               // [ skin ]
               background-color: rgba( 0, 0, 0, .54 );
@@ -273,8 +272,57 @@
               &:hover {
                 // [ skin ]
                 cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
               }
             }
+          }
+
+          > .image__cancel.cancel {
+            // [ layout ]
+            grid-area: cancel;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+
+            > .cancel__button {
+              // [ position ]
+              width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+              border-radius: font__px-to-rem( 10 );
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
+              }
+            }
+          }
+
+          > .image__button--active {
+            // [ layout ]
+            display: flex;
+          }
+
+          > .image__button--hide {
+            // [ layout ]
+            display: none;
           }
 
           > .image__frame {
@@ -343,9 +391,6 @@
                 cursor: pointer;
               }
             }
-          }
-          @include nation-dropdown( 'image' ) {
-            grid-area: nation;
           }
         }
       }

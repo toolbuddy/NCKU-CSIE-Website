@@ -235,8 +235,10 @@
 
                     // [ skin ]
                     border: none;
-                    border-bottom-left-radius: font__px-to-rem( 3 );
-                    border-bottom-right-radius: font__px-to-rem( 3 );
+                    border-bottom: {
+                      left-radius: font__px-to-rem( 3 );
+                      right-radius: font__px-to-rem( 3 );
+                    };
                     font: {
                       size: font__px-to-rem( 18 );
                       weight: bold;
@@ -347,7 +349,6 @@
                   // [ layout ]
                   display: inline-block;
                   margin-left: font__px-to-rem( 16 );
-                  line-height: font__px-to-rem( 18 );
 
                   // [ skin ]
                   width: auto;
@@ -417,7 +418,6 @@
                     // [ skin ]
                     width: font__px-to-rem( 48 );
 
-
                     &:focus {
                       // [ skin ]
                       border: 2px solid rgba( 33, 101, 131, .5 );
@@ -441,7 +441,6 @@
                   // [ layout ]
                   display: inline-block;
                   margin-left: font__px-to-rem( 25 );
-                  line-height: font__px-to-rem( 18 );
 
                   // [ skin ]
                   width: auto;
@@ -510,7 +509,6 @@
 
                     // [ skin ]
                     width: font__px-to-rem( 48 );
-
 
                     &:focus {
                       // [ skin ]
