@@ -274,7 +274,6 @@ export default class SetProfileData {
     }
 
     async exec () {
-        console.log( this.fetchData( this.config.languageId ) );
         await this.setData();
     }
 }

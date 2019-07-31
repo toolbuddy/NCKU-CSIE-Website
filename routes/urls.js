@@ -22,7 +22,6 @@ import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
 import home from 'routes/home.js';
 import language from 'routes/utils/language.js';
-import checkSession from 'routes/utils/check-session.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
 import staticFile from 'routes/static.js';
@@ -124,8 +123,6 @@ app.use( ( req, res, next ) => {
     };
     next();
 } );
-
-app.use( checkSession );
 
 /**
  * Resolve URL `/`.

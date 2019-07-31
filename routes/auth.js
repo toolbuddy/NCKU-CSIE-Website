@@ -39,7 +39,7 @@ router
         const data = await getAdminByAccount( {
             account: req.body.account,
         } );
-        if ( data.password === md5( req.body.password + data.salt ) ) {
+        if ( data.password === md5( req.body.password ) ) {
             // Store the new cookie in the user.
             console.log( 'old sid:' );
             console.log( res.locals.unparsedId );
@@ -71,7 +71,6 @@ router
                         sid:      result.sid,
                         isValid:  data.isValid,
                         name:     data.name,
-                        salt:     data.salt,
                         roleId:   data.roleId,
                     } );
 
@@ -104,14 +103,14 @@ router
 
 router
 .route( '/logout' )
-.get( async ( req, res ) => {
+.post( async ( req, res ) => {
     // Get sid in the cookie
     const cookie = res.locals.unparsedId;
     const sid = cookieParser.signedCookie( cookie, secret );
     console.log( 'in route /auth/logout' );
     console.log( cookie );
     console.log( sid );
-    if ( sid === cookie ) {
+    if ( sid === cookie && typeof ( sid ) !== 'undefined' ) {
         const error = new Error( 'Invalid cookie.' );
         error.status = 400;
         throw error;

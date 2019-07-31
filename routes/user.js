@@ -16,10 +16,12 @@ import cors from 'cors';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
-
+import cookieParser from 'cookie-parser';
+import getSession from 'models/auth/operations/get-session.js';
+import saveSession from 'models/auth/operations/save-session.js';
+import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
+import { secret, host, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import { resolve, } from 'q';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -64,6 +66,107 @@ router
 .get( staticHtml( 'user/profile' ) )
 .post( cors(), async ( req, res ) => {
     try {
+        console.log( 'in route user/profile' );
+
+        // Get id
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        let userData = -1;
+        if ( typeof ( cookie ) === 'undefined' ) {
+            try {
+                // Got no cookie from the user.
+
+                // Store the cookie in the user.
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
+
+                res.redirect( '/index' );
+            }
+            catch ( error ) {
+                console.error( error );
+            }
+        }
+        else {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            try {
+                const data = await getSession( {
+                    sid,
+                } );
+
+                // Check `expires`
+                if ( data.expires < Date.now() ) {
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        res.redirect( '/index' );
+                    } );
+                }
+                else if ( data.userId !== null ) {
+                    const result = await getAdminByUserId( {
+                        userId: Number( data.userId ),
+                    } );
+
+                    if ( result.sid === data.sid )
+                        userData = result;
+                    else
+                        res.redirect( '/index' );
+                }
+                else
+                    res.redirect( '/index' );
+            }
+            catch ( error ) {
+                if ( error.status === 404 ) {
+                    // No corresponding session id in the database
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        // Send new session & user id
+                        res.redirect( '/index' );
+                    } );
+                }
+                else
+                    console.error( error );
+            }
+        }
+
+        console.log( userData );
+
+        // Get data
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
         let uploadData = '';
 

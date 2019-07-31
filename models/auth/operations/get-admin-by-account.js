@@ -37,7 +37,6 @@ export default async ( opt ) => {
                 'sid',
                 'isValid',
                 'name',
-                'salt',
                 'roleId',
             ],
             where: {
@@ -59,7 +58,6 @@ export default async ( opt ) => {
             sid:        data.sid,
             isValid:    data.isValid,
             name:       data.name,
-            salt:       data.salt,
             roleId:     data.roleId,
         };
     }

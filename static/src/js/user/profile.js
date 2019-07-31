@@ -4,6 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
 import { SetData, } from 'static/src/js/components/user/set-data.js';
+import { host, } from 'settings/server/config.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -40,88 +41,113 @@ catch ( err ) {
     console.error( err );
 }
 
-console.log( '(Assume this is header) get profile data:' );
+async function fetchData () {
+    try {
+        const res = await fetch( `${ host }/api/user/id`, {
+            credentials: 'include',
+        } );
 
-try {
-    const setProfileData = new SetProfileData( {
-        profileDOM:       document.getElementById( 'profile' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        profileId:        24,
-    } );
+        if ( !res.ok )
+            throw new Error( 'No faculty found' );
 
-    setProfileData.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
-
-try {
-    const setEducationData = new SetData( {
-        blockDOM:       document.getElementById( 'education' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        addButtonDOM:     document.getElementById( 'add__button--education-block' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'education',
-        profileId:        24,
-    } );
-
-    setEducationData.exec();
-}
-catch ( err ) {
-    console.error( err );
+        return res.json();
+    }
+    catch ( err ) {
+        throw err;
+    }
 }
 
-try {
-    const setExperienceData = new SetData( {
-        blockDOM:       document.getElementById( 'experience' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'experience',
-        profileId:        24,
-    } );
-    if ( !( setExperienceData instanceof SetData ) )
-        throw new Error( 'setExperienceData inVaild' );
+(async ()=>{
+    try{
+        const result = await fetchData();
+        if(result.userId > -1 && result.role === 1){
+            try {
+                const setProfileData = new SetProfileData( {
+                    profileDOM:       document.getElementById( 'profile' ),
+                    editPageDOM:      document.getElementById( 'edit-page' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                    profileId:        result.roleId,
+                } );
+            
+                setProfileData.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            
+            try {
+                const setEducationData = new SetData( {
+                    blockDOM:       document.getElementById( 'education' ),
+                    editPageDOM:      document.getElementById( 'edit-page' ),
+                    addButtonDOM:     document.getElementById( 'add__button--education-block' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                    dbTable:          'education',
+                    profileId:        result.roleId,
+                } );
+            
+                setEducationData.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            try {
+                const setExperienceData = new SetData( {
+                    blockDOM:       document.getElementById( 'experience' ),
+                    editPageDOM:      document.getElementById( 'edit-page' ),
+                    addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                    dbTable:          'experience',
+                    profileId:        result.roleId,
+                } );
+                if ( !( setExperienceData instanceof SetData ) )
+                    throw new Error( 'setExperienceData inVaild' );
+            
+                setExperienceData.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            
+            try {
+                const setTitleData = new SetData( {
+                    blockDOM:         document.getElementById( 'title' ),
+                    editPageDOM:      document.getElementById( 'edit-page' ),
+                    addButtonDOM:     document.getElementById( 'add__button--title' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                    dbTable:          'title',
+                    profileId:        result.roleId,
+                } );
+                if ( !( setTitleData instanceof SetData ) )
+                    throw new Error( 'setTitleData inVaild' );
+            
+                setTitleData.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+            
+            try {
+                const setSpecialtyData = new SetData( {
+                    blockDOM:         document.getElementById( 'specialty' ),
+                    editPageDOM:      document.getElementById( 'edit-page' ),
+                    addButtonDOM:     document.getElementById( 'add__button--specialty' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                    dbTable:          'specialty',
+                    profileId:        result.roleId,
+                } );
+                if ( !( setSpecialtyData instanceof SetData ) )
+                    throw new Error( 'setSpecialtyData inVaild' );
+            
+                setSpecialtyData.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+        }
+    }catch( err ){
+        console.error( err );
+    }
+})();
 
-    setExperienceData.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
 
-try {
-    const setTitleData = new SetData( {
-        blockDOM:         document.getElementById( 'title' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        addButtonDOM:     document.getElementById( 'add__button--title' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'title',
-        profileId:        24,
-    } );
-    if ( !( setTitleData instanceof SetData ) )
-        throw new Error( 'setTitleData inVaild' );
 
-    setTitleData.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
-
-try {
-    const setSpecialtyData = new SetData( {
-        blockDOM:         document.getElementById( 'specialty' ),
-        editPageDOM:      document.getElementById( 'edit-page' ),
-        addButtonDOM:     document.getElementById( 'add__button--specialty' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'specialty',
-        profileId:        24,
-    } );
-    if ( !( setSpecialtyData instanceof SetData ) )
-        throw new Error( 'setSpecialtyData inVaild' );
-
-    setSpecialtyData.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
