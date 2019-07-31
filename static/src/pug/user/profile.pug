@@ -33,7 +33,8 @@ append data
             fax:          'Fax',
             personal_web: 'Personal Web',
             specilty:     'Specilty',
-            image_check:        'Image check'
+            image_check:  'Image check',
+            image_cancel: 'Image cancel',
           },
           education: {
             topic:         'Education',
@@ -87,7 +88,8 @@ append data
             fax:          '傳真',
             personal_web: '個人網站',
             specilty:     '專長領域',
-            image_check:        '確認圖片',
+            image_check:  '確認變更',
+            image_cancel: '取消變更',
           },
           education: {
             topic:         '學歷',
@@ -147,7 +149,9 @@ append content
           label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
           input.frame__upload#frame__upload( type= 'file' )
         section.image__check.check
-          button.check__button= i18n[ LANG.id ].content.profile.image_check
+          button.check__button#image-check= i18n[ LANG.id ].content.profile.image_check
+        section.image__cancel.cancel
+          button.cancel__button#image-cancel= i18n[ LANG.id ].content.profile.image_cancel
       +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
@@ -187,7 +191,6 @@ append content
     article.information__experience-block.experience-block
       +local-topic( 'experience-block', '經歷 / Experience', true ) 
       section.experience-block__experience.experience#experience
-  section.content__edit-page.edit-page#edit-page
 
 append footer
 

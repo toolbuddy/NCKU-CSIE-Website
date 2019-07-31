@@ -1,12 +1,12 @@
-import { renderEditPage, } from 'static/src/js/components/user/edit-page.js';
+import EditPage from 'static/src/js/components/user/edit-page.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
+import validate from 'validate.js';
 
 class SetData {
     constructor ( opt ) {
@@ -14,7 +14,6 @@ class SetData {
 
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
-            !ValidateUtils.isDomElement( opt.editPageDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
         )
@@ -30,8 +29,13 @@ class SetData {
 
         this.DOM = {
             block:     opt.blockDOM,
-            editPage:  opt.editPageDOM,
             addButton: opt.addButtonDOM,
+        };
+
+        this.selector = {
+            check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+            error:  '.edit-page__window > .window__form > .form__content > .content__error > .error__message',
         };
 
         this.updateButtonQuerySelector = ( block, id ) => `.input-block__block > .block__content > .content__modify--${ block }-${ id }`;
@@ -210,11 +214,13 @@ class SetData {
     }
 
     closeEditPageWindow () {
-        classAdd( this.DOM.editPage, 'content__edit-page--hidden' );
+        document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
     uploadUpdateData ( dbTableItemId ) {
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        this.checkSubmitData();
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
@@ -248,7 +254,8 @@ class SetData {
     }
 
     uploadAddData () {
-        const input = this.DOM.editPage.getElementsByTagName( 'input' );
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
@@ -299,65 +306,200 @@ class SetData {
         } );
     }
 
+    checkSubmitData () {
+        let isValid = true;
+        const editPageDOM = document.getElementById( 'edit-page' );
+        const errorDOM = editPageDOM.querySelector( this.selector.error );
+        const input = editPageDOM.getElementsByTagName( 'input' );
+        const today = new Date();
+
+        const constraints = {
+            [ `title_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文職稱是必填欄位',
+                },
+            },
+            [ `title_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文職稱是必填欄位',
+                },
+            },
+            [ `specialty_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文專長領域是必填欄位',
+                },
+            },
+            [ `specialty_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文專長領域是必填欄位',
+                },
+            },
+            [ `school_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文學校是必填欄位',
+                },
+            },
+            [ `school_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文學校是必填欄位',
+                },
+            },
+            [ `major_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文主修是必填欄位',
+                },
+            },
+            [ `major_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文主修是必填欄位',
+                },
+            },
+            [ `organization_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '中文任職單位是必填欄位',
+                },
+            },
+            [ `organization_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '英文任職單位是必填欄位',
+                },
+            },
+            from: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '年份是必填欄位',
+                },
+                numericality: {
+                    onlyInteger:       true,
+                    greaterThan:       1900,
+                    lessThanOrEqualTo: today.getFullYear(),
+                    message:           '年份應介於1900~現在',
+                },
+            },
+            to: {
+                presence: {
+                    allowEmpty: false,
+                    message:    '年份是必填欄位',
+                },
+                numericality: {
+                    onlyInteger:       true,
+                    greaterThan:       1900,
+                    lessThanOrEqualTo: today.getFullYear(),
+                    message:           '年份應介於1900~現在',
+                },
+            },
+        };
+
+        Array.from( input ).forEach( ( element ) => {
+            if ( isValid ) {
+                const errors = validate.single( element.value, constraints[ element.name ] );
+                if ( errors ) {
+                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                    isValid = false;
+                }
+            }
+        } );
+
+        return isValid;
+    }
+
+    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
+        inputDOM.focus();
+        errorDOM.textContent = errorMessage;
+    }
+
     setAddButtonEvent () {
         this.DOM.addButton.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 editPageConfig: dataEditPageConfig[ this.config.dbTable ],
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
                 buttonMethod:   'add',
             } );
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            await editPage.renderEditPage();
+
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
+
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.uploadAddData();
+                const isValid = this.checkSubmitData();
+                if ( isValid )
+                    this.uploadAddData();
             } );
         } );
     }
 
     setUpdateButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 editPageConfig: dataEditPageConfig[ this.config.dbTable ],
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
-                data:           info.res,
+                dbData:         info.res,
                 buttonMethod:   'update',
             } );
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            await editPage.renderEditPage();
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
+
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.uploadUpdateData( info.id );
+
+                const isValid = this.checkSubmitData();
+                if ( isValid )
+                    this.uploadUpdateData( info.id );
             } );
         } );
     }
 
     setDeleteButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
-            const editPageDOM = await renderEditPage( {
+            const editPage = new EditPage( {
                 dataI18n:       dataI18n[ this.config.dbTable ],
-                blockDOM:       this.DOM.editPage,
+                editPageConfig: dataEditPageConfig[ this.config.dbTable ],
+                editPageDOM:    this.DOM.editPage,
                 dbTable:        this.config.dbTable,
                 languageId:     this.config.languageId,
                 id:             info.id,
                 content:        info.content,
                 buttonMethod:   'delete',
             } );
-            editPageDOM.cancel.addEventListener( 'click', ( e ) => {
+            await editPage.renderEditPage();
+
+            const editPageDOM = document.getElementById( 'edit-page' );
+            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
+            const checkDOM = editPageDOM.querySelector( this.selector.check );
+
+            cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.closeEditPageWindow();
             } );
-            editPageDOM.check.addEventListener( 'click', ( e ) => {
+            checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
                 this.uploadDeleteData( info.id );
             } );
@@ -370,21 +512,23 @@ class SetData {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
         };
 
-        switch ( this.config.dbTable ) {
-            case 'education':
-                await this.renderEducationBlock( data );
-                break;
-            case 'experience':
-                await this.renderExperienceBlock( data );
-                break;
-            case 'title':
-                await this.renderTitleBlock( data );
-                break;
-            case 'specialty':
-                await this.renderSpecialtyBlock( data );
-                break;
-            default:
-                break;
+        if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) ) {
+            switch ( this.config.dbTable ) {
+                case 'education':
+                    await this.renderEducationBlock( data );
+                    break;
+                case 'experience':
+                    await this.renderExperienceBlock( data );
+                    break;
+                case 'title':
+                    await this.renderTitleBlock( data );
+                    break;
+                case 'specialty':
+                    await this.renderSpecialtyBlock( data );
+                    break;
+                default:
+                    break;
+            }
         }
         this.setAddButtonEvent();
     }

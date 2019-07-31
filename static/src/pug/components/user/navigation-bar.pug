@@ -30,10 +30,11 @@ mixin navigation-bar( belongBlock )
       },
     } );
 
-  nav.navigation( class=`${belongBlock}__navigation` )
+  nav.navigation( class=`${belongBlock}__navigation` )#navigation
     section.navigation__title
       h.title__word= i18n[LANG.id].title
-    each val, index in i18n[LANG.id].nav
-      section.navigation__block.block( id=`navigation__${index}` )
-        p.block__number= `${ n++ }`
-        p.block__content= `${ val }`
+    section.navigation__content
+      each val, index in i18n[LANG.id].nav
+        section.content__block.block( id=`navigation__${index}` class=`content-${ index }` )
+          p.block__number= `${ n++ }`
+          p.block__content= `${ val }`

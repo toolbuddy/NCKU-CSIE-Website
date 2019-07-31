@@ -24,8 +24,10 @@
       width: 100%;
 
       // [ skin ]
-      border-bottom: solid font__px-to-rem( 2 ) #adacad;
-      border-radius: font__px-to-rem( 3 );
+      border: {
+        bottom: solid font__px-to-rem( 2 ) #adacad;
+        radius: font__px-to-rem( 3 );
+      }
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
@@ -69,16 +71,19 @@
         display: flex;
         justify-content: flex-end;
         align-content: center;
-        justify-items: center;
-        align-items: center;
+
+        // [ position ]
         width: 100%;
 
         // [ template ]
         %content__word {
           // [ layout ]
           display: inline-flex;
+
+          // [ position ]
           width: auto;
-          margin-right: font__px-to-rem( 10 );
+          height: font__px-to-rem( 25 );
+          padding-right: font__px-to-rem( 10 );
           align-self: center;
 
           // [ skin ]
@@ -88,9 +93,9 @@
             stretch: normal;
           }
           text-align: center;
-          line-height: font__px-to-rem( 25 );
+          line-height: font__px-to-rem( 20 );
           letter-spacing: normal;
-          word-wrap: break-all;
+          word-break: break-all;
         }
 
         %content__tag {
@@ -128,7 +133,10 @@
 
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );
-          overflow: auto;
+          overflow: {
+            x: scroll;
+            y: visible;
+          }
         }
 
         > .content__modify {
@@ -188,8 +196,8 @@
           // [ interaction ]
           &:hover {
             // [ skin ]
-            background-color: lighten( #f67057, 10% );
-            color: white;
+            background-color: rgba( 246, 112, 87, .3 );
+            color: rgba( 255, 255, 255, .87 );
             cursor: pointer;
           }
         }
@@ -197,12 +205,13 @@
         > .content__tag--department--active {
           // [ skin ]
           background-color: lighten( #f67057, 10% );
+          box-shadow: 3px 3px rgba( 246, 112, 87, .3 );
           color: white;
 
           // [ interaction ]
           &:hover {
             color: #f67057;
-            background-color: #ffffff;
+            background-color: rgba( 246, 112, 87, .3 );
             cursor: pointer;
           }
         }
@@ -219,7 +228,7 @@
           // [ interaction ]
           &:hover {
             // [ skin ]
-            background-color: lighten( #8caae2, 10% );
+            background-color: rgba( 140, 170, 226, .3 );
             color: white;
             cursor: pointer;
           }
@@ -228,12 +237,13 @@
         > .content__tag--research--active {
           // [ skin ]
           background-color: lighten( #8caae2, 10% );
+          box-shadow: 3px 3px rgba( 140, 170, 226, .5 );
           color: white;
 
           // [ interaction ]
           &:hover {
             color: #8caae2;
-            background-color: #ffffff;
+            background-color: rgba( 140, 170, 226, .3 );
             cursor: pointer;
           }
         }

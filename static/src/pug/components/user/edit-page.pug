@@ -1,10 +1,12 @@
 -
 section.edit-page__window.window
-  form.window__form.form( action= url, method='POST')
+  form.window__form.form#form( action= url, method='POST')
     main.form__content.content#content
       article.content__title
         h1.title__word= topic
       article.content__info#info
+      article.content__error.error
+        h1.error__message#error-message
     article.form__button.button
       button.button__item.button__item--cancel( formnovalidate )= cancel
       button.button__item.button__item--check= check

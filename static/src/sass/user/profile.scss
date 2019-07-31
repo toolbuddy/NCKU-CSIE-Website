@@ -8,8 +8,6 @@
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
 @import 'components/user/input-block';
-@import 'components/user/nation-dropdown';
-@import 'components/user/dropdown';
 @import 'components/user/edit-page';
 
 // block
@@ -32,6 +30,20 @@
   @include header--large( $block: 'body' );
 
   // element
+  // `.body > .body__edit-page`
+  > .body__edit-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+
+    // [ componment ]
+    @include edit-page();
+  }
+
+  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
@@ -41,6 +53,7 @@
     grid-template: {
       areas:
         ' . breadcrumb  .'
+        ' . navigation .'
         ' . information .';
       columns: 1fr 50fr 1fr;
     }
@@ -94,7 +107,7 @@
       // [ position ]
       width: 100%;
       margin: {
-        top: font__px-to-rem( 80 );
+        top: font__px-to-rem( 20 );
         bottom: font__px-to-rem( 80 );
         left: auto;
         right: auto;
@@ -109,7 +122,10 @@
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         max-width: font__px-to-rem( 1080 );
-        margin-left: 0;
+        margin: {
+          left: 0;
+          top: font__px-to-rem( 80 );
+        };
       }
 
       // element
@@ -220,9 +236,10 @@
             template: {
               areas:
                 ' image image  image '
-                ' .     check .      ';
+                ' .     check .      '
+                ' .     cancel .     ';
               columns: 1fr font__px-to-rem( 126 ) 1fr;
-              rows: font__px-to-rem( 300 ) auto;
+              rows: font__px-to-rem( 300 ) 1fr 1fr;
             }
           }
           margin-bottom: font__px-to-rem( 20 );
@@ -230,7 +247,6 @@
 
           > .image__check.check {
             // [ layout ]
-            display: flex;
             grid-area: check;
             align-content: center;
             justify-content: center;
@@ -241,6 +257,7 @@
             > .check__button {
               // [ position ]
               width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
 
               // [ skin ]
               background-color: rgba( 0, 0, 0, .54 );
@@ -259,8 +276,57 @@
               &:hover {
                 // [ skin ]
                 cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
               }
             }
+          }
+
+          > .image__cancel.cancel {
+            // [ layout ]
+            grid-area: cancel;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+
+            > .cancel__button {
+              // [ position ]
+              width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+              border-radius: font__px-to-rem( 10 );
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
+              }
+            }
+          }
+
+          > .image__button--active {
+            // [ layout ]
+            display: flex;
+          }
+
+          > .image__button--hide {
+            // [ layout ]
+            display: none;
           }
 
           > .image__frame {
@@ -329,9 +395,6 @@
                 cursor: pointer;
               }
             }
-          }
-          @include nation-dropdown( 'image' ) {
-            grid-area: nation;
           }
         }
       }
@@ -418,22 +481,6 @@
       > .education {
         @include input-block( $block: 'education', $modifier: 'education' );
       }
-    }
-
-    > .content__edit-page.edit-page {
-      position: absolute;
-      width: 100%;
-
-      // [ componment ]
-      @include edit-page();
-    }
-
-    > .content__edit-page--hidden {
-      display: none;
-    }
-
-    > .content__edit-page--show {
-      display: block;
     }
   }
 

@@ -2,6 +2,7 @@ import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import NavigationBar from 'static/src/js/components/user/navigation-bar.js';
 import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
 import { SetData, } from 'static/src/js/components/user/set-data.js';
 import { host, } from 'settings/server/config.js';
@@ -49,12 +50,10 @@ async function fetchData () {
 
         if ( !res.ok )
             throw new Error( 'No faculty found' );
-
-        return res.json();
+    }catch(err){
+        console.error(err);
     }
-    catch ( err ) {
-        throw err;
-    }
+    return res.json();
 }
 
 (async ()=>{
@@ -62,13 +61,24 @@ async function fetchData () {
         const result = await fetchData();
         if(result.userId > -1 && result.role === 1){
             try {
+                const nevagationBar = new NavigationBar( {
+                    navigationDOM: document.getElementById( 'navigation' ),
+                    languageId:       WebLanguageUtils.currentLanguageId,
+                } );
+            
+                nevagationBar.exec();
+            }
+            catch ( err ) {
+                console.error( err );
+            }
+
+            try {
                 const setProfileData = new SetProfileData( {
                     profileDOM:       document.getElementById( 'profile' ),
-                    editPageDOM:      document.getElementById( 'edit-page' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     profileId:        result.roleId,
                 } );
-            
+
                 setProfileData.exec();
             }
             catch ( err ) {
@@ -78,11 +88,10 @@ async function fetchData () {
             try {
                 const setEducationData = new SetData( {
                     blockDOM:       document.getElementById( 'education' ),
-                    editPageDOM:      document.getElementById( 'edit-page' ),
                     addButtonDOM:     document.getElementById( 'add__button--education-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'education',
-                    profileId:        result.roleId,
+                    profileId:        24,
                 } );
             
                 setEducationData.exec();
@@ -93,11 +102,10 @@ async function fetchData () {
             try {
                 const setExperienceData = new SetData( {
                     blockDOM:       document.getElementById( 'experience' ),
-                    editPageDOM:      document.getElementById( 'edit-page' ),
                     addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'experience',
-                    profileId:        result.roleId,
+                    profileId:        24,
                 } );
                 if ( !( setExperienceData instanceof SetData ) )
                     throw new Error( 'setExperienceData inVaild' );
@@ -111,11 +119,10 @@ async function fetchData () {
             try {
                 const setTitleData = new SetData( {
                     blockDOM:         document.getElementById( 'title' ),
-                    editPageDOM:      document.getElementById( 'edit-page' ),
                     addButtonDOM:     document.getElementById( 'add__button--title' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'title',
-                    profileId:        result.roleId,
+                    profileId:        24,
                 } );
                 if ( !( setTitleData instanceof SetData ) )
                     throw new Error( 'setTitleData inVaild' );
@@ -129,11 +136,10 @@ async function fetchData () {
             try {
                 const setSpecialtyData = new SetData( {
                     blockDOM:         document.getElementById( 'specialty' ),
-                    editPageDOM:      document.getElementById( 'edit-page' ),
                     addButtonDOM:     document.getElementById( 'add__button--specialty' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'specialty',
-                    profileId:        result.roleId,
+                    profileId:        24,
                 } );
                 if ( !( setSpecialtyData instanceof SetData ) )
                     throw new Error( 'setSpecialtyData inVaild' );
@@ -148,6 +154,8 @@ async function fetchData () {
         console.error( err );
     }
 })();
+
+
 
 
 

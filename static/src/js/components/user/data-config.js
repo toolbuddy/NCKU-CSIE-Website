@@ -3,6 +3,7 @@ import degreeUtils from 'models/faculty/utils/degree.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import { editPageType, } from 'static/src/js/components/user/edit-page.js';
 import nationUtils from 'models/faculty/utils/nation.js';
+import deepFreeze from 'deep-freeze';
 
 const dataI18n = Object.freeze( {
     profile: {
@@ -23,13 +24,13 @@ const dataI18n = Object.freeze( {
             default: {
                 name:          'ex. Sam Wang',
                 officeAddress: 'ex. 65xxx, 12F, CSIE new building',
-                officeTel:     'ex. 06-xxxxxxx',
+                officeTel:     'ex. 06-xxxxxxx,ext',
                 labName:       'please input your lab name',
                 labAddress:    'ex. 65xxx, 5F, CSIE new building',
-                labTel:        'ex. 06-xxxxxxx',
-                labWeb:        'ex. https//xxxxxxxxx',
+                labTel:        'ex. 06-xxxxxxx,ext',
+                labWeb:        'ex. http://your_web_site.com',
                 email:         'ex. example@xxxxxxxx',
-                personalWeb:   'ex. https//xxxxxxxxx',
+                personalWeb:   'ex. http://your_web_site.com',
                 fax:           'please input your fax number',
                 nation:        0,
             },
@@ -51,13 +52,13 @@ const dataI18n = Object.freeze( {
             default: {
                 name:          'ex. 王小明',
                 officeAddress: 'ex. 資訊系新館 65xxx',
-                officeTel:     'ex. 06-xxxxxxx',
+                officeTel:     'ex. 06-xxxxxxx,分機號碼',
                 labName:       'ex. xxx實驗室',
                 labAddress:    'ex. 資訊系新館 65xxx',
-                labTel:        'ex. 06-xxxxxxx',
-                labWeb:        'ex. https//xxxxxxxxx',
+                labTel:        'ex. 06-xxxxxxx,分機號碼',
+                labWeb:        'ex. http://your_web_site.com',
                 email:         'ex. example@xxxxxxxx',
-                personalWeb:   'ex. https//xxxxxxxxx',
+                personalWeb:   'ex. http://your_web_site.com',
                 fax:           '請輸入您的傳真號碼',
             },
         },
@@ -201,7 +202,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'name',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             } ),
         ],
@@ -210,7 +210,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'officeAddress',
                 dataType:    'text',
-                required:    false,
                 i18n:        true,
             } ),
         ],
@@ -219,7 +218,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'labName',
                 dataType:    'text',
-                required:    false,
                 i18n:        true,
             } ),
         ],
@@ -228,7 +226,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'labAddress',
                 dataType:    'text',
-                required:    false,
                 i18n:        true,
             } ),
         ],
@@ -237,7 +234,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'labTel',
                 dataType:    'tel',
-                required:    false,
                 i18n:        false,
             } ),
         ],
@@ -246,7 +242,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'labWeb',
                 dataType:    'url',
-                required:    false,
                 i18n:        false,
             } ),
         ],
@@ -255,7 +250,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'officeTel',
                 dataType:    'tel',
-                required:    false,
                 i18n:        false,
             } ),
         ],
@@ -264,7 +258,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'email',
                 dataType:    'email',
-                required:    true,
                 i18n:        false,
             } ),
         ],
@@ -273,7 +266,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'fax',
                 dataType:    'tel',
-                required:    false,
                 i18n:        false,
             } ),
         ],
@@ -282,7 +274,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'personalWeb',
                 dataType:    'url',
-                required:    false,
                 i18n:        false,
             } ),
         ],
@@ -312,7 +303,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'school',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             }
         ),
@@ -327,7 +317,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'major',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             }
         ),
@@ -364,7 +353,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'organization',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             }
         ),
@@ -379,7 +367,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'department',
                 dataType:    'text',
-                required:    false,
                 i18n:        true,
             }
         ),
@@ -394,7 +381,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'title',
                 dataType:    'text',
-                required:    false,
                 i18n:        true,
             }
         ),
@@ -410,7 +396,6 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'title',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             }
         ),
@@ -421,11 +406,13 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'specialty',
                 dataType:    'text',
-                required:    true,
                 i18n:        true,
             }
         ),
     ],
 } );
+
+deepFreeze( dataI18n );
+deepFreeze( dataEditPageConfig );
 
 export { dataI18n, dataEditPageConfig, };
