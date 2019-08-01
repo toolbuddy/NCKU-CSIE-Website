@@ -127,6 +127,11 @@
           // [ skin ]
           color: rgba( 0, 0, 0, .87 );
           font-size: font__px-to-rem( 24 );
+
+          &:hover {
+            cursor: default;
+            color: rgba( 0, 0, 0, .87 );
+          }
         }
       }
     }
@@ -168,7 +173,7 @@
         display: flex;
 
         // [ skin ]
-        height: font__px-to-rem( 76 );
+        height: font__px-to-rem( 40 );
         width: 100%;
 
         &:hover {
@@ -190,6 +195,7 @@
         @media screen and ( min-width: $large ) {
           display: inline-flex;
           width: font__px-to-rem( 200 );
+          height: font__px-to-rem( 76 );
         }
 
         // .content > .content__navigation.navigation > .navigation__block > .block__number

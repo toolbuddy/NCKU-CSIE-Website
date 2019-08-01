@@ -76,10 +76,14 @@ class EditPage {
         const languageIds = ( editPageConfig.i18n ) ? LanguageUtils.supportedLanguageId : [ this.config.languageId, ];
         languageIds.forEach( ( languageId ) => {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
+            let value = '';
+            if ( this.config.buttonMethod === 'update' && this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
+                value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
+
 
             infoDOM.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
-                value:       ( this.config.buttonMethod === 'update' ) ? this.dbData[ languageId ][ editPageConfig.dbTableItem ] : '',
+                value,
                 placeholder,
                 name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : `${ editPageConfig.dbTableItem }`,
                 dataType:    editPageConfig.dataType,

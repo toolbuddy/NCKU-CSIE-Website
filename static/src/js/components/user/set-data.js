@@ -5,7 +5,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
-import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
+import { dataI18n, dataEditPageConfig, validationInfo, } from 'static/src/js/components/user/data-config.js';
 import validate from 'validate.js';
 
 class SetData {
@@ -85,10 +85,17 @@ class SetData {
         try {
             this.DOM.block.innerHTML = '';
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
+                let content = '';
+                [ res.school,
+                    res.major,
+                    degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ], ].forEach( ( element ) => {
+                    if ( ValidateUtils.isValidString( element ) )
+                        content += `${ element } `;
+                } );
                 await this.renderBlock( {
                     modifier: 'education',
                     id:       res.educationId,
-                    content:  `${ res.school } ${ res.major } ${ degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ] }`,
+                    content,
                     res:      {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ].education[ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].education[ index ],
@@ -118,10 +125,17 @@ class SetData {
         try {
             this.DOM.block.innerHTML = '';
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
+                let content = '';
+                [ 'organization',
+                    'department',
+                    'title', ].forEach( ( element ) => {
+                    if ( ValidateUtils.isValidString( res[ element ] ) )
+                        content += `${ res[ element ] } `;
+                } );
                 await this.renderBlock( {
                     modifier: 'experience',
                     id:       res.experienceId,
-                    content:  `${ res.organization } ${ res.department } ${ res.title }`,
+                    content,
                     res:      {
                         [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
                         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
@@ -311,97 +325,11 @@ class SetData {
         const editPageDOM = document.getElementById( 'edit-page' );
         const errorDOM = editPageDOM.querySelector( this.selector.error );
         const input = editPageDOM.getElementsByTagName( 'input' );
-        const today = new Date();
 
-        const constraints = {
-            [ `title_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文職稱是必填欄位',
-                },
-            },
-            [ `title_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文職稱是必填欄位',
-                },
-            },
-            [ `specialty_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文專長領域是必填欄位',
-                },
-            },
-            [ `specialty_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文專長領域是必填欄位',
-                },
-            },
-            [ `school_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文學校是必填欄位',
-                },
-            },
-            [ `school_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文學校是必填欄位',
-                },
-            },
-            [ `major_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文主修是必填欄位',
-                },
-            },
-            [ `major_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文主修是必填欄位',
-                },
-            },
-            [ `organization_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文任職單位是必填欄位',
-                },
-            },
-            [ `organization_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文任職單位是必填欄位',
-                },
-            },
-            from: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '年份是必填欄位',
-                },
-                numericality: {
-                    onlyInteger:       true,
-                    greaterThan:       1900,
-                    lessThanOrEqualTo: today.getFullYear(),
-                    message:           '年份應介於1900~現在',
-                },
-            },
-            to: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '年份是必填欄位',
-                },
-                numericality: {
-                    onlyInteger:       true,
-                    greaterThan:       1900,
-                    lessThanOrEqualTo: today.getFullYear(),
-                    message:           '年份應介於1900~現在',
-                },
-            },
-        };
+        const constraints = validationInfo[ this.config.dbTable ];
 
         Array.from( input ).forEach( ( element ) => {
-            if ( isValid ) {
+            if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
                 const errors = validate.single( element.value, constraints[ element.name ] );
                 if ( errors ) {
                     this.setErrorMessage( element, errors[ 0 ], errorDOM );
