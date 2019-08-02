@@ -107,17 +107,24 @@ export default class SetProfileData {
     }
 
     async setData () {
-        const res = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
-        };
+        try {
+            Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
+            .then( ( res ) => {
+                const dbData = {};
+                res.forEach( ( data, index ) => {
+                    dbData[ index ] = data;
+                } );
+                Object.keys( this.classModifier ).forEach( ( key ) => {
+                    this.setProfileBlock( key, dbData );
+                } );
 
-        Object.keys( this.classModifier ).forEach( ( key ) => {
-            this.setProfileBlock( key, res );
-        } );
-
-        this.setTags( res[ this.config.languageId ] );
-        this.setImage( res[ this.config.languageId ].profile );
+                this.setTags( dbData[ this.config.languageId ] );
+                this.setImage( dbData[ this.config.languageId ].profile );
+            } );
+        }
+        catch ( err ) {
+            console.error( err );
+        }
     }
 
     closeEditPageWindow () {
