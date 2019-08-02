@@ -5,7 +5,7 @@ import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import nationUtils from 'models/faculty/utils/nation.js';
-import { dataI18n, dataEditPageConfig, } from 'static/src/js/components/user/data-config.js';
+import { dataI18n, dataEditPageConfig, validationInfo, } from 'static/src/js/components/user/data-config.js';
 import validate from 'validate.js';
 
 export default class SetProfileData {
@@ -128,9 +128,16 @@ export default class SetProfileData {
         const textDOM         = this.DOM.profile.querySelector( this.selector.text( this.classModifier[ dbTableItem ] ) );
         const updateButtonDOM = this.DOM.profile.querySelector( this.selector.update( this.classModifier[ dbTableItem ] ) );
 
-        textDOM.textContent = res[ this.config.languageId ].profile[ dbTableItem ];
-        if ( dbTableItem === 'nation' )
-            textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
+        if ( res[ this.config.languageId ].profile[ dbTableItem ] !== null ) {
+            textDOM.textContent = res[ this.config.languageId ].profile[ dbTableItem ];
+            if ( dbTableItem === 'nation' )
+                textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
+        }
+        else {
+            textDOM.textContent = '';
+            if ( dbTableItem === 'nation' )
+                textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
+        }
 
         updateButtonDOM.addEventListener( 'click', async () => {
             await this.setUpdateButtonEvent( dbTableItem, res );
@@ -138,7 +145,6 @@ export default class SetProfileData {
     }
 
     async setUpdateButtonEvent ( dbTableItem, res ) {
-        console.log( 'click' );
         const tempDataI18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                 default: {
@@ -189,71 +195,10 @@ export default class SetProfileData {
         const input = editPageDOM.getElementsByTagName( 'input' );
         const errDOM = editPageDOM.querySelector( this.selector.editPage.error );
 
-        const constraints = {
-            [ `name_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文姓名是必填欄位',
-                },
-            },
-            [ `name_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '英文姓名是必填欄位',
-                },
-            },
-            nation: {
-                presence: {
-                    allowEmpty: false,
-                },
-            },
-            email: {
-                presence: {
-                    allowEmpty: false,
-                    message:    'email是必填欄位',
-                },
-                email: {
-                    message: 'email格式錯誤',
-                },
-            },
-            fax: {
-                format: {
-                    pattern: '[0-9-()]+',
-                    message: '傳真格式錯誤',
-                },
-            },
-            personalWeb: {
-                url: {
-                    message:    '網址格式錯誤',
-                },
-            },
-            [ `officeAddress_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
-                presence: {
-                    allowEmpty: false,
-                    message:    '中文辦公室位置是必填欄位',
-                },
-            },
-            officeTel: {
-                format: {
-                    pattern: '[0-9-(),]+',
-                    message: '電話格式錯誤',
-                },
-            },
-            labTel: {
-                format: {
-                    pattern: '[0-9-(),]+',
-                    message: '電話格式錯誤',
-                },
-            },
-            labWeb: {
-                url: {
-                    message: '網址格式錯誤',
-                },
-            },
-        };
+        const constraints = validationInfo.profile;
 
         Array.from( input ).forEach( ( element ) => {
-            if ( constraints[ element.name ].presence !== null && element.value !== '' ) {
+            if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
                 const errors = validate.single( element.value, constraints[ element.name ] );
                 if ( errors ) {
                     this.setErrorMessage( element, errors[ 0 ], errDOM );

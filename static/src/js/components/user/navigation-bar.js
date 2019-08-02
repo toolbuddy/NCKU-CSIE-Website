@@ -34,7 +34,6 @@ class NavigationBar {
 
     addButtonEventListener () {
         this.DOM.title.addEventListener( 'click', () => {
-            console.log( document.body.clientWidth );
             if ( document.body.clientWidth < 1200 && !this.config.isOpenNavigation ) {
                 classAdd( this.DOM.content, 'navigation__content--active' );
                 this.config.isOpenNavigation = true;
@@ -58,8 +57,6 @@ class NavigationBar {
 
     async exec () {
         this.addButtonEventListener();
-        console.log( 'success' );
-        console.log( this.DOM );
     }
 }
 
