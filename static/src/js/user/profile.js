@@ -6,6 +6,7 @@ import NavigationBar from 'static/src/js/components/user/navigation-bar.js';
 import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
 import { SetData, } from 'static/src/js/components/user/set-data.js';
 import { host, } from 'settings/server/config.js';
+import roleUtils from 'models/auth/utils/role.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -60,7 +61,7 @@ async function fetchData () {
 (async ()=>{
     try{
         const result = await fetchData();
-        if(result.userId > -1 && result.role === 1){
+        if(result.userId > -1 && result.role === roleUtils.getIdByOption('faculty')){
             try {
                 const nevagationBar = new NavigationBar( {
                     navigationDOM: document.getElementById( 'navigation' ),
@@ -150,6 +151,8 @@ async function fetchData () {
             catch ( err ) {
                 console.error( err );
             }
+        }else if(result.userId > -1 && result.role === roleUtils.getIdByOption('staff')){
+            
         }
     }catch( err ){
         console.error( err );

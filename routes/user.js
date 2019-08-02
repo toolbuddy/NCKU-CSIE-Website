@@ -254,11 +254,6 @@ router
                     },
                 };
             }
-
-            // Console.log( uploadData );
-            // for ( const title of uploadData.add.title )
-            //     console.log( title );
-
             await addFacultyDetail( {
                 profileId:     uploadData.profileId,
                 department:    uploadData.add.department,
@@ -268,22 +263,6 @@ router
                 specialtyI18n: uploadData.add.specialtyI18n,
                 title:         uploadData.add.title,
             } );
-
-            // Const testData = {
-            //     profileId:  uploadData.profileId,
-            //     department: [ 0,
-            //         1, ],
-            // };
-
-            // await addFacultyDetail( {
-            //     profileId:     testData.profileId,
-            //     department:    testData.department,
-            //     education:     testData.education,
-            //     experience:    testData.experience,
-            //     researchGroup: testData.researchGroup,
-            //     specialtyI18n: testData.specialtyI18n,
-            //     title:         testData.title,
-            // } );
         }
 
         if ( data.method === 'delete' ) {
