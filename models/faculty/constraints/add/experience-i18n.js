@@ -17,14 +17,14 @@ const ExperienceI18nValidationConstraints = {
         },
     },
     department: {
-        presence: true,
+        presence: false,
         type:       'string',
         length:   {
             maximum: 100,
         },
     },
     title: {
-        presence: true,
+        presence: false,
         type:       'string',
         length:   {
             maximum: 100,

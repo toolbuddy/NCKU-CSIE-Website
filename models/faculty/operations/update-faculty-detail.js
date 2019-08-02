@@ -20,7 +20,7 @@ import SpecialtyI18nValidationConstraints from 'models/faculty/constraints/updat
 import TitleValidationConstraints from 'models/faculty/constraints/update/title.js';
 import TitleI18nValidationConstraints from 'models/faculty/constraints/update/title-i18n.js';
 import validate from 'validate.js';
-
+import { faculty, } from 'models/common/utils/connect.js';
 
 export default async ( opt ) => {
     try {
@@ -156,7 +156,7 @@ export default async ( opt ) => {
 
         if ( education ) {
             for ( const educationInfo of education ) {
-                await Education.update( {
+                faculty.transaction( t => Education.update( {
                     nation: educationInfo.nation,
                     degree: educationInfo.degree,
                     from:   educationInfo.from,
@@ -166,10 +166,10 @@ export default async ( opt ) => {
                         educationId: educationInfo.educationId,
                         profileId,
                     },
-                } );
-                if ( educationInfo.i18n ) {
-                    for ( const educationI18nInfo of educationInfo.i18n ) {
-                        await EducationI18n.update( {
+                    transaction: t,
+                } ).then( () => {
+                    if ( educationInfo.i18n ) {
+                        return Promise.all( educationInfo.i18n.map( educationI18nInfo => EducationI18n.update( {
                             school: educationI18nInfo.school,
                             major:  educationI18nInfo.major,
                         }, {
@@ -177,14 +177,15 @@ export default async ( opt ) => {
                                 educationId: educationInfo.educationId,
                                 language:    educationI18nInfo.language,
                             },
-                        } );
+                            transaction: t,
+                        } ) ) );
                     }
-                }
+                } ) );
             }
         }
         if ( experience ) {
             for ( const experienceInfo of experience ) {
-                await Experience.update( {
+                faculty.transaction( t => Experience.update( {
                     from: experienceInfo.from,
                     to:   experienceInfo.to,
                 }, {
@@ -192,10 +193,10 @@ export default async ( opt ) => {
                         experienceId: experienceInfo.experienceId,
                         profileId,
                     },
-                } );
-                if ( experienceInfo.i18n ) {
-                    for ( const experienceI18nInfo of experienceInfo.i18n ) {
-                        await ExperienceI18n.update( {
+                    transaction: t,
+                } ).then( () => {
+                    if ( experienceInfo.i18n ) {
+                        return Promise.all( experienceInfo.i18n.map( experienceI18nInfo => ExperienceI18n.update( {
                             organization: experienceI18nInfo.organization,
                             department:   experienceI18nInfo.department,
                             title:        experienceI18nInfo.title,
@@ -204,13 +205,14 @@ export default async ( opt ) => {
                                 experienceId: experienceInfo.experienceId,
                                 language:     experienceI18nInfo.language,
                             },
-                        } );
+                            transaction: t,
+                        } ) ) );
                     }
-                }
+                } ) );
             }
         }
         if ( profile ) {
-            await Profile.update( {
+            faculty.transaction( t => Profile.update( {
                 fax:         profile.fax,
                 email:       profile.email,
                 personalWeb: profile.personalWeb,
@@ -224,10 +226,10 @@ export default async ( opt ) => {
                 where: {
                     profileId,
                 },
-            } );
-            if ( profile.i18n ) {
-                for ( const profileI18nInfo of profile.i18n ) {
-                    await ProfileI18n.update( {
+                transaction: t,
+            } ).then( () => {
+                if ( profile.i18n ) {
+                    return Promise.all( profile.i18n.map( profileI18nInfo => ProfileI18n.update( {
                         name:          profileI18nInfo.name,
                         officeAddress: profileI18nInfo.officeAddress,
                         labName:       profileI18nInfo.labName,
@@ -237,13 +239,14 @@ export default async ( opt ) => {
                             language: profileI18nInfo.language,
                             profileId,
                         },
-                    } );
+                        transaction: t,
+                    } ) ) );
                 }
-            }
+            } ) );
         }
         if ( specialtyI18n ) {
             for ( const specialtyInfo of specialtyI18n ) {
-                await SpecialtyI18n.update( {
+                faculty.transaction( t => SpecialtyI18n.update( {
                     specialty: specialtyInfo.specialty,
                 }, {
                     where: {
@@ -251,12 +254,13 @@ export default async ( opt ) => {
                         profileId,
                         language:    specialtyInfo.language,
                     },
-                } );
+                    transaction: t,
+                } ) );
             }
         }
         if ( title ) {
             for ( const titleInfo of title ) {
-                await Title.update( {
+                faculty.transaction( t => Title.update( {
                     from: titleInfo.from,
                     to:   titleInfo.to,
                 }, {
@@ -264,19 +268,20 @@ export default async ( opt ) => {
                         titleId:   titleInfo.titleId,
                         profileId,
                     },
-                } );
-                if ( titleInfo.i18n ) {
-                    for ( const titleI18nInfo of titleInfo.i18n ) {
-                        await TitleI18n.update( {
+                    transaction: t,
+                } ).then( () => {
+                    if ( titleInfo.i18n ) {
+                        return Promise.all( titleInfo.i18n.map( titleI18nInfo => TitleI18n.update( {
                             title: titleI18nInfo.title,
                         }, {
                             where: {
                                 titleId:  titleInfo.titleId,
                                 language: titleI18nInfo.language,
                             },
-                        } );
+                            transaction: t,
+                        } ) ) );
                     }
-                }
+                } ) );
             }
         }
         return;

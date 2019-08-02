@@ -23,6 +23,7 @@ import SpecialtyI18nValidationConstraints from 'models/faculty/constraints/add/s
 import TitleValidationConstraints from 'models/faculty/constraints/add/title.js';
 import TitleI18nValidationConstraints from 'models/faculty/constraints/add/title-i18n.js';
 import validate from 'validate.js';
+import { faculty, } from 'models/common/utils/connect.js';
 
 function sortByValue ( a, b ) {
     return a - b;
@@ -197,57 +198,63 @@ export default async ( opt ) => {
         }
 
         if ( department ) {
-            for ( const type of department ) {
-                await Department.create( {
-                    type,
-                    profileId,
-                } );
-            }
+            faculty.transaction( t => Promise.all( department.map( type => Department.create( {
+                type,
+                profileId,
+            }, {
+                transaction: t,
+            } ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         if ( education ) {
-            for ( const educationInfo of education ) {
-                await Education.create( {
-                    profileId,
-                    nation:        educationInfo.nation,
-                    degree:        educationInfo.degree,
-                    from:          educationInfo.from,
-                    to:            educationInfo.to,
-                    educationI18n: educationInfo.i18n,
-                }, {
-                    include: [ {
-                        model: EducationI18n,
-                        as:    'educationI18n',
-                    }, ],
-                } );
-            }
+            faculty.transaction( t => Promise.all( education.map( educationInfo => Education.create( {
+                profileId,
+                nation:        educationInfo.nation,
+                degree:        educationInfo.degree,
+                from:          educationInfo.from,
+                to:            educationInfo.to,
+                educationI18n: educationInfo.i18n,
+            }, {
+                include: [ {
+                    model: EducationI18n,
+                    as:    'educationI18n',
+                }, ],
+                transaction: t,
+            } ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         if ( experience ) {
-            for ( const experienceInfo of experience ) {
-                await Experience.create( {
-                    profileId,
-                    from:           experienceInfo.from,
-                    to:             experienceInfo.to,
-                    experienceI18n: experienceInfo.i18n,
-                }, {
-                    include: [ {
-                        model: ExperienceI18n,
-                        as:    'experienceI18n',
-                    }, ],
-                } );
-            }
+            faculty.transaction( t => Promise.all( experience.map( experienceInfo => Experience.create( {
+                profileId,
+                from:           experienceInfo.from,
+                to:             experienceInfo.to,
+                experienceI18n: experienceInfo.i18n,
+            }, {
+                include: [ {
+                    model: ExperienceI18n,
+                    as:    'experienceI18n',
+                }, ],
+                transaction: t,
+            } ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         if ( researchGroup ) {
-            for ( const type of researchGroup ) {
-                await ResearchGroup.create( {
-                    type,
-                    profileId,
-                } );
-            }
+            faculty.transaction( t => Promise.all( researchGroup.map( type => ResearchGroup.create( {
+                type,
+                profileId,
+            }, {
+                transaction: t,
+            } ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         if ( specialtyI18n ) {
-            for ( const specialtyInfo of specialtyI18n ) {
+            faculty.transaction( t => Promise.all( specialtyI18n.map( async ( specialtyInfo ) => {
                 const maxId = await SpecialtyI18n.max( 'specialtyId' );
-                await Profile.create( {
+                return Profile.create( {
                     specialtyI18n: specialtyInfo.map( langInfo => ( {
                         specialtyId: maxId + 1,
                         profileId,
@@ -259,23 +266,27 @@ export default async ( opt ) => {
                         model: SpecialtyI18n,
                         as:    'specialtyI18n',
                     }, ],
+                    transaction: t,
                 } );
-            }
+            } ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         if ( title ) {
-            for ( const titleInfo of title ) {
-                await Title.create( {
-                    from:        titleInfo.from,
-                    to:          titleInfo.to,
-                    profileId,
-                    titleI18n: titleInfo.i18n,
-                }, {
-                    include: [ {
-                        model: TitleI18n,
-                        as:    'titleI18n',
-                    }, ],
-                } );
-            }
+            faculty.transaction( t => Promise.all( title.map( titleInfo => Title.create( {
+                from:        titleInfo.from,
+                to:          titleInfo.to,
+                profileId,
+                titleI18n: titleInfo.i18n,
+            }, {
+                include: [ {
+                    model: TitleI18n,
+                    as:    'titleI18n',
+                }, ],
+                transaction: t,
+            } ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
         }
         return;
     }

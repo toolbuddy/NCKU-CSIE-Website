@@ -50,10 +50,11 @@ async function fetchData () {
 
         if ( !res.ok )
             throw new Error( 'No faculty found' );
+
+        return res.json();
     }catch(err){
         console.error(err);
     }
-    return res.json();
 }
 
 (async ()=>{
@@ -91,7 +92,7 @@ async function fetchData () {
                     addButtonDOM:     document.getElementById( 'add__button--education-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'education',
-                    profileId:        24,
+                    profileId:        result.roleId,
                 } );
             
                 setEducationData.exec();
@@ -105,7 +106,7 @@ async function fetchData () {
                     addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'experience',
-                    profileId:        24,
+                    profileId:        result.roleId,
                 } );
                 if ( !( setExperienceData instanceof SetData ) )
                     throw new Error( 'setExperienceData inVaild' );
@@ -122,7 +123,7 @@ async function fetchData () {
                     addButtonDOM:     document.getElementById( 'add__button--title' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'title',
-                    profileId:        24,
+                    profileId:        result.roleId,
                 } );
                 if ( !( setTitleData instanceof SetData ) )
                     throw new Error( 'setTitleData inVaild' );
@@ -139,7 +140,7 @@ async function fetchData () {
                     addButtonDOM:     document.getElementById( 'add__button--specialty' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'specialty',
-                    profileId:        24,
+                    profileId:        result.roleId,
                 } );
                 if ( !( setSpecialtyData instanceof SetData ) )
                     throw new Error( 'setSpecialtyData inVaild' );
