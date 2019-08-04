@@ -198,7 +198,7 @@ export default async ( opt ) => {
         }
 
         if ( department ) {
-            faculty.transaction( t => Promise.all( department.map( type => Department.create( {
+            await faculty.transaction( t => Promise.all( department.map( type => Department.create( {
                 type,
                 profileId,
             }, {
@@ -208,7 +208,7 @@ export default async ( opt ) => {
             } );
         }
         if ( education ) {
-            faculty.transaction( t => Promise.all( education.map( educationInfo => Education.create( {
+            await faculty.transaction( t => Promise.all( education.map( educationInfo => Education.create( {
                 profileId,
                 nation:        educationInfo.nation,
                 degree:        educationInfo.degree,
@@ -226,7 +226,7 @@ export default async ( opt ) => {
             } );
         }
         if ( experience ) {
-            faculty.transaction( t => Promise.all( experience.map( experienceInfo => Experience.create( {
+            await faculty.transaction( t => Promise.all( experience.map( experienceInfo => Experience.create( {
                 profileId,
                 from:           experienceInfo.from,
                 to:             experienceInfo.to,
@@ -242,7 +242,7 @@ export default async ( opt ) => {
             } );
         }
         if ( researchGroup ) {
-            faculty.transaction( t => Promise.all( researchGroup.map( type => ResearchGroup.create( {
+            await faculty.transaction( t => Promise.all( researchGroup.map( type => ResearchGroup.create( {
                 type,
                 profileId,
             }, {
@@ -252,7 +252,7 @@ export default async ( opt ) => {
             } );
         }
         if ( specialtyI18n ) {
-            faculty.transaction( t => Promise.all( specialtyI18n.map( async ( specialtyInfo ) => {
+            await faculty.transaction( t => Promise.all( specialtyI18n.map( async ( specialtyInfo ) => {
                 const maxId = await SpecialtyI18n.max( 'specialtyId' );
                 return Profile.create( {
                     specialtyI18n: specialtyInfo.map( langInfo => ( {
@@ -273,7 +273,7 @@ export default async ( opt ) => {
             } );
         }
         if ( title ) {
-            faculty.transaction( t => Promise.all( title.map( titleInfo => Title.create( {
+            await faculty.transaction( t => Promise.all( title.map( titleInfo => Title.create( {
                 from:        titleInfo.from,
                 to:          titleInfo.to,
                 profileId,
