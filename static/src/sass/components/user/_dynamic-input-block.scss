@@ -1,0 +1,134 @@
+@mixin dynamic-input-block ( $block, $modifier ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .input-block.#{ $block }__input-block--#{ $modifier } {
+    // [ variable ]
+    $large: 750px;
+    $small: 500px;
+
+    // [ layout ]
+    display: flex;
+    align-content: flex-start;
+
+    // [ position ]
+    width: 100%;
+    height: font__px-to-rem( 80 );
+
+    // `> .#{ $block } > .#{ $block }__input-block` > .block
+    > .input-block__block.block {
+      // [ position ]
+      width: 100%;
+
+      // [ skin ]
+      border: {
+        bottom: solid font__px-to-rem( 2 ) #adacad;
+        radius: font__px-to-rem( 3 );
+      }
+
+      // `> .#{ $block } > .#{ $block }__input-block` > .block > .block__content
+      > .block__content {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:'word remove modify';
+          columns: auto font__px-to-rem( 35 ) font__px-to-rem( 35 );
+        }
+        align-content: center;
+
+        // [ position ]
+        width: 100%;
+        height: 100%;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          grid-template: {
+            areas:'. word remove modify';
+            columns:font__px-to-rem( 100 ) auto font__px-to-rem( 35 ) font__px-to-rem( 35 );
+          }
+        }
+
+        // [ template ]
+        %content__word {
+          // [ layout ]
+          display: flex;
+
+          // [ position ]
+          width: auto;
+          height: auto;
+          padding-right: font__px-to-rem( 10 );
+          align-self: center;
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            style: normal;
+            stretch: normal;
+          }
+          text-align: left;
+          line-height: font__px-to-rem( 20 );
+          letter-spacing: normal;
+          word-wrap: break-word;
+        }
+
+        > .content__word {
+          // [ template ]
+          @extend %content__word;
+
+          // [ layout ]
+          grid-area: word;
+
+          // [ position ]
+          max-width: 90%;
+
+          // [ skin ]
+          color: rgba( 81, 81, 81, .87 );
+          overflow: visible;
+        }
+
+        > .content__modify {
+          // [ template ]
+          @extend %content__word;
+
+          // [ layout ]
+          grid-area: modify;
+
+          // [ position ]
+          width: font__px-to-rem( 30 );
+          height: auto;
+
+          // [ skin ]
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+          &:hover {
+            // [ skin ]
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+            cursor: pointer;
+          }
+        }
+
+        > .content__remove {
+          // [ template ]
+          @extend %content__word;
+
+          // [ layout ]
+          grid-area: remove;
+
+          // [ position ]
+          width: font__px-to-rem( 30 );
+          height: auto;
+
+          // [ skin ]
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+          &:hover {
+            // [ skin ]
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  // [ customization ]
+  @content;
+}

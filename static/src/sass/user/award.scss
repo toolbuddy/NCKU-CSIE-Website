@@ -7,7 +7,7 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
-@import 'components/user/input-block';
+@import 'components/user/dynamic-input-block.scss';
 @import 'components/user/edit-page';
 
 // block
@@ -171,7 +171,7 @@
         @include local-topic( 'award-block' );
 
         > .award-block__award.award {
-          @include input-block( $block: 'award', $modifier: 'award' );
+          @include dynamic-input-block( $block: 'award', $modifier: 'award' );
         }
       }
     }
