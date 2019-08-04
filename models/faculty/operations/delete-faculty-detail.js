@@ -13,6 +13,7 @@ import {
 
 import departmentUtils from 'models/faculty/utils/department.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
+import { faculty, } from 'models/common/utils/connect.js';
 
 export default async ( opt ) => {
     try {
@@ -112,95 +113,128 @@ export default async ( opt ) => {
         }
 
         if ( department ) {
-            await Department.destroy( {
+            faculty.transaction( t => Department.destroy( {
                 where: {
                     profileId,
                     type: department,
                 },
+                transaction: t,
+            } ) ).catch( ( err ) => {
+                throw err;
             } );
         }
         if ( education ) {
             for ( const id of education ) {
-                await Education.findOne( {
+                faculty.transaction( t => Education.findOne( {
                     where: {
                         profileId,
                         educationId: id,
                     },
-                } ).then( async () => {
-                    await EducationI18n.destroy( {
-                        where: {
-                            educationId: id,
-                        },
-                    } );
-                } ).then( async () => {
-                    await Education.destroy( {
-                        where: {
-                            profileId,
-                            educationId: id,
-                        },
-                    } );
+                } ).then( ( education ) => {
+                    if ( education ) {
+                        return EducationI18n.destroy( {
+                            where: {
+                                educationId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ).then( ( destroyedNum ) => {
+                    if ( destroyedNum > 0 ) {
+                        return Education.destroy( {
+                            where: {
+                                profileId,
+                                educationId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ) ).catch( ( err ) => {
+                    throw err;
                 } );
             }
         }
         if ( experience ) {
             for ( const id of experience ) {
-                await Experience.findOne( {
+                faculty.transaction( t => Experience.findOne( {
                     where: {
                         profileId,
                         experienceId: id,
                     },
-                } ).then( async () => {
-                    await ExperienceI18n.destroy( {
-                        where: {
-                            experienceId: id,
-                        },
-                    } );
-                } ).then( async () => {
-                    await Experience.destroy( {
-                        where: {
-                            profileId,
-                            experienceId: id,
-                        },
-                    } );
+                } ).then( ( experience ) => {
+                    if ( experience ) {
+                        return ExperienceI18n.destroy( {
+                            where: {
+                                experienceId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ).then( ( destroyedNum ) => {
+                    if ( destroyedNum > 0 ) {
+                        return Experience.destroy( {
+                            where: {
+                                profileId,
+                                experienceId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ) ).catch( ( err ) => {
+                    throw err;
                 } );
             }
         }
         if ( researchGroup ) {
-            await ResearchGroup.destroy( {
+            faculty.transaction( t => ResearchGroup.destroy( {
                 where: {
                     profileId,
                     type: researchGroup,
                 },
+                transaction: t,
+            } ) ).catch( ( err ) => {
+                throw err;
             } );
         }
         if ( specialtyI18n ) {
-            await SpecialtyI18n.destroy( {
+            faculty.transaction( t => SpecialtyI18n.destroy( {
                 where: {
                     profileId,
                     specialtyId: specialtyI18n,
                 },
+                transaction: t,
+            } ) ).catch( ( err ) => {
+                throw err;
             } );
         }
         if ( title ) {
             for ( const id of title ) {
-                await Title.findOne( {
+                faculty.transaction( t => Title.findOne( {
                     where: {
                         profileId,
                         titleId: id,
                     },
-                } ).then( async () => {
-                    await TitleI18n.destroy( {
-                        where: {
-                            titleId: id,
-                        },
-                    } );
-                } ).then( async () => {
-                    await Title.destroy( {
-                        where: {
-                            profileId,
-                            titleId: id,
-                        },
-                    } );
+                } ).then( ( title ) => {
+                    if ( title ) {
+                        return TitleI18n.destroy( {
+                            where: {
+                                titleId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ).then( ( destroyedNum ) => {
+                    if ( destroyedNum > 0 ) {
+                        return Title.destroy( {
+                            where: {
+                                profileId,
+                                titleId: id,
+                            },
+                            transaction: t,
+                        } );
+                    }
+                } ) ).catch( ( err ) => {
+                    throw err;
                 } );
             }
         }

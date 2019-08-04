@@ -36,10 +36,6 @@ const Admin = user.define( 'admin', {
         type:       Sequelize.STRING( 20 ),
         allowNull:    false,
     },
-    salt: {
-        type:       Sequelize.STRING( 50 ),
-        allowNull:  false,
-    },
     roleId: {
         type:         Sequelize.INTEGER.UNSIGNED,
         allowNull:    false,

@@ -10,10 +10,11 @@ const ProfileValidationConstraints = {
     },
     email: {
         presence: false,
-        type:       'string',
+        type:     'string',
         length:   {
             maximum: 2083,
         },
+        email:    true,
     },
     personalWeb: {
         presence: false,
@@ -21,6 +22,7 @@ const ProfileValidationConstraints = {
         length:   {
             maximum: 2083,
         },
+        url:      true,
     },
     nation: {
         presence: false,
@@ -41,12 +43,18 @@ const ProfileValidationConstraints = {
         length:   {
             maximum: 30,
         },
+        format: {
+            pattern: '(\([0-9]+\))*([0-9]+\-)*[0-9]+(\,[0-9]+)?',
+        },
     },
     labTel: {
         presence: false,
         type:       'string',
         length:   {
             maximum: 30,
+        },
+        format: {
+            pattern: '(\([0-9]+\))*([0-9]+\-)*[0-9]+(\,[0-9]+)?',
         },
     },
     labWeb: {
@@ -55,6 +63,7 @@ const ProfileValidationConstraints = {
         length:   {
             maximum: 2083,
         },
+        url:      true,
     },
     order: {
         presence: false,

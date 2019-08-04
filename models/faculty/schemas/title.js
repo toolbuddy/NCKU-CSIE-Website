@@ -14,11 +14,11 @@ const Title = faculty.define( 'title', {
         primaryKey: true,
     },
     from: {
-        type:      Sequelize.DATEONLY,
+        type:      Sequelize.INTEGER.UNSIGNED,
         allowNull: true,
     },
     to: {
-        type:      Sequelize.DATEONLY,
+        type:      Sequelize.INTEGER.UNSIGNED,
         allowNull: true,
     },
 } );
