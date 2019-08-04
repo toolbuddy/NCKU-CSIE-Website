@@ -156,7 +156,7 @@ export default async ( opt ) => {
 
         if ( education ) {
             for ( const educationInfo of education ) {
-                faculty.transaction( t => Education.update( {
+                await faculty.transaction( t => Education.update( {
                     nation: educationInfo.nation,
                     degree: educationInfo.degree,
                     from:   educationInfo.from,
@@ -185,7 +185,7 @@ export default async ( opt ) => {
         }
         if ( experience ) {
             for ( const experienceInfo of experience ) {
-                faculty.transaction( t => Experience.update( {
+                await faculty.transaction( t => Experience.update( {
                     from: experienceInfo.from,
                     to:   experienceInfo.to,
                 }, {
@@ -212,7 +212,7 @@ export default async ( opt ) => {
             }
         }
         if ( profile ) {
-            faculty.transaction( t => Profile.update( {
+            await faculty.transaction( t => Profile.update( {
                 fax:         profile.fax,
                 email:       profile.email,
                 personalWeb: profile.personalWeb,
@@ -246,7 +246,7 @@ export default async ( opt ) => {
         }
         if ( specialtyI18n ) {
             for ( const specialtyInfo of specialtyI18n ) {
-                faculty.transaction( t => SpecialtyI18n.update( {
+                await faculty.transaction( t => SpecialtyI18n.update( {
                     specialty: specialtyInfo.specialty,
                 }, {
                     where: {
@@ -260,7 +260,7 @@ export default async ( opt ) => {
         }
         if ( title ) {
             for ( const titleInfo of title ) {
-                faculty.transaction( t => Title.update( {
+                await faculty.transaction( t => Title.update( {
                     from: titleInfo.from,
                     to:   titleInfo.to,
                 }, {

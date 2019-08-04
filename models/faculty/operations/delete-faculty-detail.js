@@ -113,7 +113,7 @@ export default async ( opt ) => {
         }
 
         if ( department ) {
-            faculty.transaction( t => Department.destroy( {
+            await faculty.transaction( t => Department.destroy( {
                 where: {
                     profileId,
                     type: department,
@@ -125,7 +125,7 @@ export default async ( opt ) => {
         }
         if ( education ) {
             for ( const id of education ) {
-                faculty.transaction( t => Education.findOne( {
+                await faculty.transaction( t => Education.findOne( {
                     where: {
                         profileId,
                         educationId: id,
@@ -156,7 +156,7 @@ export default async ( opt ) => {
         }
         if ( experience ) {
             for ( const id of experience ) {
-                faculty.transaction( t => Experience.findOne( {
+                await faculty.transaction( t => Experience.findOne( {
                     where: {
                         profileId,
                         experienceId: id,
@@ -186,7 +186,7 @@ export default async ( opt ) => {
             }
         }
         if ( researchGroup ) {
-            faculty.transaction( t => ResearchGroup.destroy( {
+            await faculty.transaction( t => ResearchGroup.destroy( {
                 where: {
                     profileId,
                     type: researchGroup,
@@ -197,7 +197,7 @@ export default async ( opt ) => {
             } );
         }
         if ( specialtyI18n ) {
-            faculty.transaction( t => SpecialtyI18n.destroy( {
+            await faculty.transaction( t => SpecialtyI18n.destroy( {
                 where: {
                     profileId,
                     specialtyId: specialtyI18n,
@@ -209,7 +209,7 @@ export default async ( opt ) => {
         }
         if ( title ) {
             for ( const id of title ) {
-                faculty.transaction( t => Title.findOne( {
+                await faculty.transaction( t => Title.findOne( {
                     where: {
                         profileId,
                         titleId: id,
