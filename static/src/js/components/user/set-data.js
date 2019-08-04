@@ -64,13 +64,10 @@ class SetData {
 
     async renderBlock ( info ) {
         try {
-            const buttonI18n = dataI18n.button;
             const data = {
                 info,
-                button:   {
-                    remove: buttonI18n[ this.config.languageId ].delete,
-                    modify: buttonI18n[ this.config.languageId ].update,
-                },
+                removeSrc: `${ host }/static/image/icon/delete.png`,
+                editSrc:   `${ host }/static/image/icon/edit.png`,
             };
             this.DOM.block.innerHTML += dynamicInputBlock( {
                 data,
@@ -102,6 +99,13 @@ class SetData {
                             'title', ].forEach( ( element ) => {
                             if ( ValidateUtils.isValidString( res[ element ] ) )
                                 content += `${ res[ element ] } `;
+                        } );
+                        break;
+                    case 'award':
+                        [ 'award',
+                            'receivedYear', ].forEach( ( element ) => {
+                            if ( ValidateUtils.isValidString( res[ element ] ) )
+                                content += `${ res[ element ] }  `;
                         } );
                         break;
                     case 'title':
@@ -346,6 +350,7 @@ class SetData {
     async exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
+            console.log( data[ this.config.languageId ] );
             if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
                 this.setBlock( data );
             this.setAddButtonEvent();

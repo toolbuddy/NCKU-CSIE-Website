@@ -3,6 +3,7 @@
   > .input-block.#{ $block }__input-block--#{ $modifier } {
     // [ variable ]
     $large: 750px;
+    $small: 500px;
 
     // [ layout ]
     display: flex;
@@ -36,7 +37,7 @@
           area: content;
           template: {
             areas: 'title content';
-            columns: 1fr 4fr;
+            columns: font__px-to-rem( 120 ) auto;
           }
         }
       }
@@ -82,20 +83,29 @@
 
           // [ position ]
           width: auto;
-          height: font__px-to-rem( 25 );
+          height: auto;
           padding-right: font__px-to-rem( 10 );
           align-self: center;
 
           // [ skin ]
           font: {
-            size: font__px-to-rem( 18 );
+            size: font__px-to-rem( 16 );
             style: normal;
             stretch: normal;
           }
-          text-align: center;
-          line-height: font__px-to-rem( 20 );
+          text-align: right;
+          line-height: font__px-to-rem( 17 );
           letter-spacing: normal;
           word-break: break-all;
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ skin ]
+            font-size: font__px-to-rem( 18 );
+            line-height: font__px-to-rem( 20 );
+            word-break: normal;
+            word-wrap: break-word;
+          }
         }
 
         %content__tag {
@@ -129,14 +139,11 @@
           @extend %content__word;
 
           // [ position ]
-          max-width: 70%;
+          max-width: 90%;
 
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );
-          overflow: {
-            x: scroll;
-            y: visible;
-          }
+          overflow: visible;
         }
 
         > .content__modify {
@@ -144,19 +151,15 @@
           @extend %content__word;
 
           // [ position ]
-          width: font__px-to-rem( 40 );
+          width: font__px-to-rem( 30 );
+          height: auto;
 
           // [ skin ]
-          font: {
-            size: font__px-to-rem( 15 );
-            weight: bold;
-          }
-          color: rgba( 28, 81, 134, .87 );
-          background-color: white;
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
 
           &:hover {
             // [ skin ]
-            color: rgba( 5, 34, 63, .87 );
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
             cursor: pointer;
           }
         }
@@ -166,19 +169,15 @@
           @extend %content__word;
 
           // [ position ]
-          width: font__px-to-rem( 40 );
+          width: font__px-to-rem( 30 );
+          height: auto;
 
           // [ skin ]
-          font: {
-            size: font__px-to-rem( 15 );
-            weight: bold;
-          }
-          color: rgba( 28, 81, 134, .87 );
-          background-color: white;
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
 
           &:hover {
             // [ skin ]
-            color: rgba( 5, 34, 63, .87 );
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
             cursor: pointer;
           }
         }
