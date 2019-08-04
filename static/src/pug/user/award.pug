@@ -59,6 +59,13 @@ append content
   +navigation-bar( 'content' )
   main.content__main#content__main
 
+  +navigation-bar( 'content' )
+  main.content__information
+    +topic( 'information', i18n[ LANG.id ].content.topic )
+    article.information__award-block.award-block
+      +local-topic( 'award-block', '榮譽及獲獎 / Award', true )
+      section.award-block__award.award#award
+
 append footer
 
 append scripts
