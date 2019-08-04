@@ -81,120 +81,53 @@ class SetData {
         }
     }
 
-    async renderEducationBlock ( data ) {
+    async setBlock ( data ) {
         try {
             this.DOM.block.innerHTML = '';
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
                 let content = '';
-                [ res.school,
-                    res.major,
-                    degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ], ].forEach( ( element ) => {
-                    if ( ValidateUtils.isValidString( element ) )
-                        content += `${ element } `;
-                } );
+                const dbTableId = res[ `${ this.config.dbTable }Id` ];
+                switch ( this.config.dbTable ) {
+                    case 'education':
+                        [ res.school,
+                            res.major,
+                            degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ], ].forEach( ( element ) => {
+                            if ( ValidateUtils.isValidString( element ) )
+                                content += `${ element } `;
+                        } );
+                        break;
+                    case 'experience':
+                        [ 'organization',
+                            'department',
+                            'title', ].forEach( ( element ) => {
+                            if ( ValidateUtils.isValidString( res[ element ] ) )
+                                content += `${ res[ element ] } `;
+                        } );
+                        break;
+                    case 'title':
+                        content = res.title;
+                        break;
+                    case 'specialty':
+                        content = res.specialty;
+                        break;
+                    default:
+                        content = '';
+                }
                 await this.renderBlock( {
-                    modifier: 'education',
-                    id:       res.educationId,
-                    content,
-                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ].education[ index ] ),
-                } );
-                await this.setUpdateButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.educationId ) ),
-                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].education[ index ] ),
-                    id:        res.educationId,
-                } );
-                await this.setDeleteButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.educationId ) ),
-                    id:        res.educationId,
-                    content:   `${ res.school } ${ res.major } ${ degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ] }`,
-                } );
-            } );
-        }
-        catch ( err ) {
-            throw err;
-        }
-    }
-
-    async renderExperienceBlock ( data ) {
-        try {
-            this.DOM.block.innerHTML = '';
-            data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                let content = '';
-                [ 'organization',
-                    'department',
-                    'title', ].forEach( ( element ) => {
-                    if ( ValidateUtils.isValidString( res[ element ] ) )
-                        content += `${ res[ element ] } `;
-                } );
-                await this.renderBlock( {
-                    modifier: 'experience',
-                    id:       res.experienceId,
+                    modifier: this.config.dbTable,
+                    id:       dbTableId,
                     content,
                     res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.experienceId ) ),
+                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, dbTableId ) ),
                     res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                    id:        res.experienceId,
+                    id:        dbTableId,
                 } );
                 await this.setDeleteButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.experienceId ) ),
-                    id:        res.experienceId,
-                    content:   `${ res.organization } ${ res.department } ${ res.title }`,
-                } );
-            } );
-        }
-        catch ( err ) {
-            throw err;
-        }
-    }
-
-    async renderTitleBlock ( data ) {
-        try {
-            this.DOM.block.innerHTML = '';
-            data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                await this.renderBlock( {
-                    modifier: 'title',
-                    id:       res.titleId,
-                    content:  res.title,
-                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                } );
-                await this.setUpdateButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.titleId ) ),
-                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                    id:        res.titleId,
-                } );
-                await this.setDeleteButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.titleId ) ),
-                    id:        res.titleId,
-                    content:   res.title,
-                } );
-            } );
-        }
-        catch ( err ) {
-            throw err;
-        }
-    }
-
-    async renderSpecialtyBlock ( data ) {
-        try {
-            this.DOM.block.innerHTML = '';
-            data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                await this.renderBlock( {
-                    modifier: 'specialty',
-                    id:       res.specialtyId,
-                    content:  res.specialty,
-                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                } );
-                await this.setUpdateButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.specialtyId ) ),
-                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                    id:        res.specialtyId,
-                } );
-                await this.setDeleteButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.specialtyId ) ),
-                    id:        res.specialtyId,
-                    content:   res.specialty,
+                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, dbTableId ) ),
+                    id:        dbTableId,
+                    content,
                 } );
             } );
         }
@@ -413,25 +346,8 @@ class SetData {
     async exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data );
-            if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) ) {
-                switch ( this.config.dbTable ) {
-                    case 'education':
-                        await this.renderEducationBlock( data );
-                        break;
-                    case 'experience':
-                        await this.renderExperienceBlock( data );
-                        break;
-                    case 'title':
-                        await this.renderTitleBlock( data );
-                        break;
-                    case 'specialty':
-                        await this.renderSpecialtyBlock( data );
-                        break;
-                    default:
-                        break;
-                }
-            }
+            if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
+                this.setBlock( data );
             this.setAddButtonEvent();
         } );
     }

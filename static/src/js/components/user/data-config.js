@@ -295,34 +295,6 @@ const dataEditPageConfig = Object.freeze( {
         editPageType(
             {
                 type:        'localTopic',
-                dbTableItem: 'school',
-            }
-        ),
-        editPageType(
-            {
-                type:        'text',
-                dbTableItem: 'school',
-                dataType:    'text',
-                i18n:        true,
-            }
-        ),
-        editPageType(
-            {
-                type:        'localTopic',
-                dbTableItem: 'major',
-            }
-        ),
-        editPageType(
-            {
-                type:        'text',
-                dbTableItem: 'major',
-                dataType:    'text',
-                i18n:        true,
-            }
-        ),
-        editPageType(
-            {
-                type:        'localTopic',
                 dbTableItem: 'degree',
             }
         ),
@@ -333,6 +305,34 @@ const dataEditPageConfig = Object.freeze( {
                 dataType:     'text',
                 dropdownItem: degreeUtils.i18n[ WebLanguageUtils.currentLanguageId ],
                 util:         degreeUtils,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'school',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'school',
+                dataType:    'text',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'major',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'major',
+                dataType:    'text',
+                i18n:        true,
             }
         ),
     ],

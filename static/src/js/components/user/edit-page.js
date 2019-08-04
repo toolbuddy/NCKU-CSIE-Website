@@ -121,38 +121,48 @@ class EditPage {
     }
 
     setDropdownInput ( editPageConfig ) {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
-        const util = editPageConfig.util;
+        try {
+            const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+            const util = editPageConfig.util;
 
-        let value = util.map.indexOf( util.defaultOption );
-        if ( this.config.buttonMethod === 'update' )
-            value = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
+            new Promise( ( res ) => {
+                let value = util.map.indexOf( util.defaultOption );
+                if ( this.config.buttonMethod === 'update' )
+                    value = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
 
-        const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
+                const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
 
-        infoDOM.innerHTML += editPageContentHTML( {
-            top,
-            value,
-            data:        editPageConfig.dropdownItem,
-            name:        `${ editPageConfig.dbTableItem }`,
-            dbTableItem: editPageConfig.dbTableItem,
-            type:        'dropdown',
-        } );
+                infoDOM.innerHTML += editPageContentHTML( {
+                    top,
+                    value,
+                    data:        editPageConfig.dropdownItem,
+                    name:        `${ editPageConfig.dbTableItem }`,
+                    dbTableItem: editPageConfig.dbTableItem,
+                    type:        'dropdown',
+                } );
 
-        const dropdownTop = infoDOM.querySelector( '.input__dropdown > .dropdown__top' );
-        const dropdownItems = infoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
-        const dropdownSubmit = infoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
-        dropdownTop.addEventListener( 'click', () => {
-            classAdd( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
-        } );
-        dropdownItems.forEach( ( item ) => {
-            item.addEventListener( 'click', ( element ) => {
-                const newValue = element.target.getAttribute( 'value' );
-                dropdownTop.textContent = util.i18n[ this.config.languageId ][ newValue ];
-                dropdownSubmit.value = util.map.indexOf( newValue );
-                classRemove( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                res();
+            } )
+            .then( () => {
+                const dropdownTop = infoDOM.querySelector( '.input__dropdown > .dropdown__top' );
+                const dropdownItems = infoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
+                const dropdownSubmit = infoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
+                dropdownTop.addEventListener( 'click', () => {
+                    classAdd( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                } );
+                dropdownItems.forEach( ( item ) => {
+                    item.addEventListener( 'click', ( element ) => {
+                        const newValue = element.target.getAttribute( 'value' );
+                        dropdownTop.textContent = util.i18n[ this.config.languageId ][ newValue ];
+                        dropdownSubmit.value = util.map.indexOf( newValue );
+                        classRemove( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                    } );
+                } );
             } );
-        } );
+        }
+        catch ( err ) {
+            console.error( err );
+        }
     }
 
     async setEditPageInputBlock () {

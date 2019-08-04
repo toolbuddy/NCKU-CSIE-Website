@@ -53,21 +53,22 @@ async function fetchData () {
             throw new Error( 'No faculty found' );
 
         return res.json();
-    }catch(err){
-        console.error(err);
+    }
+    catch ( err ) {
+        console.error( err );
     }
 }
 
-(async ()=>{
-    try{
+( async () => {
+    try {
         const result = await fetchData();
-        if(result.userId > -1 && result.role === roleUtils.getIdByOption('faculty')){
+        if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'faculty' ) ) {
             try {
                 const nevagationBar = new NavigationBar( {
                     navigationDOM: document.getElementById( 'navigation' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                 } );
-            
+
                 nevagationBar.exec();
             }
             catch ( err ) {
@@ -86,7 +87,7 @@ async function fetchData () {
             catch ( err ) {
                 console.error( err );
             }
-            
+
             try {
                 const setEducationData = new SetData( {
                     blockDOM:       document.getElementById( 'education' ),
@@ -95,7 +96,7 @@ async function fetchData () {
                     dbTable:          'education',
                     profileId:        result.roleId,
                 } );
-            
+
                 setEducationData.exec();
             }
             catch ( err ) {
@@ -111,13 +112,13 @@ async function fetchData () {
                 } );
                 if ( !( setExperienceData instanceof SetData ) )
                     throw new Error( 'setExperienceData inVaild' );
-            
+
                 setExperienceData.exec();
             }
             catch ( err ) {
                 console.error( err );
             }
-            
+
             try {
                 const setTitleData = new SetData( {
                     blockDOM:         document.getElementById( 'title' ),
@@ -128,13 +129,13 @@ async function fetchData () {
                 } );
                 if ( !( setTitleData instanceof SetData ) )
                     throw new Error( 'setTitleData inVaild' );
-            
+
                 setTitleData.exec();
             }
             catch ( err ) {
                 console.error( err );
             }
-            
+
             try {
                 const setSpecialtyData = new SetData( {
                     blockDOM:         document.getElementById( 'specialty' ),
@@ -145,21 +146,19 @@ async function fetchData () {
                 } );
                 if ( !( setSpecialtyData instanceof SetData ) )
                     throw new Error( 'setSpecialtyData inVaild' );
-            
+
                 setSpecialtyData.exec();
             }
             catch ( err ) {
                 console.error( err );
             }
-        }else if(result.userId > -1 && result.role === roleUtils.getIdByOption('staff')){
-            
         }
-    }catch( err ){
+        else if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
+
+        }
+    }
+    catch ( err ) {
         console.error( err );
     }
-})();
-
-
-
-
+} )();
 
