@@ -25,37 +25,11 @@ export default class SetProfileData {
         };
 
         this.config = {
-            dbTable:    'profile',
             languageId: opt.languageId,
             profileId:  opt.profileId,
         };
 
-        this.selector = {
-            node:     block => `.profile__${ block }`,
-            text:     block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`,
-            update:   block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`,
-            editPage: {
-                check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
-                cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
-                error:  '.edit-page__window > .window__form > .form__content > .content__error > .error__message',
-            },
-        };
-
         this.editPageConfig = dataEditPageConfig.profile;
-
-        this.classModifier = Object.freeze( {
-            name:          'name',
-            officeAddress:  'office-location',
-            labName:       'lab-name',
-            labAddress:    'lab-location',
-            labTel:        'lab-tel',
-            labWeb:        'lab-web',
-            officeTel:     'office-tel',
-            email:         'email',
-            fax:           'fax',
-            personalWeb:   'personal-web',
-            nation:        'nation',
-        } );
 
         this.isAddEventListener = {};
 
@@ -68,6 +42,17 @@ export default class SetProfileData {
             check:   opt.profileDOM.querySelector( '.profile__image > .image__check' ),
             cancel:  opt.profileDOM.querySelector( '.profile__image > .image__cancel' ),
         };
+
+        const selector = {
+            text:     block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__word`,
+            update:   block => `.profile__input-block--${ block } > .input-block__block > .block__content > .content__modify`,
+        };
+        this.updateButtonDOM = {};
+        this.textDOM = {};
+        Object.keys( SetProfileData.classModifier() ).forEach( ( dbTableItem ) => {
+            this.textDOM[ dbTableItem ] = opt.profileDOM.querySelector( selector.text( SetProfileData.classModifier()[ dbTableItem ] ) );
+            this.updateButtonDOM[ dbTableItem ] = this.DOM.profile.querySelector( selector.update( SetProfileData.classModifier()[ dbTableItem ] ) );
+        } );
 
         this.department = Array
         .from( opt.profileDOM.querySelectorAll( '.input-block > .input-block__block > .block__content > .content__tag--department' ) )
@@ -106,15 +91,27 @@ export default class SetProfileData {
         }
     }
 
+    static classModifier () {
+        return {
+            name:          'name',
+            officeAddress:  'office-location',
+            labName:       'lab-name',
+            labAddress:    'lab-location',
+            labTel:        'lab-tel',
+            labWeb:        'lab-web',
+            officeTel:     'office-tel',
+            email:         'email',
+            fax:           'fax',
+            personalWeb:   'personal-web',
+            nation:        'nation',
+        };
+    }
+
     async setData () {
         try {
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
-            .then( ( res ) => {
-                const dbData = {};
-                res.forEach( ( data, index ) => {
-                    dbData[ index ] = data;
-                } );
-                Object.keys( this.classModifier ).forEach( ( key ) => {
+            .then( ( dbData ) => {
+                Object.keys( SetProfileData.classModifier() ).forEach( ( key ) => {
                     this.setProfileBlock( key, dbData );
                 } );
 
@@ -132,57 +129,47 @@ export default class SetProfileData {
     }
 
     setProfileBlock ( dbTableItem, res ) {
-        const textDOM         = this.DOM.profile.querySelector( this.selector.text( this.classModifier[ dbTableItem ] ) );
-        const updateButtonDOM = this.DOM.profile.querySelector( this.selector.update( this.classModifier[ dbTableItem ] ) );
-
         if ( res[ this.config.languageId ].profile[ dbTableItem ] !== null ) {
-            textDOM.textContent = res[ this.config.languageId ].profile[ dbTableItem ];
+            this.textDOM[ dbTableItem ].textContent = res[ this.config.languageId ].profile[ dbTableItem ];
             if ( dbTableItem === 'nation' )
-                textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
+                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
         }
         else {
-            textDOM.textContent = '';
+            this.textDOM[ dbTableItem ].textContent = '';
             if ( dbTableItem === 'nation' )
-                textDOM.textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
+                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
         }
 
-        updateButtonDOM.addEventListener( 'click', async () => {
+        this.updateButtonDOM[ dbTableItem ].addEventListener( 'click', async () => {
             await this.setUpdateButtonEvent( dbTableItem, res );
         } );
     }
 
     async setUpdateButtonEvent ( dbTableItem, res ) {
-        const tempDataI18n = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                default: {
-                    [ dbTableItem ]: this.i18n[ LanguageUtils.getLanguageId( 'en-US' ) ].default[ dbTableItem ],
-                },
-                topic:   this.i18n[ LanguageUtils.getLanguageId( 'en-US' ) ].topic[ dbTableItem ],
-            },
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]:  {
-                default: {
-                    [ dbTableItem ]: this.i18n[ LanguageUtils.getLanguageId( 'zh-TW' ) ].default[ dbTableItem ],
-                },
-                topic:   this.i18n[ LanguageUtils.getLanguageId( 'zh-TW' ) ].topic[ dbTableItem ],
-            },
+        const selector = {
+            check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
         };
+        const tempDataI18n = LanguageUtils.supportedLanguageId.map( id => ( {
+            default: {
+                [ dbTableItem ]: this.i18n[ id ].default[ dbTableItem ],
+            },
+            topic:   this.i18n[ id ].topic[ dbTableItem ],
+        } ) );
         this.isAddEventListener[ dbTableItem ] = true;
         const editPage = new EditPage( {
             dbTable:        'profile',
             editPageConfig: this.editPageConfig[ dbTableItem ],
             languageId:     this.config.languageId,
             dataI18n:       tempDataI18n,
-            dbData:           {
-                [ LanguageUtils.getLanguageId( 'en-US' ) ]: res[ LanguageUtils.getLanguageId( 'en-US' ) ].profile,
-                [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: res[ LanguageUtils.getLanguageId( 'zh-TW' ) ].profile,
-            },
-            buttonMethod: 'update',
+            dbData:         LanguageUtils.supportedLanguageId.map( id => res[ id ].profile ),
+            buttonMethod:   'update',
         } );
         await editPage.renderEditPage();
 
         const editPageDOM = document.getElementById( 'edit-page' );
-        const cancelDOM = editPageDOM.querySelector( this.selector.editPage.cancel );
-        const checkDOM = editPageDOM.querySelector( this.selector.editPage.check );
+        const cancelDOM = editPageDOM.querySelector( selector.cancel );
+        const checkDOM = editPageDOM.querySelector( selector.check );
 
         cancelDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
@@ -200,7 +187,8 @@ export default class SetProfileData {
         let isValid = true;
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
-        const errDOM = editPageDOM.querySelector( this.selector.editPage.error );
+        const errorSelector = '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
+        const errDOM = editPageDOM.querySelector( errorSelector );
 
         const constraints = validationInfo.profile;
 
@@ -248,12 +236,11 @@ export default class SetProfileData {
             } ),
         } )
         .then( async () => {
-            const data = {
-                [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
-                [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
-            };
-            this.setProfileBlock( dbTableItem, data );
-            this.closeEditPageWindow();
+            Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
+            .then( ( dbData ) => {
+                this.setProfileBlock( dbTableItem, dbData );
+                this.closeEditPageWindow();
+            } );
         } ).catch( ( err ) => {
             this.closeEditPageWindow();
             console.error( err );

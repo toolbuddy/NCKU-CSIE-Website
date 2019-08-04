@@ -96,18 +96,12 @@ class SetData {
                     modifier: 'education',
                     id:       res.educationId,
                     content,
-                    res:      {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ].education[ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].education[ index ],
-                    },
+                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ].education[ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.educationId ) ),
-                    res:       {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
-                    id:       res.educationId,
+                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].education[ index ] ),
+                    id:        res.educationId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.educationId ) ),
@@ -136,18 +130,12 @@ class SetData {
                     modifier: 'experience',
                     id:       res.experienceId,
                     content,
-                    res:      {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
+                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.experienceId ) ),
-                    res:       {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
-                    id:       res.experienceId,
+                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
+                    id:        res.experienceId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.experienceId ) ),
@@ -169,18 +157,12 @@ class SetData {
                     modifier: 'title',
                     id:       res.titleId,
                     content:  res.title,
-                    res:      {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
+                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.titleId ) ),
-                    res:       {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
-                    id:       res.titleId,
+                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
+                    id:        res.titleId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.titleId ) ),
@@ -202,18 +184,12 @@ class SetData {
                     modifier: 'specialty',
                     id:       res.specialtyId,
                     content:  res.specialty,
-                    res:      {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
+                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, res.specialtyId ) ),
-                    res:       {
-                        [ LanguageUtils.getLanguageId( 'en-US' ) ]: data[ LanguageUtils.getLanguageId( 'en-US' ) ][ this.config.dbTable ][ index ],
-                        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: data[ LanguageUtils.getLanguageId( 'zh-TW' ) ][ this.config.dbTable ][ index ],
-                    },
-                    id:       res.specialtyId,
+                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
+                    id:        res.specialtyId,
                 } );
                 await this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, res.specialtyId ) ),
@@ -435,30 +411,29 @@ class SetData {
     }
 
     async exec () {
-        const data = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'en-US' ) ),
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: await this.fetchData( LanguageUtils.getLanguageId( 'zh-TW' ) ),
-        };
-
-        if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) ) {
-            switch ( this.config.dbTable ) {
-                case 'education':
-                    await this.renderEducationBlock( data );
-                    break;
-                case 'experience':
-                    await this.renderExperienceBlock( data );
-                    break;
-                case 'title':
-                    await this.renderTitleBlock( data );
-                    break;
-                case 'specialty':
-                    await this.renderSpecialtyBlock( data );
-                    break;
-                default:
-                    break;
+        Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
+        .then( async ( data ) => {
+            console.log( data );
+            if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) ) {
+                switch ( this.config.dbTable ) {
+                    case 'education':
+                        await this.renderEducationBlock( data );
+                        break;
+                    case 'experience':
+                        await this.renderExperienceBlock( data );
+                        break;
+                    case 'title':
+                        await this.renderTitleBlock( data );
+                        break;
+                    case 'specialty':
+                        await this.renderSpecialtyBlock( data );
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
-        this.setAddButtonEvent();
+            this.setAddButtonEvent();
+        } );
     }
 }
 
