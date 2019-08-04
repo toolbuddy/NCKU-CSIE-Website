@@ -24,6 +24,7 @@ class NavigationBar {
 
         const classModifier = {
             profile: 'profile',
+            award:   'award',
         };
 
         this.DOM.link = {};

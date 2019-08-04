@@ -173,11 +173,11 @@
         @include input-block( $block: 'profile', $modifier: 'name' );
 
         > .profile__title {
-          @include dynamic-input-block( $block: 'title', $modifier: 'title' );
+          @include dynamic-input-block( $block: 'title' );
         }
 
         > .profile__specialty {
-          @include dynamic-input-block( $block: 'specialty', $modifier: 'specialty' );
+          @include dynamic-input-block( $block: 'specialty' );
         }
         @include local-topic( 'title' );
         @include local-topic( 'specialty' );
@@ -450,7 +450,7 @@
       @include local-topic( 'experience-block' );
 
       > .experience-block__experience.experience {
-        @include dynamic-input-block( $block: 'experience', $modifier: 'experience' );
+        @include dynamic-input-block( $block: 'experience' );
       }
     }
 
@@ -480,7 +480,7 @@
       @include local-topic( 'education-block' );
 
       > .education {
-        @include dynamic-input-block( $block: 'education', $modifier: 'education' );
+        @include dynamic-input-block( $block: 'education' );
       }
     }
   }

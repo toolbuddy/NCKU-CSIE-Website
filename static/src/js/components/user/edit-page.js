@@ -86,7 +86,6 @@ class EditPage {
                 value,
                 placeholder,
                 name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : `${ editPageConfig.dbTableItem }`,
-                dataType:    editPageConfig.dataType,
                 type:        editPageConfig.type,
                 dbTableItem: editPageConfig.dbTableItem,
                 languageId,
@@ -144,18 +143,18 @@ class EditPage {
                 res();
             } )
             .then( () => {
-                const dropdownTop = infoDOM.querySelector( '.input__dropdown > .dropdown__top' );
-                const dropdownItems = infoDOM.querySelectorAll( '.input__dropdown > .dropdown__button > .button__content > .content__item' );
-                const dropdownSubmit = infoDOM.querySelector( '.input__dropdown > .dropdown__button > .button__submit' );
+                const dropdownTop = infoDOM.querySelector( `.input__dropdown > .dropdown__top--${ editPageConfig.dbTableItem }` );
+                const dropdownItems = infoDOM.querySelectorAll( `.dropdown__button > .button__content > .content__item--${ editPageConfig.dbTableItem }` );
+                const dropdownSubmit = infoDOM.querySelector( `.dropdown__button > .button__submit--${ editPageConfig.dbTableItem }` );
                 dropdownTop.addEventListener( 'click', () => {
-                    classAdd( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                    classAdd( infoDOM.querySelector( `.input__dropdown > .dropdown__button--${ editPageConfig.dbTableItem }` ), 'dropdown__button--active' );
                 } );
                 dropdownItems.forEach( ( item ) => {
                     item.addEventListener( 'click', ( element ) => {
                         const newValue = element.target.getAttribute( 'value' );
                         dropdownTop.textContent = util.i18n[ this.config.languageId ][ newValue ];
                         dropdownSubmit.value = util.map.indexOf( newValue );
-                        classRemove( infoDOM.querySelector( '.input__dropdown > .dropdown__button' ), 'dropdown__button--active' );
+                        classRemove( infoDOM.querySelector( `.dropdown__button--${ editPageConfig.dbTableItem }` ), 'dropdown__button--active' );
                     } );
                 } );
             } );
@@ -228,7 +227,6 @@ function editPageType ( info ) {
     const typeObj = {
         text: {
             type:        'text',
-            dataType:    info.dataType,
             dbTableItem: info.dbTableItem,
             i18n:        info.i18n,
         },

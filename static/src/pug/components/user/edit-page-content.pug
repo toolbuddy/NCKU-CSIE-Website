@@ -44,9 +44,12 @@ article.info__input#input
 
   else if type === 'dropdown'
     section.input__dropdown.dropdown
-      section.dropdown__top= top
-      article.dropdown__button.button
+      section.dropdown__top( 
+        class=`dropdown__top--${ dbTableItem }` 
+      )= top
+      article.dropdown__button.button( class= `dropdown__button--${ dbTableItem }` )
         input.button__submit( 
+          class= `button__submit--${ dbTableItem }`
           type = 'hidden' 
           name= name 
           value= value 
@@ -54,5 +57,8 @@ article.info__input#input
         )
         section.button__content.content
           each val, index in data  
-            section.content__item( value= index  )= val
+            section.content__item( 
+              class= `content__item--${ dbTableItem }`
+              value= index  
+            )= val
       

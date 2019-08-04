@@ -435,7 +435,7 @@ export default async ( opt ) => {
                 degree:      education.degree,
                 from:        education.from,
                 major:       education.educationI18n[ 0 ].major,
-                nation:      nationUtils.getOptionById( education.nation ),
+                nation:      education.nation,
                 school:      education.educationI18n[ 0 ].school,
                 to:          education.to,
             } ) ),

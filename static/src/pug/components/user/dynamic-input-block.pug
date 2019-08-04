@@ -1,15 +1,19 @@
 - 
-section.input-block(class=`${ data.info.modifier }__input-block ${ data.info.modifier }__input-block--${ data.info.modifier }` id=`${ data.modifier }-${ data.id }` )
+if data.opt.subtitle !== null && data.opt.subtitle !== ''
+  section.subtitle
+    p.subtitle__word= data.opt.subtitle
+
+section.input-block( class=`${ data.opt.modifier }__input-block ${ data.opt.modifier }__input-block--${ data.opt.id }` )
   main.input-block__block.block 
     article.block__content.content
-      p.content__word= data.info.content
+      p.content__word= data.opt.content
       img.content__remove( 
         alt = 'remove', 
-        class = `content__remove--${ data.info.modifier }-${ data.info.id }`
+        class = `content__remove--${ data.opt.modifier }-${ data.opt.id }`
         src = data.removeSrc,
       )
       img.content__modify( 
         alt = 'edit', 
-        class = `content__modify--${ data.info.modifier }-${ data.info.id }`
+        class = `content__modify--${ data.opt.modifier }-${ data.opt.id }`
         src = data.editSrc,
       )

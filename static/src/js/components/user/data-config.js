@@ -103,6 +103,7 @@ const dataI18n = Object.freeze( {
                 degree: 'degree',
                 school: 'school',
                 major:  'major',
+                nation: 'nation',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -116,6 +117,7 @@ const dataI18n = Object.freeze( {
                 degree: '學位',
                 school: '學校',
                 major:  '主修',
+                nation: '國家',
             },
         },
     },
@@ -144,6 +146,26 @@ const dataI18n = Object.freeze( {
                 organization: '任職單位',
                 department:   '任職部門',
                 title:        '職位',
+            },
+        },
+    },
+    award: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'award',
+            default: {
+                award: 'ex. 國立成功大學教學傑出教師',
+            },
+            localTopic: {
+                award: 'award',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '獎項',
+            default: {
+                award: 'ex. 國立成功大學教學傑出教師',
+            },
+            localTopic: {
+                award: '獎項',
             },
         },
     },
@@ -201,7 +223,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'name',
-                dataType:    'text',
                 i18n:        true,
             } ),
         ],
@@ -209,7 +230,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'officeAddress',
-                dataType:    'text',
                 i18n:        true,
             } ),
         ],
@@ -217,7 +237,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'labName',
-                dataType:    'text',
                 i18n:        true,
             } ),
         ],
@@ -225,7 +244,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'labAddress',
-                dataType:    'text',
                 i18n:        true,
             } ),
         ],
@@ -233,7 +251,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'labTel',
-                dataType:    'tel',
                 i18n:        false,
             } ),
         ],
@@ -241,7 +258,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'labWeb',
-                dataType:    'url',
                 i18n:        false,
             } ),
         ],
@@ -249,7 +265,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'officeTel',
-                dataType:    'tel',
                 i18n:        false,
             } ),
         ],
@@ -257,7 +272,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'email',
-                dataType:    'email',
                 i18n:        false,
             } ),
         ],
@@ -265,7 +279,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'fax',
-                dataType:    'tel',
                 i18n:        false,
             } ),
         ],
@@ -273,7 +286,6 @@ const dataEditPageConfig = Object.freeze( {
             editPageType( {
                 type:        'text',
                 dbTableItem: 'personalWeb',
-                dataType:    'url',
                 i18n:        false,
             } ),
         ],
@@ -302,9 +314,22 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:         'dropdown',
                 dbTableItem:  'degree',
-                dataType:     'text',
                 dropdownItem: degreeUtils.i18n[ WebLanguageUtils.currentLanguageId ],
                 util:         degreeUtils,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'nation',
+            }
+        ),
+        editPageType(
+            {
+                type:         'dropdown',
+                dbTableItem:  'nation',
+                dropdownItem: nationUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+                util:         nationUtils,
             }
         ),
         editPageType(
@@ -317,7 +342,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'school',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -331,7 +355,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'major',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -352,7 +375,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'organization',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -366,7 +388,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'department',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -380,7 +401,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'title',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -395,7 +415,6 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'title',
-                dataType:    'text',
                 i18n:        true,
             }
         ),
@@ -405,7 +424,15 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'specialty',
-                dataType:    'text',
+                i18n:        true,
+            }
+        ),
+    ],
+    award: [
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'award',
                 i18n:        true,
             }
         ),

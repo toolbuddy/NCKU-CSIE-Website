@@ -171,7 +171,7 @@
         @include local-topic( 'award-block' );
 
         > .award-block__award.award {
-          @include dynamic-input-block( $block: 'award', $modifier: 'award' );
+          @include dynamic-input-block( $block: 'award' );
         }
       }
     }

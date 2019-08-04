@@ -62,10 +62,10 @@ class SetData {
         }
     }
 
-    async renderBlock ( info ) {
+    async renderBlock ( opt ) {
         try {
             const data = {
-                info,
+                opt,
                 removeSrc: `${ host }/static/image/icon/delete.png`,
                 editSrc:   `${ host }/static/image/icon/edit.png`,
             };
@@ -78,11 +78,43 @@ class SetData {
         }
     }
 
-    async setBlock ( data ) {
+    async sortData ( data ) {
+        if ( this.config.dbTable === 'award' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].award.sort( ( awardA, awardB ) => {
+                    if (
+                        awardA.receivedYear !== null &&
+                      awardB.receivedYear !== null &&
+                      awardA.receivedYear !== awardB.receivedYear
+                    )
+                        return awardB.receivedYear - awardA.receivedYear;
+                    else if (
+                        awardA.receivedMonth !== null &&
+                      awardB.receivedMonth !== null &&
+                      awardA.receivedMonth !== awardB.receivedMonth
+                    )
+                        return awardB.receivedMonth - awardA.receivedMonth;
+                    else if (
+                        awardA.receivedDay !== null &&
+                      awardB.receivedDay !== null &&
+                      awardA.receivedDay !== awardB.receivedDay
+                    )
+                        return awardB.receivedDay - awardA.receivedDay;
+                    return 0;
+                } );
+            } );
+        }
+        return data;
+    }
+
+    async setBlock ( dbData ) {
         try {
             this.DOM.block.innerHTML = '';
+            const data = await this.sortData( dbData );
+            let currentYear = new Date().getFullYear();
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
                 let content = '';
+                let subtitle = null;
                 const dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
@@ -102,11 +134,11 @@ class SetData {
                         } );
                         break;
                     case 'award':
-                        [ 'award',
-                            'receivedYear', ].forEach( ( element ) => {
-                            if ( ValidateUtils.isValidString( res[ element ] ) )
-                                content += `${ res[ element ] }  `;
-                        } );
+                        content = res.award;
+                        if ( res.receivedYear !== currentYear || index === 0 ) {
+                            subtitle = res.receivedYear;
+                            currentYear = res.receivedYear;
+                        }
                         break;
                     case 'title':
                         content = res.title;
@@ -121,6 +153,7 @@ class SetData {
                     modifier: this.config.dbTable,
                     id:       dbTableId,
                     content,
+                    subtitle,
                     res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
                 await this.setUpdateButtonEvent( {
