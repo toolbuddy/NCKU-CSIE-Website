@@ -7,7 +7,6 @@ article.info__input#input
       if content !== null
         input.input__content( 
           placeholder= placeholder
-          type= dataType
           value= value
           name= name 
           dbTableItem= dbTableItem
@@ -61,4 +60,11 @@ article.info__input#input
               class= `content__item--${ dbTableItem }`
               value= index  
             )= val
+  
+  else if type === 'time-detail'
+    aside.input__time-detail.time-detail
+      span.time-detail__input.input
+        input.input__year( type = 'number', value = year, placeholder = 'yyyy', min = '1999' name = dbTableYear)
+        input.input__month( type = 'number', value = month, placeholder = 'mm', min = '01', max = '12' name = dbTableMonty)
+        input.input__date( type = 'number', value = date, placeholder = 'dd', min = '01', max = '31' name = dbTableDate )
       

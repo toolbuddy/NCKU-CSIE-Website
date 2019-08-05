@@ -59,7 +59,11 @@ append breadcrumb
 
 append content
   +navigation-bar( 'content' )
-  main.content__main#content__main
+  main.content__main
+    +topic( 'main', i18n[ LANG.id ].content.topic )
+    article.main__conference-block.conference-block
+      +local-topic( 'conference-block', '參與會議 / Conference', true )
+      section.conference-block__conference.conference#conference
 
 append footer
 

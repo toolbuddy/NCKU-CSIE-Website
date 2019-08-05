@@ -164,6 +164,20 @@ class EditPage {
         }
     }
 
+    setTimeDetailInput ( editPageConfig ) {
+        console.log( 'time-detail' );
+        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+        infoDOM.innerHTML += editPageContentHTML( {
+            type:         'time-detail',
+            year:         ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].receivedYear : '',
+            month:        ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].reseivedMonth : '',
+            date:         ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].receivedDay : '',
+            dbTableYear:  editPageConfig.dbTableYear,
+            dbTableMonth: editPageConfig.dbTableMonth,
+            dbTableDate:  editPageConfig.dbTableDate,
+        } );
+    }
+
     async setEditPageInputBlock () {
         const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         infoDOM.innerHTML = '';
@@ -181,6 +195,9 @@ class EditPage {
                     break;
                 case 'dropdown':
                     this.setDropdownInput( element );
+                    break;
+                case 'time-detail':
+                    this.setTimeDetailInput( element );
                     break;
                 default:
                     break;
@@ -242,6 +259,12 @@ function editPageType ( info ) {
             util:         info.util,
             dbTableItem:  info.dbTableItem,
             dropdownItem: info.dropdownItem,
+        },
+        timeDetail: {
+            type:         'time-detail',
+            dbTableYear:  info.dbTableYear,
+            dbTableMonth: info.dbTableMonth,
+            dbTableDate:   info.dbTableDate,
         },
     };
 

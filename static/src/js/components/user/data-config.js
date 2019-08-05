@@ -156,7 +156,8 @@ const dataI18n = Object.freeze( {
                 award: 'ex. 國立成功大學教學傑出教師',
             },
             localTopic: {
-                award: 'award',
+                'award':         'award',
+                'time-detail': 'Received Date',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -165,7 +166,8 @@ const dataI18n = Object.freeze( {
                 award: 'ex. 國立成功大學教學傑出教師',
             },
             localTopic: {
-                award: '獎項',
+                'award':         '獎項',
+                'time-detail': '獲獎日期',
             },
         },
     },
@@ -431,6 +433,26 @@ const dataEditPageConfig = Object.freeze( {
     award: [
         editPageType(
             {
+                type:        'localTopic',
+                dbTableItem: 'time-detail',
+            }
+        ),
+        editPageType(
+            {
+                type:         'timeDetail',
+                dbTableYear:  'receivedYear',
+                dbTableMonth: 'receivedMonth',
+                dbTableDate:   'receivedDay',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'award',
+            }
+        ),
+        editPageType(
+            {
                 type:        'text',
                 dbTableItem: 'award',
                 i18n:        true,
@@ -616,6 +638,11 @@ const validationInfo = Object.freeze( {
             },
         },
         degree: {
+            presence: {
+                allowEmpty: false,
+            },
+        },
+        nation: {
             presence: {
                 allowEmpty: false,
             },

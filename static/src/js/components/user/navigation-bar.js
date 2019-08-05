@@ -23,8 +23,10 @@ class NavigationBar {
         };
 
         const classModifier = {
-            profile: 'profile',
-            award:   'award',
+            profile:     'profile',
+            award:       'award',
+            publication: 'publication',
+            conference:  'conference',
         };
 
         this.DOM.link = {};

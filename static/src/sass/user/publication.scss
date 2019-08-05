@@ -7,10 +7,17 @@
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
+@import 'components/user/dynamic-input-block.scss';
+@import 'components/user/edit-page';
 
 // block
 // `.body`
 .body {
+  // [ variable ]
+  $large: 1200px;
+  $medium: 710px;
+  $small: 535px;
+
   // [ skin ]
   background-color: #ffffff;
 
@@ -23,22 +30,32 @@
   @include header--large( $block: 'body' );
 
   // element
+  // `.body > .body__edit-page`
+  > .body__edit-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+
+    // [ componment ]
+    @include edit-page();
+  }
+
+  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
-    // [ variable ]
-    $large: 1200px;
-    $small: 600px;
-    $input-height-small: 30;
-
     // [ layout ]
     display: grid;
     grid-template: {
       areas:
         ' . breadcrumb  .'
+        ' . navigation  .'
         ' . main        .';
-      columns: 1fr 20fr 1fr;
+      columns: 1fr 50fr 1fr;
     }
 
     // [ skin ]
@@ -69,81 +86,6 @@
       // [ skin ]
       max-width: font__px-to-rem( 1740 );
       width: 94%;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ skin ]
-        width: 84%;
-      }
-    }
-
-    // `.body` > .content > .content__main
-    > .content__main {
-      // [ layout ]
-      display: block;
-      grid-area: main;
-
-      // [ position ]
-      width: 95%;
-      margin: {
-        top: font__px-to-rem( 80 );
-        left: auto;
-        right: auto;
-      }
-
-      // [ RWD: $small ]
-      @media screen and ( min-width: $small ) {
-        // [ position ]
-        width: 80%;
-      }
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ skin ]
-        max-width: font__px-to-rem( 1000 );
-        width: 95%;
-        margin: {
-          top: font__px-to-rem( 80 );
-          bottom: font__px-to-rem( 80 );
-          left: 0;
-        }
-      }
-
-      // element
-      // `.body > .content > .content__main > .main__topic`
-      @include topic( 'main' ) {
-        // [ layout ]
-        display: block;
-
-        // [ skin ]
-        width: 95%;
-        height: auto;
-
-        // position
-        margin: {
-          left: auto;
-          right: auto;
-          bottom: font__px-to-rem( 20 );
-        }
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ position ]
-          margin-left: font__px-to-rem( 31.5 );
-        }
-      }
-
-      // `.body > .content > .content__main > .main__topic`      
-      @include local-topic( $block: 'main' ) {
-        // [ skin ]
-        border: none;
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $small ) {
-          // [ position ]
-          margin-left: font__px-to-rem( 31.5 );
-        }
-      }
     }
 
     // block
@@ -154,6 +96,84 @@
 
       // [ layout ]
       grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__main
+    > .content__main {
+      // [ layout ]
+      display: block;
+      grid-area: main;
+
+      // [ position ]
+      width: 100%;
+      margin: {
+        top: font__px-to-rem( 20 );
+        bottom: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: 90%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        max-width: font__px-to-rem( 1080 );
+        margin: {
+          left: 0;
+          top: font__px-to-rem( 80 );
+        };
+      }
+
+      // element
+      // `.body > .content > .content__information > .information__topic`
+      @include topic( main ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+        }
+      }
+
+      // `.body > .content > .content__main > .main__publication-block`
+      .main__publication-block.publication-block {
+        // [ layout ]
+        display: block;
+        width: 95%;
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          width: 95%;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          max-width: font__px-to-rem( 1200 );
+        }
+
+        // `.body > .content > .content__main > .main__publication > publication__local-topic`
+        @include local-topic( 'publication-block' );
+
+        > .publication-block__publication.publication {
+          @include dynamic-input-block( $block: 'publication' );
+        }
+      }
     }
 
     // element

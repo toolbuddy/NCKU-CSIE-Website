@@ -152,6 +152,85 @@
             // [ position ]
             width: 100%;
 
+            > .input__time-detail.time-detail {
+              // [ position ]
+              width: 100%;
+              height: auto;
+
+              // element
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .#{ $element }__input`
+              // block
+              // `> .#{ $block } > .filter > .time > .#{ $element } > .input`
+              .time-detail__input.input {
+                // [ layout ]
+                display: block;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 6 );
+                  left: auto;
+                  right: auto;
+                }
+
+                // [ skin ]
+                width: font__px-to-rem( 134 );
+                height: font__px-to-rem( 32 );
+                border: font__px-to-rem( 1 ) solid #757575;
+                border-radius: font__px-to-rem( 32 );
+                padding: {
+                  left: font__px-to-rem( 8 );
+                  right: font__px-to-rem( 4 );
+                }
+
+                // template
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__?`
+                %input__element {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: top;
+                  line-height: font__px-to-rem( 14 );
+
+                  // [ skin ]
+                  height: font__px-to-rem( 30 );
+                  padding: {
+                    top: font__px-to-rem( 8 );
+                    bottom: font__px-to-rem( 8 );
+                  }
+                  background-color: transparent;
+                  font-size: font__px-to-rem( 14 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__year`
+                > .input__year {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 48 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__month`
+                > .input__month {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 36 );
+                }
+
+                // element
+                // `> .#{ $block } > .filter > .time > .#{ $element } > .input > .input__date`
+                > .input__date {
+                  // [ template ]
+                  @extend %input__element;
+
+                  // [ skin ]
+                  width: font__px-to-rem( 36 );
+                }
+              }
+            }
+
             .input__dropdown.dropdown {
               // [ layout ]
               display: block;
@@ -575,8 +654,8 @@
                 border-radius: 15px;
                 border: solid 1px #adacad;
                 font: {
-                  size: font__px-to-rem( 18 );
-                  weight: bold;
+                  size: font__px-to-rem( 17 );
+                  weight: normal;
                   style: normal;
                   stretch: normal;
                 }
@@ -609,6 +688,9 @@
         // [ templete ]
         %button__item {
           // [ layout ]
+          display: inline-block;
+
+          // [ position ]
           width: font__px-to-rem( 70 );
           height: font__px-to-rem( 30 );
 
@@ -623,6 +705,8 @@
           line-height: normal;
           letter-spacing: normal;
           color: rgba( 0, 0, 0, .87 );
+          background-color: white;
+          border-radius: font__px-to-rem( 10 );
 
           &:hover {
             // [ skin ]
@@ -637,24 +721,12 @@
           @extend %button__item;
 
           // [ layout ]
-          display: inline-block;
           margin-right: font__px-to-rem( 10 );
-
-          // [ skin ]
-          background-color: white;
-          border-radius: font__px-to-rem( 10 );
         }
 
         > .button__item--check {
           // [ templete ]
           @extend %button__item;
-
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          background-color: white;
-          border-radius: font__px-to-rem( 10 );
         }
       }
     }
