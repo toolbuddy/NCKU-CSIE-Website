@@ -16,11 +16,11 @@ const PublicationI18n = faculty.define( 'publicationI18n', {
     },
     title: {
         type:      Sequelize.STRING( 500 ),
-        allowNull: false,
+        allowNull: true,
     },
     authors: {
         type:      Sequelize.STRING( 500 ),
-        allowNull: false,
+        allowNull: true,
     },
 } );
 

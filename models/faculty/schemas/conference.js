@@ -15,7 +15,7 @@ const Conference = faculty.define( 'conference', {
     },
     hostYear: {
         type:      Sequelize.SMALLINT.UNSIGNED,
-        allowNull: false,
+        allowNull: true,
     },
 } );
 

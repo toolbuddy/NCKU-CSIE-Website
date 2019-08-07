@@ -16,11 +16,11 @@ const ConferenceI18n = faculty.define( 'conferenceI18n', {
     },
     conference: {
         type:      Sequelize.STRING( 300 ),
-        allowNull: false,
+        allowNull: true,
     },
     title: {
         type:      Sequelize.STRING( 300 ),
-        allowNull: false,
+        allowNull: true,
     },
 } );
 

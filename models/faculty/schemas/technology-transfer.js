@@ -13,11 +13,11 @@ const TechnologyTransfer = faculty.define( 'technologyTransfer', {
         allowNull:  false,
     },
     from: {
-        type:      Sequelize.DATEONLY,
+        type:      Sequelize.SMALLINT.UNSIGNED,
         allowNull: false,
     },
     to: {
-        type:      Sequelize.DATEONLY,
+        type:      Sequelize.SMALLINT.UNSIGNED,
         allowNull: true,
     },
 } );
