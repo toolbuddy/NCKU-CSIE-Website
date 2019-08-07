@@ -16,15 +16,15 @@ const TechnologyTransferI18n = faculty.define( 'technologyTransferI18n', {
     },
     technology: {
         type:      Sequelize.STRING( 300 ),
-        allowNull: false,
+        allowNull: true,
     },
     authorizingParty: {
         type:      Sequelize.STRING( 100 ),
-        allowNull: false,
+        allowNull: true,
     },
     authorizedParty: {
         type:      Sequelize.STRING( 100 ),
-        allowNull: false,
+        allowNull: true,
     },
 } );
 

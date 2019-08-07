@@ -19,16 +19,16 @@ const Publication = faculty.define( 'publication', {
     },
     category: {
         type:         Sequelize.TINYINT.UNSIGNED,
-        allowNull:    false,
+        allowNull:    true,
         defaultValue: publicationCategoryUtils.defaultId,
     },
     international: {
         type:      Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
     },
     refereed: {
         type:      Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
     },
     issueMonth: {
         type:      Sequelize.TINYINT.UNSIGNED,

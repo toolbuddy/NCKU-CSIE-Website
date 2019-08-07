@@ -16,7 +16,7 @@ const ProjectI18n = faculty.define( 'projectI18n', {
     },
     name: {
         type:      Sequelize.STRING( 300 ),
-        allowNull: false,
+        allowNull: true,
     },
     support: {
         type:      Sequelize.STRING( 100 ),
