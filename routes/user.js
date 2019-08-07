@@ -214,6 +214,28 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'publication' ) {
+                const item = {
+                    category:      Number( data.item.category ),
+                    international: data.item.international,
+                    refereed:      data.item.refereed,
+                    issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
+                    issueMonth:    1,
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'conference' ) {
                 const item = {
                     hostYear:    data.item.hostYear === '' ? null : Number( data.item.hostYear ),
@@ -302,6 +324,7 @@ router
                 title:         uploadData.add.title,
                 award:         uploadData.add.award,
                 conference:    uploadData.add.conference,
+                publication:   uploadData.add.publication,
             } );
         }
 
@@ -325,6 +348,7 @@ router
                 title:         uploadData.delete.title,
                 award:         uploadData.delete.award,
                 conference:    uploadData.delete.conference,
+                publication:   uploadData.delete.publication,
             } );
         }
 
@@ -334,6 +358,33 @@ router
                     from:    data.item.from === '' ? null : Number( data.item.from ),
                     to:      data.item.to === '' ? null : Number( data.item.to ),
                     titleId: Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'publication' ) {
+                const item = {
+                    category:      Number( data.item.category ),
+                    international: data.item.international,
+                    refereed:      data.item.refereed,
+                    issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
+                    issueMonth:    1,
+                    publicationId: Number( data.dbTableItemId ),
                 };
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
@@ -508,6 +559,7 @@ router
                 title:          uploadData.update.title,
                 award:          uploadData.update.award,
                 conference:     uploadData.update.conference,
+                publication:    uploadData.update.publication,
             } );
         }
 

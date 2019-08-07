@@ -356,6 +356,78 @@ const validationInfo = Object.freeze( {
             },
         },
     },
+    publication: {
+        issueYear: {
+            presence: {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份格式不正確',
+            },
+        },
+        issueMonth: {
+            presence:  {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 12,
+                message:           '月份格式不正確',
+            },
+        },
+        category: {
+            presence: {
+                allowEmpty: false,
+            },
+        },
+        international: {
+            presence: {
+                allowEmpty: false,
+            },
+        },
+        refereed: {
+            presence: {
+                allowEmpty: false,
+            },
+        },
+        [ `title_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence:     {
+                allowEmpty: false,
+                message:    '標題不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `title_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence:     {
+                allowEmpty: false,
+                message:    '標題不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `authors_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence:     {
+                allowEmpty: false,
+                message:    '作者不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `authors_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence:     {
+                allowEmpty: false,
+                message:    '作者不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+    },
 } );
 
 deepFreeze( validationInfo );

@@ -138,6 +138,11 @@ class SetData {
                         publicationB.category !== null &&
                         publicationA.category !== publicationB.category )
                         return publicationB.category - publicationA.category;
+                    else if (
+                        publicationA.issueYear !== null &&
+                        publicationB.issueYear !== null &&
+                        publicationA.issueYear !== publicationB.issueYear )
+                        return publicationB.issueYear - publicationA.issueYear;
                     return 0;
                 } );
             } );
@@ -250,6 +255,8 @@ class SetData {
         Array.from( input ).forEach( ( element ) => {
             if ( element.getAttribute( 'i18n' ) !== null )
                 i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+            else if ( element.type === 'checkbox' )
+                item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
             else
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
@@ -285,6 +292,8 @@ class SetData {
         Array.from( input ).forEach( ( element ) => {
             if ( element.getAttribute( 'i18n' ) !== null )
                 i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+            else if ( element.type === 'checkbox' )
+                item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
             else
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
