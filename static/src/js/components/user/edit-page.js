@@ -165,7 +165,6 @@ class EditPage {
     }
 
     setTimeDetailInput ( editPageConfig ) {
-        console.log( 'time-detail' );
         const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         infoDOM.innerHTML += editPageContentHTML( {
             type:         'time-detail',
@@ -176,6 +175,44 @@ class EditPage {
             dbTableMonth: editPageConfig.dbTableMonth,
             dbTableDate:  editPageConfig.dbTableDate,
         } );
+    }
+
+    setCheckboxInput ( editPageConfig ) {
+        try {
+            const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+            const content = dataI18n[ this.config.dbTable ][ this.config.languageId ].localTopic[ editPageConfig.dbTableItem ];
+            const isChecked = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ] : false;
+
+            new Promise( ( res ) => {
+                infoDOM.innerHTML += editPageContentHTML( {
+                    type:         'checkbox',
+                    dbTableItem:  editPageConfig.dbTableItem,
+                    content,
+                    checked:     isChecked,
+                } );
+                res();
+            } )
+            .then( () => {
+                const chooseDOM = infoDOM.querySelector( `.input__checkbox--${ editPageConfig.dbTableItem } > .checkbox__choose` );
+                const textDOM = infoDOM.querySelector( `.input__checkbox--${ editPageConfig.dbTableItem } > .checkbox__text` );
+
+                if ( chooseDOM.checked )
+                    classAdd( textDOM, 'checkbox__text--active' );
+                else
+                    classRemove( textDOM, 'checkbox__text--active' );
+
+                chooseDOM.addEventListener( 'change', () => {
+                    console.log( 'change' );
+                    if ( chooseDOM.checked )
+                        classAdd( textDOM, 'checkbox__text--active' );
+                    else
+                        classRemove( textDOM, 'checkbox__text--active' );
+                } );
+            } );
+        }
+        catch ( err ) {
+
+        }
     }
 
     async setEditPageInputBlock () {
@@ -198,6 +235,9 @@ class EditPage {
                     break;
                 case 'time-detail':
                     this.setTimeDetailInput( element );
+                    break;
+                case 'checkbox':
+                    this.setCheckboxInput( element );
                     break;
                 default:
                     break;
@@ -265,6 +305,10 @@ function editPageType ( info ) {
             dbTableYear:  info.dbTableYear,
             dbTableMonth: info.dbTableMonth,
             dbTableDate:   info.dbTableDate,
+        },
+        checkbox: {
+            type:        'checkbox',
+            dbTableItem: info.dbTableItem,
         },
     };
 

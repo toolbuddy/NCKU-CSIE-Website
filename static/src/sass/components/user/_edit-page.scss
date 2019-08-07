@@ -1,3 +1,4 @@
+@import 'components/common/icon.scss';
 @mixin edit-page () {
   // `> .edit-page > .edit-page__window`
   > .edit-page__window.window {
@@ -151,6 +152,74 @@
 
             // [ position ]
             width: 100%;
+
+            > .input__checkbox {
+              // [ layout ]
+              display: flex;
+              align-content: center;
+              justify-content: center;
+
+              // [ position ]
+              width: 100%;
+              height: auto;
+
+              > .checkbox__choose {
+                // [ layout ]
+                display: none;
+              }
+
+              > .checkbox__text {
+                // [ lauout ]
+                display: flex;
+
+                // [ position ]
+                width: auto;
+                height: auto;
+                margin: {
+                  top: font__px-to-rem( 10 );
+                  bottom: font__px-to-rem( 10 );
+                }
+
+                // [ skin ]
+                font: {
+                  size: font__px-to-rem( 18 );
+                  weight: bold;
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: normal;
+                letter-spacing: normal;
+                color: rgba( 0, 0, 0, .87 );
+
+                // [ ::before ]
+                &::before {
+                  content: '';
+
+                  // [ layout ]
+                  display: inline-flex;
+                  align-self: center;
+
+                  // [ position ]
+                  height: font__px-to-rem( 15 );
+                  width: font__px-to-rem( 15 );
+                  margin-right: font__px-to-rem( 10 );
+
+                  // [ skin ]
+                  border: 1px solid rgba( 0, 0, 0, 1 );
+                }
+              }
+            }
+
+            .checkbox__text--active {
+              &::before {
+                // [ skin ]
+                @include icon__check-mark();
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+              }
+            }
 
             > .input__time-detail.time-detail {
               // [ position ]

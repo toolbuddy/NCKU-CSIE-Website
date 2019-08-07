@@ -1,6 +1,7 @@
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import { editPageType, } from 'static/src/js/components/user/edit-page.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 import deepFreeze from 'deep-freeze';
@@ -96,6 +97,7 @@ const dataI18n = Object.freeze( {
             topic:   'education',
             default: {
                 degree: 0,
+                nation: 0,
                 school:       'ex. Nation Cheng Kung University',
                 major:        'ex. CSIE',
             },
@@ -110,6 +112,7 @@ const dataI18n = Object.freeze( {
             topic:   '學歷',
             default: {
                 degree: 0,
+                nation: 0,
                 school:       'ex. 國立成功大學',
                 major:        'ex. 資訊工程學系',
             },
@@ -168,6 +171,42 @@ const dataI18n = Object.freeze( {
             localTopic: {
                 'award':         '獎項',
                 'time-detail': '獲獎日期',
+            },
+        },
+    },
+    publication: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'publication',
+            default: {
+                authors:   'ex. 王小明, 黃小美',
+                title:     '',
+                category:  0,
+                issueYear: 'yyyy',
+            },
+            localTopic: {
+                authors:       'authors',
+                title:         'title',
+                category:      'category',
+                issueYear:     'issue year',
+                international: 'international',
+                refereed:      'refereed',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   'publication',
+            default: {
+                authors:   'ex. 王小明, 黃小美',
+                title:     '',
+                category:  0,
+                issueYear: 'yyyy',
+            },
+            localTopic: {
+                authors:       '作者',
+                title:         '著作名稱',
+                category:      '投稿對象',
+                issueYear:     '發行年份',
+                international: '國際級別',
+                refereed:      '經過審查委員審核',
             },
         },
     },
@@ -484,6 +523,71 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'award',
                 i18n:        true,
+            }
+        ),
+    ],
+    publication: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'issueYear',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'issueYear',
+                i18n:        false,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'category',
+            }
+        ),
+        editPageType( {
+            type:         'dropdown',
+            dbTableItem:  'category',
+            dropdownItem: publicationCategoryUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+            util:         publicationCategoryUtils,
+        } ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'title',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'title',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'authors',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'authors',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'checkbox',
+                dbTableItem: 'international',
+            }
+        ),
+        editPageType(
+            {
+                type:        'checkbox',
+                dbTableItem: 'refereed',
             }
         ),
     ],

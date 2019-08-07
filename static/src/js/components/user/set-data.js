@@ -329,7 +329,7 @@ class SetData {
         let isValid = true;
         const editPageDOM = document.getElementById( 'edit-page' );
         const errorDOM = editPageDOM.querySelector( this.selector.error );
-        const input = editPageDOM.getElementsByTagName( 'input' );
+        const input = editPageDOM.getElementsByTag( 'input' );
 
         const constraints = validationInfo[ this.config.dbTable ];
 

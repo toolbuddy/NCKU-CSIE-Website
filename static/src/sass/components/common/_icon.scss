@@ -94,3 +94,9 @@ $icon-path: '~image/icon';
 @mixin icon__book () {
   background-image: url( '#{ $icon-path }/book.png' );
 }
+
+// [ icon ]
+// Paper
+@mixin icon__check-mark () {
+  background-image: url( '#{ $icon-path }/check-mark.png' );
+}

@@ -64,7 +64,18 @@ article.info__input#input
   else if type === 'time-detail'
     aside.input__time-detail.time-detail
       span.time-detail__input.input
-        input.input__year( type = 'number', value = year, placeholder = 'yyyy', min = '1999' name = dbTableYear)
-        input.input__month( type = 'number', value = month, placeholder = 'mm', min = '01', max = '12' name = dbTableMonty)
-        input.input__date( type = 'number', value = date, placeholder = 'dd', min = '01', max = '31' name = dbTableDate )
+        input.input__year( type = 'number', value = year, placeholder = 'yyyy', min = '1999' name = dbTableYear dbTableItem = dbTableYear)
+        input.input__month( type = 'number', value = month, placeholder = 'mm', min = '01', max = '12' name = dbTableMonth dbTableItem = dbTableMonth)
+        input.input__date( type = 'number', value = date, placeholder = 'dd', min = '01', max = '31' name = dbTableDate dbTableItem = dbTableDate)
+  
+  else if type === 'checkbox'
+    aside.input__checkbox.checkbox( class = `input__checkbox--${ dbTableItem }` )
+      input.checkbox__choose(
+        type = 'checkbox' 
+        name = dbTableItem 
+        id=dbTableItem 
+        dbTableItem=dbTableItem 
+        checked = checked
+      )
+      label.checkbox__text( for=dbTableItem )= content
       
