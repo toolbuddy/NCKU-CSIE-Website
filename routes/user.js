@@ -214,6 +214,24 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'conference' ) {
+                const item = {
+                    hostYear:    data.item.hostYear === '' ? null : Number( data.item.hostYear ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'experience' ) {
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
@@ -237,8 +255,28 @@ router
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
                     to:           data.item.to === '' ? null : Number( data.item.to ),
-                    nation:       0, // Number( data.item.nation ),
+                    nation:       Number( data.item.nation ),
                     degree:       Number( data.item.degree ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'award' ) {
+                const item = {
+                    receivedDay:   data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
+                    receivedMonth:  data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
+                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
                     const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
@@ -262,6 +300,8 @@ router
                 researchGroup: uploadData.add.researchGroup,
                 specialtyI18n: uploadData.add.specialtyI18n,
                 title:         uploadData.add.title,
+                award:         uploadData.add.award,
+                conference:    uploadData.add.conference,
             } );
         }
 
@@ -283,6 +323,8 @@ router
                 researchGroup: uploadData.delete.researchGroup,
                 specialtyI18n: uploadData.delete.specialtyI18n,
                 title:         uploadData.delete.title,
+                award:         uploadData.delete.award,
+                conference:    uploadData.delete.conference,
             } );
         }
 
@@ -311,12 +353,59 @@ router
                     },
                 };
             }
+            if ( data.dbTable === 'conference' ) {
+                const item = {
+                    hostYear:     data.item.hostYear === '' ? null : Number( data.item.hostYear ),
+                    conferenceId: Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'award' ) {
+                const item = {
+                    receivedMonth:    data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
+                    receivedDay:    data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
+                    receivedYear:    data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                    awardId:       Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'education' ) {
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
                     to:           data.item.to === '' ? null : Number( data.item.to ),
-
-                    // Nation:       Number( data.item.nation ),
+                    nation:       Number( data.item.nation ),
                     degree:       Number( data.item.degree ),
                     educationId: Number( data.dbTableItemId ),
                 };
@@ -417,6 +506,8 @@ router
                 profile:        uploadData.update.profile,
                 specialtyI18n:  uploadData.update.specialtyI18n,
                 title:          uploadData.update.title,
+                award:          uploadData.update.award,
+                conference:     uploadData.update.conference,
             } );
         }
 

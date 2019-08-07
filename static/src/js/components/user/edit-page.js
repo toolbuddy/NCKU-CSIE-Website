@@ -1,6 +1,6 @@
 import editPageHTML from 'static/src/pug/components/user/edit-page.pug';
 import editPageContentHTML from 'static/src/pug/components/user/edit-page-content.pug';
-import { dataI18n, } from 'static/src/js/components/user/data-config.js';
+import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';

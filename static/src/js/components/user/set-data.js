@@ -5,7 +5,9 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-block.pug';
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
-import { dataI18n, dataEditPageConfig, validationInfo, } from 'static/src/js/components/user/data-config.js';
+import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
+import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
+import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import validate from 'validate.js';
 
@@ -329,7 +331,7 @@ class SetData {
         let isValid = true;
         const editPageDOM = document.getElementById( 'edit-page' );
         const errorDOM = editPageDOM.querySelector( this.selector.error );
-        const input = editPageDOM.getElementsByTag( 'input' );
+        const input = editPageDOM.getElementsByTagName( 'input' );
 
         const constraints = validationInfo[ this.config.dbTable ];
 

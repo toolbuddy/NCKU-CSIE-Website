@@ -5,7 +5,9 @@ import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import nationUtils from 'models/faculty/utils/nation.js';
-import { dataI18n, dataEditPageConfig, validationInfo, } from 'static/src/js/components/user/data-config.js';
+import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
+import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
+import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import validate from 'validate.js';
 
 export default class SetProfileData {
