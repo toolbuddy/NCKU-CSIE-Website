@@ -602,13 +602,14 @@
               // [ layout ]
               display: grid;
               grid-template: {
-                areas: 'flag . content';
-                columns: font__px-to-rem( 40 ) font__px-to-rem( 5 ) 1fr;
+                areas: 'flag . content .';
+                columns: font__px-to-rem( 30 ) font__px-to-rem( 2 ) 1fr font__px-to-rem( 30 );
               }
               margin: {
                 left: auto;
                 right: auto;
               }
+              align-content: center;
 
               padding: {
                 top: font__px-to-rem( 10 );
@@ -641,13 +642,13 @@
 
               > .input__content {
                 // [ layout ]
-                display: flex;
+                display: inline-flex;
                 grid-area: content;
                 align-self: center;
                 justify-self: center;
 
                 // [ position ]
-                width: 90%;
+                width: 95%;
                 height: font__px-to-rem( 40 );
 
                 // [ skin ]

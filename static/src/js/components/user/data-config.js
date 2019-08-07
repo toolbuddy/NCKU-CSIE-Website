@@ -171,6 +171,34 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    conference: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'conference',
+            default: {
+                'conference': '',
+                'title':      '',
+                'hostYear':   'yyyy',
+            },
+            localTopic: {
+                'conference':         'conference',
+                'title':      'title',
+                'hostYear':   'Host Year',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '參與會議',
+            default: {
+                'conference': '',
+                'title':      '',
+                'hostYear':   'yyyy',
+            },
+            localTopic: {
+                'conference':    '會議名稱',
+                'title':         '職稱',
+                'hostYear':   '舉行年份',
+            },
+        },
+    },
     editPage: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             button: {
@@ -455,6 +483,47 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'text',
                 dbTableItem: 'award',
+                i18n:        true,
+            }
+        ),
+    ],
+    conference: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'hostYear',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'hostYear',
+                i18n:        false,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'conference',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'conference',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'title',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'title',
                 i18n:        true,
             }
         ),

@@ -6,6 +6,7 @@ import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-bloc
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import { dataI18n, dataEditPageConfig, validationInfo, } from 'static/src/js/components/user/data-config.js';
+import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import validate from 'validate.js';
 
 class SetData {
@@ -104,6 +105,41 @@ class SetData {
                 } );
             } );
         }
+        if ( this.config.dbTable === 'conference' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].conference.sort( ( conferenceA, conferenceB ) => {
+                    if (
+                        conferenceA.hostYear !== null &&
+                        conferenceB.hostYear !== null &&
+                        conferenceA.hostYear !== conferenceB.hostYear
+                    )
+                        return conferenceB.hostYear - conferenceA.hostYear;
+                    return 0;
+                } );
+            } );
+        }
+        if ( this.config.dbTable === 'publication' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].publication.sort( ( publicationA, publicationB ) => {
+                    if (
+                        publicationA.refereed !== null &&
+                        publicationB.refereed !== null &&
+                        publicationA.refereed !== publicationB.refereed )
+                        return ( publicationA.refereed ) ? -1 : 1;
+                    else if (
+                        publicationA.international !== null &&
+                        publicationB.international !== null &&
+                        publicationA.international !== publicationB.international )
+                        return ( publicationA.international ) ? -1 : 1;
+                    else if (
+                        publicationA.category !== null &&
+                        publicationB.category !== null &&
+                        publicationA.category !== publicationB.category )
+                        return publicationB.category - publicationA.category;
+                    return 0;
+                } );
+            } );
+        }
         return data;
     }
 
@@ -112,6 +148,8 @@ class SetData {
             this.DOM.block.innerHTML = '';
             const data = await this.sortData( dbData );
             let currentYear = new Date().getFullYear();
+            let tempRefereed = true;
+            let tempCategory = 0;
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
                 let content = '';
                 let subtitle = null;
@@ -140,11 +178,32 @@ class SetData {
                             currentYear = res.receivedYear;
                         }
                         break;
+                    case 'conference':
+                        content = res.conference;
+                        if ( res.hostYear !== currentYear || index === 0 ) {
+                            subtitle = res.hostYear;
+                            currentYear = res.hostYear;
+                        }
+                        break;
                     case 'title':
                         content = res.title;
                         break;
                     case 'specialty':
                         content = res.specialty;
+                        break;
+                    case 'publication':
+                        content = res.title;
+                        if ( res.refereed !== tempRefereed || res.category !== tempCategory || index === 0 ) {
+                            const category = publicationCategoryUtils.i18n[ this.config.languageId ][ publicationCategoryUtils.map[ res.category ] ];
+                            tempRefereed = res.refereed;
+                            tempCategory = res.category;
+                            subtitle = '';
+                            if ( res.refereed )
+                                subtitle += 'Refereed';
+                            if ( res.international )
+                                subtitle += '國際';
+                            subtitle += category;
+                        }
                         break;
                     default:
                         content = '';
