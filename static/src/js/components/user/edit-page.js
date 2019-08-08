@@ -166,14 +166,43 @@ class EditPage {
 
     setTimeDetailInput ( editPageConfig ) {
         const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+        const data = {};
+
+        if ( this.config.buttonMethod === 'add' ) {
+            [ 'year',
+                'month',
+                'day', ].forEach( ( element ) => {
+                data[ element ] = '';
+            } );
+        }
+        else if ( this.config.dbTable === 'award' ) {
+            data.year = this.dbData[ this.config.languageId ].receivedYear;
+            data.month = this.dbData[ this.config.languageId ].receivedMonth;
+            data.day = this.dbData[ this.config.languageId ].receivedDay;
+        }
+        else if ( this.config.dbTable === 'patent' ) {
+            let tempDate = null;
+            const dbData = this.dbData[ this.config.languageId ];
+            if ( editPageConfig.dbTableDay.includes( 'application' ) )
+                tempDate = ( dbData.applicationDate !== null ) ? dbData.applicationDate.split( '-' ) : null;
+            else if ( editPageConfig.dbTableDay.includes( 'issue' ) )
+                tempDate = ( dbData.issueDate !== null ) ? dbData.issueDate.split( '-' ) : null;
+            else if ( editPageConfig.dbTableDay.includes( 'expire' ) )
+                tempDate = ( dbData.expireDate !== null ) ? dbData.expireDate.split( '-' ) : null;
+            console.log( tempDate );
+            data.year = ( tempDate !== null ) ? tempDate[ 0 ] : '';
+            data.month = ( tempDate !== null ) ? tempDate[ 1 ] : '';
+            data.day = ( tempDate !== null ) ? tempDate[ 2 ] : '';
+        }
+
         infoDOM.innerHTML += editPageContentHTML( {
             type:         'time-detail',
-            year:         ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].receivedYear : '',
-            month:        ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].reseivedMonth : '',
-            date:         ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].receivedDay : '',
+            year:         data.year,
+            month:        data.month,
+            day:          data.day,
             dbTableYear:  editPageConfig.dbTableYear,
             dbTableMonth: editPageConfig.dbTableMonth,
-            dbTableDate:  editPageConfig.dbTableDate,
+            dbTableDay:   editPageConfig.dbTableDay,
         } );
     }
 
@@ -304,7 +333,7 @@ function editPageType ( info ) {
             type:         'time-detail',
             dbTableYear:  info.dbTableYear,
             dbTableMonth: info.dbTableMonth,
-            dbTableDate:   info.dbTableDate,
+            dbTableDay:   info.dbTableDay,
         },
         checkbox: {
             type:        'checkbox',

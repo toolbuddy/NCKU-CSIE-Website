@@ -27,6 +27,7 @@ class NavigationBar {
             award:       'award',
             publication: 'publication',
             conference:  'conference',
+            patent:      'patent',
         };
 
         this.DOM.link = {};

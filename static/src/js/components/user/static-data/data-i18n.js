@@ -233,6 +233,41 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    patent: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'patent',
+            default: {
+                'certificationNumber': '',
+            },
+            localTopic: {
+                'applicationDate':     'application date',
+                'certificationNumber': 'certification number',
+                'expireDate':          'expire date',
+                'issueDate':           'issue date',
+                'nation':              'nation',
+                'inventor':            'inventor',
+                'patent':              'patent',
+                'patentOwner':         'patent owner',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '專利',
+            default: {
+                'certificationNumber': '',
+                'nation':                0,
+            },
+            localTopic: {
+                'applicationDate':     '申請日期',
+                'certificationNumber': '證書號',
+                'expireDate':          '到期日期',
+                'issueDate':           '核准日期',
+                'nation':              '專利國籍',
+                'inventor':            '發明人',
+                'patent':              '專利名稱',
+                'patentOwner':         '專利權人',
+            },
+        },
+    },
     editPage: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             button: {

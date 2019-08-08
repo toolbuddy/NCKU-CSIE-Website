@@ -212,6 +212,9 @@ class SetData {
                             subtitle += category;
                         }
                         break;
+                    case 'patent':
+                        content = res.patent;
+                        break;
                     default:
                         content = '';
                 }

@@ -454,7 +454,7 @@ export default async ( opt ) => {
                 expireDate:          patent.expireDate,
                 inventor:            patent.patentI18n[ 0 ].inventor,
                 issueDate:           patent.issueDate,
-                nation:              nationUtils.getOptionById( patent.nation ),
+                nation:              patent.nation,
                 patent:              patent.patentI18n[ 0 ].patent,
                 patentOwner:         patent.patentI18n[ 0 ].patentOwner,
             } ) ),

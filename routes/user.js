@@ -22,6 +22,7 @@ import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import { secret, host, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
+import { numberTypeAnnotation, } from 'babel-types';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -214,6 +215,47 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'patent' ) {
+                const date = {
+                    applicationDate: {
+                        day:   ( data.item.applicationDay === '' ) ? 1 : Number( data.item.applicationDay ),
+                        month: ( data.item.applicationMonth === '' ) ? 0 : Number( data.item.applicationMonth ) - 1,
+                        year:  ( data.item.applicationYear === '' ) ? null : Number( data.item.applicationYear ),
+                    },
+                    expireDate: {
+                        day:   ( data.item.expireDay === '' ) ? 1 : Number( data.item.expireDay ),
+                        month: ( data.item.expireMonth === '' ) ? 0 : Number( data.item.expireMonth ) - 1,
+                        year:  ( data.item.expireYear === '' ) ? null : Number( data.item.expireYear ),
+                    },
+                    issueDate: {
+                        day:   ( data.item.issueDay === '' ) ? 1 : Number( data.item.issueDay ),
+                        month: ( data.item.issueMonth === '' ) ? 0 : Number( data.item.issueMonth ) - 1,
+                        year:  ( data.item.issueYear === '' ) ? null : Number( data.item.issueYear ),
+                    },
+                };
+                const item = {
+                    certificationNumber: data.item.certificationNumber,
+                    nation:              Number( data.item.nation ),
+                };
+                Object.keys( date ).forEach( ( element ) => {
+                    const temp = date[ element ];
+                    item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
+                } );
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+                console.log( item );
+            }
             else if ( data.dbTable === 'publication' ) {
                 const item = {
                     category:      Number( data.item.category ),
@@ -325,6 +367,7 @@ router
                 award:         uploadData.add.award,
                 conference:    uploadData.add.conference,
                 publication:   uploadData.add.publication,
+                patent:        uploadData.add.patent,
             } );
         }
 
@@ -349,6 +392,7 @@ router
                 award:         uploadData.delete.award,
                 conference:    uploadData.delete.conference,
                 publication:   uploadData.delete.publication,
+                patent:        uploadData.delete.patent,
             } );
         }
 
@@ -404,7 +448,52 @@ router
                     },
                 };
             }
-            if ( data.dbTable === 'conference' ) {
+            else if ( data.dbTable === 'patent' ) {
+                const date = {
+                    applicationDate: {
+                        day:   ( data.item.applicationDay === '' ) ? 1 : Number( data.item.applicationDay ),
+                        month: ( data.item.applicationMonth === '' ) ? 0 : Number( data.item.applicationMonth ) - 1,
+                        year:  ( data.item.applicationYear === '' ) ? null : Number( data.item.applicationYear ),
+                    },
+                    expireDate: {
+                        day:   ( data.item.expireDay === '' ) ? 1 : Number( data.item.expireDay ),
+                        month: ( data.item.expireMonth === '' ) ? 0 : Number( data.item.expireMonth ) - 1,
+                        year:  ( data.item.expireYear === '' ) ? null : Number( data.item.expireYear ),
+                    },
+                    issueDate: {
+                        day:   ( data.item.issueDay === '' ) ? 1 : Number( data.item.issueDay ),
+                        month: ( data.item.issueMonth === '' ) ? 0 : Number( data.item.issueMonth ) - 1,
+                        year:  ( data.item.issueYear === '' ) ? null : Number( data.item.issueYear ),
+                    },
+                };
+                const item = {
+                    certificationNumber: data.item.certificationNumber,
+                    nation:              Number( data.item.nation ),
+                    patentId:            Number( data.dbTableItemId ),
+                };
+                Object.keys( date ).forEach( ( element ) => {
+                    const temp = date[ element ];
+                    item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
+                } );
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'conference' ) {
                 const item = {
                     hostYear:     data.item.hostYear === '' ? null : Number( data.item.hostYear ),
                     conferenceId: Number( data.dbTableItemId ),
@@ -560,6 +649,7 @@ router
                 award:          uploadData.update.award,
                 conference:     uploadData.update.conference,
                 publication:    uploadData.update.publication,
+                patent:         uploadData.update.patent,
             } );
         }
 
@@ -587,6 +677,14 @@ router
 router
 .route( '/project' )
 .get( staticHtml( 'user/project' ) );
+
+/**
+ * Resolve URL `/user/patent`.
+ */
+
+router
+.route( '/patent' )
+.get( staticHtml( 'user/patent' ) );
 
 /**
  * Resolve URL `/user/conference`.

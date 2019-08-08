@@ -1,4 +1,5 @@
 import LanguageUtils from 'models/common/utils/language.js';
+import ValidateUtils from 'models/common/utils/validate.js';
 import deepFreeze from 'deep-freeze';
 
 const validationInfo = Object.freeze( {
@@ -422,6 +423,159 @@ const validationInfo = Object.freeze( {
             presence:     {
                 allowEmpty: false,
                 message:    '作者不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+    },
+    patent: {
+        nation: {
+            presence: {
+                allowEmpty: false,
+            },
+        },
+        certificationNumber: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 100,
+            },
+        },
+        applicationYear: {
+            presence:  {
+                allowEmpty: true,
+                message:    '年份不可為空',
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份應大於1970',
+            },
+        },
+        applicationMonth: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 12,
+                message:           '月份格式錯誤',
+            },
+        },
+        applicationDay: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 31,
+                message:           '日期格式錯誤',
+            },
+        },
+        expireYear: {
+            presence:  {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份應大於1970',
+            },
+        },
+        expireMonth: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 12,
+                message:           '月份格式錯誤',
+            },
+        },
+        expireDay: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 31,
+                message:           '日期格式錯誤',
+            },
+        },
+        issueYear: {
+            presence:  {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份應大於1970',
+            },
+        },
+        issueMonth: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 12,
+                message:           '月份格式錯誤',
+            },
+        },
+        issueDay: {
+            presence:     {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThan:       0,
+                lessThanOrEqualTo: 31,
+                message:           '日期格式錯誤',
+            },
+        },
+        [ `inventor_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `inventor_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `patentOwner_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `patentOwner_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `patent_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專利名稱不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `patent_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專利名稱不可為空',
             },
             length:   {
                 maximum: 300,

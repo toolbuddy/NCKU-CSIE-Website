@@ -228,7 +228,7 @@ const dataEditPageConfig = Object.freeze( {
                 type:         'timeDetail',
                 dbTableYear:  'receivedYear',
                 dbTableMonth: 'receivedMonth',
-                dbTableDate:   'receivedDay',
+                dbTableDay:   'receivedDay',
             }
         ),
         editPageType(
@@ -348,6 +348,114 @@ const dataEditPageConfig = Object.freeze( {
                 type:        'text',
                 dbTableItem: 'title',
                 i18n:        true,
+            }
+        ),
+    ],
+    patent: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'certificationNumber',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'certificationNumber',
+                i18n:        false,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'nation',
+            }
+        ),
+        editPageType( {
+            type:         'dropdown',
+            dbTableItem:  'nation',
+            dropdownItem: nationUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+            util:         nationUtils,
+        } ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'patent',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'patent',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'inventor',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'inventor',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'patentOwner',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'patentOwner',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'applicationDate',
+            }
+        ),
+        editPageType(
+            {
+                type:         'timeDetail',
+                dbTableYear:  'applicationYear',
+                dbTableMonth: 'applicationMonth',
+                dbTableDay:   'applicationDay',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'issueDate',
+            }
+        ),
+        editPageType(
+            {
+                type:         'timeDetail',
+                dbTableYear:  'issueYear',
+                dbTableMonth: 'issueMonth',
+                dbTableDay:   'issueDay',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'expireDate',
+            }
+        ),
+        editPageType(
+            {
+                type:         'timeDetail',
+                dbTableYear:  'expireYear',
+                dbTableMonth: 'expireMonth',
+                dbTableDay:   'expireDay',
             }
         ),
     ],

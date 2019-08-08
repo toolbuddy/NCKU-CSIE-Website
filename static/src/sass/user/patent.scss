@@ -1,0 +1,205 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/navigation-bar';
+@import 'components/user/local-topic';
+@import 'components/user/dynamic-input-block.scss';
+@import 'components/user/edit-page';
+
+// block
+// `.body`
+.body {
+  // [ variable ]
+  $large: 1200px;
+  $medium: 710px;
+  $small: 535px;
+
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__edit-page`
+  > .body__edit-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+
+    // [ componment ]
+    @include edit-page();
+  }
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' . breadcrumb  .'
+        ' . navigation  .'
+        ' . main        .';
+      columns: 1fr 50fr 1fr;
+    }
+
+    // [ skin ]
+    height: auto;
+    width: 100%;
+    background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  '
+          ' navigation main        ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+      }
+    }
+
+    // template
+    // `.body > .content > .content__?.?`
+    %content__element {
+      // [ layout ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1740 );
+      width: 94%;
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__main
+    > .content__main {
+      // [ layout ]
+      display: block;
+      grid-area: main;
+
+      // [ position ]
+      width: 100%;
+      margin: {
+        top: font__px-to-rem( 20 );
+        bottom: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: 90%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        max-width: font__px-to-rem( 1080 );
+        margin: {
+          left: 0;
+          top: font__px-to-rem( 80 );
+        };
+      }
+
+      // element
+      // `.body > .content > .content__information > .information__topic`
+      @include topic( main ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+        }
+      }
+
+      // `.body > .content > .content__main > .main__patent-block`
+      .main__patent-block.patent-block {
+        // [ layout ]
+        display: block;
+        width: 95%;
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          width: 95%;
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          max-width: font__px-to-rem( 1200 );
+        }
+
+        // `.body > .content > .content__main > .main__patent > patent__local-topic`
+        @include local-topic( 'patent-block' );
+
+        > .patent-block__patent.patent {
+          @include dynamic-input-block( $block: 'patent' );
+        }
+      }
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}
