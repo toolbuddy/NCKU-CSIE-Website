@@ -486,7 +486,7 @@ export default async ( opt ) => {
                 authors:       publication.publicationI18n[ 0 ].authors,
                 category:      publication.category,
                 international: publication.international,
-                issueDate:     publication.issueDate,
+                issueMonth:     publication.issueMonth,
                 issueYear:     publication.issueYear,
                 refereed:      publication.refereed,
                 title:         publication.publicationI18n[ 0 ].title,

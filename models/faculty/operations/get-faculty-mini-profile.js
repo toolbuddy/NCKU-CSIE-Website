@@ -28,7 +28,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Profile.findAll( {
+        const data = await Profile.findOne( {
             attributes: [
                 'profileId',
                 'photo',
@@ -50,11 +50,11 @@ export default async ( opt ) => {
             ],
         } );
 
-        return data.map( profile => ( {
-            photo:         profile.photo,
-            profileId:     profile.profileId,
-            name:          profile.profileI18n[ 0 ].name,
-        } ) );
+        return {
+            photo:     data.photo,
+            profileId: data.profileId,
+            name:      data.profileI18n[ 0 ].name,
+        };
     }
     catch ( err ) {
         if ( err.status )

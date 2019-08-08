@@ -58,6 +58,120 @@ router
 .get( staticHtml( 'user/index' ) );
 
 /**
+ * Resolve URL `/user/id`.
+ */
+
+router
+.route( '/id' )
+.post( cors(), async ( req, res ) => {
+    try {
+        console.log( 'in route user/id' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+        res.header( 'Access-Control-Allow-Origin', host );
+
+        if ( typeof ( cookie ) === 'undefined' ) {
+            try {
+                // Got no cookie from the user.
+
+                // Store the cookie in the user.
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
+
+                res.json( { userId: -1, } );
+            }
+            catch ( error ) {
+                console.error( error );
+            }
+        }
+        else {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            try {
+                const data = await getSession( {
+                    sid,
+                } );
+
+                // Check `expires`
+                if ( data.expires < Date.now() ) {
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        res.json( { userId: -1, } );
+                    } );
+                }
+                else if ( data.userId !== null ) {
+                    const result = await getAdminByUserId( {
+                        userId: Number( data.userId ),
+                    } );
+
+                    if ( result.sid === data.sid ) {
+                        res.json( {
+                            userId: result.userId,
+                            role:   result.role,
+                            roleId: result.roleId,
+                        } );
+                    }
+                    else
+                        res.json( { userId: -1, } );
+                }
+                else
+                    res.json( { userId: -1, } );
+            }
+            catch ( error ) {
+                if ( error.status === 404 ) {
+                    // No corresponding session id in the database
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        // Send new session & user id
+                        res.json( { userId: -1, } );
+                    } );
+                }
+                else
+                    console.error( error );
+            }
+        }
+    }
+    catch ( err ) {
+        throw err;
+    }
+} );
+
+/**
  * Resolve URL `/user/profile`.
  */
 
@@ -163,8 +277,6 @@ router
                     console.error( error );
             }
         }
-
-        console.log( userData );
 
         // Get data
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );

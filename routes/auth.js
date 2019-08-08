@@ -33,7 +33,7 @@ router
 .route( '/login' )
 .get( staticHtml( 'auth/login' ) )
 .post( async ( req, res ) => {
-    console.log( 'in route auth/login' );
+    console.log( 'in route auth/login (post)' );
 
     try {
         const data = await getAdminByAccount( {
