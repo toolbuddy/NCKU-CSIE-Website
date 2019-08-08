@@ -14,10 +14,6 @@ append data
         },
         content: {
           topic: '教師資料維護',
-          project: {
-            name:     'Name',
-            support: 'Support',
-          },
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -28,11 +24,7 @@ append data
         },
         content: {
           topic: '教師資料維護',
-          project: {
-            name:    '專案名稱',
-            support: '補助單位',
-          },
-        }       
+        },        
       },
     } );
     const currentRoute = 'user/project';
@@ -57,6 +49,11 @@ append breadcrumb
 
 append content
   +navigation-bar( 'content' )
+  main.content__main
+    +topic( 'main', i18n[ LANG.id ].content.topic )
+    article.main__project-block.project-block
+      +local-topic( 'project-block', '專案 / Project', true )
+      section.project-block__project.project#project
 
 append footer
 

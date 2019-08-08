@@ -169,6 +169,34 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    project: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'project',
+            default: {
+                name:     '',
+                support:  '',
+                category: 0,
+            },
+            localTopic: {
+                name:     'name',
+                support:  'support',
+                category: 'category',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '專案',
+            default: {
+                name:     '',
+                support:  '',
+                category: 0,
+            },
+            localTopic: {
+                name:     '專案名稱',
+                support:  '補助單位',
+                category: '投稿對象',
+            },
+        },
+    },
     publication: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             topic:   'publication',

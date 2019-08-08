@@ -215,6 +215,9 @@ class SetData {
                     case 'patent':
                         content = res.patent;
                         break;
+                    case 'project':
+                        content = res.name;
+                        break;
                     default:
                         content = '';
                 }

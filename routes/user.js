@@ -59,6 +59,120 @@ router
 .get( staticHtml( 'user/index' ) );
 
 /**
+ * Resolve URL `/user/id`.
+ */
+
+router
+.route( '/id' )
+.post( cors(), async ( req, res ) => {
+    try {
+        console.log( 'in route user/id' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+        res.header( 'Access-Control-Allow-Origin', host );
+
+        if ( typeof ( cookie ) === 'undefined' ) {
+            try {
+                // Got no cookie from the user.
+
+                // Store the cookie in the user.
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
+
+                res.json( { userId: -1, } );
+            }
+            catch ( error ) {
+                console.error( error );
+            }
+        }
+        else {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            try {
+                const data = await getSession( {
+                    sid,
+                } );
+
+                // Check `expires`
+                if ( data.expires < Date.now() ) {
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        res.json( { userId: -1, } );
+                    } );
+                }
+                else if ( data.userId !== null ) {
+                    const result = await getAdminByUserId( {
+                        userId: Number( data.userId ),
+                    } );
+
+                    if ( result.sid === data.sid ) {
+                        res.json( {
+                            userId: result.userId,
+                            role:   result.role,
+                            roleId: result.roleId,
+                        } );
+                    }
+                    else
+                        res.json( { userId: -1, } );
+                }
+                else
+                    res.json( { userId: -1, } );
+            }
+            catch ( error ) {
+                if ( error.status === 404 ) {
+                    // No corresponding session id in the database
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
+
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
+
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+
+                        // Send new session & user id
+                        res.json( { userId: -1, } );
+                    } );
+                }
+                else
+                    console.error( error );
+            }
+        }
+    }
+    catch ( err ) {
+        throw err;
+    }
+} );
+
+/**
  * Resolve URL `/user/profile`.
  */
 
@@ -165,8 +279,6 @@ router
             }
         }
 
-        console.log( userData );
-
         // Get data
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
         let uploadData = '';
@@ -200,6 +312,26 @@ router
                 const item = {
                     from:    data.item.from === '' ? null : Number( data.item.from ),
                     to:      data.item.to === '' ? null : Number( data.item.to ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'project' ) {
+                const item = {
+                    from:     data.item.from === '' ? null : Number( data.item.from ),
+                    to:       data.item.to === '' ? null : Number( data.item.to ),
+                    category: Number( data.item.category ),
                 };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
                     const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
@@ -368,6 +500,7 @@ router
                 conference:    uploadData.add.conference,
                 publication:   uploadData.add.publication,
                 patent:        uploadData.add.patent,
+                project:       uploadData.add.project,
             } );
         }
 
@@ -393,6 +526,7 @@ router
                 conference:    uploadData.delete.conference,
                 publication:   uploadData.delete.publication,
                 patent:        uploadData.delete.patent,
+                project:       uploadData.delete.project,
             } );
         }
 
@@ -567,6 +701,31 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'project' ) {
+                const item = {
+                    from:         data.item.from === '' ? null : Number( data.item.from ),
+                    to:           data.item.to === '' ? null : Number( data.item.to ),
+                    category:       Number( data.item.category ),
+                    projectId: Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'experience' ) {
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
@@ -650,6 +809,7 @@ router
                 conference:     uploadData.update.conference,
                 publication:    uploadData.update.publication,
                 patent:         uploadData.update.patent,
+                project:        uploadData.update.project,
             } );
         }
 

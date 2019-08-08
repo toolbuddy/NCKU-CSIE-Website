@@ -42,8 +42,9 @@ catch ( err ) {
 
 async function fetchData () {
     try {
-        const res = await fetch( `${ host }/api/user/id`, {
+        const res = await fetch( `${ host }/user/id`, {
             credentials: 'include',
+            method:      'post',
         } );
 
         if ( !res.ok )

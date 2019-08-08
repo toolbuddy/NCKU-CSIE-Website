@@ -3,6 +3,7 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import { editPageType, } from 'static/src/js/components/user/edit-page.js';
 import nationUtils from 'models/faculty/utils/nation.js';
+import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 import deepFreeze from 'deep-freeze';
 
 const dataEditPageConfig = Object.freeze( {
@@ -456,6 +457,51 @@ const dataEditPageConfig = Object.freeze( {
                 dbTableYear:  'expireYear',
                 dbTableMonth: 'expireMonth',
                 dbTableDay:   'expireDay',
+            }
+        ),
+    ],
+    project: [
+        editPageType(
+            {
+                type: 'time',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'category',
+            }
+        ),
+        editPageType( {
+            type:         'dropdown',
+            dbTableItem:  'category',
+            dropdownItem: projectCategoryUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+            util:         projectCategoryUtils,
+        } ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'name',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'name',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'support',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'support',
+                i18n:        true,
             }
         ),
     ],

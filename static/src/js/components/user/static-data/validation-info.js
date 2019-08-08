@@ -582,6 +582,66 @@ const validationInfo = Object.freeze( {
             },
         },
     },
+    project: {
+        from: {
+            presence: {
+                allowEmpty: false,
+                message:    '開始時間不可為空',
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份格式不正確',
+            },
+        },
+        to: {
+            presence:  {
+                allowEmpty: true,
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份格式不正確',
+            },
+        },
+        category: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+        [ `name_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專案名稱不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `name_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專案名稱不可為空',
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `support_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+        [ `support_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+            length:   {
+                maximum: 300,
+            },
+        },
+    },
 } );
 
 deepFreeze( validationInfo );
