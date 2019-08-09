@@ -9,7 +9,6 @@
 
 import express from 'express';
 import md5 from 'md5';
-import staticHtml from 'routes/utils/static-html.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -18,7 +17,7 @@ import updateAdmin from 'models/auth/operations/update-admin.js';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { host, secret, } from 'settings/server/config.js';
+import { secret, projectRoot, maxAge, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -32,7 +31,55 @@ const router = express.Router( {
 
 router
 .route( '/login' )
-.get( staticHtml( 'auth/login' ) )
+.get( async ( req, res, next ) => {
+    try {
+        console.log( 'in route auth/login (get)' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            const data = await getSession( {
+                sid,
+            } );
+
+            // Check `expires`
+            if ( data.expires >= Date.now() && data.userId !== null ) {
+                const result = await getAdminByUserId( {
+                    userId: Number( data.userId ),
+                } );
+
+                if ( result.sid === data.sid )
+                    res.redirect( '/index' );
+            }
+        }
+        res.sendFile(
+            `static/dist/html/auth/login.${ req.query.languageId }.html`,
+            {
+                root:         projectRoot,
+                maxAge,
+                dotfiles:     'deny',
+                cacheControl: true,
+            },
+            ( err ) => {
+                if ( err )
+                    next( err );
+            }
+        );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.redirect( '/index' );
+    }
+} )
 .post( cors(), async ( req, res ) => {
     console.log( 'in route auth/login (post)' );
 
@@ -86,15 +133,25 @@ router
         }
         else {
             // Wrong account or password, should show warning message
-            console.log( 'wrong account or password' );
+            console.log( 'wrong account or password.' );
+            res.json( {
+                error: 'Wrong account or password.',
+            } );
         }
     }
     catch ( error ) {
-        if ( error.status === 404 )
+        if ( error.status === 404 ) {
             console.log( 'wrong account or password' );
-
-        else
+            res.json( {
+                error: 'Wrong account or password.',
+            } );
+        }
+        else {
             console.error( error );
+            res.json( {
+                error: 'Server Error.',
+            } );
+        }
     }
 } );
 
@@ -105,14 +162,14 @@ router
 router
 .route( '/logout' )
 .post( cors(), async ( req, res ) => {
-    console.log( 'in route /auth/logout' );
-
-    // Get sid in the cookie
-
-    const cookie = req.cookies.sessionId;
-    res.locals.unparsedId = cookie;
-
     try {
+        console.log( 'in route /auth/logout' );
+
+        // Get sid in the cookie
+
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
         if ( typeof ( cookie ) === 'undefined' ) {
             // Got no cookie from the user.
 
