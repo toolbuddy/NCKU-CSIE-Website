@@ -22,6 +22,7 @@ import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
+import noCache from 'routes/utils/no-cache.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -177,37 +178,22 @@ router
 
 router
 .route( '/profile' )
-.get( async ( req, res, next ) => {
-    console.log( 'in route user/profile - get' );
-    const cookie = req.cookies.sessionId;
-    res.locals.unparsedId = cookie;
+.get( cors(), noCache, async ( req, res, next ) => {
+    try {
+        console.log( 'in route user/profile - get' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
 
-    if ( typeof ( cookie ) === 'undefined' ) {
-        // Got no cookie from the user.
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
 
-        // Store the cookie in the user.
-        const newSid = req.session.id;
-        req.session.ctrl = newSid;
-
-        // Store new session in database
-        await saveSession( {
-            sid:     newSid,
-            expires: req.session.cookie.maxAge + Date.now(),
-        } );
-
-        res.redirect( '/index' );
-    }
-    else {
-        // Got a cookie from the user.
-        const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-        if ( sid === cookie ) {
-            const error = new Error( 'Invalid cookie.' );
-            error.status = 400;
-            throw error;
-        }
-
-        // Get session data in the database.
-        try {
+            // Get session data in the database.
             const data = await getSession( {
                 sid,
             } );
@@ -256,29 +242,31 @@ router
             else
                 res.redirect( '/index' );
         }
-        catch ( error ) {
-            if ( error.status === 404 ) {
-                // No corresponding session id in the database
-                req.session.regenerate( async () => {
-                    const newSid = req.session.id;
-                    req.session.ctrl = newSid;
+        else
+            res.redirect( '/index' );
+    }
+    catch ( error ) {
+        if ( error.status === 404 ) {
+            // No corresponding session id in the database
+            req.session.regenerate( async () => {
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
 
-                    // Store new session in database
-                    await saveSession( {
-                        sid:     newSid,
-                        expires: req.session.cookie.maxAge + Date.now(),
-                    } );
-
-                    req.session.save();
-                    res.locals.unparsedSid = req.session.id;
-
-                    // Send new session & user id
-                    res.redirect( '/index' );
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
                 } );
-            }
-            else
-                console.error( error );
+
+                req.session.save();
+                res.locals.unparsedSid = req.session.id;
+
+                // Send new session & user id
+                res.redirect( '/index' );
+            } );
         }
+        else
+            console.error( error );
     }
 } )
 .post( cors(), async ( req, res ) => {

@@ -34,7 +34,7 @@ import { host, staticHost, projectRoot, secret, } from 'settings/server/config.j
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-
+import checkSession from 'routes/utils/check-session.js';
 
 const app = express();
 
@@ -123,6 +123,8 @@ app.use( ( req, res, next ) => {
     };
     next();
 } );
+
+// App.use( checkSession );
 
 /**
  * Resolve URL `/`.
