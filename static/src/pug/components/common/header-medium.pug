@@ -55,13 +55,13 @@ mixin header--medium( belongBlock )
       +navigation__list
 
       //- Login
-      a.navigation__login.login( href = i18n[ LANG.id ].home.login.route )
+      a.navigation__login.login( href = i18n[ LANG.id ].components.login.route )
         +image( {
-          alt:       i18n[ LANG.id ].home.login.text,
+          alt:       i18n[ LANG.id ].components.login.text,
           className: 'login__image',
           src:       'icon/user.png',
         } )
-        span.login__text= i18n[ LANG.id ].home.login.text
+        span.login__text= i18n[ LANG.id ].components.login.text
 
       //- Language Choice
       section.navigation__language.language

@@ -11,13 +11,14 @@ import express from 'express';
 import md5 from 'md5';
 import staticHtml from 'routes/utils/static-html.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
 import updateAdmin from 'models/auth/operations/update-admin.js';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, } from 'settings/server/config.js';
+import { host, secret, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -32,7 +33,7 @@ const router = express.Router( {
 router
 .route( '/login' )
 .get( staticHtml( 'auth/login' ) )
-.post( async ( req, res ) => {
+.post( cors(), async ( req, res ) => {
     console.log( 'in route auth/login (post)' );
 
     try {
@@ -103,69 +104,95 @@ router
 
 router
 .route( '/logout' )
-.post( async ( req, res ) => {
-    // Get sid in the cookie
-    const cookie = res.locals.unparsedId;
-    const sid = cookieParser.signedCookie( cookie, secret );
+.post( cors(), async ( req, res ) => {
     console.log( 'in route /auth/logout' );
-    console.log( cookie );
-    console.log( sid );
-    if ( sid === cookie && typeof ( sid ) !== 'undefined' ) {
-        const error = new Error( 'Invalid cookie.' );
-        error.status = 400;
-        throw error;
-    }
 
-    // Get session data in the database.
+    // Get sid in the cookie
+
+    const cookie = req.cookies.sessionId;
+    res.locals.unparsedId = cookie;
+
     try {
-        const data = await getSession( {
-            sid,
-        } );
+        if ( typeof ( cookie ) === 'undefined' ) {
+            // Got no cookie from the user.
 
-        const result = await getAdminByUserId( {
-            userId: Number( data.userId ),
-        } );
+            // Store the cookie in the user.
+            const newSid = req.session.id;
+            req.session.ctrl = newSid;
 
-        // Update user session id in database
-        await updateAdmin( {
-            userId:   Number( result.userId ),
-            account:  result.account,
-            password: result.password,
-            role:     result.role,
-            sid:      null,
-            isValid:  result.isValid,
-            name:     result.name,
-            roleId:   result.roleId,
-        } );
+            // Store new session in database
+            await saveSession( {
+                sid:     newSid,
+                expires: req.session.cookie.maxAge + Date.now(),
+            } );
 
-        // Give a new sid cookie
-        console.log( 'old sid:' );
-        console.log( sid );
-        console.log( req.session.ctrl );
-        req.session.regenerate( async () => {
-            try {
-                const newSid = req.session.id;
-                req.session.ctrl = newSid;
-
-                console.log( 'in generate, new sid:' );
-                console.log( newSid );
-                console.log( req.session.id );
-                console.log( req.session.ctrl );
-
-                // Store new session in database
-                await saveSession( {
-                    sid:     newSid,
-                    expires: req.session.cookie.maxAge + Date.now(),
-                } );
-
-                req.session.save();
-                console.log( 'log out successfully' );
-                res.redirect( '/index' );
+            req.session.save();
+            res.send( {
+                redirect: '/index',
+            } );
+        }
+        else {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
             }
-            catch ( err ) {
-                console.error( err );
-            }
-        } );
+
+            // Get session data in the database.
+
+            const data = await getSession( {
+                sid,
+            } );
+
+            const result = await getAdminByUserId( {
+                userId: Number( data.userId ),
+            } );
+
+            // Update user session id in database
+            await updateAdmin( {
+                userId:   Number( result.userId ),
+                account:  result.account,
+                password: result.password,
+                role:     result.role,
+                sid:      null,
+                isValid:  result.isValid,
+                name:     result.name,
+                roleId:   result.roleId,
+            } );
+
+            // Give a new sid cookie
+            console.log( 'old sid:' );
+            console.log( sid );
+            console.log( req.session.ctrl );
+            req.session.regenerate( async () => {
+                try {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
+
+                    console.log( 'in generate, new sid:' );
+                    console.log( newSid );
+                    console.log( req.session.id );
+                    console.log( req.session.ctrl );
+
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    console.log( 'log out successfully' );
+                    res.send( {
+                        redirect: '/index',
+                    } );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
     }
     catch ( error ) {
         console.error( error );

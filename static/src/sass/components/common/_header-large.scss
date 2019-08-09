@@ -534,8 +534,10 @@
           margin-top: font__px-to-rem( 16 );
 
           // element
-          // `> .#{ $block } > .header.header--large > .header__login`
-          > .right__login {
+          // `> .#{ $block } > .header.header--large > .functions > .functions__right > .right__login`
+          // block
+          // `> .#{ $block } > .header.header--large > .functions > .functions__right > .login`
+          > .right__login.login {
             // [ layout ]
             display: inline-block;
             vertical-align: top;
@@ -580,6 +582,73 @@
 
               // [ icon ]
               @include icon__user();
+            }
+
+            // [ interaction ]
+            &:hover {
+              // [ skin ]
+              cursor: pointer;
+
+              // element
+              // `> .#{ $block } > .header.header--large > .functions > .functions__right > .right > 
+              // .right__login > .login > .login__dropdown`
+              // block
+              // `> .#{ $block } > .header.header--large > .functions > .functions__right > .right > 
+              // .right__login > .login > .login__dropdown > .dropdown`
+              > .login__dropdown.dropdown {
+                // [ skin ]
+                opacity: 1;
+                visibility: visible;
+              }
+            }
+
+            > .login__button.button {
+              // [ layout ]
+              display: inline-block;
+              vertical-align: top;
+
+              // [ skin ]
+              line-height: font__px-to-rem( 36.15 );
+              width: font__px-to-rem( 105 );
+              height: font__px-to-rem( 36.15 );
+              font: {
+                size: font__px-to-rem( 14.1 );
+                weight: 500;
+              }
+              color: #ffffff;
+            }
+
+            > .login__dropdown.dropdown {
+              background-color: #ffffff;
+              width: font__px-to-rem( 105 );
+              font-size: font__px-to-rem( 14 );
+              visibility: hidden;
+              opacity: 0;
+              text-align: center;
+
+              > .dropdown__item.item {
+                background-color: #ffffff;
+                color: #757575;
+                width: font__px-to-rem( 105 );
+                height: font__px-to-rem( 36 );
+                font-size: font__px-to-rem( 14 );
+                border-style: solid;
+                border-width: font__px-to-rem( .1 );
+                border-color: rgba( 0, 0, 0, .25 );
+
+                // [ interaction ]
+                &:hover {
+                  // [ skin ]
+                  cursor: pointer;
+                  background-color: #999999;
+                  color: #ffffff;
+                }
+
+                > .item__link {
+                  line-height: font__px-to-rem( 36 );
+                  vertical-align: top;
+                }
+              }
             }
           }
 

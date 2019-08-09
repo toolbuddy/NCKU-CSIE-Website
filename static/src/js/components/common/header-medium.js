@@ -7,6 +7,8 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
+import { host, } from 'settings/server/config.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 export default class GetHeaderMedium {
     /**
@@ -67,6 +69,7 @@ export default class GetHeaderMedium {
                 .map( header => header.querySelector( languageBlockQuerySelector( 'dropdown' ) ) )
                 .filter( dropdownDOM => dropdownDOM !== null ),
             },
+            login: opt.headerDOM.querySelector( navigationBlockQuerySelector('login') ),
         };
 
         if (
@@ -80,14 +83,19 @@ export default class GetHeaderMedium {
             !this.DOM.language.switches.length ||
             !this.DOM.language.switches.every( ValidateUtils.isDomElement ) ||
             !this.DOM.language.dropdowns.length ||
-            !this.DOM.language.dropdowns.every( ValidateUtils.isDomElement )
+            !this.DOM.language.dropdowns.every( ValidateUtils.isDomElement ) ||
+            !ValidateUtils.isDomElement( this.DOM.login )
         )
             throw new Error( 'DOM not found.' );
+
+        this.host = host;
+        this.languageId = WebLanguageUtils.currentLanguageId;
 
         this.subscribeMenuEvent();
         this.subscribeDropdownEvent();
         this.subscribeLanguageEvent();
         this.subscribeScrollEvent();
+        this.renderLogin();
 
         return this;
     }
@@ -164,5 +172,52 @@ export default class GetHeaderMedium {
                 classRemove( this.DOM.header, 'header--fixed' );
             prevScrollpos = currentScrollPos;
         } );
+    }
+
+    async renderLogin(){
+        try{
+            console.log('in header-medium.js - renderLogin');
+            const result = await this.fetchIdData();
+            if(result.userId > -1){
+                console.log('is a user:');
+                const data = await this.fetchMiniProfileData( result.userId );
+                console.log(data);
+            }else{
+                console.log('is not a logged-in user');
+            }
+        }catch( err ){
+            console.error( err );
+        }
+    }
+
+    async fetchIdData () {
+        try {
+            const res = await fetch( `${ this.host }/user/id`, {
+                credentials: 'include',
+                method: 'post',
+            } );
+    
+            if ( !res.ok )
+                throw new Error( 'No userId found' );
+    
+            return res.json();
+        }catch( err ){
+            throw err;
+        }
+    }
+
+    async fetchMiniProfileData ( id ) {
+        try {
+            const res = await fetch( `${ this.host }/api/user/miniProfile/${ id }?languageId=${ this.languageId }` , {
+                credentials: 'include',
+            });
+    
+            if ( !res.ok )
+                throw new Error( 'No miniProfile found' );
+    
+            return res.json();
+        }catch( err ){
+            throw err;
+        }
     }
 }

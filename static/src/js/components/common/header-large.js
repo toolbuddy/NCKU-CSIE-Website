@@ -7,6 +7,11 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
+import { host, } from 'settings/server/config.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
+import loginButtonHTML from 'static/src/pug/components/common/login.pug';
+import LanguageUtils from 'models/common/utils/language.js';
+import UrlUtils from 'static/src/js/utils/url.js';
 
 export default class GetHeaderLarge {
     /**
@@ -47,6 +52,7 @@ export default class GetHeaderLarge {
                 dropdown: opt.headerDOM.querySelector( searchBlockQuerySelector( 'dropdown' ) ),
                 cancel:   opt.headerDOM.querySelector( `${ searchBlockQuerySelector( 'dropdown' ) } > .dropdown__cancel` ),
             },
+            login: opt.headerDOM.querySelector( functionRightElementQuerySelector('login') ),
         };
 
         if (
@@ -54,9 +60,13 @@ export default class GetHeaderLarge {
             !ValidateUtils.isDomElement( this.DOM.language.dropdown ) ||
             !ValidateUtils.isDomElement( this.DOM.search.button ) ||
             !ValidateUtils.isDomElement( this.DOM.search.dropdown ) ||
-            !ValidateUtils.isDomElement( this.DOM.search.cancel )
+            !ValidateUtils.isDomElement( this.DOM.search.cancel ) ||
+            !ValidateUtils.isDomElement( this.DOM.login )
         )
             throw new Error( 'DOM not found.' );
+
+        this.host = host;
+        this.languageId = WebLanguageUtils.currentLanguageId;
 
         this.subscribeLanguageEvent();
         this.subscribeSearchEvent();
@@ -101,6 +111,76 @@ export default class GetHeaderLarge {
                 classRemove( this.DOM.header, 'header--fixed' );
             prevScrollpos = currentScrollPos;
         } );
+    }
+
+    async renderLogin(){
+        try{
+            console.log('in header-large.js - renderLogin');
+            const result = await this.fetchData( 'user/id' , {
+                credentials: 'include',
+                method: 'post',
+            });
+            if(result.userId > -1){
+                console.log('is a user:');
+                const data = await this.fetchMiniProfileData( result.userId );
+                console.log(data);
+                this.DOM.login.innerHTML = loginButtonHTML({
+                    name: data.name,
+                    belongBlock: 'login',
+                    LANG: {
+                        id:            WebLanguageUtils.currentLanguageId,
+                        getLanguageId: LanguageUtils.getLanguageId,
+                    },
+                    UTILS:{
+                        url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                    }
+                },
+                'login');
+                this.DOM.login.querySelector('#logout').addEventListener('click', async ()=>{
+                    try{
+                        const result = await this.fetchData('auth/logout', {
+                            credentials: 'include',
+                            method: 'post',
+                        });
+                        window.location = result.redirect;
+                    }catch( err ){
+                        console.error( err );
+                    }
+                });
+            }else{
+                console.log('is not a logged-in user');
+            }
+        }catch( err ){
+            console.error( err );
+        }
+    }
+
+    async fetchData ( url, opt ) {
+        try {
+            const res = await fetch( `${ this.host }/${ url }`, opt );
+    
+            if ( !res.ok )
+                throw new Error( 'Fetch data failed' );
+    
+            return res.json();
+        }catch( err ){
+            throw err;
+        }
+    }
+
+    async fetchMiniProfileData ( id ) {
+        try {
+            const res = await fetch( `${ this.host }/api/user/miniProfile/${ id }?languageId=${ this.languageId }` , {
+                credentials: 'include',
+            });
+    
+            if ( !res.ok )
+                throw new Error( 'No miniProfile found' );
+    
+            return res.json();
+        }catch( err ){
+            throw err;
+        }
     }
 }
 

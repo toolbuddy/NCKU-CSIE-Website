@@ -85,13 +85,6 @@
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
-          login: {
-            text: 'Login',
-            route: UTILS.url( {
-              href : 'auth/login',
-              query: { languageId: LANG.getLanguageId( 'en-US' ) },
-            } ),
-          },
           search: {
             text: 'Search',
             route: UTILS.url( {
@@ -220,6 +213,15 @@
             } ),
           },
         },
+        components:{
+            login: {
+                text: 'Log In',
+                route: UTILS.url( {
+                href : 'auth/login',
+                query: { languageId: LANG.getLanguageId( 'en-US' ) },
+                } ),
+            },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         language: '語言',
@@ -302,13 +304,6 @@
             text: '首頁',
             route: UTILS.url( {
               href : '',
-              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-            } ),
-          },
-          login: {
-            text: '登入',
-            route: UTILS.url( {
-              href : 'auth/login',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
@@ -439,6 +434,15 @@
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
+        },
+        components:{
+            login: {
+                text: '登入',
+                route: UTILS.url( {
+                href : 'auth/login',
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+                } ),
+            },
         },
       }
     } );

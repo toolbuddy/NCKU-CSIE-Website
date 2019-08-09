@@ -1,0 +1,59 @@
+//- Header Login Button template module.
+-
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        profile: {
+                text: 'Edit Profile',
+                route: UTILS.url({
+                    href: 'user/profile',
+                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
+                }),
+            },
+            logout: {
+                text: 'Log Out',
+                route: UTILS.url({
+                    href: 'auth/logout',
+                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
+                }),
+            },
+            password: {
+                text: 'Update Password',
+                route: UTILS.url({
+                    href: '/',
+                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
+                }),
+            },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        profile: {
+                text: '個人資料維護',
+                route: UTILS.url({
+                    href: 'user/profile',
+                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+                }),
+            },
+            logout: {
+                text: '登出',
+                route: UTILS.url({
+                    href: 'auth/logout',
+                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+                }),
+            },
+            password: {
+                text: '密碼管理',
+                route: UTILS.url({
+                    href: '',
+                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+                }),
+            },
+      },
+    } );
+a.login( class = `${ belongBlock }__button` )= name
+  ul.login__dropdown.dropdown
+    li.dropdown__item.item
+        a.item__link( href = i18n[ LANG.id ].profile.route )= i18n[ LANG.id ].profile.text
+    li.dropdown__item.item
+        a.item__link( href = i18n[ LANG.id ].password.route )= i18n[ LANG.id ].password.text
+    li.dropdown__item.item#logout
+        a.item__link= i18n[ LANG.id ].logout.text
+

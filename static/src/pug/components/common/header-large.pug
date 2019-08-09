@@ -34,7 +34,8 @@ mixin header--large( belongBlock )
     section.header__functions.functions
       aside.functions__right.right
         //- Login
-        a.right__login( href = i18n[ LANG.id ].home.login.route )= i18n[ LANG.id ].home.login.text
+        section.right__login.login
+          a.login__button( href = i18n[ LANG.id ].components.login.route )= i18n[ LANG.id ].components.login.text
 
         //- Search, currently not available
         scetion.right__search.search
