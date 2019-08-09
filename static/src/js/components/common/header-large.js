@@ -136,17 +136,17 @@ export default class GetHeaderLarge {
                     }
                 },
                 'login');
-                this.DOM.login.querySelector('#logout').addEventListener('click', async ()=>{
-                    try{
-                        const result = await this.fetchData('auth/logout', {
-                            credentials: 'include',
-                            method: 'post',
-                        });
-                        window.location = result.redirect;
-                    }catch( err ){
-                        console.error( err );
-                    }
-                });
+                // this.DOM.login.querySelector('#logout').addEventListener('click', async ()=>{
+                //     try{
+                //         const result = await this.fetchData('auth/logout', {
+                //             credentials: 'include',
+                //             method: 'post',
+                //         });
+                //         window.location = result.redirect;
+                //     }catch( err ){
+                //         console.error( err );
+                //     }
+                // });
             }else{
                 console.log('is not a logged-in user');
             }

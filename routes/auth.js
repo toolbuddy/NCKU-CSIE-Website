@@ -161,34 +161,15 @@ router
 
 router
 .route( '/logout' )
-.post( cors(), async ( req, res ) => {
+.get( cors(), async ( req, res ) => {
     try {
-        console.log( 'in route /auth/logout' );
+        console.log( 'in route /auth/logout (get)' );
 
         // Get sid in the cookie
-
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
 
-        if ( typeof ( cookie ) === 'undefined' ) {
-            // Got no cookie from the user.
-
-            // Store the cookie in the user.
-            const newSid = req.session.id;
-            req.session.ctrl = newSid;
-
-            // Store new session in database
-            await saveSession( {
-                sid:     newSid,
-                expires: req.session.cookie.maxAge + Date.now(),
-            } );
-
-            req.session.save();
-            res.send( {
-                redirect: '/index',
-            } );
-        }
-        else {
+        if ( typeof ( cookie ) !== 'undefined' ) {
             // Got a cookie from the user.
             const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
             if ( sid === cookie ) {
@@ -220,9 +201,6 @@ router
             } );
 
             // Give a new sid cookie
-            console.log( 'old sid:' );
-            console.log( sid );
-            console.log( req.session.ctrl );
             req.session.regenerate( async () => {
                 try {
                     const newSid = req.session.id;
@@ -241,18 +219,19 @@ router
 
                     req.session.save();
                     console.log( 'log out successfully' );
-                    res.send( {
-                        redirect: '/index',
-                    } );
+                    res.redirect( '/index' );
                 }
                 catch ( err ) {
                     console.error( err );
                 }
             } );
         }
+        else
+            res.redirect( '/index' );
     }
     catch ( error ) {
         console.error( error );
+        res.redirect( '/index' );
     }
 } );
 
