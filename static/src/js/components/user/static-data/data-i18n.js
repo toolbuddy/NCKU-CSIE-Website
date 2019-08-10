@@ -28,7 +28,6 @@ const dataI18n = Object.freeze( {
                 email:         'ex. example@xxxxxxxx',
                 personalWeb:   'ex. http://your_web_site.com',
                 fax:           'please input your fax number',
-                nation:        0,
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -91,8 +90,6 @@ const dataI18n = Object.freeze( {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             topic:   'education',
             default: {
-                degree: 0,
-                nation: 0,
                 school:       'ex. Nation Cheng Kung University',
                 major:        'ex. CSIE',
             },
@@ -106,8 +103,6 @@ const dataI18n = Object.freeze( {
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
             topic:   '學歷',
             default: {
-                degree: 0,
-                nation: 0,
                 school:       'ex. 國立成功大學',
                 major:        'ex. 資訊工程學系',
             },
@@ -175,7 +170,6 @@ const dataI18n = Object.freeze( {
             default: {
                 name:     '',
                 support:  '',
-                category: 0,
             },
             localTopic: {
                 name:     'name',
@@ -188,7 +182,6 @@ const dataI18n = Object.freeze( {
             default: {
                 name:     '',
                 support:  '',
-                category: 0,
             },
             localTopic: {
                 name:     '專案名稱',
@@ -203,7 +196,6 @@ const dataI18n = Object.freeze( {
             default: {
                 authors:   'ex. 王小明, 黃小美',
                 title:     '',
-                category:  0,
                 issueYear: 'yyyy',
             },
             localTopic: {
@@ -220,7 +212,6 @@ const dataI18n = Object.freeze( {
             default: {
                 authors:   'ex. 王小明, 黃小美',
                 title:     '',
-                category:  0,
                 issueYear: 'yyyy',
             },
             localTopic: {
@@ -282,7 +273,6 @@ const dataI18n = Object.freeze( {
             topic:   '專利',
             default: {
                 'certificationNumber': '',
-                'nation':                0,
             },
             localTopic: {
                 'applicationDate':     '申請日期',

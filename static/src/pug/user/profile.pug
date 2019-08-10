@@ -143,7 +143,7 @@ append content
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
     article.information__profile.profile#profile
-      +local-topic( 'profile', '個人資料 / Profile', false )
+      +local-topic( 'profile', i18n[ LANG.id ].title, false )
       form.profile__image.image( method= 'post' )
         section.image__frame.frame
           label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
@@ -185,11 +185,11 @@ append content
       section.profile__specialty.specialty#specialty
 
     article.information__education-block.education-block
-      +local-topic( 'education-block', '學歷 / Education', true )
+      +local-topic( 'education-block', i18n[ LANG.id ].content.education.topic , true )
       section.education-block__education.education#education
 
     article.information__experience-block.experience-block
-      +local-topic( 'experience-block', '經歷 / Experience', true ) 
+      +local-topic( 'experience-block', i18n[ LANG.id ].content.experience.topic, true ) 
       section.experience-block__experience.experience#experience
 
 append footer

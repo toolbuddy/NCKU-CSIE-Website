@@ -35,8 +35,6 @@ export default class SetProfileData {
 
         this.isAddEventListener = {};
 
-        this.i18n = dataI18n.profile;
-
         this.imageDOM = {
             block:   opt.profileDOM.querySelector( '.profile__image' ),
             button:  opt.profileDOM.querySelector( '.profile__image > .image__frame > .frame__upload' ),
@@ -154,9 +152,9 @@ export default class SetProfileData {
         };
         const tempDataI18n = LanguageUtils.supportedLanguageId.map( id => ( {
             default: {
-                [ dbTableItem ]: this.i18n[ id ].default[ dbTableItem ],
+                [ dbTableItem ]: dataI18n.profile[ id ].default[ dbTableItem ],
             },
-            topic:   this.i18n[ id ].topic[ dbTableItem ],
+            topic:   dataI18n.profile[ id ].topic[ dbTableItem ],
         } ) );
         this.isAddEventListener[ dbTableItem ] = true;
         const editPage = new EditPage( {

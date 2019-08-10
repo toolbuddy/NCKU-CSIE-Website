@@ -204,7 +204,7 @@
         > .content__tag--department--active {
           // [ skin ]
           background-color: lighten( #f67057, 10% );
-          box-shadow: 3px 3px rgba( 246, 112, 87, .3 );
+          border-width: font__px-to-rem( 2 );
           color: white;
 
           // [ interaction ]
@@ -236,8 +236,8 @@
         > .content__tag--research--active {
           // [ skin ]
           background-color: lighten( #8caae2, 10% );
-          box-shadow: 3px 3px rgba( 140, 170, 226, .5 );
           color: white;
+          border-width: font__px-to-rem( 2 );
 
           // [ interaction ]
           &:hover {

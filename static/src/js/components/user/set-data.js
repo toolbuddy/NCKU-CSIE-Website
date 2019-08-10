@@ -28,32 +28,19 @@ class SetData {
             dbTable:    opt.dbTable,
         };
 
-        this.i18n = dataI18n[ opt.dbTable ];
-
         this.DOM = {
             block:     opt.blockDOM,
             addButton: opt.addButtonDOM,
         };
-
-        this.selector = {
-            check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
-            cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
-            error:  '.edit-page__window > .window__form > .form__content > .content__error > .error__message',
-        };
-
-        this.updateButtonQuerySelector = ( block, id ) => `.input-block__block > .block__content > .content__modify--${ block }-${ id }`;
-        this.deleteButtonQuerySelector = ( block, id ) => `.input-block__block > .block__content > .content__remove--${ block }-${ id }`;
-
-        this.editPageConfig = dataEditPageConfig[ opt.dbTable ];
     }
 
-    queryApi ( lang ) {
-        return `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ lang }`;
+    queryApi ( languageId ) {
+        return `${ host }/api/faculty/facultyWithId/${ this.config.profileId }?languageId=${ languageId }`;
     }
 
-    async fetchData ( lang ) {
+    async fetchData ( languageId ) {
         try {
-            const res = await fetch( this.queryApi( lang ) );
+            const res = await fetch( this.queryApi( languageId ) );
 
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
@@ -137,7 +124,7 @@ class SetData {
                         publicationA.category !== null &&
                         publicationB.category !== null &&
                         publicationA.category !== publicationB.category )
-                        return publicationB.category - publicationA.category;
+                        return publicationA.category - publicationB.category;
                     else if (
                         publicationA.issueYear !== null &&
                         publicationB.issueYear !== null &&
@@ -156,6 +143,7 @@ class SetData {
             const data = await this.sortData( dbData );
             let currentYear = new Date().getFullYear();
             let tempRefereed = true;
+            let tempInternational = true;
             let tempCategory = 0;
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
                 let content = '';
@@ -200,10 +188,15 @@ class SetData {
                         break;
                     case 'publication':
                         content = res.title;
-                        if ( res.refereed !== tempRefereed || res.category !== tempCategory || index === 0 ) {
+                        if (
+                            res.refereed !== tempRefereed ||
+                            res.category !== tempCategory ||
+                            res.international !== tempInternational ||
+                            index === 0 ) {
                             const category = publicationCategoryUtils.i18n[ this.config.languageId ][ publicationCategoryUtils.map[ res.category ] ];
                             tempRefereed = res.refereed;
                             tempCategory = res.category;
+                            tempInternational = res.international;
                             subtitle = '';
                             if ( res.refereed )
                                 subtitle += 'Refereed';
@@ -228,13 +221,16 @@ class SetData {
                     subtitle,
                     res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                 } );
-                await this.setUpdateButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.updateButtonQuerySelector( this.config.dbTable, dbTableId ) ),
+
+                const updateSelector = `.input-block__block > .block__content > .content__modify--${ this.config.dbTable }-${ dbTableId }`;
+                const deleteSelector = `.input-block__block > .block__content > .content__remove--${ this.config.dbTable }-${ dbTableId }`;
+                this.setUpdateButtonEvent( {
+                    buttonDOM: this.DOM.block.querySelector( updateSelector ),
                     res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                     id:        dbTableId,
                 } );
-                await this.setDeleteButtonEvent( {
-                    buttonDOM: this.DOM.block.querySelector( this.deleteButtonQuerySelector( this.config.dbTable, dbTableId ) ),
+                this.setDeleteButtonEvent( {
+                    buttonDOM: this.DOM.block.querySelector( deleteSelector ),
                     id:        dbTableId,
                     content,
                 } );
@@ -344,8 +340,9 @@ class SetData {
 
     checkSubmitData () {
         let isValid = true;
+        const errorSelector =   '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
         const editPageDOM = document.getElementById( 'edit-page' );
-        const errorDOM = editPageDOM.querySelector( this.selector.error );
+        const errorDOM = editPageDOM.querySelector( errorSelector );
         const input = editPageDOM.getElementsByTagName( 'input' );
 
         const constraints = validationInfo[ this.config.dbTable ];
@@ -380,9 +377,13 @@ class SetData {
             } );
             await editPage.renderEditPage();
 
+            const selector = {
+                cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+                check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            };
             const editPageDOM = document.getElementById( 'edit-page' );
-            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
-            const checkDOM = editPageDOM.querySelector( this.selector.check );
+            const cancelDOM = editPageDOM.querySelector( selector.cancel );
+            const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
@@ -409,9 +410,14 @@ class SetData {
                 buttonMethod:   'update',
             } );
             await editPage.renderEditPage();
+
+            const selector = {
+                cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+                check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            };
             const editPageDOM = document.getElementById( 'edit-page' );
-            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
-            const checkDOM = editPageDOM.querySelector( this.selector.check );
+            const cancelDOM = editPageDOM.querySelector( selector.cancel );
+            const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
@@ -441,9 +447,13 @@ class SetData {
             } );
             await editPage.renderEditPage();
 
+            const selector = {
+                cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
+                check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
+            };
             const editPageDOM = document.getElementById( 'edit-page' );
-            const cancelDOM = editPageDOM.querySelector( this.selector.cancel );
-            const checkDOM = editPageDOM.querySelector( this.selector.check );
+            const cancelDOM = editPageDOM.querySelector( selector.cancel );
+            const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();

@@ -16,7 +16,9 @@ import WebLanguageUtils from 'static/src/js/utils/language.js';
 class EditPage {
     constructor ( opt ) {
         if (
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
+            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
+            !ValidateUtils.isValidString( opt.buttonMethod ) ||
+            !ValidateUtils.isValidString( opt.dbTable )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -32,10 +34,6 @@ class EditPage {
         this.editPageConfig = opt.editPageConfig;
         this.dbData = ( opt.buttonMethod === 'update' ) ? opt.dbData : {};
         this.content = opt.content;
-
-        this.selector = {
-            info:   '.edit-page__window > .window__form > .form__content > .content__info',
-        };
     }
 
     async checkEditPageExist () {
@@ -68,7 +66,6 @@ class EditPage {
     }
 
     setTextInput ( editPageConfig ) {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const flag = {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
@@ -81,7 +78,7 @@ class EditPage {
                 value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
 
-            infoDOM.innerHTML += editPageContentHTML( {
+            this.DOM.info.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
                 value,
                 placeholder,
@@ -95,12 +92,11 @@ class EditPage {
     }
 
     setTimeInput () {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const timeI18n = dataI18n.time[ this.config.languageId ];
         const valueFrom = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].from : null;
         const valueTo = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].to : null;
 
-        infoDOM.innerHTML += editPageContentHTML( {
+        this.DOM.info.innerHTML += editPageContentHTML( {
             from:       timeI18n.from,
             to:         timeI18n.to,
             valueFrom,
@@ -112,8 +108,7 @@ class EditPage {
     }
 
     setLocalTopic ( topic ) {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
-        infoDOM.innerHTML += editPageContentHTML( {
+        this.DOM.info.innerHTML += editPageContentHTML( {
             localTopic:   topic,
             type:        'local-topic',
         } );
@@ -121,7 +116,7 @@ class EditPage {
 
     setDropdownInput ( editPageConfig ) {
         try {
-            const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+            const infoDOM = this.DOM.info;
             const util = editPageConfig.util;
 
             new Promise( ( res ) => {
@@ -131,7 +126,7 @@ class EditPage {
 
                 const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
 
-                infoDOM.innerHTML += editPageContentHTML( {
+                this.DOM.info.innerHTML += editPageContentHTML( {
                     top,
                     value,
                     data:        editPageConfig.dropdownItem,
@@ -165,7 +160,6 @@ class EditPage {
     }
 
     setTimeDetailInput ( editPageConfig ) {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
         const data = {};
 
         if ( this.config.buttonMethod === 'add' ) {
@@ -189,13 +183,12 @@ class EditPage {
                 tempDate = ( dbData.issueDate !== null ) ? dbData.issueDate.split( '-' ) : null;
             else if ( editPageConfig.dbTableDay.includes( 'expire' ) )
                 tempDate = ( dbData.expireDate !== null ) ? dbData.expireDate.split( '-' ) : null;
-            console.log( tempDate );
             data.year = ( tempDate !== null ) ? tempDate[ 0 ] : '';
             data.month = ( tempDate !== null ) ? tempDate[ 1 ] : '';
             data.day = ( tempDate !== null ) ? tempDate[ 2 ] : '';
         }
 
-        infoDOM.innerHTML += editPageContentHTML( {
+        this.DOM.info.innerHTML += editPageContentHTML( {
             type:         'time-detail',
             year:         data.year,
             month:        data.month,
@@ -208,12 +201,12 @@ class EditPage {
 
     setCheckboxInput ( editPageConfig ) {
         try {
-            const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
+            const infoDOM = this.DOM.info;
             const content = dataI18n[ this.config.dbTable ][ this.config.languageId ].localTopic[ editPageConfig.dbTableItem ];
             const isChecked = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ] : false;
 
             new Promise( ( res ) => {
-                infoDOM.innerHTML += editPageContentHTML( {
+                this.DOM.info.innerHTML += editPageContentHTML( {
                     type:         'checkbox',
                     dbTableItem:  editPageConfig.dbTableItem,
                     content,
@@ -231,7 +224,6 @@ class EditPage {
                     classRemove( textDOM, 'checkbox__text--active' );
 
                 chooseDOM.addEventListener( 'change', () => {
-                    console.log( 'change' );
                     if ( chooseDOM.checked )
                         classAdd( textDOM, 'checkbox__text--active' );
                     else
@@ -245,8 +237,7 @@ class EditPage {
     }
 
     async setEditPageInputBlock () {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
-        infoDOM.innerHTML = '';
+        this.DOM.info.innerHTML = '';
         this.editPageConfig.forEach( ( element ) => {
             switch ( element.type ) {
                 case 'text':
@@ -275,8 +266,7 @@ class EditPage {
     }
 
     async setEditPageDeleteBlock () {
-        const infoDOM = this.DOM.editPage.querySelector( this.selector.info );
-        infoDOM.innerHTML += editPageContentHTML( {
+        this.DOM.info.innerHTML += editPageContentHTML( {
             localTopic:  this.content,
             type:       'local-topic',
         } );
@@ -291,7 +281,11 @@ class EditPage {
     }
 
     async renderEditPage () {
-        await this.renderEditPageWindow();
+        await this.renderEditPageWindow()
+        .then( () => {
+            const infoSelector = '.edit-page__window > .window__form > .form__content > .content__info';
+            this.DOM.info = this.DOM.editPage.querySelector( infoSelector );
+        } );
 
         if ( this.config.buttonMethod === 'delete' )
             await this.setEditPageDeleteBlock();

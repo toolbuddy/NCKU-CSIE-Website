@@ -303,12 +303,13 @@ const validationInfo = Object.freeze( {
         [ `award_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
             presence: {
                 allowEmpty: false,
-                message:    '中文獎項是必填欄位',
+                message:    '獎項是必填欄位',
             },
         },
         [ `award_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
             presence: {
-                allowEmpty: true,
+                allowEmpty: false,
+                message:    '獎項是必填欄位',
             },
         },
     },
