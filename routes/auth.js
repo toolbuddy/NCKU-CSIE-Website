@@ -9,15 +9,15 @@
 
 import express from 'express';
 import md5 from 'md5';
-import staticHtml from 'routes/utils/static-html.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
 import updateAdmin from 'models/auth/operations/update-admin.js';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, } from 'settings/server/config.js';
+import { secret, projectRoot, maxAge, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -31,8 +31,56 @@ const router = express.Router( {
 
 router
 .route( '/login' )
-.get( staticHtml( 'auth/login' ) )
-.post( async ( req, res ) => {
+.get( async ( req, res, next ) => {
+    try {
+        console.log( 'in route auth/login (get)' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            const data = await getSession( {
+                sid,
+            } );
+
+            // Check `expires`
+            if ( data.expires >= Date.now() && data.userId !== null ) {
+                const result = await getAdminByUserId( {
+                    userId: Number( data.userId ),
+                } );
+
+                if ( result.sid === data.sid )
+                    res.redirect( '/index' );
+            }
+        }
+        res.sendFile(
+            `static/dist/html/auth/login.${ req.query.languageId }.html`,
+            {
+                root:         projectRoot,
+                maxAge,
+                dotfiles:     'deny',
+                cacheControl: true,
+            },
+            ( err ) => {
+                if ( err )
+                    next( err );
+            }
+        );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.redirect( '/index' );
+    }
+} )
+.post( cors(), async ( req, res ) => {
     console.log( 'in route auth/login (post)' );
 
     try {
@@ -80,20 +128,33 @@ router
                 }
                 catch ( err ) {
                     console.error( err );
+                    res.json( {
+                        error: 'Server Error.',
+                    } );
                 }
             } );
         }
         else {
             // Wrong account or password, should show warning message
-            console.log( 'wrong account or password' );
+            console.log( 'wrong account or password.' );
+            res.json( {
+                error: 'Wrong account or password.',
+            } );
         }
     }
     catch ( error ) {
-        if ( error.status === 404 )
+        if ( error.status === 404 ) {
             console.log( 'wrong account or password' );
-
-        else
+            res.json( {
+                error: 'Wrong account or password.',
+            } );
+        }
+        else {
             console.error( error );
+            res.json( {
+                error: 'Server Error.',
+            } );
+        }
     }
 } );
 
@@ -103,72 +164,77 @@ router
 
 router
 .route( '/logout' )
-.post( async ( req, res ) => {
-    // Get sid in the cookie
-    const cookie = res.locals.unparsedId;
-    const sid = cookieParser.signedCookie( cookie, secret );
-    console.log( 'in route /auth/logout' );
-    console.log( cookie );
-    console.log( sid );
-    if ( sid === cookie && typeof ( sid ) !== 'undefined' ) {
-        const error = new Error( 'Invalid cookie.' );
-        error.status = 400;
-        throw error;
-    }
-
-    // Get session data in the database.
+.get( cors(), async ( req, res ) => {
     try {
-        const data = await getSession( {
-            sid,
-        } );
+        console.log( 'in route /auth/logout (get)' );
 
-        const result = await getAdminByUserId( {
-            userId: Number( data.userId ),
-        } );
+        // Get sid in the cookie
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
 
-        // Update user session id in database
-        await updateAdmin( {
-            userId:   Number( result.userId ),
-            account:  result.account,
-            password: result.password,
-            role:     result.role,
-            sid:      null,
-            isValid:  result.isValid,
-            name:     result.name,
-            roleId:   result.roleId,
-        } );
-
-        // Give a new sid cookie
-        console.log( 'old sid:' );
-        console.log( sid );
-        console.log( req.session.ctrl );
-        req.session.regenerate( async () => {
-            try {
-                const newSid = req.session.id;
-                req.session.ctrl = newSid;
-
-                console.log( 'in generate, new sid:' );
-                console.log( newSid );
-                console.log( req.session.id );
-                console.log( req.session.ctrl );
-
-                // Store new session in database
-                await saveSession( {
-                    sid:     newSid,
-                    expires: req.session.cookie.maxAge + Date.now(),
-                } );
-
-                req.session.save();
-                console.log( 'log out successfully' );
-                res.redirect( '/index' );
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
             }
-            catch ( err ) {
-                console.error( err );
-            }
-        } );
+
+            // Get session data in the database.
+
+            const data = await getSession( {
+                sid,
+            } );
+
+            const result = await getAdminByUserId( {
+                userId: Number( data.userId ),
+            } );
+
+            // Update user session id in database
+            await updateAdmin( {
+                userId:   Number( result.userId ),
+                account:  result.account,
+                password: result.password,
+                role:     result.role,
+                sid:      null,
+                isValid:  result.isValid,
+                name:     result.name,
+                roleId:   result.roleId,
+            } );
+
+            // Give a new sid cookie
+            req.session.regenerate( async () => {
+                try {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
+
+                    console.log( 'in generate, new sid:' );
+                    console.log( newSid );
+                    console.log( req.session.id );
+                    console.log( req.session.ctrl );
+
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    console.log( 'log out successfully' );
+                    res.redirect( '/index' );
+                }
+                catch ( err ) {
+                    console.error( err );
+                }
+            } );
+        }
+        else
+            res.redirect( '/index' );
     }
     catch ( error ) {
         console.error( error );
+        res.redirect( '/index' );
     }
 } );
 

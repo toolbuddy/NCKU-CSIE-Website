@@ -24,7 +24,7 @@ import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import { secret, } from 'settings/server/config.js';
 
 export default async function ( req, res, next ) {
-    console.log( 'get query:' );
+    console.log( 'In check-session:' );
     const cookie = req.cookies.sessionId;
     res.locals.unparsedId = cookie;
 

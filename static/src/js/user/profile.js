@@ -38,6 +38,7 @@ try {
     } );
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
+    headerLarge.renderLogin();
 }
 catch ( err ) {
     console.error( err );
@@ -63,6 +64,11 @@ async function fetchData () {
 ( async () => {
     try {
         const result = await fetchData();
+        console.log( result );
+        console.log( result.redirect );
+        if ( result.redirect )
+            window.location = result.redirect;
+
         if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'faculty' ) ) {
             try {
                 const nevagationBar = new NavigationBar( {

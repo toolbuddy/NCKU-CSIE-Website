@@ -20,9 +20,9 @@ import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, } from 'settings/server/config.js';
+import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
-import { numberTypeAnnotation, } from 'babel-types';
+import noCache from 'routes/utils/no-cache.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -178,7 +178,97 @@ router
 
 router
 .route( '/profile' )
-.get( staticHtml( 'user/profile' ) )
+.get( cors(), noCache, async ( req, res, next ) => {
+    try {
+        console.log( 'in route user/profile - get' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            const data = await getSession( {
+                sid,
+            } );
+
+            // Check `expires`
+            if ( data.expires < Date.now() ) {
+                req.session.regenerate( async () => {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
+
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    res.locals.unparsedSid = req.session.id;
+                    res.redirect( '/index' );
+                } );
+            }
+            else if ( data.userId !== null ) {
+                const result = await getAdminByUserId( {
+                    userId: Number( data.userId ),
+                } );
+
+                if ( result.sid === data.sid ) {
+                    console.log( 'should send profile html' );
+                    res.sendFile(
+                        `static/dist/html/user/profile.${ req.query.languageId }.html`,
+                        {
+                            root:         projectRoot,
+                            maxAge,
+                            dotfiles:     'deny',
+                            cacheControl: true,
+                        },
+                        ( err ) => {
+                            if ( err )
+                                next( err );
+                        }
+                    );
+                }
+                else
+                    res.redirect( '/index' );
+            }
+            else
+                res.redirect( '/index' );
+        }
+        else
+            res.redirect( '/index' );
+    }
+    catch ( error ) {
+        if ( error.status === 404 ) {
+            // No corresponding session id in the database
+            req.session.regenerate( async () => {
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
+
+                req.session.save();
+                res.locals.unparsedSid = req.session.id;
+
+                // Send new session & user id
+                res.redirect( '/index' );
+            } );
+        }
+        else
+            console.error( error );
+    }
+} )
 .post( cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/profile' );
@@ -187,7 +277,6 @@ router
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
 
-        let userData = -1;
         if ( typeof ( cookie ) === 'undefined' ) {
             try {
                 // Got no cookie from the user.
@@ -202,7 +291,9 @@ router
                     expires: req.session.cookie.maxAge + Date.now(),
                 } );
 
-                res.redirect( '/index' );
+                res.send( {
+                    redirect: '/index',
+                } );
             }
             catch ( error ) {
                 console.error( error );
@@ -237,8 +328,9 @@ router
 
                         req.session.save();
                         res.locals.unparsedSid = req.session.id;
-
-                        res.redirect( '/index' );
+                        res.send( {
+                            redirect: '/index',
+                        } );
                     } );
                 }
                 else if ( data.userId !== null ) {
@@ -246,13 +338,17 @@ router
                         userId: Number( data.userId ),
                     } );
 
-                    if ( result.sid === data.sid )
-                        userData = result;
-                    else
-                        res.redirect( '/index' );
+                    if ( result.sid !== data.sid ) {
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    }
                 }
-                else
-                    res.redirect( '/index' );
+                else {
+                    res.send( {
+                        redirect: '/index',
+                    } );
+                }
             }
             catch ( error ) {
                 if ( error.status === 404 ) {
@@ -271,7 +367,9 @@ router
                         res.locals.unparsedSid = req.session.id;
 
                         // Send new session & user id
-                        res.redirect( '/index' );
+                        res.send( {
+                            redirect: '/index',
+                        } );
                     } );
                 }
                 else

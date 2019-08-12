@@ -12,6 +12,7 @@ import publicationCategoryUtils from 'models/faculty/utils/publication-category.
 import validate from 'validate.js';
 import nationUtils from '../../../../../models/faculty/utils/nation';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
+import { declareInterface, } from 'babel-types';
 
 class SetData {
     constructor ( opt ) {
@@ -210,6 +211,8 @@ class SetData {
                 let dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
+                        const degree = degreeUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].degree ];
+                        content.push( `${ res.school } ${ res.major } ${ degree }` );
                         await this.renderBlock( {
                             dbTable: this.config.dbTable,
                             id:       dbTableId,
@@ -219,6 +222,11 @@ class SetData {
                         } );
                         break;
                     case 'experience':
+                        let deleteContent = '';
+                        deleteContent += `${ res.organization }`;
+                        deleteContent += ( res.department !== null ) ? ` ${ res.department }` : '';
+                        deleteContent += ( res.title !== null ) ? ` ${ res.title }` : '';
+                        content.push( deleteContent );
                         await this.renderBlock( {
                             dbTable: 'experience',
                             id:       dbTableId,
@@ -279,6 +287,7 @@ class SetData {
                             subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectCategoryUtils.map[ res.category ] ] );
                             tempCategory = res.category;
                         }
+                        content.push( res.name );
                         await this.renderBlock( {
                             dbTable: this.config.dbTable,
                             id:       dbTableId,
