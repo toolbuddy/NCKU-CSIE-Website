@@ -221,15 +221,14 @@ const dataEditPageConfig = Object.freeze( {
         editPageType(
             {
                 type:        'localTopic',
-                dbTableItem: 'time-detail',
+                dbTableItem: 'receivedYear',
             }
         ),
         editPageType(
             {
-                type:         'timeDetail',
-                dbTableYear:  'receivedYear',
-                dbTableMonth: 'receivedMonth',
-                dbTableDay:   'receivedDay',
+                type:        'text',
+                dbTableItem: 'receivedYear',
+                i18n:        false,
             }
         ),
         editPageType(
@@ -426,9 +425,7 @@ const dataEditPageConfig = Object.freeze( {
         editPageType(
             {
                 type:         'timeDetail',
-                dbTableYear:  'applicationYear',
-                dbTableMonth: 'applicationMonth',
-                dbTableDay:   'applicationDay',
+                dbTableItem:  'applicationDate',
             }
         ),
         editPageType(
@@ -440,9 +437,7 @@ const dataEditPageConfig = Object.freeze( {
         editPageType(
             {
                 type:         'timeDetail',
-                dbTableYear:  'issueYear',
-                dbTableMonth: 'issueMonth',
-                dbTableDay:   'issueDay',
+                dbTableItem:  'issueDate',
             }
         ),
         editPageType(
@@ -454,9 +449,7 @@ const dataEditPageConfig = Object.freeze( {
         editPageType(
             {
                 type:         'timeDetail',
-                dbTableYear:  'expireYear',
-                dbTableMonth: 'expireMonth',
-                dbTableDay:   'expireDay',
+                dbTableItem:  'expireDate',
             }
         ),
     ],

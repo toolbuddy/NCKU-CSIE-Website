@@ -10,6 +10,8 @@ import dataEditPageConfig from 'static/src/js/components/user/static-data/data-e
 import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import validate from 'validate.js';
+import nationUtils from '../../../../../models/faculty/utils/nation';
+import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 
 class SetData {
     constructor ( opt ) {
@@ -60,7 +62,8 @@ class SetData {
                 editSrc:   `${ host }/static/image/icon/edit.png`,
             };
             this.DOM.block.innerHTML += dynamicInputBlock( {
-                data,
+                opt,
+                host,
             } );
         }
         catch ( err ) {
@@ -134,6 +137,34 @@ class SetData {
                 } );
             } );
         }
+        if ( this.config.dbTable === 'patent' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].patent.sort( ( patentA, patentB ) => {
+                    const tempDateA = ( patentA.applicationDate !== null ) ? patentA.applicationDate.split( '-' ) : null;
+                    const tempDateB = ( patentB.applicationDate !== null ) ? patentB.applicationDate.split( '-' ) : null;
+                    for ( const i = 0; i < 3; ++i ) {
+                        if ( tempDateA !== null &&
+                            tempDateB !== null &&
+                            tempDateA[ i ] !== tempDateB[ i ] )
+                            return tempDateB[ i ] - tempDateA[ i ];
+                    }
+                    return 0;
+                } );
+            } );
+        }
+        if ( this.config.dbTable === 'project' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].project.sort( ( projectA, projectB ) => {
+                    if ( projectA.category !== projectB.category )
+                        return projectB.category - projectA.category;
+                    else if ( projectA.from !== null &&
+                        projectB.from !== null &&
+                        projectA.from !== projectB.from )
+                        return projectB.from - projectA.from;
+                    return 0;
+                } );
+            } );
+        }
         return data;
     }
 
@@ -146,48 +177,50 @@ class SetData {
             let tempInternational = true;
             let tempCategory = 0;
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                let content = '';
-                let subtitle = null;
+                let content = new Array();
+                const subtitle = new Array();
                 const dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
-                        [ res.school,
-                            res.major,
-                            degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ res.degree ] ], ].forEach( ( element ) => {
-                            if ( ValidateUtils.isValidString( element ) )
-                                content += `${ element } `;
+                        await this.renderBlock( {
+                            dbTable: this.config.dbTable,
+                            id:       dbTableId,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            nation:  nationUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].nation ],
+                            degree:  degreeUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].degree ],
                         } );
                         break;
                     case 'experience':
-                        [ 'organization',
-                            'department',
-                            'title', ].forEach( ( element ) => {
-                            if ( ValidateUtils.isValidString( res[ element ] ) )
-                                content += `${ res[ element ] } `;
+                        await this.renderBlock( {
+                            dbTable: 'experience',
+                            id:       dbTableId,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
                         } );
                         break;
                     case 'award':
-                        content = res.award;
+                        content.push( res.award );
                         if ( res.receivedYear !== currentYear || index === 0 ) {
-                            subtitle = res.receivedYear;
+                            subtitle.push( res.receivedYear );
                             currentYear = res.receivedYear;
                         }
                         break;
                     case 'conference':
-                        content = res.conference;
+                        content.push( res.conference );
                         if ( res.hostYear !== currentYear || index === 0 ) {
-                            subtitle = res.hostYear;
+                            subtitle.push( res.hostYear );
                             currentYear = res.hostYear;
                         }
                         break;
                     case 'title':
-                        content = res.title;
+                        content.push( res.title );
                         break;
                     case 'specialty':
-                        content = res.specialty;
+                        content.push( res.specialty );
                         break;
                     case 'publication':
-                        content = res.title;
+                        content.push( res.title );
+                        content.push( ` ${ res.authors }` );
+                        let temp = '';
                         if (
                             res.refereed !== tempRefereed ||
                             res.category !== tempCategory ||
@@ -197,30 +230,50 @@ class SetData {
                             tempRefereed = res.refereed;
                             tempCategory = res.category;
                             tempInternational = res.international;
-                            subtitle = '';
+                            temp = '';
                             if ( res.refereed )
-                                subtitle += 'Refereed';
+                                temp += 'Refereed \n';
                             if ( res.international )
-                                subtitle += '國際';
-                            subtitle += category;
+                                temp += '國際';
+                            temp += category;
+                            subtitle.push( temp );
+                        }
+                        if ( res.issueYear !== currentYear || index === 0 ) {
+                            subtitle.push( res.issueYear );
+                            currentYear = res.issueYear;
                         }
                         break;
                     case 'patent':
-                        content = res.patent;
+                        content.push( res.patent );
                         break;
                     case 'project':
-                        content = res.name;
+                        if ( res.category !== tempCategory || index === 0 ) {
+                            subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectCategoryUtils.map[ res.category ] ] );
+                            tempCategory = res.category;
+                        }
+                        await this.renderBlock( {
+                            dbTable: this.config.dbTable,
+                            id:       dbTableId,
+                            subtitle,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                        } );
+
+                        // Content.push( res.name );
                         break;
                     default:
                         content = '';
                 }
-                await this.renderBlock( {
-                    modifier: this.config.dbTable,
-                    id:       dbTableId,
-                    content,
-                    subtitle,
-                    res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                } );
+                if ( this.config.dbTable !== 'education' &&
+                    this.config.dbTable !== 'experience' &&
+                    this.config.dbTable !== 'project' ) {
+                    await this.renderBlock( {
+                        dbTable:  this.config.dbTable,
+                        id:       dbTableId,
+                        content,
+                        subtitle,
+                        res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
+                    } );
+                }
 
                 const updateSelector = `.input-block__block > .block__content > .content__modify--${ this.config.dbTable }-${ dbTableId }`;
                 const deleteSelector = `.input-block__block > .block__content > .content__remove--${ this.config.dbTable }-${ dbTableId }`;

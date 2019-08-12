@@ -90,6 +90,8 @@ export default {
         'user/conference':         path.join( jsSrcRoot, 'user/conference.js' ),
         'user/project':            path.join( jsSrcRoot, 'user/project.js' ),
         'user/patent':             path.join( jsSrcRoot, 'user/patent.js' ),
+        'user/studentAward':       path.join( jsSrcRoot, 'user/studentAward.js' ),
+        'user/technologyTransfer': path.join( jsSrcRoot, 'user/technologyTransfer.js' ),
         'user/announcement/index': path.join( jsSrcRoot, 'user/announcement/index.js' ),
         'user/announcement/add':   path.join( jsSrcRoot, 'user/announcement/add.js' ),
         'user/announcement/edit':  path.join( jsSrcRoot, 'user/announcement/edit.js' ),

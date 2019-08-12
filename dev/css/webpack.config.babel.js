@@ -94,15 +94,17 @@ export default {
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
 
         // Route `user`
-        'user/index':             path.join( sassRoot, 'user/index.scss' ),
-        'user/profile':           path.join( sassRoot, 'user/profile.scss' ),
-        'user/resetPassword':     path.join( sassRoot, 'user/resetPassword.scss' ),
-        'user/award':             path.join( sassRoot, 'user/award.scss' ),
-        'user/publication':       path.join( sassRoot, 'user/publication.scss' ),
-        'user/conference':        path.join( sassRoot, 'user/conference.scss' ),
-        'user/project':           path.join( sassRoot, 'user/project.scss' ),
-        'user/patent':            path.join( sassRoot, 'user/patent.scss' ),
-        'user/announcement/edit': path.join( sassRoot, 'user/announcement/edit.scss' ),
+        'user/index':              path.join( sassRoot, 'user/index.scss' ),
+        'user/profile':            path.join( sassRoot, 'user/profile.scss' ),
+        'user/studentAward':       path.join( sassRoot, 'user/studentAward.scss' ),
+        'user/resetPassword':      path.join( sassRoot, 'user/resetPassword.scss' ),
+        'user/award':              path.join( sassRoot, 'user/award.scss' ),
+        'user/publication':        path.join( sassRoot, 'user/publication.scss' ),
+        'user/conference':         path.join( sassRoot, 'user/conference.scss' ),
+        'user/project':            path.join( sassRoot, 'user/project.scss' ),
+        'user/patent':             path.join( sassRoot, 'user/patent.scss' ),
+        'user/technologyTransfer': path.join( sassRoot, 'user/technologyTransfer.scss' ),
+        'user/announcement/edit':  path.join( sassRoot, 'user/announcement/edit.scss' ),
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),

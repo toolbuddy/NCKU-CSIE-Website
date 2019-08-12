@@ -350,19 +350,19 @@ router
             else if ( data.dbTable === 'patent' ) {
                 const date = {
                     applicationDate: {
-                        day:   ( data.item.applicationDay === '' ) ? 1 : Number( data.item.applicationDay ),
-                        month: ( data.item.applicationMonth === '' ) ? 0 : Number( data.item.applicationMonth ) - 1,
-                        year:  ( data.item.applicationYear === '' ) ? null : Number( data.item.applicationYear ),
+                        day:   ( data.item.applicationDate_day === '' ) ? 1 : Number( data.item.applicationDate_day ),
+                        month: ( data.item.applicationDate_month === '' ) ? 0 : Number( data.item.applicationDate_month ) - 1,
+                        year:  ( data.item.applicationDate_year === '' ) ? null : Number( data.item.applicationDate_year ),
                     },
                     expireDate: {
-                        day:   ( data.item.expireDay === '' ) ? 1 : Number( data.item.expireDay ),
-                        month: ( data.item.expireMonth === '' ) ? 0 : Number( data.item.expireMonth ) - 1,
-                        year:  ( data.item.expireYear === '' ) ? null : Number( data.item.expireYear ),
+                        day:   ( data.item.expireDate_day === '' ) ? 1 : Number( data.item.expireDate_day ),
+                        month: ( data.item.expireDate_month === '' ) ? 0 : Number( data.item.expireDate_month ) - 1,
+                        year:  ( data.item.expireDate_year === '' ) ? null : Number( data.item.expireDate_year ),
                     },
                     issueDate: {
-                        day:   ( data.item.issueDay === '' ) ? 1 : Number( data.item.issueDay ),
-                        month: ( data.item.issueMonth === '' ) ? 0 : Number( data.item.issueMonth ) - 1,
-                        year:  ( data.item.issueYear === '' ) ? null : Number( data.item.issueYear ),
+                        day:   ( data.item.issueDate_day === '' ) ? 1 : Number( data.item.issueDate_day ),
+                        month: ( data.item.issueDate_month === '' ) ? 0 : Number( data.item.issueDate_month ) - 1,
+                        year:  ( data.item.issueDate_year === '' ) ? null : Number( data.item.issueDate_year ),
                     },
                 };
                 const item = {
@@ -386,7 +386,6 @@ router
                         ],
                     },
                 };
-                console.log( item );
             }
             else if ( data.dbTable === 'publication' ) {
                 const item = {
@@ -470,8 +469,10 @@ router
             }
             else if ( data.dbTable === 'award' ) {
                 const item = {
-                    receivedDay:   data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
-                    receivedMonth:  data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
+                    // ReceivedDay:   data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
+                    // receivedMonth:  data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
+                    receivedDay:   null,
+                    receivedMonth: null,
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
@@ -585,19 +586,19 @@ router
             else if ( data.dbTable === 'patent' ) {
                 const date = {
                     applicationDate: {
-                        day:   ( data.item.applicationDay === '' ) ? 1 : Number( data.item.applicationDay ),
-                        month: ( data.item.applicationMonth === '' ) ? 0 : Number( data.item.applicationMonth ) - 1,
-                        year:  ( data.item.applicationYear === '' ) ? null : Number( data.item.applicationYear ),
+                        day:   ( data.item.applicationDate_day === '' ) ? 1 : Number( data.item.applicationDate_day ),
+                        month: ( data.item.applicationDate_month === '' ) ? 0 : Number( data.item.applicationDate_month ) - 1,
+                        year:  ( data.item.applicationDate_year === '' ) ? null : Number( data.item.applicationDate_year ),
                     },
                     expireDate: {
-                        day:   ( data.item.expireDay === '' ) ? 1 : Number( data.item.expireDay ),
-                        month: ( data.item.expireMonth === '' ) ? 0 : Number( data.item.expireMonth ) - 1,
-                        year:  ( data.item.expireYear === '' ) ? null : Number( data.item.expireYear ),
+                        day:   ( data.item.expireDate_day === '' ) ? 1 : Number( data.item.expireDate_day ),
+                        month: ( data.item.expireDate_month === '' ) ? 0 : Number( data.item.expireDate_month ) - 1,
+                        year:  ( data.item.expireDate_year === '' ) ? null : Number( data.item.expireDate_year ),
                     },
                     issueDate: {
-                        day:   ( data.item.issueDay === '' ) ? 1 : Number( data.item.issueDay ),
-                        month: ( data.item.issueMonth === '' ) ? 0 : Number( data.item.issueMonth ) - 1,
-                        year:  ( data.item.issueYear === '' ) ? null : Number( data.item.issueYear ),
+                        day:   ( data.item.issueDate_day === '' ) ? 1 : Number( data.item.issueDate_day ),
+                        month: ( data.item.issueDate_month === '' ) ? 0 : Number( data.item.issueDate_month ) - 1,
+                        year:  ( data.item.issueDate_year === '' ) ? null : Number( data.item.issueDate_year ),
                     },
                 };
                 const item = {
@@ -652,9 +653,9 @@ router
             }
             else if ( data.dbTable === 'award' ) {
                 const item = {
-                    receivedMonth:    data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
-                    receivedDay:    data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
-                    receivedYear:    data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                    receivedDay:   null,
+                    receivedMonth: null,
+                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     awardId:       Number( data.dbTableItemId ),
                 };
                 const i18nData = [];
@@ -855,12 +856,28 @@ router
 .get( staticHtml( 'user/conference' ) );
 
 /**
+ * Resolve URL `/user/studentAward`.
+ */
+
+router
+.route( '/studentAward' )
+.get( staticHtml( 'user/studentAward' ) );
+
+/**
  * Resolve URL `/user/publication`.
  */
 
 router
 .route( '/publication' )
 .get( staticHtml( 'user/publication' ) );
+
+/**
+ * Resolve URL `/user/technologyTransfer`.
+ */
+
+router
+.route( '/technologyTransfer' )
+.get( staticHtml( 'user/technologyTransfer' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.

@@ -444,7 +444,7 @@ const validationInfo = Object.freeze( {
                 maximum: 100,
             },
         },
-        applicationYear: {
+        applicationDate_year: {
             presence:  {
                 allowEmpty: true,
                 message:    '年份不可為空',
@@ -454,7 +454,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        applicationMonth: {
+        applicationDate_month: {
             presence:     {
                 allowEmpty: true,
             },
@@ -464,7 +464,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        applicationDay: {
+        applicationDate_day: {
             presence:     {
                 allowEmpty: true,
             },
@@ -474,7 +474,7 @@ const validationInfo = Object.freeze( {
                 message:           '日期格式錯誤',
             },
         },
-        expireYear: {
+        expireDate_year: {
             presence:  {
                 allowEmpty: true,
             },
@@ -483,7 +483,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        expireMonth: {
+        expireDate_month: {
             presence:     {
                 allowEmpty: true,
             },
@@ -493,7 +493,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        expireDay: {
+        expireDate_day: {
             presence:     {
                 allowEmpty: true,
             },
@@ -503,7 +503,7 @@ const validationInfo = Object.freeze( {
                 message:           '日期格式錯誤',
             },
         },
-        issueYear: {
+        issueDate_year: {
             presence:  {
                 allowEmpty: true,
             },
@@ -512,7 +512,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        issueMonth: {
+        issueDate_month: {
             presence:     {
                 allowEmpty: true,
             },
@@ -522,7 +522,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        issueDay: {
+        issueDate_day: {
             presence:     {
                 allowEmpty: true,
             },

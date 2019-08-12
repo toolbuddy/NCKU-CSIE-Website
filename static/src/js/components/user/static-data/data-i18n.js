@@ -146,21 +146,23 @@ const dataI18n = Object.freeze( {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             topic:   'award',
             default: {
-                award: 'ex. 國立成功大學教學傑出教師',
+                award:        'ex. 國立成功大學教學傑出教師',
+                receivedYear: 'yyyy',
             },
             localTopic: {
                 'award':         'award',
-                'time-detail': 'Received Date',
+                'receivedYear': 'Received Year',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
             topic:   '獎項',
             default: {
-                award: 'ex. 國立成功大學教學傑出教師',
+                award:        'ex. 國立成功大學教學傑出教師',
+                receivedYear: 'yyyy',
             },
             localTopic: {
                 'award':         '獎項',
-                'time-detail': '獲獎日期',
+                'receivedYear': '獲獎年份',
             },
         },
     },

@@ -23,12 +23,14 @@ class NavigationBar {
         };
 
         const classModifier = {
-            profile:     'profile',
-            award:       'award',
-            publication: 'publication',
-            conference:  'conference',
-            patent:      'patent',
-            project:     'project',
+            profile:            'profile',
+            award:              'award',
+            publication:        'publication',
+            conference:         'conference',
+            patent:             'patent',
+            project:            'project',
+            studentAward:       'student_award',
+            technologyTransfer: 'technology_transfer',
         };
 
         this.DOM.link = {};

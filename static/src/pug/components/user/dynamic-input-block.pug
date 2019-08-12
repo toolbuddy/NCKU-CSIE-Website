@@ -1,19 +1,90 @@
 - 
-if data.opt.subtitle !== null && data.opt.subtitle !== ''
-  section.subtitle
-    p.subtitle__word= data.opt.subtitle
+if Array.isArray( opt.subtitle ) && opt.subtitle.length
+  each subtitle in opt.subtitle
+    section.subtitle
+      p.subtitle__word= subtitle
 
-section.input-block( class=`${ data.opt.modifier }__input-block ${ data.opt.modifier }__input-block--${ data.opt.id }` )
+section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__input-block--${ opt.id }` )
   main.input-block__block.block 
     article.block__content.content
-      p.content__word= data.opt.content
+      if opt.dbTable === 'education'
+        article.content__education.education
+          if opt.res.from !== null
+            time.education__time.time
+              if opt.res.to === 0
+                time.time__year= '-'
+              else
+                time.time__year= opt.res.from
+              hr.time__till
+              if opt.res.to !== null && opt.res.to !== 0
+                time.time__year= opt.res.to
+              else if opt.res.to === 0
+                time.time__year= '-'
+              //- If there is no end time, then it must be still studying.
+              else
+                time.time__year= new Date().getFullYear()
+          ul.education__list.list
+            if education.nation !== null
+              img.list__flag( 
+                alt = opt.nation,, 
+                src = `${ host }/static/image/icon/${ opt.nation }.png`,
+              )
+            if opt.res.school !== null
+              li.list__item= opt.res.school
+            if opt.res.major !== null
+              li.list__item= opt.res.major
+            if opt.res.degree !== null
+              li.list__item.list__item--blue= opt.degree
+
+      else if opt.dbTable === 'experience'
+        article.content__experience
+          //- If there is no start time, then there must be no end time.
+          if opt.res.from !== null
+            time.experience__time.time
+              time.time__year= opt.res.from
+              hr.time__till
+              if opt.res.to !== null
+                time.time__year= opt.res.to
+              //- If there is no end time, then it must be still studying.
+              else
+                time.time__year= new Date().getFullYear()
+          ul.experience__list.list
+            if opt.res.organization !== null
+              li.list__item= opt.res.organization
+            if opt.res.department !== null
+              li.list__item= opt.res.department
+            if opt.res.title !== null
+              li.list__item.list__item--blue= opt.res.title
+
+      else if opt.dbTable === 'project'
+        article.content__project
+          //- If there is no start time, then there must be no end time.
+          if opt.res.from !== null
+            time.project__time.time
+              time.time__year= opt.res.from
+              hr.time__till
+              if opt.res.to !== null
+                time.time__year= opt.res.to
+              //- If there is no end time, then it must be still studying.
+              else
+                time.time__year= new Date().getFullYear()
+          ul.project__list.list
+            if opt.res.name !== null
+              li.list__item= opt.res.name       
+
+      else
+        article.content__word
+          if Array.isArray( opt.content ) && opt.content.length
+            each content in opt.content
+              p.word__text= content
+
       img.content__remove( 
         alt = 'remove', 
-        class = `content__remove--${ data.opt.modifier }-${ data.opt.id }`
-        src = data.removeSrc,
+        class = `content__remove--${ opt.dbTable }-${ opt.id }`
+        src = `${ host }/static/image/icon/delete.png`,
       )
       img.content__modify( 
         alt = 'edit', 
-        class = `content__modify--${ data.opt.modifier }-${ data.opt.id }`
-        src = data.editSrc,
+        class = `content__modify--${ opt.dbTable }-${ opt.id }`
+        src = `${ host }/static/image/icon/edit.png`,
       )

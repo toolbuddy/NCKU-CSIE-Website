@@ -169,23 +169,12 @@ class EditPage {
                 data[ element ] = '';
             } );
         }
-        else if ( this.config.dbTable === 'award' ) {
-            data.year = this.dbData[ this.config.languageId ].receivedYear;
-            data.month = this.dbData[ this.config.languageId ].receivedMonth;
-            data.day = this.dbData[ this.config.languageId ].receivedDay;
-        }
         else if ( this.config.dbTable === 'patent' ) {
-            let tempDate = null;
-            const dbData = this.dbData[ this.config.languageId ];
-            if ( editPageConfig.dbTableDay.includes( 'application' ) )
-                tempDate = ( dbData.applicationDate !== null ) ? dbData.applicationDate.split( '-' ) : null;
-            else if ( editPageConfig.dbTableDay.includes( 'issue' ) )
-                tempDate = ( dbData.issueDate !== null ) ? dbData.issueDate.split( '-' ) : null;
-            else if ( editPageConfig.dbTableDay.includes( 'expire' ) )
-                tempDate = ( dbData.expireDate !== null ) ? dbData.expireDate.split( '-' ) : null;
-            data.year = ( tempDate !== null ) ? tempDate[ 0 ] : '';
-            data.month = ( tempDate !== null ) ? tempDate[ 1 ] : '';
-            data.day = ( tempDate !== null ) ? tempDate[ 2 ] : '';
+            const dbData = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
+            const formattedData = ( dbData !== null ) ? dbData.split( '-' ) : null;
+            data.year = ( formattedData !== null ) ? formattedData[ 0 ] : '';
+            data.month = ( formattedData !== null ) ? formattedData[ 1 ] : '';
+            data.day = ( formattedData !== null ) ? formattedData[ 2 ] : '';
         }
 
         this.DOM.info.innerHTML += editPageContentHTML( {
@@ -193,9 +182,9 @@ class EditPage {
             year:         data.year,
             month:        data.month,
             day:          data.day,
-            dbTableYear:  editPageConfig.dbTableYear,
-            dbTableMonth: editPageConfig.dbTableMonth,
-            dbTableDay:   editPageConfig.dbTableDay,
+            dbTableYear:  `${ editPageConfig.dbTableItem }_year`,
+            dbTableMonth: `${ editPageConfig.dbTableItem }_month`,
+            dbTableDay:   `${ editPageConfig.dbTableItem }_day`,
         } );
     }
 
@@ -328,6 +317,7 @@ function editPageType ( info ) {
             dbTableYear:  info.dbTableYear,
             dbTableMonth: info.dbTableMonth,
             dbTableDay:   info.dbTableDay,
+            dbTableItem:  info.dbTableItem,
         },
         checkbox: {
             type:        'checkbox',
