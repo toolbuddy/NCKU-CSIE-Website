@@ -643,6 +643,85 @@ const validationInfo = Object.freeze( {
             },
         },
     },
+    studentAward: {
+        receivedYear: {
+            presence:  {
+                allowEmpty: false,
+                message:    '年份不可為空',
+            },
+            numericality: {
+                greaterThanOrEqualTo: 1970,
+                message:              '年份應大於1970',
+            },
+        },
+        [ `award_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '獎項是必填欄位',
+            },
+        },
+        [ `award_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '獎項是必填欄位',
+            },
+        },
+    },
+    technologyTransfer: {
+        [ `technology_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '技術名稱是必填欄位',
+            },
+        },
+        [ `technology_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '技術名稱是必填欄位',
+            },
+        },
+        [ `authorizingParty_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+        [ `authorizingParty_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+        [ `authorizedParty_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+        [ `authorizedParty_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+        from: {
+            presence: {
+                allowEmpty: false,
+                message:    '開始年份是必填欄位',
+            },
+            numericality: {
+                onlyInteger:       true,
+                greaterThan:       1970,
+                message:           '年份應大於1970',
+            },
+        },
+        to: {
+            presence: {
+                allowEmpty: true,
+            },
+            numericality: {
+                onlyInteger:       true,
+                greaterThan:       1970,
+                message:           '年份應大於1970',
+            },
+        },
+    },
 } );
 
 deepFreeze( validationInfo );

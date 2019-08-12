@@ -75,10 +75,10 @@ async function fetchData () {
 
             try {
                 const setStudentAwardData = new SetData( {
-                    blockDOM:       document.getElementById( 'student-award' ),
-                    addButtonDOM:     document.getElementById( 'add__button--student-award-block' ),
+                    blockDOM:       document.getElementById( 'studentAward' ),
+                    addButtonDOM:     document.getElementById( 'add__button--studentAward-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
-                    dbTable:          'student-award',
+                    dbTable:          'studentAward',
                     profileId:        result.roleId,
                 } );
 

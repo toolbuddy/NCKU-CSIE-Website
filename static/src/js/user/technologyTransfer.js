@@ -75,8 +75,8 @@ async function fetchData () {
 
             try {
                 const setTechnologyTransferData = new SetData( {
-                    blockDOM:       document.getElementById( 'technology-transfer' ),
-                    addButtonDOM:     document.getElementById( 'add__button--technology-transfer-block' ),
+                    blockDOM:       document.getElementById( 'technologyTransfer' ),
+                    addButtonDOM:     document.getElementById( 'add__button--technologyTransfer-block' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'technologyTransfer',
                     profileId:        result.roleId,

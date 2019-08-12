@@ -446,12 +446,49 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'technologyTransfer' ) {
+                const item = {
+                    from:         data.item.from === '' ? null : Number( data.item.from ),
+                    to:           data.item.to === '' ? null : Number( data.item.to ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'education' ) {
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
                     to:           data.item.to === '' ? null : Number( data.item.to ),
                     nation:       Number( data.item.nation ),
                     degree:       Number( data.item.degree ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'studentAward' ) {
+                const item = {
+                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
                     const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
@@ -489,19 +526,22 @@ router
                     },
                 };
             }
+
             await addFacultyDetail( {
-                profileId:     uploadData.profileId,
-                department:    uploadData.add.department,
-                education:     uploadData.add.education,
-                experience:    uploadData.add.experience,
-                researchGroup: uploadData.add.researchGroup,
-                specialtyI18n: uploadData.add.specialtyI18n,
-                title:         uploadData.add.title,
-                award:         uploadData.add.award,
-                conference:    uploadData.add.conference,
-                publication:   uploadData.add.publication,
-                patent:        uploadData.add.patent,
-                project:       uploadData.add.project,
+                profileId:          uploadData.profileId,
+                department:         uploadData.add.department,
+                education:          uploadData.add.education,
+                experience:         uploadData.add.experience,
+                technologyTransfer: uploadData.add.technologyTransfer,
+                researchGroup:      uploadData.add.researchGroup,
+                specialtyI18n:      uploadData.add.specialtyI18n,
+                title:              uploadData.add.title,
+                award:              uploadData.add.award,
+                conference:         uploadData.add.conference,
+                publication:        uploadData.add.publication,
+                patent:             uploadData.add.patent,
+                project:            uploadData.add.project,
+                studentAward:       uploadData.add.studentAward,
             } );
         }
 
@@ -516,18 +556,20 @@ router
                 },
             };
             await deleteFacultyDetail( {
-                profileId:     uploadData.profileId,
-                department:    uploadData.delete.department,
-                education:     uploadData.delete.education,
-                experience:    uploadData.delete.experience,
-                researchGroup: uploadData.delete.researchGroup,
-                specialtyI18n: uploadData.delete.specialtyI18n,
-                title:         uploadData.delete.title,
-                award:         uploadData.delete.award,
-                conference:    uploadData.delete.conference,
-                publication:   uploadData.delete.publication,
-                patent:        uploadData.delete.patent,
-                project:       uploadData.delete.project,
+                profileId:          uploadData.profileId,
+                department:         uploadData.delete.department,
+                education:          uploadData.delete.education,
+                experience:         uploadData.delete.experience,
+                researchGroup:      uploadData.delete.researchGroup,
+                specialtyI18n:      uploadData.delete.specialtyI18n,
+                title:              uploadData.delete.title,
+                award:              uploadData.delete.award,
+                conference:         uploadData.delete.conference,
+                publication:        uploadData.delete.publication,
+                patent:             uploadData.delete.patent,
+                project:            uploadData.delete.project,
+                studentAward:       uploadData.delete.studentAward,
+                technologyTransfer: uploadData.delete.technologyTransfer,
             } );
         }
 
@@ -676,6 +718,30 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'studentAward' ) {
+                console.log( data );
+                const item = {
+                    receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                    studentAwardId:        Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'education' ) {
                 const item = {
                     from:         data.item.from === '' ? null : Number( data.item.from ),
@@ -751,6 +817,30 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'technologyTransfer' ) {
+                const item = {
+                    from:                 data.item.from === '' ? null : Number( data.item.from ),
+                    to:                   data.item.to === '' ? null : Number( data.item.to ),
+                    technologyTransferId: Number( data.dbTableItemId ),
+                };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'specialty' ) {
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
@@ -800,17 +890,19 @@ router
                 };
             }
             await updateFacultyDetail( {
-                profileId:      uploadData.profileId, // UserData.roleId
-                education:      uploadData.update.education,
-                experience:     uploadData.update.experience,
-                profile:        uploadData.update.profile,
-                specialtyI18n:  uploadData.update.specialtyI18n,
-                title:          uploadData.update.title,
-                award:          uploadData.update.award,
-                conference:     uploadData.update.conference,
-                publication:    uploadData.update.publication,
-                patent:         uploadData.update.patent,
-                project:        uploadData.update.project,
+                profileId:          uploadData.profileId, // UserData.roleId
+                education:          uploadData.update.education,
+                experience:         uploadData.update.experience,
+                profile:            uploadData.update.profile,
+                specialtyI18n:      uploadData.update.specialtyI18n,
+                title:              uploadData.update.title,
+                award:              uploadData.update.award,
+                conference:         uploadData.update.conference,
+                publication:        uploadData.update.publication,
+                patent:             uploadData.update.patent,
+                project:            uploadData.update.project,
+                studentAward:       uploadData.update.studentAward,
+                technologyTransfer: uploadData.update.technologyTransfer,
             } );
         }
 

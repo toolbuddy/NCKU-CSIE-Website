@@ -145,8 +145,8 @@
         }
       }
 
-      // `.body > .content > .content__main > .main__student-award-block`
-      .main__student-award-block.student-award-block {
+      // `.body > .content > .content__main > .main__studentAward-block`
+      .main__studentAward-block.studentAward-block {
         // [ layout ]
         display: block;
         width: 95%;
@@ -167,11 +167,11 @@
           max-width: font__px-to-rem( 1200 );
         }
 
-        // `.body > .content > .content__main > .main__student-award > student-award__local-topic`
-        @include local-topic( 'student-award-block' );
+        // `.body > .content > .content__main > .main__studentAward > studentAward__local-topic`
+        @include local-topic( 'studentAward-block' );
 
-        > .student-award-block__student-award.student-award {
-          @include dynamic-input-block( $block: 'student-award' );
+        > .studentAward-block__studentAward.studentAward {
+          @include dynamic-input-block( $block: 'studentAward' );
         }
       }
     }

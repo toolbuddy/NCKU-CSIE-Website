@@ -145,8 +145,8 @@
         }
       }
 
-      // `.body > .content > .content__main > .main__technology-transfer-block`
-      .main__technology-transfer-block.technology-transfer-block {
+      // `.body > .content > .content__main > .main__technologyTransfer-block`
+      .main__technologyTransfer-block.technologyTransfer-block {
         // [ layout ]
         display: block;
         width: 95%;
@@ -167,11 +167,11 @@
           max-width: font__px-to-rem( 1200 );
         }
 
-        // `.body > .content > .content__main > .main__technology-transfer > technology-transfer__local-topic`
-        @include local-topic( 'technology-transfer-block' );
+        // `.body > .content > .content__main > .main__technologyTransfer > technologyTransfer__local-topic`
+        @include local-topic( 'technologyTransfer-block' );
 
-        > .technology-transfer-block__technology-transfer.technology-transfer {
-          @include dynamic-input-block( $block: 'technology-transfer' );
+        > .technologyTransfer-block__technologyTransfer.technologyTransfer {
+          @include dynamic-input-block( $block: 'technologyTransfer' );
         }
       }
     }

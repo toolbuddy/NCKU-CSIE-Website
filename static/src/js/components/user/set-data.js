@@ -165,6 +165,34 @@ class SetData {
                 } );
             } );
         }
+        if ( this.config.dbTable === 'studentAward' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ].award.sort( ( awardA, awardB ) => {
+                    if (
+                        awardA.receivedYear !== null &&
+                      awardB.receivedYear !== null &&
+                      awardA.receivedYear !== awardB.receivedYear
+                    )
+                        return awardB.receivedYear - awardA.receivedYear;
+                    return 0;
+                } );
+            } );
+        }
+        if ( this.config.dbTable === 'technologyTransfer' ||
+            this.config.dbTable === 'education' ||
+            this.config.dbTable === 'experience' ) {
+            LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
+                data[ languageId ][ this.config.dbTable ].sort( ( tempA, tempB ) => {
+                    if (
+                        tempA.from !== null &&
+                      tempB.from !== null &&
+                      tempA.from !== tempB.from
+                    )
+                        return tempB.from - tempA.from;
+                    return 0;
+                } );
+            } );
+        }
         return data;
     }
 
@@ -179,7 +207,7 @@ class SetData {
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
                 let content = new Array();
                 const subtitle = new Array();
-                const dbTableId = res[ `${ this.config.dbTable }Id` ];
+                let dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
                         await this.renderBlock( {
@@ -257,8 +285,17 @@ class SetData {
                             subtitle,
                             res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
                         } );
-
-                        // Content.push( res.name );
+                        break;
+                    case 'studentAward':
+                        if ( res.receivedYear !== currentYear || index === 0 ) {
+                            subtitle.push( res.receivedYear );
+                            currentYear = res.receivedYear;
+                        }
+                        content.push( res.award );
+                        dbTableId = res.awardId;
+                        break;
+                    case 'technologyTransfer':
+                        content.push( res.technology );
                         break;
                     default:
                         content = '';

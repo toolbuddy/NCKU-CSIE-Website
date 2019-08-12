@@ -498,6 +498,80 @@ const dataEditPageConfig = Object.freeze( {
             }
         ),
     ],
+    studentAward: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'receivedYear',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'receivedYear',
+                i18n:        false,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'award',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'award',
+                i18n:        true,
+            }
+        ),
+    ],
+    technologyTransfer: [
+        editPageType(
+            {
+                type: 'time',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'technology',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'technology',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'authorizingParty',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'authorizingParty',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'authorizedParty',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'authorizedParty',
+                i18n:        true,
+            }
+        ),
+    ],
 } );
 
 deepFreeze( dataEditPageConfig );

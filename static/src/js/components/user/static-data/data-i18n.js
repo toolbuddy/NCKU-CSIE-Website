@@ -254,6 +254,30 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    studentAward: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'student award',
+            default: {
+                'award':        '',
+                'receivedYear':   'yyyy',
+            },
+            localTopic: {
+                'award':        'award',
+                'receivedYear':   'received year',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '指導學生獲獎',
+            default: {
+                'award':        '',
+                'receivedYear':   'yyyy',
+            },
+            localTopic: {
+                'award':          '獎項名稱',
+                'receivedYear':   '獲獎年份',
+            },
+        },
+    },
     patent: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             topic:   'patent',
@@ -285,6 +309,34 @@ const dataI18n = Object.freeze( {
                 'inventor':            '發明人',
                 'patent':              '專利名稱',
                 'patentOwner':         '專利權人',
+            },
+        },
+    },
+    technologyTransfer: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'technology transfer',
+            default: {
+                authorizingParty: '',
+                authorizedParty:  '',
+                technology:       '',
+            },
+            localTopic: {
+                authorizingParty: 'authorizing party',
+                authorizedParty:  'authorized party',
+                technology:       'technology',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '技術轉移',
+            default: {
+                authorizingParty: '',
+                authorizedParty:  '',
+                technology:       '',
+            },
+            localTopic: {
+                authorizingParty: '授權方名稱',
+                authorizedParty:  '接受方名稱',
+                technology:       '技術名稱',
             },
         },
     },
