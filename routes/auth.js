@@ -61,6 +61,7 @@ router
                     res.redirect( '/index' );
             }
         }
+
         res.sendFile(
             `static/dist/html/auth/login.${ req.query.languageId }.html`,
             {

@@ -572,6 +572,96 @@ const dataEditPageConfig = Object.freeze( {
             }
         ),
     ],
+    education: [
+        editPageType(
+            {
+                type: 'time',
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'degree',
+            }
+        ),
+        editPageType(
+            {
+                type:         'dropdown',
+                dbTableItem:  'degree',
+                dropdownItem: degreeUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+                util:         degreeUtils,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'nation',
+            }
+        ),
+        editPageType(
+            {
+                type:         'dropdown',
+                dbTableItem:  'nation',
+                dropdownItem: nationUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+                util:         nationUtils,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'school',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'school',
+                i18n:        true,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'major',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'major',
+                i18n:        true,
+            }
+        ),
+    ],
+    student: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'degree',
+            }
+        ),
+        editPageType(
+            {
+                type:         'dropdown',
+                dbTableItem:  'degree',
+                dropdownItem: degreeUtils.i18n[ WebLanguageUtils.currentLanguageId ],
+                util:         degreeUtils,
+            }
+        ),
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'name',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'name',
+                i18n:        true,
+            }
+        ),
+    ],
 } );
 
 deepFreeze( dataEditPageConfig );

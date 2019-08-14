@@ -70,7 +70,28 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 time.time__year= new Date().getFullYear()
           ul.project__list.list
             if opt.res.name !== null
-              li.list__item= opt.res.name       
+              li.list__item= opt.res.name  
+
+      else if opt.dbTable === 'studentAward'
+        article.content__studentAward
+          p.word__text= opt.res.award
+          if Array.isArray( opt.res.student ) && opt.res.student.length
+            each student in opt.res.student
+              section.word__student
+                img.student__button--remove( 
+                  alt = 'remove', 
+                  class = `content__remove--student-${ student.studentId }`
+                  src = `${ host }/static/image/icon/cross.png`,
+                )
+                img.student__button--modify( 
+                  alt = 'edit', 
+                  class = `content__modify--student-${ student.studentId }`
+                  src = `${ host }/static/image/icon/settings.png`,
+                )
+                article.student__detail
+                  p.detail__text= student.name
+                  p.detail__text= student.degree
+          p.word__add( class=`content__modify--student-${ student.studentId }` )= '新增學生'
 
       else
         article.content__word

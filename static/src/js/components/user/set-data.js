@@ -300,7 +300,13 @@ class SetData {
                             subtitle.push( res.receivedYear );
                             currentYear = res.receivedYear;
                         }
-                        content.push( res.award );
+                        await this.renderBlock( {
+                            dbTable: this.config.dbTable,
+                            id:       res.awardId,
+                            subtitle,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                        } );
+
                         dbTableId = res.awardId;
                         break;
                     case 'technologyTransfer':
@@ -311,7 +317,8 @@ class SetData {
                 }
                 if ( this.config.dbTable !== 'education' &&
                     this.config.dbTable !== 'experience' &&
-                    this.config.dbTable !== 'project' ) {
+                    this.config.dbTable !== 'project' &&
+                    this.config.dbTable !== 'studentAward' ) {
                     await this.renderBlock( {
                         dbTable:  this.config.dbTable,
                         id:       dbTableId,
@@ -464,13 +471,13 @@ class SetData {
         errorDOM.textContent = errorMessage;
     }
 
-    setAddButtonEvent () {
+    setAddButtonEvent ( dbTable ) {
         this.DOM.addButton.addEventListener( 'click', async () => {
             const editPage = new EditPage( {
-                editPageConfig: dataEditPageConfig[ this.config.dbTable ],
-                dataI18n:       dataI18n[ this.config.dbTable ],
+                editPageConfig: dataEditPageConfig[ dbTable ],
+                dataI18n:       dataI18n[ dbTable ],
                 editPageDOM:    this.DOM.editPage,
-                dbTable:        this.config.dbTable,
+                dbTable,
                 languageId:     this.config.languageId,
                 buttonMethod:   'add',
             } );
@@ -565,13 +572,19 @@ class SetData {
         } );
     }
 
+    emptyBlock () {
+        this.DOM.block.innerHTML = '';
+    }
+
     async exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
             console.log( data[ this.config.languageId ] );
-            if ( !validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
+            if ( validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
+                this.emptyBlock();
+            else
                 this.setBlock( data );
-            this.setAddButtonEvent();
+            this.setAddButtonEvent( this.config.dbTable );
         } );
     }
 }

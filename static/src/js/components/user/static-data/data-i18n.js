@@ -340,6 +340,28 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    student: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'student',
+            default: {
+                name:       '',
+            },
+            localTopic: {
+                degree: 'degree',
+                name:   'name',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '獲獎學生',
+            default: {
+                name:       '',
+            },
+            localTopic: {
+                degree: '學位',
+                name:   '學生姓名',
+            },
+        },
+    },
     editPage: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             button: {
