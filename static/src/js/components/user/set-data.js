@@ -57,11 +57,6 @@ class SetData {
 
     async renderBlock ( opt ) {
         try {
-            const data = {
-                opt,
-                removeSrc: `${ host }/static/image/icon/delete.png`,
-                editSrc:   `${ host }/static/image/icon/edit.png`,
-            };
             this.DOM.block.innerHTML += dynamicInputBlock( {
                 opt,
                 host,
@@ -168,7 +163,8 @@ class SetData {
         }
         if ( this.config.dbTable === 'studentAward' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].award.sort( ( awardA, awardB ) => {
+                data[ languageId ].studentAward.sort( ( awardA, awardB ) => {
+                    console.log( awardB.receivedYear - awardA.receivedYear );
                     if (
                         awardA.receivedYear !== null &&
                       awardB.receivedYear !== null &&
@@ -301,11 +297,37 @@ class SetData {
                             currentYear = res.receivedYear;
                         }
                         await this.renderBlock( {
-                            dbTable: this.config.dbTable,
-                            id:       res.awardId,
+                            dbTable:     this.config.dbTable,
+                            id:          res.awardId,
                             subtitle,
-                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            degreeI18n:  degreeUtils.i18n[ this.config.languageId ],
+                            degreeUtils,
                         } );
+                        this.setAddButtonEvent( {
+                            dbTable:      'student',
+                            dbTableId:    res.awardId,
+                            addButtonDOM: this.DOM.block.querySelector( `.content__studentAward > .content__modify--student-${ res.awardId }` ),
+                        } );
+
+                        if ( ValidateUtils.isValidArray( res.student ) ) {
+                            const removeSelector = studentId => ` .word__student > .student__remove-${ studentId } `;
+                            const updateSelector = studentId => ` .word__student > .student__modify-${ studentId } `;
+                            res.student.forEach( ( student, studentIndex ) => {
+                                this.setUpdateButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( updateSelector( student.studentId ) ),
+                                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].studentAward[ index ].student[ studentIndex ] ),
+                                    id:        student.studentId,
+                                    dbTable:   'student',
+                                } );
+                                this.setDeleteButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( removeSelector( student.studentId ) ),
+                                    id:        student.studentId,
+                                    content:   student.name,
+                                    dbTable:   'student',
+                                } );
+                            } );
+                        }
 
                         dbTableId = res.awardId;
                         break;
@@ -334,11 +356,13 @@ class SetData {
                     buttonDOM: this.DOM.block.querySelector( updateSelector ),
                     res:       LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
                     id:        dbTableId,
+                    dbTable:   this.config.dbTable,
                 } );
                 this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( deleteSelector ),
                     id:        dbTableId,
                     content,
+                    dbTable:   this.config.dbTable,
                 } );
             } );
         }
@@ -351,8 +375,7 @@ class SetData {
         document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
-    uploadUpdateData ( dbTableItemId ) {
-        this.checkSubmitData();
+    uploadUpdateData ( dbTableItemId, dbTable ) {
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
@@ -374,7 +397,7 @@ class SetData {
             body:   JSON.stringify( {
                 'profileId':    this.config.profileId,
                 'method':       'update',
-                'dbTable':      this.config.dbTable,
+                dbTable,
                 dbTableItemId,
                 item,
                 i18n,
@@ -389,7 +412,7 @@ class SetData {
         } );
     }
 
-    uploadAddData () {
+    uploadAddData ( dbTable, dbTableId ) {
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
         const item = {};
@@ -410,8 +433,9 @@ class SetData {
             method:   'POST',
             body:   JSON.stringify( {
                 profileId:    this.config.profileId,
+                dbTableId,
                 method:       'add',
-                dbTable:      this.config.dbTable,
+                dbTable,
                 item,
                 i18n,
             } ),
@@ -425,13 +449,13 @@ class SetData {
         } );
     }
 
-    uploadDeleteData ( dbTableItemId ) {
+    uploadDeleteData ( dbTableItemId, dbTable ) {
         fetch( `${ host }/user/profile`, {
             method:   'POST',
             body:   JSON.stringify( {
                 profileId:     this.config.profileId,
                 method:        'delete',
-                dbTable:       this.config.dbTable,
+                dbTable,
                 dbTableItemId,
             } ),
         } )
@@ -444,14 +468,14 @@ class SetData {
         } );
     }
 
-    checkSubmitData () {
+    checkSubmitData ( dbTable ) {
         let isValid = true;
         const errorSelector =   '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
         const editPageDOM = document.getElementById( 'edit-page' );
         const errorDOM = editPageDOM.querySelector( errorSelector );
         const input = editPageDOM.getElementsByTagName( 'input' );
 
-        const constraints = validationInfo[ this.config.dbTable ];
+        const constraints = validationInfo[ dbTable ];
 
         Array.from( input ).forEach( ( element ) => {
             if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
@@ -471,13 +495,13 @@ class SetData {
         errorDOM.textContent = errorMessage;
     }
 
-    setAddButtonEvent ( dbTable ) {
-        this.DOM.addButton.addEventListener( 'click', async () => {
+    setAddButtonEvent ( opt ) {
+        opt.addButtonDOM.addEventListener( 'click', async () => {
             const editPage = new EditPage( {
-                editPageConfig: dataEditPageConfig[ dbTable ],
-                dataI18n:       dataI18n[ dbTable ],
+                editPageConfig: dataEditPageConfig[ opt.dbTable ],
+                dataI18n:       dataI18n[ opt.dbTable ],
                 editPageDOM:    this.DOM.editPage,
-                dbTable,
+                dbTable:        opt.dbTable,
                 languageId:     this.config.languageId,
                 buttonMethod:   'add',
             } );
@@ -497,9 +521,9 @@ class SetData {
             } );
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                const isValid = this.checkSubmitData();
+                const isValid = this.checkSubmitData( opt.dbTable );
                 if ( isValid )
-                    this.uploadAddData();
+                    this.uploadAddData( opt.dbTable, opt.dbTableId );
             } );
         } );
     }
@@ -507,10 +531,10 @@ class SetData {
     setUpdateButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
             const editPage = new EditPage( {
-                editPageConfig: dataEditPageConfig[ this.config.dbTable ],
-                dataI18n:       dataI18n[ this.config.dbTable ],
+                editPageConfig: dataEditPageConfig[ info.dbTable ],
+                dataI18n:       dataI18n[ info.dbTable ],
                 editPageDOM:    this.DOM.editPage,
-                dbTable:        this.config.dbTable,
+                dbTable:        info.dbTable,
                 languageId:     this.config.languageId,
                 dbData:         info.res,
                 buttonMethod:   'update',
@@ -532,9 +556,9 @@ class SetData {
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
 
-                const isValid = this.checkSubmitData();
+                const isValid = this.checkSubmitData( info.dbTable );
                 if ( isValid )
-                    this.uploadUpdateData( info.id );
+                    this.uploadUpdateData( info.id, info.dbTable );
             } );
         } );
     }
@@ -542,10 +566,10 @@ class SetData {
     setDeleteButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
             const editPage = new EditPage( {
-                dataI18n:       dataI18n[ this.config.dbTable ],
-                editPageConfig: dataEditPageConfig[ this.config.dbTable ],
+                dataI18n:       dataI18n[ info.dbTable ],
+                editPageConfig: dataEditPageConfig[ info.dbTable ],
                 editPageDOM:    this.DOM.editPage,
-                dbTable:        this.config.dbTable,
+                dbTable:        info.dbTable,
                 languageId:     this.config.languageId,
                 id:             info.id,
                 content:        info.content,
@@ -567,7 +591,7 @@ class SetData {
             } );
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.uploadDeleteData( info.id );
+                this.uploadDeleteData( info.id, info.dbTable );
             } );
         } );
     }
@@ -584,7 +608,11 @@ class SetData {
                 this.emptyBlock();
             else
                 this.setBlock( data );
-            this.setAddButtonEvent( this.config.dbTable );
+            this.setAddButtonEvent( {
+                dbTable:      this.config.dbTable,
+                dbTableId:    -1,
+                addButtonDOM: this.DOM.addButton,
+            } );
         } );
     }
 }

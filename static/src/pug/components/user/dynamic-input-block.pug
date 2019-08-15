@@ -80,18 +80,18 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
               section.word__student
                 img.student__button--remove( 
                   alt = 'remove', 
-                  class = `content__remove--student-${ student.studentId }`
+                  class = `student__remove-${ student.studentId }`
                   src = `${ host }/static/image/icon/cross.png`,
                 )
                 img.student__button--modify( 
                   alt = 'edit', 
-                  class = `content__modify--student-${ student.studentId }`
+                  class = `student__modify-${ student.studentId }`
                   src = `${ host }/static/image/icon/settings.png`,
                 )
                 article.student__detail
                   p.detail__text= student.name
-                  p.detail__text= student.degree
-          p.word__add( class=`content__modify--student-${ student.studentId }` )= '新增學生'
+                  p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ 0 ] ]
+          p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
 
       else
         article.content__word

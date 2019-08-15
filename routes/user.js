@@ -584,6 +584,25 @@ router
                     },
                 };
             }
+            else if ( data.dbTable === 'student' ) {
+                const item = {
+                    studentAwardId:    Number( data.dbTableId ),
+                    degree:            Number( data.item.degree ),
+                };
+                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                    dbTableItem.language = Number( languageId );
+                    return dbTableItem;
+                } );
+                uploadData = {
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
             else if ( data.dbTable === 'studentAward' ) {
                 const item = {
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
@@ -640,6 +659,7 @@ router
                 patent:             uploadData.add.patent,
                 project:            uploadData.add.project,
                 studentAward:       uploadData.add.studentAward,
+                student:            uploadData.add.student,
             } );
         }
 
@@ -668,6 +688,7 @@ router
                 project:            uploadData.delete.project,
                 studentAward:       uploadData.delete.studentAward,
                 technologyTransfer: uploadData.delete.technologyTransfer,
+                student:            uploadData.delete.student,
             } );
         }
 
@@ -822,6 +843,31 @@ router
                     receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     studentAwardId:        Number( data.dbTableItemId ),
                 };
+                const i18nData = [];
+                Object.keys( data.i18n ).forEach( ( languageId ) => {
+                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                        const newData = Object.assign( {}, data.i18n[ languageId ] );
+                        newData.language = Number( languageId );
+                        i18nData.push( newData );
+                    }
+                } );
+                item.i18n = i18nData;
+                uploadData = {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
+                        [ data.dbTable ]: [
+                            Object.assign( {}, item ),
+                        ],
+                    },
+                };
+            }
+            else if ( data.dbTable === 'student' ) {
+                console.log( data.item );
+                const item = {
+                    degree:       Number( data.item.degree ),
+                    studentId:    Number( data.dbTableItemId ),
+                };
+                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -1001,6 +1047,7 @@ router
                 project:            uploadData.update.project,
                 studentAward:       uploadData.update.studentAward,
                 technologyTransfer: uploadData.update.technologyTransfer,
+                student:            uploadData.update.student,
             } );
         }
 

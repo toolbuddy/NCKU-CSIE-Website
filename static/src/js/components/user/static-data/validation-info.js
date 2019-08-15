@@ -667,6 +667,25 @@ const validationInfo = Object.freeze( {
             },
         },
     },
+    student: {
+        degree: {
+            presence:  {
+                allowEmpty: false,
+            },
+        },
+        [ `name_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '學生姓名是必填欄位',
+            },
+        },
+        [ `name_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '學生姓名是必填欄位',
+            },
+        },
+    },
     technologyTransfer: {
         [ `technology_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
             presence: {
