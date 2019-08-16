@@ -498,7 +498,7 @@ export default async ( opt ) => {
                 authorizingParty: technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
                 authorizedParty:  technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
                 from:             technologyTransfer.from,
-                patent:           technologyTransfer.technologyTransferPatent.map( patent => patent.patentI18n[ 0 ].patent ),
+                patent:           technologyTransfer.technologyTransferPatent.map( patent => patent.technologyTransferPatentI18n[ 0 ].patent ),
                 to:               technologyTransfer.to,
                 technology:       technologyTransfer.technologyTransferI18n[ 0 ].technology,
             } ) ),
