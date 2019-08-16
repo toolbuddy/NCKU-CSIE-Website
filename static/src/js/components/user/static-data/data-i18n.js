@@ -362,6 +362,26 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    technologyTransferPatent: {
+        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+            topic:   'patent',
+            default: {
+                patent:       '',
+            },
+            localTopic: {
+                patent:   'patent',
+            },
+        },
+        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+            topic:   '專利',
+            default: {
+                patent:       '',
+            },
+            localTopic: {
+                patent:   '專利名稱',
+            },
+        },
+    },
     editPage: {
         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
             button: {

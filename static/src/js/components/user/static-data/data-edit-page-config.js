@@ -662,6 +662,21 @@ const dataEditPageConfig = Object.freeze( {
             }
         ),
     ],
+    technologyTransferPatent: [
+        editPageType(
+            {
+                type:        'localTopic',
+                dbTableItem: 'patent',
+            }
+        ),
+        editPageType(
+            {
+                type:        'text',
+                dbTableItem: 'patent',
+                i18n:        true,
+            }
+        ),
+    ],
 } );
 
 deepFreeze( dataEditPageConfig );

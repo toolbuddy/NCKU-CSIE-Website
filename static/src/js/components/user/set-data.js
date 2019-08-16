@@ -333,6 +333,26 @@ class SetData {
                         break;
                     case 'technologyTransfer':
                         content.push( res.technology );
+
+                        if ( index === 0 ) {
+                            await this.renderBlock( {
+                                dbTable:     this.config.dbTable,
+                                id:          res.technologyTransferId,
+                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                                isTitle:     true,
+                            } );
+                        }
+                        await this.renderBlock( {
+                            dbTable:     this.config.dbTable,
+                            id:          res.technologyTransferId,
+                            res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            isTitle:     false,
+                        } );
+                        this.setAddButtonEvent( {
+                            dbTable:      'technologyTransferPatent',
+                            dbTableId:    res.technologyTransferId,
+                            addButtonDOM: this.DOM.block.querySelector( `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }` ),
+                        } );
                         break;
                     default:
                         content = '';
@@ -340,7 +360,8 @@ class SetData {
                 if ( this.config.dbTable !== 'education' &&
                     this.config.dbTable !== 'experience' &&
                     this.config.dbTable !== 'project' &&
-                    this.config.dbTable !== 'studentAward' ) {
+                    this.config.dbTable !== 'studentAward' &&
+                    this.config.dbTable !== 'technologyTransfer' ) {
                     await this.renderBlock( {
                         dbTable:  this.config.dbTable,
                         id:       dbTableId,

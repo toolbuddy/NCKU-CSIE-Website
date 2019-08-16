@@ -238,6 +238,386 @@
             }
           }
         }
+        @if $block == 'technologyTransfer' {
+          > .content__#{ $block } {
+            // [ layout ]
+            grid-area: word;
+
+            // [ position ]
+            display: block;
+            width: 100%;
+
+            // [ skin ]
+            color: rgba( 81, 81, 81, .87 );
+            overflow: visible;
+
+            %technologyTransfer-table {
+              // [ layout ]
+              display: grid;
+              grid-template: {
+                areas: 'time technology authorizedParty authorizingParty';
+                columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+              }
+              align-content: center;
+
+              // [ position ]
+              width: 100%;
+            }
+
+            > .technologyTransfer__title {
+              @extend %technologyTransfer-table;
+
+              // [ element ]
+              %title__item {
+                // [ layout ]
+                display: block;
+
+                // [ position ]
+                width: 100%;
+
+                // [ skin ]
+                font: {
+                  size: font__px-to-rem( 16 );
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: font__px-to-rem( 16 );
+                letter-spacing: normal;
+                word-wrap: break-word;
+
+                // [ skin ]
+                color: rgba( 81, 81, 81, .87 );
+
+                // [ RWD: $small ]
+                @media screen and ( min-width: $small ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 17 );
+                  line-height: font__px-to-rem( 19 );
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 18 );
+                  line-height: font__px-to-rem( 20 );
+                }
+              }
+
+              > .title__item--time {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: time;
+              }
+
+              > .title__item--technology {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: technology;
+              }
+
+              > .title__item--authorizedParty {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: authorizedParty;
+              }
+
+              > .title__item--authorizingParty {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: authorizingParty;
+              }
+            }
+
+            > .#{ $block }__content {
+              @extend %technologyTransfer-table;
+
+              // [ element ]
+              %content__item {
+                // [ layout ]
+                display: flex;
+                align-content: center;
+
+                // [ position ]
+                width: 100%;
+
+                > .item__word {
+                  // [ layout ]
+                  display: inline-block;
+
+                  // [ position ]
+                  width: 100%;
+                  height: auto;
+                  vertical-align: middle;
+
+                  // [ skin ]
+                  font: {
+                    size: font__px-to-rem( 16 );
+                    style: normal;
+                    stretch: normal;
+                  }
+                  text-align: center;
+                  line-height: font__px-to-rem( 18 );
+                  letter-spacing: normal;
+                  word-wrap: break-word;
+
+                  // [ skin ]
+                  color: rgba( 33, 33, 33, .87 );
+
+                  // [ RWD: $small ]
+                  @media screen and ( min-width: $small ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 17 );
+                    line-height: font__px-to-rem( 19 );
+                  }
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 18 );
+                    line-height: font__px-to-rem( 20 );
+                  }
+                }
+              }
+
+              > .content__item--time {
+                // [ layout ]
+                grid-area: time;
+
+                > .item__time {
+                  // [ layout ]
+                  display: block;
+                  text-align: center;
+                  margin-top: font__px-to-rem( 10 );
+                  line-height: font__px-to-rem( 26 );
+
+                  // [ skin ]
+                  width: auto;
+                  height: auto;
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ layout ]
+                    display: inline-block;
+                  }
+
+                  > .time__year {
+                    // [ layout ]
+                    display: inline-block;
+                    line-height: font__px-to-rem( 14 );
+                    vertical-align: top;
+
+                    // [ skin ]
+                    width: auto;
+                    height: font__px-to-rem( 26 );
+                    border: font__px-to-rem( 1 ) solid #757575;
+                    border-radius: font__px-to-rem( 16 );
+                    padding: {
+                      top: font__px-to-rem( 5 );
+                      bottom: font__px-to-rem( 5 );
+                      left: font__px-to-rem( 10 );
+                      right: font__px-to-rem( 10 );
+                    }
+                    color: #000000;
+                    font-size: font__px-to-rem( 14 );
+
+                    // [ RWD: $small ]
+                    @media screen and ( min-width: $large ) {
+                      // [ layout ]
+                      display: inline-block;
+                      line-height: font__px-to-rem( 16 );
+
+                      // [ skin ]
+                      height: font__px-to-rem( 30 );
+                      border-radius: font__px-to-rem( 26 );
+                      padding: {
+                        top: font__px-to-rem( 7 );
+                        bottom: font__px-to-rem( 7 );
+                        left: font__px-to-rem( 26 );
+                        right: font__px-to-rem( 26 );
+                      }
+                      font-size: font__px-to-rem( 16 );
+                    }
+                  }
+
+                  > .time__till {
+                    // [ layout ]
+                    display: inline-block;
+                    margin: {
+                      top: font__px-to-rem( 12 );
+                      bottom: font__px-to-rem( 12 );
+                      left: font__px-to-rem( 7 );
+                      right: font__px-to-rem( 7 );
+                    }
+                    vertical-align: top;
+
+                    // [ skin ]
+                    width: font__px-to-rem( 20 );
+                    height: font__px-to-rem( 2 );
+                    color: #757575;
+                    background-color: #757575;
+                  }
+                }
+              }
+
+              > .content__item--technology {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: technology;
+              }
+
+              > .content__item--authorizedParty {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: authorizedParty;
+              }
+
+              > .content__item--authorizingParty {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: authorizingParty;
+              }
+            }
+
+            > .#{ $block }__patent {
+              // [ layout ]
+              display: flex;
+              align-content: center;
+
+              // [ position ]
+              width: 100%;
+
+              > .patent__button--remove {
+                // [ layout ]
+                display: inline-flex;
+                align-self: center;
+
+                // [ position ]
+                width: font__px-to-rem( 12 );
+                height: font__px-to-rem( 12 );
+                margin: {
+                  right: font__px-to-rem( 3 );
+                  left:  font__px-to-rem( 25 );
+                }
+
+                &:hover {
+                  // [ skin ]
+                  cursor: pointer;
+                  filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) contrast( 121% );
+                }
+              }
+
+              > .patent__button--modify {
+                // [ layout ]
+                display: inline-flex;
+                align-self: center;
+
+                // [ position ]
+                width: font__px-to-rem( 15 );
+                height: font__px-to-rem( 15 );
+                margin: {
+                  right: font__px-to-rem( 10 );
+                  left:  font__px-to-rem( 3 );
+                }
+
+                &:hover {
+                  // [ skin ]
+                  cursor: pointer;
+                  filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+                }
+              }
+
+              > .patent__detail {
+                // [ layout ]
+                display: inline-block;
+                vertical-align: middle;
+
+                > .detail__text {
+                  // [ layout ]
+                  display: inline-block;
+                  vertical-align: middle;
+
+                  // [ position ]
+                  margin-right: font__px-to-rem( 8 );
+
+                  // [ skin ]
+                  font: {
+                    size: font__px-to-rem( 16 );
+                    style: normal;
+                    stretch: normal;
+                  }
+                  text-align: left;
+                  line-height: font__px-to-rem( 18 );
+                  letter-spacing: normal;
+                  word-wrap: break-word;
+
+                  // [ RWD: $small ]
+                  @media screen and ( min-width: $small ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 17 );
+                    line-height: font__px-to-rem( 19 );
+                  }
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 18 );
+                    line-height: font__px-to-rem( 20 );
+                  }
+                }
+              }
+            }
+
+            > .#{ $block }__add {
+              // [ layout ]
+              display: flex;
+
+              // [ position ]
+              width: 100%;
+              height: auto;
+              padding-right: font__px-to-rem( 10 );
+              align-self: center;
+              margin: {
+                top: font__px-to-rem( 2 );
+                bottom: font__px-to-rem( 2 );
+              }
+
+              // [ skin ]
+              font: {
+                size: font__px-to-rem( 14 );
+                style: normal;
+                stretch: normal;
+              }
+              text-align: left;
+              line-height: font__px-to-rem( 16 );
+              letter-spacing: normal;
+              word-wrap: break-word;
+
+              // [ skin ]
+              color: rgba( 139, 186, 187, .87 );
+
+              // [ RWD: $small ]
+              @media screen and ( min-width: $small ) {
+                // [ skin ]
+                font-size: font__px-to-rem( 15 );
+                line-height: font__px-to-rem( 17 );
+              }
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+                color: rgba( 108, 123, 149, .87 );
+              }
+            }
+          }
+        }
         @if $block == 'studentAward' {
           > .content__#{ $block } {
             // [ layout ]
@@ -262,7 +642,7 @@
               align-self: center;
               margin: {
                 top: font__px-to-rem( 5 );
-                bottom: font__px-to-rem( 5 );
+                bottom: font__px-to-rem( 10 );
               }
 
               // [ skin ]

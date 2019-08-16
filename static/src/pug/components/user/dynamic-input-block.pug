@@ -93,19 +93,66 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ 0 ] ]
           p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
 
+      else if opt.dbTable === 'technologyTransfer'
+        article.content__technologyTransfer
+          if opt.isTitle 
+            section.technologyTransfer__title.title
+              p.title__item.title__item--time= '合約期間'
+              p.title__item.title__item--technology= '技術名稱'
+              p.title__item.title__item--authorizedParty= '接受方'
+              p.title__item.title__item--authorizingParty= '授權方'
+          if !opt.isTitle
+            section.technologyTransfer__content.content
+              article.content__item.content__item--time
+                //- If there is no start time, then there must be no end time.
+                if opt.res.from !== null
+                  time.item__time.time
+                    time.time__year= opt.res.from
+                    hr.time__till
+                    if opt.res.to !== null
+                      time.time__year= opt.res.to
+                    //- If there is no end time, then it must be still studying.
+                    else
+                      time.time__year= new Date().getFullYear()
+              article.content__item.content__item--technology
+                p.item__word= opt.res.technology
+              article.content__item.content__item--authorizedParty
+                p.item__word= opt.res.authorizedParty
+              article.content__item.content__item--authorizingParty
+                p.item__word= opt.res.authorizingParty
+
+            if Array.isArray( opt.res.patent ) && opt.res.patent.length
+              each patent in opt.res.patent
+                section.technologyTransfer__patent
+                  img.patent__button--remove( 
+                    alt = 'remove', 
+                    class = `patent__remove-${ patent.technologyTransferPatentId }`
+                    src = `${ host }/static/image/icon/cross.png`,
+                  )
+                  img.patent__button--modify( 
+                    alt = 'edit', 
+                    class = `student__modify-${ student.technologyTransferPatentId }`
+                    src = `${ host }/static/image/icon/settings.png`,
+                  )
+                  article.patent__detail
+                    p.detail__text= patent.patent
+            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= '新增專利'      
+
+
       else
         article.content__word
           if Array.isArray( opt.content ) && opt.content.length
             each content in opt.content
               p.word__text= content
 
-      img.content__remove( 
-        alt = 'remove', 
-        class = `content__remove--${ opt.dbTable }-${ opt.id }`
-        src = `${ host }/static/image/icon/delete.png`,
-      )
-      img.content__modify( 
-        alt = 'edit', 
-        class = `content__modify--${ opt.dbTable }-${ opt.id }`
-        src = `${ host }/static/image/icon/edit.png`,
-      )
+      if !opt.isTitle
+        img.content__remove( 
+          alt = 'remove', 
+          class = `content__remove--${ opt.dbTable }-${ opt.id }`
+          src = `${ host }/static/image/icon/delete.png`,
+        )
+        img.content__modify( 
+          alt = 'edit', 
+          class = `content__modify--${ opt.dbTable }-${ opt.id }`
+          src = `${ host }/static/image/icon/edit.png`,
+        )

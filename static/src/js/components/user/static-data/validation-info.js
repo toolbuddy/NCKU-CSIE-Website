@@ -686,6 +686,20 @@ const validationInfo = Object.freeze( {
             },
         },
     },
+    technologyTransferPatent: {
+        [ `patent_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專利名稱是必填欄位',
+            },
+        },
+        [ `patent_${ LanguageUtils.getLanguageId( 'en-US' ) }` ]: {
+            presence: {
+                allowEmpty: false,
+                message:    '專利名稱是必填欄位',
+            },
+        },
+    },
     technologyTransfer: {
         [ `technology_${ LanguageUtils.getLanguageId( 'zh-TW' ) }` ]: {
             presence: {
