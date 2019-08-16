@@ -90,7 +90,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 )
                 article.student__detail
                   p.detail__text= student.name
-                  p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ 0 ] ]
+                  p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ student.degree ] ]
           p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
 
       else if opt.dbTable === 'technologyTransfer'
