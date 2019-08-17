@@ -12,7 +12,6 @@ import publicationCategoryUtils from 'models/faculty/utils/publication-category.
 import validate from 'validate.js';
 import nationUtils from '../../../../../models/faculty/utils/nation';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
-import { declareInterface, } from 'babel-types';
 
 class SetData {
     constructor ( opt ) {
