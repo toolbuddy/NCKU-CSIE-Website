@@ -347,12 +347,14 @@ export default async ( opt ) => {
                     {
                         model:      TechnologyTransferPatent,
                         as:         'technologyTransferPatent',
+                        attributes: [
+                            'technologyTransferPatentId',
+                        ],
                         include:    [
                             {
                                 model:      TechnologyTransferPatentI18n,
                                 as:         'technologyTransferPatentI18n',
                                 attributes: [
-                                    'technologyTransferPatentId',
                                     'patent',
                                 ],
                                 where: {
@@ -508,11 +510,14 @@ export default async ( opt ) => {
                 } ) ),
             } ) ),
             technologyTransfer: technologyTransfer.map( technologyTransfer => ( {
-                technologyTransferId: technologyTransfer.technologyTransferId,
-                authorizingParty:     technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
-                authorizedParty:      technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
-                from:                 technologyTransfer.from,
-                patent:               technologyTransfer.technologyTransferPatent.map( patent => patent.technologyTransferPatentI18n[ 0 ].patent ),
+                technologyTransferId:     technologyTransfer.technologyTransferId,
+                authorizingParty:         technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
+                authorizedParty:          technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
+                from:                     technologyTransfer.from,
+                technologyTransferPatent:               technologyTransfer.technologyTransferPatent.map( patent => ( {
+                    patent:                     patent.technologyTransferPatentI18n[ 0 ].patent,
+                    technologyTransferPatentId: patent.technologyTransferPatentId,
+                } ) ),
                 to:                   technologyTransfer.to,
                 technology:           technologyTransfer.technologyTransferI18n[ 0 ].technology,
             } ) ),
