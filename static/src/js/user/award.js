@@ -78,6 +78,8 @@ async function fetchData () {
                 const setAwardData = new SetData( {
                     blockDOM:       document.getElementById( 'award' ),
                     addButtonDOM:     document.getElementById( 'add__button--award-block' ),
+                    noResultDOM:      document.querySelector( '.content__main > .main__award-block > .award-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__main > .main__award-block > .award-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'award',
                     profileId:        result.roleId,

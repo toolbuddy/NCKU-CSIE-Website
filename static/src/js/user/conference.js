@@ -78,6 +78,8 @@ async function fetchData () {
                 const setConferenceData = new SetData( {
                     blockDOM:       document.getElementById( 'conference' ),
                     addButtonDOM:     document.getElementById( 'add__button--conference-block' ),
+                    noResultDOM:      document.querySelector( '.content__main > .main__conference-block > .conference-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__main > .main__conference-block > .conference-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'conference',
                     profileId:        result.roleId,

@@ -9,10 +9,10 @@ import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
 import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
+import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import validate from 'validate.js';
 import nationUtils from '../../../../../models/faculty/utils/nation';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
-import { declareInterface, } from 'babel-types';
 
 class SetData {
     constructor ( opt ) {
@@ -20,6 +20,8 @@ class SetData {
 
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
+            !ValidateUtils.isDomElement( opt.noResultDOM ) ||
+            !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
         )
@@ -34,7 +36,24 @@ class SetData {
         this.DOM = {
             block:     opt.blockDOM,
             addButton: opt.addButtonDOM,
+            noResult:  opt.noResultDOM,
+            loading:   opt.loadingDOM,
         };
+    }
+
+    renderLoading () {
+        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classRemove( this.DOM.loading, 'loading--hidden' );
+    }
+
+    renderLoadingSucceed () {
+        classAdd( this.DOM.loading, 'loading--hidden' );
+        classAdd( this.DOM.noResult, 'no-result--hidden' );
+    }
+
+    renderLoadingFailed () {
+        classAdd( this.DOM.loading, 'loading--hidden' );
+        classRemove( this.DOM.noResult, 'no-result--hidden' );
     }
 
     queryApi ( languageId ) {
@@ -353,6 +372,25 @@ class SetData {
                             dbTableId:    res.technologyTransferId,
                             addButtonDOM: this.DOM.block.querySelector( `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }` ),
                         } );
+
+                        if ( ValidateUtils.isValidArray( res.technologyTransferPatent ) ) {
+                            const removeSelector = patentId => ` .technologyTransfer__patent > .patent__remove-${ patentId } `;
+                            const updateSelector = patentId => `  .technologyTransfer__patent > .patent__modify-${ patentId } `;
+                            res.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
+                                this.setUpdateButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( updateSelector( patent.technologyTransferPatentId ) ),
+                                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ] ),
+                                    id:        patent.technologyTransferPatentId,
+                                    dbTable:   'technologyTransferPatent',
+                                } );
+                                this.setDeleteButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( removeSelector( patent.technologyTransferPatentId ) ),
+                                    id:        patent.technologyTransferPatentId,
+                                    content:   patent.patent,
+                                    dbTable:   'technologyTransferPatent',
+                                } );
+                            } );
+                        }
                         break;
                     default:
                         content = '';
@@ -426,9 +464,12 @@ class SetData {
         } )
         .then( async () => {
             this.exec();
+            this.emptyBlock();
             this.closeEditPageWindow();
         } ).catch( ( err ) => {
             this.closeEditPageWindow();
+            this.emptyBlock();
+            this.renderLoadingFailed();
             console.error( err );
         } );
     }
@@ -463,9 +504,12 @@ class SetData {
         } )
         .then( async () => {
             this.exec();
+            this.emptyBlock();
             this.closeEditPageWindow();
         } ).catch( ( err ) => {
             this.closeEditPageWindow();
+            this.emptyBlock();
+            this.renderLoadingFailed();
             console.error( err );
         } );
     }
@@ -482,9 +526,12 @@ class SetData {
         } )
         .then( async () => {
             this.exec();
+            this.emptyBlock();
             this.closeEditPageWindow();
         } ).catch( ( err ) => {
             this.closeEditPageWindow();
+            this.emptyBlock();
+            this.renderLoadingFailed();
             console.error( err );
         } );
     }
@@ -622,6 +669,7 @@ class SetData {
     }
 
     async exec () {
+        this.renderLoading();
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
             console.log( data[ this.config.languageId ] );
@@ -634,6 +682,12 @@ class SetData {
                 dbTableId:    -1,
                 addButtonDOM: this.DOM.addButton,
             } );
+        } )
+        .then( () => {
+            this.renderLoadingSucceed();
+        } )
+        .catch( () => {
+            this.renderLoadingFailed();
         } );
     }
 }

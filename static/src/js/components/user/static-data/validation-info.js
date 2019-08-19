@@ -446,8 +446,8 @@ const validationInfo = Object.freeze( {
         },
         applicationDate_year: {
             presence:  {
-                allowEmpty: true,
-                message:    '年份不可為空',
+                allowEmpty: false,
+                message:    '申請日期不可為空',
             },
             numericality: {
                 greaterThanOrEqualTo: 1970,
@@ -456,7 +456,8 @@ const validationInfo = Object.freeze( {
         },
         applicationDate_month: {
             presence:     {
-                allowEmpty: true,
+                allowEmpty: false,
+                message:    '申請日期不可為空',
             },
             numericality: {
                 greaterThan:       0,
@@ -466,7 +467,8 @@ const validationInfo = Object.freeze( {
         },
         applicationDate_day: {
             presence:     {
-                allowEmpty: true,
+                allowEmpty: false,
+                message:    '申請日期不可為空',
             },
             numericality: {
                 greaterThan:       0,

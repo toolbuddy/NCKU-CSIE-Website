@@ -48,11 +48,16 @@ append breadcrumb
   )
 
 append content
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     article.main__patent-block.patent-block
       +local-topic( 'patent-block', i18n[ LANG.id ].title, true )
+      +noResultWithImage( 'patent-block' )
+      +loading( 'patent-block' )
       section.patent-block__patent.patent#patent
 
 append footer

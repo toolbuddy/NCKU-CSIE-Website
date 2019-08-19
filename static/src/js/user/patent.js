@@ -75,8 +75,10 @@ async function fetchData () {
 
             try {
                 const setPatentData = new SetData( {
-                    blockDOM:       document.getElementById( 'patent' ),
+                    blockDOM:         document.getElementById( 'patent' ),
                     addButtonDOM:     document.getElementById( 'add__button--patent-block' ),
+                    noResultDOM:      document.querySelector( '.content__main > .main__patent-block > .patent-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__main > .main__patent-block > .patent-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'patent',
                     profileId:        result.roleId,

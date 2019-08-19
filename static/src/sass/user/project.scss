@@ -5,6 +5,8 @@
 @import 'components/common/breadcrumb';
 @import 'components/common/footer';
 @import 'components/common/topic';
+@import 'components/common/loading';
+@import 'components/common/no-result';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
 @import 'components/user/dynamic-input-block.scss';
@@ -153,6 +155,14 @@
         margin: {
           left: auto;
           right: auto;
+        }
+        @include no-result( $block: 'project-block' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+        @include loading( $block: 'project-block' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
         }
 
         // [ RWD: $medium ]
