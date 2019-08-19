@@ -660,13 +660,17 @@
           // [ layout ]
           display: block;
           text-align: left;
+          position: relative;
 
           // [ skin ]
           width: 100%;
-          height: $item-height;
-          border-top: $border-height solid #415277;
           padding-left: font__px-to-rem( 30 );
           background-color: transparent;
+          height: auto;
+          border: {
+            top: $border-height solid #415277;
+            bottom: $border-height solid #415277;
+          }
 
           // element
           // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__image`
@@ -677,14 +681,19 @@
 
             // [ skin ]
             width: font__px-to-rem( 24 );
-            height: $item-height - $border-height;
+            border-radius: 50%;
             padding: {
               top: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
               bottom: ( $item-height - $border-height - font__px-to-rem( 24 ) ) / 2;
             }
-            filter:
-              invert( 100% )
-              opacity( 50% );
+
+            &.login__image--icon {
+              width: font__px-to-rem( 24 );
+              height: $item-height - $border-height;
+              filter:
+                invert( 100% )
+                opacity( 50% );
+            }
           }
 
           // element
@@ -704,6 +713,144 @@
             }
             color: #8f98ae;
             font-size: $font-size;
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__switch`
+          > .login__switch {
+            // [ position ]
+            // `z-index` is set to put `.login__switch` beneath `.item__text`.
+            position: absolute;
+            text-align: right;
+            left: 0;
+            top: 0;
+            z-index: 0;
+
+            // [ layout ]
+            display: inline-block;
+
+            // [ skin ]
+            width: 100%;
+            height: $item-height - $border-height;
+            padding-right: font__px-to-rem( 20 );
+            background-color: transparent;
+
+            &::after {
+              // [ layout ]
+              display: inline-block;
+              vertical-align: middle;
+
+              // [ skin ]
+              width: font__px-to-rem( 14 );
+              height: font__px-to-rem( 14 );
+              border: {
+                color: #8f98ae;
+                style: solid;
+                top-width: font__px-to-rem( 3 );
+                right-width: font__px-to-rem( 3 );
+              }
+              content: '';
+              transform: rotate( 45deg );
+
+              // [ animation ]
+              transition: transform .5s;
+            }
+
+            // modifier
+            // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__switch > .login__switch--active`
+            &.login__switch--active {
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .login > .switch > .switch__icon`
+              &::after {
+                // [ skin ]
+                transform: rotate( 135deg );
+              }
+            }
+
+            // modifier
+            // `> .#{ $block } > .header.header--medium > .navigation > .login > .login__switch > .login__switch--hide`
+            &.login__switch--hide {
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .login > .switch > .switch__icon`
+              &::after {
+                // [ skin ]
+                display: none;
+              }
+            }
+          }
+
+          // element
+          // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .item__dropdown`
+          // block
+          // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown`
+          > .login__dropdown.dropdown {
+            // [ layout ]
+            display: block;
+            overflow: hidden;
+
+            // [ skin ]
+            // In order to trigger `height` transition without knowing actual elements `height`,
+            // `max-height` must be used instead of `height`.
+            width: 100%;
+            max-height: 0;
+            background-color: #1d2d56;
+            opacity: 0;
+
+            // [ animation ]
+            transition: height .5s, padding .5s, opacity .5s;
+
+            // element
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown > .dropdown__item`
+            // block
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .item > .dropdown > .item`
+            > .dropdown__item.item {
+              // [ layout ]
+              display: block;
+              margin-left: font__px-to-rem( 130 ) / $item-width * 100%;
+
+              // [ skin ]
+              width: font__px-to-rem( 180 ) - $border-height;
+              height: font__px-to-rem( 40 );
+              border-left: $border-height solid #404e6e;
+              padding: {
+                top: font__px-to-rem( 12 );
+                bottom: font__px-to-rem( 12 );
+                left: font__px-to-rem( 30 );
+              }
+
+              // element
+              // `> .#{ $block } > .header.header--medium > .navigation > .list > .login > .dropdown > .login > .login__link`
+              > .item__link {
+                // [ layout ]
+                display: inline-block;
+                vertical-align: top;
+                line-height: $font-size;
+
+                // [ skin ]
+                width: 100%;
+                height: 100%;
+                color: #ffffff;
+                font: {
+                  size: $font-size;
+                  style: normal;
+                  weight: normal;
+                }
+              }
+            }
+
+            // modifier
+            // `> .#{ $block } > .header.header--medium > .navigation > .list > .login > .login__dropdown > .login__dropdown--open`
+            &.login__dropdown--open {
+              // [ skin ]
+              // In order to trigger `max-height` transition,
+              // `max-height` must be larger than possible height.
+              max-height: font__px-to-rem( 10000 );
+              padding: {
+                top: font__px-to-rem( 20 );
+                bottom: font__px-to-rem( 20 );
+              }
+              opacity: 1;
+            }
           }
         }
 

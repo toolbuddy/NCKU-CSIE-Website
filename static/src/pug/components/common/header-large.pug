@@ -35,6 +35,11 @@ mixin header--large( belongBlock )
       aside.functions__right.right
         //- Login
         section.right__login.login
+          +image( {
+            alt:       i18n[ LANG.id ].components.login.text,
+            className: 'login__image login__image--icon',
+            src:       'icon/user.png',
+            } )
           a.login__button( href = i18n[ LANG.id ].components.login.route )= i18n[ LANG.id ].components.login.text
 
         //- Search, currently not available

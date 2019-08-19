@@ -7,7 +7,7 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost } from 'settings/server/config.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import loginButtonHTML from 'static/src/pug/components/common/login.pug';
 import LanguageUtils from 'models/common/utils/language.js';
@@ -115,42 +115,27 @@ export default class GetHeaderLarge {
 
     async renderLogin () {
         try {
-            console.log( 'in header-large.js - renderLogin' );
             const result = await this.fetchData( 'user/id', {
                 credentials: 'include',
                 method:      'post',
             } );
             if ( result.userId > -1 ) {
-                console.log( 'is a user:' );
                 const data = await this.fetchMiniProfileData( result.userId );
-                console.log( data );
                 this.DOM.login.innerHTML = loginButtonHTML( {
                     name:        data.name,
                     belongBlock: 'login',
+                    photo: `faculty/${ data.photo }`,
                     LANG:        {
                         id:            WebLanguageUtils.currentLanguageId,
                         getLanguageId: LanguageUtils.getLanguageId,
                     },
                     UTILS: {
                         url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                        staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, WebLanguageUtils.currentLanguageId ) ),
                     },
                 },
                 'login' );
-
-                // This.DOM.login.querySelector('#logout').addEventListener('click', async ()=>{
-                //     try{
-                //         const result = await this.fetchData('auth/logout', {
-                //             credentials: 'include',
-                //             method: 'post',
-                //         });
-                //         window.location = result.redirect;
-                //     }catch( err ){
-                //         console.error( err );
-                //     }
-                // });
             }
-            else
-                console.log( 'is not a logged-in user' );
         }
         catch ( err ) {
             console.error( err );

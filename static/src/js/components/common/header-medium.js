@@ -7,8 +7,11 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost } from 'settings/server/config.js';
+import loginDropdownHTML from 'static/src/pug/components/common/login-dropdown.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import LanguageUtils from 'models/common/utils/language.js';
+import UrlUtils from 'static/src/js/utils/url.js';
 
 export default class GetHeaderMedium {
     /**
@@ -46,6 +49,7 @@ export default class GetHeaderMedium {
 
         this.DOM = {
             header:         opt.headerDOM,
+            allHeaders:     Array.from(opt.allHeaderDOMs),
             allNavigations: Array.from( opt.allHeaderDOMs ).map( header => header.querySelector( headerBlockQuerySelector( 'navigation' ) ) ),
             menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
             navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
@@ -69,7 +73,9 @@ export default class GetHeaderMedium {
                 .map( header => header.querySelector( languageBlockQuerySelector( 'dropdown' ) ) )
                 .filter( dropdownDOM => dropdownDOM !== null ),
             },
-            login: opt.headerDOM.querySelector( navigationBlockQuerySelector( 'login' ) ),
+            login: {
+                container: opt.headerDOM.querySelector( navigationBlockQuerySelector( 'login' ) ),
+            },
         };
 
         if (
@@ -84,7 +90,7 @@ export default class GetHeaderMedium {
             !this.DOM.language.switches.every( ValidateUtils.isDomElement ) ||
             !this.DOM.language.dropdowns.length ||
             !this.DOM.language.dropdowns.every( ValidateUtils.isDomElement ) ||
-            !ValidateUtils.isDomElement( this.DOM.login )
+            !ValidateUtils.isDomElement( this.DOM.login.container )
         )
             throw new Error( 'DOM not found.' );
 
@@ -157,6 +163,44 @@ export default class GetHeaderMedium {
         } );
     }
 
+    subscribeLoginEvent () {
+        this.DOM.login.container.removeAttribute('href');
+        const headerElementQuerySelector = element => `.header > .header__${ element }`;
+        const headerBlockQuerySelector = block => `${ headerElementQuerySelector( block ) }.${ block }`;
+        const navigationElementQuerySelector = element => `${ headerBlockQuerySelector( 'navigation' ) } > .navigation__${ element }`;
+        const navigationBlockQuerySelector = block => `${ navigationElementQuerySelector( block ) }.${ block }`;
+        const loginElementQuerySelector = element => `${ navigationBlockQuerySelector( 'login' ) } > .login__${ element }`;
+        const loginBlockQuerySelector = block => `${ loginElementQuerySelector( block ) }.${ block }`;
+
+        this.DOM.login.switch = this.DOM.header.querySelector( loginElementQuerySelector( 'switch' ));
+        this.DOM.login.switches = this.DOM.allHeaders
+                .map( header => header.querySelector( loginElementQuerySelector( 'switch' ) ) )
+                .filter( switchDOM => switchDOM !== null );
+        this.DOM.login.dropdowns = this.DOM.allHeaders
+                .map( header => header.querySelector( loginBlockQuerySelector( 'dropdown' ) ) )
+                .filter( dropdownDOM => dropdownDOM !== null );
+
+        if (
+            !ValidateUtils.isDomElement( this.DOM.login.switch ) ||
+            !this.DOM.login.switches.length ||
+            !this.DOM.login.switches.every( ValidateUtils.isDomElement ) ||
+            !this.DOM.login.dropdowns.length ||
+            !this.DOM.login.dropdowns.every( ValidateUtils.isDomElement )
+        )
+            throw new Error( 'DOM not found.' );
+
+        this.DOM.login.switch.addEventListener( 'click', () => {
+            if ( this.DOM.login.switch.classList.contains( 'login__switch--active' ) ) {
+                this.DOM.login.dropdowns.forEach( dropdownDOM => classRemove( dropdownDOM, 'login__dropdown--open' ) );
+                this.DOM.login.switches.forEach( switchDOM => classRemove( switchDOM, 'login__switch--active' ) );
+            }
+            else {
+                this.DOM.login.dropdowns.forEach( dropdownDOM => classAdd( dropdownDOM, 'login__dropdown--open' ) );
+                this.DOM.login.switches.forEach( switchDOM => classAdd( switchDOM, 'login__switch--active' ) );
+            }
+        } );
+    }
+
     subscribeScrollEvent () {
         let prevScrollpos = window.pageYOffset;
         window.addEventListener( 'scroll', () => {
@@ -176,30 +220,40 @@ export default class GetHeaderMedium {
 
     async renderLogin () {
         try {
-            console.log( 'in header-medium.js - renderLogin' );
-            const result = await this.fetchIdData();
+            const result = await this.fetchData( 'user/id', {
+                credentials: 'include',
+                method:      'post',
+            } );
             if ( result.userId > -1 ) {
-                console.log( 'is a user:' );
                 const data = await this.fetchMiniProfileData( result.userId );
-                console.log( data );
+                this.DOM.login.container.innerHTML = loginDropdownHTML( {
+                    name:        data.name,
+                    belongBlock: 'login',
+                    photo: `faculty/${ data.photo }`,
+                    LANG:        {
+                        id:            WebLanguageUtils.currentLanguageId,
+                        getLanguageId: LanguageUtils.getLanguageId,
+                    },
+                    UTILS: {
+                        url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                        staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, WebLanguageUtils.currentLanguageId ) ),
+                    },
+                },
+                'login' );
+                this.subscribeLoginEvent();
             }
-            else
-                console.log( 'is not a logged-in user' );
         }
         catch ( err ) {
             console.error( err );
         }
     }
 
-    async fetchIdData () {
+    async fetchData ( url, opt ) {
         try {
-            const res = await fetch( `${ this.host }/user/id`, {
-                credentials: 'include',
-                method:      'post',
-            } );
+            const res = await fetch( `${ this.host }/${ url }`, opt );
 
             if ( !res.ok )
-                throw new Error( 'No userId found' );
+                throw new Error( 'Fetch data failed' );
 
             return res.json();
         }
