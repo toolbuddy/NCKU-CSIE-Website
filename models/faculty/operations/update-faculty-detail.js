@@ -422,8 +422,6 @@ export default async ( opt ) => {
             for ( const awardInfo of award ) {
                 await faculty.transaction( t => Award.update( {
                     receivedYear:    awardInfo.receivedYear,
-                    receivedMonth:   awardInfo.receivedMonth,
-                    receivedDay:     awardInfo.receivedDay,
                 }, {
                     where: {
                         awardId: awardInfo.awardId,

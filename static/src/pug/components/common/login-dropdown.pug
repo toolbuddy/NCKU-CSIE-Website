@@ -1,4 +1,4 @@
-//- Header Login Button template module.
+//- Header Login Dropdown template module.
 -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -54,12 +54,12 @@ include /components/common/image.pug
     className: `${ belongBlock }__image ${ belongBlock }__image--personal`,
     src:       `${ photo }`,
 } )
-a.login( class = `${ belongBlock }__button` )= name
-  ul.login__dropdown.dropdown
-    li.dropdown__item.item
-        a.item__link( href = i18n[ LANG.id ].profile.route )= i18n[ LANG.id ].profile.text
-    li.dropdown__item.item
-        a.item__link( href = i18n[ LANG.id ].password.route )= i18n[ LANG.id ].password.text
-    li.dropdown__item.item#logout
-        a.item__link( href = i18n[ LANG.id ].logout.route )= i18n[ LANG.id ].logout.text
-
+span.login__text= name
+button.login__switch
+ul.login__dropdown.dropdown
+  li.dropdown__item.item
+    a.item__link.link( href = i18n[ LANG.id ].profile.route )= i18n[ LANG.id ].profile.text
+  li.dropdown__item.item
+    a.item__link.link( href = i18n[ LANG.id ].password.route )= i18n[ LANG.id ].password.text
+  li.dropdown__item.item#logout
+    a.item__link.link( href = i18n[ LANG.id ].logout.route )= i18n[ LANG.id ].logout.text
