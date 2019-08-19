@@ -8,22 +8,6 @@ const AwardValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    receivedMonth: {
-        presence:     false,
-        type:         'integer',
-        numericality: {
-            greaterThan:       0,
-            lessThanOrEqualTo: 12,
-        },
-    },
-    receivedDay: {
-        presence:     false,
-        type:         'integer',
-        numericality: {
-            greaterThan:       0,
-            lessThanOrEqualTo: 31,
-        },
-    },
     i18n: {
         presence: {
             allowEmpty: false,

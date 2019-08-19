@@ -74,8 +74,6 @@ export default async ( opt ) => {
         ] = await Promise.all( [
             Award.findAll( {
                 attributes: [
-                    'receivedDay',
-                    'receivedMonth',
                     'receivedYear',
                 ],
                 where: {
@@ -403,8 +401,6 @@ export default async ( opt ) => {
         return {
             award: award.map( award => ( {
                 award:         award.awardI18n[ 0 ].award,
-                receivedDay:   award.receivedDay,
-                receivedMonth: award.receivedMonth,
                 receivedYear:  award.receivedYear,
             } ) ),
             conference: conference.map( conference => ( {

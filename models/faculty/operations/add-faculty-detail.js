@@ -516,8 +516,6 @@ export default async ( opt ) => {
             await faculty.transaction( t => Promise.all( award.map( awardInfo => Award.create( {
                 profileId,
                 receivedYear:  awardInfo.receivedYear,
-                receivedMonth: awardInfo.receivedMonth,
-                receivedDay:   awardInfo.receivedDay,
                 awardI18n:     awardInfo.i18n,
             }, {
                 include: [ {
