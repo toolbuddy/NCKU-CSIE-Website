@@ -255,13 +255,29 @@
               // [ layout ]
               display: grid;
               grid-template: {
-                areas: 'time technology authorizedParty authorizingParty';
-                columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+                areas: 'time technology';
+                columns: font__px-to-rem( 100 ) 1fr ;
               }
               align-content: center;
 
               // [ position ]
               width: 100%;
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'time technology authorizedParty authorizingParty';
+                  columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+                }
+              }
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'time technology authorizedParty authorizingParty';
+                  columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+                }
+              }
             }
 
             > .technologyTransfer__title {
@@ -323,6 +339,12 @@
 
                 // [ layout ]  
                 grid-area: authorizedParty;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
               }
 
               > .title__item--authorizingParty {
@@ -330,29 +352,41 @@
 
                 // [ layout ]  
                 grid-area: authorizingParty;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
               }
             }
 
             > .#{ $block }__content {
               @extend %technologyTransfer-table;
 
+              // [ position ]
+              margin-bottom: font__px-to-rem( 10 );
+
               // [ element ]
               %content__item {
                 // [ layout ]
                 display: flex;
                 align-content: center;
+                justify-content: center;
 
                 // [ position ]
                 width: 100%;
+                height: auto;
 
                 > .item__word {
                   // [ layout ]
-                  display: inline-block;
+                  display: inline-flex;
+                  align-self: center;
+                  justify-self: center;
 
                   // [ position ]
-                  width: 100%;
-                  height: auto;
-                  vertical-align: middle;
+                  width: auto;
+                  height: font__px-to-rem( 18 );
 
                   // [ skin ]
                   font: {
@@ -475,14 +509,26 @@
                 @extend %content__item;
 
                 // [ layout ]
+                display: none;
                 grid-area: authorizedParty;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
               }
 
               > .content__item--authorizingParty {
                 @extend %content__item;
 
                 // [ layout ]
+                display: none;
                 grid-area: authorizingParty;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
               }
             }
 
@@ -493,6 +539,11 @@
 
               // [ position ]
               width: 100%;
+              margin: {
+                top: font__px-to-rem( 5 );
+                bottom: font__px-to-rem( 5 );
+                left: font__px-to-rem( 30 );
+              }
 
               > .patent__button--remove {
                 // [ layout ]
@@ -585,8 +636,8 @@
               padding-right: font__px-to-rem( 10 );
               align-self: center;
               margin: {
-                top: font__px-to-rem( 2 );
-                bottom: font__px-to-rem( 2 );
+                top: font__px-to-rem( 8 );
+                bottom: font__px-to-rem( 8 );
               }
 
               // [ skin ]

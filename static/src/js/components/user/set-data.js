@@ -352,6 +352,25 @@ class SetData {
                             dbTableId:    res.technologyTransferId,
                             addButtonDOM: this.DOM.block.querySelector( `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }` ),
                         } );
+
+                        if ( ValidateUtils.isValidArray( res.technologyTransferPatent ) ) {
+                            const removeSelector = patentId => ` .technologyTransfer__patent > .patent__remove-${ patentId } `;
+                            const updateSelector = patentId => `  .technologyTransfer__patent > .patent__modify-${ patentId } `;
+                            res.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
+                                this.setUpdateButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( updateSelector( patent.technologyTransferPatentId ) ),
+                                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ] ),
+                                    id:        patent.technologyTransferPatentId,
+                                    dbTable:   'technologyTransferPatent',
+                                } );
+                                this.setDeleteButtonEvent( {
+                                    buttonDOM: this.DOM.block.querySelector( removeSelector( patent.technologyTransferPatentId ) ),
+                                    id:        patent.technologyTransferPatentId,
+                                    content:   patent.patent,
+                                    dbTable:   'technologyTransferPatent',
+                                } );
+                            } );
+                        }
                         break;
                     default:
                         content = '';

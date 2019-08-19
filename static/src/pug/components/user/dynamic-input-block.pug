@@ -121,8 +121,8 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
               article.content__item.content__item--authorizingParty
                 p.item__word= opt.res.authorizingParty
 
-            if Array.isArray( opt.res.patent ) && opt.res.patent.length
-              each patent in opt.res.patent
+            if Array.isArray( opt.res.technologyTransferPatent ) && opt.res.technologyTransferPatent.length
+              each patent in opt.res.technologyTransferPatent
                 section.technologyTransfer__patent
                   img.patent__button--remove( 
                     alt = 'remove', 
@@ -131,7 +131,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   )
                   img.patent__button--modify( 
                     alt = 'edit', 
-                    class = `student__modify-${ student.technologyTransferPatentId }`
+                    class = `patent__modify-${ patent.technologyTransferPatentId }`
                     src = `${ host }/static/image/icon/settings.png`,
                   )
                   article.patent__detail
