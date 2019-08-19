@@ -70,8 +70,6 @@ export default async ( opt ) => {
         ] = await Promise.all( [
             Award.findAll( {
                 attributes: [
-                    'receivedDay',
-                    'receivedMonth',
                     'receivedYear',
                     'awardId',
                 ],
@@ -403,6 +401,7 @@ export default async ( opt ) => {
             } ),
         ] );
 
+
         /**
          * Profile not found.
          * Handle with 404 not found.
@@ -418,8 +417,6 @@ export default async ( opt ) => {
             award: award.map( award => ( {
                 awardId:       award.awardId,
                 award:         award.awardI18n[ 0 ].award,
-                receivedDay:   award.receivedDay,
-                receivedMonth: award.receivedMonth,
                 receivedYear:  award.receivedYear,
             } ) ),
             conference: conference.map( conference => ( {
@@ -530,6 +527,7 @@ export default async ( opt ) => {
         };
     }
     catch ( err ) {
+        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();
