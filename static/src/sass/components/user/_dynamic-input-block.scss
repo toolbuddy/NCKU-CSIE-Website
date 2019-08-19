@@ -669,6 +669,259 @@
             }
           }
         }
+        @if $block == 'patent' {
+          > .content__#{ $block } {
+            // [ layout ]
+            grid-area: word;
+
+            // [ position ]
+            display: block;
+            width: 100%;
+
+            // [ skin ]
+            color: rgba( 81, 81, 81, .87 );
+            overflow: visible;
+
+            %patent-table {
+              // [ layout ]
+              display: grid;
+              grid-template: {
+                areas: 'certification patent';
+                columns: font__px-to-rem( 100 ) 1fr ;
+              }
+              align-content: center;
+
+              // [ position ]
+              width: 100%;
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'certification patent nation inventor patentOwner';
+                  columns: font__px-to-rem( 100 ) 3fr font__px-to-rem( 80 ) 1fr 1fr;
+                }
+              }
+            }
+
+            > .patent__title {
+              @extend %patent-table;
+
+              // [ element ]
+              %title__item {
+                // [ layout ]
+                display: block;
+
+                // [ position ]
+                width: 100%;
+
+                // [ skin ]
+                font: {
+                  size: font__px-to-rem( 16 );
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: font__px-to-rem( 16 );
+                letter-spacing: normal;
+                word-wrap: break-word;
+
+                // [ skin ]
+                color: rgba( 81, 81, 81, .87 );
+
+                // [ RWD: $small ]
+                @media screen and ( min-width: $small ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 17 );
+                  line-height: font__px-to-rem( 19 );
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 18 );
+                  line-height: font__px-to-rem( 20 );
+                }
+              }
+
+              > .title__item--certificationNumber {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: certification;
+              }
+
+              > .title__item--patent {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: patent;
+              }
+
+              > .title__item--nation {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: nation;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--inventor {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: inventor;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--patentOwner {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: patentOwner;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+            }
+
+            > .#{ $block }__content {
+              @extend %patent-table;
+
+              // [ position ]
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ element ]
+              %content__item {
+                // [ layout ]
+                display: flex;
+                align-content: center;
+                justify-content: center;
+
+                // [ position ]
+                width: 100%;
+                height: auto;
+
+                > .item__word {
+                  // [ layout ]
+                  display: inline-flex;
+                  align-self: center;
+                  justify-self: center;
+
+                  // [ position ]
+                  width: auto;
+                  height: font__px-to-rem( 18 );
+
+                  // [ skin ]
+                  font: {
+                    size: font__px-to-rem( 16 );
+                    style: normal;
+                    stretch: normal;
+                  }
+                  text-align: center;
+                  line-height: font__px-to-rem( 18 );
+                  letter-spacing: normal;
+                  word-wrap: break-word;
+
+                  // [ skin ]
+                  color: rgba( 33, 33, 33, .87 );
+
+                  // [ RWD: $small ]
+                  @media screen and ( min-width: $small ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 17 );
+                    line-height: font__px-to-rem( 19 );
+                  }
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 18 );
+                    line-height: font__px-to-rem( 20 );
+                  }
+                }
+              }
+
+              > .content__item--certificationNumber {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: certification;
+              }
+
+              > .content__item--patent {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: patent;
+              }
+
+              > .content__item--nation {
+                // [ layout ]
+                display: none;
+                grid-area: nation;
+                align-content: center;
+                justify-content: center;
+
+                // [ position ]
+                width: 100%;
+                height: auto;
+
+                > .item__nation {
+                  // [ layout ]
+                  display: flex;
+
+                  // [ position ]
+                  width: font__px-to-rem( 38 );
+                  height: auto;
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--inventor {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: inventor;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--patentOwner {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: patentOwner;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+            }
+          }
+        }
         @if $block == 'studentAward' {
           > .content__#{ $block } {
             // [ layout ]

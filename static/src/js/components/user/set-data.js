@@ -295,7 +295,20 @@ class SetData {
                         }
                         break;
                     case 'patent':
-                        content.push( res.patent );
+                        if ( index === 0 ) {
+                            await this.renderBlock( {
+                                dbTable:     this.config.dbTable,
+                                id:          res.technologyTransferId,
+                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                                isTitle:     true,
+                            } );
+                        }
+                        await this.renderBlock( {
+                            dbTable: this.config.dbTable,
+                            id:       dbTableId,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            nation:  nationUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].nation ],
+                        } );
                         break;
                     case 'project':
                         if ( res.category !== tempCategory || index === 0 ) {
@@ -399,7 +412,8 @@ class SetData {
                     this.config.dbTable !== 'experience' &&
                     this.config.dbTable !== 'project' &&
                     this.config.dbTable !== 'studentAward' &&
-                    this.config.dbTable !== 'technologyTransfer' ) {
+                    this.config.dbTable !== 'technologyTransfer' &&
+                    this.config.dbTable !== 'patent' ) {
                     await this.renderBlock( {
                         dbTable:  this.config.dbTable,
                         id:       dbTableId,

@@ -93,6 +93,31 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ student.degree ] ]
           p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
 
+      else if opt.dbTable === 'patent'
+        article.content__patent
+          if opt.isTitle 
+            section.patent__title.title
+              p.title__item.title__item--certificationNumber= '專利號碼'
+              p.title__item.title__item--patent= '專利名稱'
+              p.title__item.title__item--nation= '國籍'
+              p.title__item.title__item--inventor= '發明人'
+              p.title__item.title__item--patentOwner= '專利權人'
+          if !opt.isTitle
+            section.patent__content.content
+              article.content__item.content__item--certificationNumber
+                p.item__word= opt.res.certificationNumber
+              article.content__item.content__item--patent
+                p.item__word= opt.res.patent
+              article.content__item.content__item--nation
+                img.item__nation( 
+                  alt = 'remove', 
+                  src = `${ host }/static/image/icon/${ opt.nation }.png`,
+                )
+              article.content__item.content__item--inventor
+                p.item__word= opt.res.inventor
+              article.content__item.content__item--patentOwner
+                p.item__word= opt.res.patentOwner
+
       else if opt.dbTable === 'technologyTransfer'
         article.content__technologyTransfer
           if opt.isTitle 
@@ -120,7 +145,6 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 p.item__word= opt.res.authorizedParty
               article.content__item.content__item--authorizingParty
                 p.item__word= opt.res.authorizingParty
-
             if Array.isArray( opt.res.technologyTransferPatent ) && opt.res.technologyTransferPatent.length
               each patent in opt.res.technologyTransferPatent
                 section.technologyTransfer__patent
@@ -137,7 +161,6 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   article.patent__detail
                     p.detail__text= patent.patent
             p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= '新增專利'      
-
 
       else
         article.content__word
