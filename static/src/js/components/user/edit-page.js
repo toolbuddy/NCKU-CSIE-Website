@@ -74,9 +74,9 @@ class EditPage {
         languageIds.forEach( ( languageId ) => {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
             let value = '';
-            if ( this.config.buttonMethod === 'update' && this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
-                value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
+            if ( typeof this.dbData[ languageId ] === 'object' && this.config.buttonMethod === 'update' && this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
+                value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
             this.DOM.info.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,

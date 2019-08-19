@@ -157,7 +157,7 @@ class SetData {
                 data[ languageId ].patent.sort( ( patentA, patentB ) => {
                     const tempDateA = ( patentA.applicationDate !== null ) ? patentA.applicationDate.split( '-' ) : null;
                     const tempDateB = ( patentB.applicationDate !== null ) ? patentB.applicationDate.split( '-' ) : null;
-                    for ( const i = 0; i < 3; ++i ) {
+                    for ( let i = 0; i < 3; ++i ) {
                         if ( tempDateA !== null &&
                             tempDateB !== null &&
                             tempDateA[ i ] !== tempDateB[ i ] )
@@ -183,7 +183,6 @@ class SetData {
         if ( this.config.dbTable === 'studentAward' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
                 data[ languageId ].studentAward.sort( ( awardA, awardB ) => {
-                    console.log( awardB.receivedYear - awardA.receivedYear );
                     if (
                         awardA.receivedYear !== null &&
                       awardB.receivedYear !== null &&
@@ -295,6 +294,7 @@ class SetData {
                         }
                         break;
                     case 'patent':
+                        content.push( res.patent );
                         if ( index === 0 ) {
                             await this.renderBlock( {
                                 dbTable:     this.config.dbTable,
@@ -392,7 +392,11 @@ class SetData {
                             res.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
                                 this.setUpdateButtonEvent( {
                                     buttonDOM: this.DOM.block.querySelector( updateSelector( patent.technologyTransferPatentId ) ),
-                                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ] ),
+                                    res:       LanguageUtils.supportedLanguageId.map( ( id ) => {
+                                        if ( typeof data[ id ].technologyTransfer[ index ] === 'object' )
+                                            return data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ];
+                                        return data[ 0 ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ];
+                                    } ),
                                     id:        patent.technologyTransferPatentId,
                                     dbTable:   'technologyTransferPatent',
                                 } );

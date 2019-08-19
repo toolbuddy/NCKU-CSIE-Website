@@ -699,7 +699,9 @@
                 grid-template: {
                   areas: 'certification patent nation inventor patentOwner';
                   columns: font__px-to-rem( 100 ) 3fr font__px-to-rem( 80 ) 1fr 1fr;
+                  rows: auto;
                 }
+                gap: font__px-to-rem( 3 );
               }
             }
 
@@ -822,7 +824,7 @@
 
                   // [ position ]
                   width: auto;
-                  height: font__px-to-rem( 18 );
+                  min-height: font__px-to-rem( 18 );
 
                   // [ skin ]
                   font: {
@@ -877,15 +879,16 @@
 
                 // [ position ]
                 width: 100%;
-                height: auto;
+                height: 100%;
 
                 > .item__nation {
                   // [ layout ]
                   display: flex;
+                  align-self: center;
 
                   // [ position ]
                   width: font__px-to-rem( 38 );
-                  height: auto;
+                  height: font__px-to-rem( 38 );
                 }
 
                 // [ RWD: $large ]
