@@ -3,6 +3,8 @@
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
+@import 'components/common/loading';
+@import 'components/common/no-result';
 @import 'components/common/footer';
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
@@ -171,6 +173,22 @@
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
         @include local-topic( profile );
         @include input-block( $block: 'profile', $modifier: 'name' );
+        @include no-result( $block: 'title' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+        @include loading( $block: 'title' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+        @include no-result( $block: 'speciaty' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+        @include loading( $block: 'speciaty' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
 
         > .profile__title {
           @include dynamic-input-block( $block: 'title' );
@@ -433,6 +451,14 @@
         left: auto;
         right: auto;
       }
+      @include no-result( $block: 'experience-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+      @include loading( $block: 'experience-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
 
       // [ RWD: $medium ]
       @media screen and ( min-width: $medium ) {
@@ -462,6 +488,14 @@
       margin: {
         left: auto;
         right: auto;
+      }
+      @include no-result( $block: 'education-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+      @include loading( $block: 'education-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
       }
 
       // [ RWD: $medium ]

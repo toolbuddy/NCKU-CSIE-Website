@@ -66,11 +66,16 @@ append breadcrumb
   )
 
 append content
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+  
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     article.main__publication-block.publication-block
       +local-topic( 'publication-block',i18n[ LANG.id ].title, true )
+      +noResultWithImage( 'publication-block' )
+      +loading( 'publication-block' )      
       section.publication-block__publication.publication#publication
 
 append footer

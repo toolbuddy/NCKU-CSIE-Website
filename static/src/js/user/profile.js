@@ -99,6 +99,8 @@ async function fetchData () {
                 const setEducationData = new SetData( {
                     blockDOM:       document.getElementById( 'education' ),
                     addButtonDOM:     document.getElementById( 'add__button--education-block' ),
+                    noResultDOM:      document.querySelector( '.content__information > .information__education-block > .education-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__information > .information__education-block > .education-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'education',
                     profileId:        result.roleId,
@@ -113,6 +115,8 @@ async function fetchData () {
                 const setExperienceData = new SetData( {
                     blockDOM:       document.getElementById( 'experience' ),
                     addButtonDOM:     document.getElementById( 'add__button--experience-block' ),
+                    noResultDOM:      document.querySelector( '.content__information > .information__experience-block > .experience-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__information > .information__experience-block > .experience-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'experience',
                     profileId:        result.roleId,
@@ -130,6 +134,8 @@ async function fetchData () {
                 const setTitleData = new SetData( {
                     blockDOM:         document.getElementById( 'title' ),
                     addButtonDOM:     document.getElementById( 'add__button--title' ),
+                    noResultDOM:      document.querySelector( '.content__information > .information__profile > .title__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__information > .information__profile > .title__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'title',
                     profileId:        result.roleId,
@@ -147,6 +153,8 @@ async function fetchData () {
                 const setSpecialtyData = new SetData( {
                     blockDOM:         document.getElementById( 'specialty' ),
                     addButtonDOM:     document.getElementById( 'add__button--specialty' ),
+                    noResultDOM:      document.querySelector( '.content__information > .information__profile > .speciaty__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__information > .information__profile > .speciaty__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'specialty',
                     profileId:        result.roleId,

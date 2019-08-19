@@ -78,6 +78,8 @@ async function fetchData () {
                 const setProjectData = new SetData( {
                     blockDOM:       document.getElementById( 'project' ),
                     addButtonDOM:     document.getElementById( 'add__button--project-block' ),
+                    noResultDOM:      document.querySelector( '.content__main > .main__project-block > .project-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__main > .main__project-block > .project-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'project',
                     profileId:        result.roleId,

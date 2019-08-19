@@ -77,6 +77,8 @@ async function fetchData () {
                 const setStudentAwardData = new SetData( {
                     blockDOM:       document.getElementById( 'studentAward' ),
                     addButtonDOM:     document.getElementById( 'add__button--studentAward-block' ),
+                    noResultDOM:      document.querySelector( '.content__main > .main__studentAward-block > .studentAward-block__no-result' ),
+                    loadingDOM:       document.querySelector( '.content__main > .main__studentAward-block > .studentAward-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'studentAward',
                     profileId:        result.roleId,

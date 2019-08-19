@@ -139,6 +139,9 @@ append breadcrumb
   )
 
 append content
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
   +navigation-bar( 'content' )
   main.content__information.information
     +topic( 'information', i18n[ LANG.id ].content.topic )
@@ -180,16 +183,24 @@ append content
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
       +local-topic( 'title',i18n[ LANG.id ].content.profile.title, true )
+      +noResultWithImage( 'title' )
+      +loading( 'title' )
       section.profile__title.title#title
       +local-topic( 'specialty',i18n[ LANG.id ].content.profile.specilty, true )
+      +noResultWithImage( 'speciaty' )
+      +loading( 'speciaty' )
       section.profile__specialty.specialty#specialty
 
     article.information__education-block.education-block
       +local-topic( 'education-block', i18n[ LANG.id ].content.education.topic , true )
+      +noResultWithImage( 'education-block' )
+      +loading( 'education-block' )
       section.education-block__education.education#education
 
     article.information__experience-block.experience-block
       +local-topic( 'experience-block', i18n[ LANG.id ].content.experience.topic, true ) 
+      +noResultWithImage( 'experience-block' )
+      +loading( 'experience-block' )      
       section.experience-block__experience.experience#experience
 
 append footer
