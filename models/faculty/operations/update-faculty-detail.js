@@ -686,7 +686,7 @@ export default async ( opt ) => {
                         }, {
                             where: {
                                 studentId:      studentInfo.studentId,
-                                studentAwardId: studentInfo.studentAwardId,
+                                studentAwardId: result.studentAwardId,
                             },
                             transaction: t,
                         } );
