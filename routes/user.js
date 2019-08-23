@@ -835,8 +835,6 @@ router
             }
             else if ( data.dbTable === 'award' ) {
                 const item = {
-                    // ReceivedDay:   null,
-                    // receivedMonth: null,
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     awardId:       Number( data.dbTableItemId ),
                 };

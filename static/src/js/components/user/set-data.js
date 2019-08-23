@@ -96,18 +96,6 @@ class SetData {
                       awardA.receivedYear !== awardB.receivedYear
                     )
                         return awardB.receivedYear - awardA.receivedYear;
-                    else if (
-                        awardA.receivedMonth !== null &&
-                      awardB.receivedMonth !== null &&
-                      awardA.receivedMonth !== awardB.receivedMonth
-                    )
-                        return awardB.receivedMonth - awardA.receivedMonth;
-                    else if (
-                        awardA.receivedDay !== null &&
-                      awardB.receivedDay !== null &&
-                      awardA.receivedDay !== awardB.receivedDay
-                    )
-                        return awardB.receivedDay - awardA.receivedDay;
                     return 0;
                 } );
             } );
