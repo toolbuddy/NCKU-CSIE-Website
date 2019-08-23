@@ -17,14 +17,6 @@ const Award = faculty.define( 'award', {
         type:      Sequelize.SMALLINT.UNSIGNED,
         allowNull: false,
     },
-    receivedMonth: {
-        type:      Sequelize.TINYINT.UNSIGNED,
-        allowNull: true,
-    },
-    receivedDay: {
-        type:      Sequelize.TINYINT.UNSIGNED,
-        allowNull: true,
-    },
 } );
 
 export default Award;
