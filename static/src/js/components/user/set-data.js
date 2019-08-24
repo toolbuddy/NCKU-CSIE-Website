@@ -145,11 +145,18 @@ class SetData {
                 data[ languageId ].patent.sort( ( patentA, patentB ) => {
                     const tempDateA = ( patentA.applicationDate !== null ) ? patentA.applicationDate.split( '-' ) : null;
                     const tempDateB = ( patentB.applicationDate !== null ) ? patentB.applicationDate.split( '-' ) : null;
+                    if ( tempDateA === null && tempDateB !== null )
+                        return 1;
+
+                    else if ( tempDateA !== null && tempDateB === null )
+                        return -1;
+
+                    else if ( tempDateA === null && tempDateB === null )
+                        return 0;
+
                     for ( let i = 0; i < 3; ++i ) {
-                        if ( tempDateA !== null &&
-                            tempDateB !== null &&
-                            tempDateA[ i ] !== tempDateB[ i ] )
-                            return tempDateB[ i ] - tempDateA[ i ];
+                        if ( tempDateA[ i ] !== tempDateB[ i ] )
+                            return Number( tempDateB[ i ] ) - Number( tempDateA[ i ] );
                     }
                     return 0;
                 } );
@@ -186,13 +193,9 @@ class SetData {
             this.config.dbTable === 'experience' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
                 data[ languageId ][ this.config.dbTable ].sort( ( tempA, tempB ) => {
-                    if (
-                        tempA.from !== null &&
-                      tempB.from !== null &&
-                      tempA.from !== tempB.from
-                    )
-                        return tempB.from - tempA.from;
-                    return 0;
+                    if ( tempA.from === null || tempB.from === null )
+                        return 0;
+                    return tempB.from - tempA.from;
                 } );
             } );
         }
@@ -284,7 +287,7 @@ class SetData {
                     case 'patent':
                         content.push( res.patent );
                         if ( index === 0 ) {
-                            await this.renderBlock( {
+                            this.renderBlock( {
                                 dbTable:     this.config.dbTable,
                                 id:          res.technologyTransferId,
                                 res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
@@ -316,6 +319,7 @@ class SetData {
                             subtitle.push( res.receivedYear );
                             currentYear = res.receivedYear;
                         }
+                        content.push( res.award );
                         await this.renderBlock( {
                             dbTable:     this.config.dbTable,
                             id:          res.awardId,
@@ -355,7 +359,7 @@ class SetData {
                         content.push( res.technology );
 
                         if ( index === 0 ) {
-                            await this.renderBlock( {
+                            this.renderBlock( {
                                 dbTable:     this.config.dbTable,
                                 id:          res.technologyTransferId,
                                 res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
@@ -678,7 +682,7 @@ class SetData {
         this.renderLoading();
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data[ this.config.languageId ] );
+            console.log( data );
             if ( validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
                 this.emptyBlock();
             else
