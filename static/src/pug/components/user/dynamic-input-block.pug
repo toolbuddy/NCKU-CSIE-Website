@@ -125,6 +125,9 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
               p.title__item.title__item--nation= dataI18n[ languageId ].localTopic.nation
               p.title__item.title__item--inventor=  dataI18n[ languageId ].localTopic.inventor
               p.title__item.title__item--patentOwner= dataI18n[ languageId ].localTopic.patentOwner
+              p.title__item.title__item--applicationDate= dataI18n[ languageId ].localTopic.applicationDate
+              p.title__item.title__item--duration= dataI18n[ languageId ].localTopic.duration
+              
           if !opt.isTitle
             section.patent__content.content
               article.content__item.content__item--certificationNumber
@@ -140,6 +143,12 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 p.item__word= opt.res.inventor
               article.content__item.content__item--patentOwner
                 p.item__word= opt.res.patentOwner
+              article.content__item.content__item--applicationDate
+                p.item__word= opt.res.applicationDate
+              article.content__item.content__item--duration
+                p.item__word= opt.res.issueDate
+                p.item__word= '-'
+                p.item__word= opt.res.expireDate
 
       else if opt.dbTable === 'technologyTransfer'
         article.content__technologyTransfer

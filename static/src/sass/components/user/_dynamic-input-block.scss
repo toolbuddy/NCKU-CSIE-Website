@@ -949,7 +949,7 @@
 
             // [ skin ]
             color: rgba( 81, 81, 81, .87 );
-            overflow: visible;
+            overflow: scroll;
 
             %patent-table {
               // [ layout ]
@@ -966,15 +966,15 @@
               // [ RWD: $large ]
               @media screen and ( min-width: $large ) {
                 grid-template: {
-                  areas: 'certification patent nation inventor patentOwner';
-                  columns: font__px-to-rem( 100 ) 3fr font__px-to-rem( 80 ) 1fr 1fr;
+                  areas: 'certification patent nation inventor patentOwner applicationDate duration';
+                  columns: font__px-to-rem( 100 ) font__px-to-rem( 400 ) font__px-to-rem( 80 ) font__px-to-rem( 200 ) font__px-to-rem( 200 ) font__px-to-rem( 150 ) font__px-to-rem( 150 );
                   rows: auto;
                 }
                 gap: font__px-to-rem( 3 );
               }
 
               // [ skin ]
-              overflow-x: scroll;
+              overflow: scroll;
             }
 
             > .patent__title {
@@ -1062,6 +1062,32 @@
 
                 // [ layout ]  
                 grid-area: patentOwner;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--applicationDate {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: applicationDate;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--duration {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: duration;
                 display: none;
 
                 // [ RWD: $large ]
@@ -1188,6 +1214,32 @@
                 // [ layout ]
                 display: none;
                 grid-area: patentOwner;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--applicationDate {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: applicationDate;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--duration {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: duration;
 
                 // [ RWD: $large ]
                 @media screen and ( min-width: $large ) {

@@ -295,6 +295,7 @@ const dataI18n = Object.freeze( {
                 'inventor':            'inventor',
                 'patent':              'patent',
                 'patentOwner':         'patent owner',
+                'duration':            'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -311,6 +312,7 @@ const dataI18n = Object.freeze( {
                 'inventor':            '發明人',
                 'patent':              '專利名稱',
                 'patentOwner':         '專利權人',
+                'duration':              '專利期間',
             },
         },
     },
