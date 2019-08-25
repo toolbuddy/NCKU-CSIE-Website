@@ -20,7 +20,7 @@ class SetData {
 
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
-            !ValidateUtils.isDomElement( opt.noResultDOM ) ||
+            !ValidateUtils.isDomElement( opt.refreshDOM ) ||
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
@@ -36,24 +36,24 @@ class SetData {
         this.DOM = {
             block:     opt.blockDOM,
             addButton: opt.addButtonDOM,
-            noResult:  opt.noResultDOM,
+            refresh:   opt.refreshDOM,
             loading:   opt.loadingDOM,
         };
     }
 
     renderLoading () {
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classAdd( this.DOM.refresh, 'refresh--hidden' );
         classRemove( this.DOM.loading, 'loading--hidden' );
     }
 
     renderLoadingSucceed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classAdd( this.DOM.refresh, 'refresh--hidden' );
     }
 
     renderLoadingFailed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
-        classRemove( this.DOM.noResult, 'no-result--hidden' );
+        classRemove( this.DOM.refresh, 'refresh--hidden' );
     }
 
     queryApi ( languageId ) {
@@ -316,12 +316,21 @@ class SetData {
                         if ( res.category !== tempCategory || index === 0 ) {
                             subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectCategoryUtils.map[ res.category ] ] );
                             tempCategory = res.category;
+
+                            this.renderBlock( {
+                                dbTable:     this.config.dbTable,
+                                id:          dbTableId,
+                                subtitle,
+                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                                isTitle:     true,
+                            } );
                         }
                         content.push( res.name );
                         await this.renderBlock( {
                             dbTable: this.config.dbTable,
                             id:       dbTableId,
-                            subtitle,
+
+                            // Subtitle,
                             res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
                         } );
                         break;

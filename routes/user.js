@@ -857,7 +857,6 @@ router
                 };
             }
             else if ( data.dbTable === 'studentAward' ) {
-                console.log( data );
                 const item = {
                     receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     studentAwardId:        Number( data.dbTableItemId ),

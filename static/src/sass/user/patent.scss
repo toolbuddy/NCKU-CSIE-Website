@@ -4,7 +4,7 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/loading';
-@import 'components/common/no-result';
+@import 'components/common/refresh';
 @import 'components/common/not-available';
 @import 'components/common/footer';
 @import 'components/common/topic';
@@ -157,7 +157,7 @@
           left: auto;
           right: auto;
         }
-        @include no-result( $block: 'patent-block' ) {
+        @include refresh( $block: 'patent-block' ) {
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }

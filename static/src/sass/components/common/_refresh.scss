@@ -1,0 +1,115 @@
+@import 'components/common/font';
+
+// components
+// `> .#{ $block } > .#{ $block }__refresh.refresh`
+@mixin refresh ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__refresh`
+  // block
+  // `> .#{ $block } > .refresh`
+  > .#{ $block }__refresh.refresh {
+    // [ layout ]
+    display: block;
+    text-align: center;
+
+    // [ skin ]
+    width: auto;
+
+    // modifier
+    // `> .#{ $block } > .refresh.refresh--hidden`
+    &.refresh--hidden {
+      // [ layout ]
+      display: none;
+    }
+
+    // element
+    // `> .#{ $block } > .refresh > .refresh__image`
+    > .refresh__image {
+      // [ layout ]
+      display: block;
+      margin: {
+        top: font__px-to-rem( 100 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 74 );
+      height: auto;
+    }
+
+    // element
+    // `> .#{ $block } > .refresh > .refresh__caption`
+    > .refresh__caption {
+      // [ layout ]
+      display: block;
+      line-height: font__px-to-rem( 16 );
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: font__px-to-rem( 16 );
+      color: #adacad;
+      font-size: font__px-to-rem( 16 );
+    }
+
+    // element
+    // `> .#{ $block } > .refresh > .refresh__suggestion`
+    // block
+    // `> .#{ $block } > .refresh > .suggestion`
+    > .refresh__suggestion.suggestion {
+      // [ layout ]
+      display: block;
+      text-align: center;
+      margin: {
+        top: font__px-to-rem( 18 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      width: auto;
+      height: auto;
+
+      // template
+      // `> .#{ $block } > .refresh > .suggestion > .suggestion__?`
+      %suggestion__element {
+        // [ layout ]
+        display: inline;
+        line-height: font__px-to-rem( 16 );
+        vertical-align: top;
+
+        // [ skin ]
+        color: #adacad;
+        font-size: font__px-to-rem( 16 );
+      }
+
+      // element
+      // `> .#{ $block } > .refresh > .suggestion > .suggestion__text`
+      > .suggestion__text {
+        // [ template ]
+        @extend %suggestion__element;
+      }
+
+      // element
+      // `> .#{ $block } > .refresh > .suggestion > .suggestion__link`
+      > .suggestion__link {
+        // [ template ]
+        @extend %suggestion__element;
+
+        // [ layout ]
+        white-space: nowrap;
+
+        // [ skin ]
+        text-decoration: underline;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

@@ -1,0 +1,48 @@
+//- No result content template module.
+mixin refresh( belongBlock )
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        refresh: 'refresh',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        refresh: '請重新整理',
+      },
+    } );
+
+  section.refresh.refresh--hidden( class = `${ belongBlock }__refresh` )
+    h2.refresh__caption= i18n[ LANG.id ].refresh
+
+//- No result content template module.
+mixin refreshWithImage( belongBlock )
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        error:   'error',
+        suggestion: {
+          start: 'Please refresh or go back ',
+          link:  'home page',
+          end:   '.',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        error:   '出現錯誤',
+        suggestion: {
+          start: '請重新整理或回到',
+          link:  '首頁',
+          end:   '，或請聯絡系統管理員',
+        },
+      },
+    } );
+
+  figure.refresh.refresh--hidden( class = `${ belongBlock }__refresh` )
+    +image( {
+      alt:       i18n[ LANG.id ].error,
+      className: 'refresh__image',
+      src:       'icon/refresh.png',
+    } )
+    figcaption.refresh__caption= i18n[ LANG.id ].error
+    section.refresh__suggestion.suggestion
+      article.suggestion__text= i18n[ LANG.id ].suggestion.start
+      a.suggestion__link( href = UTILS.url( { href: '' } ) )= i18n[ LANG.id ].suggestion.link
+      article.suggestion__text= i18n[ LANG.id ].suggestion.end

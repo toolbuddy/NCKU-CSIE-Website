@@ -69,19 +69,31 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
 
       else if opt.dbTable === 'project'
         article.content__project
-          //- If there is no start time, then there must be no end time.
-          if opt.res.from !== null
-            time.project__time.time
-              time.time__year= opt.res.from
-              hr.time__till
-              if opt.res.to !== null
-                time.time__year= opt.res.to
-              //- If there is no end time, then it must be still studying.
-              else
-                time.time__year= new Date().getFullYear()
-          ul.project__list.list
-            if opt.res.name !== null
-              li.list__item= opt.res.name  
+          if opt.isTitle 
+            section.project__title.title
+              p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
+              p.title__item.title__item--name= dataI18n[ languageId ].localTopic.name
+              p.title__item.title__item--support= dataI18n[ languageId ].localTopic.support
+          if !opt.isTitle
+            section.project__content.content
+              article.content__item.content__item--time
+                //- If there is no start time, then there must be no end time.
+                if opt.res.from !== null
+                  time.item__time.time
+                    if opt.res.from === 0
+                      time.time__year= '0000'
+                    else
+                      time.time__year= opt.res.from
+                    hr.time__till
+                    if opt.res.to !== null
+                      time.time__year= opt.res.to
+                    //- If there is no end time, then it must be still studying.
+                    else
+                      time.time__year= new Date().getFullYear()
+              article.content__item.content__item--name
+                p.item__word= opt.res.name
+              article.content__item.content__item--support
+                p.item__word= opt.res.support
 
       else if opt.dbTable === 'studentAward'
         article.content__studentAward
@@ -143,7 +155,10 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 //- If there is no start time, then there must be no end time.
                 if opt.res.from !== null
                   time.item__time.time
-                    time.time__year= opt.res.from
+                    if opt.res.from === 0
+                      time.time__year= '0000'
+                    else
+                      time.time__year= opt.res.from
                     hr.time__till
                     if opt.res.to !== null
                       time.time__year= opt.res.to

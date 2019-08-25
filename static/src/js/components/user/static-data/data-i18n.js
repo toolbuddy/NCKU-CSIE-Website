@@ -177,6 +177,7 @@ const dataI18n = Object.freeze( {
                 name:     'name',
                 support:  'support',
                 category: 'category',
+                time:     'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -189,6 +190,7 @@ const dataI18n = Object.freeze( {
                 name:     '專案名稱',
                 support:  '補助單位',
                 category: '投稿對象',
+                time:     '合約期間',
             },
         },
     },
@@ -324,7 +326,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: 'authorizing party',
                 authorizedParty:  'authorized party',
                 technology:       'technology',
-                time:             'time',
+                time:             'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -338,7 +340,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: '授權方名稱',
                 authorizedParty:  '接受方名稱',
                 technology:       '技術名稱',
-                time:             '契約期間',
+                time:             '合約期間',
             },
         },
     },
