@@ -91,9 +91,6 @@ async function fetchData () {
                 console.error( err );
             }
         }
-        else if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
-
-        }
     }
     catch ( err ) {
         console.error( err );

@@ -58,10 +58,10 @@ class EditPage {
 
         this.DOM.editPage.innerHTML = '';
         this.DOM.editPage.innerHTML += editPageHTML( {
-            url:    `${ host }/user/profile`,
-            cancel: i18n[ this.config.languageId ].button.cancel,
-            check:  i18n[ this.config.languageId ].button.check,
-            topic:  `${ i18n[ this.config.languageId ].topic[ this.config.buttonMethod ] }${ this.dataI18n[ this.config.languageId ].topic }`,
+            url:        `${ host }/user/profile`,
+            topic:      `${ i18n[ this.config.languageId ].topic[ this.config.buttonMethod ] }${ this.dataI18n[ this.config.languageId ].topic }`,
+            LANG:       LanguageUtils,
+            languageId:  this.config.languageId,
         } );
     }
 
@@ -75,7 +75,9 @@ class EditPage {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
             let value = '';
 
-            if ( typeof this.dbData[ languageId ] === 'object' && this.config.buttonMethod === 'update' && this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
+            if ( typeof this.dbData[ languageId ] === 'object' &&
+                 this.config.buttonMethod === 'update' &&
+                this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
                 value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
             this.DOM.info.innerHTML += editPageContentHTML( {
@@ -85,6 +87,7 @@ class EditPage {
                 name:        ( editPageConfig.i18n ) ? `${ editPageConfig.dbTableItem }_${ languageId }` : `${ editPageConfig.dbTableItem }`,
                 type:        editPageConfig.type,
                 dbTableItem: editPageConfig.dbTableItem,
+                LANG:        LanguageUtils,
                 languageId,
                 i18n:        editPageConfig.i18n,
             } );
@@ -92,13 +95,12 @@ class EditPage {
     }
 
     setTimeInput () {
-        const timeI18n = dataI18n.time[ this.config.languageId ];
         const valueFrom = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].from : null;
         const valueTo = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].to : null;
 
         this.DOM.info.innerHTML += editPageContentHTML( {
-            from:       timeI18n.from,
-            to:         timeI18n.to,
+            LANG:       LanguageUtils,
+            languageId: this.config.languageId,
             valueFrom,
             valueTo,
             nameFrom:   'from',
@@ -109,6 +111,7 @@ class EditPage {
 
     setLocalTopic ( topic ) {
         this.DOM.info.innerHTML += editPageContentHTML( {
+            LANG:        LanguageUtils,
             localTopic:   topic,
             type:        'local-topic',
         } );
@@ -127,6 +130,7 @@ class EditPage {
                 const top = util.i18n[ this.config.languageId ][ util.map[ value ] ];
 
                 this.DOM.info.innerHTML += editPageContentHTML( {
+                    LANG:        LanguageUtils,
                     top,
                     value,
                     data:        editPageConfig.dropdownItem,
@@ -178,6 +182,7 @@ class EditPage {
         }
 
         this.DOM.info.innerHTML += editPageContentHTML( {
+            LANG:         LanguageUtils,
             type:         'time-detail',
             year:         data.year,
             month:        data.month,
@@ -196,6 +201,7 @@ class EditPage {
 
             new Promise( ( res ) => {
                 this.DOM.info.innerHTML += editPageContentHTML( {
+                    LANG:        LanguageUtils,
                     type:         'checkbox',
                     dbTableItem:  editPageConfig.dbTableItem,
                     content,
@@ -256,6 +262,7 @@ class EditPage {
 
     async setEditPageDeleteBlock () {
         this.DOM.info.innerHTML += editPageContentHTML( {
+            LANG:        LanguageUtils,
             localTopic:  this.content,
             type:       'local-topic',
         } );

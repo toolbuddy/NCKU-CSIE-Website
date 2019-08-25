@@ -64,8 +64,6 @@ async function fetchData () {
 ( async () => {
     try {
         const result = await fetchData();
-        console.log( result );
-        console.log( result.redirect );
         if ( result.redirect )
             window.location = result.redirect;
 
@@ -167,9 +165,6 @@ async function fetchData () {
             catch ( err ) {
                 console.error( err );
             }
-        }
-        else if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
-
         }
     }
     catch ( err ) {

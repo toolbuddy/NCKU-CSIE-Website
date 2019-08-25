@@ -79,6 +79,9 @@ class SetData {
             this.DOM.block.innerHTML += dynamicInputBlock( {
                 opt,
                 host,
+                languageId:  this.config.languageId,
+                LANG:        LanguageUtils,
+                dataI18n:    dataI18n[ this.config.dbTable ],
             } );
         }
         catch ( err ) {
@@ -211,8 +214,8 @@ class SetData {
             let tempInternational = true;
             let tempCategory = 0;
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                let content = new Array();
-                const subtitle = new Array();
+                let content = [];
+                const subtitle = [];
                 let dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
@@ -268,14 +271,22 @@ class SetData {
                             res.international !== tempInternational ||
                             index === 0 ) {
                             const category = publicationCategoryUtils.i18n[ this.config.languageId ][ publicationCategoryUtils.map[ res.category ] ];
+                            const i18n = {
+                                [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                                    international: 'international ',
+                                },
+                                [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                                    international: '國際',
+                                },
+                            };
                             tempRefereed = res.refereed;
                             tempCategory = res.category;
                             tempInternational = res.international;
                             temp = '';
                             if ( res.refereed )
-                                temp += 'Refereed \n';
+                                temp += 'Refereed ';
                             if ( res.international )
-                                temp += '國際';
+                                temp += i18n[ this.config.languageId ].international;
                             temp += category;
                             subtitle.push( temp );
                         }
@@ -372,10 +383,11 @@ class SetData {
                             res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
                             isTitle:     false,
                         } );
+                        const addSelector = `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }`;
                         this.setAddButtonEvent( {
                             dbTable:      'technologyTransferPatent',
                             dbTableId:    res.technologyTransferId,
-                            addButtonDOM: this.DOM.block.querySelector( `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }` ),
+                            addButtonDOM: this.DOM.block.querySelector( addSelector ),
                         } );
 
                         if ( ValidateUtils.isValidArray( res.technologyTransferPatent ) ) {

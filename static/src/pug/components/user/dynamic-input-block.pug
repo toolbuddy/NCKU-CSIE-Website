@@ -1,4 +1,15 @@
 - 
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      addStudent: 'add student',
+      addPatent:  'add patent',
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      addStudent: '新增學生',
+      addPatent:  '新增專利',
+    },
+  } );
+
 if Array.isArray( opt.subtitle ) && opt.subtitle.length
   each subtitle in opt.subtitle
     section.subtitle
@@ -91,17 +102,17 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 article.student__detail
                   p.detail__text= student.name
                   p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ student.degree ] ]
-          p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
+          p.word__add( class=`content__modify--student-${ opt.id }` )= i18n[ languageId ].addStudent
 
       else if opt.dbTable === 'patent'
         article.content__patent
           if opt.isTitle 
             section.patent__title.title
-              p.title__item.title__item--certificationNumber= '專利號碼'
-              p.title__item.title__item--patent= '專利名稱'
-              p.title__item.title__item--nation= '國籍'
-              p.title__item.title__item--inventor= '發明人'
-              p.title__item.title__item--patentOwner= '專利權人'
+              p.title__item.title__item--certificationNumber= dataI18n[ languageId ].localTopic.certificationNumber
+              p.title__item.title__item--patent= dataI18n[ languageId ].localTopic.patent
+              p.title__item.title__item--nation= dataI18n[ languageId ].localTopic.nation
+              p.title__item.title__item--inventor=  dataI18n[ languageId ].localTopic.inventor
+              p.title__item.title__item--patentOwner= dataI18n[ languageId ].localTopic.patentOwner
           if !opt.isTitle
             section.patent__content.content
               article.content__item.content__item--certificationNumber
@@ -122,10 +133,10 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
         article.content__technologyTransfer
           if opt.isTitle 
             section.technologyTransfer__title.title
-              p.title__item.title__item--time= '合約期間'
-              p.title__item.title__item--technology= '技術名稱'
-              p.title__item.title__item--authorizedParty= '接受方'
-              p.title__item.title__item--authorizingParty= '授權方'
+              p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
+              p.title__item.title__item--technology=dataI18n[ languageId ].localTopic.technology
+              p.title__item.title__item--authorizedParty= dataI18n[ languageId ].localTopic.authorizedParty
+              p.title__item.title__item--authorizingParty= dataI18n[ languageId ].localTopic.authorizingParty
           if !opt.isTitle
             section.technologyTransfer__content.content
               article.content__item.content__item--time
@@ -160,7 +171,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   )
                   article.patent__detail
                     p.detail__text= patent.patent
-            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= '新增專利'      
+            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= i18n[ languageId ].addPatent     
 
       else
         article.content__word

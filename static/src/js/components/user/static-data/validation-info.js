@@ -1,5 +1,4 @@
 import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
 import deepFreeze from 'deep-freeze';
 
 const validationInfo = Object.freeze( {

@@ -131,8 +131,10 @@ export default class SetProfileData {
     setProfileBlock ( dbTableItem, res ) {
         if ( res[ this.config.languageId ].profile[ dbTableItem ] !== null ) {
             this.textDOM[ dbTableItem ].textContent = res[ this.config.languageId ].profile[ dbTableItem ];
-            if ( dbTableItem === 'nation' )
-                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ res[ this.config.languageId ].profile.nation ] ];
+            if ( dbTableItem === 'nation' ) {
+                const nationId = res[ this.config.languageId ].profile.nation;
+                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationId ] ];
+            }
         }
         else {
             this.textDOM[ dbTableItem ].textContent = '';

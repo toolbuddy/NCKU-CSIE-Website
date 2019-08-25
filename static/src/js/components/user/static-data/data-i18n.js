@@ -324,6 +324,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: 'authorizing party',
                 authorizedParty:  'authorized party',
                 technology:       'technology',
+                time:             'time',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -337,6 +338,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: '授權方名稱',
                 authorizedParty:  '接受方名稱',
                 technology:       '技術名稱',
+                time:             '契約期間',
             },
         },
     },
@@ -404,28 +406,6 @@ const dataI18n = Object.freeze( {
                 update: '修改您的',
                 delete: '刪除您的',
             },
-        },
-    },
-    button: {
-        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-            delete: 'delete',
-            update:  'update',
-            add:     'add',
-        },
-        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-            delete: '刪除',
-            update:  '變更',
-            add:     '新增',
-        },
-    },
-    time: {
-        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-            from:    'from',
-            to:      'to',
-        },
-        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-            from:    '從',
-            to:      '至',
         },
     },
 } );
