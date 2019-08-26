@@ -6,6 +6,7 @@ import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
+import { conditionalExpression, } from 'babel-types';
 
 /**
  * @param {object} opt
@@ -80,6 +81,7 @@ class EditPage {
                 this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
                 value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
+            console.log( editPageConfig.i18n );
             this.DOM.info.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
                 value,
@@ -89,7 +91,7 @@ class EditPage {
                 dbTableItem: editPageConfig.dbTableItem,
                 LANG:        LanguageUtils,
                 languageId,
-                i18n:        editPageConfig.i18n,
+                isI18n:        editPageConfig.i18n,
             } );
         } );
     }

@@ -4,7 +4,7 @@
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
 @import 'components/common/loading';
-@import 'components/common/no-result';
+@import 'components/common/refresh';
 @import 'components/common/footer';
 @import 'components/common/topic';
 @import 'components/user/navigation-bar';
@@ -171,7 +171,7 @@
         // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
         @include local-topic( profile );
         @include input-block( $block: 'profile', $modifier: 'name' );
-        @include no-result( $block: 'title' ) {
+        @include refresh( $block: 'title' ) {
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }
@@ -179,7 +179,7 @@
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }
-        @include no-result( $block: 'speciaty' ) {
+        @include refresh( $block: 'speciaty' ) {
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }
@@ -449,7 +449,7 @@
         left: auto;
         right: auto;
       }
-      @include no-result( $block: 'experience-block' ) {
+      @include refresh( $block: 'experience-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }
@@ -487,7 +487,7 @@
         left: auto;
         right: auto;
       }
-      @include no-result( $block: 'education-block' ) {
+      @include refresh( $block: 'education-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }

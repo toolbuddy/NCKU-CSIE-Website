@@ -222,14 +222,14 @@ const dataEditPageConfig = Object.freeze( {
             {
                 type:        'localTopic',
                 dbTableItem: 'receivedYear',
-            }
+            },
         ),
         editPageType(
             {
                 type:        'text',
                 dbTableItem: 'receivedYear',
                 i18n:        false,
-            }
+            },
         ),
         editPageType(
             {
