@@ -12,12 +12,18 @@
 
 import express from 'express';
 import MarkdownIt from 'markdown-it';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+import getSession from 'models/auth/operations/get-session.js';
 import getFileInfo from 'models/announcement/operations/get-file-info.js';
+import saveSession from 'models/auth/operations/save-session.js';
+import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
+import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
-import { projectRoot, } from 'settings/server/config.js';
+import { projectRoot, secret, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -59,6 +65,125 @@ router
 router
 .route( '/recruitment' )
 .get( staticHtml( 'announcement/recruitment' ) );
+
+/**
+ * Resolve URL `/announcement/add`.
+ */
+
+router
+.route( '/add' )
+
+// .post( cors(), async ( req, res ) => {
+.get( async ( req, res, next ) => {
+    try {
+        console.log( 'in route announcement/add' );
+
+        // Get id
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid !== cookie ) {
+                // Get session data in the database.
+                try {
+                    const data = await getSession( {
+                        sid,
+                    } );
+
+                    // Check `expires`
+                    if ( data.expires >= Date.now() && data.userId !== null ) {
+                        const result = await getAdminByUserId( {
+                            userId: Number( data.userId ),
+                        } );
+
+                        if ( result.sid !== data.sid ) {
+                            res.send( {
+                                redirect: '/index',
+                            } );
+                        }
+                    }
+                    else {
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    }
+                }
+                catch ( error ) {
+                    if ( error.status === 404 ) {
+                        res.send( {
+                            redirect: '/error/404',
+                        } );
+                    }
+                    else
+                        console.error( error );
+                }
+            }
+        }
+
+        // Check proper user
+
+        await postAnnouncement( {
+            publishTime:      1355644555,
+            updateTime:       1355644555,
+            author:           1,
+            isPinned:         0,
+            isPublished:      1,
+            imageUrl:         null,
+            views:            0,
+            tag:              [
+                {
+                    typeId: 1,
+                },
+                {
+                    typeId: 2,
+                },
+                {
+                    typeId: 3,
+                },
+            ],
+            announcementI18n: [
+                {
+                    languageId: 0,
+                    title:      'test title tw',
+                    content:    'test content tw',
+                },
+                {
+                    languageId: 1,
+                    title:      'test title eng',
+                    content:    'test content eng',
+                },
+            ],
+            fileI18n: [
+                [
+                    {
+                        languageId: 0,
+                        name:       'test file 1 tw',
+                    },
+                    {
+                        languageId: 1,
+                        name:       'test file 1 eng',
+                    },
+                ],
+                [
+                    {
+                        languageId: 0,
+                        name:       'test file 2 tw',
+                    },
+                    {
+                        languageId: 1,
+                        name:       'test file 2 eng',
+                    },
+                ],
+            ],
+        } );
+        res.send( { 'message': 'success', } );
+    }
+    catch ( error ) {
+        console.error( error );
+    }
+} );
 
 /**
  * Resolve URL `/announcement/[id]`.
@@ -131,5 +256,6 @@ router
             next( err );
     }
 } );
+
 
 export default router;
