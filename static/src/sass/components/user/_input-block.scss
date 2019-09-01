@@ -189,7 +189,7 @@
           border-color: #f67057;
           color: #f67057;
           background-color: #ffffff;
-          width: font__px-to-rem( 150 );
+          min-width: font__px-to-rem( 150 );
           text-align: center;
 
           // [ interaction ]
@@ -222,7 +222,7 @@
           border-color: #8caae2;
           color: #8caae2;
           background-color: #ffffff;
-          width: font__px-to-rem( 200 );
+          min-width: font__px-to-rem( 200 );
 
           // [ interaction ]
           &:hover {

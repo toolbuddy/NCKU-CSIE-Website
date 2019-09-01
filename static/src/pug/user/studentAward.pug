@@ -13,7 +13,7 @@ append data
           user:     'User',
         },
         content: {
-          topic: '教師資料維護',
+          topic: 'Teacher profile settings',
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -49,14 +49,14 @@ append breadcrumb
 
 append content
   include /components/common/loading.pug
-  include /components/common/no-result.pug
+  include /components/common/refresh.pug
 
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     article.main__studentAward-block.studentAward-block
       +local-topic( 'studentAward-block', i18n[ LANG.id ].title, true )
-      +noResultWithImage( 'studentAward-block' )
+      +refreshWithImage( 'studentAward-block' )
       +loading( 'studentAward-block' )      
       section.studentAward-block__studentAward.studentAward#studentAward
 

@@ -77,7 +77,7 @@ async function fetchData () {
                 const setTechnologyTransferData = new SetData( {
                     blockDOM:       document.getElementById( 'technologyTransfer' ),
                     addButtonDOM:     document.getElementById( 'add__button--technologyTransfer-block' ),
-                    noResultDOM:      document.querySelector( '.content__main > .main__technologyTransfer-block > .technologyTransfer-block__no-result' ),
+                    refreshDOM:      document.querySelector( '.content__main > .main__technologyTransfer-block > .technologyTransfer-block__refresh' ),
                     loadingDOM:       document.querySelector( '.content__main > .main__technologyTransfer-block > .technologyTransfer-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'technologyTransfer',
@@ -89,9 +89,6 @@ async function fetchData () {
             catch ( err ) {
                 console.error( err );
             }
-        }
-        else if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
-
         }
     }
     catch ( err ) {

@@ -177,6 +177,7 @@ const dataI18n = Object.freeze( {
                 name:     'name',
                 support:  'support',
                 category: 'category',
+                time:     'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -189,6 +190,7 @@ const dataI18n = Object.freeze( {
                 name:     '專案名稱',
                 support:  '補助單位',
                 category: '投稿對象',
+                time:     '合約期間',
             },
         },
     },
@@ -293,6 +295,7 @@ const dataI18n = Object.freeze( {
                 'inventor':            'inventor',
                 'patent':              'patent',
                 'patentOwner':         'patent owner',
+                'duration':            'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -309,6 +312,7 @@ const dataI18n = Object.freeze( {
                 'inventor':            '發明人',
                 'patent':              '專利名稱',
                 'patentOwner':         '專利權人',
+                'duration':              '專利期間',
             },
         },
     },
@@ -324,6 +328,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: 'authorizing party',
                 authorizedParty:  'authorized party',
                 technology:       'technology',
+                time:             'duration',
             },
         },
         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
@@ -337,6 +342,7 @@ const dataI18n = Object.freeze( {
                 authorizingParty: '授權方名稱',
                 authorizedParty:  '接受方名稱',
                 technology:       '技術名稱',
+                time:             '合約期間',
             },
         },
     },
@@ -404,28 +410,6 @@ const dataI18n = Object.freeze( {
                 update: '修改您的',
                 delete: '刪除您的',
             },
-        },
-    },
-    button: {
-        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-            delete: 'delete',
-            update:  'update',
-            add:     'add',
-        },
-        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-            delete: '刪除',
-            update:  '變更',
-            add:     '新增',
-        },
-    },
-    time: {
-        [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-            from:    'from',
-            to:      'to',
-        },
-        [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-            from:    '從',
-            to:      '至',
         },
     },
 } );

@@ -310,7 +310,8 @@
                 position: relative;
 
                 // [ position ]
-                width: font__px-to-rem( 120 );
+                min-width: font__px-to-rem( 120 );
+                max-width: 50%;
                 height: font__px-to-rem( 40 );
                 margin: {
                   top: font__px-to-rem( 10 );

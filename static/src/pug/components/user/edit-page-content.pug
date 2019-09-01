@@ -1,4 +1,18 @@
 -
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      time: {
+        from: 'from',
+        to:   'to',
+      }
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      time: {
+        from: '從',
+        to:   '自',
+      }
+    },
+  } );
 article.info__input#input
   if type === 'text'
     section.input__text
@@ -11,13 +25,13 @@ article.info__input#input
           name= name 
           dbTableItem= dbTableItem
           languageId= languageId
-          i18n= i18n
+          i18n= isI18n
         )
 
   else if type === 'time'
     article.input__time.time
       aside.time__from.from
-        label.from__text= from
+        label.from__text= i18n[ languageId ].time.from
         span.from__input.input
           input.input__year( 
             type = 'number', 
@@ -27,7 +41,7 @@ article.info__input#input
             name= nameFrom
           )
       aside.time__to.to
-        label.to__text= to
+        label.to__text= i18n[ languageId ].time.to
         span.to__input.input
           input.input__year( 
             type = 'number', 

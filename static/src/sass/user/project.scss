@@ -6,7 +6,7 @@
 @import 'components/common/footer';
 @import 'components/common/topic';
 @import 'components/common/loading';
-@import 'components/common/no-result';
+@import 'components/common/refresh';
 @import 'components/user/navigation-bar';
 @import 'components/user/local-topic';
 @import 'components/user/dynamic-input-block.scss';
@@ -156,7 +156,7 @@
           left: auto;
           right: auto;
         }
-        @include no-result( $block: 'project-block' ) {
+        @include refresh( $block: 'project-block' ) {
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }

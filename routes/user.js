@@ -641,11 +641,8 @@ router
                 };
             }
             else if ( data.dbTable === 'award' ) {
+                console.log( data );
                 const item = {
-                    // ReceivedDay:   data.item.receivedDay === '' ? null : Number( data.item.receivedDay ),
-                    // receivedMonth:  data.item.receivedMonth === '' ? null : Number( data.item.receivedMonth ),
-                    receivedDay:   null,
-                    receivedMonth: null,
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
                 item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
@@ -835,8 +832,6 @@ router
             }
             else if ( data.dbTable === 'award' ) {
                 const item = {
-                    receivedDay:   null,
-                    receivedMonth: null,
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     awardId:       Number( data.dbTableItemId ),
                 };
@@ -859,7 +854,6 @@ router
                 };
             }
             else if ( data.dbTable === 'studentAward' ) {
-                console.log( data );
                 const item = {
                     receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                     studentAwardId:        Number( data.dbTableItemId ),

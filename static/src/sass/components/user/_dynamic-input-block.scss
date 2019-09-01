@@ -238,6 +238,275 @@
             }
           }
         }
+        @if $block == 'project' {
+          > .content__#{ $block } {
+            // [ layout ]
+            grid-area: word;
+
+            // [ position ]
+            display: block;
+            width: 100%;
+
+            // [ skin ]
+            color: rgba( 81, 81, 81, .87 );
+            overflow: visible;
+
+            %project-table {
+              // [ layout ]
+              display: grid;
+              grid-template: {
+                areas: 'time name';
+                columns: font__px-to-rem( 100 ) 1fr ;
+              }
+              align-content: center;
+
+              // [ position ]
+              width: 100%;
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'time name support';
+                  columns: font__px-to-rem( 100 ) 3fr 1fr;
+                }
+              }
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'time name support';
+                  columns: font__px-to-rem( 100 ) 3fr 1fr;
+                }
+              }
+            }
+
+            > .project__title {
+              @extend %project-table;
+
+              // [ element ]
+              %title__item {
+                // [ layout ]
+                display: block;
+
+                // [ position ]
+                width: 100%;
+
+                // [ skin ]
+                font: {
+                  size: font__px-to-rem( 16 );
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: font__px-to-rem( 16 );
+                letter-spacing: normal;
+                word-wrap: break-word;
+
+                // [ skin ]
+                color: rgba( 81, 81, 81, .87 );
+
+                // [ RWD: $small ]
+                @media screen and ( min-width: $small ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 17 );
+                  line-height: font__px-to-rem( 19 );
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 18 );
+                  line-height: font__px-to-rem( 20 );
+                }
+              }
+
+              > .title__item--time {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: time;
+              }
+
+              > .title__item--name {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: name;
+              }
+
+              > .title__item--support {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: support;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+            }
+
+            > .#{ $block }__content {
+              @extend %project-table;
+
+              // [ position ]
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ element ]
+              %content__item {
+                // [ layout ]
+                display: flex;
+                align-content: center;
+                justify-content: center;
+
+                // [ position ]
+                width: 100%;
+                height: auto;
+
+                > .item__word {
+                  // [ layout ]
+                  display: inline-flex;
+                  align-self: center;
+                  justify-self: center;
+
+                  // [ position ]
+                  width: auto;
+                  min-height: font__px-to-rem( 18 );
+
+                  // [ skin ]
+                  font: {
+                    size: font__px-to-rem( 16 );
+                    style: normal;
+                    stretch: normal;
+                  }
+                  text-align: center;
+                  line-height: font__px-to-rem( 18 );
+                  letter-spacing: normal;
+                  word-wrap: break-word;
+
+                  // [ skin ]
+                  color: rgba( 33, 33, 33, .87 );
+
+                  // [ RWD: $small ]
+                  @media screen and ( min-width: $small ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 17 );
+                    line-height: font__px-to-rem( 19 );
+                  }
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 18 );
+                    line-height: font__px-to-rem( 20 );
+                  }
+                }
+              }
+
+              > .content__item--time {
+                // [ layout ]
+                grid-area: time;
+
+                > .item__time {
+                  // [ layout ]
+                  display: block;
+                  text-align: center;
+                  margin-top: font__px-to-rem( 10 );
+                  line-height: font__px-to-rem( 26 );
+
+                  // [ skin ]
+                  width: auto;
+                  height: auto;
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ layout ]
+                    display: inline-block;
+                  }
+
+                  > .time__year {
+                    // [ layout ]
+                    display: inline-block;
+                    line-height: font__px-to-rem( 14 );
+                    vertical-align: top;
+
+                    // [ skin ]
+                    width: auto;
+                    height: font__px-to-rem( 26 );
+                    border: font__px-to-rem( 1 ) solid #757575;
+                    border-radius: font__px-to-rem( 16 );
+                    padding: {
+                      top: font__px-to-rem( 5 );
+                      bottom: font__px-to-rem( 5 );
+                      left: font__px-to-rem( 10 );
+                      right: font__px-to-rem( 10 );
+                    }
+                    color: #000000;
+                    font-size: font__px-to-rem( 14 );
+
+                    // [ RWD: $small ]
+                    @media screen and ( min-width: $large ) {
+                      // [ layout ]
+                      display: inline-block;
+                      line-height: font__px-to-rem( 16 );
+
+                      // [ skin ]
+                      height: font__px-to-rem( 30 );
+                      border-radius: font__px-to-rem( 26 );
+                      padding: {
+                        top: font__px-to-rem( 7 );
+                        bottom: font__px-to-rem( 7 );
+                        left: font__px-to-rem( 26 );
+                        right: font__px-to-rem( 26 );
+                      }
+                      font-size: font__px-to-rem( 16 );
+                    }
+                  }
+
+                  > .time__till {
+                    // [ layout ]
+                    display: inline-block;
+                    margin: {
+                      top: font__px-to-rem( 12 );
+                      bottom: font__px-to-rem( 12 );
+                      left: font__px-to-rem( 7 );
+                      right: font__px-to-rem( 7 );
+                    }
+                    vertical-align: top;
+
+                    // [ skin ]
+                    width: font__px-to-rem( 20 );
+                    height: font__px-to-rem( 2 );
+                    color: #757575;
+                    background-color: #757575;
+                  }
+                }
+              }
+
+              > .content__item--name {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: name;
+              }
+
+              > .content__item--support {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: support;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+            }
+          }
+        }
         @if $block == 'technologyTransfer' {
           > .content__#{ $block } {
             // [ layout ]
@@ -665,6 +934,317 @@
                 // [ skin ]
                 cursor: pointer;
                 color: rgba( 108, 123, 149, .87 );
+              }
+            }
+          }
+        }
+        @if $block == 'patent' {
+          > .content__#{ $block } {
+            // [ layout ]
+            grid-area: word;
+
+            // [ position ]
+            display: block;
+            width: 100%;
+
+            // [ skin ]
+            color: rgba( 81, 81, 81, .87 );
+            overflow: scroll;
+
+            %patent-table {
+              // [ layout ]
+              display: grid;
+              grid-template: {
+                areas: 'certification patent';
+                columns: font__px-to-rem( 100 ) 1fr ;
+              }
+              align-content: center;
+
+              // [ position ]
+              width: 100%;
+
+              // [ RWD: $large ]
+              @media screen and ( min-width: $large ) {
+                grid-template: {
+                  areas: 'certification patent nation inventor patentOwner applicationDate duration';
+                  columns: font__px-to-rem( 100 ) font__px-to-rem( 400 ) font__px-to-rem( 80 ) font__px-to-rem( 200 ) font__px-to-rem( 200 ) font__px-to-rem( 150 ) font__px-to-rem( 150 );
+                  rows: auto;
+                }
+                gap: font__px-to-rem( 3 );
+              }
+
+              // [ skin ]
+              overflow: scroll;
+            }
+
+            > .patent__title {
+              @extend %patent-table;
+
+              // [ element ]
+              %title__item {
+                // [ layout ]
+                display: block;
+
+                // [ position ]
+                width: 100%;
+
+                // [ skin ]
+                font: {
+                  size: font__px-to-rem( 16 );
+                  style: normal;
+                  stretch: normal;
+                }
+                text-align: center;
+                line-height: font__px-to-rem( 16 );
+                letter-spacing: normal;
+                word-wrap: break-word;
+
+                // [ skin ]
+                color: rgba( 81, 81, 81, .87 );
+
+                // [ RWD: $small ]
+                @media screen and ( min-width: $small ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 17 );
+                  line-height: font__px-to-rem( 19 );
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  // [ skin ]
+                  font-size: font__px-to-rem( 18 );
+                  line-height: font__px-to-rem( 20 );
+                }
+              }
+
+              > .title__item--certificationNumber {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: certification;
+              }
+
+              > .title__item--patent {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: patent;
+              }
+
+              > .title__item--nation {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: nation;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--inventor {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: inventor;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--patentOwner {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: patentOwner;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--applicationDate {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: applicationDate;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+
+              > .title__item--duration {
+                @extend %title__item;
+
+                // [ layout ]  
+                grid-area: duration;
+                display: none;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: block;
+                }
+              }
+            }
+
+            > .#{ $block }__content {
+              @extend %patent-table;
+
+              // [ position ]
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ element ]
+              %content__item {
+                // [ layout ]
+                display: flex;
+                align-content: center;
+                justify-content: center;
+
+                // [ position ]
+                width: 100%;
+                height: auto;
+
+                > .item__word {
+                  // [ layout ]
+                  display: inline-flex;
+                  align-self: center;
+                  justify-self: center;
+
+                  // [ position ]
+                  width: auto;
+                  min-height: font__px-to-rem( 18 );
+
+                  // [ skin ]
+                  font: {
+                    size: font__px-to-rem( 16 );
+                    style: normal;
+                    stretch: normal;
+                  }
+                  text-align: center;
+                  line-height: font__px-to-rem( 18 );
+                  letter-spacing: normal;
+                  word-wrap: break-word;
+
+                  // [ skin ]
+                  color: rgba( 33, 33, 33, .87 );
+
+                  // [ RWD: $small ]
+                  @media screen and ( min-width: $small ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 17 );
+                    line-height: font__px-to-rem( 19 );
+                  }
+
+                  // [ RWD: $large ]
+                  @media screen and ( min-width: $large ) {
+                    // [ skin ]
+                    font-size: font__px-to-rem( 18 );
+                    line-height: font__px-to-rem( 20 );
+                  }
+                }
+              }
+
+              > .content__item--certificationNumber {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: certification;
+              }
+
+              > .content__item--patent {
+                @extend %content__item;
+
+                // [ layout ]
+                grid-area: patent;
+              }
+
+              > .content__item--nation {
+                // [ layout ]
+                display: none;
+                grid-area: nation;
+                align-content: center;
+                justify-content: center;
+
+                // [ position ]
+                width: 100%;
+                height: 100%;
+
+                > .item__nation {
+                  // [ layout ]
+                  display: flex;
+                  align-self: center;
+
+                  // [ position ]
+                  width: font__px-to-rem( 38 );
+                  height: font__px-to-rem( 38 );
+                }
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--inventor {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: inventor;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--patentOwner {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: patentOwner;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--applicationDate {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: applicationDate;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
+              }
+
+              > .content__item--duration {
+                @extend %content__item;
+
+                // [ layout ]
+                display: none;
+                grid-area: duration;
+
+                // [ RWD: $large ]
+                @media screen and ( min-width: $large ) {
+                  display: flex;
+                }
               }
             }
           }

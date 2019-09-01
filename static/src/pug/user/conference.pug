@@ -13,12 +13,7 @@ append data
           user:     'User',
         },
         content: {
-          topic: '教師資料維護',
-          conference: {
-            host_year:  '舉行時間 / Host Year',
-            conference: 'Conference',
-            title:      'title',
-          },
+          topic: 'Teacher profile settings',
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -29,11 +24,6 @@ append data
         },
         content: {
           topic: '教師資料維護',
-          conference: {
-            host_year:  '舉行時間 / Host Year',
-            conference: '會議名稱',
-            title:      '職稱',
-          },
         },        
       },
     } );
@@ -59,14 +49,14 @@ append breadcrumb
 
 append content
   include /components/common/loading.pug
-  include /components/common/no-result.pug
+  include /components/common/refresh.pug
 
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     article.main__conference-block.conference-block
       +local-topic( 'conference-block', i18n[ LANG.id ].title, true )
-      +noResultWithImage( 'conference-block' )
+      +refreshWithImage( 'conference-block' )
       +loading( 'conference-block' )
       section.conference-block__conference.conference#conference
 

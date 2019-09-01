@@ -1,4 +1,15 @@
 - 
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      addStudent: 'add student',
+      addPatent:  'add patent',
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      addStudent: '新增學生',
+      addPatent:  '新增專利',
+    },
+  } );
+
 if Array.isArray( opt.subtitle ) && opt.subtitle.length
   each subtitle in opt.subtitle
     section.subtitle
@@ -58,19 +69,31 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
 
       else if opt.dbTable === 'project'
         article.content__project
-          //- If there is no start time, then there must be no end time.
-          if opt.res.from !== null
-            time.project__time.time
-              time.time__year= opt.res.from
-              hr.time__till
-              if opt.res.to !== null
-                time.time__year= opt.res.to
-              //- If there is no end time, then it must be still studying.
-              else
-                time.time__year= new Date().getFullYear()
-          ul.project__list.list
-            if opt.res.name !== null
-              li.list__item= opt.res.name  
+          if opt.isTitle 
+            section.project__title.title
+              p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
+              p.title__item.title__item--name= dataI18n[ languageId ].localTopic.name
+              p.title__item.title__item--support= dataI18n[ languageId ].localTopic.support
+          if !opt.isTitle
+            section.project__content.content
+              article.content__item.content__item--time
+                //- If there is no start time, then there must be no end time.
+                if opt.res.from !== null
+                  time.item__time.time
+                    if opt.res.from === 0
+                      time.time__year= '0000'
+                    else
+                      time.time__year= opt.res.from
+                    hr.time__till
+                    if opt.res.to !== null
+                      time.time__year= opt.res.to
+                    //- If there is no end time, then it must be still studying.
+                    else
+                      time.time__year= new Date().getFullYear()
+              article.content__item.content__item--name
+                p.item__word= opt.res.name
+              article.content__item.content__item--support
+                p.item__word= opt.res.support
 
       else if opt.dbTable === 'studentAward'
         article.content__studentAward
@@ -91,23 +114,60 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 article.student__detail
                   p.detail__text= student.name
                   p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ student.degree ] ]
-          p.word__add( class=`content__modify--student-${ opt.id }` )= '新增學生'
+          p.word__add( class=`content__modify--student-${ opt.id }` )= i18n[ languageId ].addStudent
+
+      else if opt.dbTable === 'patent'
+        article.content__patent
+          if opt.isTitle 
+            section.patent__title.title
+              p.title__item.title__item--certificationNumber= dataI18n[ languageId ].localTopic.certificationNumber
+              p.title__item.title__item--patent= dataI18n[ languageId ].localTopic.patent
+              p.title__item.title__item--nation= dataI18n[ languageId ].localTopic.nation
+              p.title__item.title__item--inventor=  dataI18n[ languageId ].localTopic.inventor
+              p.title__item.title__item--patentOwner= dataI18n[ languageId ].localTopic.patentOwner
+              p.title__item.title__item--applicationDate= dataI18n[ languageId ].localTopic.applicationDate
+              p.title__item.title__item--duration= dataI18n[ languageId ].localTopic.duration
+              
+          if !opt.isTitle
+            section.patent__content.content
+              article.content__item.content__item--certificationNumber
+                p.item__word= opt.res.certificationNumber
+              article.content__item.content__item--patent
+                p.item__word= opt.res.patent
+              article.content__item.content__item--nation
+                img.item__nation( 
+                  alt = 'remove', 
+                  src = `${ host }/static/image/icon/${ opt.nation }.png`,
+                )
+              article.content__item.content__item--inventor
+                p.item__word= opt.res.inventor
+              article.content__item.content__item--patentOwner
+                p.item__word= opt.res.patentOwner
+              article.content__item.content__item--applicationDate
+                p.item__word= opt.res.applicationDate
+              article.content__item.content__item--duration
+                p.item__word= opt.res.issueDate
+                p.item__word= '-'
+                p.item__word= opt.res.expireDate
 
       else if opt.dbTable === 'technologyTransfer'
         article.content__technologyTransfer
           if opt.isTitle 
             section.technologyTransfer__title.title
-              p.title__item.title__item--time= '合約期間'
-              p.title__item.title__item--technology= '技術名稱'
-              p.title__item.title__item--authorizedParty= '接受方'
-              p.title__item.title__item--authorizingParty= '授權方'
+              p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
+              p.title__item.title__item--technology=dataI18n[ languageId ].localTopic.technology
+              p.title__item.title__item--authorizedParty= dataI18n[ languageId ].localTopic.authorizedParty
+              p.title__item.title__item--authorizingParty= dataI18n[ languageId ].localTopic.authorizingParty
           if !opt.isTitle
             section.technologyTransfer__content.content
               article.content__item.content__item--time
                 //- If there is no start time, then there must be no end time.
                 if opt.res.from !== null
                   time.item__time.time
-                    time.time__year= opt.res.from
+                    if opt.res.from === 0
+                      time.time__year= '0000'
+                    else
+                      time.time__year= opt.res.from
                     hr.time__till
                     if opt.res.to !== null
                       time.time__year= opt.res.to
@@ -120,7 +180,6 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 p.item__word= opt.res.authorizedParty
               article.content__item.content__item--authorizingParty
                 p.item__word= opt.res.authorizingParty
-
             if Array.isArray( opt.res.technologyTransferPatent ) && opt.res.technologyTransferPatent.length
               each patent in opt.res.technologyTransferPatent
                 section.technologyTransfer__patent
@@ -136,8 +195,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   )
                   article.patent__detail
                     p.detail__text= patent.patent
-            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= '新增專利'      
-
+            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= i18n[ languageId ].addPatent     
 
       else
         article.content__word

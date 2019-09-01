@@ -77,7 +77,7 @@ async function fetchData () {
                 const setPublicationData = new SetData( {
                     blockDOM:       document.getElementById( 'publication' ),
                     addButtonDOM:     document.getElementById( 'add__button--publication-block' ),
-                    noResultDOM:      document.querySelector( '.content__main > .main__publication-block > .publication-block__no-result' ),
+                    refreshDOM:      document.querySelector( '.content__main > .main__publication-block > .publication-block__refresh' ),
                     loadingDOM:       document.querySelector( '.content__main > .main__publication-block > .publication-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'publication',
@@ -89,9 +89,6 @@ async function fetchData () {
             catch ( err ) {
                 console.error( err );
             }
-        }
-        else if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
-
         }
     }
     catch ( err ) {

@@ -13,16 +13,7 @@ append data
           user:     'User',
         },
         content: {
-          topic: '教師資料維護',
-          publication: {
-            authors: 'Authors',
-            title:   'Title',
-            category: {
-              journal: 'Journal',
-              conference: 'Conference',
-              workshop:   'Workshop',
-            },
-          },
+          topic: 'Teacher profile settings',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -33,15 +24,6 @@ append data
         },
         content: {
           topic: '教師資料維護',
-          publication: {
-            authors: '作者',
-            title:   '著作名稱',
-            category: {
-              journal: '期刊',
-              conference: '會議',
-              workshop:   '工作坊',
-            },
-          },
         }       
       },
     } );
@@ -67,14 +49,14 @@ append breadcrumb
 
 append content
   include /components/common/loading.pug
-  include /components/common/no-result.pug
+  include /components/common/refresh.pug
   
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
     article.main__publication-block.publication-block
       +local-topic( 'publication-block',i18n[ LANG.id ].title, true )
-      +noResultWithImage( 'publication-block' )
+      +refreshWithImage( 'publication-block' )
       +loading( 'publication-block' )      
       section.publication-block__publication.publication#publication
 

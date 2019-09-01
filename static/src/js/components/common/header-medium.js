@@ -7,7 +7,7 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import { host, staticHost } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import loginDropdownHTML from 'static/src/pug/components/common/login-dropdown.pug';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
@@ -49,7 +49,7 @@ export default class GetHeaderMedium {
 
         this.DOM = {
             header:         opt.headerDOM,
-            allHeaders:     Array.from(opt.allHeaderDOMs),
+            allHeaders:     Array.from( opt.allHeaderDOMs ),
             allNavigations: Array.from( opt.allHeaderDOMs ).map( header => header.querySelector( headerBlockQuerySelector( 'navigation' ) ) ),
             menu:           opt.headerDOM.querySelector( headerElementQuerySelector( 'menu' ) ),
             navigation:     opt.headerDOM.querySelector( headerBlockQuerySelector( 'navigation' ) ),
@@ -164,7 +164,7 @@ export default class GetHeaderMedium {
     }
 
     subscribeLoginEvent () {
-        this.DOM.login.container.removeAttribute('href');
+        this.DOM.login.container.removeAttribute( 'href' );
         const headerElementQuerySelector = element => `.header > .header__${ element }`;
         const headerBlockQuerySelector = block => `${ headerElementQuerySelector( block ) }.${ block }`;
         const navigationElementQuerySelector = element => `${ headerBlockQuerySelector( 'navigation' ) } > .navigation__${ element }`;
@@ -172,13 +172,13 @@ export default class GetHeaderMedium {
         const loginElementQuerySelector = element => `${ navigationBlockQuerySelector( 'login' ) } > .login__${ element }`;
         const loginBlockQuerySelector = block => `${ loginElementQuerySelector( block ) }.${ block }`;
 
-        this.DOM.login.switch = this.DOM.header.querySelector( loginElementQuerySelector( 'switch' ));
+        this.DOM.login.switch = this.DOM.header.querySelector( loginElementQuerySelector( 'switch' ) );
         this.DOM.login.switches = this.DOM.allHeaders
-                .map( header => header.querySelector( loginElementQuerySelector( 'switch' ) ) )
-                .filter( switchDOM => switchDOM !== null );
+        .map( header => header.querySelector( loginElementQuerySelector( 'switch' ) ) )
+        .filter( switchDOM => switchDOM !== null );
         this.DOM.login.dropdowns = this.DOM.allHeaders
-                .map( header => header.querySelector( loginBlockQuerySelector( 'dropdown' ) ) )
-                .filter( dropdownDOM => dropdownDOM !== null );
+        .map( header => header.querySelector( loginBlockQuerySelector( 'dropdown' ) ) )
+        .filter( dropdownDOM => dropdownDOM !== null );
 
         if (
             !ValidateUtils.isDomElement( this.DOM.login.switch ) ||
@@ -229,7 +229,7 @@ export default class GetHeaderMedium {
                 this.DOM.login.container.innerHTML = loginDropdownHTML( {
                     name:        data.name,
                     belongBlock: 'login',
-                    photo: `faculty/${ data.photo }`,
+                    photo:       `faculty/${ data.photo }`,
                     LANG:        {
                         id:            WebLanguageUtils.currentLanguageId,
                         getLanguageId: LanguageUtils.getLanguageId,

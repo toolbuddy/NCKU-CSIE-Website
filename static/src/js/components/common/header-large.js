@@ -7,7 +7,7 @@
 
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import ValidateUtils from 'models/common/utils/validate.js';
-import { host, staticHost } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import loginButtonHTML from 'static/src/pug/components/common/login.pug';
 import LanguageUtils from 'models/common/utils/language.js';
@@ -124,7 +124,7 @@ export default class GetHeaderLarge {
                 this.DOM.login.innerHTML = loginButtonHTML( {
                     name:        data.name,
                     belongBlock: 'login',
-                    photo: `faculty/${ data.photo }`,
+                    photo:       `faculty/${ data.photo }`,
                     LANG:        {
                         id:            WebLanguageUtils.currentLanguageId,
                         getLanguageId: LanguageUtils.getLanguageId,

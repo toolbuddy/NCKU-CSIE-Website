@@ -20,7 +20,7 @@ class SetData {
 
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
-            !ValidateUtils.isDomElement( opt.noResultDOM ) ||
+            !ValidateUtils.isDomElement( opt.refreshDOM ) ||
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
@@ -36,24 +36,24 @@ class SetData {
         this.DOM = {
             block:     opt.blockDOM,
             addButton: opt.addButtonDOM,
-            noResult:  opt.noResultDOM,
+            refresh:   opt.refreshDOM,
             loading:   opt.loadingDOM,
         };
     }
 
     renderLoading () {
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classAdd( this.DOM.refresh, 'refresh--hidden' );
         classRemove( this.DOM.loading, 'loading--hidden' );
     }
 
     renderLoadingSucceed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classAdd( this.DOM.refresh, 'refresh--hidden' );
     }
 
     renderLoadingFailed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
-        classRemove( this.DOM.noResult, 'no-result--hidden' );
+        classRemove( this.DOM.refresh, 'refresh--hidden' );
     }
 
     queryApi ( languageId ) {
@@ -79,6 +79,9 @@ class SetData {
             this.DOM.block.innerHTML += dynamicInputBlock( {
                 opt,
                 host,
+                languageId:  this.config.languageId,
+                LANG:        LanguageUtils,
+                dataI18n:    dataI18n[ this.config.dbTable ],
             } );
         }
         catch ( err ) {
@@ -96,18 +99,6 @@ class SetData {
                       awardA.receivedYear !== awardB.receivedYear
                     )
                         return awardB.receivedYear - awardA.receivedYear;
-                    else if (
-                        awardA.receivedMonth !== null &&
-                      awardB.receivedMonth !== null &&
-                      awardA.receivedMonth !== awardB.receivedMonth
-                    )
-                        return awardB.receivedMonth - awardA.receivedMonth;
-                    else if (
-                        awardA.receivedDay !== null &&
-                      awardB.receivedDay !== null &&
-                      awardA.receivedDay !== awardB.receivedDay
-                    )
-                        return awardB.receivedDay - awardA.receivedDay;
                     return 0;
                 } );
             } );
@@ -157,11 +148,18 @@ class SetData {
                 data[ languageId ].patent.sort( ( patentA, patentB ) => {
                     const tempDateA = ( patentA.applicationDate !== null ) ? patentA.applicationDate.split( '-' ) : null;
                     const tempDateB = ( patentB.applicationDate !== null ) ? patentB.applicationDate.split( '-' ) : null;
-                    for ( const i = 0; i < 3; ++i ) {
-                        if ( tempDateA !== null &&
-                            tempDateB !== null &&
-                            tempDateA[ i ] !== tempDateB[ i ] )
-                            return tempDateB[ i ] - tempDateA[ i ];
+                    if ( tempDateA === null && tempDateB !== null )
+                        return 1;
+
+                    else if ( tempDateA !== null && tempDateB === null )
+                        return -1;
+
+                    else if ( tempDateA === null && tempDateB === null )
+                        return 0;
+
+                    for ( let i = 0; i < 3; ++i ) {
+                        if ( tempDateA[ i ] !== tempDateB[ i ] )
+                            return Number( tempDateB[ i ] ) - Number( tempDateA[ i ] );
                     }
                     return 0;
                 } );
@@ -183,7 +181,6 @@ class SetData {
         if ( this.config.dbTable === 'studentAward' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
                 data[ languageId ].studentAward.sort( ( awardA, awardB ) => {
-                    console.log( awardB.receivedYear - awardA.receivedYear );
                     if (
                         awardA.receivedYear !== null &&
                       awardB.receivedYear !== null &&
@@ -199,13 +196,9 @@ class SetData {
             this.config.dbTable === 'experience' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
                 data[ languageId ][ this.config.dbTable ].sort( ( tempA, tempB ) => {
-                    if (
-                        tempA.from !== null &&
-                      tempB.from !== null &&
-                      tempA.from !== tempB.from
-                    )
-                        return tempB.from - tempA.from;
-                    return 0;
+                    if ( tempA.from === null || tempB.from === null )
+                        return 0;
+                    return tempB.from - tempA.from;
                 } );
             } );
         }
@@ -221,8 +214,8 @@ class SetData {
             let tempInternational = true;
             let tempCategory = 0;
             data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                let content = new Array();
-                const subtitle = new Array();
+                let content = [];
+                const subtitle = [];
                 let dbTableId = res[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
@@ -278,14 +271,22 @@ class SetData {
                             res.international !== tempInternational ||
                             index === 0 ) {
                             const category = publicationCategoryUtils.i18n[ this.config.languageId ][ publicationCategoryUtils.map[ res.category ] ];
+                            const i18n = {
+                                [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                                    international: 'international ',
+                                },
+                                [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                                    international: '國際',
+                                },
+                            };
                             tempRefereed = res.refereed;
                             tempCategory = res.category;
                             tempInternational = res.international;
                             temp = '';
                             if ( res.refereed )
-                                temp += 'Refereed \n';
+                                temp += 'Refereed ';
                             if ( res.international )
-                                temp += '國際';
+                                temp += i18n[ this.config.languageId ].international;
                             temp += category;
                             subtitle.push( temp );
                         }
@@ -296,17 +297,40 @@ class SetData {
                         break;
                     case 'patent':
                         content.push( res.patent );
+                        if ( index === 0 ) {
+                            this.renderBlock( {
+                                dbTable:     this.config.dbTable,
+                                id:          res.technologyTransferId,
+                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                                isTitle:     true,
+                            } );
+                        }
+                        await this.renderBlock( {
+                            dbTable: this.config.dbTable,
+                            id:       dbTableId,
+                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            nation:  nationUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].nation ],
+                        } );
                         break;
                     case 'project':
                         if ( res.category !== tempCategory || index === 0 ) {
                             subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectCategoryUtils.map[ res.category ] ] );
                             tempCategory = res.category;
+
+                            this.renderBlock( {
+                                dbTable:     this.config.dbTable,
+                                id:          dbTableId,
+                                subtitle,
+                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                                isTitle:     true,
+                            } );
                         }
                         content.push( res.name );
                         await this.renderBlock( {
                             dbTable: this.config.dbTable,
                             id:       dbTableId,
-                            subtitle,
+
+                            // Subtitle,
                             res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
                         } );
                         break;
@@ -315,6 +339,7 @@ class SetData {
                             subtitle.push( res.receivedYear );
                             currentYear = res.receivedYear;
                         }
+                        content.push( res.award );
                         await this.renderBlock( {
                             dbTable:     this.config.dbTable,
                             id:          res.awardId,
@@ -354,7 +379,7 @@ class SetData {
                         content.push( res.technology );
 
                         if ( index === 0 ) {
-                            await this.renderBlock( {
+                            this.renderBlock( {
                                 dbTable:     this.config.dbTable,
                                 id:          res.technologyTransferId,
                                 res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
@@ -367,10 +392,11 @@ class SetData {
                             res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
                             isTitle:     false,
                         } );
+                        const addSelector = `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }`;
                         this.setAddButtonEvent( {
                             dbTable:      'technologyTransferPatent',
                             dbTableId:    res.technologyTransferId,
-                            addButtonDOM: this.DOM.block.querySelector( `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }` ),
+                            addButtonDOM: this.DOM.block.querySelector( addSelector ),
                         } );
 
                         if ( ValidateUtils.isValidArray( res.technologyTransferPatent ) ) {
@@ -379,7 +405,11 @@ class SetData {
                             res.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
                                 this.setUpdateButtonEvent( {
                                     buttonDOM: this.DOM.block.querySelector( updateSelector( patent.technologyTransferPatentId ) ),
-                                    res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ] ),
+                                    res:       LanguageUtils.supportedLanguageId.map( ( id ) => {
+                                        if ( typeof data[ id ].technologyTransfer[ index ] === 'object' )
+                                            return data[ id ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ];
+                                        return data[ 0 ].technologyTransfer[ index ].technologyTransferPatent[ patentIndex ];
+                                    } ),
                                     id:        patent.technologyTransferPatentId,
                                     dbTable:   'technologyTransferPatent',
                                 } );
@@ -399,7 +429,8 @@ class SetData {
                     this.config.dbTable !== 'experience' &&
                     this.config.dbTable !== 'project' &&
                     this.config.dbTable !== 'studentAward' &&
-                    this.config.dbTable !== 'technologyTransfer' ) {
+                    this.config.dbTable !== 'technologyTransfer' &&
+                    this.config.dbTable !== 'patent' ) {
                     await this.renderBlock( {
                         dbTable:  this.config.dbTable,
                         id:       dbTableId,
@@ -672,7 +703,7 @@ class SetData {
         this.renderLoading();
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data[ this.config.languageId ] );
+            console.log( data );
             if ( validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
                 this.emptyBlock();
             else
