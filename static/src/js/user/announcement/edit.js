@@ -45,6 +45,8 @@ try {
     else
         id = id[ 1 ];
 
+    console.log( id );
+
     ( async () => {
         // Get announcement
         const announcement = new Announcement( id );

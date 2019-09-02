@@ -105,6 +105,7 @@ export default {
         'user/patent':             path.join( sassRoot, 'user/patent.scss' ),
         'user/technologyTransfer': path.join( sassRoot, 'user/technologyTransfer.scss' ),
         'user/announcement/edit':  path.join( sassRoot, 'user/announcement/edit.scss' ),
+        'user/announcement/add':   path.join( sassRoot, 'user/announcement/add.scss' ),
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
