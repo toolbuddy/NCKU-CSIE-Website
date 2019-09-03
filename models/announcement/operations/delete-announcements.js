@@ -11,33 +11,22 @@ export default async ( opt ) => {
             announcementId = null,
         } = opt;
 
-        if ( ValidateUtils.isValidArray( announcementId ) ) {
-            for ( const id of announcementId ) {
-                if ( !ValidateUtils.isValidId( id ) ) {
-                    const error = new Error( 'Invalid announcement id' );
-                    error.status = 400;
-                    throw error;
-                }
-            }
-        }
-        else {
+        if ( !ValidateUtils.isValidId( announcementId ) ) {
             const error = new Error( 'Invalid announcement id' );
             error.status = 400;
             throw error;
         }
 
-        for ( const id of announcementId ) {
-            await announcement.transaction( t => Announcement.update( {
-                isPublished:    0,
-            }, {
-                where: {
-                    announcementId: id,
-                },
-                transaction: t,
-            } ) ).catch( ( err ) => {
-                throw err;
-            } );
-        }
+        await announcement.transaction( t => Announcement.update( {
+            isPublished:    0,
+        }, {
+            where: {
+                announcementId,
+            },
+            transaction: t,
+        } ) ).catch( ( err ) => {
+            throw err;
+        } );
         return;
     }
     catch ( err ) {

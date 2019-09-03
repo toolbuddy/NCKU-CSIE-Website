@@ -55,6 +55,14 @@ const AnnouncementValidationConstraints = {
         presence: false,
         type:     'array',
     },
+    tags: {
+        presence: false,
+        type:     'array',
+    },
+    fileI18n: {
+        presence: false,
+        type:     'array',
+    },
 };
 
 export default AnnouncementValidationConstraints;

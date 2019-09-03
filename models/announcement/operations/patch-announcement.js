@@ -19,8 +19,6 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             announcementInfo = null,
-            tags = null,
-            fileI18n = null,
         } = opt;
 
         if ( announcementInfo !== null ) {
@@ -38,35 +36,37 @@ export default async ( opt ) => {
                     }
                 }
             }
-        }
-        if ( tags !== null ) {
-            if ( !ValidateUtils.isValidArray( tags ) ) {
-                const error = new Error( 'Invalid tag object' );
-                error.status = 400;
-                throw error;
-            }
-            tags.forEach( ( tagObj ) => {
-                if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+
+            if ( announcementInfo.tags !== null ) {
+                if ( !ValidateUtils.isValidArray( announcementInfo.tags ) ) {
                     const error = new Error( 'Invalid tag object' );
                     error.status = 400;
                     throw error;
                 }
-            } );
-        }
-        if ( fileI18n !== null ) {
-            if ( ValidateUtils.isValidArray( fileI18n ) ) {
-                for ( const data of fileI18n ) {
-                    if ( typeof ( validate( data, FileI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid fileI18n object' );
+                announcementInfo.tags.forEach( ( tagObj ) => {
+                    if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+                        const error = new Error( 'Invalid tag object' );
                         error.status = 400;
                         throw error;
                     }
-                }
+                } );
             }
-            else {
-                const error = new Error( 'Invalid fileI18n object' );
-                error.status = 400;
-                throw error;
+
+            if ( announcementInfo.fileI18n !== null ) {
+                if ( ValidateUtils.isValidArray( announcementInfo.fileI18n ) ) {
+                    for ( const data of announcementInfo.fileI18n ) {
+                        if ( typeof ( validate( data, FileI18nValidationConstraints ) ) !== 'undefined' ) {
+                            const error = new Error( 'Invalid fileI18n object' );
+                            error.status = 400;
+                            throw error;
+                        }
+                    }
+                }
+                else {
+                    const error = new Error( 'Invalid fileI18n object' );
+                    error.status = 400;
+                    throw error;
+                }
             }
         }
 
@@ -98,18 +98,18 @@ export default async ( opt ) => {
                     announcementId: announcementInfo.announcementId,
                 },
                 transaction: t,
-            } ) ).then( () => Promise.all( tags.map( tagObj => Tag.create( {
+            } ) ).then( () => Promise.all( announcementInfo.tags.map( tagObj => Tag.create( {
                 announcementId: announcementInfo.announcementId,
                 typeId:         tagObj.typeId,
             }, {
                 transaction: t,
-            } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => File.findOne( {
+            } ) ) ) ).then( () => Promise.all( announcementInfo.fileI18n.map( fileI18nInfo => File.findOne( {
                 where: {
                     announcementId: announcementInfo.announcementId,
                     fileId:         fileI18nInfo.fileId,
                 },
                 transaction: t,
-            } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => FileI18n.update( {
+            } ) ) ) ).then( () => Promise.all( announcementInfo.fileI18n.map( fileI18nInfo => FileI18n.update( {
                 name: fileI18nInfo.name,
             }, {
                 where: {
