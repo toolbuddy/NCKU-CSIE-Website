@@ -1,44 +1,129 @@
-import associations from 'models/announcement/operation/associations.js';
+import ValidateUtils from 'models/common/utils/validate.js';
+import {
+    Announcement,
+    AnnouncementI18n,
+    File,
+    FileI18n,
+    Tag,
+} from 'models/announcement/operations/associations.js';
+import { announcement, } from 'models/common/utils/connect.js';
 
-export default async ( { announcementId, announcementData, } = {} ) => {
-    const table = await associations();
+import AnnouncementValidationConstraints from 'models/announcement/constraints/patch/announcement.js';
+import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/patch/announcement-i18n.js';
+import FileI18nValidationConstraints from 'models/announcement/constraints/patch/file-i18n.js';
+import TagValidationConstraints from 'models/announcement/constraints/patch/tag.js';
+import validate from 'validate.js';
 
-    const i18n = announcementData.announcementI18n;
-    delete announcementData.announcementI18n;
+export default async ( opt ) => {
+    try {
+        opt = opt || {};
+        const {
+            announcementInfo = null,
+            tags = null,
+            fileI18n = null,
+        } = opt;
 
-    // Initialize result object
-    const result = {};
-    result.i18n = {};
-    result.i18n.affectedCount = {};
+        if ( announcementInfo !== null ) {
+            if ( typeof ( validate( announcementInfo, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
+                const error = new Error( 'Invalid announcement object' );
+                error.status = 400;
+                throw error;
+            }
+            if ( announcementInfo.i18n ) {
+                for ( const i18nData of announcementInfo.i18n ) {
+                    if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
+                        const error = new Error( 'Invalid announcement object' );
+                        error.status = 400;
+                        throw error;
+                    }
+                }
+            }
+        }
+        if ( tags !== null ) {
+            if ( !ValidateUtils.isValidArray( tags ) ) {
+                const error = new Error( 'Invalid tag object' );
+                error.status = 400;
+                throw error;
+            }
+            tags.forEach( ( tagObj ) => {
+                if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+                    const error = new Error( 'Invalid tag object' );
+                    error.status = 400;
+                    throw error;
+                }
+            } );
+        }
+        if ( fileI18n !== null ) {
+            if ( ValidateUtils.isValidArray( fileI18n ) ) {
+                for ( const data of fileI18n ) {
+                    if ( typeof ( validate( data, FileI18nValidationConstraints ) ) !== 'undefined' ) {
+                        const error = new Error( 'Invalid fileI18n object' );
+                        error.status = 400;
+                        throw error;
+                    }
+                }
+            }
+            else {
+                const error = new Error( 'Invalid fileI18n object' );
+                error.status = 400;
+                throw error;
+            }
+        }
 
-    for ( let i = 0; i < i18n.length; i++ ) {
-        await table.announcementI18n.update( i18n[ i ], {
-            where: {
-                language: i18n[ i ].language,
-                announcementId,
-            },
-        } )
-        .then(
-            ( count ) => { result.i18n.affectedCount[ i18n[ i ].language ] = count; }
-        );
+        if ( announcementInfo ) {
+            await announcement.transaction( t => Announcement.update( {
+                publishTime:    announcementInfo.publishTime,
+                updateTime:    announcementInfo.updateTime,
+                author:      announcementInfo.author,
+                views:       announcementInfo.views,
+                isPinned:    announcementInfo.isPinned,
+                isPublished:    announcementInfo.isPublished,
+                image:       announcementInfo.imageUrl,
+            }, {
+                where: {
+                    announcementId: announcementInfo.announcementId,
+                },
+                transaction: t,
+            } ).then( () => Promise.all( announcementInfo.i18n.map( announcementI18nInfo => AnnouncementI18n.update( {
+                title:   announcementI18nInfo.title,
+                content:  announcementI18nInfo.content,
+            }, {
+                where: {
+                    announcementId:  announcementInfo.announcementId,
+                    languageId:     announcementI18nInfo.languageId,
+                },
+                transaction: t,
+            } ) ) ) ).then( () => Tag.destroy( {
+                where: {
+                    announcementId: announcementInfo.announcementId,
+                },
+                transaction: t,
+            } ) ).then( () => Promise.all( tags.map( tagObj => Tag.create( {
+                announcementId: announcementInfo.announcementId,
+                typeId:         tagObj.typeId,
+            }, {
+                transaction: t,
+            } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => File.findOne( {
+                where: {
+                    announcementId: announcementInfo.announcementId,
+                    fileId:         fileI18nInfo.fileId,
+                },
+                transaction: t,
+            } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => FileI18n.update( {
+                name: fileI18nInfo.name,
+            }, {
+                where: {
+                    fileId:     fileI18nInfo.fileId,
+                    languageId: fileI18nInfo.languageId,
+                },
+                transaction: t,
+            } ) ) ) ) ).catch( ( err ) => {
+                throw err;
+            } );
+        }
+        return;
     }
-
-    await table.announcement.update( announcementData, {
-        include: [
-            {
-                model:      table.announcementI18n,
-                as:         'announcementI18n',
-            },
-        ],
-        where: {
-            announcementId,
-        },
-    } )
-    .then(
-        ( count ) => { result.affectedCount = count; }
-    );
-
-    table.database.close();
-
-    return result;
+    catch ( err ) {
+        throw err;
+    }
 };

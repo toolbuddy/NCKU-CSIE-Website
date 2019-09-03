@@ -21,6 +21,10 @@ import getFileInfo from 'models/announcement/operations/get-file-info.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
+import patchAnnouncement from 'models/announcement/operations/patch-announcement.js';
+import deleteAnnouncement from 'models/announcement/operations/delete-announcements.js';
+import deleteAnnouncementTags from 'models/announcement/operations/delete-announcementTags.js';
+import deleteAnnouncementFiles from 'models/announcement/operations/delete-announcementFiles.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, secret, } from 'settings/server/config.js';
@@ -124,60 +128,135 @@ router
 
         // Check proper user
 
-        await postAnnouncement( {
-            publishTime:      1355644555,
-            updateTime:       1355644555,
-            author:           1,
-            isPinned:         0,
-            isPublished:      1,
-            imageUrl:         null,
-            views:            0,
-            tag:              [
-                {
-                    typeId: 1,
-                },
-                {
-                    typeId: 2,
-                },
+        // // post ann
+        // await postAnnouncement( {
+        //     publishTime:      new Date( 2000, 1, 2, 3, 4, 5 ),
+        //     updateTime:       new Date( 2000, 1, 2, 3, 4, 6 ),
+        //     author:           1,
+        //     isPinned:         0,
+        //     isPublished:      1,
+        //     imageUrl:         null,
+        //     views:            0,
+        //     tag:              [
+        //         {
+        //             typeId: 1,
+        //         },
+        //         {
+        //             typeId: 2,
+        //         },
+        //         {
+        //             typeId: 3,
+        //         },
+        //     ],
+        //     announcementI18n: [
+        //         {
+        //             languageId: 0,
+        //             title:      'test title tw',
+        //             content:    'test content tw',
+        //         },
+        //         {
+        //             languageId: 1,
+        //             title:      'test title eng',
+        //             content:    'test content eng',
+        //         },
+        //     ],
+        //     fileI18n: [
+        //         [
+        //             {
+        //                 languageId: 0,
+        //                 name:       'test file 1 tw',
+        //             },
+        //             {
+        //                 languageId: 1,
+        //                 name:       'test file 1 eng',
+        //             },
+        //         ],
+        //         [
+        //             {
+        //                 languageId: 0,
+        //                 name:       'test file 2 tw',
+        //             },
+        //             {
+        //                 languageId: 1,
+        //                 name:       'test file 2 eng',
+        //             },
+        //         ],
+        //     ],
+        // } );
+
+        // // delete(hide) ann
+        // await deleteAnnouncement( {
+        //     announcementId: [
+        //         1152,
+        //     ],
+        // } );
+
+        // // delete ann tags
+        // await deleteAnnouncementTags( {
+        //     tags: [
+        //         {
+        //             announcementId: 1152,
+        //             tagId:          1,
+        //         },
+        //         {
+        //             announcementId: 1152,
+        //             tagId:          2,
+        //         },
+
+        //     ],
+        // } );
+
+        // // delete ann files
+        // await deleteAnnouncementFiles( {
+        //     fileId: [
+        //         949,
+        //     ],
+        // } );
+
+        // patch ann
+        await patchAnnouncement( {
+            announcementInfo: {
+                announcementId:   1152,
+                publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
+                updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
+                author:           2,
+                isPinned:         1,
+                isPublished:      1,
+                imageUrl:         null,
+                views:            1,
+                i18n:             [
+                    {
+                        languageId: 0,
+                        title:      'test title tw update',
+                        content:    'test content tw update',
+                    },
+                    {
+                        languageId: 1,
+                        title:      'test title eng update',
+                        content:    'test content eng update',
+                    },
+                ],
+            },
+            tags:              [
                 {
                     typeId: 3,
                 },
-            ],
-            announcementI18n: [
                 {
-                    languageId: 0,
-                    title:      'test title tw',
-                    content:    'test content tw',
+                    typeId: 4,
                 },
                 {
-                    languageId: 1,
-                    title:      'test title eng',
-                    content:    'test content eng',
+                    typeId: 5,
                 },
             ],
             fileI18n: [
-                [
-                    {
-                        languageId: 0,
-                        name:       'test file 1 tw',
-                    },
-                    {
-                        languageId: 1,
-                        name:       'test file 1 eng',
-                    },
-                ],
-                [
-                    {
-                        languageId: 0,
-                        name:       'test file 2 tw',
-                    },
-                    {
-                        languageId: 1,
-                        name:       'test file 2 eng',
-                    },
-                ],
+                {
+                    fileId:     948,
+                    languageId: 0,
+                    name:       'test file 1 tw update',
+                },
             ],
         } );
+
         res.send( { 'message': 'success', } );
     }
     catch ( error ) {

@@ -79,8 +79,45 @@ export default async ( opt ) => {
             throw error;
         }
 
-        // Validate tag
-        // validate fileI18n
+        if ( !ValidateUtils.isValidArray( tag ) ) {
+            const error = new Error( 'Invalid tag object' );
+            error.status = 400;
+            throw error;
+        }
+        tag.forEach( ( tagObj ) => {
+            if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+                const error = new Error( 'Invalid tag object' );
+                error.status = 400;
+                throw error;
+            }
+        } );
+
+        if ( !ValidateUtils.isValidArray( fileI18n ) ) {
+            const error = new Error( 'Invalid fileI18n object' );
+            error.status = 400;
+            throw error;
+        }
+        fileI18n.forEach( ( fileI18nArr ) => {
+            if ( !ValidateUtils.isValidArray( fileI18nArr ) ) {
+                const error = new Error( 'Invalid fileI18n object' );
+                error.status = 400;
+                throw error;
+            }
+            const langArr = [];
+            fileI18nArr.forEach( ( fileI18nObj ) => {
+                if ( typeof ( validate( fileI18nObj, FileI18nValidationConstraints ) ) !== 'undefined' ) {
+                    const error = new Error( 'Invalid fileI18n object' );
+                    error.status = 400;
+                    throw error;
+                }
+                langArr.push( fileI18nObj.languageId );
+            } );
+            if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
+                const error = new Error( 'Invalid fileI18n object' );
+                error.status = 400;
+                throw error;
+            }
+        } );
 
         await announcement.transaction( t => Announcement.create( {
             publishTime,
