@@ -83,7 +83,6 @@ class SetData {
                 LANG:        LanguageUtils,
                 dataI18n:    dataI18n[ this.config.dbTable ],
             } );
-            console.log( dynamicInputBlock );
         }
         catch ( err ) {
             console.error( err );

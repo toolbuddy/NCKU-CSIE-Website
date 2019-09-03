@@ -1,6 +1,11 @@
-mixin edit-block( belongBlock, data )
+mixin edit-block( belongBlock, method, dbData )
   -
-    const method = ( data === null )? 'add': 'edit';
+    dbData = dbData || {};
+    const data = {
+      title: ( method === 'add' )? '': dbData.title,
+      content: ( method === 'add' )?'': dbData.content,
+      tags: ( method === 'add' || !Array.isArray( dbData.tags ) )? []: dbData.tags,
+    };
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         title: 'Create Announcement',
@@ -54,13 +59,17 @@ mixin edit-block( belongBlock, data )
           languageId: LANG.id,
         } ),
         tagName: tag,
-      };
+        checked: ( data.tags.indexOf( tagId ) === -1)? true: false,
+      }; 
     } );
 
   section#edit-block.edit-block( class= `${ belongBlock }__edit-block` )
     aside.edit-block__tags.tags
       each tagObj, tagName in allTags
-        button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
+        if tagObj.checked
+          button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
+        else  
+          button.tags__tag( class = `tags__tag--${ tagObj.color } tags__tag--active`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
     aside.edit-block__language.language
       if LANG.id === LANG.getLanguageId( 'zh-TW' )
         button.language__button--zh-TW( class= 'language__button--active' )= i18n[ LANG.id ].button[ 'zh-TW' ]
@@ -70,11 +79,9 @@ mixin edit-block( belongBlock, data )
         button.language__button--en-US( class= 'language__button--active' )= i18n[ LANG.id ].button[ 'en-US' ]
     aside.edit-block__announcement
       section.announcement__title.title
-        if method === 'add'
-          input.title__input( name='title', type = 'text', value = '', placeholder= i18n[ LANG.id ].placeholder.title )
+        input.title__input( name='title', type = 'text', value = data.title, placeholder= i18n[ LANG.id ].placeholder.title )
       section.announcement__content.content
-        if method === 'add'
-          textarea.content__textarea( name="content", cols="30", rows="10", placeholder= i18n[ LANG.id ].placeholder.content )
+        textarea.content__textarea( name="content", cols="30", rows="10", value = data.content, placeholder= i18n[ LANG.id ].placeholder.content )= data.content
       section.announcement__attachment
         button.attachment__button= i18n[ LANG.id ].button.attachment
         article#attachment__names.attachment__names
@@ -82,7 +89,7 @@ mixin edit-block( belongBlock, data )
         article.option__title
           p.title__text= i18n[ LANG.id ].option.title
         article.option__now
-          input.now__input( name='publish-time', type='radio', value='now' id='now__input' )
+          input.now__input( name='publish-time', type='radio', value='now', id='now__input', checked)
           label.now__label( for='now__input' )= i18n[ LANG.id ].option.now
         article.option__reservation
           input.reservation__input( name='publish-time', type='radio', value='reservation' id='reservation__input' )

@@ -32,19 +32,21 @@ append stylesheets
   +css( 'user/announcement/edit' )
 
 append header
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-      { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.normal, route: 'announcement' },
       { text: i18n[ LANG.id ].title },
     ]
   )
-
+  
 append content
   main.content__main.main
     +topic( 'main', i18n[ LANG.id ].title )
-    +edit-block( 'main', null )
+    +edit-block( 'main', 'edit', data )
   //- +filter__tags( [
   //-   'tags',
   //-   'award',

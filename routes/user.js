@@ -23,6 +23,8 @@ import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
+import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+import tagUtils from 'models/announcement/utils/tag.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -1186,6 +1188,37 @@ router
 
 router
 .route( '/announcement/edit/:announcementId' )
-.get( staticHtml( 'user/announcement/edit' ) );
 
+// .get( staticHtml( 'user/announcement/edit' ) );
+
+.get( async ( req, res, next ) => {
+    try {
+        const data = await getAnnouncement( {
+            announcementId: Number( req.params.announcementId ),
+            languageId:     req.query.languageId,
+        } );
+        res.locals.UTILS.announcement = {
+            tagUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/announcement/edit.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                res.send( html );
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 export default router;
