@@ -290,6 +290,7 @@ export default async ( opt ) => {
                         profileId,
                         awardId: id,
                     },
+                    transaction: t,
                 } ).then( ( award ) => {
                     if ( award ) {
                         return AwardI18n.destroy( {
@@ -321,6 +322,7 @@ export default async ( opt ) => {
                         profileId,
                         conferenceId: id,
                     },
+                    transaction: t,
                 } ).then( ( conference ) => {
                     if ( conference ) {
                         return ConferenceI18n.destroy( {
@@ -363,6 +365,7 @@ export default async ( opt ) => {
                         profileId,
                         educationId: id,
                     },
+                    transaction: t,
                 } ).then( ( education ) => {
                     if ( education ) {
                         return EducationI18n.destroy( {
@@ -394,6 +397,7 @@ export default async ( opt ) => {
                         profileId,
                         experienceId: id,
                     },
+                    transaction: t,
                 } ).then( ( experience ) => {
                     if ( experience ) {
                         return ExperienceI18n.destroy( {
@@ -425,6 +429,7 @@ export default async ( opt ) => {
                         profileId,
                         patentId: id,
                     },
+                    transaction: t,
                 } ).then( ( patent ) => {
                     if ( patent ) {
                         return PatentI18n.destroy( {
@@ -456,6 +461,7 @@ export default async ( opt ) => {
                         profileId,
                         projectId: id,
                     },
+                    transaction: t,
                 } ).then( ( project ) => {
                     if ( project ) {
                         return ProjectI18n.destroy( {
@@ -487,6 +493,7 @@ export default async ( opt ) => {
                         profileId,
                         publicationId: id,
                     },
+                    transaction: t,
                 } ).then( ( publication ) => {
                     if ( publication ) {
                         return PublicationI18n.destroy( {
@@ -710,6 +717,7 @@ export default async ( opt ) => {
                         profileId,
                         titleId: id,
                     },
+                    transaction: t,
                 } ).then( ( title ) => {
                     if ( title ) {
                         return TitleI18n.destroy( {

@@ -35,6 +35,7 @@ try {
     } );
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
+    headerLarge.renderLogin();
 }
 catch ( err ) {
     console.error( err );

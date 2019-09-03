@@ -13,6 +13,11 @@ const File = announcement.define( 'file', {
         primaryKey:    true,
         autoIncrement: true,
     },
+    isValid: {
+        type:         Sequelize.BOOLEAN,
+        allowNull:    false,
+        defaultValue: '1',
+    },
 } );
 
 export default File;

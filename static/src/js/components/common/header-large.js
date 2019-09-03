@@ -119,8 +119,10 @@ export default class GetHeaderLarge {
                 credentials: 'include',
                 method:      'post',
             } );
+            console.log(result);
             if ( result.userId > -1 ) {
                 const data = await this.fetchMiniProfileData( result.userId );
+                console.log(data);
                 this.DOM.login.innerHTML = loginButtonHTML( {
                     name:        data.name,
                     belongBlock: 'login',
