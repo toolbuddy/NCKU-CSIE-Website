@@ -37,7 +37,9 @@ try {
 catch ( err ) {
     console.error( err );
 }
-try {
+
+/*
+Try {
     ( async () => {
         // Get announcement
         const announcement = new Announcement();
@@ -59,3 +61,4 @@ try {
 catch ( err ) {
     console.error( err );
 }
+*/

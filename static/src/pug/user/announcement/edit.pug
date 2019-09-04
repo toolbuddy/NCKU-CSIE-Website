@@ -1,8 +1,7 @@
 extends /layouts/base.pug
-//- include /components/announcement/filter-tags.pug
 include /components/user/announcement/time-selector.pug
 include /components/common/topic.pug
-include /components/common/breadcrumb.pug
+include /components/user/announcement/edit-block.pug
 
 append data
   -
@@ -16,8 +15,8 @@ append data
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        'title':    '新增公告',
-        'topic':    '新增公告',
+        'title':    '編輯公告',
+        'topic':    '編輯公告',
         'breadcrumb': {
           'normal': '系所公告',
           'home':   '首頁',
@@ -33,19 +32,21 @@ append stylesheets
   +css( 'user/announcement/edit' )
 
 append header
+
+append breadcrumb
   +breadcrumb(
-    'body',
+    'content',
     [
-      { text: i18n[ LANG.id ].breadcrumb.home, url: '' },
-      { text: i18n[ LANG.id ].breadcrumb.normal, url: 'announcement' },
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.normal, route: 'announcement' },
       { text: i18n[ LANG.id ].title },
     ]
   )
-
+  
 append content
-  +topic( 'content', '新增公告' )
-  a.content--return( href = '/user/announcement' )= '<取消'
-  br
+  main.content__main.main
+    +topic( 'main', i18n[ LANG.id ].title )
+    +edit-block( 'main', 'edit', data )
   //- +filter__tags( [
   //-   'tags',
   //-   'award',
@@ -64,37 +65,37 @@ append content
   //-   'scholarship',
   //-   'speech',
   //- ] )
-  article.editor
-    button.editor__language.editor__language--zh-TW.editor__language--horizontal 中文
-    button.editor__language.editor__language--en-US.editor__language--horizontal English
-    button.editor__language.editor__language--zh-TW.editor__language--vertical 中文版
-    button.editor__language.editor__language--en-US.editor__language--vertical 英文版
-    section.editor__editor.editor__editor--zh-TW
-      input.editor__input--title( type = 'text', name = 'title', placeholder = '文章標題（最多70字）' )
-      textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = '文章內文' )
-      label.editor__input--addfile( for = 'editor__input--addfile-input' )
-        p.editor__input--addfile-content 附加檔案
-      input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
-    section.editor__editor.editor__editor--en-US
-      input.editor__input--title( type = 'text', name = 'title', placeholder = 'title（at most 300 letters）' )
-      textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = 'content' )
-      label.editor__input--addfile( for = 'editor__input--addfile-input' )
-        p.editor__input--addfile-content 附加檔案
-      input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
-  article.submit
-    .submit__option
-      h2.submit--topic 發佈選項
-      input.submit__option--input( type = 'radio', name = 'action', value = 'publish', checked )
-      span.submit__option--now.submit__option--options 直接發佈
-      br
-      input.submit__option--input( type = 'radio', name = 'action', value = 'delay' )
-      span.submit__option--reservation.submit__option--options 設定時間發佈
-      br
-      +time_selector()
-      input.submit__option--input( type = 'radio', name = 'action', value = 'draft' )
-      span.submit__option--private.submit__option--options 發佈草稿（不公開）
-      br
-    input.submit--release( type = 'submit', id = 'editor__input--submit', value = '確認發佈')
+  //- article.editor
+  //-   button.editor__language.editor__language--zh-TW.editor__language--horizontal 中文
+  //-   button.editor__language.editor__language--en-US.editor__language--horizontal English
+  //-   button.editor__language.editor__language--zh-TW.editor__language--vertical 中文版
+  //-   button.editor__language.editor__language--en-US.editor__language--vertical 英文版
+  //-   section.editor__editor.editor__editor--zh-TW
+  //-     input.editor__input--title( type = 'text', name = 'title', placeholder = '文章標題（最多70字）' )
+  //-     textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = '文章內文' )
+  //-     label.editor__input--addfile( for = 'editor__input--addfile-input' )
+  //-       p.editor__input--addfile-content 附加檔案
+  //-     input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
+  //-   section.editor__editor.editor__editor--en-US
+  //-     input.editor__input--title( type = 'text', name = 'title', placeholder = 'title（at most 300 letters）' )
+  //-     textarea.editor__input--content( name = 'content', cols = '30', rows = '10', placeholder = 'content' )
+  //-     label.editor__input--addfile( for = 'editor__input--addfile-input' )
+  //-       p.editor__input--addfile-content 附加檔案
+  //-     input.editor__input--addfile-input( id = 'editor__input--addfile-input', type = 'file', name = 'file', multiple )
+  //- article.submit
+  //-   .submit__option
+  //-     h2.submit--topic 發佈選項
+  //-     input.submit__option--input( type = 'radio', name = 'action', value = 'publish', checked )
+  //-     span.submit__option--now.submit__option--options 直接發佈
+  //-     br
+  //-     input.submit__option--input( type = 'radio', name = 'action', value = 'delay' )
+  //-     span.submit__option--reservation.submit__option--options 設定時間發佈
+  //-     br
+  //-     +time_selector()
+  //-     input.submit__option--input( type = 'radio', name = 'action', value = 'draft' )
+  //-     span.submit__option--private.submit__option--options 發佈草稿（不公開）
+  //-     br
+  //-   input.submit--release( type = 'submit', id = 'editor__input--submit', value = '確認發佈')
 
 append footer
 

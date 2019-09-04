@@ -1,0 +1,103 @@
+mixin edit-block( belongBlock, method, dbData )
+  -
+    dbData = dbData || {};
+    const data = {
+      title: ( method === 'add' )? '': dbData.title,
+      content: ( method === 'add' )?'': dbData.content,
+      tags: ( method === 'add' || !Array.isArray( dbData.tags ) )? []: dbData.tags,
+    };
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'Create Announcement',
+        button: {
+          'zh-TW': 'Chinese',
+          'en-US': 'English',
+          attachment: 'Attachment',
+          release:    'Release',
+          cancel:     'Cancel'
+        },
+        placeholder: {
+          title: 'title ( at most 70 words )',
+          content: 'content',
+        },
+        option: {
+          title: 'Release Option',
+          now: 'Release Now',
+          reservation:    'Set Release Time',
+          private:      'Store Draft ( Not Publish )',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '新增公告',
+        button: {
+          'zh-TW': '中文',
+          'en-US': '英文',
+          attachment: '附加檔案',
+          release:    '確認發佈',
+          cancel:     '取消發佈'
+        },
+        placeholder: {
+          title: '文章標題 ( 至多七十字 )',
+          content: '文章內文',
+        },
+        option: {
+          title:      '發佈選項',
+          now: '直接發佈',
+          reservation:    '設定時間發佈',
+          private:      '儲存草稿（不公開）',
+        }
+      },
+    } )
+    const allTags = {};
+    UTILS.announcement.tagUtils.supportedOptions.forEach( tag => {
+      const tagId = UTILS.announcement.tagUtils.getIdByOption( tag );
+      allTags[ tag ] = {
+        color: UTILS.announcement.tagUtils.getTagColorById( tagId ),
+        id:    tagId,
+        tag:   UTILS.announcement.tagUtils.getValueById( {
+          id: tagId,
+          languageId: LANG.id,
+        } ),
+        tagName: tag,
+        checked: ( data.tags.indexOf( tagId ) === -1)? true: false,
+      }; 
+    } );
+
+  section#edit-block.edit-block( class= `${ belongBlock }__edit-block` )
+    aside.edit-block__tags.tags
+      each tagObj, tagName in allTags
+        if tagObj.checked
+          button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
+        else  
+          button.tags__tag( class = `tags__tag--${ tagObj.color } tags__tag--active`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
+    aside.edit-block__language.language
+      if LANG.id === LANG.getLanguageId( 'zh-TW' )
+        button.language__button--zh-TW( class= 'language__button--active' )= i18n[ LANG.id ].button[ 'zh-TW' ]
+        button.language__button--en-US= i18n[ LANG.id ].button[ 'en-US' ]
+      else
+        button.language__button--zh-TW= i18n[ LANG.id ].button[ 'zh-TW' ]
+        button.language__button--en-US( class= 'language__button--active' )= i18n[ LANG.id ].button[ 'en-US' ]
+    aside.edit-block__announcement
+      section.announcement__title.title
+        input.title__input( name='title', type = 'text', value = data.title, placeholder= i18n[ LANG.id ].placeholder.title )
+      section.announcement__content.content
+        textarea.content__textarea( name="content", cols="30", rows="10", value = data.content, placeholder= i18n[ LANG.id ].placeholder.content )= data.content
+      section.announcement__attachment
+        button.attachment__button= i18n[ LANG.id ].button.attachment
+        article#attachment__names.attachment__names
+      section.announcement__option.option
+        article.option__title
+          p.title__text= i18n[ LANG.id ].option.title
+        article.option__now
+          input.now__input( name='publish-time', type='radio', value='now', id='now__input', checked)
+          label.now__label( for='now__input' )= i18n[ LANG.id ].option.now
+        article.option__reservation
+          input.reservation__input( name='publish-time', type='radio', value='reservation' id='reservation__input' )
+          label.reservation__label( for='reservation__input' )= i18n[ LANG.id ].option.reservation
+        article.option__private
+          input.private__input( name='publish-time', type='radio', value='private' id='private__input' )
+          label.private__label( for='private__input' )= i18n[ LANG.id ].option.private
+      section.announcement__release
+        button.release__check= i18n[ LANG.id ].button.release
+        p.release__error-message= 'error message'
+        button.release__cancel= i18n[ LANG.id ].button.cancel
