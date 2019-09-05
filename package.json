@@ -88,6 +88,7 @@
     "npm": "^6.4.1",
     "pug": "^2.0.3",
     "sequelize": "^4.41.2",
+    "tinymce": "^5.0.15",
     "url-loader": "^1.1.2",
     "validate.js": "^0.13.1"
   },
