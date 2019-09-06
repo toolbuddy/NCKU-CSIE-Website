@@ -196,49 +196,47 @@ router
         //     ],
         // } );
 
-        // // patch ann
-        // await patchAnnouncement( {
-        //     announcementInfo: {
-        //         announcementId:   1153,
-        //         publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
-        //         updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
-        //         author:           2,
-        //         isPinned:         1,
-        //         isPublished:      1,
-        //         imageUrl:         null,
-        //         views:            1,
-        //         i18n:             [
-        //             {
-        //                 languageId: 0,
-        //                 title:      'test title tw update',
-        //                 content:    'test content tw update',
-        //             },
-        //             {
-        //                 languageId: 1,
-        //                 title:      'test title eng update',
-        //                 content:    'test content eng update',
-        //             },
-        //         ],
-        //         tags:              [
-        //             {
-        //                 typeId: 3,
-        //             },
-        //             {
-        //                 typeId: 4,
-        //             },
-        //             {
-        //                 typeId: 5,
-        //             },
-        //         ],
-        //         fileI18n: [
-        //             {
-        //                 fileId:     951,
-        //                 languageId: 0,
-        //                 name:       'test file 1 tw update',
-        //             },
-        //         ],
-        //     },
-        // } );
+        // patch ann
+        await patchAnnouncement( {
+            announcementId:   1151,
+            publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
+            updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
+            author:           2,
+            isPinned:         1,
+            isPublished:      1,
+            imageUrl:         null,
+            views:            1,
+            i18n:             [
+                {
+                    languageId: 0,
+                    title:      'test title tw update',
+                    content:    'test content tw update',
+                },
+                {
+                    languageId: 1,
+                    title:      'test title eng update',
+                    content:    'test content eng update',
+                },
+            ],
+            tags:              [
+                {
+                    typeId: 3,
+                },
+                {
+                    typeId: 4,
+                },
+                {
+                    typeId: 5,
+                },
+            ],
+            fileI18n: [
+                {
+                    fileId:     947,
+                    languageId: 0,
+                    name:       'test file 1 tw update',
+                },
+            ],
+        } );
 
         res.send( { 'message': 'success', } );
     }
