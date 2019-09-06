@@ -8,20 +8,28 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            announcementId = null,
+            announcementIds = null,
         } = opt;
 
-        if ( !ValidateUtils.isValidId( announcementId ) ) {
+        if ( !ValidateUtils.isValidArray( announcementIds ) ) {
             const error = new Error( 'Invalid announcement id' );
             error.status = 400;
             throw error;
         }
 
+        announcementIds.forEach( ( id ) => {
+            if ( !ValidateUtils.isValidId( id ) ) {
+                const error = new Error( 'Invalid announcement id' );
+                error.status = 400;
+                throw error;
+            }
+        } );
+
         await announcement.transaction( t => Announcement.update( {
             isPublished:    0,
         }, {
             where: {
-                announcementId,
+                announcementId: announcementIds,
             },
             transaction: t,
         } ) ).catch( ( err ) => {

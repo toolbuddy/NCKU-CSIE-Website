@@ -22,7 +22,7 @@ import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import patchAnnouncement from 'models/announcement/operations/patch-announcement.js';
-import deleteAnnouncement from 'models/announcement/operations/delete-announcements.js';
+import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
 import deleteAnnouncementFiles from 'models/announcement/operations/delete-announcementFiles.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
@@ -183,10 +183,13 @@ router
         //     ],
         // } );
 
-        // // delete(hide) ann
-        // await deleteAnnouncement( {
-        //     announcementId: 1151,
-        // } );
+        // delete(hide) ann
+        await deleteAnnouncements( {
+            announcementIds: [
+                1151,
+                1152,
+            ],
+        } );
 
         // // delete ann files
         // await deleteAnnouncementFiles( {
@@ -196,47 +199,47 @@ router
         //     ],
         // } );
 
-        // patch ann
-        await patchAnnouncement( {
-            announcementId:   1151,
-            publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
-            updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
-            author:           2,
-            isPinned:         1,
-            isPublished:      1,
-            imageUrl:         null,
-            views:            1,
-            i18n:             [
-                {
-                    languageId: 0,
-                    title:      'test title tw update',
-                    content:    'test content tw update',
-                },
-                {
-                    languageId: 1,
-                    title:      'test title eng update',
-                    content:    'test content eng update',
-                },
-            ],
-            tags:              [
-                {
-                    typeId: 3,
-                },
-                {
-                    typeId: 4,
-                },
-                {
-                    typeId: 5,
-                },
-            ],
-            fileI18n: [
-                {
-                    fileId:     947,
-                    languageId: 0,
-                    name:       'test file 1 tw update',
-                },
-            ],
-        } );
+        // // patch ann
+        // await patchAnnouncement( {
+        //     announcementId:   1151,
+        //     publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
+        //     updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
+        //     author:           2,
+        //     isPinned:         1,
+        //     isPublished:      1,
+        //     imageUrl:         null,
+        //     views:            1,
+        //     i18n:             [
+        //         {
+        //             languageId: 0,
+        //             title:      'test title tw update',
+        //             content:    'test content tw update',
+        //         },
+        //         {
+        //             languageId: 1,
+        //             title:      'test title eng update',
+        //             content:    'test content eng update',
+        //         },
+        //     ],
+        //     tags:              [
+        //         {
+        //             typeId: 3,
+        //         },
+        //         {
+        //             typeId: 4,
+        //         },
+        //         {
+        //             typeId: 5,
+        //         },
+        //     ],
+        //     fileI18n: [
+        //         {
+        //             fileId:     947,
+        //             languageId: 0,
+        //             name:       'test file 1 tw update',
+        //         },
+        //     ],
+        // } );
 
         res.send( { 'message': 'success', } );
     }
