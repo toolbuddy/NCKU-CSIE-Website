@@ -54,6 +54,7 @@ try {
         id:             Number( id ),
         languageId:     WebLanguageUtils.currentLanguageId,
         editBlockDOM: document.getElementById( 'edit-block' ),
+        method:       'edit',
     } );
     announcementEvent.exec();
 }

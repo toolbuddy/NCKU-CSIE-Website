@@ -1,3 +1,5 @@
+include /components/common/image.pug
+
 mixin edit-block( belongBlock, method, dbData )
   -
     dbData = dbData || {};
@@ -81,23 +83,24 @@ mixin edit-block( belongBlock, method, dbData )
       section.announcement__title.title
         input.title__input( name='title', type = 'text', value = data.title, placeholder= i18n[ LANG.id ].placeholder.title )
       section.announcement__content.content
-        textarea.content__textarea( name="content", cols="30", rows="10", value = data.content, placeholder= i18n[ LANG.id ].placeholder.content )= data.content
+        textarea.content__textarea#content__textarea( name="content", cols="30", rows="10", value = data.content, placeholder= i18n[ LANG.id ].placeholder.content )= data.content
       section.announcement__attachment
-        button.attachment__button= i18n[ LANG.id ].button.attachment
-        article#attachment__names.attachment__names
+        label.attachment__button( for='attachment__input' )= i18n[ LANG.id ].button.attachment
+        input.attachment__input#attachment__input( type = 'file', name = 'attachment__input', multiple = true)
+        article#attachment__file.attachment__file
       section.announcement__option.option
         article.option__title
           p.title__text= i18n[ LANG.id ].option.title
         article.option__now
           input.now__input( name='publish-time', type='radio', value='now', id='now__input', checked)
           label.now__label( for='now__input' )= i18n[ LANG.id ].option.now
-        article.option__reservation
-          input.reservation__input( name='publish-time', type='radio', value='reservation' id='reservation__input' )
-          label.reservation__label( for='reservation__input' )= i18n[ LANG.id ].option.reservation
+        //- article.option__reservation
+        //-   input.reservation__input( name='publish-time', type='radio', value='reservation' id='reservation__input' )
+        //-   label.reservation__label( for='reservation__input' )= i18n[ LANG.id ].option.reservation
         article.option__private
           input.private__input( name='publish-time', type='radio', value='private' id='private__input' )
           label.private__label( for='private__input' )= i18n[ LANG.id ].option.private
       section.announcement__release
         button.release__check= i18n[ LANG.id ].button.release
         p.release__error-message= 'error message'
-        button.release__cancel= i18n[ LANG.id ].button.cancel
+        a.release__cancel( href=`${ SERVER.host }/announcement`, target='_self' )= i18n[ LANG.id ].button.cancel
