@@ -19,9 +19,10 @@ export default class AnnouncementEvent {
             throw new TypeError( 'invalid arguments' );
 
         this.config = {
-            id:         opt.id,
-            languageId: opt.languageId,
-            method:     opt.method,
+            id:                 opt.id,
+            languageId:         opt.languageId,
+            method:             opt.method,
+            animationDelayTime: 500,
         };
 
         this.state = {
@@ -30,6 +31,7 @@ export default class AnnouncementEvent {
             tags:        [],
             newFiles:    [],
             deleteFiles: [],
+            fileLoad:    false,
         };
 
         this.DOM = {
@@ -82,9 +84,9 @@ export default class AnnouncementEvent {
     }
 
     subscribeEditor () {
-        tinymce.init( {
-            selector: '#content__textarea',
-        } );
+        // Tinymce.init( {
+        //     selector: '#content__textarea',
+        // } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', () => {
                 this.data[ this.state.languageId ].title = this.DOM.title.value;
@@ -142,7 +144,7 @@ export default class AnnouncementEvent {
             } );
             res();
         } )
-        .then( () => {
+        .then( async () => {
             const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
 
             /***
@@ -163,13 +165,17 @@ export default class AnnouncementEvent {
 
             if ( id < 0 ) {
                 const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-                console.log( file );
+                this.state.fileLoad = true;
+                classAdd( loaderDOM, 'file-preview__loader--active' );
 
-                // // Const reader = new FileReader();
-                // classAdd( loaderDOM, 'file-preview__loader--active' );
-                // this.DOM.uploadFile.addEventListener( 'onload', () => {
-                //     classRemove( loaderDOM, 'file-preview__loader--active' );
-                // } );
+                await delay( this.config.animationDelayTime );
+
+                const reader = new FileReader();
+                reader.readAsDataURL( file );
+                reader.onload = () => {
+                    this.state.fileLoad = false;
+                    classRemove( loaderDOM, 'file-preview__loader--active' );
+                };
             }
         } );
     }

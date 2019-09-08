@@ -1188,9 +1188,6 @@ router
 
 router
 .route( '/announcement/edit/:announcementId' )
-
-// .get( staticHtml( 'user/announcement/edit' ) );
-
 .get( async ( req, res, next ) => {
     try {
         const data = await getAnnouncement( {
