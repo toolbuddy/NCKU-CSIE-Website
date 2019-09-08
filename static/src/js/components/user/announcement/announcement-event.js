@@ -6,7 +6,6 @@ import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import FilePreview from 'static/src/pug/components/user/announcement/file-preview.pug';
 import tinymce from 'tinymce';
 import encodeurl from 'encodeurl';
-import escapeHtml from 'escape-html';
 
 // Plugins
 import 'tinymce/themes/silver';
@@ -126,7 +125,8 @@ export default class AnnouncementEvent {
 
     subscribeTagEvent () {
         this.DOM.tags.forEach( ( tag ) => {
-            tag.node.addEventListener( 'click', () => {
+            tag.node.addEventListener( 'click', ( e ) => {
+                e.preventDefault();
                 const index = this.state.tags.indexOf( tag.id );
                 if ( index < 0 ) {
                     this.state.tags.push( tag.id );
@@ -158,10 +158,18 @@ export default class AnnouncementEvent {
     }
 
     subscribeSubmitButton () {
-        this.DOM.submit.addEventListener( 'click', ( e ) => {
-            e.preventDefault();
-            this.uploadPostAnnouncement();
-        } );
+        if ( this.config.method === 'add' ) {
+            this.DOM.submit.addEventListener( 'click', ( e ) => {
+                e.preventDefault();
+                this.uploadPostAnnouncement();
+            } );
+        }
+        else {
+            this.DOM.submit.addEventListener( 'click', ( e ) => {
+                e.preventDefault();
+                this.uploadPatchAnnouncement();
+            } );
+        }
     }
 
     async addFilePreviewBlock ( file, id ) {
@@ -208,6 +216,46 @@ export default class AnnouncementEvent {
         } );
     }
 
+    uploadPatchAnnouncement () {
+        const form = this.DOM.editBlock;
+        const isPublished = form.elements[ 'publish-time' ].value;
+        let tagString = '';
+        this.state.tags.forEach( ( tag ) => {
+            tagString += `${ tag } `;
+        } );
+        const files = {};
+        this.state.files.forEach( ( file ) => {
+            files[ file.fileId ] = file.name;
+        } );
+        console.log( this.state.files );
+        console.log( files );
+
+        fetch( `${ host }/announcement/add`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                'method':           'patch',
+                isPublished,
+                'announcementId':   this.config.id,
+                'author':           1,
+                'isPinned':         0,
+                'imageUrl':         null,
+                'views':            0,
+                'i18n':           {
+                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                },
+                'tags':     tagString,
+                'fileI18n': files,
+            } ),
+        } );
+    }
+
     uploadPostAnnouncement () {
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
@@ -215,6 +263,12 @@ export default class AnnouncementEvent {
         this.state.tags.forEach( ( tag ) => {
             tagString += `${ tag } `;
         } );
+        const files = {};
+        this.state.files.forEach( ( file ) => {
+            files[ file.fileId ] = file.name;
+        } );
+        console.log( this.state.files );
+        console.log( files );
 
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
@@ -225,7 +279,6 @@ export default class AnnouncementEvent {
                 'isPinned':         0,
                 'imageUrl':         null,
                 'views':            0,
-
                 'i18n':     {
                     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
@@ -237,7 +290,7 @@ export default class AnnouncementEvent {
                     },
                 },
                 'tags':     tagString,
-                'fileI18n': {},
+                'fileI18n': files,
             } ),
         } );
     }

@@ -130,10 +130,74 @@ router
             }
         }
 
-        // Console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
-        console.log( req );
+        console.log( req.body );
+        console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+        const dataTags = data.tags.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
+        dataTags.pop();
+        const dataFiles = Object.keys( data.fileI18n ).map( key => [
+            {
+                languageId: 0,
+                name:       data.fileI18n[ key ],
+            },
+            {
+                languageId: 1,
+                name:       data.fileI18n[ key ],
+            },
+        ] );
 
-        // Check proper user
+
+        if ( data.method === 'post' ) {
+            await postAnnouncement( {
+                publishTime:      new Date(),
+                updateTime:       new Date(),
+                author:           Number( data.author ),
+                isPinned:         Number( data.isPinned ),
+                isPublished:      Number( data.isPublished ),
+                imageUrl:         null,
+                views:            0,
+                tag:              dataTags,
+                announcementI18n:        [
+                    {
+                        languageId: 0,
+                        title:      data.i18n[ 0 ].title,
+                        content:    data.i18n[ 0 ].content,
+                    },
+                    {
+                        languageId: 1,
+                        title:      data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].title,
+                    },
+                ],
+                fileI18n: dataFiles,
+            } );
+        }
+        else if ( data.method === 'patch' ) {
+            console.log( 'patch' );
+            await patchAnnouncement( {
+                announcementId:   data.announcementId,
+                updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
+                author:           Number( data.author ),
+                isPinned:         Number( data.isPinned ),
+                isPublished:      Number( data.isPublished ),
+                imageUrl:         null,
+                views:            1,
+                i18n:             [
+                    {
+                        languageId: 0,
+                        title:      data.i18n[ 0 ].title,
+                        content:    data.i18n[ 0 ].content,
+                    },
+                    {
+                        languageId: 1,
+                        title:      data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].title,
+                    },
+                ],
+                tags:     dataTags,
+                fileI18n: [],
+            } );
+        }
 
         // // post ann
         // await postAnnouncement( {

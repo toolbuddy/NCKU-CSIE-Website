@@ -182,6 +182,12 @@
         @include local-topic( 'patent-block' );
 
         > .patent-block__patent.patent {
+          // [ layout ]
+          display: block;
+          overflow: scroll;
+
+          // [ position ]
+          width: 100%;
           @include dynamic-input-block( $block: 'patent' );
         }
       }
