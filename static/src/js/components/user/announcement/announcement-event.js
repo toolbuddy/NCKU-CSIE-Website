@@ -5,6 +5,8 @@ import { host, } from 'settings/server/config.js';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import FilePreview from 'static/src/pug/components/user/announcement/file-preview.pug';
 import tinymce from 'tinymce';
+import encodeurl from 'encodeurl';
+import escapeHtml from 'escape-html';
 
 // Plugins
 import 'tinymce/themes/silver';
@@ -31,7 +33,6 @@ export default class AnnouncementEvent {
             tags:        [],
             newFiles:    [],
             deleteFiles: [],
-            fileLoad:    false,
         };
 
         this.DOM = {
@@ -50,9 +51,11 @@ export default class AnnouncementEvent {
                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: opt.editBlockDOM.querySelector( '.edit-block__language > .language__button--en-US' ),
                 [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: opt.editBlockDOM.querySelector( '.edit-block__language > .language__button--zh-TW' ),
             },
+            editBlock:   opt.editBlockDOM,
             title:       opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__title > .title__input' ),
             content:     opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__content > .content__textarea' ),
             uploadFile:  opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__input' ),
+            submit:      opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__check' ),
             filePreview: opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__file' ),
         };
     }
@@ -76,6 +79,7 @@ export default class AnnouncementEvent {
                 title:   '',
                 content: '',
                 tags:    [],
+                files:   [],
             };
         }
         catch ( err ) {
@@ -84,20 +88,38 @@ export default class AnnouncementEvent {
     }
 
     subscribeEditor () {
-        // Tinymce.init( {
-        //     selector: '#content__textarea',
-        // } );
+        tinymce.init( {
+            selector: '#content__textarea',
+        } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
-            this.DOM.languageButton[ languageId ].addEventListener( 'click', () => {
+            this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {
+                e.preventDefault();
+
+                /***
+                 * Store content in another language
+                 */
+
                 this.data[ this.state.languageId ].title = this.DOM.title.value;
-                this.data[ this.state.languageId ].content = this.DOM.content.value;
+                this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
+
+                /***
+                 * Change button css
+                 */
+
                 Object.keys( this.DOM.languageButton ).forEach( ( id ) => {
                     classRemove( this.DOM.languageButton[ id ], 'language__button--active' );
                 } );
                 classAdd( this.DOM.languageButton[ languageId ], 'language__button--active' );
+
+                /***
+                 * Set content in selected language
+                 */
+
                 this.state.languageId = languageId;
                 this.DOM.title.value = this.data[ languageId ].title;
-                this.DOM.content.value = this.data[ languageId ].content;
+                tinymce.get( 'content__textarea' ).setContent( this.data[ languageId ].content );
+
+                // This.DOM.content.value = this.data[ languageId ].content;
             } );
         } );
     }
@@ -135,6 +157,13 @@ export default class AnnouncementEvent {
         } );
     }
 
+    subscribeSubmitButton () {
+        this.DOM.submit.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            this.uploadPostAnnouncement();
+        } );
+    }
+
     async addFilePreviewBlock ( file, id ) {
         new Promise( ( res ) => {
             this.DOM.filePreview.innerHTML += FilePreview( {
@@ -152,6 +181,7 @@ export default class AnnouncementEvent {
             */
 
             deleteDOM.addEventListener( 'click', () => {
+                console.log( 'delete' );
                 const temp = this.state.files.find( element => element.fileId === id );
                 const index = this.state.files.indexOf( temp );
                 this.state.files.splice( index, 1 );
@@ -165,7 +195,6 @@ export default class AnnouncementEvent {
 
             if ( id < 0 ) {
                 const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-                this.state.fileLoad = true;
                 classAdd( loaderDOM, 'file-preview__loader--active' );
 
                 await delay( this.config.animationDelayTime );
@@ -173,10 +202,43 @@ export default class AnnouncementEvent {
                 const reader = new FileReader();
                 reader.readAsDataURL( file );
                 reader.onload = () => {
-                    this.state.fileLoad = false;
                     classRemove( loaderDOM, 'file-preview__loader--active' );
                 };
             }
+        } );
+    }
+
+    uploadPostAnnouncement () {
+        const form = this.DOM.editBlock;
+        const isPublished = form.elements[ 'publish-time' ].value;
+        let tagString = '';
+        this.state.tags.forEach( ( tag ) => {
+            tagString += `${ tag } `;
+        } );
+
+        fetch( `${ host }/announcement/add`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                'method':           'post',
+                isPublished,
+                'author':           1,
+                'isPinned':         0,
+                'imageUrl':         null,
+                'views':            0,
+
+                'i18n':     {
+                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                },
+                'tags':     tagString,
+                'fileI18n': {},
+            } ),
         } );
     }
 
@@ -194,6 +256,7 @@ export default class AnnouncementEvent {
             this.subscribeTagEvent();
             this.subscribeEditor();
             this.subscribeFileUploadButton();
+            this.subscribeSubmitButton();
             this.DOM.filePreview.innerHTML = '';
             this.state.files.forEach( async ( file ) => {
                 await this.addFilePreviewBlock( file, file.fileId );

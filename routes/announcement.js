@@ -27,12 +27,15 @@ import deleteAnnouncementFiles from 'models/announcement/operations/delete-annou
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, secret, } from 'settings/server/config.js';
+import BodyParser from 'body-parser';
 
 const router = express.Router( {
     caseSensitive: true,
     mergeParams:   false,
     strict:        false,
 } );
+
+const jsonParser = BodyParser.json();
 
 /**
  * Resolve URL `/announcement`.
@@ -77,7 +80,7 @@ router
 .route( '/add' )
 
 // .post( cors(), async ( req, res ) => {
-.get( async ( req, res, next ) => {
+.post( async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
 
@@ -119,11 +122,16 @@ router
                             redirect: '/error/404',
                         } );
                     }
-                    else
+                    else {
+                        // Console.log( error );
                         console.error( error );
+                    }
                 }
             }
         }
+
+        // Console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
+        console.log( req );
 
         // Check proper user
 
@@ -183,13 +191,13 @@ router
         //     ],
         // } );
 
-        // delete(hide) ann
-        await deleteAnnouncements( {
-            announcementIds: [
-                1151,
-                1152,
-            ],
-        } );
+        // // delete(hide) ann
+        // await deleteAnnouncements( {
+        //     announcementIds: [
+        //         1151,
+        //         1152,
+        //     ],
+        // } );
 
         // // delete ann files
         // await deleteAnnouncementFiles( {

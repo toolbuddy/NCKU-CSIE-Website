@@ -65,7 +65,7 @@ mixin edit-block( belongBlock, method, dbData )
       }; 
     } );
 
-  section#edit-block.edit-block( class= `${ belongBlock }__edit-block` )
+  form#edit-block.edit-block( class= `${ belongBlock }__edit-block` name='edit-block' )
     aside.edit-block__tags.tags
       each tagObj, tagName in allTags
         if tagObj.checked
@@ -92,13 +92,13 @@ mixin edit-block( belongBlock, method, dbData )
         article.option__title
           p.title__text= i18n[ LANG.id ].option.title
         article.option__now
-          input.now__input( name='publish-time', type='radio', value='now', id='now__input', checked)
+          input.now__input( name='publish-time', type='radio', value=2, id='now__input', checked)
           label.now__label( for='now__input' )= i18n[ LANG.id ].option.now
         //- article.option__reservation
         //-   input.reservation__input( name='publish-time', type='radio', value='reservation' id='reservation__input' )
         //-   label.reservation__label( for='reservation__input' )= i18n[ LANG.id ].option.reservation
         article.option__private
-          input.private__input( name='publish-time', type='radio', value='private' id='private__input' )
+          input.private__input( name='publish-time', type='radio', value=0 id='private__input' )
           label.private__label( for='private__input' )= i18n[ LANG.id ].option.private
       section.announcement__release
         button.release__check= i18n[ LANG.id ].button.release
