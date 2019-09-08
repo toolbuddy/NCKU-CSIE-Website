@@ -18,109 +18,127 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            announcementInfo = null,
+            announcementId = null,
+            publishTime = null,
+            updateTime = null,
+            author = null,
+            isPinned = null,
+            isPublished = null,
+            imageUrl = null,
+            views = null,
+            i18n = null,
+            tags = null,
+            fileI18n = null,
         } = opt;
 
-        if ( announcementInfo !== null ) {
-            if ( typeof ( validate( announcementInfo, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid announcement object' );
+        if ( typeof ( validate( {
+            announcementId,
+            publishTime,
+            updateTime,
+            author,
+            isPinned,
+            isPublished,
+            image: imageUrl,
+            views,
+            i18n,
+            tags,
+            fileI18n,
+        }, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
+            const error = new Error( 'Invalid announcement object' );
+            error.status = 400;
+            throw error;
+        }
+        if ( i18n ) {
+            for ( const i18nData of i18n ) {
+                if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
+                    const error = new Error( 'Invalid announcement object' );
+                    error.status = 400;
+                    throw error;
+                }
+            }
+        }
+
+        if ( tags !== null ) {
+            if ( !ValidateUtils.isValidArray( tags ) ) {
+                const error = new Error( 'Invalid tag object' );
                 error.status = 400;
                 throw error;
             }
-            if ( announcementInfo.i18n ) {
-                for ( const i18nData of announcementInfo.i18n ) {
-                    if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid announcement object' );
-                        error.status = 400;
-                        throw error;
-                    }
-                }
-            }
-
-            if ( announcementInfo.tags !== null ) {
-                if ( !ValidateUtils.isValidArray( announcementInfo.tags ) ) {
+            tags.forEach( ( tagObj ) => {
+                if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
                     const error = new Error( 'Invalid tag object' );
                     error.status = 400;
                     throw error;
                 }
-                announcementInfo.tags.forEach( ( tagObj ) => {
-                    if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid tag object' );
+            } );
+        }
+
+        if ( fileI18n !== null ) {
+            if ( ValidateUtils.isValidArray( fileI18n ) ) {
+                for ( const data of fileI18n ) {
+                    if ( typeof ( validate( data, FileI18nValidationConstraints ) ) !== 'undefined' ) {
+                        const error = new Error( 'Invalid fileI18n object' );
                         error.status = 400;
                         throw error;
                     }
-                } );
+                }
             }
-
-            if ( announcementInfo.fileI18n !== null ) {
-                if ( ValidateUtils.isValidArray( announcementInfo.fileI18n ) ) {
-                    for ( const data of announcementInfo.fileI18n ) {
-                        if ( typeof ( validate( data, FileI18nValidationConstraints ) ) !== 'undefined' ) {
-                            const error = new Error( 'Invalid fileI18n object' );
-                            error.status = 400;
-                            throw error;
-                        }
-                    }
-                }
-                else {
-                    const error = new Error( 'Invalid fileI18n object' );
-                    error.status = 400;
-                    throw error;
-                }
+            else {
+                const error = new Error( 'Invalid fileI18n object' );
+                error.status = 400;
+                throw error;
             }
         }
 
-        if ( announcementInfo ) {
-            await announcement.transaction( t => Announcement.update( {
-                publishTime:    announcementInfo.publishTime,
-                updateTime:    announcementInfo.updateTime,
-                author:      announcementInfo.author,
-                views:       announcementInfo.views,
-                isPinned:    announcementInfo.isPinned,
-                isPublished:    announcementInfo.isPublished,
-                image:       announcementInfo.imageUrl,
-            }, {
-                where: {
-                    announcementId: announcementInfo.announcementId,
-                },
-                transaction: t,
-            } ).then( () => Promise.all( announcementInfo.i18n.map( announcementI18nInfo => AnnouncementI18n.update( {
-                title:   announcementI18nInfo.title,
-                content:  announcementI18nInfo.content,
-            }, {
-                where: {
-                    announcementId:  announcementInfo.announcementId,
-                    languageId:     announcementI18nInfo.languageId,
-                },
-                transaction: t,
-            } ) ) ) ).then( () => Tag.destroy( {
-                where: {
-                    announcementId: announcementInfo.announcementId,
-                },
-                transaction: t,
-            } ) ).then( () => Promise.all( announcementInfo.tags.map( tagObj => Tag.create( {
-                announcementId: announcementInfo.announcementId,
-                typeId:         tagObj.typeId,
-            }, {
-                transaction: t,
-            } ) ) ) ).then( () => Promise.all( announcementInfo.fileI18n.map( fileI18nInfo => File.findOne( {
-                where: {
-                    announcementId: announcementInfo.announcementId,
-                    fileId:         fileI18nInfo.fileId,
-                },
-                transaction: t,
-            } ) ) ) ).then( () => Promise.all( announcementInfo.fileI18n.map( fileI18nInfo => FileI18n.update( {
-                name: fileI18nInfo.name,
-            }, {
-                where: {
-                    fileId:     fileI18nInfo.fileId,
-                    languageId: fileI18nInfo.languageId,
-                },
-                transaction: t,
-            } ) ) ) ) ).catch( ( err ) => {
-                throw err;
-            } );
-        }
+        await announcement.transaction( t => Announcement.update( {
+            publishTime,
+            updateTime,
+            author,
+            views,
+            isPinned,
+            isPublished,
+            image: imageUrl,
+        }, {
+            where: {
+                announcementId,
+            },
+            transaction: t,
+        } ).then( () => Promise.all( i18n.map( announcementI18nInfo => AnnouncementI18n.update( {
+            title:   announcementI18nInfo.title,
+            content:  announcementI18nInfo.content,
+        }, {
+            where: {
+                announcementId,
+                languageId:     announcementI18nInfo.languageId,
+            },
+            transaction: t,
+        } ) ) ) ).then( () => Tag.destroy( {
+            where: {
+                announcementId,
+            },
+            transaction: t,
+        } ) ).then( () => Promise.all( tags.map( tagObj => Tag.create( {
+            announcementId,
+            typeId:         tagObj.typeId,
+        }, {
+            transaction: t,
+        } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => File.findOne( {
+            where: {
+                announcementId,
+                fileId:         fileI18nInfo.fileId,
+            },
+            transaction: t,
+        } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => FileI18n.update( {
+            name: fileI18nInfo.name,
+        }, {
+            where: {
+                fileId:     fileI18nInfo.fileId,
+                languageId: fileI18nInfo.languageId,
+            },
+            transaction: t,
+        } ) ) ) ) ).catch( ( err ) => {
+            throw err;
+        } );
         return;
     }
     catch ( err ) {
