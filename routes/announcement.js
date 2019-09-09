@@ -176,7 +176,7 @@ router
             console.log( 'patch' );
             await patchAnnouncement( {
                 announcementId:   data.announcementId,
-                updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
+                updateTime:       new Date(),
                 author:           Number( data.author ),
                 isPinned:         Number( data.isPinned ),
                 isPublished:      Number( data.isPublished ),

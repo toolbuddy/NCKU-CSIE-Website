@@ -50,12 +50,13 @@ export default class AnnouncementEvent {
                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: opt.editBlockDOM.querySelector( '.edit-block__language > .language__button--en-US' ),
                 [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: opt.editBlockDOM.querySelector( '.edit-block__language > .language__button--zh-TW' ),
             },
-            editBlock:   opt.editBlockDOM,
-            title:       opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__title > .title__input' ),
-            content:     opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__content > .content__textarea' ),
-            uploadFile:  opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__input' ),
-            submit:      opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__check' ),
-            filePreview: opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__file' ),
+            editBlock:    opt.editBlockDOM,
+            title:        opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__title > .title__input' ),
+            content:      opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__content > .content__textarea' ),
+            uploadFile:   opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__input' ),
+            submit:       opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__check' ),
+            filePreview:  opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__file' ),
+            errorMessage: opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__error-message' ),
         };
     }
 
@@ -158,18 +159,19 @@ export default class AnnouncementEvent {
     }
 
     subscribeSubmitButton () {
-        if ( this.config.method === 'add' ) {
-            this.DOM.submit.addEventListener( 'click', ( e ) => {
-                e.preventDefault();
-                this.uploadPostAnnouncement();
-            } );
-        }
-        else {
-            this.DOM.submit.addEventListener( 'click', ( e ) => {
-                e.preventDefault();
-                this.uploadPatchAnnouncement();
-            } );
-        }
+        this.DOM.submit.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            this.data[ this.state.languageId ].title = this.DOM.title.value;
+            this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
+            this.isDataValidate();
+
+            // If ( this.isDataValidate() ) {
+            //     if ( this.config.method === 'add' )
+            //         this.uploadPostAnnouncement();
+            //     else
+            //         this.uploadPatchAnnouncement();
+            // }
+        } );
     }
 
     async addFilePreviewBlock ( file, id ) {
@@ -227,8 +229,6 @@ export default class AnnouncementEvent {
         this.state.files.forEach( ( file ) => {
             files[ file.fileId ] = file.name;
         } );
-        console.log( this.state.files );
-        console.log( files );
 
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
@@ -256,6 +256,53 @@ export default class AnnouncementEvent {
         } );
     }
 
+    isDataValidate () {
+        const form = this.DOM.editBlock;
+        const isPublished = Number( form.elements[ 'publish-time' ].value );
+        let errorMessage = '';
+
+        /***
+         * Validate data and set error message
+         */
+
+        if ( this.state.tags.length <= 0 )
+            errorMessage = '請至少選擇一個標籤';
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title ) ||
+            this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title.length <= 0
+        )
+            errorMessage = '中文標題為必填欄位';
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content ) ||
+            this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.length <= 0
+        )
+            errorMessage = '中文內容為必填欄位';
+        if ( isPublished === 1 ) {
+            if (
+                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title ) ||
+                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title.length <= 0
+            )
+                errorMessage = '英文標題為必填欄位';
+            if (
+                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content ) ||
+                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.length <= 0
+            )
+                errorMessage = '英文內容為必填欄位';
+        }
+
+        if ( errorMessage !== '' ) {
+            this.setErrorMessage( errorMessage );
+            return false;
+        }
+
+        this.setErrorMessage( '' );
+        return true;
+    }
+
+    setErrorMessage ( errorMessage ) {
+        this.DOM.errorMessage.textContent = errorMessage;
+    }
+
     uploadPostAnnouncement () {
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
@@ -267,8 +314,6 @@ export default class AnnouncementEvent {
         this.state.files.forEach( ( file ) => {
             files[ file.fileId ] = file.name;
         } );
-        console.log( this.state.files );
-        console.log( files );
 
         fetch( `${ host }/announcement/add`, {
             method:   'POST',

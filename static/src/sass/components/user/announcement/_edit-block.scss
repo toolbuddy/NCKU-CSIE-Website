@@ -445,7 +445,7 @@
 
         > .release__error-message {
           // [ layout ]
-          display: none;
+          display: inline-block;
 
           // [ skin ]
           font-size: font__px-to-rem( 16 );
