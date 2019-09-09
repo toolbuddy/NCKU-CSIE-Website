@@ -89,7 +89,12 @@ export default class AnnouncementEvent {
 
     subscribeEditor () {
         tinymce.init( {
-            selector: '#content__textarea',
+            selector:  '#content__textarea',
+            width:     '100%',
+            statusbar: false,
+            plugins:   'table lists',
+            menubar:   'table',
+            toolbar:   'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {
@@ -163,14 +168,15 @@ export default class AnnouncementEvent {
             e.preventDefault();
             this.data[ this.state.languageId ].title = this.DOM.title.value;
             this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
-            this.isDataValidate();
 
-            // If ( this.isDataValidate() ) {
-            //     if ( this.config.method === 'add' )
-            //         this.uploadPostAnnouncement();
-            //     else
-            //         this.uploadPatchAnnouncement();
-            // }
+            // This.isDataValidate();
+
+            if ( this.isDataValidate() ) {
+                if ( this.config.method === 'add' )
+                    this.uploadPostAnnouncement();
+                else
+                    this.uploadPatchAnnouncement();
+            }
         } );
     }
 
@@ -184,18 +190,32 @@ export default class AnnouncementEvent {
             res();
         } )
         .then( async () => {
+            // Const deleteDOM = this.DOM.filePreview.querySelectorAll( `.file__file-preview > .file-preview__delete` );
             const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
 
             /***
             *   Add delete button event listener
             */
 
+            // Array.from( deleteDOM ).forEach( ( DOM ) => {
+            //     DOM.addEventListener( 'click', () => {
+            //         console.log( 'delete' );
+            //         const tempId = Number( DOM.getAttribute( 'file-id' ) );
+            //         const temp = this.state.files.find( element => element.fileId === tempId );
+            //         const index = this.state.files.indexOf( temp );
+            //         this.state.files.splice( index, 1 );
+            //         this.state.deleteFiles.push( tempId );
+            //         DOM.parentNode.remove();
+            //     } );
+            // } );
+
             deleteDOM.addEventListener( 'click', () => {
                 console.log( 'delete' );
-                const temp = this.state.files.find( element => element.fileId === id );
+                const tempId = Number( deleteDOM.getAttribute( 'file-id' ) );
+                const temp = this.state.files.find( element => element.fileId === tempId );
                 const index = this.state.files.indexOf( temp );
                 this.state.files.splice( index, 1 );
-                this.state.deleteFiles.push( id );
+                this.state.deleteFiles.push( tempId );
                 deleteDOM.parentNode.remove();
             } );
 
@@ -215,44 +235,6 @@ export default class AnnouncementEvent {
                     classRemove( loaderDOM, 'file-preview__loader--active' );
                 };
             }
-        } );
-    }
-
-    uploadPatchAnnouncement () {
-        const form = this.DOM.editBlock;
-        const isPublished = form.elements[ 'publish-time' ].value;
-        let tagString = '';
-        this.state.tags.forEach( ( tag ) => {
-            tagString += `${ tag } `;
-        } );
-        const files = {};
-        this.state.files.forEach( ( file ) => {
-            files[ file.fileId ] = file.name;
-        } );
-
-        fetch( `${ host }/announcement/add`, {
-            method:   'POST',
-            body:   JSON.stringify( {
-                'method':           'patch',
-                isPublished,
-                'announcementId':   this.config.id,
-                'author':           1,
-                'isPinned':         0,
-                'imageUrl':         null,
-                'views':            0,
-                'i18n':           {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
-                    },
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
-                    },
-                },
-                'tags':     tagString,
-                'fileI18n': files,
-            } ),
         } );
     }
 
@@ -336,6 +318,45 @@ export default class AnnouncementEvent {
                 },
                 'tags':     tagString,
                 'fileI18n': files,
+            } ),
+        } );
+    }
+
+    uploadPatchAnnouncement () {
+        console.log( 'patch' );
+        const form = this.DOM.editBlock;
+        const isPublished = form.elements[ 'publish-time' ].value;
+        let tagString = '';
+        this.state.tags.forEach( ( tag ) => {
+            tagString += `${ tag } `;
+        } );
+        const files = {};
+        this.state.files.forEach( ( file ) => {
+            files[ file.fileId ] = file.name;
+        } );
+
+        fetch( `${ host }/announcement/add`, {
+            method:   'POST',
+            body:   JSON.stringify( {
+                'method':           'patch',
+                isPublished,
+                'announcementId':   this.config.id,
+                'author':           1,
+                'isPinned':         0,
+                'imageUrl':         null,
+                'views':            0,
+                'i18n':           {
+                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
+                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                    },
+                },
+                'tags':           tagString,
+                'fileI18n':       files,
             } ),
         } );
     }

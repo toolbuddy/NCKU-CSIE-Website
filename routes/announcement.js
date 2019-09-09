@@ -130,11 +130,16 @@ router
             }
         }
 
-        console.log( req.body );
-        console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
-        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-        const dataTags = data.tags.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
-        dataTags.pop();
+        /**
+         * Data format
+         */
+
+        const dataString = Object.keys( req.body )[ 0 ];
+        const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
+        console.log( JSON.parse( dataFormat ) );
+        const data = JSON.parse( dataFormat );
+        const dataTagsString = data.tags.substring( 0, data.tags.length - 1 );
+        const dataTags = dataTagsString.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
         const dataFiles = Object.keys( data.fileI18n ).map( key => [
             {
                 languageId: 0,
@@ -146,6 +151,9 @@ router
             },
         ] );
 
+        /**
+         * Post new data
+         */
 
         if ( data.method === 'post' ) {
             await postAnnouncement( {
@@ -172,8 +180,12 @@ router
                 fileI18n: dataFiles,
             } );
         }
+
+        /**
+         * Edit exist data
+         */
+
         else if ( data.method === 'patch' ) {
-            console.log( 'patch' );
             await patchAnnouncement( {
                 announcementId:   data.announcementId,
                 updateTime:       new Date(),
