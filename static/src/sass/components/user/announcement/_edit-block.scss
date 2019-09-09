@@ -3,16 +3,18 @@
 @mixin edit-block ( $block ) {
   // `> .#{ $block } > .#{ $block }__edit-block`
   > .edit-block.#{ $block }__edit-block {
+    // [ variable ]
+    $large: 850px;
+    $median: 600px;
+
     // [ layout ]
     display: grid;
     grid: {
       gap: font__px-to-rem( 5 );
-      template: {
-        areas:
-          ' .        tags        '
-          ' language announcement';
-        columns: font__px-to-rem( 60 ) auto;
-      }
+      template-areas:
+        ' tags        '
+        ' language'
+        ' announcement';
     };
 
     // [ position ]
@@ -21,6 +23,17 @@
     margin: {
       left: auto;
       right: auto;
+    }
+
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          ' .        tags        '
+          ' language announcement';
+        columns: font__px-to-rem( 60 ) auto;
+      };
     }
 
     // `> .#{ $block } > .#{ $block }__edit-block` > .edit-block__language
@@ -32,14 +45,26 @@
         gap: font__px-to-rem( 15 );
         template: {
           areas:
-            'zh'
-            'en'
-            '.';
-          rows: font__px-to-rem( 160 ) font__px-to-rem( 160 ) auto;
+            'zh en';
+          column: 1fr 1fr;
         }
       }
 
       // align-content: center;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        grid: {
+          gap: 0;
+          template: {
+            areas:
+              'zh'
+              'en'
+              '.';
+            rows: font__px-to-rem( 160 ) font__px-to-rem( 160 ) auto;
+          }
+        }
+      }
 
       %language__button {
         // [ layout ]
@@ -48,8 +73,8 @@
         align-self: center;
 
         // [ position ]
-        width: font__px-to-rem( 48 );
-        height: font__px-to-rem( 157.9 );
+        width: 100%;
+        height: font__px-to-rem( 48 );
         padding: {
           left: font__px-to-rem( 14 );
           right: font__px-to-rem( 14 );
@@ -61,6 +86,21 @@
         letter-spacing: normal;
         color: #757575;
         background-color: rgba( 140, 170, 226, .4 );
+        text-align: center;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          display: flex;
+
+          // [ position ]
+          width: font__px-to-rem( 48 );
+          height: font__px-to-rem( 157.9 );
+          padding: {
+            left: font__px-to-rem( 14 );
+            right: font__px-to-rem( 14 );
+          }
+        }
 
         // [ event ]
         &:hover {
@@ -484,13 +524,41 @@
       grid-area: tags;
       display: grid;
       grid-template-areas:
-        ' college internship    speech      rule'
-        ' master  scholarship   conference  recruitment'
-        ' phd     international exhibition  course'
-        ' .       award         competition faculty';
+        ' college internship    speech    '
+        ' master  scholarship   conference '
+        ' phd     international exhibition '
+        ' course  award         competition '
+        ' faculty rule          recruitment ';
 
       // [ display ]
-      width: font__px-to-rem( 550 );
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+
+      // [ RWD: $median ]
+      @media screen and ( min-width: $median ) {
+        // [ layout ]
+        grid-template-areas:
+          ' college internship    speech      rule'
+          ' master  scholarship   conference  recruitment'
+          ' phd     international exhibition  course'
+          ' .       award         competition faculty';
+
+        // [ display ]
+        width: font__px-to-rem( 550 );
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        margin: {
+          left: 0;
+          right: 0;
+        }
+      }
 
       // element
       // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'award' ]`

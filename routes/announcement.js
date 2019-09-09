@@ -193,7 +193,7 @@ router
                 isPinned:         Number( data.isPinned ),
                 isPublished:      Number( data.isPublished ),
                 imageUrl:         null,
-                views:            1,
+                views:            0,
                 i18n:             [
                     {
                         languageId: 0,

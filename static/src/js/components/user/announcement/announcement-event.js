@@ -317,7 +317,7 @@ export default class AnnouncementEvent {
                     },
                 },
                 'tags':     tagString,
-                'fileI18n': files,
+                'fileI18n': {},
             } ),
         } );
     }
@@ -356,8 +356,11 @@ export default class AnnouncementEvent {
                     },
                 },
                 'tags':           tagString,
-                'fileI18n':       files,
+                'fileI18n':       {},
             } ),
+        } )
+        .then( () => {
+            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
         } );
     }
 
