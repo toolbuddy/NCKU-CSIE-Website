@@ -319,6 +319,9 @@ export default class AnnouncementEvent {
                 'tags':     tagString,
                 'fileI18n': {},
             } ),
+        } )
+        .then( () => {
+            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
         } );
     }
 
