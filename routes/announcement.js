@@ -62,7 +62,37 @@ router
 
 router
 .route( '/all' )
-.get( staticHtml( 'announcement/all' ) );
+
+// .get( staticHtml( 'announcement/all' ) );
+
+.get( async ( req, res, next ) => {
+    try {
+        const data =  {};
+
+        res.locals.UTILS.announcement = {
+            tagUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'announcement/all.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                res.send( html );
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/announcement/recruitment`.
