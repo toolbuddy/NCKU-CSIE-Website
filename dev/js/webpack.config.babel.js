@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { projectRoot, } from '../../settings/server/config.js';
+import { emptyStatement, } from 'babel-types';
 
 const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
 const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
@@ -141,6 +142,10 @@ export default {
             static:   staticRoot,
             settings: path.join( projectRoot, 'settings' ),
         },
+    },
+
+    node: {
+        fs: 'empty',
     },
 
     /**
