@@ -21,6 +21,7 @@
     "clean:css": "shx rm -rf static/dist/css",
     "clean:html": "shx rm -rf static/dist/html",
     "clean:js": "shx rm -rf static/dist/js",
+    "copy": "cp -R node_modules/tinymce/{plugins,skins,themes} static/dist/js/user/announcement",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
     "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
