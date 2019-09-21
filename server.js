@@ -3,6 +3,7 @@ import http from 'http';
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
+import fileUpload from 'express-fileupload';
 
 import { port, } from 'settings/server/config.js';
 import contentSecurityPolicy from 'settings/server/content-security-policy.js';
@@ -21,6 +22,7 @@ const httpServer = http.createServer( server );
  */
 
 httpServer.listen( port );
+
 
 /**
  * Remove default express HTTP response header `x-powered-by`.

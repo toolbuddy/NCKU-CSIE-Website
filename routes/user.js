@@ -70,7 +70,9 @@ const router = express.Router( {
 //     } ),
 // } );
 
-const upload = multer();
+// const upload = multer();
+
+// const upload = multer( { dest: `${ projectRoot }/static/dist/file/`, } );
 
 // Delete router.use( express.bodyParser() );
 
@@ -1170,7 +1172,9 @@ router
 
 router
 .route( '/uploadPhoto' )
-.post( upload.any(), ( req, res ) => {
+
+// .post( upload.fields( [ { name: 'file', }, ] ), ( req, res ) => {
+.post( cors(), ( req, res ) => {
     try {
         console.log( 'in route user/uploadPhoto' );
 
@@ -1275,10 +1279,15 @@ router
 
         // Save photo
 
+        console.log( req.headers[ 'content-type' ] );
+        if ( req.is( 'multipart/form-data' ) )
+            console.log( 'yesyesyes' );
+
+
         const formData = req.body;
         console.log( formData );
         console.log( req.files );
-        console.log( req.files.file );
+        console.log( req.file );
 
         // Console.log( req.body );
         // console.log( req.files );
@@ -1303,22 +1312,8 @@ router
         // form.keepExtensions = true;
         // form.maxFieldsSize = 20 * 1024 * 1024;
 
-        // form.parse( req, ( err, fields, files ) => {
-        //     if ( err ) {
-        //         console.error( 'Error', err );
-        //         throw err;
-        //     }
-        //     console.log( files.filetoupload.path );
-        //     console.log( files.filetoupload.name );
-        //     console.log( 'Fields', fields );
-        //     console.log( 'Files', files );
-        //     files.map( ( file ) => {
-        //         console.log( file );
-        //     } );
-        // } );
 
-
-        // Form.on( 'field', ( name, field ) => {
+        // form.on( 'field', ( name, field ) => {
         //     console.log( 'Field', name, field );
         // } );
         // form.on( 'fileBegin', ( name, file ) => {
@@ -1344,8 +1339,26 @@ router
         //     // Response
         //     console.log( 'in formidable - end' );
         // } );
+        // form.on( 'progress', function ( bytesReceived, bytesExpected ) {
+        //     const percent_complete = ( bytesReceived / bytesExpected ) * 100;
+        //     console.log( percent_complete.toFixed( 2 ) );
+        // } );
 
-        // form.parse( req );
+        // form.parse( req, ( err, fields, files ) => {
+        //     if ( err ) {
+        //         console.error( 'Error', err );
+        //         throw err;
+        //     }
+        //     console.log( files.filetoupload.path );
+        //     console.log( files.filetoupload.name );
+        //     console.log( 'Fields', fields );
+        //     console.log( 'Files', files );
+        //     files.map( ( file ) => {
+        //         console.log( file );
+        //     } );
+        // } );
+
+        // Form.parse( req );
 
         // Save photo url in database
         console.log( 'should save photo url in db' );
