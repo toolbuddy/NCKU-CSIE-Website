@@ -72,7 +72,7 @@ const router = express.Router( {
 
 // const upload = multer();
 
-// const upload = multer( { dest: `${ projectRoot }/static/dist/file/`, } );
+const upload = multer( { dest: `${ projectRoot }/static/dist/file/`, } );
 
 // Delete router.use( express.bodyParser() );
 
@@ -1173,7 +1173,9 @@ router
 router
 .route( '/uploadPhoto' )
 
-// .post( upload.fields( [ { name: 'file', }, ] ), ( req, res ) => {
+// .post( cors(), upload.fields( [ { name: 'file', }, ] ), ( req, res ) => {
+// .post( cors(), upload.none(), ( req, res ) => {
+// .post( cors(), upload.single( 'file' ), ( req, res ) => {
 .post( cors(), ( req, res ) => {
     try {
         console.log( 'in route user/uploadPhoto' );
@@ -1284,9 +1286,14 @@ router
             console.log( 'yesyesyes' );
 
 
-        const formData = req.body;
-        console.log( formData );
+        // Const formData = req.body;
+        // console.log( formData );
+
+        console.log( 'body' );
+        console.log( req.body );
+        console.log( 'files' );
         console.log( req.files );
+        console.log( 'file' );
         console.log( req.file );
 
         // Console.log( req.body );
@@ -1313,7 +1320,7 @@ router
         // form.maxFieldsSize = 20 * 1024 * 1024;
 
 
-        // form.on( 'field', ( name, field ) => {
+        // Form.on( 'field', ( name, field ) => {
         //     console.log( 'Field', name, field );
         // } );
         // form.on( 'fileBegin', ( name, file ) => {
@@ -1358,7 +1365,7 @@ router
         //     } );
         // } );
 
-        // Form.parse( req );
+        // form.parse( req );
 
         // Save photo url in database
         console.log( 'should save photo url in db' );
