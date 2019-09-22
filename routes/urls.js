@@ -30,6 +30,8 @@ import student from 'routes/student.js';
 import developer from 'routes/developer.js';
 import user from 'routes/user.js';
 
+import bodyParser from 'routes/utils/body-parser.js';
+
 import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
@@ -65,36 +67,6 @@ app.set( 'view engine', 'pug' );
 app.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
 
 /**
- * Url-encoded parser for HTTP request body.
- * Request header `Content-Type` can only be one of the supported types.
- * Mainly used by `<form method='POST' enctype='x-www-form-urlencoded'>`.
- */
-
-app.use( express.urlencoded( {
-    extended: true,
-    limit:    '5GB',
-    type:     [
-        'application/x-www-form-urlencoded',
-        'multipart/form-data',
-        'text/*',
-        '*/json',
-        'application/xhtml+xml',
-        'application/xml',
-    ],
-} ) );
-
-/**
- * JSON parser for HTTP request body.
- * Request header `Content-Type` can only be JSON related MIME types.
- * Maximum supported JSON size is 5GB.
- */
-
-app.use( express.json( {
-    limit: '5GB',
-    type:  '*/json',
-} ) );
-
-/**
  * Setup language option.
  */
 
@@ -104,7 +76,7 @@ app.use( language );
  * Setup static files routes.
  */
 
-app.use( '/static', staticFile );
+app.use( '/static', bodyParser, staticFile );
 
 app.use( ( req, res, next ) => {
     res.locals.SERVER = {
@@ -123,62 +95,76 @@ app.use( ( req, res, next ) => {
     next();
 } );
 
+
 // App.use( checkSession );
 
 /**
  * Resolve URL `/`.
  */
 
-app.use( '/', home );
+app.use( '/', bodyParser, home );
 
 /**
  * Resolve URL `/about`.
  */
 
-app.use( '/about', about );
+app.use( '/about', bodyParser, about );
 
 /**
  * Resolve URL `/announcement`.
  */
 
-app.use( '/announcement', announcement );
+app.use( '/announcement', bodyParser, announcement );
 
 /**
  * Resolve URL `/auth`.
  */
 
-app.use( '/auth', auth );
+app.use( '/auth', express.urlencoded( {
+    extended: true,
+    limit:    '5GB',
+    type:     [
+        'application/x-www-form-urlencoded',
+        'multipart/form-data',
+        'text/*',
+        '*/json',
+        'application/xhtml+xml',
+        'application/xml',
+    ],
+} ), express.json( {
+    limit: '5GB',
+    type:  '*/json',
+} ), auth );
 
 /**
  * Resolve URL `/research`.
  */
 
-app.use( '/research', research );
+app.use( '/research', bodyParser, research );
 
 /**
  * Resolve URL `/resource`.
  */
 
-app.use( '/resource', resource );
+app.use( '/resource', bodyParser, resource );
 
 /**
  * Resolve URL `/student`.
  */
 
-app.use( '/student', student );
+app.use( '/student', bodyParser, student );
 
 /**
  * Resolve URL `/developer`.
  */
 
-app.use( '/developer', developer );
+app.use( '/developer', bodyParser, developer );
 
 /**
  * Resolve URL `/user`.
  */
 
 app.use( '/user', user );
-
 
 app.use(
     ( {}, res, next ) => {

@@ -28,7 +28,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Profile.findAll( {
+        const data = await Profile.findOne( {
             attributes: [
                 'profileId',
                 'photo',
@@ -57,6 +57,7 @@ export default async ( opt ) => {
         };
     }
     catch ( err ) {
+        console.log( err );
         if ( err.status )
             throw err;
         const error = new Error();

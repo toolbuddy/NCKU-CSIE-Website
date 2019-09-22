@@ -3,10 +3,8 @@ import http from 'http';
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
-import fileUpload from 'express-fileupload';
-import multer from 'multer';
 
-import { secret, host, projectRoot, maxAge, staticHost, port, } from 'settings/server/config.js';
+import { port, } from 'settings/server/config.js';
 import contentSecurityPolicy from 'settings/server/content-security-policy.js';
 import csie from 'routes/urls.js';
 import apis from 'apis/urls.js';
@@ -59,17 +57,6 @@ server.use( helmet.contentSecurityPolicy( {
  */
 
 server.use( compression() );
-
-/**
- * Setup file parser.
- */
-
-server.use( multer( {
-    dest:     `${ projectRoot }/static/dist/file/`,
-    filename ( req, file, cb ) {
-        cb( null, file.name );
-    },
-} ).any() );
 
 /**
  * Setup web api routes.
