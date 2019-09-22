@@ -239,8 +239,6 @@ export default class AnnouncementEvent {
     }
 
     isDataValidate () {
-        const form = this.DOM.editBlock;
-        const isPublished = Number( form.elements[ 'publish-time' ].value );
         let errorMessage = '';
 
         /***
@@ -259,18 +257,16 @@ export default class AnnouncementEvent {
             this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.length <= 0
         )
             errorMessage = '中文內容為必填欄位';
-        if ( isPublished === 1 ) {
-            if (
-                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title ) ||
-                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title.length <= 0
-            )
-                errorMessage = '英文標題為必填欄位';
-            if (
-                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content ) ||
-                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.length <= 0
-            )
-                errorMessage = '英文內容為必填欄位';
-        }
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title ) ||
+            this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title.length <= 0
+        )
+            errorMessage = '英文標題為必填欄位';
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content ) ||
+            this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.length <= 0
+        )
+            errorMessage = '英文內容為必填欄位';
 
         if ( errorMessage !== '' ) {
             this.setErrorMessage( errorMessage );

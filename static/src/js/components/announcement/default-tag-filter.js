@@ -36,7 +36,8 @@ export default class DefaultTagFilter {
             !ValidateUtils.isPositiveInteger( opt.page ) ||
             typeof ( opt.visiblePageNum ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId ) ||
+            typeof ( opt.userId ) === 'undefined'
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -61,6 +62,7 @@ export default class DefaultTagFilter {
             visiblePageNum:     opt.visiblePageNum,
             animationDelayTime:  500,
             scrollPx:           5,
+            userId:             opt.userId,
         };
 
         this.tagId = {
@@ -789,8 +791,10 @@ export default class DefaultTagFilter {
             } )
             .forEach( ( briefing ) => {
                 this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML( {
+                    userId: this.config.userId,
                     briefing,
-                    UTILS: {
+                    host,
+                    UTILS:  {
                         url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
                     },
                 } );
@@ -910,8 +914,10 @@ export default class DefaultTagFilter {
             } )
             .forEach( ( briefing ) => {
                 this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
+                    userId: this.config.userId,
                     briefing,
-                    UTILS: {
+                    host,
+                    UTILS:  {
                         url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
                     },
                 } );

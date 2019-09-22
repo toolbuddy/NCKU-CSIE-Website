@@ -1388,6 +1388,92 @@ router
 .get( staticHtml( 'user/announcement/index' ) );
 
 /**
+ * Resolve URL `/user/announcement/\.`.
+ */
+
+router
+.route( /^\/announcement\/./ )
+.get( cors(), noCache, async ( req, res, next ) => {
+    try {
+        console.log( 'in route user/announcement/. - get' );
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
+
+            // Get session data in the database.
+            const data = await getSession( {
+                sid,
+            } );
+
+            // Check `expires`
+            if ( data.expires < Date.now() ) {
+                req.session.regenerate( async () => {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
+
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
+                    } );
+
+                    req.session.save();
+                    res.locals.unparsedSid = req.session.id;
+                    res.redirect( '/index' );
+                } );
+            }
+            else if ( data.userId !== null ) {
+                const result = await getAdminByUserId( {
+                    userId: Number( data.userId ),
+                } );
+
+                if ( result.sid === data.sid ) {
+                    console.log( 'should send profile html' );
+                    next();
+                }
+                else
+                    res.redirect( '/index' );
+            }
+            else
+                res.redirect( '/index' );
+        }
+        else
+            res.redirect( '/index' );
+    }
+    catch ( error ) {
+        if ( error.status === 404 ) {
+            // No corresponding session id in the database
+            req.session.regenerate( async () => {
+                const newSid = req.session.id;
+                req.session.ctrl = newSid;
+
+                // Store new session in database
+                await saveSession( {
+                    sid:     newSid,
+                    expires: req.session.cookie.maxAge + Date.now(),
+                } );
+
+                req.session.save();
+                res.locals.unparsedSid = req.session.id;
+
+                // Send new session & user id
+                res.redirect( '/index' );
+            } );
+        }
+        else
+            console.error( error );
+    }
+} );
+
+/**
  * Resolve URL `/user/announcement/add`.
  */
 

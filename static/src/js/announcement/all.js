@@ -4,7 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import MultipleDefaultTagFilter from 'static/src/js/components/announcement/multiple-default-tag-filter.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import roleUtils from 'models/auth/utils/role.js';
-import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
+import { host, } from 'settings/server/config.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -61,8 +61,10 @@ async function fetchData () {
     try {
         const result = await fetchData();
         const userRole = result.role;
-        const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? result.userId : -1;
 
+        const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? result.roleId : -1;
+
+        // Const userId = -1;
         console.log( result );
         try {
             const filter = new MultipleDefaultTagFilter( {
