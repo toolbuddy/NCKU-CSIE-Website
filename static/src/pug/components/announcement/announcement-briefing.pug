@@ -9,9 +9,11 @@ a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ brie
     aside.briefing__button.button
       img.button__update.update( 
         alt = 'update', 
+        class = `button__update--${ briefing.announcementId }`,
         src = `${ host }/static/image/icon/edit.png`,
       )
       img.button__remove.remove( 
         alt = 'remove', 
+        class = `button__remove--${ briefing.announcementId }`,
         src = `${ host }/static/image/icon/delete.png`,
       )

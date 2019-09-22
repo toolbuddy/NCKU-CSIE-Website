@@ -913,13 +913,24 @@ export default class DefaultTagFilter {
                 return briefing;
             } )
             .forEach( ( briefing ) => {
-                this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
-                    userId: this.config.userId,
-                    briefing,
-                    host,
-                    UTILS:  {
-                        url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
-                    },
+                new Promise( ( res ) => {
+                    this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
+                        userId: this.config.userId,
+                        briefing,
+                        host,
+                        UTILS:  {
+                            url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                        },
+                    } );
+                    res();
+                } )
+                .then( () => {
+                    // Console.log( this.DOM.announcement.normal.briefings );
+                    const briefingDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
+                    briefingDOM.addEventListener( 'click', ( e ) => {
+                        e.preventDefault();
+                        window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
+                    } );
                 } );
             } );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );

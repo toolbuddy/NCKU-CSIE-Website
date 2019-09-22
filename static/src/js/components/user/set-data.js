@@ -284,7 +284,7 @@ class SetData {
                             tempInternational = res.international;
                             temp = '';
                             if ( res.refereed )
-                                temp += 'Refereed ';
+                                temp += 'REFERRED ';
                             if ( res.international )
                                 temp += i18n[ this.config.languageId ].international;
                             temp += category;
