@@ -27,12 +27,15 @@ import deleteAnnouncementFiles from 'models/announcement/operations/delete-annou
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, secret, } from 'settings/server/config.js';
+import BodyParser from 'body-parser';
 
 const router = express.Router( {
     caseSensitive: true,
     mergeParams:   false,
     strict:        false,
 } );
+
+const jsonParser = BodyParser.json();
 
 /**
  * Resolve URL `/announcement`.
@@ -77,7 +80,7 @@ router
 .route( '/add' )
 
 // .post( cors(), async ( req, res ) => {
-.get( async ( req, res, next ) => {
+.post( async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
 
@@ -119,13 +122,82 @@ router
                             redirect: '/error/404',
                         } );
                     }
-                    else
+                    else {
+                        // Console.log( error );
                         console.error( error );
+                    }
                 }
             }
         }
 
-        // Check proper user
+        console.log( req.body );
+        console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+        const dataTags = data.tags.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
+        dataTags.pop();
+        const dataFiles = Object.keys( data.fileI18n ).map( key => [
+            {
+                languageId: 0,
+                name:       data.fileI18n[ key ],
+            },
+            {
+                languageId: 1,
+                name:       data.fileI18n[ key ],
+            },
+        ] );
+
+
+        if ( data.method === 'post' ) {
+            await postAnnouncement( {
+                publishTime:      new Date(),
+                updateTime:       new Date(),
+                author:           Number( data.author ),
+                isPinned:         Number( data.isPinned ),
+                isPublished:      Number( data.isPublished ),
+                imageUrl:         null,
+                views:            0,
+                tag:              dataTags,
+                announcementI18n:        [
+                    {
+                        languageId: 0,
+                        title:      data.i18n[ 0 ].title,
+                        content:    data.i18n[ 0 ].content,
+                    },
+                    {
+                        languageId: 1,
+                        title:      data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].title,
+                    },
+                ],
+                fileI18n: dataFiles,
+            } );
+        }
+        else if ( data.method === 'patch' ) {
+            console.log( 'patch' );
+            await patchAnnouncement( {
+                announcementId:   data.announcementId,
+                updateTime:       new Date(),
+                author:           Number( data.author ),
+                isPinned:         Number( data.isPinned ),
+                isPublished:      Number( data.isPublished ),
+                imageUrl:         null,
+                views:            1,
+                i18n:             [
+                    {
+                        languageId: 0,
+                        title:      data.i18n[ 0 ].title,
+                        content:    data.i18n[ 0 ].content,
+                    },
+                    {
+                        languageId: 1,
+                        title:      data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].title,
+                    },
+                ],
+                tags:     dataTags,
+                fileI18n: [],
+            } );
+        }
 
         // // post ann
         // await postAnnouncement( {
@@ -183,13 +255,13 @@ router
         //     ],
         // } );
 
-        // delete(hide) ann
-        await deleteAnnouncements( {
-            announcementIds: [
-                1151,
-                1152,
-            ],
-        } );
+        // // delete(hide) ann
+        // await deleteAnnouncements( {
+        //     announcementIds: [
+        //         1151,
+        //         1152,
+        //     ],
+        // } );
 
         // // delete ann files
         // await deleteAnnouncementFiles( {

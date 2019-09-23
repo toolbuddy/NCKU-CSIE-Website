@@ -3,6 +3,8 @@ import editorEvent from 'static/src/js/components/user/announcement/index.js';
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import AnnouncementEvent from 'static/src/js/components/user/announcement/announcement-event.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -33,6 +35,21 @@ try {
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
     headerLarge.renderLogin();
+}
+catch ( err ) {
+    console.error( err );
+}
+
+try {
+    const id = 0;
+
+    const announcementEvent = new AnnouncementEvent( {
+        id,
+        languageId:     WebLanguageUtils.currentLanguageId,
+        editBlockDOM: document.getElementById( 'edit-block' ),
+        method:       'add',
+    } );
+    announcementEvent.exec();
 }
 catch ( err ) {
     console.error( err );

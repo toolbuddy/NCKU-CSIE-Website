@@ -61,6 +61,12 @@
             areas:'. word remove modify';
             columns:font__px-to-rem( 100 ) auto font__px-to-rem( 35 ) font__px-to-rem( 35 );
           }
+          @if $block == 'patent' {
+            grid-template: {
+              areas:'. remove modify word';
+              columns:font__px-to-rem( 35 ) font__px-to-rem( 35 ) font__px-to-rem( 35 ) auto;
+            }
+          }
           padding: 0;
         }
         @if $block == 'education' or $block == 'experience' or $block == 'project' {
@@ -949,7 +955,8 @@
 
             // [ skin ]
             color: rgba( 81, 81, 81, .87 );
-            overflow: scroll;
+
+            // overflow: scroll;
 
             %patent-table {
               // [ layout ]
