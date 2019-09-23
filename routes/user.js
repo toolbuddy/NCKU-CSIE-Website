@@ -14,7 +14,7 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import bodyParser from 'routes/utils/body-parser.js';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
@@ -62,19 +62,13 @@ const upload = multer( {
     },
 } ).any();
 
-// Const upload = multer();
-
-// const upload = multer( { dest: `${ projectRoot }/static/dist/file/`, } );
-
-// Delete router.use( express.bodyParser() );
-
 /**
  * Resolve URL `/user`.
  */
 
 router
 .route( '/' )
-.get( bodyParser, staticHtml( 'user/index' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/id`.
@@ -83,21 +77,7 @@ router
 router
 
 // .route( '/id' )
-.post( '/id', express.urlencoded( {
-    extended: true,
-    limit:    '5GB',
-    type:     [
-        'application/x-www-form-urlencoded',
-        'multipart/form-data',
-        'text/*',
-        '*/json',
-        'application/xhtml+xml',
-        'application/xml',
-    ],
-} ), express.json( {
-    limit: '5GB',
-    type:  '*/json',
-} ), cors(), async ( req, res ) => {
+.post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/id' );
         const cookie = req.cookies.sessionId;
@@ -211,7 +191,7 @@ router
 
 router
 .route( '/profile' )
-.get( bodyParser, cors(), noCache, async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     try {
         console.log( 'in route user/profile - get' );
         const cookie = req.cookies.sessionId;
@@ -302,7 +282,7 @@ router
             console.error( error );
     }
 } )
-.post( bodyParser, cors(), async ( req, res ) => {
+.post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/profile' );
 
@@ -1139,7 +1119,7 @@ router
 
 router
 .route( '/award' )
-.get( bodyParser, staticHtml( 'user/award' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
 
 /**
  * Resolve URL `/user/project`.
@@ -1147,7 +1127,7 @@ router
 
 router
 .route( '/project' )
-.get( bodyParser, staticHtml( 'user/project' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
 
 /**
  * Resolve URL `/user/patent`.
@@ -1155,7 +1135,7 @@ router
 
 router
 .route( '/patent' )
-.get( bodyParser, staticHtml( 'user/patent' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
 
 /**
  * Resolve URL `/user/conference`.
@@ -1163,7 +1143,7 @@ router
 
 router
 .route( '/conference' )
-.get( bodyParser, staticHtml( 'user/conference' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
 
 /**
  * Resolve URL `/user/studentAward`.
@@ -1171,7 +1151,7 @@ router
 
 router
 .route( '/studentAward' )
-.get( bodyParser, staticHtml( 'user/studentAward' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
 
 /**
  * Resolve URL `/user/uploadPhoto`.

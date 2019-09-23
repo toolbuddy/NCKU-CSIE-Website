@@ -30,7 +30,7 @@ import student from 'routes/student.js';
 import developer from 'routes/developer.js';
 import user from 'routes/user.js';
 
-import bodyParser from 'routes/utils/body-parser.js';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
@@ -76,7 +76,7 @@ app.use( language );
  * Setup static files routes.
  */
 
-app.use( '/static', bodyParser, staticFile );
+app.use( '/static', urlEncoded, jsonParser, staticFile );
 
 app.use( ( req, res, next ) => {
     res.locals.SERVER = {
@@ -102,63 +102,49 @@ app.use( ( req, res, next ) => {
  * Resolve URL `/`.
  */
 
-app.use( '/', bodyParser, home );
+app.use( '/', urlEncoded, jsonParser, home );
 
 /**
  * Resolve URL `/about`.
  */
 
-app.use( '/about', bodyParser, about );
+app.use( '/about', urlEncoded, jsonParser, about );
 
 /**
  * Resolve URL `/announcement`.
  */
 
-app.use( '/announcement', bodyParser, announcement );
+app.use( '/announcement', urlEncoded, jsonParser, announcement );
 
 /**
  * Resolve URL `/auth`.
  */
 
-app.use( '/auth', express.urlencoded( {
-    extended: true,
-    limit:    '5GB',
-    type:     [
-        'application/x-www-form-urlencoded',
-        'multipart/form-data',
-        'text/*',
-        '*/json',
-        'application/xhtml+xml',
-        'application/xml',
-    ],
-} ), express.json( {
-    limit: '5GB',
-    type:  '*/json',
-} ), auth );
+app.use( '/auth', urlEncoded, jsonParser, auth );
 
 /**
  * Resolve URL `/research`.
  */
 
-app.use( '/research', bodyParser, research );
+app.use( '/research', urlEncoded, jsonParser, research );
 
 /**
  * Resolve URL `/resource`.
  */
 
-app.use( '/resource', bodyParser, resource );
+app.use( '/resource', urlEncoded, jsonParser, resource );
 
 /**
  * Resolve URL `/student`.
  */
 
-app.use( '/student', bodyParser, student );
+app.use( '/student', urlEncoded, jsonParser, student );
 
 /**
  * Resolve URL `/developer`.
  */
 
-app.use( '/developer', bodyParser, developer );
+app.use( '/developer', urlEncoded, jsonParser, developer );
 
 /**
  * Resolve URL `/user`.

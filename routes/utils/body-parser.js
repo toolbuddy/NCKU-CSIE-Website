@@ -12,24 +12,30 @@ import express from 'express';
  * Maximum supported JSON size is 5GB.
  */
 
-export default function ( req, res, next ) {
-    express.urlencoded( {
-        extended: true,
-        limit:    '5GB',
-        type:     [
-            'application/x-www-form-urlencoded',
-            'multipart/form-data',
-            'text/*',
-            '*/json',
-            'application/xhtml+xml',
-            'application/xml',
-        ],
-    } );
+const urlEncoded = express.urlencoded( {
+    extended: true,
+    limit:    '5GB',
+    type:     [
+        'application/x-www-form-urlencoded',
+        'multipart/form-data',
+        'text/*',
+        '*/json',
+        'application/xhtml+xml',
+        'application/xml',
+    ],
+} );
 
-    express.json( {
-        limit: '5GB',
-        type:  '*/json',
-    } );
+const jsonParser = express.json( {
+    limit: '5GB',
+    type:  '*/json',
+} );
 
-    next();
-}
+export {
+    jsonParser,
+    urlEncoded,
+};
+
+export default {
+    jsonParser,
+    urlEncoded,
+};

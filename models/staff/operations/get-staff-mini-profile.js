@@ -57,7 +57,6 @@ export default async ( opt ) => {
         };
     }
     catch ( err ) {
-        console.log( err );
         if ( err.status )
             throw err;
         const error = new Error();
