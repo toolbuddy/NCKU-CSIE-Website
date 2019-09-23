@@ -8,6 +8,7 @@ import { port, } from 'settings/server/config.js';
 import contentSecurityPolicy from 'settings/server/content-security-policy.js';
 import csie from 'routes/urls.js';
 import apis from 'apis/urls.js';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 /**
  * Create HTTP server instance.
@@ -62,7 +63,7 @@ server.use( compression() );
  * Setup web api routes.
  */
 
-server.use( '/api', apis );
+server.use( '/api', urlEncoded, jsonParser, apis );
 
 /**
  * Setup web page routes.

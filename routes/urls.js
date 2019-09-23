@@ -102,7 +102,7 @@ app.use( ( req, res, next ) => {
  * Resolve URL `/`.
  */
 
-app.use( '/', urlEncoded, jsonParser, home );
+app.use( '/', home );
 
 /**
  * Resolve URL `/about`.

@@ -14,6 +14,9 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
+import * as fs from 'fs';
+import path from 'path';
+
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
@@ -55,29 +58,21 @@ const router = express.Router( {
     strict:        false,
 } );
 
-const upload = multer( {
-    dest:     `${ projectRoot }/static/dist/file/`,
-    filename: ( req, file, cb ) => {
-        cb( null, req.file.originalname );
-    },
-} ).any();
-
 /**
  * Resolve URL `/user`.
  */
 
 router
 .route( '/' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/index' ) );
+.get( staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/id`.
  */
 
 router
-
-// .route( '/id' )
-.post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
+.route( '/id' )
+.post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/id' );
         const cookie = req.cookies.sessionId;
@@ -1086,7 +1081,7 @@ router
                 };
             }
             await updateFacultyDetail( {
-                profileId:                uploadData.profileId, // UserData.roleId
+                profileId:                uploadData.profileId,
                 education:                uploadData.update.education,
                 experience:               uploadData.update.experience,
                 profile:                  uploadData.update.profile,
@@ -1160,12 +1155,13 @@ router
 router
 .route( '/uploadPhoto' )
 .post( cors(), multer( {
-    dest:     `${ projectRoot }/static/dist/file/`,
+    dest:     `${ projectRoot }/static/src/image/faculty/`,
     storage: multer.diskStorage( {
-        destination: `${ projectRoot }/static/dist/file/`,
-        filename:    ( req, file, cb ) => {
-            cb( null, file.originalname );
-        },
+        destination: `${ projectRoot }/static/src/image/faculty/`,
+
+        // Filename:    ( req, file, cb ) => {
+        //     cb( null, file.originalname );
+        // },
     } ),
 } ).any(), async ( req, res ) => {
     try {
@@ -1236,6 +1232,14 @@ router
                             redirect: '/index',
                         } );
                     }
+
+                    // Save file & rename
+                    req.files.forEach( ( fileObj ) => {
+                        fs.rename( fileObj.path, `${ fileObj.destination }${ result.roleId }${ path.extname( fileObj.originalname ) }`, function ( err ) {
+                            if ( err )
+                                throw err;
+                        } );
+                    } );
                 }
                 else {
                     res.send( {
@@ -1269,26 +1273,6 @@ router
                     console.error( error );
             }
         }
-
-        // Save photo
-
-        console.log( req.headers[ 'content-type' ] );
-        if ( req.is( 'multipart/form-data' ) )
-            console.log( 'yesyesyes' );
-
-
-        console.log( 'body' );
-        console.log( req.body );
-        console.log( 'files' );
-        console.log( req.files );
-        console.log( 'file' );
-        console.log( req.file );
-        console.log( 'test' );
-        console.log( req.body.mFileName );
-        console.log( req.files[ 0 ].originalname );
-
-        // Save photo url in database
-        console.log( 'should save photo url in db' );
         return res.end();
     }
     catch ( error ) {
@@ -1302,7 +1286,7 @@ router
 
 router
 .route( '/publication' )
-.get( staticHtml( 'user/publication' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/publication' ) );
 
 /**
  * Resolve URL `/user/technologyTransfer`.
@@ -1310,7 +1294,7 @@ router
 
 router
 .route( '/technologyTransfer' )
-.get( staticHtml( 'user/technologyTransfer' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/technologyTransfer' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.
@@ -1318,7 +1302,7 @@ router
 
 router
 .route( '/resetPassword' )
-.get( staticHtml( 'user/resetPassword' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/resetPassword' ) );
 
 /**
  * Resolve URL `/user/announcement`.
@@ -1326,7 +1310,7 @@ router
 
 router
 .route( '/announcement' )
-.get( staticHtml( 'user/announcement/index' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/announcement/index' ) );
 
 /**
  * Resolve URL `/user/announcement/add`.
@@ -1334,7 +1318,7 @@ router
 
 router
 .route( '/announcement/add' )
-.get( staticHtml( 'user/announcement/add' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/announcement/add' ) );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
@@ -1342,10 +1326,7 @@ router
 
 router
 .route( '/announcement/edit/:announcementId' )
-
-// .get( staticHtml( 'user/announcement/edit' ) );
-
-.get( async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const data = await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),
