@@ -31,6 +31,7 @@ import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import tagUtils from 'models/announcement/utils/tag.js';
+import roleUtils from 'models/auth/utils/role.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -74,7 +75,6 @@ router
 .route( '/id' )
 .post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
-        console.log( 'in route user/id' );
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
         res.header( 'Access-Control-Allow-Origin', host );
@@ -188,7 +188,6 @@ router
 .route( '/profile' )
 .get( urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     try {
-        console.log( 'in route user/profile - get' );
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
 
@@ -229,7 +228,6 @@ router
                 } );
 
                 if ( result.sid === data.sid ) {
-                    console.log( 'should send profile html' );
                     res.sendFile(
                         `static/dist/html/user/profile.${ req.query.languageId }.html`,
                         {
@@ -279,8 +277,6 @@ router
 } )
 .post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
-        console.log( 'in route user/profile' );
-
         // Get id
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
@@ -593,7 +589,6 @@ router
                 };
             }
             else if ( data.dbTable === 'technologyTransferPatent' ) {
-                console.log( data );
                 const item = {
                     technologyTransferId: Number( data.dbTableId ),
                 };
@@ -649,7 +644,6 @@ router
                 };
             }
             else if ( data.dbTable === 'award' ) {
-                console.log( data );
                 const item = {
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
@@ -885,11 +879,9 @@ router
                 };
             }
             else if ( data.dbTable === 'technologyTransferPatent' ) {
-                console.log( data.item );
                 const item = {
                     technologyTransferPatentId:    Number( data.dbTableItemId ),
                 };
-                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -909,12 +901,10 @@ router
                 };
             }
             else if ( data.dbTable === 'student' ) {
-                console.log( data.item );
                 const item = {
                     degree:       Number( data.item.degree ),
                     studentId:    Number( data.dbTableItemId ),
                 };
-                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -1155,15 +1145,15 @@ router
 router
 .route( '/uploadPhoto' )
 .post( cors(), multer( {
-    dest:     `${ projectRoot }/static/src/image/faculty/`,
+    dest:     `${ projectRoot }/static/src/image/`,
     storage: multer.diskStorage( {
-        destination: `${ projectRoot }/static/src/image/faculty/`,
+        destination: `${ projectRoot }/static/src/image/`,
 
         // Filename:    ( req, file, cb ) => {
         //     cb( null, file.originalname );
         // },
     } ),
-} ).any(), async ( req, res ) => {
+} ).single( 'file' ), async ( req, res ) => {
     try {
         console.log( 'in route user/uploadPhoto' );
 
@@ -1234,12 +1224,18 @@ router
                     }
 
                     // Save file & rename
-                    req.files.forEach( ( fileObj ) => {
-                        fs.rename( fileObj.path, `${ fileObj.destination }${ result.roleId }${ path.extname( fileObj.originalname ) }`, function ( err ) {
+                    if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+                        fs.rename( req.file.path, `${ req.file.destination }faculty/${ result.roleId }${ path.extname( req.file.originalname ) }`, function ( err ) {
                             if ( err )
                                 throw err;
                         } );
-                    } );
+                    }
+                    else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+                        fs.rename( req.file.path, `${ req.file.destination }staff/${ result.roleId }${ path.extname( req.file.originalname ) }`, function ( err ) {
+                            if ( err )
+                                throw err;
+                        } );
+                    }
                 }
                 else {
                     res.send( {

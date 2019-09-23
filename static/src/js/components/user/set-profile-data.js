@@ -290,7 +290,6 @@ export default class SetProfileData {
                             } );
                             reader.readAsDataURL( input.files[ 0 ] );
 
-                            console.log( 'test uploading photo' );
                             const formData = new FormData();
 
                             formData.append( 'file', input.files[ 0 ] );
