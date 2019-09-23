@@ -47,8 +47,6 @@ try {
     else
         id = id[ 1 ];
 
-
-    console.log( id );
     const announcementEvent = new AnnouncementEvent( {
         id:             Number( id ),
         languageId:     WebLanguageUtils.currentLanguageId,

@@ -1,5 +1,6 @@
 @import 'components/common/font';
 @import 'components/common/icon';
+@import 'components/announcement/editor';
 
 // component
 // `> .#{ $block } > .#{ $block }__announcement.announcement`
@@ -17,12 +18,21 @@
     display: grid;
     grid: {
       template-areas:
+        'announcement__editor'
         'announcement__headline'
         'announcement__image'
         'announcement__article'
         'announcement__attachments';
       row-gap: font__px-to-rem( 32 );
     };
+
+    > .announcement__editor {
+      // [ layout ]
+      grid-area: announcement__editor;
+      display: flex;
+      justify-content: flex-end;
+      @include editor();
+    }
 
     // element
     // `> .#{ $block } > .announcement > .announcement__headline`

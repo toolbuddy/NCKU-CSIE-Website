@@ -1,0 +1,39 @@
+@mixin editor () {
+  > .editor__update.update {
+    // [ position ]
+    margin-right: font__px-to-rem( 15 );
+
+    > .update__image.image {
+      // [ position ]
+      height: font__px-to-rem( 25 );
+      width: auto;
+
+      // [ skin ]
+      filter: opacity( .87 );
+
+      // [ action ]
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        cursor: pointer;
+      }
+    }
+  }
+
+  > .editor__remove {
+    // [ position ]
+    height: font__px-to-rem( 25 );
+    width: auto;
+
+    // [ skin ]
+    filter: opacity( .87 );
+
+    // [ action ]
+    &:hover {
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+      cursor: pointer;
+    }
+  }
+  @content;
+}
