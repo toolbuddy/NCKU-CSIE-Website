@@ -322,7 +322,6 @@ export default class AnnouncementEvent {
     }
 
     uploadPatchAnnouncement () {
-        console.log( 'patch' );
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
@@ -347,11 +346,11 @@ export default class AnnouncementEvent {
                 'i18n':           {
                     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                 },
                 'tags':           tagString,
@@ -359,7 +358,7 @@ export default class AnnouncementEvent {
             } ),
         } )
         .then( () => {
-            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+            location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
         } );
     }
 

@@ -28,7 +28,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Profile.findAll( {
+        const data = await Profile.findOne( {
             attributes: [
                 'profileId',
                 'photo',

@@ -9,8 +9,6 @@ import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
 import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import validate from 'validate.js';
-import FormData from 'form-data';
-import fs from 'fs';
 
 export default class SetProfileData {
     constructor ( opt ) {
@@ -278,7 +276,7 @@ export default class SetProfileData {
             }
 
             if ( !this.isAddEventListener.imageChange ) {
-                this.imageDOM.button.addEventListener( 'change', ( eee ) => {
+                this.imageDOM.button.addEventListener( 'change', () => {
                     new Promise( async ( res, rej ) => {
                         const input = this.imageDOM.button;
                         if ( input.files && input.files[ 0 ] ) {
@@ -292,44 +290,16 @@ export default class SetProfileData {
                             } );
                             reader.readAsDataURL( input.files[ 0 ] );
 
-                            // Reader.onloadend = async ( e ) => {
-                            // here
-                            // console.log('test uploading photo');
-                            // let formData = new FormData();
-                            // formData.append("file", e.target.files[0]);
-
-                            // const result = await fetch( `${ host }/user/uploadPhoto`, {
-                            //     credentials: 'include',
-                            //     method:      'post',
-                            //     // headers: {
-                            //     //     'content-type': 'multipart/form-data', //'application/json',
-                            //     // },
-                            //     // body: input.files[0], //formData, //reader.result,
-                            //     body: formData,
-                            // } );
-
-                            // if ( !result.ok )
-                            //     throw new Error( 'photo uploading failed' );
-
-                            // res();
-                            // }
                             console.log( 'test uploading photo' );
                             const formData = new FormData();
 
-                            // FormData.append("file", eee.target.files[0]);
-                            formData.append( 'file', fs.createReadStream( '~/Desktop/racoon.jpg' ) );
-                            console.log( input.files[ 0 ] );
+                            formData.append( 'file', input.files[ 0 ] );
+                            formData.append( 'mFileName', 'mFileName.jpg' );
 
                             const result = await fetch( `${ host }/user/uploadPhoto`, {
                                 credentials: 'include',
                                 method:      'post',
-
-                                // Headers: {
-                                //     // 'content-type': 'multipart/form-data', //'application/json',
-                                //     'content-type': undefined,
-                                // },
-                                body:        formData, // Input.files[0], //formData, //reader.result,
-                                // body: formData,
+                                body:        formData,
                             } );
 
                             res();
@@ -340,31 +310,6 @@ export default class SetProfileData {
                         classRemove( this.imageDOM.cancel, 'image__button--hide' );
                         classAdd( this.imageDOM.check, 'image__button--active' );
                         classAdd( this.imageDOM.cancel, 'image__button--active' );
-                        const input = this.imageDOM.button;
-                        if ( input.files && input.files[ 0 ] ) {
-                            // // here
-                            // console.log('test uploading photo2');
-                            // let formData = new FormData();
-                            // formData.append("file", input.files[0], 'test2.JPG');
-                            // console.log(formData);
-
-                            // const options = {
-                            //     credentials: 'include',
-                            //     method:      'post',
-                            //     // headers: {
-                            //     //     // 'content-type': 'multipart/form-data', //'application/json',
-                            //     //     'content-type': undefined,
-                            //     // },
-                            //     body: formData, //input.files[0], //formData, //reader.result,
-                            // }
-
-                            // // delete options.headers['content-type'];
-
-                            // const result = await fetch( `${ host }/user/uploadPhoto`,  options);
-
-                            // if ( !result.ok )
-                            //     throw new Error( 'photo uploading failed' );
-                        }
                     } )
                     .catch( ( err ) => {
                         console.error( err );

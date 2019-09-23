@@ -22,6 +22,7 @@ const httpServer = http.createServer( server );
 
 httpServer.listen( port );
 
+
 /**
  * Remove default express HTTP response header `x-powered-by`.
  */

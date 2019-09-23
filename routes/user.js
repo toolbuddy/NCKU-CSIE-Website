@@ -13,10 +13,8 @@
 
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
 import multer from 'multer';
-import FormData from 'form-data';
-import formidable from 'formidable';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
@@ -25,7 +23,7 @@ import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, projectRoot, maxAge, staticHost, } from 'settings/server/config.js';
+import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
@@ -57,22 +55,12 @@ const router = express.Router( {
     strict:        false,
 } );
 
-// Const upload = multer( {
-//     storage: multer.diskStorage( {
-//         destination: ( req, file, cb ) => {
-//             console.log( req );
-//             console.log( file );
-//             cb( null, `${ projectRoot }/static/dist/file` );
-//         },
-//         filename: ( req, file, cb ) => {
-//             cb( null, 'multest.JPG' );
-//         },
-//     } ),
-// } );
-
-const upload = multer();
-
-// Delete router.use( express.bodyParser() );
+const upload = multer( {
+    dest:     `${ projectRoot }/static/dist/file/`,
+    filename: ( req, file, cb ) => {
+        cb( null, req.file.originalname );
+    },
+} ).any();
 
 /**
  * Resolve URL `/user`.
@@ -80,15 +68,16 @@ const upload = multer();
 
 router
 .route( '/' )
-.get( staticHtml( 'user/index' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/id`.
  */
 
 router
-.route( '/id' )
-.post( cors(), async ( req, res ) => {
+
+// .route( '/id' )
+.post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/id' );
         const cookie = req.cookies.sessionId;
@@ -202,7 +191,7 @@ router
 
 router
 .route( '/profile' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     try {
         console.log( 'in route user/profile - get' );
         const cookie = req.cookies.sessionId;
@@ -293,7 +282,7 @@ router
             console.error( error );
     }
 } )
-.post( cors(), async ( req, res ) => {
+.post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/profile' );
 
@@ -1130,7 +1119,7 @@ router
 
 router
 .route( '/award' )
-.get( staticHtml( 'user/award' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
 
 /**
  * Resolve URL `/user/project`.
@@ -1138,7 +1127,7 @@ router
 
 router
 .route( '/project' )
-.get( staticHtml( 'user/project' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
 
 /**
  * Resolve URL `/user/patent`.
@@ -1146,7 +1135,7 @@ router
 
 router
 .route( '/patent' )
-.get( staticHtml( 'user/patent' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
 
 /**
  * Resolve URL `/user/conference`.
@@ -1154,7 +1143,7 @@ router
 
 router
 .route( '/conference' )
-.get( staticHtml( 'user/conference' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
 
 /**
  * Resolve URL `/user/studentAward`.
@@ -1162,7 +1151,7 @@ router
 
 router
 .route( '/studentAward' )
-.get( staticHtml( 'user/studentAward' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
 
 /**
  * Resolve URL `/user/uploadPhoto`.
@@ -1170,185 +1159,137 @@ router
 
 router
 .route( '/uploadPhoto' )
-.post( upload.any(), ( req, res ) => {
+.post( cors(), multer( {
+    dest:     `${ projectRoot }/static/dist/file/`,
+    storage: multer.diskStorage( {
+        destination: `${ projectRoot }/static/dist/file/`,
+        filename:    ( req, file, cb ) => {
+            cb( null, file.originalname );
+        },
+    } ),
+} ).any(), async ( req, res ) => {
     try {
         console.log( 'in route user/uploadPhoto' );
 
-        // // Get id
-        // const cookie = req.cookies.sessionId;
-        // res.locals.unparsedId = cookie;
+        // Get id
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
 
-        // if ( typeof ( cookie ) === 'undefined' ) {
-        //     // Got no cookie from the user.
+        if ( typeof ( cookie ) === 'undefined' ) {
+            // Got no cookie from the user.
 
-        //     // Store the cookie in the user.
-        //     const newSid = req.session.id;
-        //     req.session.ctrl = newSid;
+            // Store the cookie in the user.
+            const newSid = req.session.id;
+            req.session.ctrl = newSid;
 
-        //     // Store new session in database
-        //     await saveSession( {
-        //         sid:     newSid,
-        //         expires: req.session.cookie.maxAge + Date.now(),
-        //     } );
+            // Store new session in database
+            await saveSession( {
+                sid:     newSid,
+                expires: req.session.cookie.maxAge + Date.now(),
+            } );
 
-        //     res.send( {
-        //         redirect: '/index',
-        //     } );
-        // }
-        // else {
-        //     // Got a cookie from the user.
-        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-        //     if ( sid === cookie ) {
-        //         const error = new Error( 'Invalid cookie.' );
-        //         error.status = 400;
-        //         throw error;
-        //     }
+            res.send( {
+                redirect: '/index',
+            } );
+        }
+        else {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid === cookie ) {
+                const error = new Error( 'Invalid cookie.' );
+                error.status = 400;
+                throw error;
+            }
 
-        //     // Get session data in the database.
-        //     try {
-        //         const data = await getSession( {
-        //             sid,
-        //         } );
+            // Get session data in the database.
+            try {
+                const data = await getSession( {
+                    sid,
+                } );
 
-        //         // Check `expires`
-        //         if ( data.expires < Date.now() ) {
-        //             req.session.regenerate( async () => {
-        //                 const newSid = req.session.id;
-        //                 req.session.ctrl = newSid;
+                // Check `expires`
+                if ( data.expires < Date.now() ) {
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
 
-        //                 // Store new session in database
-        //                 await saveSession( {
-        //                     sid:     newSid,
-        //                     expires: req.session.cookie.maxAge + Date.now(),
-        //                 } );
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
 
-        //                 req.session.save();
-        //                 res.locals.unparsedSid = req.session.id;
-        //                 res.send( {
-        //                     redirect: '/index',
-        //                 } );
-        //             } );
-        //         }
-        //         else if ( data.userId !== null ) {
-        //             const result = await getAdminByUserId( {
-        //                 userId: Number( data.userId ),
-        //             } );
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    } );
+                }
+                else if ( data.userId !== null ) {
+                    const result = await getAdminByUserId( {
+                        userId: Number( data.userId ),
+                    } );
 
-        //             if ( result.sid !== data.sid ) {
-        //                 res.send( {
-        //                     redirect: '/index',
-        //                 } );
-        //             }
-        //         }
-        //         else {
-        //             res.send( {
-        //                 redirect: '/index',
-        //             } );
-        //         }
-        //     }
-        //     catch ( error ) {
-        //         if ( error.status === 404 ) {
-        //             // No corresponding session id in the database
-        //             req.session.regenerate( async () => {
-        //                 const newSid = req.session.id;
-        //                 req.session.ctrl = newSid;
+                    if ( result.sid !== data.sid ) {
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    }
+                }
+                else {
+                    res.send( {
+                        redirect: '/index',
+                    } );
+                }
+            }
+            catch ( error ) {
+                if ( error.status === 404 ) {
+                    // No corresponding session id in the database
+                    req.session.regenerate( async () => {
+                        const newSid = req.session.id;
+                        req.session.ctrl = newSid;
 
-        //                 // Store new session in database
-        //                 await saveSession( {
-        //                     sid:     newSid,
-        //                     expires: req.session.cookie.maxAge + Date.now(),
-        //                 } );
+                        // Store new session in database
+                        await saveSession( {
+                            sid:     newSid,
+                            expires: req.session.cookie.maxAge + Date.now(),
+                        } );
 
-        //                 req.session.save();
-        //                 res.locals.unparsedSid = req.session.id;
+                        req.session.save();
+                        res.locals.unparsedSid = req.session.id;
 
-        //                 // Send new session & user id
-        //                 res.send( {
-        //                     redirect: '/index',
-        //                 } );
-        //             } );
-        //         }
-        //         else
-        //             console.error( error );
-        //     }
-        // }
+                        // Send new session & user id
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    } );
+                }
+                else
+                    console.error( error );
+            }
+        }
 
         // Save photo
 
-        const formData = req.body;
-        console.log( formData );
+        console.log( req.headers[ 'content-type' ] );
+        if ( req.is( 'multipart/form-data' ) )
+            console.log( 'yesyesyes' );
+
+
+        console.log( 'body' );
+        console.log( req.body );
+        console.log( 'files' );
         console.log( req.files );
-        console.log( req.files.file );
-
-        // Console.log( req.body );
-        // console.log( req.files );
-        // console.log( req.file );
-        // let temp = '';
-        // req.on( 'data', ( data ) => {
-        //     console.log( 'in req data event' );
-        //     temp += data;
-        // } );
-        // req.on( 'end', () => {
-        //     console.log( 'in req end event' );
-        //     fs.appendFile( `${ projectRoot }/static/dist/file/test.JPG`, temp, () => {
-        //         console.log( 'in file append' );
-        //         res.end();
-        //     } );
-        // } );
-
-        // const form = new formidable.IncomingForm();
-
-        // console.log( `${ projectRoot }/static/dist/file/test.jpg` );
-        // form.uploadDir = `${ projectRoot }/static/dist/file/test.jpg`;
-        // form.keepExtensions = true;
-        // form.maxFieldsSize = 20 * 1024 * 1024;
-
-        // form.parse( req, ( err, fields, files ) => {
-        //     if ( err ) {
-        //         console.error( 'Error', err );
-        //         throw err;
-        //     }
-        //     console.log( files.filetoupload.path );
-        //     console.log( files.filetoupload.name );
-        //     console.log( 'Fields', fields );
-        //     console.log( 'Files', files );
-        //     files.map( ( file ) => {
-        //         console.log( file );
-        //     } );
-        // } );
-
-
-        // Form.on( 'field', ( name, field ) => {
-        //     console.log( 'Field', name, field );
-        // } );
-        // form.on( 'fileBegin', ( name, file ) => {
-        //     // Set file path to server
-        //     console.log( 'in formidable - fileBegin' );
-        //     file.path = `${ projectRoot }/static/dist/file/test.jpg`;
-        // } );
-        // form.on( 'file', ( name, file ) => {
-        //     // Save file
-        //     console.log( 'in formidable - file' );
-        //     console.log( file.name );
-        // } );
-        // form.on( 'aborted', () => {
-        //     // Delete incomplete file
-        //     console.log( 'in formidable - delete' );
-        // } );
-        // form.on( 'error', ( err ) => {
-        //     // Error control
-        //     console.log( 'in formidable - error' );
-        //     console.log( err );
-        // } );
-        // form.on( 'end', () => {
-        //     // Response
-        //     console.log( 'in formidable - end' );
-        // } );
-
-        // form.parse( req );
+        console.log( 'file' );
+        console.log( req.file );
+        console.log( 'test' );
+        console.log( req.body.mFileName );
+        console.log( req.files[ 0 ].originalname );
 
         // Save photo url in database
         console.log( 'should save photo url in db' );
+        return res.end();
     }
     catch ( error ) {
         console.error( error );
