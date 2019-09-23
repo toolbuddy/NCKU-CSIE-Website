@@ -12,6 +12,7 @@ import loginDropdownHTML from 'static/src/pug/components/common/login-dropdown.p
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
+import roleUtils from 'models/auth/utils/role.js';
 
 export default class GetHeaderBase {
     /**
@@ -227,20 +228,38 @@ export default class GetHeaderBase {
             } );
             if ( result.userId > -1 ) {
                 const data = await this.fetchMiniProfileData( result.userId );
-                this.DOM.login.container.innerHTML = loginDropdownHTML( {
-                    name:        data.name,
-                    belongBlock: 'login',
-                    photo:       `faculty/${ data.photo }`,
-                    LANG:        {
-                        id:            WebLanguageUtils.currentLanguageId,
-                        getLanguageId: LanguageUtils.getLanguageId,
+                if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+                    this.DOM.login.container.innerHTML = loginDropdownHTML( {
+                        name:        data.name,
+                        belongBlock: 'login',
+                        photo:       `faculty/${ data.photo }`,
+                        LANG:        {
+                            id:            WebLanguageUtils.currentLanguageId,
+                            getLanguageId: LanguageUtils.getLanguageId,
+                        },
+                        UTILS: {
+                            url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                            staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, WebLanguageUtils.currentLanguageId ) ),
+                        },
                     },
-                    UTILS: {
-                        url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
-                        staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, WebLanguageUtils.currentLanguageId ) ),
+                    'login' );
+                }
+                else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+                    this.DOM.login.container.innerHTML = loginDropdownHTML( {
+                        name:        data.name,
+                        belongBlock: 'login',
+                        photo:       `staff/${ data.photo }`,
+                        LANG:        {
+                            id:            WebLanguageUtils.currentLanguageId,
+                            getLanguageId: LanguageUtils.getLanguageId,
+                        },
+                        UTILS: {
+                            url:          UrlUtils.serverUrl( new UrlUtils( host, WebLanguageUtils.currentLanguageId ) ),
+                            staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, WebLanguageUtils.currentLanguageId ) ),
+                        },
                     },
-                },
-                'login' );
+                    'login' );
+                }
                 this.subscribeLoginEvent();
             }
         }
