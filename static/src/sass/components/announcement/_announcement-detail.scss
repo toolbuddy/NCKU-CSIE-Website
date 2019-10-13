@@ -170,7 +170,7 @@
         right: font__px-to-rem( 10 );
       }
 
-      td, p {
+      td, p, li, ul {
         line-height: font__px-to-rem( 20 );
       }
       overflow: scroll;

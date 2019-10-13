@@ -164,7 +164,16 @@ router
          * Data format
          */
 
-        const dataString = Object.keys( req.body )[ 0 ];
+        let tempString = '';
+        Object.keys( req.body ).forEach( ( key ) => {
+            if ( key.length !== 0 )
+                tempString += key;
+            if ( req.body[ key ].length !== 0 )
+                tempString += `=${ req.body[ key ] }`;
+        } );
+
+        // Const dataString = Object.keys( req.body )[ 0 ];
+        const dataString = tempString;
         const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
         console.log( JSON.parse( dataFormat ) );
         const data = JSON.parse( dataFormat );

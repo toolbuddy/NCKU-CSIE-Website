@@ -25,7 +25,6 @@
       right: auto;
     }
 
-
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       grid-template: {
@@ -39,9 +38,9 @@
     // `> .#{ $block } > .#{ $block }__edit-block` > .edit-block__language
     > .edit-block__language.language {
       // [ layout ]
-      grid-area: language;
       display: grid;
       grid: {
+        area: language;
         gap: font__px-to-rem( 15 );
         template: {
           areas:
@@ -337,9 +336,7 @@
 
             // [ position ]
             vertical-align: center;
-            padding: {
-              left: font__px-to-rem( 18 );
-            }
+            padding-left: font__px-to-rem( 18 );
 
             // [ skin ]
             font-size: font__px-to-rem( 18 );

@@ -2,6 +2,7 @@ import tagUtils from 'models/announcement/utils/tag.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
+import addButtonHTML from 'static/src/pug/components/announcement/add-button.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
@@ -118,6 +119,7 @@ export default class DefaultTagFilter {
             },
             pages:     opt.pagesDOM,
             scrollTop: opt.scrollTopDOM,
+            add:       opt.addDOM,
         };
 
         if (
@@ -925,12 +927,13 @@ export default class DefaultTagFilter {
                     res();
                 } )
                 .then( () => {
-                    // Console.log( this.DOM.announcement.normal.briefings );
-                    const briefingDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
-                    briefingDOM.addEventListener( 'click', ( e ) => {
-                        e.preventDefault();
-                        window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
-                    } );
+                    if ( this.config.userId !== -1 ) {
+                        const briefingDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
+                        briefingDOM.addEventListener( 'click', ( e ) => {
+                            e.preventDefault();
+                            window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
+                        } );
+                    }
                 } );
             } );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
@@ -950,6 +953,13 @@ export default class DefaultTagFilter {
         }
     }
 
+    subscribeAddButton () {
+        this.DOM.add.innerHTML += addButtonHTML( {
+            host,
+            languageId: this.state.languageId,
+        } );
+    }
+
     async getAll () {
         try {
             await this.getPage();
@@ -957,6 +967,8 @@ export default class DefaultTagFilter {
                 this.getPinnedAnnouncement(),
                 this.getNormalAnnouncement(),
             ] );
+            if ( this.config.userId !== -1 )
+                this.subscribeAddButton();
         }
         catch ( err ) {
             console.error( err );

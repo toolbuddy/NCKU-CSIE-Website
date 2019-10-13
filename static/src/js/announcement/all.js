@@ -90,6 +90,7 @@ async function fetchData () {
                 announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
                 announcementNormalDOM: document.getElementById( 'announcement--normal' ),
                 pagesDOM:              document.getElementById( 'pages' ),
+                addDOM:                document.getElementById( 'announcement--add' ),
                 scrollTopDOM:          document.getElementById( 'announcement--normal' ),
                 amount:                15,
                 from:                  new Date( '2018/01/01' ),

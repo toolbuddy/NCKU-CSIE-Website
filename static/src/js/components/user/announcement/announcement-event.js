@@ -302,14 +302,14 @@ export default class AnnouncementEvent {
                 'isPinned':         0,
                 'imageUrl':         null,
                 'views':            0,
-                'i18n':     {
+                'i18n':           {
                     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                 },
                 'tags':     tagString,
@@ -335,6 +335,7 @@ export default class AnnouncementEvent {
 
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
+            type:     'string',
             body:   JSON.stringify( {
                 'method':           'patch',
                 isPublished,

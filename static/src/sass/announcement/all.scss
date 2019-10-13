@@ -8,6 +8,7 @@
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/announcement/filter';
+@import 'components/announcement/add-button';
 @import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
 
@@ -343,6 +344,11 @@
       // [ position ]
       grid-area: pages;
       justify-self: center;
+    }
+
+
+    > .content__add.add {
+      @include add-button();
     }
   }
 
