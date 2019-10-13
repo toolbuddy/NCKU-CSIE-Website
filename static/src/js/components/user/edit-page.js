@@ -6,7 +6,6 @@ import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { conditionalExpression, } from 'babel-types';
 
 /**
  * @param {object} opt

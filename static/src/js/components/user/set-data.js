@@ -330,7 +330,9 @@ class SetData {
                 let dbTableId = dataItem[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
-                        const degree = degreeUtils.map[ dataItem.degree ];   // Abbreviation of degree
+                        // Abbreviation of degree
+                        const degree = degreeUtils.map[ dataItem.degree ];
+
                         deleteDescription.push( `${ dataItem.school } ${ dataItem.major } ${ degree }` );
 
                         /***
@@ -465,7 +467,7 @@ class SetData {
                         content.push( dataItem.title );
                         content.push( ` ${ dataItem.authors }` );
                         deleteDescription.push( dataItem.title );
-                        let temp = '';  // Temp subtitle string
+                        let temp = '';
 
                         /***
                          * Set subtitle of Refereed, category, international
@@ -646,7 +648,6 @@ class SetData {
                         await this.renderBlock( {
                             id:          dataItem.technologyTransferId,
                             res:         dataItem,
-                            isTitle:     false,
                         } );
                         const addSelector = `.content__technologyTransfer > .content__modify--technologyTransfer-${ dataItem.technologyTransferId }`;
                         this.setAddButtonEvent( {
@@ -683,7 +684,7 @@ class SetData {
                         }
                         break;
                     default:
-                        deleteDescription = [];
+                        console.error( 'no validate table' );
                 }
 
                 const updateSelector = `.input-block__block > .block__content > .content__modify--${ this.config.dbTable }-${ dbTableId }`;
@@ -719,7 +720,11 @@ class SetData {
     uploadUpdateData ( dbTableItemId, dbTable ) {
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
-        const item = {};  // Every data not need i18n
+
+        // Every data not need i18n
+        const item = {};
+
+        // Every data need i18n
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
@@ -882,6 +887,12 @@ class SetData {
         } );
     }
 
+    /***
+     * Set information update button event
+     * When click update button,
+     * open an edit-page.
+     */
+
     setUpdateButtonEvent ( info ) {
         info.buttonDOM.addEventListener( 'click', async () => {
             const editPage = new EditPage( {
@@ -958,7 +969,7 @@ class SetData {
         this.renderLoading();
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data );
+            // Whether there is no data of certain table in database
             if ( validate.isEmpty( data[ this.config.languageId ][ this.config.dbTable ] ) )
                 this.emptyBlock();
             else

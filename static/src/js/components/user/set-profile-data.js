@@ -14,6 +14,14 @@ export default class SetProfileData {
     constructor ( opt ) {
         opt = opt || {};
 
+        /***
+         * Data validation
+         * require data:
+         * profileDOM:   DOM of profile information block
+         * languageId:   Id  of languageId
+         * profileId:    Id  of profileId
+         */
+
         if (
             !opt.profileDOM ||
             !ValidateUtils.isDomElement( opt.profileDOM ) ||
@@ -31,6 +39,7 @@ export default class SetProfileData {
             profileId:  opt.profileId,
         };
 
+        // Get edit-page config of profile
         this.editPageConfig = dataEditPageConfig.profile;
 
         this.isAddEventListener = {};
@@ -49,11 +58,14 @@ export default class SetProfileData {
         };
         this.updateButtonDOM = {};
         this.textDOM = {};
+
+        // Store profile information block in this.textDOM[ dbTable ] and this.updateButtonDOM[ dbTable ]
         Object.keys( SetProfileData.classModifier() ).forEach( ( dbTableItem ) => {
             this.textDOM[ dbTableItem ] = opt.profileDOM.querySelector( selector.text( SetProfileData.classModifier()[ dbTableItem ] ) );
             this.updateButtonDOM[ dbTableItem ] = this.DOM.profile.querySelector( selector.update( SetProfileData.classModifier()[ dbTableItem ] ) );
         } );
 
+        // Store department buttons
         this.department = Array
         .from( opt.profileDOM.querySelectorAll( '.input-block > .input-block__block > .block__content > .content__tag--department' ) )
         .map( node => ( {
@@ -63,6 +75,7 @@ export default class SetProfileData {
             id:            node.getAttribute( 'data-department-id' ),
         } ) );
 
+        // Store researchGroup buttons
         this.researchGroup = Array
         .from( opt.profileDOM.querySelectorAll( '.input-block > .input-block__block > .block__content > .content__tag--research' ) )
         .map( node => ( {
@@ -91,10 +104,11 @@ export default class SetProfileData {
         }
     }
 
+    // Compare information class name and database table name
     static classModifier () {
         return {
             name:          'name',
-            officeAddress:  'office-location',
+            officeAddress: 'office-location',
             labName:       'lab-name',
             labAddress:    'lab-location',
             labTel:        'lab-tel',
@@ -107,10 +121,17 @@ export default class SetProfileData {
         };
     }
 
+    /***
+     * Set all data of profile in database
+     * ( include informating, department tags, researchGroup tags and image )
+     */
+
     async setData () {
         try {
+            // Get all language data
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
             .then( ( dbData ) => {
+                // Set block information
                 Object.keys( SetProfileData.classModifier() ).forEach( ( key ) => {
                     this.setProfileBlock( key, dbData );
                 } );
@@ -128,47 +149,63 @@ export default class SetProfileData {
         document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
-    setProfileBlock ( dbTableItem, res ) {
-        if ( res[ this.config.languageId ].profile[ dbTableItem ] !== null ) {
-            this.textDOM[ dbTableItem ].textContent = res[ this.config.languageId ].profile[ dbTableItem ];
-            if ( dbTableItem === 'nation' ) {
-                const nationId = res[ this.config.languageId ].profile.nation;
-                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationId ] ];
+    /****
+     * DbTable: string, database table name
+     * dbData:  data of profile in database
+     */
+
+    setProfileBlock ( dbTable, dbData ) {
+        const dbProfileData = dbData[ this.config.languageId ].profile;
+        if ( dbProfileData[ dbTable ] !== null ) {
+            this.textDOM[ dbTable ].textContent = dbProfileData[ dbTable ];
+            if ( dbTable === 'nation' ) {
+                const nationId = dbProfileData.nation;
+                this.textDOM[ dbTable ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationId ] ];
             }
         }
         else {
-            this.textDOM[ dbTableItem ].textContent = '';
-            if ( dbTableItem === 'nation' )
-                this.textDOM[ dbTableItem ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
+            this.textDOM[ dbTable ].textContent = '';
+            if ( dbTable === 'nation' )
+                this.textDOM[ dbTable ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
         }
 
-        this.updateButtonDOM[ dbTableItem ].addEventListener( 'click', async () => {
-            await this.setUpdateButtonEvent( dbTableItem, res );
+        this.updateButtonDOM[ dbTable ].addEventListener( 'click', async () => {
+            await this.setUpdateButtonEvent( dbTable, dbData );
         } );
     }
 
-    async setUpdateButtonEvent ( dbTableItem, res ) {
+    /****
+     * DbTable: string, database table name
+     * dbData:  data of profile in database
+     */
+
+    async setUpdateButtonEvent ( dbTable, dbData ) {
         const selector = {
             check:  '.edit-page__window > .window__form > .form__button > .button__item--check',
             cancel: '.edit-page__window > .window__form > .form__button > .button__item--cancel',
         };
+
+        // Format data i18n for profile edit-page
         const tempDataI18n = LanguageUtils.supportedLanguageId.map( id => ( {
             default: {
-                [ dbTableItem ]: dataI18n.profile[ id ].default[ dbTableItem ],
+                [ dbTable ]: dataI18n.profile[ id ].default[ dbTable ],
             },
-            topic:   dataI18n.profile[ id ].topic[ dbTableItem ],
+            topic:   dataI18n.profile[ id ].topic[ dbTable ],
         } ) );
-        this.isAddEventListener[ dbTableItem ] = true;
+
+        // Check whether is addEventListener
+        this.isAddEventListener[ dbTable ] = true;
         const editPage = new EditPage( {
             dbTable:        'profile',
-            editPageConfig: this.editPageConfig[ dbTableItem ],
+            editPageConfig: this.editPageConfig[ dbTable ],
             languageId:     this.config.languageId,
             dataI18n:       tempDataI18n,
-            dbData:         LanguageUtils.supportedLanguageId.map( id => res[ id ].profile ),
+            dbData:         LanguageUtils.supportedLanguageId.map( id => dbData[ id ].profile ),
             buttonMethod:   'update',
         } );
         await editPage.renderEditPage();
 
+        // After edit-page render, add event of that
         const editPageDOM = document.getElementById( 'edit-page' );
         const cancelDOM = editPageDOM.querySelector( selector.cancel );
         const checkDOM = editPageDOM.querySelector( selector.check );
@@ -181,9 +218,14 @@ export default class SetProfileData {
             e.preventDefault();
             const isValid = this.checkSubmitData();
             if ( isValid )
-                this.uploadProfileData( dbTableItem );
+                this.uploadProfileData( dbTable );
         } );
     }
+
+    /***
+     * Validate data before submit
+     * @returns boolean, whether the data is valid
+     */
 
     checkSubmitData () {
         let isValid = true;
@@ -249,10 +291,10 @@ export default class SetProfileData {
         } );
     }
 
-    setImage ( res ) {
+    setImage ( dbData ) {
         try {
-            if ( ValidateUtils.isValidString( res.photo ) ) {
-                const photoUrl = `${ host }/static/image/faculty/${ res.photo }`;
+            if ( ValidateUtils.isValidString( dbData.photo ) ) {
+                const photoUrl = `${ host }/static/image/faculty/${ dbData.photo }`;
                 this.imageDOM.preview.style.backgroundImage = `url('${ photoUrl }')`;
                 this.imageDOM.button.name = `modify_profile_photo_0_${ this.config.profileId }`;
                 this.imageDOM.block.action = `${ host }/user/profile`;
@@ -277,7 +319,7 @@ export default class SetProfileData {
 
             if ( !this.isAddEventListener.imageChange ) {
                 this.imageDOM.button.addEventListener( 'change', () => {
-                    new Promise( async ( res, rej ) => {
+                    new Promise( async ( dbData, rej ) => {
                         const input = this.imageDOM.button;
                         if ( input.files && input.files[ 0 ] ) {
                             const reader = new FileReader();
@@ -290,7 +332,6 @@ export default class SetProfileData {
                             } );
                             reader.readAsDataURL( input.files[ 0 ] );
 
-                            console.log( 'test uploading photo' );
                             const formData = new FormData();
 
                             formData.append( 'file', input.files[ 0 ] );
@@ -323,13 +364,21 @@ export default class SetProfileData {
         }
     }
 
-    setTags ( res ) {
+    /***
+     * Set department and researchGroup event
+     * Submit its status when click
+     */
+
+    setTags ( dbData ) {
         [ 'department',
             'researchGroup', ].forEach( ( dbTable ) => {
-            res[ dbTable ].forEach( ( element ) => {
+            // Initialize selected tags
+            dbData[ dbTable ].forEach( ( element ) => {
                 classAdd( this[ dbTable ][ element.type ].node, `content__tag--${ this[ dbTable ][ element.type ].classModifier }--active` );
                 this[ dbTable ][ element.type ].selected = true;
             } );
+
+            // Add eventListener to all tags
             this[ dbTable ].forEach( ( element ) => {
                 element.node.addEventListener( 'click', () => {
                     const method = ( element.selected ) ? 'delete' : 'add';
