@@ -16,6 +16,12 @@ import { conditionalExpression, } from 'babel-types';
 
 class EditPage {
     constructor ( opt ) {
+        /***
+         * Data Validate
+         * require data:
+         *
+         */
+
         if (
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
             !ValidateUtils.isValidString( opt.buttonMethod ) ||

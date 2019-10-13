@@ -18,12 +18,25 @@ class SetData {
     constructor ( opt ) {
         opt = opt || {};
 
+        /***
+         * Data validation
+         * require data:
+         * blockDOM:     DOM of information block
+         * addButtonDOM: DOM of add button to add information
+         * loadingDOM:   DOM of loading logo
+         * languageId:   Id  of languageId
+         * profileId:    Id  of profileId
+         * dbTable:      String of the table name of database
+         */
+
         if (
             !ValidateUtils.isDomElement( opt.blockDOM ) ||
             !ValidateUtils.isDomElement( opt.refreshDOM ) ||
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.addButtonDOM ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
+            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
+            !ValidateUtils.isValidId( opt.profileId ) ||
+            !ValidateUtils.isValidString( opt.dbTable )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -41,15 +54,27 @@ class SetData {
         };
     }
 
+    /***
+     * Show loading logo
+     */
+
     renderLoading () {
         classAdd( this.DOM.refresh, 'refresh--hidden' );
         classRemove( this.DOM.loading, 'loading--hidden' );
     }
 
+    /***
+     * Show data information ( show the blocks )
+     */
+
     renderLoadingSucceed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
         classAdd( this.DOM.refresh, 'refresh--hidden' );
     }
+
+    /***
+     * Show refresh logo
+     */
 
     renderLoadingFailed () {
         classAdd( this.DOM.loading, 'loading--hidden' );
@@ -74,11 +99,16 @@ class SetData {
         }
     }
 
+    /****
+     * Render Information Block
+     */
+
     async renderBlock ( opt ) {
         try {
             this.DOM.block.innerHTML += dynamicInputBlock( {
                 opt,
                 host,
+                dbTable:     this.config.dbTable,
                 languageId:  this.config.languageId,
                 LANG:        LanguageUtils,
                 dataI18n:    dataI18n[ this.config.dbTable ],
@@ -89,10 +119,19 @@ class SetData {
         }
     }
 
-    async sortData ( data ) {
+    /***
+     * Sort database data to show information in order
+     */
+
+    async sortData ( dbData ) {
+        /***
+         * Sort award data
+         * receievedYear: int
+         */
+
         if ( this.config.dbTable === 'award' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].award.sort( ( awardA, awardB ) => {
+                dbData[ languageId ].award.sort( ( awardA, awardB ) => {
                     if (
                         awardA.receivedYear !== null &&
                       awardB.receivedYear !== null &&
@@ -103,9 +142,15 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort conference data
+         * hostYear: boolean
+         */
+
         if ( this.config.dbTable === 'conference' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].conference.sort( ( conferenceA, conferenceB ) => {
+                dbData[ languageId ].conference.sort( ( conferenceA, conferenceB ) => {
                     if (
                         conferenceA.hostYear !== null &&
                         conferenceB.hostYear !== null &&
@@ -116,9 +161,18 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort conference data
+         * refereed: boolean,
+         * international: boolean,
+         * category:  int ( 0 for journal, 1 for conference, 2 for workshop ),
+         * issueYear: int
+         */
+
         if ( this.config.dbTable === 'publication' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].publication.sort( ( publicationA, publicationB ) => {
+                dbData[ languageId ].publication.sort( ( publicationA, publicationB ) => {
                     if (
                         publicationA.refereed !== null &&
                         publicationB.refereed !== null &&
@@ -143,11 +197,23 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort patent data
+         * applicationDate: string ( yyyy-mm-dd )
+         */
+
         if ( this.config.dbTable === 'patent' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].patent.sort( ( patentA, patentB ) => {
+                dbData[ languageId ].patent.sort( ( patentA, patentB ) => {
                     const tempDateA = ( patentA.applicationDate !== null ) ? patentA.applicationDate.split( '-' ) : null;
                     const tempDateB = ( patentB.applicationDate !== null ) ? patentB.applicationDate.split( '-' ) : null;
+
+                    /***
+                     * If one of applicationDates not exist, put it behind
+                     * If all of applicationDatas not exist, don't change its position
+                     */
+
                     if ( tempDateA === null && tempDateB !== null )
                         return 1;
 
@@ -157,6 +223,13 @@ class SetData {
                     else if ( tempDateA === null && tempDateB === null )
                         return 0;
 
+                    /***
+                     * Sort data according to
+                     * tempDate[ 0 ]: year
+                     * tempDate[ 1 ]: month
+                     * tempDate[ 2 ]: day
+                     */
+
                     for ( let i = 0; i < 3; ++i ) {
                         if ( tempDateA[ i ] !== tempDateB[ i ] )
                             return Number( tempDateB[ i ] ) - Number( tempDateA[ i ] );
@@ -165,9 +238,16 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort project data
+         * category: int ( 0 for generl, 1 for national science council )
+         * from:     int ( year )
+         */
+
         if ( this.config.dbTable === 'project' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].project.sort( ( projectA, projectB ) => {
+                dbData[ languageId ].project.sort( ( projectA, projectB ) => {
                     if ( projectA.category !== projectB.category )
                         return projectB.category - projectA.category;
                     else if ( projectA.from !== null &&
@@ -178,9 +258,15 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort student award data
+         * receievedYear: int
+         */
+
         if ( this.config.dbTable === 'studentAward' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ].studentAward.sort( ( awardA, awardB ) => {
+                dbData[ languageId ].studentAward.sort( ( awardA, awardB ) => {
                     if (
                         awardA.receivedYear !== null &&
                       awardB.receivedYear !== null &&
@@ -191,86 +277,211 @@ class SetData {
                 } );
             } );
         }
+
+        /***
+         * Sort technology transfer, education and experience data
+         * from: int ( year )
+         */
+
         if ( this.config.dbTable === 'technologyTransfer' ||
             this.config.dbTable === 'education' ||
             this.config.dbTable === 'experience' ) {
             LanguageUtils.supportedLanguageId.forEach( ( languageId ) => {
-                data[ languageId ][ this.config.dbTable ].sort( ( tempA, tempB ) => {
+                dbData[ languageId ][ this.config.dbTable ].sort( ( tempA, tempB ) => {
                     if ( tempA.from === null || tempB.from === null )
                         return 0;
                     return tempB.from - tempA.from;
                 } );
             } );
         }
-        return data;
+        return dbData;
     }
+
+    /***
+     * Put information in database to the block
+     */
 
     async setBlock ( dbData ) {
         try {
             this.DOM.block.innerHTML = '';
             const data = await this.sortData( dbData );
             let currentYear = new Date().getFullYear();
+
+            /***
+             * Get the current state to classify data
+             */
+
             let tempRefereed = true;
             let tempInternational = true;
             let tempCategory = 0;
-            data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( res, index ) => {
-                let content = [];
+
+            /***
+             * Render data in oder
+             */
+
+            data[ this.config.languageId ][ this.config.dbTable ].forEach( async ( dataItem, index ) => {
+                /***
+                 * Item use to initia
+                 */
+
+                const content = [];
                 const subtitle = [];
-                let dbTableId = res[ `${ this.config.dbTable }Id` ];
+                const deleteDescription = [];
+                let dbTableId = dataItem[ `${ this.config.dbTable }Id` ];
                 switch ( this.config.dbTable ) {
                     case 'education':
-                        const degree = degreeUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].degree ];
-                        content.push( `${ res.school } ${ res.major } ${ degree }` );
+                        const degree = degreeUtils.map[ dataItem.degree ];   // Abbreviation of degree
+                        deleteDescription.push( `${ dataItem.school } ${ dataItem.major } ${ degree }` );
+
+                        /***
+                         * Id:  item id of its database table
+                         * res: item info in the database
+                         * nation: abbreviation of nation
+                         * degree: abbreviation of degree
+                         */
+
                         await this.renderBlock( {
-                            dbTable: this.config.dbTable,
-                            id:       dbTableId,
-                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
-                            nation:  nationUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].nation ],
-                            degree:  degreeUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].degree ],
+                            id:      dbTableId,
+                            res:     dataItem,
+                            nation:  nationUtils.map[ dataItem.nation ],
+                            degree:  degreeUtils.map[ dataItem.degree ],
                         } );
                         break;
+
                     case 'experience':
+                        /***
+                         * Create description let user review when click delete button
+                         */
+
                         let deleteContent = '';
-                        deleteContent += `${ res.organization }`;
-                        deleteContent += ( res.department !== null ) ? ` ${ res.department }` : '';
-                        deleteContent += ( res.title !== null ) ? ` ${ res.title }` : '';
-                        content.push( deleteContent );
+                        deleteContent += `${ dataItem.organization }`;
+                        deleteContent += ( dataItem.department !== null ) ? ` ${ dataItem.department }` : '';
+                        deleteContent += ( dataItem.title !== null ) ? ` ${ dataItem.title }` : '';
+                        deleteDescription.push( deleteContent );
+
+                        /***
+                         * Id: item id of its database table
+                         * res: item info in the database
+                         */
+
                         await this.renderBlock( {
-                            dbTable: 'experience',
                             id:       dbTableId,
-                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            res:      dataItem,
                         } );
                         break;
+
                     case 'award':
-                        content.push( res.award );
-                        if ( res.receivedYear !== currentYear || index === 0 ) {
-                            subtitle.push( res.receivedYear );
-                            currentYear = res.receivedYear;
+                        content.push( dataItem.award );
+                        deleteDescription.push( dataItem.award );
+
+                        /***
+                         * Set subtitle of year
+                         * if receieveYear is not equle to current status year or
+                         * it is the first item.
+                         */
+
+                        if ( dataItem.receivedYear !== currentYear || index === 0 ) {
+                            subtitle.push( dataItem.receivedYear );
+                            currentYear = dataItem.receivedYear;
                         }
+
+                        /***
+                         * Id: item id of its database
+                         * content: array of string, it is award name here
+                         * subtitle: array of string, receievedYear of the award
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            content,
+                            subtitle,
+                        } );
                         break;
+
                     case 'conference':
-                        content.push( res.conference );
-                        if ( res.hostYear !== currentYear || index === 0 ) {
-                            subtitle.push( res.hostYear );
-                            currentYear = res.hostYear;
+                        content.push( dataItem.conference );
+                        deleteDescription.push( dataItem.conference );
+
+                        /***
+                         * Set subtitle of hostYear
+                         * if hostYear is not equle to current status year or
+                         * it is the first item.
+                         */
+
+                        if ( dataItem.hostYear !== currentYear || index === 0 ) {
+                            subtitle.push( dataItem.hostYear );
+                            currentYear = dataItem.hostYear;
                         }
+
+                        /***
+                         * Id: item id of its database
+                         * content: array of string, it is conference name here
+                         * subtitle: array of string, receievedYear of the award
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            content,
+                            subtitle,
+                        } );
                         break;
+
                     case 'title':
-                        content.push( res.title );
+                        content.push( dataItem.title );
+                        deleteDescription.push( dataItem.title );
+
+                        /***
+                         * Id: item id of its database
+                         * content: array of string, it is title name here
+                         * subtitle: array of string, it is empty array here
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            content,
+                            subtitle,
+                        } );
+
                         break;
+
                     case 'specialty':
-                        content.push( res.specialty );
+                        content.push( dataItem.specialty );
+                        deleteDescription.push( dataItem.specialty );
+
+                        /***
+                         * Id: item id of its database
+                         * content: array of string, it is specialty name here
+                         * subtitle: array of string, it is empty array here
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            content,
+                            subtitle,
+                        } );
                         break;
+
                     case 'publication':
-                        content.push( res.title );
-                        content.push( ` ${ res.authors }` );
-                        let temp = '';
+                        content.push( dataItem.title );
+                        content.push( ` ${ dataItem.authors }` );
+                        deleteDescription.push( dataItem.title );
+                        let temp = '';  // Temp subtitle string
+
+                        /***
+                         * Set subtitle of Refereed, category, international
+                         * if refereed is not equle to current status Refereed or
+                         * category is not equle to current status category or
+                         * international is not equle to  current status international or
+                         * it is the first item.
+                         */
+
                         if (
-                            res.refereed !== tempRefereed ||
-                            res.category !== tempCategory ||
-                            res.international !== tempInternational ||
+                            dataItem.refereed !== tempRefereed ||
+                            dataItem.category !== tempCategory ||
+                            dataItem.international !== tempInternational ||
                             index === 0 ) {
-                            const category = publicationCategoryUtils.i18n[ this.config.languageId ][ publicationCategoryUtils.map[ res.category ] ];
+                            const categoryAbbreviation = publicationCategoryUtils.map[ dataItem.category ];
+                            const category = publicationCategoryUtils.i18n[ this.config.languageId ][ categoryAbbreviation ];
                             const i18n = {
                                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                                     international: 'international ',
@@ -279,85 +490,129 @@ class SetData {
                                     international: '國際',
                                 },
                             };
-                            tempRefereed = res.refereed;
-                            tempCategory = res.category;
-                            tempInternational = res.international;
+                            tempRefereed = dataItem.refereed;
+                            tempCategory = dataItem.category;
+                            tempInternational = dataItem.international;
                             temp = '';
-                            if ( res.refereed )
+                            if ( dataItem.refereed )
                                 temp += 'REFERRED ';
-                            if ( res.international )
+                            if ( dataItem.international )
                                 temp += i18n[ this.config.languageId ].international;
                             temp += category;
                             subtitle.push( temp );
                         }
-                        if ( res.issueYear !== currentYear || index === 0 ) {
-                            subtitle.push( res.issueYear );
-                            currentYear = res.issueYear;
+
+                        /***
+                         * Set subtitle of Refereed, category, international
+                         * if issueYear is not equal to current status year of
+                         * it is the first item.
+                         */
+
+                        if ( dataItem.issueYear !== currentYear || index === 0 ) {
+                            subtitle.push( dataItem.issueYear );
+                            currentYear = dataItem.issueYear;
                         }
+
+                        /***
+                         * Id: item id of its database
+                         * content: array of string, it is [ title, authors ] here.
+                         * subtitle: array of string, it is [ `REFEREED international category`, year ] here
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            content,
+                            subtitle,
+                        } );
                         break;
+
                     case 'patent':
-                        content.push( res.patent );
+                        deleteDescription.push( dataItem.patent );
+
+                        /***
+                         * At beginning, show title
+                         */
+
                         if ( index === 0 ) {
                             this.renderBlock( {
-                                dbTable:     this.config.dbTable,
-                                id:          res.technologyTransferId,
-                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
                                 isTitle:     true,
                             } );
                         }
+
+                        /***
+                         * Id:     item id of its database table
+                         * res:    item info in the database
+                         * nation: nation abbreviation
+                         */
+
                         await this.renderBlock( {
-                            dbTable: this.config.dbTable,
                             id:       dbTableId,
-                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
-                            nation:  nationUtils.map[ data[ this.config.languageId ][ this.config.dbTable ][ index ].nation ],
+                            res:      dataItem,
+                            nation:  nationUtils.map[ dataItem.nation ],
                         } );
                         break;
+
                     case 'project':
-                        if ( res.category !== tempCategory || index === 0 ) {
-                            subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectCategoryUtils.map[ res.category ] ] );
-                            tempCategory = res.category;
+                        deleteDescription.push( dataItem.name );
+
+                        /***
+                         * At beginning, show title
+                         */
+
+                        if ( dataItem.category !== tempCategory || index === 0 ) {
+                            const projectAbbreviation =  projectCategoryUtils.map[ dataItem.category ];
+                            subtitle.push( projectCategoryUtils.i18n[ this.config.languageId ][ projectAbbreviation ] );
+                            tempCategory = dataItem.category;
 
                             this.renderBlock( {
-                                dbTable:     this.config.dbTable,
-                                id:          dbTableId,
                                 subtitle,
-                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
                                 isTitle:     true,
                             } );
                         }
-                        content.push( res.name );
-                        await this.renderBlock( {
-                            dbTable: this.config.dbTable,
-                            id:       dbTableId,
 
-                            // Subtitle,
-                            res:      data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                        /***
+                         * Id:     item id of its database table
+                         * res:    item info in the database
+                         */
+
+                        await this.renderBlock( {
+                            id:       dbTableId,
+                            res:      dataItem,
                         } );
                         break;
+
                     case 'studentAward':
-                        if ( res.receivedYear !== currentYear || index === 0 ) {
-                            subtitle.push( res.receivedYear );
-                            currentYear = res.receivedYear;
+                        deleteDescription.push( dataItem.award );
+
+                        /***
+                         * Set subtitle if index = 0 or receieveYear != current status year
+                         */
+
+                        if ( dataItem.receivedYear !== currentYear || index === 0 ) {
+                            subtitle.push( dataItem.receivedYear );
+                            currentYear = dataItem.receivedYear;
                         }
-                        content.push( res.award );
                         await this.renderBlock( {
-                            dbTable:     this.config.dbTable,
-                            id:          res.awardId,
+                            id:          dataItem.awardId,
                             subtitle,
-                            res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            res:         dataItem,
                             degreeI18n:  degreeUtils.i18n[ this.config.languageId ],
                             degreeUtils,
                         } );
                         this.setAddButtonEvent( {
                             dbTable:      'student',
-                            dbTableId:    res.awardId,
-                            addButtonDOM: this.DOM.block.querySelector( `.content__studentAward > .content__modify--student-${ res.awardId }` ),
+                            dbTableId:    dataItem.awardId,
+                            addButtonDOM: this.DOM.block.querySelector( `.content__studentAward > .content__modify--student-${ dataItem.awardId }` ),
                         } );
 
-                        if ( ValidateUtils.isValidArray( res.student ) ) {
+                        /***
+                         * Set subblock of student who receieved the award
+                         */
+
+                        if ( ValidateUtils.isValidArray( dataItem.student ) ) {
                             const removeSelector = studentId => ` .word__student > .student__remove-${ studentId } `;
                             const updateSelector = studentId => ` .word__student > .student__modify-${ studentId } `;
-                            res.student.forEach( ( student, studentIndex ) => {
+                            dataItem.student.forEach( ( student, studentIndex ) => {
                                 this.setUpdateButtonEvent( {
                                     buttonDOM: this.DOM.block.querySelector( updateSelector( student.studentId ) ),
                                     res:       LanguageUtils.supportedLanguageId.map( id => data[ id ].studentAward[ index ].student[ studentIndex ] ),
@@ -373,36 +628,41 @@ class SetData {
                             } );
                         }
 
-                        dbTableId = res.awardId;
+                        dbTableId = dataItem.awardId;
                         break;
+
                     case 'technologyTransfer':
-                        content.push( res.technology );
+                        deleteDescription.push( dataItem.technology );
+
+                        /***
+                         * At beginning, set title
+                         */
 
                         if ( index === 0 ) {
                             this.renderBlock( {
-                                dbTable:     this.config.dbTable,
-                                id:          res.technologyTransferId,
-                                res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
                                 isTitle:     true,
                             } );
                         }
                         await this.renderBlock( {
-                            dbTable:     this.config.dbTable,
-                            id:          res.technologyTransferId,
-                            res:         data[ this.config.languageId ][ this.config.dbTable ][ index ],
+                            id:          dataItem.technologyTransferId,
+                            res:         dataItem,
                             isTitle:     false,
                         } );
-                        const addSelector = `.content__technologyTransfer > .content__modify--technologyTransfer-${ res.technologyTransferId }`;
+                        const addSelector = `.content__technologyTransfer > .content__modify--technologyTransfer-${ dataItem.technologyTransferId }`;
                         this.setAddButtonEvent( {
                             dbTable:      'technologyTransferPatent',
-                            dbTableId:    res.technologyTransferId,
+                            dbTableId:    dataItem.technologyTransferId,
                             addButtonDOM: this.DOM.block.querySelector( addSelector ),
                         } );
 
-                        if ( ValidateUtils.isValidArray( res.technologyTransferPatent ) ) {
+                        /***
+                         * Set patent of technology transfer
+                         */
+
+                        if ( ValidateUtils.isValidArray( dataItem.technologyTransferPatent ) ) {
                             const removeSelector = patentId => ` .technologyTransfer__patent > .patent__remove-${ patentId } `;
                             const updateSelector = patentId => `  .technologyTransfer__patent > .patent__modify-${ patentId } `;
-                            res.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
+                            dataItem.technologyTransferPatent.forEach( ( patent, patentIndex ) => {
                                 this.setUpdateButtonEvent( {
                                     buttonDOM: this.DOM.block.querySelector( updateSelector( patent.technologyTransferPatentId ) ),
                                     res:       LanguageUtils.supportedLanguageId.map( ( id ) => {
@@ -423,21 +683,7 @@ class SetData {
                         }
                         break;
                     default:
-                        content = '';
-                }
-                if ( this.config.dbTable !== 'education' &&
-                    this.config.dbTable !== 'experience' &&
-                    this.config.dbTable !== 'project' &&
-                    this.config.dbTable !== 'studentAward' &&
-                    this.config.dbTable !== 'technologyTransfer' &&
-                    this.config.dbTable !== 'patent' ) {
-                    await this.renderBlock( {
-                        dbTable:  this.config.dbTable,
-                        id:       dbTableId,
-                        content,
-                        subtitle,
-                        res:      LanguageUtils.supportedLanguageId.map( id => data[ id ][ this.config.dbTable ][ index ] ),
-                    } );
+                        deleteDescription = [];
                 }
 
                 const updateSelector = `.input-block__block > .block__content > .content__modify--${ this.config.dbTable }-${ dbTableId }`;
@@ -451,7 +697,7 @@ class SetData {
                 this.setDeleteButtonEvent( {
                     buttonDOM: this.DOM.block.querySelector( deleteSelector ),
                     id:        dbTableId,
-                    content,
+                    content:   deleteDescription,
                     dbTable:   this.config.dbTable,
                 } );
             } );
@@ -465,10 +711,15 @@ class SetData {
         document.body.removeChild( document.getElementById( 'edit-page' ) );
     }
 
+    /***
+     * Deal with update data
+     * update database
+     */
+
     uploadUpdateData ( dbTableItemId, dbTable ) {
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
-        const item = {};
+        const item = {};  // Every data not need i18n
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
@@ -566,6 +817,10 @@ class SetData {
             console.error( err );
         } );
     }
+
+    /****
+     * Submit Data Validation
+     */
 
     checkSubmitData ( dbTable ) {
         let isValid = true;

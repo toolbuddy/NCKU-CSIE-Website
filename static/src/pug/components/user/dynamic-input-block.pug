@@ -15,10 +15,10 @@ if Array.isArray( opt.subtitle ) && opt.subtitle.length
     section.subtitle
       p.subtitle__word= subtitle
 
-section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__input-block--${ opt.id }` )
+section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block--${ opt.id }` )
   main.input-block__block.block 
     article.block__content.content
-      if opt.dbTable === 'education'
+      if dbTable === 'education'
         article.content__education.education
           if opt.res.from !== null
             time.education__time.time
@@ -47,7 +47,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
             if opt.res.degree !== null
               li.list__item.list__item--blue= opt.degree
 
-      else if opt.dbTable === 'experience'
+      else if dbTable === 'experience'
         article.content__experience
           //- If there is no start time, then there must be no end time.
           if opt.res.from !== null
@@ -67,7 +67,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
             if opt.res.title !== null
               li.list__item.list__item--blue= opt.res.title
 
-      else if opt.dbTable === 'project'
+      else if dbTable === 'project'
         article.content__project
           if opt.isTitle 
             section.project__title.title
@@ -95,7 +95,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
               article.content__item.content__item--support
                 p.item__word= opt.res.support
 
-      else if opt.dbTable === 'studentAward'
+      else if dbTable === 'studentAward'
         article.content__studentAward
           p.word__text= opt.res.award
           if Array.isArray( opt.res.student ) && opt.res.student.length
@@ -116,7 +116,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                   p.detail__text= opt.degreeI18n[ opt.degreeUtils.map[ student.degree ] ]
           p.word__add( class=`content__modify--student-${ opt.id }` )= i18n[ languageId ].addStudent
 
-      else if opt.dbTable === 'patent'
+      else if dbTable === 'patent'
         article.content__patent
           if opt.isTitle 
             section.patent__title.title
@@ -150,7 +150,7 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
                 p.item__word= '-'
                 p.item__word= opt.res.expireDate
 
-      else if opt.dbTable === 'technologyTransfer'
+      else if dbTable === 'technologyTransfer'
         article.content__technologyTransfer
           if opt.isTitle 
             section.technologyTransfer__title.title
@@ -206,11 +206,11 @@ section.input-block( class=`${ opt.dbTable }__input-block ${ opt.dbTable }__inpu
       if !opt.isTitle
         img.content__remove( 
           alt = 'remove', 
-          class = `content__remove--${ opt.dbTable }-${ opt.id }`
+          class = `content__remove--${ dbTable }-${ opt.id }`
           src = `${ host }/static/image/icon/delete.png`,
         )
         img.content__modify( 
           alt = 'edit', 
-          class = `content__modify--${ opt.dbTable }-${ opt.id }`
+          class = `content__modify--${ dbTable }-${ opt.id }`
           src = `${ host }/static/image/icon/edit.png`,
         )

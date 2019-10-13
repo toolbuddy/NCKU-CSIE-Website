@@ -175,7 +175,6 @@ router
         // Const dataString = Object.keys( req.body )[ 0 ];
         const dataString = tempString;
         const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
-        console.log( JSON.parse( dataFormat ) );
         const data = JSON.parse( dataFormat );
         const dataTagsString = data.tags.substring( 0, data.tags.length - 1 );
         const dataTags = dataTagsString.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
