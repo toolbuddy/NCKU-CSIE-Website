@@ -319,7 +319,7 @@ export default class SetProfileData {
 
             if ( !this.isAddEventListener.imageChange ) {
                 this.imageDOM.button.addEventListener( 'change', () => {
-                    new Promise( async ( dbData, rej ) => {
+                    new Promise( async ( res, rej ) => {
                         const input = this.imageDOM.button;
                         if ( input.files && input.files[ 0 ] ) {
                             const reader = new FileReader();

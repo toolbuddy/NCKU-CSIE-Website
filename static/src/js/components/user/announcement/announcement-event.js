@@ -5,7 +5,6 @@ import { host, } from 'settings/server/config.js';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import FilePreview from 'static/src/pug/components/user/announcement/file-preview.pug';
 import tinymce from 'tinymce';
-import encodeurl from 'encodeurl';
 
 // Plugins
 import 'tinymce/themes/silver';
@@ -13,6 +12,17 @@ import 'tinymce/themes/silver';
 export default class AnnouncementEvent {
     constructor ( opt ) {
         opt = opt || {};
+
+        /***
+         * Data validation
+         * require data:
+         * blockDOM:     DOM of information block
+         * addButtonDOM: DOM of add button to add information
+         * loadingDOM:   DOM of loading logo
+         * languageId:   Id  of languageId
+         * profileId:    Id  of profileId
+         * dbTable:      String of the table name of database
+         */
 
         if ( !ValidateUtils.isValidId( opt.id ) ||
             !ValidateUtils.isValidId( opt.languageId ) ||
@@ -75,6 +85,7 @@ export default class AnnouncementEvent {
                 return res.json();
             }
 
+            // If method is add, return empty
             return {
                 title:   '',
                 content: '',
@@ -168,8 +179,6 @@ export default class AnnouncementEvent {
             e.preventDefault();
             this.data[ this.state.languageId ].title = this.DOM.title.value;
             this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
-
-            // This.isDataValidate();
 
             if ( this.isDataValidate() ) {
                 if ( this.config.method === 'add' )
