@@ -1,3 +1,5 @@
+include /components/common/image.pug
+
 a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ briefing.announcementId }` } ) )
   h1.briefing__title= briefing.title
   p.briefing__article= briefing.content
@@ -5,20 +7,20 @@ a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ brie
   aside.briefing__tags.tags
     each tagObj in briefing.tags
       button.tags__tag( class=`tags__tag--${ tagObj.color }` )= tagObj.tag
-  if userId != -1 
+  if userId >= 0 
     aside.briefing__button.button
-      img.button__pin.pin( 
-        alt = 'pin', 
-        class = `button__pin--${ briefing.announcementId }`,
-        src = `${ host }/static/image/icon/pin.png`,
-      )
-      img.button__update.update( 
-        alt = 'update', 
-        class = `button__update--${ briefing.announcementId }`,
-        src = `${ host }/static/image/icon/edit.png`,
-      )
-      img.button__remove.remove( 
-        alt = 'remove', 
-        class = `button__remove--${ briefing.announcementId }`,
-        src = `${ host }/static/image/icon/delete.png`,
-      )
+      +image( {
+        alt: 'pin',
+        className: `button__pin pin button__pin--${ briefing.announcementId }`,
+        src: `icon/pin.png`,
+      } )
+      +image( {
+        alt: 'update',
+        className: `button__update button__update--${ briefing.announcementId }`,
+        src: `icon/edit.png`,
+      } )
+      +image( {
+        alt: 'remove',
+        className: `button__remove button__remove--${ briefing.announcementId }`,
+        src: `icon/delete.png`,
+      } )

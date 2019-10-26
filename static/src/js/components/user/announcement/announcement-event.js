@@ -15,13 +15,13 @@ export default class AnnouncementEvent {
 
         /***
          * Data validation
-         * require data:
-         * blockDOM:     DOM of information block
-         * addButtonDOM: DOM of add button to add information
-         * loadingDOM:   DOM of loading logo
-         * languageId:   Id  of languageId
-         * profileId:    Id  of profileId
-         * dbTable:      String of the table name of database
+         * @parm
+         * - `blockDOM:     DOM of information block`
+         * - `addButtonDOM: DOM of add button to add information`
+         * - `loadingDOM:   DOM of loading logo`
+         * - `languageId:   Id  of languageId`
+         * - `profileId:    Id  of profileId`
+         * - `dbTable:      String of the table name of database`
          */
 
         if ( !ValidateUtils.isValidId( opt.id ) ||
@@ -134,8 +134,6 @@ export default class AnnouncementEvent {
                 this.state.languageId = languageId;
                 this.DOM.title.value = this.data[ languageId ].title;
                 tinymce.get( 'content__textarea' ).setContent( this.data[ languageId ].content );
-
-                // This.DOM.content.value = this.data[ languageId ].content;
             } );
         } );
     }
@@ -294,6 +292,12 @@ export default class AnnouncementEvent {
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
+
+        /***
+         * Use a string to submit which tags be choosed
+         * ex. `tag1 tag2 tag3 ...`
+         */
+
         this.state.tags.forEach( ( tag ) => {
             tagString += `${ tag } `;
         } );
@@ -334,6 +338,12 @@ export default class AnnouncementEvent {
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
+
+        /***
+         * Use a string to submit which tags be choosed
+         * ex. `tag1 tag2 tag3 ...`
+         */
+
         this.state.tags.forEach( ( tag ) => {
             tagString += `${ tag } `;
         } );
@@ -375,7 +385,6 @@ export default class AnnouncementEvent {
     exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data );
             this.data = data;
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;

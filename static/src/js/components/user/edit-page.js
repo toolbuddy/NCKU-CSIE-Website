@@ -3,7 +3,7 @@ import editPageContentHTML from 'static/src/pug/components/user/edit-page-conten
 import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
@@ -91,8 +91,8 @@ class EditPage {
     setTextInput ( editPageConfig ) {
         // The flag of text language
         const flag = {
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ staticHost }/image/icon/tw.png`,
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ staticHost }/image/icon/us.png`,
         };
 
         // Language that need to show ( whether it need i18n )

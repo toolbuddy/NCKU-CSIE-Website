@@ -108,8 +108,6 @@ router
 
 router
 .route( '/add' )
-
-// .post( cors(), async ( req, res ) => {
 .post( async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
@@ -172,7 +170,6 @@ router
                 tempString += `=${ req.body[ key ] }`;
         } );
 
-        // Const dataString = Object.keys( req.body )[ 0 ];
         const dataString = tempString;
         const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
         const data = JSON.parse( dataFormat );
@@ -241,7 +238,7 @@ router
                     {
                         languageId: 1,
                         title:      data.i18n[ 1 ].title,
-                        content:    data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].content,
                     },
                 ],
                 tags:     dataTags,

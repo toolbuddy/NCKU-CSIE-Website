@@ -40,8 +40,6 @@ catch ( err ) {
 
 try {
     let announcementId = /announcement\/(\d+)/.exec( window.location.pathname );
-    console.log( announcementId );
-    console.log( document.getElementById( 'announcement__editor' ) );
     if ( announcementId === null )
         announcementId = 0;
     else

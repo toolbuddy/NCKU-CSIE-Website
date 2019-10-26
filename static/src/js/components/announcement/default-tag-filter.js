@@ -5,7 +5,7 @@ import briefingHTML from 'static/src/pug/components/announcement/announcement-br
 import addButtonHTML from 'static/src/pug/components/announcement/add-button.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
@@ -795,7 +795,7 @@ export default class DefaultTagFilter {
                 this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML( {
                     userId: this.config.userId,
                     briefing,
-                    host,
+                    host:   UrlUtils.host,
                     UTILS:  {
                         url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
                     },
@@ -919,14 +919,19 @@ export default class DefaultTagFilter {
                     this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
                         userId: this.config.userId,
                         briefing,
-                        host,
                         UTILS:  {
-                            url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                            url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                            staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
                         },
                     } );
                     res();
                 } )
                 .then( () => {
+                    /***
+                     * If it's staff login
+                     * brefingDOM set addButtou event
+                     */
+
                     if ( this.config.userId !== -1 ) {
                         const briefingDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
                         briefingDOM.addEventListener( 'click', ( e ) => {
