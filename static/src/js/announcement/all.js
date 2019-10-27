@@ -92,6 +92,7 @@ async function fetchData () {
                 pagesDOM:              document.getElementById( 'pages' ),
                 addDOM:                document.getElementById( 'announcement--add' ),
                 scrollTopDOM:          document.getElementById( 'announcement--normal' ),
+                deleteDOM:             document.getElementById( 'announcement--delete' ),
                 amount:                15,
                 from:                  new Date( '2018/01/01' ),
                 to:                    new Date( Date.now() ),

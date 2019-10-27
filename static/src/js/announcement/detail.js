@@ -47,6 +47,7 @@ try {
 
     const editorIcon = new EditorIcon( {
         editorDOM:         document.getElementById( 'announcement__editor' ),
+        deleteDOM:         document.getElementById( 'announcement__delete' ),
         announcementId,
         currentLanguageId:     WebLanguageUtils.currentLanguageId,
     } );

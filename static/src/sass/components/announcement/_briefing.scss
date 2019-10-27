@@ -203,8 +203,8 @@
       }
 
       // element
-      // `> .#{ $block } > .briefing > .briefing__button > .button__remove`
-      > .button__remove {
+      // `> .#{ $block } > .briefing > .briefing__button > .button__delete`
+      > .button__delete {
         @extend %button;
       }
     }

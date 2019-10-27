@@ -368,6 +368,77 @@ router
 } );
 
 /**
+ * Resolve URL `/announcement/delete`.
+ */
+
+router
+.route( '/delete' )
+.post( async ( req, res, next ) => {
+    try {
+        console.log( 'in route announcement/delete' );
+
+        // Get id
+        const cookie = req.cookies.sessionId;
+        res.locals.unparsedId = cookie;
+
+        if ( typeof ( cookie ) !== 'undefined' ) {
+            // Got a cookie from the user.
+            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+            if ( sid !== cookie ) {
+                // Get session data in the database.
+                try {
+                    const data = await getSession( {
+                        sid,
+                    } );
+
+                    // Check `expires`
+                    if ( data.expires >= Date.now() && data.userId !== null ) {
+                        const result = await getAdminByUserId( {
+                            userId: Number( data.userId ),
+                        } );
+
+                        if ( result.sid !== data.sid ) {
+                            res.send( {
+                                redirect: '/index',
+                            } );
+                        }
+                    }
+                    else {
+                        res.send( {
+                            redirect: '/index',
+                        } );
+                    }
+                }
+                catch ( error ) {
+                    if ( error.status === 404 ) {
+                        res.send( {
+                            redirect: '/error/404',
+                        } );
+                    }
+                    else {
+                        // Console.log( error );
+                        console.error( error );
+                    }
+                }
+            }
+        }
+
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+
+        await deleteAnnouncements( {
+            announcementIds: [
+                data.announcementId,
+            ],
+        } );
+
+        res.send( { 'message': 'success', } );
+    }
+    catch ( error ) {
+        console.error( error );
+    }
+} );
+
+/**
  * Resolve URL `/announcement/[id]`.
  */
 

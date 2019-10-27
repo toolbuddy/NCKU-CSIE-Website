@@ -88,7 +88,6 @@ class SetData {
     async fetchData ( languageId ) {
         try {
             const res = await fetch( this.queryApi( languageId ) );
-
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
 

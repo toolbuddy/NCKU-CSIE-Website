@@ -76,11 +76,13 @@ export default class DefaultTagFilter {
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
+            deleteId:      -1,
             tags:          [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
         const announcementQuerySelector = block => `.announcement__${ block }.${ block }`;
+        const deleteBriefingSelector = element => `.delete-preview > .delete-preview__briefing > .briefing__${ element }`;
         this.DOM = {
             filter: {
                 from: {
@@ -115,6 +117,17 @@ export default class DefaultTagFilter {
                     noResult:  opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'no-result' ) ),
                     loading:   opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'loading' ) ),
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
+                },
+            },
+            delete: {
+                block:  opt.deleteDOM.querySelector( '.delete-preview' ),
+                button: {
+                    cancel: opt.deleteDOM.querySelector( '.delete-preview > .delete-preview__button > .button__cancel' ),
+                    check:  opt.deleteDOM.querySelector( '.delete-preview > .delete-preview__button > .button__check' ),
+                },
+                briefing: {
+                    title:   opt.deleteDOM.querySelector( deleteBriefingSelector( 'title' ) ),
+                    time:    opt.deleteDOM.querySelector( deleteBriefingSelector( 'time' ) ),
                 },
             },
             pages:     opt.pagesDOM,
@@ -929,14 +942,22 @@ export default class DefaultTagFilter {
                 .then( () => {
                     /***
                      * If it's staff login
-                     * brefingDOM set addButtou event
+                     * brefingDOM set `addButtou` and `deleteButton` event
                      */
 
-                    if ( this.config.userId !== -1 ) {
-                        const briefingDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
-                        briefingDOM.addEventListener( 'click', ( e ) => {
+                    if ( this.config.userId >= 0 ) {
+                        const briefingAddDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
+                        const briefingDeleteDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__delete--${ briefing.announcementId }` );
+                        briefingAddDOM.addEventListener( 'click', ( e ) => {
                             e.preventDefault();
                             window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
+                        } );
+                        briefingDeleteDOM.addEventListener( 'click', async ( e ) => {
+                            e.preventDefault();
+                            classAdd( this.DOM.delete.block, 'delete-preview--show' );
+                            this.state.deleteId = briefing.announcementId;
+                            this.DOM.delete.briefing.title.innerText = briefing.title;
+                            this.DOM.delete.briefing.time.innerText = briefing.updateTime;
                         } );
                     }
                 } );
@@ -965,6 +986,35 @@ export default class DefaultTagFilter {
         } );
     }
 
+    subscribeDeletePreview () {
+        this.DOM.delete.button.cancel.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            classRemove( this.DOM.delete.block, 'delete-preview--show' );
+        } );
+        this.DOM.delete.button.check.addEventListener( 'click', async ( e ) => {
+            e.preventDefault();
+            await this.sendDeleteRequest();
+        } );
+    }
+
+    async sendDeleteRequest () {
+        fetch( `${ host }/announcement/delete`, {
+            method: 'POST',
+            body:   JSON.stringify( {
+                announcementId: this.state.deleteId,
+            } ),
+        } )
+        .then( async () => {
+            /***
+             * If get response successful,
+             * reload this page.
+             */
+
+            classRemove( this.DOM.delete.block, 'delete-preview--show' );
+            this.getAll();
+        } );
+    }
+
     async getAll () {
         try {
             await this.getPage();
@@ -972,8 +1022,10 @@ export default class DefaultTagFilter {
                 this.getPinnedAnnouncement(),
                 this.getNormalAnnouncement(),
             ] );
-            if ( this.config.userId !== -1 )
+            if ( this.config.userId !== -1 ) {
                 this.subscribeAddButton();
+                this.subscribeDeletePreview();
+            }
         }
         catch ( err ) {
             console.error( err );

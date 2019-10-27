@@ -43,6 +43,8 @@ append breadcrumb
   )
 
 append content
+  include /components/announcement/delete-preview.pug
+  
   section.content__announcement.announcement
     aside.announcement__editor.editor#announcement__editor
     header.announcement__headline.headline
@@ -61,6 +63,8 @@ append content
         a.attachments__attachment(
           href = UTILS.url( { href: `announcement/${ data.announcementId }/file/${ fileObj.fileId }` } )
         )= fileObj.name
+  section#announcement__delete.content__delete.delete
+    +deletPreview( 'delete' ) 
 
 append footer
 

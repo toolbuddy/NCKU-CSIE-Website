@@ -11,6 +11,7 @@
 @import 'components/announcement/add-button';
 @import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
+@import 'components/announcement/delete-preview';
 
 // block
 // `.body`
@@ -349,6 +350,15 @@
 
     > .content__add.add {
       @include add-button();
+    }
+
+    > .content__delete.delete {
+      // [ layout ]
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include delete-preview();
     }
   }
 
