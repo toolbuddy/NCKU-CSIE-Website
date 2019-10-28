@@ -75,8 +75,6 @@ router
  */
 
 router
-
-// .route( '/id' )
 .post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         console.log( 'in route user/id' );

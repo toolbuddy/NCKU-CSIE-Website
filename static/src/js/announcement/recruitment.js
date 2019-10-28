@@ -71,6 +71,8 @@ async function fetchData () {
                 filterDOM:             document.getElementById( 'filter' ),
                 announcementPinnedDOM: document.getElementById( 'announcement--pinned' ),
                 announcementNormalDOM: document.getElementById( 'announcement--normal' ),
+                addDOM:                document.getElementById( 'announcement--add' ),
+                deletePreviewDOM:      document.getElementById( 'announcement--delete' ),
                 pagesDOM:              document.getElementById( 'pages' ),
                 scrollTopDOM:          document.getElementById( 'announcement--normal' ),
                 amount:                15,

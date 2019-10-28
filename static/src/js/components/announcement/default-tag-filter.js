@@ -119,15 +119,15 @@ export default class DefaultTagFilter {
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
-            delete: {
-                block:  opt.deleteDOM.querySelector( '.delete-preview' ),
+            deletePreview: {
+                block:  opt.deletePreviewDOM.querySelector( '.delete-preview' ),
                 button: {
-                    cancel: opt.deleteDOM.querySelector( '.delete-preview > .delete-preview__button > .button__cancel' ),
-                    check:  opt.deleteDOM.querySelector( '.delete-preview > .delete-preview__button > .button__check' ),
+                    cancel: opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__button > .button__cancel' ),
+                    check:  opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__button > .button__check' ),
                 },
                 briefing: {
-                    title:   opt.deleteDOM.querySelector( deleteBriefingSelector( 'title' ) ),
-                    time:    opt.deleteDOM.querySelector( deleteBriefingSelector( 'time' ) ),
+                    title:   opt.deletePreviewDOM.querySelector( deleteBriefingSelector( 'title' ) ),
+                    time:    opt.deletePreviewDOM.querySelector( deleteBriefingSelector( 'time' ) ),
                 },
             },
             pages:     opt.pagesDOM,
@@ -954,10 +954,10 @@ export default class DefaultTagFilter {
                         } );
                         briefingDeleteDOM.addEventListener( 'click', async ( e ) => {
                             e.preventDefault();
-                            classAdd( this.DOM.delete.block, 'delete-preview--show' );
+                            classAdd( this.DOM.deletePreview.block, 'delete-preview--show' );
                             this.state.deleteId = briefing.announcementId;
-                            this.DOM.delete.briefing.title.innerText = briefing.title;
-                            this.DOM.delete.briefing.time.innerText = briefing.updateTime;
+                            this.DOM.deletePreview.briefing.title.innerText = briefing.title;
+                            this.DOM.deletePreview.briefing.time.innerText = briefing.updateTime;
                         } );
                     }
                 } );
@@ -987,11 +987,11 @@ export default class DefaultTagFilter {
     }
 
     subscribeDeletePreview () {
-        this.DOM.delete.button.cancel.addEventListener( 'click', ( e ) => {
+        this.DOM.deletePreview.button.cancel.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            classRemove( this.DOM.delete.block, 'delete-preview--show' );
+            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
         } );
-        this.DOM.delete.button.check.addEventListener( 'click', async ( e ) => {
+        this.DOM.deletePreview.button.check.addEventListener( 'click', async ( e ) => {
             e.preventDefault();
             await this.sendDeleteRequest();
         } );
@@ -1010,7 +1010,7 @@ export default class DefaultTagFilter {
              * reload this page.
              */
 
-            classRemove( this.DOM.delete.block, 'delete-preview--show' );
+            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
             this.getAll();
         } );
     }

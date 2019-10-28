@@ -63,9 +63,6 @@ async function fetchData () {
         const userRole = result.role;
 
         const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? result.roleId : -1;
-
-        // Const userId = -1;
-        console.log( result );
         try {
             const filter = new MultipleDefaultTagFilter( {
                 defaultTag: [
@@ -92,7 +89,7 @@ async function fetchData () {
                 pagesDOM:              document.getElementById( 'pages' ),
                 addDOM:                document.getElementById( 'announcement--add' ),
                 scrollTopDOM:          document.getElementById( 'announcement--normal' ),
-                deleteDOM:             document.getElementById( 'announcement--delete' ),
+                deletePreviewDOM:      document.getElementById( 'announcement--delete' ),
                 amount:                15,
                 from:                  new Date( '2018/01/01' ),
                 to:                    new Date( Date.now() ),
