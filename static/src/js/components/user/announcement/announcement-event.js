@@ -5,7 +5,6 @@ import { host, } from 'settings/server/config.js';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
 import FilePreview from 'static/src/pug/components/user/announcement/file-preview.pug';
 import tinymce from 'tinymce';
-import encodeurl from 'encodeurl';
 
 // Plugins
 import 'tinymce/themes/silver';
@@ -13,6 +12,17 @@ import 'tinymce/themes/silver';
 export default class AnnouncementEvent {
     constructor ( opt ) {
         opt = opt || {};
+
+        /***
+         * Data validation
+         * @parm
+         * - `blockDOM:     DOM of information block`
+         * - `addButtonDOM: DOM of add button to add information`
+         * - `loadingDOM:   DOM of loading logo`
+         * - `languageId:   Id  of languageId`
+         * - `profileId:    Id  of profileId`
+         * - `dbTable:      String of the table name of database`
+         */
 
         if ( !ValidateUtils.isValidId( opt.id ) ||
             !ValidateUtils.isValidId( opt.languageId ) ||
@@ -75,6 +85,7 @@ export default class AnnouncementEvent {
                 return res.json();
             }
 
+            // If method is add, return empty
             return {
                 title:   '',
                 content: '',
@@ -89,7 +100,12 @@ export default class AnnouncementEvent {
 
     subscribeEditor () {
         tinymce.init( {
-            selector: '#content__textarea',
+            selector:  '#content__textarea',
+            width:     '100%',
+            statusbar: false,
+            plugins:   'table lists',
+            menubar:   'table',
+            toolbar:   'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {
@@ -118,8 +134,6 @@ export default class AnnouncementEvent {
                 this.state.languageId = languageId;
                 this.DOM.title.value = this.data[ languageId ].title;
                 tinymce.get( 'content__textarea' ).setContent( this.data[ languageId ].content );
-
-                // This.DOM.content.value = this.data[ languageId ].content;
             } );
         } );
     }
@@ -182,14 +196,13 @@ export default class AnnouncementEvent {
             e.preventDefault();
             this.data[ this.state.languageId ].title = this.DOM.title.value;
             this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
-            this.isDataValidate();
 
-            // If ( this.isDataValidate() ) {
-            //     if ( this.config.method === 'add' )
-            //         this.uploadPostAnnouncement();
-            //     else
-            //         this.uploadPatchAnnouncement();
-            // }
+            if ( this.isDataValidate() ) {
+                if ( this.config.method === 'add' )
+                    this.uploadPostAnnouncement();
+                else
+                    this.uploadPatchAnnouncement();
+            }
         } );
     }
 
@@ -203,18 +216,32 @@ export default class AnnouncementEvent {
             res();
         } )
         .then( async () => {
+            // Const deleteDOM = this.DOM.filePreview.querySelectorAll( `.file__file-preview > .file-preview__delete` );
             const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
 
             /***
             *   Add delete button event listener
             */
 
+            // Array.from( deleteDOM ).forEach( ( DOM ) => {
+            //     DOM.addEventListener( 'click', () => {
+            //         console.log( 'delete' );
+            //         const tempId = Number( DOM.getAttribute( 'file-id' ) );
+            //         const temp = this.state.files.find( element => element.fileId === tempId );
+            //         const index = this.state.files.indexOf( temp );
+            //         this.state.files.splice( index, 1 );
+            //         this.state.deleteFiles.push( tempId );
+            //         DOM.parentNode.remove();
+            //     } );
+            // } );
+
             deleteDOM.addEventListener( 'click', () => {
                 console.log( 'delete' );
-                const temp = this.state.files.find( element => element.fileId === id );
+                const tempId = Number( deleteDOM.getAttribute( 'file-id' ) );
+                const temp = this.state.files.find( element => element.fileId === tempId );
                 const index = this.state.files.indexOf( temp );
                 this.state.files.splice( index, 1 );
-                this.state.deleteFiles.push( id );
+                this.state.deleteFiles.push( tempId );
                 deleteDOM.parentNode.remove();
             } );
 
@@ -237,47 +264,7 @@ export default class AnnouncementEvent {
         } );
     }
 
-    uploadPatchAnnouncement () {
-        const form = this.DOM.editBlock;
-        const isPublished = form.elements[ 'publish-time' ].value;
-        let tagString = '';
-        this.state.tags.forEach( ( tag ) => {
-            tagString += `${ tag } `;
-        } );
-        const files = {};
-        this.state.files.forEach( ( file ) => {
-            files[ file.fileId ] = file.name;
-        } );
-
-        fetch( `${ host }/announcement/add`, {
-            method:   'POST',
-            body:   JSON.stringify( {
-                'method':           'patch',
-                isPublished,
-                'announcementId':   this.config.id,
-                'author':           1,
-                'isPinned':         0,
-                'imageUrl':         null,
-                'views':            0,
-                'i18n':           {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
-                    },
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
-                    },
-                },
-                'tags':     tagString,
-                'fileI18n': files,
-            } ),
-        } );
-    }
-
     isDataValidate () {
-        const form = this.DOM.editBlock;
-        const isPublished = Number( form.elements[ 'publish-time' ].value );
         let errorMessage = '';
 
         /***
@@ -296,18 +283,16 @@ export default class AnnouncementEvent {
             this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.length <= 0
         )
             errorMessage = '中文內容為必填欄位';
-        if ( isPublished === 1 ) {
-            if (
-                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title ) ||
-                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title.length <= 0
-            )
-                errorMessage = '英文標題為必填欄位';
-            if (
-                !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content ) ||
-                this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.length <= 0
-            )
-                errorMessage = '英文內容為必填欄位';
-        }
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title ) ||
+            this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title.length <= 0
+        )
+            errorMessage = '英文標題為必填欄位';
+        if (
+            !ValidateUtils.isValidString( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content ) ||
+            this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.length <= 0
+        )
+            errorMessage = '英文內容為必填欄位';
 
         if ( errorMessage !== '' ) {
             this.setErrorMessage( errorMessage );
@@ -326,6 +311,12 @@ export default class AnnouncementEvent {
         const form = this.DOM.editBlock;
         const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
+
+        /***
+         * Use a string to submit which tags be choosed
+         * ex. `tag1 tag2 tag3 ...`
+         */
+
         this.state.tags.forEach( ( tag ) => {
             tagString += `${ tag } `;
         } );
@@ -343,26 +334,76 @@ export default class AnnouncementEvent {
                 'isPinned':         0,
                 'imageUrl':         null,
                 'views':            0,
-                'i18n':     {
+                'i18n':           {
                     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                         title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: encodeurl( this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ) ),
+                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                     },
                 },
                 'tags':     tagString,
-                'fileI18n': files,
+                'fileI18n': {},
             } ),
+        } )
+        .then( () => {
+            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+        } );
+    }
+
+    uploadPatchAnnouncement () {
+        const form = this.DOM.editBlock;
+        const isPublished = form.elements[ 'publish-time' ].value;
+        let tagString = '';
+
+        /***
+         * Use a string to submit which tags be choosed
+         * ex. `tag1 tag2 tag3 ...`
+         */
+
+        this.state.tags.forEach( ( tag ) => {
+            tagString += `${ tag } `;
+        } );
+        const files = {};
+        this.state.files.forEach( ( file ) => {
+            files[ file.fileId ] = file.name;
+        } );
+
+        fetch( `${ host }/announcement/add`, {
+            method:   'POST',
+            type:     'string',
+            body:   JSON.stringify( {
+                'method':           'patch',
+                isPublished,
+                'announcementId':   this.config.id,
+                'author':           1,
+                'isPinned':         0,
+                'imageUrl':         null,
+                'views':            0,
+                'i18n':           {
+                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
+                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+                    },
+                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
+                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+                    },
+                },
+                'tags':           tagString,
+                'fileI18n':       {},
+            } ),
+        } )
+        .then( () => {
+            location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
         } );
     }
 
     exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            console.log( data );
             this.data = data;
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;

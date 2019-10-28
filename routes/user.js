@@ -73,8 +73,7 @@ router
  */
 
 router
-.route( '/id' )
-.post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
+.post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
@@ -182,7 +181,8 @@ router
 } );
 
 /**
- * Resolve URL `/user/profile`.
+ * Resolve URL `/user/.`.
+ * If sid not found or invalid, redirect to /index.
  */
 
 router

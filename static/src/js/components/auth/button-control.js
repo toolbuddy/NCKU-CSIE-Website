@@ -13,6 +13,7 @@ export default class ButtonControl {
 
     setButton () {
         this.button.disabled = true;
+        this.account.focus();
         this.account.addEventListener( 'input', () => {
             if ( this.isEmpty() ) {
                 this.button.classList.remove( 'form__button--enable' );

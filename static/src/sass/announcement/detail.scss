@@ -8,6 +8,7 @@
 @import 'components/common/footer';
 @import 'components/announcement/tags';
 @import 'components/announcement/announcement-detail';
+@import 'components/announcement/delete-preview';
 @import '~thirdPartyLib/github-markdown-css/github-markdown.css';
 
 // block
@@ -89,6 +90,15 @@
     @include announcement( 'content' ) {
       // [ position ]
       grid-area: announcement;
+    }
+
+    > .content__delete.delete {
+      // [ layout ]
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include delete-preview();
     }
   }
 

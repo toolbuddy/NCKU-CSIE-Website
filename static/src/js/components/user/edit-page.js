@@ -3,10 +3,9 @@ import editPageContentHTML from 'static/src/pug/components/user/edit-page-conten
 import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { conditionalExpression, } from 'babel-types';
 
 /**
  * @param {object} opt
@@ -16,6 +15,15 @@ import { conditionalExpression, } from 'babel-types';
 
 class EditPage {
     constructor ( opt ) {
+        /***
+         * Data Validate
+         * require data:
+         * buttonMethod: string of which method ( add/update/delete )
+         * dbTable:      string of database table name
+         * labguageId:   id     of language id
+         * dbTableItemId: int ( id ) of the data id of its database
+         */
+
         if (
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
             !ValidateUtils.isValidString( opt.buttonMethod ) ||
@@ -37,6 +45,12 @@ class EditPage {
         this.content = opt.content;
     }
 
+    /***
+     * Check whether edit-page exist,
+     * if exist, show
+     * if not exist, create
+     */
+
     async checkEditPageExist () {
         const editPageDOM = document.getElementById( 'edit-page' );
 
@@ -52,6 +66,10 @@ class EditPage {
         }
     }
 
+    /***
+     * Render edit-page form
+     */
+
     async renderEditPageWindow () {
         await this.checkEditPageExist();
 
@@ -66,22 +84,29 @@ class EditPage {
         } );
     }
 
+    /***
+     * Input type: text
+     */
+
     setTextInput ( editPageConfig ) {
+        // The flag of text language
         const flag = {
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ host }/static/image/icon/tw.png`,
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ host }/static/image/icon/us.png`,
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: `${ staticHost }/image/icon/tw.png`,
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: `${ staticHost }/image/icon/us.png`,
         };
+
+        // Language that need to show ( whether it need i18n )
         const languageIds = ( editPageConfig.i18n ) ? LanguageUtils.supportedLanguageId : [ this.config.languageId, ];
         languageIds.forEach( ( languageId ) => {
             const placeholder = this.dataI18n[ languageId ].default[ editPageConfig.dbTableItem ];
             let value = '';
 
+            // If button method = update and data exist, add value
             if ( typeof this.dbData[ languageId ] === 'object' &&
                  this.config.buttonMethod === 'update' &&
                 this.dbData[ languageId ][ editPageConfig.dbTableItem ] !== null )
                 value = this.dbData[ languageId ][ editPageConfig.dbTableItem ];
 
-            console.log( editPageConfig.i18n );
             this.DOM.info.innerHTML += editPageContentHTML( {
                 flag:        ( editPageConfig.i18n ) ? flag[ languageId ] : null,
                 value,
@@ -95,6 +120,12 @@ class EditPage {
             } );
         } );
     }
+
+    /***
+     * Input type:
+     *  from: text ( yyyy )
+     *  to:   text ( yyyy )
+     */
 
     setTimeInput () {
         const valueFrom = ( this.config.buttonMethod === 'update' ) ? this.dbData[ this.config.languageId ].from : null;
@@ -125,6 +156,7 @@ class EditPage {
             const util = editPageConfig.util;
 
             new Promise( ( res ) => {
+                // Initial select drop down item
                 let value = util.map.indexOf( util.defaultOption );
                 if ( this.config.buttonMethod === 'update' )
                     value = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
@@ -165,6 +197,13 @@ class EditPage {
         }
     }
 
+    /***
+     * Input
+     * year:  text ( yyyy )
+     * month: text ( mm )
+     * day:   test ( dd )
+     */
+
     setTimeDetailInput ( editPageConfig ) {
         const data = {};
 
@@ -176,6 +215,7 @@ class EditPage {
             } );
         }
         else if ( this.config.dbTable === 'patent' ) {
+            // DbData: string: `yyyy-mm-dd`
             const dbData = this.dbData[ this.config.languageId ][ editPageConfig.dbTableItem ];
             const formattedData = ( dbData !== null ) ? dbData.split( '-' ) : null;
             data.year = ( formattedData !== null ) ? formattedData[ 0 ] : '';
@@ -232,6 +272,10 @@ class EditPage {
 
         }
     }
+
+    /***
+     * Set edit-page content
+     */
 
     async setEditPageInputBlock () {
         this.DOM.info.innerHTML = '';

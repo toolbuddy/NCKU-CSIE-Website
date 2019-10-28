@@ -1,0 +1,26 @@
+@mixin add-button () {
+  > .add__link.link {
+    // [ layout ]
+    display: block;
+    position: fixed;
+
+    // [ position ]
+    bottom: font__px-to-rem( 100 );
+    right: font__px-to-rem( 50 );
+
+    > .link__image {
+      // [ position ]
+      width: font__px-to-rem( 50 );
+      height: font__px-to-rem( 50 );
+
+      // [ skin ]
+      filter: opacity( .87 );
+
+      // [ event ]
+      &:hover {
+        // [ skin ]
+        filter: opacity( 1 );
+      }
+    }
+  }
+}

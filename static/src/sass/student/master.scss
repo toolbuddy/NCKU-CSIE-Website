@@ -10,6 +10,8 @@
 @import 'components/announcement/filter';
 @import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
+@import 'components/announcement/delete-preview';
+@import 'components/announcement/add-button';
 
 // block
 // `.body`
@@ -287,6 +289,19 @@
       // [ position ]
       grid-area: pages;
       justify-self: center;
+    }
+
+    > .content__add.add {
+      @include add-button();
+    }
+
+    > .content__delete.delete {
+      // [ layout ]
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include delete-preview();
     }
   }
 

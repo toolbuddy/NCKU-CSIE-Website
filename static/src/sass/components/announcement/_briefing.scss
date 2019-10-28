@@ -15,11 +15,12 @@
     display: grid;
     grid-template: {
       areas:
-        'briefing__title briefing__title briefing__title'
-        'briefing__tags  briefing__tags  briefing__tags'
-        'briefing__time  briefing__time  .';
+        'briefing__title  briefing__title  briefing__title'
+        'briefing__tags   briefing__tags   briefing__tags'
+        'briefing__time   briefing__time   .'
+        'briefing__button briefing__button briefing__button';
       rows: min-content font__px-to-rem( 48 ) 1fr;
-      columns: 5fr 1fr 13fr;
+      columns: 5fr 1fr 13fr auto;
     }
     margin-bottom: font__px-to-rem( 14 );
 
@@ -50,10 +51,15 @@
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
-      grid-template-areas:
-        'briefing__title   briefing__title briefing__title'
-        'briefing__article briefing__article briefing__article'
-        'briefing__tags    briefing__tags  briefing__time';
+      grid-template: {
+        areas:
+          'briefing__title   briefing__title   briefing__title'
+          'briefing__article briefing__article briefing__article'
+          'briefing__tags    briefing__tags    briefing__time'
+          '.                 .                 briefing__button';
+        rows: min-content font__px-to-rem( 48 ) 1fr auto;
+        columns: 5fr 1fr 13fr;
+      }
 
       // [ skin ]
       width: font__px-to-rem( 424 );
@@ -145,6 +151,61 @@
         // [ position ]
         justify-self: end;
         align-self: end;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__button`
+    > .briefing__button {
+      // [ position ]
+      grid-area: briefing__button;
+
+      // [ layout ]
+      display: flex;
+      justify-content: flex-end;
+
+      // [ element ]
+      %button {
+        // [ position ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        margin: {
+          top: font__px-to-rem( 10 );
+          bottom: font__px-to-rem( 5 );
+        }
+
+        // [ skin ]
+        filter: opacity( .7 );
+
+        // [ action ]
+        &:hover {
+          // [ skin ]
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__pin`
+      > .button__pin {
+        @extend %button;
+
+        // [ position ]
+        margin-right: font__px-to-rem( 4 );
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__update`
+      > .button__update {
+        @extend %button;
+
+        // [ position ]
+        margin-right: font__px-to-rem( 4 );
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__delete`
+      > .button__delete {
+        @extend %button;
       }
     }
 

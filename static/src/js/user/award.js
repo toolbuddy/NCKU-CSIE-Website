@@ -82,7 +82,7 @@ async function fetchData () {
                     loadingDOM:       document.querySelector( '.content__main > .main__award-block > .award-block__loading' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     dbTable:          'award',
-                    profileId:        result.roleId,
+                    profileId:        Number( result.roleId ),
                 } );
 
                 setAwardData.exec();

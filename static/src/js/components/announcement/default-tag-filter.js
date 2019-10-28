@@ -2,9 +2,10 @@ import tagUtils from 'models/announcement/utils/tag.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
+import addButtonHTML from 'static/src/pug/components/announcement/add-button.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
 import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
-import { host, } from 'settings/server/config.js';
+import { host, staticHost, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 export default class DefaultTagFilter {
@@ -36,7 +37,8 @@ export default class DefaultTagFilter {
             !ValidateUtils.isPositiveInteger( opt.page ) ||
             typeof ( opt.visiblePageNum ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId ) ||
+            typeof ( opt.userId ) === 'undefined'
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -61,6 +63,7 @@ export default class DefaultTagFilter {
             visiblePageNum:     opt.visiblePageNum,
             animationDelayTime:  500,
             scrollPx:           5,
+            userId:             opt.userId,
         };
 
         this.tagId = {
@@ -73,11 +76,13 @@ export default class DefaultTagFilter {
             from:          this.config.from,
             to:            this.config.to,
             page:          this.config.page,
+            deleteId:      -1,
             tags:          [],
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
         const announcementQuerySelector = block => `.announcement__${ block }.${ block }`;
+        const deleteBriefingSelector = element => `.delete-preview > .delete-preview__briefing > .briefing__${ element }`;
         this.DOM = {
             filter: {
                 from: {
@@ -114,8 +119,20 @@ export default class DefaultTagFilter {
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
+            deletePreview: {
+                block:  opt.deletePreviewDOM.querySelector( '.delete-preview' ),
+                button: {
+                    cancel: opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__button > .button__cancel' ),
+                    check:  opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__button > .button__check' ),
+                },
+                briefing: {
+                    title:   opt.deletePreviewDOM.querySelector( deleteBriefingSelector( 'title' ) ),
+                    time:    opt.deletePreviewDOM.querySelector( deleteBriefingSelector( 'time' ) ),
+                },
+            },
             pages:     opt.pagesDOM,
             scrollTop: opt.scrollTopDOM,
+            add:       opt.addDOM,
         };
 
         if (
@@ -789,8 +806,10 @@ export default class DefaultTagFilter {
             } )
             .forEach( ( briefing ) => {
                 this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML( {
+                    userId: this.config.userId,
                     briefing,
-                    UTILS: {
+                    host:   UrlUtils.host,
+                    UTILS:  {
                         url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
                     },
                 } );
@@ -909,11 +928,38 @@ export default class DefaultTagFilter {
                 return briefing;
             } )
             .forEach( ( briefing ) => {
-                this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
-                    briefing,
-                    UTILS: {
-                        url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
-                    },
+                new Promise( ( res ) => {
+                    this.DOM.announcement.normal.briefings.innerHTML += briefingHTML( {
+                        userId: this.config.userId,
+                        briefing,
+                        UTILS:  {
+                            url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                            staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
+                        },
+                    } );
+                    res();
+                } )
+                .then( () => {
+                    /***
+                     * If it's staff login
+                     * brefingDOM set `addButtou` and `deleteButton` event
+                     */
+
+                    if ( this.config.userId >= 0 ) {
+                        const briefingAddDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
+                        const briefingDeleteDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__delete--${ briefing.announcementId }` );
+                        briefingAddDOM.addEventListener( 'click', ( e ) => {
+                            e.preventDefault();
+                            window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
+                        } );
+                        briefingDeleteDOM.addEventListener( 'click', async ( e ) => {
+                            e.preventDefault();
+                            classAdd( this.DOM.deletePreview.block, 'delete-preview--show' );
+                            this.state.deleteId = briefing.announcementId;
+                            this.DOM.deletePreview.briefing.title.innerText = briefing.title;
+                            this.DOM.deletePreview.briefing.time.innerText = briefing.updateTime;
+                        } );
+                    }
                 } );
             } );
             classAdd( this.DOM.announcement.normal.loading, 'loading--hidden' );
@@ -933,6 +979,42 @@ export default class DefaultTagFilter {
         }
     }
 
+    subscribeAddButton () {
+        this.DOM.add.innerHTML += addButtonHTML( {
+            host,
+            languageId: this.state.languageId,
+        } );
+    }
+
+    subscribeDeletePreview () {
+        this.DOM.deletePreview.button.cancel.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
+        } );
+        this.DOM.deletePreview.button.check.addEventListener( 'click', async ( e ) => {
+            e.preventDefault();
+            await this.sendDeleteRequest();
+        } );
+    }
+
+    async sendDeleteRequest () {
+        fetch( `${ host }/announcement/delete`, {
+            method: 'POST',
+            body:   JSON.stringify( {
+                announcementId: this.state.deleteId,
+            } ),
+        } )
+        .then( async () => {
+            /***
+             * If get response successful,
+             * reload this page.
+             */
+
+            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
+            this.getAll();
+        } );
+    }
+
     async getAll () {
         try {
             await this.getPage();
@@ -940,6 +1022,10 @@ export default class DefaultTagFilter {
                 this.getPinnedAnnouncement(),
                 this.getNormalAnnouncement(),
             ] );
+            if ( this.config.userId !== -1 ) {
+                this.subscribeAddButton();
+                this.subscribeDeletePreview();
+            }
         }
         catch ( err ) {
             console.error( err );

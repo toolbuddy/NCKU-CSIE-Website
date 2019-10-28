@@ -13,16 +13,12 @@
 import express from 'express';
 import MarkdownIt from 'markdown-it';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import * as fs from 'fs';
 import path from 'path';
 
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
-import getSession from 'models/auth/operations/get-session.js';
 import getFileInfo from 'models/announcement/operations/get-file-info.js';
-import saveSession from 'models/auth/operations/save-session.js';
-import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import patchAnnouncement from 'models/announcement/operations/patch-announcement.js';
 import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
@@ -65,7 +61,37 @@ router
 
 router
 .route( '/all' )
-.get( urlEncoded, jsonParser, staticHtml( 'announcement/all' ) );
+
+// .get( staticHtml( 'announcement/all' ) );
+
+.get( async ( req, res, next ) => {
+    try {
+        const data =  {};
+
+        res.locals.UTILS.announcement = {
+            tagUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'announcement/all.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err ) {
+                    reject( err );
+                    return;
+                }
+                res.send( html );
+                resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/announcement/recruitment`.
@@ -81,14 +107,73 @@ router
 
 router
 .route( '/add' )
-.get( cors(), urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+.post( allowUserOnly, async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
-        console.log( req.body );
-        console.log( JSON.parse( Object.keys( req.body )[ 0 ] ) );
-        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-        const dataTags = data.tags.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
-        dataTags.pop();
+
+        // // Get id
+        // const cookie = req.cookies.sessionId;
+        // res.locals.unparsedId = cookie;
+
+        // if ( typeof ( cookie ) !== 'undefined' ) {
+        //     // Got a cookie from the user.
+        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+        //     if ( sid !== cookie ) {
+        //         // Get session data in the database.
+        //         try {
+        //             const data = await getSession( {
+        //                 sid,
+        //             } );
+
+        //             // Check `expires`
+        //             if ( data.expires >= Date.now() && data.userId !== null ) {
+        //                 const result = await getAdminByUserId( {
+        //                     userId: Number( data.userId ),
+        //                 } );
+
+        //                 if ( result.sid !== data.sid ) {
+        //                     res.send( {
+        //                         redirect: '/index',
+        //                     } );
+        //                 }
+        //             }
+        //             else {
+        //                 res.send( {
+        //                     redirect: '/index',
+        //                 } );
+        //             }
+        //         }
+        //         catch ( error ) {
+        //             if ( error.status === 404 ) {
+        //                 res.send( {
+        //                     redirect: '/error/404',
+        //                 } );
+        //             }
+        //             else {
+        //                 // Console.log( error );
+        //                 console.error( error );
+        //             }
+        //         }
+        //     }
+        // }
+
+        /**
+         * Data format
+         */
+
+        let tempString = '';
+        Object.keys( req.body ).forEach( ( key ) => {
+            if ( key.length !== 0 )
+                tempString += key;
+            if ( req.body[ key ].length !== 0 )
+                tempString += `=${ req.body[ key ] }`;
+        } );
+
+        const dataString = tempString;
+        const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
+        const data = JSON.parse( dataFormat );
+        const dataTagsString = data.tags.substring( 0, data.tags.length - 1 );
+        const dataTags = dataTagsString.split( ' ' ).map( tag => ( { 'typeId': Number( tag ), } ) );
         const dataFiles = Object.keys( data.fileI18n ).map( key => [
             {
                 languageId: 0,
@@ -100,6 +185,9 @@ router
             },
         ] );
 
+        /**
+         * Post new data
+         */
 
         if ( data.method === 'post' ) {
             const resu = await postAnnouncement( {
@@ -148,8 +236,12 @@ router
                 } );
             } );
         }
+
+        /**
+         * Edit exist data
+         */
+
         else if ( data.method === 'patch' ) {
-            console.log( 'patch' );
             await patchAnnouncement( {
                 announcementId:   data.announcementId,
                 updateTime:       new Date(),
@@ -157,7 +249,7 @@ router
                 isPinned:         Number( data.isPinned ),
                 isPublished:      Number( data.isPublished ),
                 imageUrl:         null,
-                views:            1,
+                views:            0,
                 i18n:             [
                     {
                         languageId: 0,
@@ -167,7 +259,7 @@ router
                     {
                         languageId: 1,
                         title:      data.i18n[ 1 ].title,
-                        content:    data.i18n[ 1 ].title,
+                        content:    data.i18n[ 1 ].content,
                     },
                 ],
                 tags:     dataTags,
@@ -330,6 +422,77 @@ router
         resNames.push( `${ fileObj.destination }${ fileObj.filename }${ path.extname( fileObj.originalname ) }` );
     } );
     res.send( resNames );
+} );
+
+/**
+ * Resolve URL `/announcement/delete`.
+ */
+
+router
+.route( '/delete' )
+.post( allowUserOnly, async ( req, res, next ) => {
+    try {
+        console.log( 'in route announcement/delete' );
+
+        // // Get id
+        // const cookie = req.cookies.sessionId;
+        // res.locals.unparsedId = cookie;
+
+        // if ( typeof ( cookie ) !== 'undefined' ) {
+        //     // Got a cookie from the user.
+        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+        //     if ( sid !== cookie ) {
+        //         // Get session data in the database.
+        //         try {
+        //             const data = await getSession( {
+        //                 sid,
+        //             } );
+
+        //             // Check `expires`
+        //             if ( data.expires >= Date.now() && data.userId !== null ) {
+        //                 const result = await getAdminByUserId( {
+        //                     userId: Number( data.userId ),
+        //                 } );
+
+        //                 if ( result.sid !== data.sid ) {
+        //                     res.send( {
+        //                         redirect: '/index',
+        //                     } );
+        //                 }
+        //             }
+        //             else {
+        //                 res.send( {
+        //                     redirect: '/index',
+        //                 } );
+        //             }
+        //         }
+        //         catch ( error ) {
+        //             if ( error.status === 404 ) {
+        //                 res.send( {
+        //                     redirect: '/error/404',
+        //                 } );
+        //             }
+        //             else {
+        //                 // Console.log( error );
+        //                 console.error( error );
+        //             }
+        //         }
+        //     }
+        // }
+
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+
+        await deleteAnnouncements( {
+            announcementIds: [
+                data.announcementId,
+            ],
+        } );
+
+        res.send( { 'message': 'success', } );
+    }
+    catch ( error ) {
+        console.error( error );
+    }
 } );
 
 /**

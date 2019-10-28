@@ -28,6 +28,7 @@ append content
   include /components/common/topic.pug
   include /components/common/loading.pug
   include /components/common/no-result.pug
+  include /components/announcement/delete-preview.pug
 
   +topic( 'content', i18n[ LANG.id ].topic )
   section#filter.content__filter.filter
@@ -61,3 +62,8 @@ append content
     nav.announcement__briefings.briefings
 
   section#pages.content__pages.pages
+
+  section#announcement--add.content__add.add
+
+  section#announcement--delete.content__delete.delete
+    +deletPreview( 'delete' ) 
