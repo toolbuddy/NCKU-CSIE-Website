@@ -114,7 +114,7 @@ app.use( '/about', urlEncoded, jsonParser, about );
  * Resolve URL `/announcement`.
  */
 
-app.use( '/announcement', urlEncoded, jsonParser, announcement );
+app.use( '/announcement', announcement );
 
 /**
  * Resolve URL `/auth`.

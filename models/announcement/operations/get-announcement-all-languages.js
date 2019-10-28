@@ -46,6 +46,7 @@ export default async ( { announcementId = 1, } = {} ) => {
                         attributes: [
                             'filepath',
                             'name',
+                            'path',
                         ],
                     },
                 ],
@@ -83,6 +84,7 @@ export default async ( { announcementId = 1, } = {} ) => {
                 announcementFile => ( {
                     url:        announcementFile.announcementFileI18n[ 0 ].filepath,
                     name:       announcementFile.announcementFileI18n[ 0 ].name,
+                    path:       announcementFile.announcementFileI18n[ 0 ].path,
                 } ),
             ),
             'tags':        announcement.tag.map(

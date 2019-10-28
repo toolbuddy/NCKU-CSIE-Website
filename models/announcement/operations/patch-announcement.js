@@ -130,6 +130,7 @@ export default async ( opt ) => {
             transaction: t,
         } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => FileI18n.update( {
             name: fileI18nInfo.name,
+            path: fileI18nInfo.path,
         }, {
             where: {
                 fileId:     fileI18nInfo.fileId,

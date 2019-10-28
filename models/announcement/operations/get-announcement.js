@@ -87,6 +87,7 @@ export default async ( opt ) => {
                             as:         'fileI18n',
                             attributes: [
                                 'name',
+                                'path',
                             ],
                             where: {
                                 languageId,
@@ -116,6 +117,7 @@ export default async ( opt ) => {
             files:          data.file.map( file => ( {
                 fileId: file.fileId,
                 name:   file.fileI18n[ 0 ].name,
+                path:   file.fileI18n[ 0 ].path,
             } ) ),
         };
     }

@@ -15,7 +15,14 @@ const FileI18nValidationConstraints = {
         },
     },
     name: {
-        presence: true,
+        presence: false,
+        type:       'string',
+        length:   {
+            maximum: 2083,
+        },
+    },
+    path: {
+        presence: false,
         type:       'string',
         length:   {
             maximum: 2083,

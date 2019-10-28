@@ -293,7 +293,6 @@ export default class SetProfileData {
                             const formData = new FormData();
 
                             formData.append( 'file', input.files[ 0 ] );
-                            formData.append( 'mFileName', 'mFileName.jpg' );
 
                             const result = await fetch( `${ host }/user/uploadPhoto`, {
                                 credentials: 'include',
