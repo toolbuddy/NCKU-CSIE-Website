@@ -621,7 +621,7 @@ export default async ( opt ) => {
                 email:       profile.email,
                 personalWeb: profile.personalWeb,
                 nation:      profile.nation,
-                photo:       profile.photo, // ???
+                photo:       profile.photo,
                 officeTel:   profile.officeTel,
                 labTel:      profile.labTel,
                 labWeb:      profile.labWeb,

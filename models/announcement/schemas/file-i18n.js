@@ -18,6 +18,10 @@ const FileI18n = announcement.define( 'fileI18n', {
         type:      Sequelize.STRING( 2083 ),
         allowNull: false,
     },
+    path: {
+        type:      Sequelize.STRING( 2083 ),
+        allowNull: false,
+    },
 } );
 
 export default FileI18n;

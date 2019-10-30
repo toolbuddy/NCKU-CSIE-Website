@@ -102,7 +102,7 @@ app.use( ( req, res, next ) => {
  * Resolve URL `/`.
  */
 
-app.use( '/', urlEncoded, jsonParser, home );
+app.use( '/', home );
 
 /**
  * Resolve URL `/about`.
@@ -114,7 +114,7 @@ app.use( '/about', urlEncoded, jsonParser, about );
  * Resolve URL `/announcement`.
  */
 
-app.use( '/announcement', urlEncoded, jsonParser, announcement );
+app.use( '/announcement', announcement );
 
 /**
  * Resolve URL `/auth`.

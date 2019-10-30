@@ -14,6 +14,9 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
+import * as fs from 'fs';
+import path from 'path';
+
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
@@ -26,8 +29,10 @@ import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
+import allowUserOnly from 'routes/utils/allow-user-only.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import tagUtils from 'models/announcement/utils/tag.js';
+import roleUtils from 'models/auth/utils/role.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -55,20 +60,13 @@ const router = express.Router( {
     strict:        false,
 } );
 
-const upload = multer( {
-    dest:     `${ projectRoot }/static/dist/file/`,
-    filename: ( req, file, cb ) => {
-        cb( null, req.file.originalname );
-    },
-} ).any();
-
 /**
  * Resolve URL `/user`.
  */
 
 router
 .route( '/' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/index' ) );
+.get( staticHtml( 'user/index' ) );
 
 /**
  * Resolve URL `/user/id`.
@@ -77,7 +75,6 @@ router
 router
 .post( '/id', urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
-        console.log( 'in route user/id' );
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
         res.header( 'Access-Control-Allow-Origin', host );
@@ -189,96 +186,8 @@ router
  */
 
 router
-.route( /./ )
-.get( cors(), noCache, async ( req, res, next ) => {
-    try {
-        console.log( 'in route user/. - get' );
-        const cookie = req.cookies.sessionId;
-        res.locals.unparsedId = cookie;
-
-        if ( typeof ( cookie ) !== 'undefined' ) {
-            // Got a cookie from the user.
-            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-            if ( sid === cookie ) {
-                const error = new Error( 'Invalid cookie.' );
-                error.status = 400;
-                throw error;
-            }
-
-            // Get session data in the database.
-            const data = await getSession( {
-                sid,
-            } );
-
-            // Check `expires`
-            if ( data.expires < Date.now() ) {
-                req.session.regenerate( async () => {
-                    const newSid = req.session.id;
-                    req.session.ctrl = newSid;
-
-                    // Store new session in database
-                    await saveSession( {
-                        sid:     newSid,
-                        expires: req.session.cookie.maxAge + Date.now(),
-                    } );
-
-                    req.session.save();
-                    res.locals.unparsedSid = req.session.id;
-                    res.redirect( '/index' );
-                } );
-            }
-            else if ( data.userId !== null ) {
-                const result = await getAdminByUserId( {
-                    userId: Number( data.userId ),
-                } );
-
-                if ( result.sid === data.sid ) {
-                    console.log( 'should send profile html' );
-                    next();
-                }
-                else {
-                    console.log( 'sid invalid, redirect' );
-                    res.redirect( '/index' );
-                }
-            }
-            else
-                res.redirect( '/index' );
-        }
-        else
-            res.redirect( '/index' );
-    }
-    catch ( error ) {
-        if ( error.status === 404 ) {
-            // No corresponding session id in the database
-            req.session.regenerate( async () => {
-                const newSid = req.session.id;
-                req.session.ctrl = newSid;
-
-                // Store new session in database
-                await saveSession( {
-                    sid:     newSid,
-                    expires: req.session.cookie.maxAge + Date.now(),
-                } );
-
-                req.session.save();
-                res.locals.unparsedSid = req.session.id;
-
-                // Send new session & user id
-                res.redirect( '/index' );
-            } );
-        }
-        else
-            console.error( error );
-    }
-} );
-
-/**
- * Resolve URL `/user/profile`.
- */
-
-router
 .route( '/profile' )
-.get( urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     res.sendFile(
         `static/dist/html/user/profile.${ req.query.languageId }.html`,
         {
@@ -293,114 +202,8 @@ router
         }
     );
 } )
-.post( urlEncoded, jsonParser, cors(), async ( req, res ) => {
+.post( allowUserOnly, urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
-        console.log( 'in route user/profile' );
-
-        // Get id
-        const cookie = req.cookies.sessionId;
-        res.locals.unparsedId = cookie;
-
-        if ( typeof ( cookie ) === 'undefined' ) {
-            try {
-                // Got no cookie from the user.
-
-                // Store the cookie in the user.
-                const newSid = req.session.id;
-                req.session.ctrl = newSid;
-
-                // Store new session in database
-                await saveSession( {
-                    sid:     newSid,
-                    expires: req.session.cookie.maxAge + Date.now(),
-                } );
-
-                res.send( {
-                    redirect: '/index',
-                } );
-            }
-            catch ( error ) {
-                console.error( error );
-            }
-        }
-        else {
-            // Got a cookie from the user.
-            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-            if ( sid === cookie ) {
-                const error = new Error( 'Invalid cookie.' );
-                error.status = 400;
-                throw error;
-            }
-
-            // Get session data in the database.
-            try {
-                const data = await getSession( {
-                    sid,
-                } );
-
-                // Check `expires`
-                if ( data.expires < Date.now() ) {
-                    req.session.regenerate( async () => {
-                        const newSid = req.session.id;
-                        req.session.ctrl = newSid;
-
-                        // Store new session in database
-                        await saveSession( {
-                            sid:     newSid,
-                            expires: req.session.cookie.maxAge + Date.now(),
-                        } );
-
-                        req.session.save();
-                        res.locals.unparsedSid = req.session.id;
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    } );
-                }
-                else if ( data.userId !== null ) {
-                    const result = await getAdminByUserId( {
-                        userId: Number( data.userId ),
-                    } );
-
-                    if ( result.sid !== data.sid ) {
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    }
-                }
-                else {
-                    res.send( {
-                        redirect: '/index',
-                    } );
-                }
-            }
-            catch ( error ) {
-                if ( error.status === 404 ) {
-                    // No corresponding session id in the database
-                    req.session.regenerate( async () => {
-                        const newSid = req.session.id;
-                        req.session.ctrl = newSid;
-
-                        // Store new session in database
-                        await saveSession( {
-                            sid:     newSid,
-                            expires: req.session.cookie.maxAge + Date.now(),
-                        } );
-
-                        req.session.save();
-                        res.locals.unparsedSid = req.session.id;
-
-                        // Send new session & user id
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    } );
-                }
-                else
-                    console.error( error );
-            }
-        }
-
         // Get data
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
         let uploadData = '';
@@ -609,7 +412,6 @@ router
                 };
             }
             else if ( data.dbTable === 'technologyTransferPatent' ) {
-                console.log( data );
                 const item = {
                     technologyTransferId: Number( data.dbTableId ),
                 };
@@ -665,7 +467,6 @@ router
                 };
             }
             else if ( data.dbTable === 'award' ) {
-                console.log( data );
                 const item = {
                     receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
                 };
@@ -901,11 +702,9 @@ router
                 };
             }
             else if ( data.dbTable === 'technologyTransferPatent' ) {
-                console.log( data.item );
                 const item = {
                     technologyTransferPatentId:    Number( data.dbTableItemId ),
                 };
-                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -925,12 +724,10 @@ router
                 };
             }
             else if ( data.dbTable === 'student' ) {
-                console.log( data.item );
                 const item = {
                     degree:       Number( data.item.degree ),
                     studentId:    Number( data.dbTableItemId ),
                 };
-                console.log( item );
                 const i18nData = [];
                 Object.keys( data.i18n ).forEach( ( languageId ) => {
                     if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -1097,7 +894,7 @@ router
                 };
             }
             await updateFacultyDetail( {
-                profileId:                uploadData.profileId, // UserData.roleId
+                profileId:                uploadData.profileId,
                 education:                uploadData.update.education,
                 experience:               uploadData.update.experience,
                 profile:                  uploadData.update.profile,
@@ -1171,135 +968,76 @@ router
 router
 .route( '/uploadPhoto' )
 .post( cors(), multer( {
-    dest:     `${ projectRoot }/static/dist/file/`,
+    dest:     `${ projectRoot }/static/src/image/`,
     storage: multer.diskStorage( {
-        destination: `${ projectRoot }/static/dist/file/`,
-        filename:    ( req, file, cb ) => {
-            cb( null, file.originalname );
-        },
+        destination: `${ projectRoot }/static/src/image/`,
     } ),
-} ).any(), async ( req, res ) => {
+} ).single( 'file' ), async ( req, res ) => {
     try {
-        console.log( 'in route user/uploadPhoto' );
-
         // Get id
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
 
-        if ( typeof ( cookie ) === 'undefined' ) {
-            // Got no cookie from the user.
+        // Got a cookie from the user.
+        const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
 
-            // Store the cookie in the user.
-            const newSid = req.session.id;
-            req.session.ctrl = newSid;
-
-            // Store new session in database
-            await saveSession( {
-                sid:     newSid,
-                expires: req.session.cookie.maxAge + Date.now(),
+        // Get session data in the database.
+        try {
+            const data = await getSession( {
+                sid,
             } );
 
-            res.send( {
-                redirect: '/index',
+            // Check `expires`
+
+            const result = await getAdminByUserId( {
+                userId: Number( data.userId ),
             } );
-        }
-        else {
-            // Got a cookie from the user.
-            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-            if ( sid === cookie ) {
-                const error = new Error( 'Invalid cookie.' );
-                error.status = 400;
-                throw error;
+
+            if ( result.sid !== data.sid ) {
+                res.send( {
+                    redirect: '/index',
+                } );
             }
 
-            // Get session data in the database.
-            try {
-                const data = await getSession( {
-                    sid,
+            // Save file & rename
+            if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+                fs.rename( req.file.path, `${ req.file.destination }faculty/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
+                    if ( err )
+                        throw err;
                 } );
+            }
+            else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+                fs.rename( req.file.path, `${ req.file.destination }staff/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
+                    if ( err )
+                        throw err;
+                } );
+            }
+        }
+        catch ( error ) {
+            if ( error.status === 404 ) {
+                // No corresponding session id in the database
+                req.session.regenerate( async () => {
+                    const newSid = req.session.id;
+                    req.session.ctrl = newSid;
 
-                // Check `expires`
-                if ( data.expires < Date.now() ) {
-                    req.session.regenerate( async () => {
-                        const newSid = req.session.id;
-                        req.session.ctrl = newSid;
-
-                        // Store new session in database
-                        await saveSession( {
-                            sid:     newSid,
-                            expires: req.session.cookie.maxAge + Date.now(),
-                        } );
-
-                        req.session.save();
-                        res.locals.unparsedSid = req.session.id;
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    } );
-                }
-                else if ( data.userId !== null ) {
-                    const result = await getAdminByUserId( {
-                        userId: Number( data.userId ),
+                    // Store new session in database
+                    await saveSession( {
+                        sid:     newSid,
+                        expires: req.session.cookie.maxAge + Date.now(),
                     } );
 
-                    if ( result.sid !== data.sid ) {
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    }
-                }
-                else {
+                    req.session.save();
+                    res.locals.unparsedSid = req.session.id;
+
+                    // Send new session & user id
                     res.send( {
                         redirect: '/index',
                     } );
-                }
+                } );
             }
-            catch ( error ) {
-                if ( error.status === 404 ) {
-                    // No corresponding session id in the database
-                    req.session.regenerate( async () => {
-                        const newSid = req.session.id;
-                        req.session.ctrl = newSid;
-
-                        // Store new session in database
-                        await saveSession( {
-                            sid:     newSid,
-                            expires: req.session.cookie.maxAge + Date.now(),
-                        } );
-
-                        req.session.save();
-                        res.locals.unparsedSid = req.session.id;
-
-                        // Send new session & user id
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    } );
-                }
-                else
-                    console.error( error );
-            }
+            else
+                console.error( error );
         }
-
-        // Save photo
-
-        console.log( req.headers[ 'content-type' ] );
-        if ( req.is( 'multipart/form-data' ) )
-            console.log( 'yesyesyes' );
-
-
-        console.log( 'body' );
-        console.log( req.body );
-        console.log( 'files' );
-        console.log( req.files );
-        console.log( 'file' );
-        console.log( req.file );
-        console.log( 'test' );
-        console.log( req.body.mFileName );
-        console.log( req.files[ 0 ].originalname );
-
-        // Save photo url in database
-        console.log( 'should save photo url in db' );
         return res.end();
     }
     catch ( error ) {
@@ -1313,7 +1051,7 @@ router
 
 router
 .route( '/publication' )
-.get( staticHtml( 'user/publication' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/publication' ) );
 
 /**
  * Resolve URL `/user/technologyTransfer`.
@@ -1321,7 +1059,7 @@ router
 
 router
 .route( '/technologyTransfer' )
-.get( staticHtml( 'user/technologyTransfer' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/technologyTransfer' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.
@@ -1329,7 +1067,7 @@ router
 
 router
 .route( '/resetPassword' )
-.get( staticHtml( 'user/resetPassword' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/resetPassword' ) );
 
 /**
  * Resolve URL `/user/announcement`.
@@ -1337,7 +1075,7 @@ router
 
 router
 .route( '/announcement' )
-.get( staticHtml( 'user/announcement/index' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/announcement/index' ) );
 
 /**
  * Resolve URL `/user/announcement/add`.
@@ -1345,7 +1083,7 @@ router
 
 router
 .route( '/announcement/add' )
-.get( staticHtml( 'user/announcement/add' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/announcement/add' ) );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
@@ -1353,7 +1091,7 @@ router
 
 router
 .route( '/announcement/edit/:announcementId' )
-.get( async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const data = await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),

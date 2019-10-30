@@ -44,6 +44,7 @@ export default async ( opt ) => {
                     as:         'fileI18n',
                     attributes: [
                         'name',
+                        'path',
                     ],
                     where: {
                         fileId,
@@ -60,6 +61,7 @@ export default async ( opt ) => {
 
         return {
             name:           data.fileI18n[ 0 ].name,
+            path:           data.fileI18n[ 0 ].path,
             announcementId: data.announcementId,
         };
     }

@@ -38,6 +38,10 @@ export default class EditorIcon {
         };
     }
 
+    /***
+     * Insert `edit` and `delete` icon on the top of announcement
+     */
+
     async insertEditorDOM () {
         this.DOM.editor.innerHTML += editorHTML( {
             host,
@@ -45,6 +49,10 @@ export default class EditorIcon {
             languageId:     this.config.languageId,
         } );
     }
+
+    /***
+     * Add eventlistener of deletePreview `cancel button`, `check button`, `delete button`
+     */
 
     subscribeDeletePreview () {
         const deleteButton = this.DOM.editor.querySelector( '.editor__delete' );
@@ -73,6 +81,11 @@ export default class EditorIcon {
             } ),
         } )
         .then( async () => {
+            /***
+             *  If delete announcement successful,
+             *  redirect to announcement/all.
+             */
+
             window.location.replace( `${ host }/announcement/all?languageId=${ this.config.languageId }` );
         } );
     }

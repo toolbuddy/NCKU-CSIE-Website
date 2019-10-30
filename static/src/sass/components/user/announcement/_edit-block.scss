@@ -86,6 +86,7 @@
         color: #757575;
         background-color: rgba( 140, 170, 226, .4 );
         text-align: center;
+        word-break: break-all;
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {

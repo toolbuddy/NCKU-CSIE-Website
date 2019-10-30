@@ -13,13 +13,12 @@
 import express from 'express';
 import MarkdownIt from 'markdown-it';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
+import multer from 'multer';
+import * as fs from 'fs';
+import path from 'path';
 
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
-import getSession from 'models/auth/operations/get-session.js';
 import getFileInfo from 'models/announcement/operations/get-file-info.js';
-import saveSession from 'models/auth/operations/save-session.js';
-import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import patchAnnouncement from 'models/announcement/operations/patch-announcement.js';
 import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
@@ -27,15 +26,15 @@ import deleteAnnouncementFiles from 'models/announcement/operations/delete-annou
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
 import { projectRoot, secret, } from 'settings/server/config.js';
-import BodyParser from 'body-parser';
+import roleUtils from 'models/auth/utils/role.js';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
+import allowUserOnly from 'routes/utils/allow-user-only.js';
 
 const router = express.Router( {
     caseSensitive: true,
     mergeParams:   false,
     strict:        false,
 } );
-
-const jsonParser = BodyParser.json();
 
 /**
  * Resolve URL `/announcement`.
@@ -54,7 +53,7 @@ router
 
 router
 .route( '/activity' )
-.get( staticHtml( 'announcement/activity' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'announcement/activity' ) );
 
 /**
  * Resolve URL `/announcement/all`.
@@ -100,7 +99,7 @@ router
 
 router
 .route( '/recruitment' )
-.get( staticHtml( 'announcement/recruitment' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'announcement/recruitment' ) );
 
 /**
  * Resolve URL `/announcement/add`.
@@ -108,55 +107,55 @@ router
 
 router
 .route( '/add' )
-.post( async ( req, res, next ) => {
+.post( allowUserOnly, async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
 
-        // Get id
-        const cookie = req.cookies.sessionId;
-        res.locals.unparsedId = cookie;
+        // // Get id
+        // const cookie = req.cookies.sessionId;
+        // res.locals.unparsedId = cookie;
 
-        if ( typeof ( cookie ) !== 'undefined' ) {
-            // Got a cookie from the user.
-            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-            if ( sid !== cookie ) {
-                // Get session data in the database.
-                try {
-                    const data = await getSession( {
-                        sid,
-                    } );
+        // if ( typeof ( cookie ) !== 'undefined' ) {
+        //     // Got a cookie from the user.
+        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+        //     if ( sid !== cookie ) {
+        //         // Get session data in the database.
+        //         try {
+        //             const data = await getSession( {
+        //                 sid,
+        //             } );
 
-                    // Check `expires`
-                    if ( data.expires >= Date.now() && data.userId !== null ) {
-                        const result = await getAdminByUserId( {
-                            userId: Number( data.userId ),
-                        } );
+        //             // Check `expires`
+        //             if ( data.expires >= Date.now() && data.userId !== null ) {
+        //                 const result = await getAdminByUserId( {
+        //                     userId: Number( data.userId ),
+        //                 } );
 
-                        if ( result.sid !== data.sid ) {
-                            res.send( {
-                                redirect: '/index',
-                            } );
-                        }
-                    }
-                    else {
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    }
-                }
-                catch ( error ) {
-                    if ( error.status === 404 ) {
-                        res.send( {
-                            redirect: '/error/404',
-                        } );
-                    }
-                    else {
-                        // Console.log( error );
-                        console.error( error );
-                    }
-                }
-            }
-        }
+        //                 if ( result.sid !== data.sid ) {
+        //                     res.send( {
+        //                         redirect: '/index',
+        //                     } );
+        //                 }
+        //             }
+        //             else {
+        //                 res.send( {
+        //                     redirect: '/index',
+        //                 } );
+        //             }
+        //         }
+        //         catch ( error ) {
+        //             if ( error.status === 404 ) {
+        //                 res.send( {
+        //                     redirect: '/error/404',
+        //                 } );
+        //             }
+        //             else {
+        //                 // Console.log( error );
+        //                 console.error( error );
+        //             }
+        //         }
+        //     }
+        // }
 
         /**
          * Data format
@@ -191,7 +190,7 @@ router
          */
 
         if ( data.method === 'post' ) {
-            await postAnnouncement( {
+            const resu = await postAnnouncement( {
                 publishTime:      new Date(),
                 updateTime:       new Date(),
                 author:           Number( data.author ),
@@ -213,6 +212,28 @@ router
                     },
                 ],
                 fileI18n: dataFiles,
+            } );
+
+            // Move files from tmp/ to corresponding announcement-file folder
+            dataFiles.forEach( ( fileData ) => {
+                fileData.forEach( ( fileI18nObj ) => {
+                    const existFile = `${ projectRoot }/tmp/${ fileI18nObj.path }`;
+                    if ( fs.existsSync( existFile ) ) {
+                        if ( !fs.existsSync( `${ projectRoot }/static/dist/file/${ resu[ 0 ].announcementId }/` ) )
+                            fs.mkdirSync( `${ projectRoot }/static/dist/file/${ resu[ 0 ].announcementId }/` );
+
+                        fs.rename(
+                            `${ projectRoot }/tmp/${ fileI18nObj.path }`,
+                            `${ projectRoot }/static/dist/file/${ resu[ 0 ].announcementId }/${ fileI18nObj.path }`,
+                            ( err ) => {
+                                if ( err )
+                                    throw err;
+                            }
+                        );
+                    }
+                    else
+                        throw new Error( 'No files exist.' );
+                } );
             } );
         }
 
@@ -246,120 +267,6 @@ router
             } );
         }
 
-        // // post ann
-        // await postAnnouncement( {
-        //     publishTime:      new Date( 2000, 1, 2, 3, 4, 5 ),
-        //     updateTime:       new Date( 2000, 1, 2, 3, 4, 6 ),
-        //     author:           1,
-        //     isPinned:         0,
-        //     isPublished:      1,
-        //     imageUrl:         null,
-        //     views:            0,
-        //     tag:              [
-        //         {
-        //             typeId: 1,
-        //         },
-        //         {
-        //             typeId: 2,
-        //         },
-        //         {
-        //             typeId: 3,
-        //         },
-        //     ],
-        //     announcementI18n: [
-        //         {
-        //             languageId: 0,
-        //             title:      'test title tw',
-        //             content:    'test content tw',
-        //         },
-        //         {
-        //             languageId: 1,
-        //             title:      'test title eng',
-        //             content:    'test content eng',
-        //         },
-        //     ],
-        //     fileI18n: [
-        //         [
-        //             {
-        //                 languageId: 0,
-        //                 name:       'test file 1 tw',
-        //             },
-        //             {
-        //                 languageId: 1,
-        //                 name:       'test file 1 eng',
-        //             },
-        //         ],
-        //         [
-        //             {
-        //                 languageId: 0,
-        //                 name:       'test file 2 tw',
-        //             },
-        //             {
-        //                 languageId: 1,
-        //                 name:       'test file 2 eng',
-        //             },
-        //         ],
-        //     ],
-        // } );
-
-        // // delete(hide) ann
-        // await deleteAnnouncements( {
-        //     announcementIds: [
-        //         1151,
-        //         1152,
-        //     ],
-        // } );
-
-        // // delete ann files
-        // await deleteAnnouncementFiles( {
-        //     announcementId: 1153,
-        //     fileId:         [
-        //         950,
-        //     ],
-        // } );
-
-        // // patch ann
-        // await patchAnnouncement( {
-        //     announcementId:   1151,
-        //     publishTime:      new Date( 2000, 7, 7, 7, 7, 7 ),
-        //     updateTime:       new Date( 2000, 7, 7, 7, 7, 7 ),
-        //     author:           2,
-        //     isPinned:         1,
-        //     isPublished:      1,
-        //     imageUrl:         null,
-        //     views:            1,
-        //     i18n:             [
-        //         {
-        //             languageId: 0,
-        //             title:      'test title tw update',
-        //             content:    'test content tw update',
-        //         },
-        //         {
-        //             languageId: 1,
-        //             title:      'test title eng update',
-        //             content:    'test content eng update',
-        //         },
-        //     ],
-        //     tags:              [
-        //         {
-        //             typeId: 3,
-        //         },
-        //         {
-        //             typeId: 4,
-        //         },
-        //         {
-        //             typeId: 5,
-        //         },
-        //     ],
-        //     fileI18n: [
-        //         {
-        //             fileId:     947,
-        //             languageId: 0,
-        //             name:       'test file 1 tw update',
-        //         },
-        //     ],
-        // } );
-
         res.send( { 'message': 'success', } );
     }
     catch ( error ) {
@@ -368,60 +275,210 @@ router
 } );
 
 /**
+ * Resolve URL `/announcement/uploadFile`.
+ */
+
+router
+.route( '/uploadFile' )
+.post( cors(), allowUserOnly, multer( {
+    dest:     `${ projectRoot }/tmp/`,
+    storage: multer.diskStorage( {
+        destination: `${ projectRoot }/tmp/`,
+    } ),
+} ).any(), async ( req, res ) => {
+    // Try {
+    //     // Get id
+    //     const cookie = req.cookies.sessionId;
+    //     res.locals.unparsedId = cookie;
+
+    //     if ( typeof ( cookie ) === 'undefined' ) {
+    //         // Got no cookie from the user.
+
+    //         // Store the cookie in the user.
+    //         const newSid = req.session.id;
+    //         req.session.ctrl = newSid;
+
+    //         // Store new session in database
+    //         await saveSession( {
+    //             sid:     newSid,
+    //             expires: req.session.cookie.maxAge + Date.now(),
+    //         } );
+
+    //         res.send( {
+    //             redirect: '/index',
+    //         } );
+    //     }
+    //     else {
+    //         // Got a cookie from the user.
+    //         const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+    //         if ( sid === cookie ) {
+    //             const error = new Error( 'Invalid cookie.' );
+    //             error.status = 400;
+    //             throw error;
+    //         }
+
+    //         // Get session data in the database.
+    //         try {
+    //             const data = await getSession( {
+    //                 sid,
+    //             } );
+
+    //             // Check `expires`
+    //             if ( data.expires < Date.now() ) {
+    //                 req.session.regenerate( async () => {
+    //                     const newSid = req.session.id;
+    //                     req.session.ctrl = newSid;
+
+    //                     // Store new session in database
+    //                     await saveSession( {
+    //                         sid:     newSid,
+    //                         expires: req.session.cookie.maxAge + Date.now(),
+    //                     } );
+
+    //                     req.session.save();
+    //                     res.locals.unparsedSid = req.session.id;
+    //                     res.send( {
+    //                         redirect: '/index',
+    //                     } );
+    //                 } );
+    //             }
+    //             else if ( data.userId !== null ) {
+    //                 const result = await getAdminByUserId( {
+    //                     userId: Number( data.userId ),
+    //                 } );
+
+    //                 if ( result.sid !== data.sid ) {
+    //                     res.send( {
+    //                         redirect: '/index',
+    //                     } );
+    //                 }
+
+    //                 const resNames = [];
+
+    //                 // Should check permission
+    //                 req.files.forEach( ( fileObj ) => {
+    //                     fs.rename(
+    //                         fileObj.path,
+    //                         `${ fileObj.destination }${ fileObj.filename }${ path.extname( fileObj.originalname ) }`,
+    //                         ( err ) => {
+    //                             if ( err )
+    //                                 throw err;
+    //                         },
+    //                     );
+    //                     resNames.push( `${ fileObj.destination }${ fileObj.filename }${ path.extname( fileObj.originalname ) }` );
+    //                 } );
+    //                 res.send( resNames );
+    //             }
+    //             else {
+    //                 res.send( {
+    //                     redirect: '/index',
+    //                 } );
+    //             }
+    //         }
+    //         catch ( error ) {
+    //             if ( error.status === 404 ) {
+    //                 // No corresponding session id in the database
+    //                 req.session.regenerate( async () => {
+    //                     const newSid = req.session.id;
+    //                     req.session.ctrl = newSid;
+
+    //                     // Store new session in database
+    //                     await saveSession( {
+    //                         sid:     newSid,
+    //                         expires: req.session.cookie.maxAge + Date.now(),
+    //                     } );
+
+    //                     req.session.save();
+    //                     res.locals.unparsedSid = req.session.id;
+
+    //                     // Send new session & user id
+    //                     res.send( {
+    //                         redirect: '/index',
+    //                     } );
+    //                 } );
+    //             }
+    //             else
+    //                 console.error( error );
+    //         }
+    //     }
+    //     return res.end();
+    // }
+    // catch ( error ) {
+    //     console.error( error );
+    // }
+
+    const resNames = [];
+
+    // Should check permission
+    req.files.forEach( ( fileObj ) => {
+        fs.rename(
+            fileObj.path,
+            `${ fileObj.destination }${ fileObj.filename }${ path.extname( fileObj.originalname ) }`,
+            ( err ) => {
+                if ( err )
+                    throw err;
+            },
+        );
+        resNames.push( `${ fileObj.destination }${ fileObj.filename }${ path.extname( fileObj.originalname ) }` );
+    } );
+    res.send( resNames );
+} );
+
+/**
  * Resolve URL `/announcement/delete`.
  */
 
 router
 .route( '/delete' )
-.post( async ( req, res, next ) => {
+.post( allowUserOnly, async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/delete' );
 
-        // Get id
-        const cookie = req.cookies.sessionId;
-        res.locals.unparsedId = cookie;
+        // // Get id
+        // const cookie = req.cookies.sessionId;
+        // res.locals.unparsedId = cookie;
 
-        if ( typeof ( cookie ) !== 'undefined' ) {
-            // Got a cookie from the user.
-            const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-            if ( sid !== cookie ) {
-                // Get session data in the database.
-                try {
-                    const data = await getSession( {
-                        sid,
-                    } );
+        // if ( typeof ( cookie ) !== 'undefined' ) {
+        //     // Got a cookie from the user.
+        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
+        //     if ( sid !== cookie ) {
+        //         // Get session data in the database.
+        //         try {
+        //             const data = await getSession( {
+        //                 sid,
+        //             } );
 
-                    // Check `expires`
-                    if ( data.expires >= Date.now() && data.userId !== null ) {
-                        const result = await getAdminByUserId( {
-                            userId: Number( data.userId ),
-                        } );
+        //             // Check `expires`
+        //             if ( data.expires >= Date.now() && data.userId !== null ) {
+        //                 const result = await getAdminByUserId( {
+        //                     userId: Number( data.userId ),
+        //                 } );
 
-                        if ( result.sid !== data.sid ) {
-                            res.send( {
-                                redirect: '/index',
-                            } );
-                        }
-                    }
-                    else {
-                        res.send( {
-                            redirect: '/index',
-                        } );
-                    }
-                }
-                catch ( error ) {
-                    if ( error.status === 404 ) {
-                        res.send( {
-                            redirect: '/error/404',
-                        } );
-                    }
-                    else {
-                        // Console.log( error );
-                        console.error( error );
-                    }
-                }
-            }
-        }
+        //                 if ( result.sid !== data.sid ) {
+        //                     res.send( {
+        //                         redirect: '/index',
+        //                     } );
+        //                 }
+        //             }
+        //             else {
+        //                 res.send( {
+        //                     redirect: '/index',
+        //                 } );
+        //             }
+        //         }
+        //         catch ( error ) {
+        //             if ( error.status === 404 ) {
+        //                 res.send( {
+        //                     redirect: '/error/404',
+        //                 } );
+        //             }
+        //             else {
+        //                 // Console.log( error );
+        //                 console.error( error );
+        //             }
+        //         }
+        //     }
+        // }
 
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
 
@@ -444,7 +501,7 @@ router
 
 router
 .route( '/:announcementId' )
-.get( async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const data = await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),
@@ -481,7 +538,7 @@ router
 
 router
 .route( '/:announcementId/file/:fileId' )
-.get( async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const announcementId = Number( req.params.announcementId );
         const fileId = Number( req.params.fileId );
@@ -509,6 +566,5 @@ router
             next( err );
     }
 } );
-
 
 export default router;

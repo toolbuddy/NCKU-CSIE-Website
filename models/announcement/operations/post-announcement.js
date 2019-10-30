@@ -119,7 +119,7 @@ export default async ( opt ) => {
             }
         } );
 
-        await announcement.transaction( t => Announcement.create( {
+        const res = await announcement.transaction( t => Announcement.create( {
             publishTime,
             updateTime,
             author,
@@ -146,6 +146,7 @@ export default async ( opt ) => {
             const result = await File.create( {
                 announcementId: ann.announcementId,
                 fileI18n:       fileI18nInfo,
+                isValid:        1,
             }, {
                 include: [ {
                     model: FileI18n,
@@ -158,7 +159,7 @@ export default async ( opt ) => {
             throw err;
         } );
 
-        return;
+        return res;
     }
     catch ( err ) {
         throw err;

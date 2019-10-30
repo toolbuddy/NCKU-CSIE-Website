@@ -12,8 +12,8 @@ mixin edit-block( belongBlock, method, dbData )
       [ LANG.getLanguageId( 'en-US' ) ]: {
         title: 'Create Announcement',
         button: {
-          'zh-TW': 'Chinese',
-          'en-US': 'English',
+          'zh-TW': 'TW',
+          'en-US': 'US',
           attachment: 'Attachment',
           release:    'Release',
           cancel:     'Cancel'
@@ -64,7 +64,6 @@ mixin edit-block( belongBlock, method, dbData )
         checked: ( data.tags.indexOf( tagId ) === -1)? true: false,
       }; 
     } );
-
   form#edit-block.edit-block( class= `${ belongBlock }__edit-block` name='edit-block' )
     aside.edit-block__tags.tags
       each tagObj, tagName in allTags

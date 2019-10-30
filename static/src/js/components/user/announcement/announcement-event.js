@@ -157,6 +157,7 @@ export default class AnnouncementEvent {
 
     subscribeFileUploadButton () {
         this.DOM.uploadFile.addEventListener( 'change', ( e ) => {
+            console.log( 'in file upload btn' );
             Array.from( e.target.files ).forEach( async ( file ) => {
                 const id = this.state.newFiles.length * -1 - 1;
                 this.state.newFiles.push( {
@@ -168,6 +169,24 @@ export default class AnnouncementEvent {
                     fileId: id,
                 } );
                 await this.addFilePreviewBlock( file, id );
+
+                // Send file
+                const formData = new FormData();
+
+                formData.append( 'file', file );
+
+                const result = await fetch( `${ host }/announcement/uploadFile`, {
+                    credentials: 'include',
+                    method:      'post',
+                    body:        formData,
+                } )
+                .then( res => res.json() )
+                .then( ( text ) => {
+                    console.log( text );
+                    text.forEach( ( t ) => {
+                        console.log( t );
+                    } );
+                } );
             } );
         } );
     }
