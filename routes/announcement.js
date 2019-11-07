@@ -107,7 +107,7 @@ router
 
 router
 .route( '/add' )
-.post( allowUserOnly, async ( req, res, next ) => {
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
 
@@ -161,6 +161,7 @@ router
          * Data format
          */
 
+        console.log( req.body );
         let tempString = '';
         Object.keys( req.body ).forEach( ( key ) => {
             if ( key.length !== 0 )
