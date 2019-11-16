@@ -168,7 +168,6 @@ router
             if ( req.body[ key ].length !== 0 )
                 tempString += `=${ req.body[ key ] }`;
         } );
-
         const dataString = tempString;
         const dataFormat = dataString.replace( /\n/g, '\\\\n' ).replace( /\r/g, '\\\\r' ).replace( /\t/g, '\\\\t' );
         const data = JSON.parse( dataFormat );

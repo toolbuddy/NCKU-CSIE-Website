@@ -72,12 +72,13 @@ export default class DefaultTagFilter {
         };
 
         this.state = {
-            languageId:    opt.currentLanguageId,
-            from:          this.config.from,
-            to:            this.config.to,
-            page:          this.config.page,
-            deleteId:      -1,
-            tags:          [],
+            languageId:     opt.currentLanguageId,
+            from:           this.config.from,
+            to:             this.config.to,
+            page:           this.config.page,
+            announcementId: -1,
+            tags:           [],
+            preview:        'delete',
         };
 
         const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
@@ -119,7 +120,8 @@ export default class DefaultTagFilter {
                     briefings: opt.announcementNormalDOM.querySelector( announcementQuerySelector( 'briefings' ) ),
                 },
             },
-            deletePreview: {
+            preview: {
+                topic:  opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__topic' ),
                 block:  opt.deletePreviewDOM.querySelector( '.delete-preview' ),
                 button: {
                     cancel: opt.deletePreviewDOM.querySelector( '.delete-preview > .delete-preview__button > .button__cancel' ),
@@ -948,16 +950,28 @@ export default class DefaultTagFilter {
                     if ( this.config.userId >= 0 ) {
                         const briefingAddDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
                         const briefingDeleteDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__delete--${ briefing.announcementId }` );
+                        const briefingPinDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__pin--${ briefing.announcementId }` );
                         briefingAddDOM.addEventListener( 'click', ( e ) => {
                             e.preventDefault();
                             window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
                         } );
                         briefingDeleteDOM.addEventListener( 'click', async ( e ) => {
                             e.preventDefault();
-                            classAdd( this.DOM.deletePreview.block, 'delete-preview--show' );
-                            this.state.deleteId = briefing.announcementId;
-                            this.DOM.deletePreview.briefing.title.innerText = briefing.title;
-                            this.DOM.deletePreview.briefing.time.innerText = briefing.updateTime;
+                            classAdd( this.DOM.preview.block, 'delete-preview--show' );
+                            this.state.announcementId = briefing.announcementId;
+                            this.state.preview = 'delete';
+                            this.DOM.preview.topic.innerText = '刪除公告';
+                            this.DOM.preview.briefing.title.innerText = briefing.title;
+                            this.DOM.preview.briefing.time.innerText = briefing.updateTime;
+                        } );
+                        briefingPinDOM.addEventListener( 'click', async ( e ) => {
+                            e.preventDefault();
+                            classAdd( this.DOM.preview.block, 'delete-preview--show' );
+                            this.state.announcementId = briefing.announcementId;
+                            this.state.preview = 'pin';
+                            this.DOM.preview.topic.innerText = '置頂公告';
+                            this.DOM.preview.briefing.title.innerText = briefing.title;
+                            this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         } );
                     }
                 } );
@@ -986,22 +1000,26 @@ export default class DefaultTagFilter {
         } );
     }
 
-    subscribeDeletePreview () {
-        this.DOM.deletePreview.button.cancel.addEventListener( 'click', ( e ) => {
+    setPreview () {
+        this.DOM.preview.button.cancel.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
+            classRemove( this.DOM.preview.block, 'delete-preview--show' );
         } );
-        this.DOM.deletePreview.button.check.addEventListener( 'click', async ( e ) => {
+        this.DOM.preview.button.check.addEventListener( 'click', async ( e ) => {
             e.preventDefault();
-            await this.sendDeleteRequest();
+            if ( this.state.preview === 'delete' )
+                await this.sendDeleteRequest();
+            else if ( this.state.preview === 'pin' )
+                await this.sendPinRequest();
         } );
     }
 
-    async sendDeleteRequest () {
-        fetch( `${ host }/announcement/delete`, {
+    async sendPinRequest () {
+        fetch( `${ host }/announcement/add`, {
             method: 'POST',
             body:   JSON.stringify( {
-                announcementId: this.state.deleteId,
+                announcementId: this.state.announcementId,
+                isPinned:       1,
             } ),
         } )
         .then( async () => {
@@ -1010,7 +1028,25 @@ export default class DefaultTagFilter {
              * reload this page.
              */
 
-            classRemove( this.DOM.deletePreview.block, 'delete-preview--show' );
+            classRemove( this.DOM.preview.block, 'delete-preview--show' );
+            this.getAll();
+        } );
+    }
+
+    async sendDeleteRequest () {
+        fetch( `${ host }/announcement/delete`, {
+            method: 'POST',
+            body:   JSON.stringify( {
+                announcementId: this.state.announcementId,
+            } ),
+        } )
+        .then( async () => {
+            /***
+             * If get response successful,
+             * reload this page.
+             */
+
+            classRemove( this.DOM.preview.block, 'delete-preview--show' );
             this.getAll();
         } );
     }
@@ -1024,7 +1060,7 @@ export default class DefaultTagFilter {
             ] );
             if ( this.config.userId !== -1 ) {
                 this.subscribeAddButton();
-                this.subscribeDeletePreview();
+                this.setPreview();
             }
         }
         catch ( err ) {

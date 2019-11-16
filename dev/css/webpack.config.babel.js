@@ -103,6 +103,7 @@ export default {
         'user/conference':         path.join( sassRoot, 'user/conference.scss' ),
         'user/project':            path.join( sassRoot, 'user/project.scss' ),
         'user/patent':             path.join( sassRoot, 'user/patent.scss' ),
+        'user/staffProfile':       path.join( sassRoot, 'user/staffProfile.scss' ),
         'user/technologyTransfer': path.join( sassRoot, 'user/technologyTransfer.scss' ),
         'user/announcement/edit':  path.join( sassRoot, 'user/announcement/edit.scss' ),
         'user/announcement/add':   path.join( sassRoot, 'user/announcement/add.scss' ),

@@ -1062,6 +1062,14 @@ router
 .get( urlEncoded, jsonParser, staticHtml( 'user/technologyTransfer' ) );
 
 /**
+ * Resolve URL `/user/staffProfile`.
+ */
+
+router
+.route( '/staffProfile' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/staffProfile' ) );
+
+/**
  * Resolve URL `/user/resetPassword`.
  */
 

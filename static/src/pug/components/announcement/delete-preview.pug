@@ -2,14 +2,14 @@ mixin deletPreview( belongBlock )
   - 
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title: 'delete announcement',
+        topic: 'delete announcement',
         button: {
           cancel: 'cancel',
           check:  'check',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title: '刪除公告',
+        topic: '刪除公告',
         button: {
           cancel: '取消',
           check:  '確定',
@@ -18,7 +18,7 @@ mixin deletPreview( belongBlock )
     } )
 
   section.delete-preview( class = `${ belongBlock }__delete-preview` )
-    h1.delete-preview__title.title= i18n[ LANG.id ].title
+    h1.delete-preview__topic.topic= i18n[ LANG.id ].topic
     article.delete-preview__briefing.briefing
       h2.briefing__title
       time.briefing__time

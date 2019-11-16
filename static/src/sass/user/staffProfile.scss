@@ -1,0 +1,469 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/loading';
+@import 'components/common/refresh';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/navigation-bar';
+@import 'components/user/local-topic';
+@import 'components/user/input-block';
+@import 'components/user/edit-page';
+@import 'components/user/dynamic-input-block.scss';
+
+.body {
+  // [ variable ]
+  $large: 1200px;
+  $medium: 710px;
+  $small: 535px;
+
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__edit-page`
+  > .body__edit-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+
+    // [ componment ]
+    @include edit-page();
+  }
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' . breadcrumb  .'
+        ' . navigation .'
+        ' . information .';
+      columns: 1fr 50fr 1fr;
+    }
+
+    // [ skin ]
+    height: auto;
+    width: 100%;
+    background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb  '
+          ' navigation information ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+      }
+    }
+
+    // template
+    // `.body > .content > .content__?.?`
+    %content__element {
+      // [ layout ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1740 );
+      width: 94%;
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__information
+    > .content__information {
+      // [ layout ]
+      display: block;
+      grid-area: information;
+
+      // [ position ]
+      width: 100%;
+      margin: {
+        top: font__px-to-rem( 20 );
+        bottom: font__px-to-rem( 80 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: 90%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        max-width: font__px-to-rem( 1080 );
+        margin: {
+          left: 0;
+          top: font__px-to-rem( 80 );
+        };
+      }
+
+      // element
+      // `.body > .content > .content__information > .information__topic`
+      @include topic( information ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        width: 100%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+        }
+      }
+
+      // `.body > .content > .content__information > .information__profile`
+      > .information__profile.profile {
+        // [ layout ]
+        display: block;
+        width: 95%;
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          width: 95%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          max-width: font__px-to-rem( 1200 );
+        }
+
+        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+        @include local-topic( profile );
+        @include input-block( $block: 'profile', $modifier: 'name' );
+        @include refresh( $block: 'title' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+        @include loading( $block: 'title' ) {
+          // [ layout ]
+          margin-top: font__px-to-rem( 64 );
+        }
+
+        > .profile__title {
+          @include dynamic-input-block( $block: 'title' );
+        }
+        @include local-topic( 'title' );
+        @include input-block( $block: 'profile', $modifier: 'office-location' );
+        @include input-block( $block: 'profile', $modifier: 'office-tel' );
+        @include input-block( $block: 'profile', $modifier: 'email' );
+
+        // `.body > .content > .content__information > .information__profile > .profile__image`
+        > .profile__image {
+          // [ layout ]
+          display: grid;
+          grid: {
+            area: image;
+            template: {
+              areas:
+                ' image image  image '
+                ' .     check .      '
+                ' .     cancel .     ';
+              columns: 1fr font__px-to-rem( 126 ) 1fr;
+              rows: font__px-to-rem( 300 ) 1fr 1fr;
+            }
+          }
+          margin-bottom: font__px-to-rem( 20 );
+          width: 100%;
+
+          > .image__check.check {
+            // [ layout ]
+            grid-area: check;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+
+            > .check__button {
+              // [ position ]
+              width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+              border-radius: font__px-to-rem( 10 );
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
+              }
+            }
+          }
+
+          > .image__cancel.cancel {
+            // [ layout ]
+            grid-area: cancel;
+            align-content: center;
+            justify-content: center;
+
+            // [ position ]
+            width: 100%;
+
+            > .cancel__button {
+              // [ position ]
+              width: font__px-to-rem( 100 );
+              margin-bottom: font__px-to-rem( 10 );
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+              border-radius: font__px-to-rem( 10 );
+
+              &:hover {
+                // [ skin ]
+                cursor: pointer;
+                background-color: rgba( 0, 0, 0, .32 );
+                color: rgba( 0, 0, 0, .87 );
+              }
+            }
+          }
+
+          > .image__button--active {
+            // [ layout ]
+            display: flex;
+          }
+
+          > .image__button--hide {
+            // [ layout ]
+            display: none;
+          }
+
+          > .image__frame {
+            // [ layout ]
+            display: block;
+            grid-area: image;
+
+            // [ position ]
+            position: relative;
+            width: font__px-to-rem( 255 );
+            height: font__px-to-rem( 255 );
+            margin: {
+              left: auto;
+              right: auto;
+            }
+
+            // [ skin ]
+            border-radius: 50%;
+            border: 2px solid gray;
+            background: {
+              color: white;
+              size: font__px-to-rem( 200 );
+              repeat: no-repeat;
+              position: center top;
+            };
+            overflow: hidden;
+
+            > .frame__upload {
+              // [ layout ]
+              display: none;
+            }
+
+            // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
+            > .frame__button {
+              // [ layout ]
+              display: block;
+              position: absolute;
+
+              // [ position ]
+              width: 100%;
+              height: 30%;
+              bottom: 0;
+
+              padding: {
+                top: 5%;
+                bottom: 5%;
+              }
+
+              // [ skin ]
+              background-color: rgba( 0, 0, 0, .54 );
+              font: {
+                size: font__px-to-rem( 16 );
+                weight: normal;
+                style: normal;
+                stretch: normal;
+              }
+              text-align: center;
+              line-height: 1.5;
+              letter-spacing: 3.2px;
+              color: rgba( 255, 255, 255, .76 );
+
+              &:hover {
+                // [ skin ]
+                background-color: rgba( 255, 255, 255, .5 );
+                color: black;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ position ]
+      width: 100%;
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+
+    // `.body > .content > .content__information > .information__experience`
+    .information__experience-block.experience-block {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      @include refresh( $block: 'experience-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+      @include loading( $block: 'experience-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
+      @include local-topic( 'experience-block' );
+
+      > .experience-block__experience.experience {
+        @include dynamic-input-block( $block: 'experience' );
+      }
+    }
+
+    // `.body > .content > .content__information > .information__education`
+    .information__education-block.education-block {
+      // [ layout ]
+      display: block;
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      @include refresh( $block: 'education-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+      @include loading( $block: 'education-block' ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 64 );
+      }
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ layout ]
+        width: 95%;
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        max-width: font__px-to-rem( 1200 );
+      }
+
+      // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
+      @include local-topic( 'education-block' );
+
+      > .education {
+        @include dynamic-input-block( $block: 'education' );
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}
