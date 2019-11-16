@@ -324,9 +324,10 @@ export default class AnnouncementEvent {
         this.state.files.forEach( ( file ) => {
             files[ file.fileId ] = file.name;
         } );
-
+        console.log( 'here' );
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
+            type:     'string',
             body:   JSON.stringify( {
                 'method':           'post',
                 isPublished,

@@ -68,6 +68,7 @@
   "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
+    "acorn": "^6.3.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "cookie-parser": "^1.4.4",
@@ -126,7 +127,7 @@
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
     "style-loader": "^0.23.1",
-    "stylelint": "^9.8.0",
+    "stylelint": "^8.4.0",
     "stylelint-scss": "^3.11.1",
     "stylelint-webpack-plugin": "^0.10.5",
     "tinymce": "^5.1.1",

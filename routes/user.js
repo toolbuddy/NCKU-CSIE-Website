@@ -1091,7 +1091,7 @@ router
 
 router
 .route( '/announcement/add' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/announcement/add' ) );
+.get( urlEncoded, jsonParser, allowUserOnly, staticHtml( 'user/announcement/add' ) );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
