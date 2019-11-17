@@ -616,6 +616,26 @@ const dataEditPageConfig = Object.freeze( {
             }
         ),
     ],
+    staff: {
+        business: [
+            editPageType(
+                {
+                    type:        'text',
+                    dbTableItem: 'business',
+                    i18n:        true,
+                }
+            ),
+        ],
+        title: [
+            editPageType(
+                {
+                    type:        'text',
+                    dbTableItem: 'title',
+                    i18n:        true,
+                }
+            ),
+        ],
+    },
 } );
 
 deepFreeze( dataEditPageConfig );

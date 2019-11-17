@@ -412,6 +412,36 @@ const dataI18n = Object.freeze( {
             },
         },
     },
+    staff: {
+        title: {
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                topic:   'title',
+                default: {
+                    title:        'ex. Assistant',
+                },
+            },
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                topic:   '職稱',
+                default: {
+                    title:        'ex. 助理',
+                },
+            },
+        },
+        business: {
+            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+                topic:   'business',
+                default: {
+                    business:    'ex. Courses Services',
+                },
+            },
+            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+                topic:   '負責項目',
+                default: {
+                    business:   'ex. 課務',
+                },
+            },
+        },
+    },
 } );
 
 deepFreeze( dataI18n );

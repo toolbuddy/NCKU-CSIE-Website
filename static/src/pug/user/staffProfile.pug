@@ -20,6 +20,7 @@ append data
             image:        'select picture',
             name:         'name',
             title:        'title',
+            business:     'business',
             nation:       'nation',
             office:       'office',
             office_tel:   'Office Tel',
@@ -46,6 +47,7 @@ append data
             image:        '編輯相片',
             name:         '姓名',
             title:        '職稱',
+            business:     '負責項目',
             office:       '辦公室位置',
             office_tel:   '辦公室電話',
             email:        'Email',
@@ -99,10 +101,18 @@ append content
       +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
       +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
-      +local-topic( 'title',i18n[ LANG.id ].content.profile.title, true )
-      +refreshWithImage( 'title' )
-      +loading( 'title' )
-      section.profile__title.title#title
+
+    article.information__title-block.title-block
+      +local-topic( 'title-block',i18n[ LANG.id ].content.profile.title, true )
+      +refreshWithImage( 'title-block' )
+      +loading( 'title-block' )
+      section.title-block__title.title#title
+
+    article.information__business-block.business-block
+      +local-topic( 'business-block',i18n[ LANG.id ].content.profile.business, true )
+      +refreshWithImage( 'business-block' )
+      +loading( 'business-block' )
+      section.business-block__business.business#business
 
 append footer
 

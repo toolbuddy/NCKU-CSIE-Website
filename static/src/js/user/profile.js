@@ -3,7 +3,7 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import NavigationBar from 'static/src/js/components/user/navigation-bar.js';
-import SetProfileData from 'static/src/js/components/user/set-profile-data.js';
+import SetFacultyProfile from 'static/src/js/components/user/set-faculty-profile.js';
 import { SetData, } from 'static/src/js/components/user/set-data.js';
 import { host, } from 'settings/server/config.js';
 import roleUtils from 'models/auth/utils/role.js';
@@ -81,13 +81,13 @@ async function fetchData () {
             }
 
             try {
-                const setProfileData = new SetProfileData( {
+                const setFacultyProfile = new SetFacultyProfile( {
                     profileDOM:       document.getElementById( 'profile' ),
                     languageId:       WebLanguageUtils.currentLanguageId,
                     profileId:        result.roleId,
                 } );
 
-                setProfileData.exec();
+                setFacultyProfile.exec();
             }
             catch ( err ) {
                 console.error( err );

@@ -10,7 +10,7 @@ import dataEditPageConfig from 'static/src/js/components/user/static-data/data-e
 import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import validate from 'validate.js';
 
-export default class SetProfileData {
+export default class SetFacultyProfile {
     constructor ( opt ) {
         opt = opt || {};
 
@@ -60,9 +60,9 @@ export default class SetProfileData {
         this.textDOM = {};
 
         // Store profile information block in this.textDOM[ dbTable ] and this.updateButtonDOM[ dbTable ]
-        Object.keys( SetProfileData.classModifier() ).forEach( ( dbTableItem ) => {
-            this.textDOM[ dbTableItem ] = opt.profileDOM.querySelector( selector.text( SetProfileData.classModifier()[ dbTableItem ] ) );
-            this.updateButtonDOM[ dbTableItem ] = this.DOM.profile.querySelector( selector.update( SetProfileData.classModifier()[ dbTableItem ] ) );
+        Object.keys( SetFacultyProfile.classModifier() ).forEach( ( dbTableItem ) => {
+            this.textDOM[ dbTableItem ] = opt.profileDOM.querySelector( selector.text( SetFacultyProfile.classModifier()[ dbTableItem ] ) );
+            this.updateButtonDOM[ dbTableItem ] = this.DOM.profile.querySelector( selector.update( SetFacultyProfile.classModifier()[ dbTableItem ] ) );
         } );
 
         // Store department buttons
@@ -132,7 +132,7 @@ export default class SetProfileData {
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
             .then( ( dbData ) => {
                 // Set block information
-                Object.keys( SetProfileData.classModifier() ).forEach( ( key ) => {
+                Object.keys( SetFacultyProfile.classModifier() ).forEach( ( key ) => {
                     this.setProfileBlock( key, dbData );
                 } );
 

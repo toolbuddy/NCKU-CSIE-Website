@@ -180,11 +180,6 @@
           // [ layout ]
           margin-top: font__px-to-rem( 64 );
         }
-
-        > .profile__title {
-          @include dynamic-input-block( $block: 'title' );
-        }
-        @include local-topic( 'title' );
         @include input-block( $block: 'profile', $modifier: 'office-location' );
         @include input-block( $block: 'profile', $modifier: 'office-tel' );
         @include input-block( $block: 'profile', $modifier: 'email' );
@@ -385,8 +380,8 @@
       }
     }
 
-    // `.body > .content > .content__information > .information__experience`
-    .information__experience-block.experience-block {
+    // `.body > .content > .content__information > .information__title`
+    .information__title-block.title-block {
       // [ layout ]
       display: block;
       width: 95%;
@@ -394,11 +389,11 @@
         left: auto;
         right: auto;
       }
-      @include refresh( $block: 'experience-block' ) {
+      @include refresh( $block: 'title-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }
-      @include loading( $block: 'experience-block' ) {
+      @include loading( $block: 'title-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }
@@ -415,16 +410,16 @@
         max-width: font__px-to-rem( 1200 );
       }
 
-      // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
-      @include local-topic( 'experience-block' );
+      // `.body > .content > .content__information > .information__title > .title__persona. > .personal__topic`
+      @include local-topic( 'title-block' );
 
-      > .experience-block__experience.experience {
-        @include dynamic-input-block( $block: 'experience' );
+      > .title-block__title.title {
+        @include dynamic-input-block( $block: 'title' );
       }
     }
 
-    // `.body > .content > .content__information > .information__education`
-    .information__education-block.education-block {
+    // `.body > .content > .content__information > .information__business`
+    .information__business-block.business-block {
       // [ layout ]
       display: block;
       width: 95%;
@@ -432,11 +427,11 @@
         left: auto;
         right: auto;
       }
-      @include refresh( $block: 'education-block' ) {
+      @include refresh( $block: 'business-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }
-      @include loading( $block: 'education-block' ) {
+      @include loading( $block: 'business-block' ) {
         // [ layout ]
         margin-top: font__px-to-rem( 64 );
       }
@@ -454,10 +449,10 @@
       }
 
       // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-      @include local-topic( 'education-block' );
+      @include local-topic( 'business-block' );
 
-      > .education {
-        @include dynamic-input-block( $block: 'education' );
+      > .business {
+        @include dynamic-input-block( $block: 'business' );
       }
     }
   }
