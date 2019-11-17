@@ -69,9 +69,9 @@
       // [ layout ]
       grid-template: {
         areas:
-          ' breadcrumb breadcrumb  '
-          ' navigation information ';
-        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+          ' breadcrumb breadcrumb bread crumb  '
+          ' . information . ';
+        columns: 1fr 8fr 1fr;
       }
     }
 
@@ -122,9 +122,10 @@
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
-        max-width: font__px-to-rem( 1080 );
+        width: 100%;
         margin: {
-          left: 0;
+          left: auto;
+          right: auto;
           top: font__px-to-rem( 80 );
         };
       }

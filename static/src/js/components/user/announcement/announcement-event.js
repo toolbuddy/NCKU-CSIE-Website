@@ -31,6 +31,7 @@ export default class AnnouncementEvent {
 
         this.config = {
             id:                 opt.id,
+            author:             -1,
             languageId:         opt.languageId,
             method:             opt.method,
             animationDelayTime: 500,
@@ -72,6 +73,23 @@ export default class AnnouncementEvent {
 
     queryApi ( languageId ) {
         return `${ host }/api/announcement/${ this.config.id }?languageId=${ languageId }`;
+    }
+
+    async fetchAuthor () {
+        try {
+            const res = await fetch( `${ host }/user/id`, {
+                credentials: 'include',
+                method:      'post',
+            } );
+
+            if ( !res.ok )
+                throw new Error( 'No faculty found' );
+
+            return res.json();
+        }
+        catch ( err ) {
+            throw err;
+        }
     }
 
     async fetchData ( languageId ) {
@@ -330,8 +348,8 @@ export default class AnnouncementEvent {
             type:     'string',
             body:   JSON.stringify( {
                 'method':           'post',
-                isPublished,
-                'author':           1,
+                'isPublished':      1,
+                'author':           this.config.author,
                 'isPinned':         0,
                 'imageUrl':         null,
                 'views':            0,
@@ -377,10 +395,9 @@ export default class AnnouncementEvent {
             type:     'string',
             body:   JSON.stringify( {
                 'method':           'patch',
-                isPublished,
+                'isPublished':      1,
                 'announcementId':   this.config.id,
-                'author':           1,
-                'isPinned':         0,
+                'author':           this.config.author,
                 'imageUrl':         null,
                 'views':            0,
                 'i18n':           {
@@ -405,6 +422,8 @@ export default class AnnouncementEvent {
     exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
+            const res = await this.fetchAuthor();
+            this.config.author = res.roleId;
             this.data = data;
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;

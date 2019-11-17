@@ -48,6 +48,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
+
         if ( i18n ) {
             for ( const i18nData of i18n ) {
                 if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
@@ -103,6 +104,7 @@ export default async ( opt ) => {
                 announcementId,
             },
             transaction: t,
+            omitNull:    true,
         } ).then( () => Promise.all( i18n.map( announcementI18nInfo => AnnouncementI18n.update( {
             title:   announcementI18nInfo.title,
             content:  announcementI18nInfo.content,
@@ -112,17 +114,28 @@ export default async ( opt ) => {
                 languageId:     announcementI18nInfo.languageId,
             },
             transaction: t,
-        } ) ) ) ).then( () => Tag.destroy( {
-            where: {
-                announcementId,
-            },
-            transaction: t,
-        } ) ).then( () => Promise.all( tags.map( tagObj => Tag.create( {
-            announcementId,
-            typeId:         tagObj.typeId,
-        }, {
-            transaction: t,
-        } ) ) ) ).then( () => Promise.all( fileI18n.map( fileI18nInfo => File.findOne( {
+            omitNull:    true,
+        } ) ) ) ).then( () => {
+            if ( tags !== null ) {
+                return Tag.destroy( {
+                    where: {
+                        announcementId,
+                    },
+                    transaction: t,
+                    omitNull:    true,
+                } );
+            }return Promise.resolve( { transaction: t, } );
+        } ).then( () => {
+            if ( tags !== null ) {
+                return Promise.all( tags.map( tagObj => Tag.create( {
+                    announcementId,
+                    typeId:         tagObj.typeId,
+                }, {
+                    transaction: t,
+                } ) ) );
+            }
+            return Promise.resolve( { transaction: t, } );
+        } ).then( () => Promise.all( fileI18n.map( fileI18nInfo => File.findOne( {
             where: {
                 announcementId,
                 fileId:         fileI18nInfo.fileId,
@@ -137,6 +150,7 @@ export default async ( opt ) => {
                 languageId: fileI18nInfo.languageId,
             },
             transaction: t,
+            omitNull:    true,
         } ) ) ) ) ).catch( ( err ) => {
             throw err;
         } );

@@ -188,19 +188,59 @@ router
 router
 .route( '/profile' )
 .get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
-    res.sendFile(
-        `static/dist/html/user/profile.${ req.query.languageId }.html`,
-        {
-            root:         projectRoot,
-            maxAge,
-            dotfiles:     'deny',
-            cacheControl: true,
-        },
-        ( err ) => {
-            if ( err )
-                next( err );
-        }
-    );
+    // Get id
+    console.log( res.locals.userId );
+    const result = await getAdminByUserId( {
+        userId: Number( res.locals.userId ),
+    } );
+    console.log( result );
+
+    // Res.sendFile(
+    //     `static/dist/html/user/profile.${ req.query.languageId }.html`,
+    //     {
+    //         root:         projectRoot,
+    //         maxAge,
+    //         dotfiles:     'deny',
+    //         cacheControl: true,
+    //     },
+    //     ( err ) => {
+    //         if ( err )
+    //             next( err );
+    //     }
+    // );
+
+    if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+        res.sendFile(
+            `static/dist/html/user/profile.${ req.query.languageId }.html`,
+            {
+                root:         projectRoot,
+                maxAge,
+                dotfiles:     'deny',
+                cacheControl: true,
+            },
+            ( err ) => {
+                if ( err )
+                    next( err );
+            }
+        );
+    }
+    else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+        res.sendFile(
+            `static/dist/html/user/staffProfile.${ req.query.languageId }.html`,
+            {
+                root:         projectRoot,
+                maxAge,
+                dotfiles:     'deny',
+                cacheControl: true,
+            },
+            ( err ) => {
+                if ( err )
+                    next( err );
+            }
+        );
+    }
+    else
+        res.redirect( '/index' );
 } )
 .post( allowUserOnly, urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {

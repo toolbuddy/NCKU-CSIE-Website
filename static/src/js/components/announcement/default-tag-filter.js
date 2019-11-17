@@ -77,6 +77,7 @@ export default class DefaultTagFilter {
             to:             this.config.to,
             page:           this.config.page,
             announcementId: -1,
+            isPinned:           false,
             tags:           [],
             preview:        'delete',
         };
@@ -767,6 +768,7 @@ export default class DefaultTagFilter {
              * Used when default tag is the only tag active.
              */
 
+
             if ( this.state.tags.length === 0 )
                 res = await window.fetch( `${ host }/api/announcement/get-pinned-announcements-by-or-tags?${ queryString }` );
 
@@ -807,13 +809,51 @@ export default class DefaultTagFilter {
                 return briefing;
             } )
             .forEach( ( briefing ) => {
-                this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML( {
-                    userId: this.config.userId,
-                    briefing,
-                    host:   UrlUtils.host,
-                    UTILS:  {
-                        url: UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
-                    },
+                new Promise( ( res ) => {
+                    this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML( {
+                        userId: this.config.userId,
+                        briefing,
+                        UTILS:  {
+                            url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
+                            staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
+                        },
+                    } );
+                    res();
+                } )
+                .then( () => {
+                    /***
+                     * If it's staff login
+                     * brefingDOM set `addButtou` and `deleteButton` event
+                     */
+
+                    if ( this.config.userId >= 0 ) {
+                        const briefingAddDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
+                        const briefingDeleteDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__delete--${ briefing.announcementId }` );
+                        const briefingPinDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__pin--${ briefing.announcementId }` );
+                        briefingAddDOM.addEventListener( 'click', ( e ) => {
+                            e.preventDefault();
+                            window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
+                        } );
+                        briefingDeleteDOM.addEventListener( 'click', async ( e ) => {
+                            e.preventDefault();
+                            classAdd( this.DOM.preview.block, 'delete-preview--show' );
+                            this.state.announcementId = briefing.announcementId;
+                            this.state.preview = 'delete';
+                            this.DOM.preview.topic.innerText = '刪除公告';
+                            this.DOM.preview.briefing.title.innerText = briefing.title;
+                            this.DOM.preview.briefing.time.innerText = briefing.updateTime;
+                        } );
+                        briefingPinDOM.addEventListener( 'click', async ( e ) => {
+                            e.preventDefault();
+                            classAdd( this.DOM.preview.block, 'delete-preview--show' );
+                            this.state.announcementId = briefing.announcementId;
+                            this.state.preview = 'pin';
+                            this.state.isPinned = true;
+                            this.DOM.preview.topic.innerText = '取消置頂公告';
+                            this.DOM.preview.briefing.title.innerText = briefing.title;
+                            this.DOM.preview.briefing.time.innerText = briefing.updateTime;
+                        } );
+                    }
                 } );
             } );
             classAdd( this.DOM.announcement.pinned.loading, 'loading--hidden' );
@@ -965,10 +1005,12 @@ export default class DefaultTagFilter {
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         } );
                         briefingPinDOM.addEventListener( 'click', async ( e ) => {
+                            console.log( briefing );
                             e.preventDefault();
                             classAdd( this.DOM.preview.block, 'delete-preview--show' );
                             this.state.announcementId = briefing.announcementId;
                             this.state.preview = 'pin';
+                            this.state.isPinned = false;
                             this.DOM.preview.topic.innerText = '置頂公告';
                             this.DOM.preview.briefing.title.innerText = briefing.title;
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
@@ -1015,11 +1057,13 @@ export default class DefaultTagFilter {
     }
 
     async sendPinRequest () {
-        fetch( `${ host }/announcement/add`, {
+        fetch( `${ host }/announcement/pin`, {
             method: 'POST',
             body:   JSON.stringify( {
                 announcementId: this.state.announcementId,
-                isPinned:       1,
+                isPinned:       ( this.state.isPinned ) ? 0 : 1,
+                isPublished:    1,
+                author:         this.config.userId,
             } ),
         } )
         .then( async () => {
@@ -1034,6 +1078,7 @@ export default class DefaultTagFilter {
     }
 
     async sendDeleteRequest () {
+        console.log( 'delete' );
         fetch( `${ host }/announcement/delete`, {
             method: 'POST',
             body:   JSON.stringify( {

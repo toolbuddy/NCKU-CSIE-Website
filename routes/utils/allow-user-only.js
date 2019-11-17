@@ -96,6 +96,7 @@ export default async function ( req, res, next ) {
 
 
                 // Is a valid user
+                res.locals.userId = data.userId;
                 next();
             }
             else
