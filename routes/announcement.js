@@ -107,7 +107,7 @@ router
 
 router
 .route( '/add' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
+.get( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => { // Here -> should change to `POST`
     try {
         console.log( 'in route announcement/add' );
 
