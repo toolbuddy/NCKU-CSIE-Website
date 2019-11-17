@@ -68,13 +68,12 @@ export default class SetStaffProfile {
 
     queryApi ( languageId ) {
         // Return `${ host }/api/staff/miniProfile/${ this.config.profileId }?languageId=${ languageId }`;
-        return `${ host }/api/staff?languageId=${ languageId }`;
+        return `${ host }/api/staff/staffWithId/${ this.config.profileId }?languageId=${ languageId }`;
     }
 
     async fetchData ( languageId ) {
         try {
             const res = await fetch( this.queryApi( languageId ) );
-            console.log( res.json() );
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
 
@@ -105,12 +104,13 @@ export default class SetStaffProfile {
             // Get all language data
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
             .then( ( dbData ) => {
+                console.log( dbData );
+
                 // Set block information
                 Object.keys( SetStaffProfile.classModifier() ).forEach( ( key ) => {
                     this.setProfileBlock( key, dbData );
                 } );
 
-                this.setTags( dbData[ this.config.languageId ] );
                 this.setImage( dbData[ this.config.languageId ].profile );
             } );
         }
@@ -130,18 +130,10 @@ export default class SetStaffProfile {
 
     setProfileBlock ( dbTable, dbData ) {
         const dbProfileData = dbData[ this.config.languageId ].profile;
-        if ( dbProfileData[ dbTable ] !== null ) {
+        if ( dbProfileData[ dbTable ] !== null )
             this.textDOM[ dbTable ].textContent = dbProfileData[ dbTable ];
-            if ( dbTable === 'nation' ) {
-                const nationId = dbProfileData.nation;
-                this.textDOM[ dbTable ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationId ] ];
-            }
-        }
-        else {
+        else
             this.textDOM[ dbTable ].textContent = '';
-            if ( dbTable === 'nation' )
-                this.textDOM[ dbTable ].textContent = nationUtils.i18n[ this.config.languageId ][ nationUtils.map[ nationUtils.default ] ];
-        }
 
         this.updateButtonDOM[ dbTable ].addEventListener( 'click', async () => {
             await this.setUpdateButtonEvent( dbTable, dbData );
@@ -243,32 +235,32 @@ export default class SetStaffProfile {
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
 
-        fetch( `${ host }/user/profile`, {
-            method:   'POST',
-            body:   JSON.stringify( {
-                'profileId':    this.config.profileId,
-                'method':       'update',
-                'dbTable':      'profile',
-                item,
-                i18n,
-            } ),
-        } )
-        .then( async () => {
-            Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
-            .then( ( dbData ) => {
-                this.setProfileBlock( dbTableItem, dbData );
-                this.closeEditPageWindow();
-            } );
-        } ).catch( ( err ) => {
-            this.closeEditPageWindow();
-            console.error( err );
-        } );
+        // Fetch( `${ host }/user/profile`, {
+        //     method:   'POST',
+        //     body:   JSON.stringify( {
+        //         'profileId':    this.config.profileId,
+        //         'method':       'update',
+        //         'dbTable':      'profile',
+        //         item,
+        //         i18n,
+        //     } ),
+        // } )
+        // .then( async () => {
+        //     Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
+        //     .then( ( dbData ) => {
+        //         this.setProfileBlock( dbTableItem, dbData );
+        //         this.closeEditPageWindow();
+        //     } );
+        // } ).catch( ( err ) => {
+        //     this.closeEditPageWindow();
+        //     console.error( err );
+        // } );
     }
 
     setImage ( dbData ) {
         try {
             if ( ValidateUtils.isValidString( dbData.photo ) ) {
-                const photoUrl = `${ host }/static/image/faculty/${ dbData.photo }`;
+                const photoUrl = `${ host }/static/image/staff/${ dbData.photo }`;
                 this.imageDOM.preview.style.backgroundImage = `url('${ photoUrl }')`;
                 this.imageDOM.button.name = `modify_profile_photo_0_${ this.config.profileId }`;
                 this.imageDOM.block.action = `${ host }/user/profile`;
@@ -335,51 +327,6 @@ export default class SetStaffProfile {
         catch ( err ) {
             console.error( err );
         }
-    }
-
-    /***
-     * Set department and researchGroup event
-     * Submit its status when click
-     */
-
-    setTags ( dbData ) {
-        [ 'department',
-            'researchGroup', ].forEach( ( dbTable ) => {
-            // Initialize selected tags
-            dbData[ dbTable ].forEach( ( element ) => {
-                classAdd( this[ dbTable ][ element.type ].node, `content__tag--${ this[ dbTable ][ element.type ].classModifier }--active` );
-                this[ dbTable ][ element.type ].selected = true;
-            } );
-
-            // Add eventListener to all tags
-            this[ dbTable ].forEach( ( element ) => {
-                element.node.addEventListener( 'click', () => {
-                    const method = ( element.selected ) ? 'delete' : 'add';
-                    fetch( `${ host }/user/profile`, {
-                        method:   'POST',
-                        body:   JSON.stringify( {
-                            profileId:     this.config.profileId,
-                            method,
-                            dbTable,
-                            dbTableItemId: element.id,
-                        } ),
-                    } )
-                    .then( () => {
-                        if ( element.selected ) {
-                            classRemove( element.node, `content__tag--${ this[ dbTable ][ element.id ].classModifier }--active` );
-                            element.selected = false;
-                        }
-                        else {
-                            classAdd( element.node, `content__tag--${ this[ dbTable ][ element.id ].classModifier }--active` );
-                            element.selected = true;
-                        }
-                    } )
-                    .catch( ( err ) => {
-                        console.error( err );
-                    } );
-                } );
-            } );
-        } );
     }
 
     async exec () {
