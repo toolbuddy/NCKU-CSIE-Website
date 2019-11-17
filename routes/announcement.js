@@ -107,55 +107,9 @@ router
 
 router
 .route( '/add' )
-.get( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => { // Here -> should change to `POST`
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
     try {
         console.log( 'in route announcement/add' );
-
-        // // Get id
-        // const cookie = req.cookies.sessionId;
-        // res.locals.unparsedId = cookie;
-
-        // if ( typeof ( cookie ) !== 'undefined' ) {
-        //     // Got a cookie from the user.
-        //     const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-        //     if ( sid !== cookie ) {
-        //         // Get session data in the database.
-        //         try {
-        //             const data = await getSession( {
-        //                 sid,
-        //             } );
-
-        //             // Check `expires`
-        //             if ( data.expires >= Date.now() && data.userId !== null ) {
-        //                 const result = await getAdminByUserId( {
-        //                     userId: Number( data.userId ),
-        //                 } );
-
-        //                 if ( result.sid !== data.sid ) {
-        //                     res.send( {
-        //                         redirect: '/index',
-        //                     } );
-        //                 }
-        //             }
-        //             else {
-        //                 res.send( {
-        //                     redirect: '/index',
-        //                 } );
-        //             }
-        //         }
-        //         catch ( error ) {
-        //             if ( error.status === 404 ) {
-        //                 res.send( {
-        //                     redirect: '/error/404',
-        //                 } );
-        //             }
-        //             else {
-        //                 // Console.log( error );
-        //                 console.error( error );
-        //             }
-        //         }
-        //     }
-        // }
 
         /**
          * Data format
