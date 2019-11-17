@@ -22,6 +22,7 @@ import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
+import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
