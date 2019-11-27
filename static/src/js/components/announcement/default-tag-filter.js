@@ -823,7 +823,7 @@ export default class DefaultTagFilter {
                 .then( () => {
                     /***
                      * If it's staff login
-                     * brefingDOM set `addButtou` and `deleteButton` event
+                     * brefingDOM set `pinnButton`, `addButton` and `deleteButton` event
                      */
 
                     if ( this.config.userId >= 0 ) {
@@ -1005,7 +1005,6 @@ export default class DefaultTagFilter {
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         } );
                         briefingPinDOM.addEventListener( 'click', async ( e ) => {
-                            console.log( briefing );
                             e.preventDefault();
                             classAdd( this.DOM.preview.block, 'delete-preview--show' );
                             this.state.announcementId = briefing.announcementId;
@@ -1073,7 +1072,7 @@ export default class DefaultTagFilter {
              */
 
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
-            this.getAll();
+            this.getPinnedAnnouncement();
         } );
     }
 

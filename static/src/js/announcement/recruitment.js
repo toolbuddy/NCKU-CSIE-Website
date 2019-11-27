@@ -63,7 +63,6 @@ async function fetchData () {
         const userRole = result.role;
         const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? result.roleId : -1;
 
-        console.log( result );
         try {
             const filter = new SingleDefaultTagFilter( {
                 defaultTag:            [ 'recruitment', ],
