@@ -12,7 +12,7 @@
     "pre-build": "npm-run-all pre-build:*",
     "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
     "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js && shx cp settings/server/content-security-policy.js.default settings/server/content-security-policy.js",
-    "build": "cross-env NODE_ENV=production npm-run-all build:server build:css build:html build:js copy:tinymce",
+    "build": "cross-env NODE_ENV=production npm-run-all copy:tinymce build:server build:css build:html build:js",
     "build:css": "cross-env NODE_ENV=production webpack --config dev/css/webpack.config.babel.js",
     "build:html": "cross-env NODE_ENV=production webpack --config dev/html/webpack.config.babel.js",
     "build:js": "cross-env NODE_ENV=production webpack --config dev/js/webpack.config.babel.js",

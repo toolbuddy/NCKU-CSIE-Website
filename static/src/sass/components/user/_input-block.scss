@@ -103,8 +103,10 @@
             // [ skin ]
             font-size: font__px-to-rem( 18 );
             line-height: font__px-to-rem( 20 );
-            word-break: normal;
-            word-wrap: break-word;
+            word: {
+              break: normal;
+              wrap: break-word;
+            }
           }
         }
 

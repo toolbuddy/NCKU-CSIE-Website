@@ -215,9 +215,11 @@
               &::before {
                 // [ skin ]
                 @include icon__check-mark();
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
+                background: {
+                  position: center;
+                  repeat: no-repeat;
+                  size: cover;
+                }
               }
             }
 
