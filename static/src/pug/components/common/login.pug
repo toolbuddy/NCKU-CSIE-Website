@@ -23,6 +23,13 @@
                     query: { languageId: LANG.getLanguageId( 'en-US' ) },
                 }),
             },
+            addAnnouncement: {
+                text: 'Add Announcement',
+                route: UTILS.url({
+                    href: 'user/announcement/add',
+                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
+                }),
+            }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         profile: {
@@ -46,6 +53,13 @@
                     query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
                 }),
             },
+            addAnnouncement: {
+                text: '新增公告',
+                route: UTILS.url({
+                    href: 'user/announcement/add',
+                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+                }),
+            }
       },
     } );
 include /components/common/image.pug
@@ -56,6 +70,9 @@ include /components/common/image.pug
 } )
 a.login( class = `${ belongBlock }__button` )= name
   ul.login__dropdown.dropdown
+    if role === 'staff'
+        li.dropdown__item.item
+            a.item__link( href = i18n[ LANG.id ].addAnnouncement.route )= i18n[ LANG.id ].addAnnouncement.text
     li.dropdown__item.item
         a.item__link( href = i18n[ LANG.id ].profile.route )= i18n[ LANG.id ].profile.text
     li.dropdown__item.item

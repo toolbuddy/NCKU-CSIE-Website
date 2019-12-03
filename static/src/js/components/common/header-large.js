@@ -127,6 +127,7 @@ export default class GetHeaderLarge {
                 if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
                     this.DOM.login.innerHTML = loginButtonHTML( {
                         name:        data.name,
+                        role:        'faculty',
                         belongBlock: 'login',
                         photo:       `faculty/${ data.photo }`,
                         LANG:        {
@@ -143,6 +144,7 @@ export default class GetHeaderLarge {
                 else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
                     this.DOM.login.innerHTML = loginButtonHTML( {
                         name:        data.name,
+                        role:        'staff',
                         belongBlock: 'login',
                         photo:       `staff/${ data.photo }`,
                         LANG:        {

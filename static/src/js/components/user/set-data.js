@@ -330,7 +330,7 @@ class SetData {
                 switch ( this.config.dbTable ) {
                     case 'education':
                         // Abbreviation of degree
-                        const degree = degreeUtils.map[ dataItem.degree ];
+                        const degree = degreeUtils.i18n[ this.config.languageId ][ degreeUtils.map[ dataItem.degree ] ];
 
                         deleteDescription.push( `${ dataItem.school } ${ dataItem.major } ${ degree }` );
 
@@ -345,7 +345,7 @@ class SetData {
                             id:      dbTableId,
                             res:     dataItem,
                             nation:  nationUtils.map[ dataItem.nation ],
-                            degree:  degreeUtils.map[ dataItem.degree ],
+                            degree,
                         } );
                         break;
 
@@ -486,9 +486,11 @@ class SetData {
                             const i18n = {
                                 [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
                                     international: 'international ',
+                                    reffereed:     'REFFEREED ',
                                 },
                                 [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
                                     international: '國際',
+                                    reffereed:     '被引用',
                                 },
                             };
                             tempRefereed = dataItem.refereed;
@@ -496,9 +498,11 @@ class SetData {
                             tempInternational = dataItem.international;
                             temp = '';
                             if ( dataItem.refereed )
-                                temp += 'REFERRED ';
-                            if ( dataItem.international )
-                                temp += i18n[ this.config.languageId ].international;
+                                temp += i18n[ this.config.languageId ].reffereed;
+                            if ( dataItem.refereed && this.config.languageId === LanguageUtils.getLanguageId( 'zh-TW' ) ) {
+                                if ( dataItem.international )
+                                    temp += i18n[ this.config.languageId ].international;
+                            }
                             temp += category;
                             subtitle.push( temp );
                         }

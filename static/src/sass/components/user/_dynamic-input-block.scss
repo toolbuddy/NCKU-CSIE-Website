@@ -13,6 +13,7 @@
     width: 100%;
     min-height: font__px-to-rem( 80 );
 
+
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       min-height: font__px-to-rem( 80 );
@@ -27,6 +28,11 @@
       border: {
         bottom: solid font__px-to-rem( 2 ) #adacad;
         radius: font__px-to-rem( 3 );
+      }
+
+      // [ patent ]
+      @if $block == 'patent' {
+        width: auto;
       }
 
       // `> .#{ $block } > .#{ $block }__input-block` > .block > .block__content
@@ -146,7 +152,7 @@
                 vertical-align: top;
 
                 // [ skin ]
-                width: font__px-to-rem( 20 );
+                width: font__px-to-rem( 15 );
                 height: font__px-to-rem( 2 );
                 color: #757575;
                 background-color: #757575;
@@ -262,7 +268,7 @@
               display: grid;
               grid-template: {
                 areas: 'time name';
-                columns: font__px-to-rem( 100 ) 1fr ;
+                columns: font__px-to-rem( 150 ) 1fr ;
               }
               align-content: center;
 
@@ -273,7 +279,7 @@
               @media screen and ( min-width: $large ) {
                 grid-template: {
                   areas: 'time name support';
-                  columns: font__px-to-rem( 100 ) 3fr 1fr;
+                  columns: font__px-to-rem( 150 ) 3fr 1fr;
                 }
               }
 
@@ -281,7 +287,7 @@
               @media screen and ( min-width: $large ) {
                 grid-template: {
                   areas: 'time name support';
-                  columns: font__px-to-rem( 100 ) 3fr 1fr;
+                  columns: font__px-to-rem( 150 ) 3fr 1fr;
                 }
               }
             }
@@ -455,17 +461,18 @@
                     // [ RWD: $small ]
                     @media screen and ( min-width: $large ) {
                       // [ layout ]
-                      display: inline-block;
+                      display: inline-flex;
+                      align-items: center;
                       line-height: font__px-to-rem( 16 );
 
                       // [ skin ]
                       height: font__px-to-rem( 30 );
                       border-radius: font__px-to-rem( 26 );
                       padding: {
-                        top: font__px-to-rem( 7 );
-                        bottom: font__px-to-rem( 7 );
-                        left: font__px-to-rem( 26 );
-                        right: font__px-to-rem( 26 );
+                        top: font__px-to-rem( 5 );
+                        bottom: font__px-to-rem( 5 );
+                        left: font__px-to-rem( 10 );
+                        right: font__px-to-rem( 10 );
                       }
                       font-size: font__px-to-rem( 16 );
                     }
@@ -483,7 +490,7 @@
                     vertical-align: top;
 
                     // [ skin ]
-                    width: font__px-to-rem( 20 );
+                    width: font__px-to-rem( 15 );
                     height: font__px-to-rem( 2 );
                     color: #757575;
                     background-color: #757575;
@@ -542,7 +549,7 @@
               @media screen and ( min-width: $large ) {
                 grid-template: {
                   areas: 'time technology authorizedParty authorizingParty';
-                  columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+                  columns: font__px-to-rem( 150 ) 3fr 1fr 1fr;
                 }
               }
 
@@ -550,7 +557,7 @@
               @media screen and ( min-width: $large ) {
                 grid-template: {
                   areas: 'time technology authorizedParty authorizingParty';
-                  columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+                  columns: font__px-to-rem( 150 ) 3fr 1fr 1fr;
                 }
               }
             }
@@ -716,7 +723,8 @@
 
                   > .time__year {
                     // [ layout ]
-                    display: inline-block;
+                    display: inline-flex;
+                    align-items: center;
                     line-height: font__px-to-rem( 14 );
                     vertical-align: top;
 
@@ -737,17 +745,18 @@
                     // [ RWD: $small ]
                     @media screen and ( min-width: $large ) {
                       // [ layout ]
-                      display: inline-block;
+                      display: inline-flex;
+                      align-items: center;
                       line-height: font__px-to-rem( 16 );
 
                       // [ skin ]
                       height: font__px-to-rem( 30 );
                       border-radius: font__px-to-rem( 26 );
                       padding: {
-                        top: font__px-to-rem( 7 );
-                        bottom: font__px-to-rem( 7 );
-                        left: font__px-to-rem( 26 );
-                        right: font__px-to-rem( 26 );
+                        top: font__px-to-rem( 5 );
+                        bottom: font__px-to-rem( 5 );
+                        left: font__px-to-rem( 10 );
+                        right: font__px-to-rem( 10 );
                       }
                       font-size: font__px-to-rem( 16 );
                     }
@@ -1261,6 +1270,10 @@
             // [ position ]
             display: block;
             width: 100%;
+            padding: {
+              bottom: font__px-to-rem( 5 );
+              top: font__px-to-rem( 5 );
+            }
 
             // [ skin ]
             color: rgba( 81, 81, 81, .87 );
@@ -1530,6 +1543,10 @@
           // [ position ]
           display: block;
           width: 100%;
+          padding: {
+            bottom: font__px-to-rem( 7.5 );
+            top:    font__px-to-rem( 7.5 );
+          }
 
           // [ skin ]
           color: rgba( 81, 81, 81, .87 );

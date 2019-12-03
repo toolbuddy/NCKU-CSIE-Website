@@ -232,6 +232,7 @@ export default class GetHeaderBase {
                     this.DOM.login.container.innerHTML = loginDropdownHTML( {
                         name:        data.name,
                         belongBlock: 'login',
+                        role:        'faculty',
                         photo:       `faculty/${ data.photo }`,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
@@ -249,6 +250,7 @@ export default class GetHeaderBase {
                         name:        data.name,
                         belongBlock: 'login',
                         photo:       `staff/${ data.photo }`,
+                        role:        'staff',
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
                             getLanguageId: LanguageUtils.getLanguageId,

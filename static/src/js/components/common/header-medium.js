@@ -230,6 +230,7 @@ export default class GetHeaderMedium {
                 if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
                     this.DOM.login.container.innerHTML = loginDropdownHTML( {
                         name:        data.name,
+                        role:        'faculty',
                         belongBlock: 'login',
                         photo:       `faculty/${ data.photo }`,
                         LANG:        {
@@ -247,6 +248,7 @@ export default class GetHeaderMedium {
                     this.DOM.login.container.innerHTML = loginDropdownHTML( {
                         name:        data.name,
                         belongBlock: 'login',
+                        role:        'staff',
                         photo:       `staff/${ data.photo }`,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,

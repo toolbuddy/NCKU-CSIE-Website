@@ -1,4 +1,3 @@
-import editorEvent from 'static/src/js/components/user/announcement/index.js';
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';

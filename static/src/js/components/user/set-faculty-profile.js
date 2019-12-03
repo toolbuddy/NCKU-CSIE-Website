@@ -263,7 +263,7 @@ export default class SetFacultyProfile {
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
         };
         Array.from( input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'type' ) === 'text' && element.getAttribute( 'i18n' ) !== null )
+            if ( element.getAttribute( 'i18n' ) !== null )
                 i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
             else
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;

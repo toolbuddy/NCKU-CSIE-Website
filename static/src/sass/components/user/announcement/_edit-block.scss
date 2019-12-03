@@ -515,14 +515,16 @@
     // `> .#{ $block } > .#{ $block }__edit-block` > .edit-block__tags
     @include tags( 'edit-block' ) {
       // [ layout ]
-      grid-area: tags;
+      grid: {
+        area: tags;
+        template-areas:
+          ' college internship    speech    '
+          ' master  scholarship   conference '
+          ' phd     international exhibition '
+          ' course  award         competition '
+          ' faculty rule          recruitment ';
+      }
       display: grid;
-      grid-template-areas:
-        ' college internship    speech    '
-        ' master  scholarship   conference '
-        ' phd     international exhibition '
-        ' course  award         competition '
-        ' faculty rule          recruitment ';
 
       // [ display ]
       width: 95%;
@@ -530,7 +532,6 @@
         left: auto;
         right: auto;
       }
-
 
       // [ RWD: $median ]
       @media screen and ( min-width: $median ) {
@@ -568,7 +569,6 @@
         grid-area: college;
       }
 
-
       // element
       // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'competition' ]`
       > .tags__tag[ data-tag-name = 'competition' ] {
@@ -591,14 +591,14 @@
       }
 
       // element
-      //`.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'exhibition' ]`
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'exhibition' ]`
       > .tags__tag[ data-tag-name = 'exhibition' ] {
         // [ position ]
         grid-area: exhibition;
       }
 
       // element
-      //`.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'faculty' ]`
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'faculty' ]`
       > .tags__tag[ data-tag-name = 'faculty' ] {
         // [ position ]
         grid-area: faculty;
@@ -647,7 +647,7 @@
       }
 
       // element
-      //`.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'scholarship' ]`
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'scholarship' ]`
       > .tags__tag[ data-tag-name = 'scholarship' ] {
         // [ position ]
         grid-area: scholarship;
@@ -664,7 +664,4 @@
 
   // [ customization ]
   @content;
-}
-@mixin edit-text {
-
 }

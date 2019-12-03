@@ -39,7 +39,6 @@
       }
       width: font__px-to-rem( 30 );
       height: font__px-to-rem( 30 );
-      -webkit-animation: spin 2s linear infinite; /* Safari */
       animation: spin 2s linear infinite;
       @keyframes spin {
         0% {
