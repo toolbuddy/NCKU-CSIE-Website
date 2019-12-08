@@ -194,6 +194,19 @@
       }
 
       // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__pin`
+      > .button__pin--pinned {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+        // [ action ]
+        &:hover {
+          // [ skin ]
+          filter: opacity( .7 );
+        }
+      }
+
+      // element
       // `> .#{ $block } > .briefing > .briefing__button > .button__update`
       > .button__update {
         @extend %button;

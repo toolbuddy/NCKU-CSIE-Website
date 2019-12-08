@@ -61,7 +61,7 @@ export default class DefaultTagFilter {
             to:                 opt.to,
             page:               opt.page,
             visiblePageNum:     opt.visiblePageNum,
-            animationDelayTime:  500,
+            animationDelayTime: 500,
             scrollPx:           5,
             userId:             opt.userId,
         };
@@ -77,7 +77,8 @@ export default class DefaultTagFilter {
             to:             this.config.to,
             page:           this.config.page,
             announcementId: -1,
-            isPinned:           false,
+            isPinned:       false,
+            pinnedId:       [],
             tags:           [],
             preview:        'delete',
         };
@@ -760,6 +761,16 @@ export default class DefaultTagFilter {
                 ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
+            /***
+             * Initialize pinned state
+             */
+
+            this.state.pinnedId.forEach( ( id ) => {
+                const normalPinnedDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__pin--${ id }` );
+                classRemove( normalPinnedDOM, 'button__pin--pinned' );
+            } );
+            this.state.pinnedId = [];
+
             let res = null;
 
             /**
@@ -827,9 +838,13 @@ export default class DefaultTagFilter {
                      */
 
                     if ( this.config.userId >= 0 ) {
+                        this.state.pinnedId.push( briefing.announcementId );
                         const briefingAddDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__update--${ briefing.announcementId }` );
                         const briefingDeleteDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__delete--${ briefing.announcementId }` );
                         const briefingPinDOM = this.DOM.announcement.pinned.briefings.querySelector( `.button__pin--${ briefing.announcementId }` );
+                        const normalPinnedDOM = this.DOM.announcement.normal.briefings.querySelector( `.button__pin--${ briefing.announcementId }` );
+                        classAdd( briefingPinDOM, 'button__pin--pinned' );
+                        classAdd( normalPinnedDOM, 'button__pin--pinned' );
                         briefingAddDOM.addEventListener( 'click', ( e ) => {
                             e.preventDefault();
                             window.location.href = `${ host }/user/announcement/edit/${ briefing.announcementId }`;
@@ -1006,11 +1021,12 @@ export default class DefaultTagFilter {
                         } );
                         briefingPinDOM.addEventListener( 'click', async ( e ) => {
                             e.preventDefault();
+                            const isPinned = ( this.state.pinnedId.includes( briefing.announcementId ) ) ? true : false;
                             classAdd( this.DOM.preview.block, 'delete-preview--show' );
                             this.state.announcementId = briefing.announcementId;
                             this.state.preview = 'pin';
-                            this.state.isPinned = false;
-                            this.DOM.preview.topic.innerText = '置頂公告';
+                            this.state.isPinned = isPinned;
+                            this.DOM.preview.topic.innerText = ( isPinned ) ? '取消置頂公告' : '置頂公告';
                             this.DOM.preview.briefing.title.innerText = briefing.title;
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         } );
@@ -1033,6 +1049,17 @@ export default class DefaultTagFilter {
             throw err;
         }
     }
+
+    // SubscribePinnedButton (announcementId) {
+    //     e.preventDefault();
+    //     classAdd( this.DOM.preview.block, 'delete-preview--show' );
+    //     this.state.announcementId = announcementId;
+    //     this.state.preview = 'pin';
+    //     this.state.isPinned = isPinned;
+    //     this.DOM.preview.topic.innerText = ( isPinned ) ? '取消置頂公告' : '置頂公告';
+    //     this.DOM.preview.briefing.title.innerText = briefing.title;
+    //     this.DOM.preview.briefing.time.innerText = briefing.updateTime;
+    // }
 
     subscribeAddButton () {
         this.DOM.add.innerHTML += addButtonHTML( {
@@ -1098,10 +1125,13 @@ export default class DefaultTagFilter {
     async getAll () {
         try {
             await this.getPage();
-            await Promise.all( [
-                this.getPinnedAnnouncement(),
-                this.getNormalAnnouncement(),
-            ] );
+            await this.getNormalAnnouncement();
+            await this.getPinnedAnnouncement();
+
+            // Await Promise.all( [
+            //     this.getPinnedAnnouncement(),
+            //     this.getNormalAnnouncement(),
+            // ] );
             if ( this.config.userId !== -1 ) {
                 this.subscribeAddButton();
                 this.setPreview();
