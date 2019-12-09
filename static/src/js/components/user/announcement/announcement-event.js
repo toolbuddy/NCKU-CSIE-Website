@@ -39,9 +39,10 @@ export default class AnnouncementEvent {
 
         this.state = {
             languageId:  opt.languageId,
+            newFileId:   0,
             files:       [],
             tags:        [],
-            newFiles:    [],
+            newFiles:    {},
             deleteFiles: [],
         };
 
@@ -175,35 +176,33 @@ export default class AnnouncementEvent {
 
     subscribeFileUploadButton () {
         this.DOM.uploadFile.addEventListener( 'change', ( e ) => {
-            console.log( 'in file upload btn' );
-            Array.from( e.target.files ).forEach( async ( file ) => {
-                const id = this.state.newFiles.length * -1 - 1;
-                this.state.newFiles.push( {
-                    file,
-                    fileId: id,
-                } );
-                this.state.files.push( {
-                    name:   file.name,
-                    fileId: id,
-                } );
-                await this.addFilePreviewBlock( file, id );
+            this.state.newFileId -= e.target.files.length;
+            Array.from( e.target.files ).forEach( async ( file, index ) => {
+                const tempId = this.state.newFileId + index;
+                await this.addFilePreviewBlock( file, tempId );
 
                 // Send file
                 const formData = new FormData();
 
                 formData.append( 'file', file );
 
-                const result = await fetch( `${ host }/announcement/uploadFile`, {
+                await fetch( `${ host }/announcement/uploadFile`, {
                     credentials: 'include',
                     method:      'post',
                     body:        formData,
                 } )
                 .then( res => res.json() )
-                .then( ( text ) => {
-                    console.log( text );
-                    text.forEach( ( t ) => {
-                        console.log( t );
+                .then( ( fileRes ) => {
+                    fileRes.forEach( ( text ) => {
+                        this.state.newFiles[ tempId ] = {
+                            res:          text.resName,
+                            originalName: file.name,
+                        };
                     } );
+                } )
+                .then( () => {
+                    console.log( this.state.newFiles );
+                    console.log( this.state.deleteFiles );
                 } );
             } );
         } );
@@ -241,25 +240,13 @@ export default class AnnouncementEvent {
             *   Add delete button event listener
             */
 
-            // Array.from( deleteDOM ).forEach( ( DOM ) => {
-            //     DOM.addEventListener( 'click', () => {
-            //         console.log( 'delete' );
-            //         const tempId = Number( DOM.getAttribute( 'file-id' ) );
-            //         const temp = this.state.files.find( element => element.fileId === tempId );
-            //         const index = this.state.files.indexOf( temp );
-            //         this.state.files.splice( index, 1 );
-            //         this.state.deleteFiles.push( tempId );
-            //         DOM.parentNode.remove();
-            //     } );
-            // } );
-
             deleteDOM.addEventListener( 'click', () => {
                 console.log( 'delete' );
-                const tempId = Number( deleteDOM.getAttribute( 'file-id' ) );
-                const temp = this.state.files.find( element => element.fileId === tempId );
-                const index = this.state.files.indexOf( temp );
-                this.state.files.splice( index, 1 );
-                this.state.deleteFiles.push( tempId );
+
+                if ( id > 0 )
+                    this.state.deleteFiles.push( id );
+                else
+                    delete this.state.newFiles[ id ];
                 deleteDOM.parentNode.remove();
             } );
 
@@ -267,18 +254,18 @@ export default class AnnouncementEvent {
             *   Add loader event listener
             */
 
-            if ( id < 0 ) {
-                const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-                classAdd( loaderDOM, 'file-preview__loader--active' );
+            // if ( id < 0 ) {
+            //     const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
+            //     classAdd( loaderDOM, 'file-preview__loader--active' );
 
-                await delay( this.config.animationDelayTime );
+            //     await delay( this.config.animationDelayTime );
 
-                const reader = new FileReader();
-                reader.readAsDataURL( file );
-                reader.onload = () => {
-                    classRemove( loaderDOM, 'file-preview__loader--active' );
-                };
-            }
+            //     const reader = new FileReader();
+            //     reader.readAsDataURL( file );
+            //     reader.onload = () => {
+            //         classRemove( loaderDOM, 'file-preview__loader--active' );
+            //     };
+            // }
         } );
     }
 
@@ -339,9 +326,11 @@ export default class AnnouncementEvent {
             tagString += `${ tag } `;
         } );
         const files = {};
-        this.state.files.forEach( ( file ) => {
-            files[ file.fileId ] = file.name;
-        } );
+
+        // This.state.files.forEach( ( file ) => {
+        //     files[ file.fileId ] = file.name;
+        // } );
+
         console.log( 'here' );
         fetch( `${ host }/announcement/add`, {
             method:   'POST',

@@ -26,6 +26,7 @@ bin/
 
 ## Static files
 static/dist/
+tmp
 
 #############################
 # OS generated files

@@ -1,6 +1,6 @@
 include /components/common/image.pug
 
-aside.file__file-preview.file-preview
+aside.file__file-preview.file-preview( name= name )
   p.file-preview__name.name= name
   section.file-preview__loader.loader( class = `file-preview__loader--${ id }` )
   img.file-preview__delete.delete( 
