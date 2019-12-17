@@ -1,6 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
-import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+
+// Import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import MultipleDefaultTagFilter from 'static/src/js/components/announcement/multiple-default-tag-filter.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import roleUtils from 'models/auth/utils/role.js';

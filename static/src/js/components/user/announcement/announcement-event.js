@@ -2,7 +2,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { host, } from 'settings/server/config.js';
-import { classAdd, classRemove, delay, } from 'static/src/js/utils/style.js';
+import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import FilePreview from 'static/src/pug/components/user/announcement/file-preview.pug';
 import tinymce from 'tinymce';
 
@@ -76,23 +76,6 @@ export default class AnnouncementEvent {
         return `${ host }/api/announcement/${ this.config.id }?languageId=${ languageId }`;
     }
 
-    async fetchAuthor () {
-        try {
-            const res = await fetch( `${ host }/user/id`, {
-                credentials: 'include',
-                method:      'post',
-            } );
-
-            if ( !res.ok )
-                throw new Error( 'No faculty found' );
-
-            return res.json();
-        }
-        catch ( err ) {
-            throw err;
-        }
-    }
-
     async fetchData ( languageId ) {
         try {
             if ( this.config.method === 'edit' ) {
@@ -124,7 +107,12 @@ export default class AnnouncementEvent {
             statusbar: false,
             plugins:   'table lists',
             menubar:   'table',
-            toolbar:   'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            toolbar:   `formatselect | 
+                        bold italic strikethrough forecolor backcolor | 
+                        link | 
+                        alignleft aligncenter alignright alignjustify  | 
+                        numlist bullist outdent indent  | 
+                        removeformat`,
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {
@@ -199,10 +187,6 @@ export default class AnnouncementEvent {
                             originalName: file.name,
                         };
                     } );
-                } )
-                .then( () => {
-                    console.log( this.state.newFiles );
-                    console.log( this.state.deleteFiles );
                 } );
             } );
         } );
@@ -241,8 +225,6 @@ export default class AnnouncementEvent {
             */
 
             deleteDOM.addEventListener( 'click', () => {
-                console.log( 'delete' );
-
                 if ( id > 0 )
                     this.state.deleteFiles.push( id );
                 else
@@ -313,8 +295,6 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        const form = this.DOM.editBlock;
-        const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
 
         /***
@@ -325,13 +305,11 @@ export default class AnnouncementEvent {
         this.state.tags.forEach( ( tag ) => {
             tagString += `${ tag } `;
         } );
-        const files = {};
 
         // This.state.files.forEach( ( file ) => {
         //     files[ file.fileId ] = file.name;
         // } );
 
-        console.log( 'here' );
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
             type:     'string',
@@ -362,8 +340,6 @@ export default class AnnouncementEvent {
     }
 
     uploadPatchAnnouncement () {
-        const form = this.DOM.editBlock;
-        const isPublished = form.elements[ 'publish-time' ].value;
         let tagString = '';
 
         /***
@@ -411,8 +387,14 @@ export default class AnnouncementEvent {
     exec () {
         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
         .then( async ( data ) => {
-            const res = await this.fetchAuthor();
-            this.config.author = res.roleId;
+            fetch( `${ host }/user/id`, {
+                credentials: 'include',
+                method:      'post',
+            } )
+            .then( async res => res.json() )
+            .then( async ( res ) => {
+                this.config.author = res.roleId;
+            } );
             this.data = data;
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;

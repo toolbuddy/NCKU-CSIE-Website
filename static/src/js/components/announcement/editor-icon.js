@@ -17,6 +17,7 @@ export default class EditorIcon {
             throw new TypeError( 'invalid arguments' );
 
         this.config = {
+            userId:         -1,
             announcementId: opt.announcementId,
             languageId:     opt.currentLanguageId,
         };
@@ -90,36 +91,26 @@ export default class EditorIcon {
         } );
     }
 
-    async fetchUserData () {
-        try {
-            const res = await fetch( `${ host }/user/id`, {
-                credentials: 'include',
-                method:      'post',
-            } );
-
-            if ( !res.ok )
-                throw new Error( 'No faculty found' );
-
-            return res.json();
-        }
-        catch ( err ) {
-            throw err;
-        }
-    }
-
     async exec () {
         /***
          *   Fetch user data
          *   and check whether login and is staff
         */
 
-        const userData = await this.fetchUserData();
-        const userRole = userData.role;
-        const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? userData.roleId : -1;
+        fetch( `${ host }/user/id`, {
+            credentials: 'include',
+            method:      'post',
+        } )
+        .then( async res => res.json() )
+        .then( async ( res ) => {
+            const userData = res;
+            const userRole = userData.role;
+            const userId =   ( userRole === roleUtils.getIdByOption( 'staff' ) ) ? userData.roleId : -1;
 
-        if ( userId !== -1 ) {
-            await this.insertEditorDOM();
-            this.subscribeDeletePreview();
-        }
+            if ( userId !== -1 ) {
+                await this.insertEditorDOM();
+                this.subscribeDeletePreview();
+            }
+        } );
     }
 }

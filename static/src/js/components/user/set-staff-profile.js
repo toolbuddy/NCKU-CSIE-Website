@@ -4,11 +4,11 @@ import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import { host, } from 'settings/server/config.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import nationUtils from 'models/faculty/utils/nation.js';
 import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
-import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
-import validate from 'validate.js';
+
+// Import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
+// import validate from 'validate.js';
 
 export default class SetStaffProfile {
     constructor ( opt ) {
@@ -104,8 +104,6 @@ export default class SetStaffProfile {
             // Get all language data
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
             .then( ( dbData ) => {
-                console.log( dbData );
-
                 // Set block information
                 Object.keys( SetStaffProfile.classModifier() ).forEach( ( key ) => {
                     this.setProfileBlock( key, dbData );
@@ -119,9 +117,9 @@ export default class SetStaffProfile {
         }
     }
 
-    closeEditPageWindow () {
-        document.body.removeChild( document.getElementById( 'edit-page' ) );
-    }
+    // CloseEditPageWindow () {
+    //     document.body.removeChild( document.getElementById( 'edit-page' ) );
+    // }
 
     /****
      * DbTable: string, database table name
@@ -178,13 +176,16 @@ export default class SetStaffProfile {
 
         cancelDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            this.closeEditPageWindow();
+
+            // This.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
         } );
         checkDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            const isValid = this.checkSubmitData();
-            if ( isValid )
-                this.uploadProfileData( dbTable );
+
+            // Const isValid = this.checkSubmitData();
+            // if ( isValid )
+            //     this.uploadProfileData( dbTable );
         } );
     }
 
@@ -193,69 +194,71 @@ export default class SetStaffProfile {
      * @returns boolean, whether the data is valid
      */
 
-    checkSubmitData () {
-        let isValid = true;
-        const editPageDOM = document.getElementById( 'edit-page' );
-        const input = editPageDOM.getElementsByTagName( 'input' );
-        const errorSelector = '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
-        const errDOM = editPageDOM.querySelector( errorSelector );
+    // checkSubmitData () {
+    //     let isValid = true;
+    //     const editPageDOM = document.getElementById( 'edit-page' );
+    //     const input = editPageDOM.getElementsByTagName( 'input' );
+    //     const errorSelector = '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
+    //     const errDOM = editPageDOM.querySelector( errorSelector );
 
-        const constraints = validationInfo.profile;
+    //     const constraints = validationInfo.profile;
 
-        Array.from( input ).forEach( ( element ) => {
-            if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
-                const errors = validate.single( element.value, constraints[ element.name ] );
-                if ( errors ) {
-                    this.setErrorMessage( element, errors[ 0 ], errDOM );
-                    isValid = false;
-                }
-            }
-        } );
+    //     Array.from( input ).forEach( ( element ) => {
+    //         if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
+    //             const errors = validate.single( element.value, constraints[ element.name ] );
+    //             if ( errors ) {
+    //                 // This.setErrorMessage( element, errors[ 0 ], errDOM );
+    //                 element.focus();
+    //                 errDOM.textContent = errors[ 0 ];
+    //                 isValid = false;
+    //             }
+    //         }
+    //     } );
 
-        return isValid;
-    }
+    //     return isValid;
+    // }
 
-    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
-        inputDOM.focus();
-        errorDOM.textContent = errorMessage;
-    }
+    // SetErrorMessage ( inputDOM, errorMessage, errorDOM ) {
+    //     inputDOM.focus();
+    //     errorDOM.textContent = errorMessage;
+    // }
 
-    async uploadProfileData ( dbTableItem ) {
-        const editPageDOM = document.getElementById( 'edit-page' );
-        const input = editPageDOM.getElementsByTagName( 'input' );
-        const item = {};
-        const i18n = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
-        };
-        Array.from( input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'type' ) === 'text' && element.getAttribute( 'i18n' ) !== null )
-                i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
-            else
-                item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
-        } );
+    // async uploadProfileData ( dbTableItem ) {
+    //     const editPageDOM = document.getElementById( 'edit-page' );
+    //     const input = editPageDOM.getElementsByTagName( 'input' );
+    //     const item = {};
+    //     const i18n = {
+    //         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+    //         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+    //     };
+    //     Array.from( input ).forEach( ( element ) => {
+    //         if ( element.getAttribute( 'type' ) === 'text' && element.getAttribute( 'i18n' ) !== null )
+    //             i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //         else
+    //             item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //     } );
 
-        // Fetch( `${ host }/user/profile`, {
-        //     method:   'POST',
-        //     body:   JSON.stringify( {
-        //         'profileId':    this.config.profileId,
-        //         'method':       'update',
-        //         'dbTable':      'profile',
-        //         item,
-        //         i18n,
-        //     } ),
-        // } )
-        // .then( async () => {
-        //     Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
-        //     .then( ( dbData ) => {
-        //         this.setProfileBlock( dbTableItem, dbData );
-        //         this.closeEditPageWindow();
-        //     } );
-        // } ).catch( ( err ) => {
-        //     this.closeEditPageWindow();
-        //     console.error( err );
-        // } );
-    }
+    //     Fetch( `${ host }/user/profile`, {
+    //         method:   'POST',
+    //         body:   JSON.stringify( {
+    //             'profileId':    this.config.profileId,
+    //             'method':       'update',
+    //             'dbTable':      'profile',
+    //             item,
+    //             i18n,
+    //         } ),
+    //     } )
+    //     .then( async () => {
+    //         Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
+    //         .then( ( dbData ) => {
+    //             this.setProfileBlock( dbTableItem, dbData );
+    //             this.closeEditPageWindow();
+    //         } );
+    //     } ).catch( ( err ) => {
+    //         this.closeEditPageWindow();
+    //         console.error( err );
+    //     } );
+    // }
 
     setImage ( dbData ) {
         try {
@@ -302,7 +305,7 @@ export default class SetStaffProfile {
 
                             formData.append( 'file', input.files[ 0 ] );
 
-                            const result = await fetch( `${ host }/user/uploadPhoto`, {
+                            await fetch( `${ host }/user/uploadPhoto`, {
                                 credentials: 'include',
                                 method:      'post',
                                 body:        formData,

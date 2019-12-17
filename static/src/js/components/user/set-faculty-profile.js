@@ -145,10 +145,6 @@ export default class SetFacultyProfile {
         }
     }
 
-    closeEditPageWindow () {
-        document.body.removeChild( document.getElementById( 'edit-page' ) );
-    }
-
     /****
      * DbTable: string, database table name
      * dbData:  data of profile in database
@@ -212,7 +208,7 @@ export default class SetFacultyProfile {
 
         cancelDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
         } );
         checkDOM.addEventListener( 'click', ( e ) => {
             e.preventDefault();
@@ -234,24 +230,22 @@ export default class SetFacultyProfile {
         const errorSelector = '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
         const errDOM = editPageDOM.querySelector( errorSelector );
 
+        const profileId = this.config.profileId;
         const constraints = validationInfo.profile;
 
         Array.from( input ).forEach( ( element ) => {
             if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
                 const errors = validate.single( element.value, constraints[ element.name ] );
                 if ( errors ) {
-                    this.setErrorMessage( element, errors[ 0 ], errDOM );
+                    element.focus();
+                    errDOM.textContent = errors[ 0 ];
                     isValid = false;
                 }
             }
         } );
+        this.config.profileId = profileId;
 
         return isValid;
-    }
-
-    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
-        inputDOM.focus();
-        errorDOM.textContent = errorMessage;
     }
 
     async uploadProfileData ( dbTableItem ) {
@@ -283,10 +277,10 @@ export default class SetFacultyProfile {
             Promise.all( LanguageUtils.supportedLanguageId.map( id => this.fetchData( id ) ) )
             .then( ( dbData ) => {
                 this.setProfileBlock( dbTableItem, dbData );
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
         } ).catch( ( err ) => {
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
             console.error( err );
         } );
     }
@@ -336,7 +330,7 @@ export default class SetFacultyProfile {
 
                             formData.append( 'file', input.files[ 0 ] );
 
-                            const result = await fetch( `${ host }/user/uploadPhoto`, {
+                            await fetch( `${ host }/user/uploadPhoto`, {
                                 credentials: 'include',
                                 method:      'post',
                                 body:        formData,

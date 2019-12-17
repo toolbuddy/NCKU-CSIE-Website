@@ -1104,7 +1104,6 @@ export default class DefaultTagFilter {
     }
 
     async sendDeleteRequest () {
-        console.log( 'delete' );
         fetch( `${ host }/announcement/delete`, {
             method: 'POST',
             body:   JSON.stringify( {

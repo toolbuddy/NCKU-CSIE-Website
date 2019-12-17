@@ -443,7 +443,7 @@ const validationInfo = Object.freeze( {
                 maximum: 100,
             },
         },
-        applicationDate_year: {
+        applicationDateYear: {
             presence:  {
                 allowEmpty: false,
                 message:    '申請日期不可為空',
@@ -453,7 +453,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        applicationDate_month: {
+        applicationDateMonth: {
             presence:     {
                 allowEmpty: false,
                 message:    '申請日期不可為空',
@@ -464,7 +464,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        applicationDate_day: {
+        applicationDateDay: {
             presence:     {
                 allowEmpty: false,
                 message:    '申請日期不可為空',
@@ -475,7 +475,7 @@ const validationInfo = Object.freeze( {
                 message:           '日期格式錯誤',
             },
         },
-        expireDate_year: {
+        expireDateYear: {
             presence:  {
                 allowEmpty: true,
             },
@@ -484,7 +484,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        expireDate_month: {
+        expireDateMonth: {
             presence:     {
                 allowEmpty: true,
             },
@@ -494,7 +494,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        expireDate_day: {
+        expireDateDay: {
             presence:     {
                 allowEmpty: true,
             },
@@ -504,7 +504,7 @@ const validationInfo = Object.freeze( {
                 message:           '日期格式錯誤',
             },
         },
-        issueDate_year: {
+        issueDateYear: {
             presence:  {
                 allowEmpty: true,
             },
@@ -513,7 +513,7 @@ const validationInfo = Object.freeze( {
                 message:              '年份應大於1970',
             },
         },
-        issueDate_month: {
+        issueDateMonth: {
             presence:     {
                 allowEmpty: true,
             },
@@ -523,7 +523,7 @@ const validationInfo = Object.freeze( {
                 message:           '月份格式錯誤',
             },
         },
-        issueDate_day: {
+        issueDateDay: {
             presence:     {
                 allowEmpty: true,
             },

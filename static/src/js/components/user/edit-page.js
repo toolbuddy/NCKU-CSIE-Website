@@ -229,9 +229,9 @@ class EditPage {
             year:         data.year,
             month:        data.month,
             day:          data.day,
-            dbTableYear:  `${ editPageConfig.dbTableItem }_year`,
-            dbTableMonth: `${ editPageConfig.dbTableItem }_month`,
-            dbTableDay:   `${ editPageConfig.dbTableItem }_day`,
+            dbTableYear:  `${ editPageConfig.dbTableItem }Year`,
+            dbTableMonth: `${ editPageConfig.dbTableItem }Month`,
+            dbTableDay:   `${ editPageConfig.dbTableItem }Day`,
         } );
     }
 

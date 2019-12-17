@@ -711,10 +711,6 @@ class SetData {
         }
     }
 
-    closeEditPageWindow () {
-        document.body.removeChild( document.getElementById( 'edit-page' ) );
-    }
-
     /***
      * Deal with update data
      * update database
@@ -755,9 +751,9 @@ class SetData {
         .then( async () => {
             this.exec();
             this.emptyBlock();
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
         } ).catch( ( err ) => {
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
             this.emptyBlock();
             this.renderLoadingFailed();
             console.error( err );
@@ -795,9 +791,9 @@ class SetData {
         .then( async () => {
             this.exec();
             this.emptyBlock();
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
         } ).catch( ( err ) => {
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
             this.emptyBlock();
             this.renderLoadingFailed();
             console.error( err );
@@ -817,9 +813,9 @@ class SetData {
         .then( async () => {
             this.exec();
             this.emptyBlock();
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
         } ).catch( ( err ) => {
-            this.closeEditPageWindow();
+            document.body.removeChild( document.getElementById( 'edit-page' ) );
             this.emptyBlock();
             this.renderLoadingFailed();
             console.error( err );
@@ -837,24 +833,22 @@ class SetData {
         const errorDOM = editPageDOM.querySelector( errorSelector );
         const input = editPageDOM.getElementsByTagName( 'input' );
 
+        const profileId = this.config.profileId;
         const constraints = validationInfo[ dbTable ];
 
         Array.from( input ).forEach( ( element ) => {
             if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
                 const errors = validate.single( element.value, constraints[ element.name ] );
                 if ( errors ) {
-                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
+                    element.focus();
+                    errorDOM.textContent = errors[ 0 ];
                     isValid = false;
+                    this.config.profileId = profileId;
                 }
             }
         } );
 
         return isValid;
-    }
-
-    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
-        inputDOM.focus();
-        errorDOM.textContent = errorMessage;
     }
 
     setAddButtonEvent ( opt ) {
@@ -879,7 +873,7 @@ class SetData {
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
@@ -919,7 +913,7 @@ class SetData {
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
@@ -955,7 +949,7 @@ class SetData {
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
             checkDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();

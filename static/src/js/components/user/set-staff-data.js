@@ -6,7 +6,8 @@ import dynamicInputBlock from 'static/src/pug/components/user/dynamic-input-bloc
 import LanguageUtils from 'models/common/utils/language.js';
 import dataI18n from 'static/src/js/components/user/static-data/data-i18n.js';
 import dataEditPageConfig from 'static/src/js/components/user/static-data/data-edit-page-config.js';
-import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
+
+// Import validationInfo from 'static/src/js/components/user/static-data/validation-info.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import validate from 'validate.js';
 
@@ -127,8 +128,6 @@ export default class SetStaffData {
              * Render data in oder
              */
 
-            console.log( data[ this.config.languageId ][ `${ this.config.dbTable }I18n` ] );
-
             data[ this.config.languageId ][ `${ this.config.dbTable }I18n` ].forEach( async ( dataItem, index ) => {
                 /***
                  * Item use to initia
@@ -185,151 +184,151 @@ export default class SetStaffData {
         }
     }
 
-    closeEditPageWindow () {
-        document.body.removeChild( document.getElementById( 'edit-page' ) );
-    }
+    // CloseEditPageWindow () {
+    //     document.body.removeChild( document.getElementById( 'edit-page' ) );
+    // }
 
     /***
      * Deal with update data
      * update database
      */
 
-    uploadUpdateData ( dbTableItemId, dbTable ) {
-        const editPageDOM = document.getElementById( 'edit-page' );
-        const input = editPageDOM.getElementsByTagName( 'input' );
+    // uploadUpdateData ( dbTableItemId, dbTable ) {
+    //     const editPageDOM = document.getElementById( 'edit-page' );
+    //     const input = editPageDOM.getElementsByTagName( 'input' );
 
-        // Every data not need i18n
-        const item = {};
+    //     // Every data not need i18n
+    //     const item = {};
 
-        // Every data need i18n
-        const i18n = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
-        };
-        Array.from( input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'i18n' ) !== null )
-                i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
-            else if ( element.type === 'checkbox' )
-                item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
-            else
-                item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
-        } );
+    //     // Every data need i18n
+    //     const i18n = {
+    //         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+    //         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+    //     };
+    //     Array.from( input ).forEach( ( element ) => {
+    //         if ( element.getAttribute( 'i18n' ) !== null )
+    //             i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //         else if ( element.type === 'checkbox' )
+    //             item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
+    //         else
+    //             item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //     } );
 
-        // Fetch( `${ host }/user/profile`, {
-        //     method:   'POST',
-        //     body:   JSON.stringify( {
-        //         'profileId':    this.config.profileId,
-        //         'method':       'update',
-        //         dbTable,
-        //         dbTableItemId,
-        //         item,
-        //         i18n,
-        //     } ),
-        // } )
-        // .then( async () => {
-        //     this.exec();
-        //     this.emptyBlock();
-        //     this.closeEditPageWindow();
-        // } ).catch( ( err ) => {
-        //     this.closeEditPageWindow();
-        //     this.emptyBlock();
-        //     this.renderLoadingFailed();
-        //     console.error( err );
-        // } );
-    }
+    //     Fetch( `${ host }/user/profile`, {
+    //         method:   'POST',
+    //         body:   JSON.stringify( {
+    //             'profileId':    this.config.profileId,
+    //             'method':       'update',
+    //             dbTable,
+    //             dbTableItemId,
+    //             item,
+    //             i18n,
+    //         } ),
+    //     } )
+    //     .then( async () => {
+    //         this.exec();
+    //         this.emptyBlock();
+    //         this.closeEditPageWindow();
+    //     } ).catch( ( err ) => {
+    //         this.closeEditPageWindow();
+    //         this.emptyBlock();
+    //         this.renderLoadingFailed();
+    //         console.error( err );
+    //     } );
+    // }
 
-    uploadAddData ( dbTable, dbTableId ) {
-        const editPageDOM = document.getElementById( 'edit-page' );
-        const input = editPageDOM.getElementsByTagName( 'input' );
-        const item = {};
-        const i18n = {
-            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
-            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
-        };
-        Array.from( input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'i18n' ) !== null )
-                i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
-            else if ( element.type === 'checkbox' )
-                item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
-            else
-                item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
-        } );
+    // uploadAddData ( dbTable, dbTableId ) {
+    //     const editPageDOM = document.getElementById( 'edit-page' );
+    //     const input = editPageDOM.getElementsByTagName( 'input' );
+    //     const item = {};
+    //     const i18n = {
+    //         [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+    //         [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+    //     };
+    //     Array.from( input ).forEach( ( element ) => {
+    //         if ( element.getAttribute( 'i18n' ) !== null )
+    //             i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //         else if ( element.type === 'checkbox' )
+    //             item[ element.getAttribute( 'dbTableItem' ) ] = ( element.checked ) ? 1 : 0;
+    //         else
+    //             item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+    //     } );
 
-        // Fetch( `${ host }/user/profile`, {
-        //     method:   'POST',
-        //     body:   JSON.stringify( {
-        //         profileId:    this.config.profileId,
-        //         dbTableId,
-        //         method:       'add',
-        //         dbTable,
-        //         item,
-        //         i18n,
-        //     } ),
-        // } )
-        // .then( async () => {
-        //     this.exec();
-        //     this.emptyBlock();
-        //     this.closeEditPageWindow();
-        // } ).catch( ( err ) => {
-        //     this.closeEditPageWindow();
-        //     this.emptyBlock();
-        //     this.renderLoadingFailed();
-        //     console.error( err );
-        // } );
-    }
+    //     Fetch( `${ host }/user/profile`, {
+    //         method:   'POST',
+    //         body:   JSON.stringify( {
+    //             profileId:    this.config.profileId,
+    //             dbTableId,
+    //             method:       'add',
+    //             dbTable,
+    //             item,
+    //             i18n,
+    //         } ),
+    //     } )
+    //     .then( async () => {
+    //         this.exec();
+    //         this.emptyBlock();
+    //         this.closeEditPageWindow();
+    //     } ).catch( ( err ) => {
+    //         this.closeEditPageWindow();
+    //         this.emptyBlock();
+    //         this.renderLoadingFailed();
+    //         console.error( err );
+    //     } );
+    // }
 
-    uploadDeleteData ( dbTableItemId, dbTable ) {
-        // Fetch( `${ host }/user/profile`, {
-        //     method:   'POST',
-        //     body:   JSON.stringify( {
-        //         profileId:     this.config.profileId,
-        //         method:        'delete',
-        //         dbTable,
-        //         dbTableItemId,
-        //     } ),
-        // } )
-        // .then( async () => {
-        //     this.exec();
-        //     this.emptyBlock();
-        //     this.closeEditPageWindow();
-        // } ).catch( ( err ) => {
-        //     this.closeEditPageWindow();
-        //     this.emptyBlock();
-        //     this.renderLoadingFailed();
-        //     console.error( err );
-        // } );
-    }
+    // uploadDeleteData ( dbTableItemId, dbTable ) {
+    //     Fetch( `${ host }/user/profile`, {
+    //         method:   'POST',
+    //         body:   JSON.stringify( {
+    //             profileId:     this.config.profileId,
+    //             method:        'delete',
+    //             dbTable,
+    //             dbTableItemId,
+    //         } ),
+    //     } )
+    //     .then( async () => {
+    //         this.exec();
+    //         this.emptyBlock();
+    //         this.closeEditPageWindow();
+    //     } ).catch( ( err ) => {
+    //         this.closeEditPageWindow();
+    //         this.emptyBlock();
+    //         this.renderLoadingFailed();
+    //         console.error( err );
+    //     } );
+    // }
 
     /****
      * Submit Data Validation
      */
 
-    checkSubmitData ( dbTable ) {
-        let isValid = true;
-        const errorSelector =   '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
-        const editPageDOM = document.getElementById( 'edit-page' );
-        const errorDOM = editPageDOM.querySelector( errorSelector );
-        const input = editPageDOM.getElementsByTagName( 'input' );
+    // checkSubmitData ( dbTable ) {
+    //     let isValid = true;
+    //     const errorSelector =   '.edit-page__window > .window__form > .form__content > .content__error > .error__message';
+    //     const editPageDOM = document.getElementById( 'edit-page' );
+    //     const errorDOM = editPageDOM.querySelector( errorSelector );
+    //     const input = editPageDOM.getElementsByTagName( 'input' );
 
-        const constraints = validationInfo[ dbTable ];
+    //     const constraints = validationInfo[ dbTable ];
 
-        Array.from( input ).forEach( ( element ) => {
-            if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
-                const errors = validate.single( element.value, constraints[ element.name ] );
-                if ( errors ) {
-                    this.setErrorMessage( element, errors[ 0 ], errorDOM );
-                    isValid = false;
-                }
-            }
-        } );
+    //     Array.from( input ).forEach( ( element ) => {
+    //         if ( constraints[ element.name ].presence.allowEmpty === false || element.value !== '' ) {
+    //             const errors = validate.single( element.value, constraints[ element.name ] );
+    //             if ( errors ) {
+    //                 this.setErrorMessage( element, errors[ 0 ], errorDOM );
+    //                 isValid = false;
+    //             }
+    //         }
+    //     } );
 
-        return isValid;
-    }
+    //     return isValid;
+    // }
 
-    setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
-        inputDOM.focus();
-        errorDOM.textContent = errorMessage;
-    }
+    // setErrorMessage ( inputDOM, errorMessage, errorDOM ) {
+    //     inputDOM.focus();
+    //     errorDOM.textContent = errorMessage;
+    // }
 
     setAddButtonEvent ( opt ) {
         opt.addButtonDOM.addEventListener( 'click', async () => {
@@ -349,18 +348,20 @@ export default class SetStaffData {
             };
             const editPageDOM = document.getElementById( 'edit-page' );
             const cancelDOM = editPageDOM.querySelector( selector.cancel );
-            const checkDOM = editPageDOM.querySelector( selector.check );
+
+            // Const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
-            checkDOM.addEventListener( 'click', ( e ) => {
-                e.preventDefault();
-                const isValid = this.checkSubmitData( opt.dbTable );
-                if ( isValid )
-                    this.uploadAddData( opt.dbTable, opt.dbTableId );
-            } );
+
+            // CheckDOM.addEventListener( 'click', ( e ) => {
+            //     e.preventDefault();
+            //     const isValid = this.checkSubmitData( opt.dbTable );
+            //     if ( isValid )
+            //         this.uploadAddData( opt.dbTable, opt.dbTableId );
+            // } );
         } );
     }
 
@@ -389,19 +390,21 @@ export default class SetStaffData {
             };
             const editPageDOM = document.getElementById( 'edit-page' );
             const cancelDOM = editPageDOM.querySelector( selector.cancel );
-            const checkDOM = editPageDOM.querySelector( selector.check );
+
+            // Const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
-            checkDOM.addEventListener( 'click', ( e ) => {
-                e.preventDefault();
 
-                const isValid = this.checkSubmitData( info.dbTable );
-                if ( isValid )
-                    this.uploadUpdateData( info.id, info.dbTable );
-            } );
+            // CheckDOM.addEventListener( 'click', ( e ) => {
+            //     e.preventDefault();
+
+            //     const isValid = this.checkSubmitData( info.dbTable );
+            //     if ( isValid )
+            //         this.uploadUpdateData( info.id, info.dbTable );
+            // } );
         } );
     }
 
@@ -425,16 +428,18 @@ export default class SetStaffData {
             };
             const editPageDOM = document.getElementById( 'edit-page' );
             const cancelDOM = editPageDOM.querySelector( selector.cancel );
-            const checkDOM = editPageDOM.querySelector( selector.check );
+
+            // Const checkDOM = editPageDOM.querySelector( selector.check );
 
             cancelDOM.addEventListener( 'click', ( e ) => {
                 e.preventDefault();
-                this.closeEditPageWindow();
+                document.body.removeChild( document.getElementById( 'edit-page' ) );
             } );
-            checkDOM.addEventListener( 'click', ( e ) => {
-                e.preventDefault();
-                this.uploadDeleteData( info.id, info.dbTable );
-            } );
+
+            // CheckDOM.addEventListener( 'click', ( e ) => {
+            //     e.preventDefault();
+            //     this.uploadDeleteData( info.id, info.dbTable );
+            // } );
         } );
     }
 

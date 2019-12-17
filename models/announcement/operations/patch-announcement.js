@@ -124,7 +124,10 @@ export default async ( opt ) => {
                     transaction: t,
                     omitNull:    true,
                 } );
-            }return Promise.resolve( { transaction: t, } );
+            }
+            return Promise.resolve( {
+                transaction: t,
+            } );
         } ).then( () => {
             if ( tags !== null ) {
                 return Promise.all( tags.map( tagObj => Tag.create( {

@@ -22,11 +22,13 @@ import getFileInfo from 'models/announcement/operations/get-file-info.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import patchAnnouncement from 'models/announcement/operations/patch-announcement.js';
 import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
-import deleteAnnouncementFiles from 'models/announcement/operations/delete-announcementFiles.js';
+
+// Import deleteAnnouncementFiles from 'models/announcement/operations/delete-announcementFiles.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
-import { projectRoot, secret, } from 'settings/server/config.js';
-import roleUtils from 'models/auth/utils/role.js';
+import { projectRoot, } from 'settings/server/config.js';
+
+// Import roleUtils from 'models/auth/utils/role.js';
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 import allowUserOnly from 'routes/utils/allow-user-only.js';
 
@@ -107,15 +109,12 @@ router
 
 router
 .route( '/add' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        console.log( 'in route announcement/add' );
-
         /**
          * Data format
          */
 
-        console.log( req.body );
         let tempString = '';
         Object.keys( req.body ).forEach( ( key ) => {
             if ( key.length !== 0 )
@@ -196,7 +195,6 @@ router
          */
 
         else if ( data.method === 'patch' ) {
-            console.log( dataTags );
             await patchAnnouncement( {
                 announcementId:   data.announcementId,
                 updateTime:       new Date(),
@@ -266,12 +264,10 @@ router
 
 router
 .route( '/pin' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        console.log( 'in route announcement/pin' );
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
 
-        console.log( data );
         await patchAnnouncement( {
             announcementId:   data.announcementId,
             author:           Number( data.author ),
@@ -293,9 +289,8 @@ router
 
 router
 .route( '/delete' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res, next ) => {
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        console.log( 'in route announcement/delete' );
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
 
         await deleteAnnouncements( {

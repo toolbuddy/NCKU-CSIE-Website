@@ -4,6 +4,8 @@ import {
     TitleI18n,
 } from 'models/staff/operations/associations.js';
 
+import { staff, } from 'models/common/utils/connect.js';
+
 export default async ( opt ) => {
     try {
         opt = opt || {};
@@ -53,7 +55,7 @@ export default async ( opt ) => {
 
         if ( businessI18n ) {
             for ( const id of businessI18n ) {
-                await faculty.transaction( t => BusinessI18n.destroy( {
+                await staff.transaction( t => BusinessI18n.destroy( {
                     where: {
                         profileId,
                         businessId: id,
@@ -67,7 +69,7 @@ export default async ( opt ) => {
 
         if ( titleI18n ) {
             for ( const id of titleI18n ) {
-                await faculty.transaction( t => TitleI18n.findOne( {
+                await staff.transaction( t => TitleI18n.findOne( {
                     where: {
                         profileId,
                         titleId: id,

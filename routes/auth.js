@@ -33,7 +33,6 @@ router
 .route( '/login' )
 .get( async ( req, res, next ) => {
     try {
-        console.log( 'in route auth/login (get)' );
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
 
@@ -82,27 +81,16 @@ router
     }
 } )
 .post( cors(), async ( req, res ) => {
-    console.log( 'in route auth/login (post)' );
-
     try {
         const data = await getAdminByAccount( {
             account: req.body.account,
         } );
         if ( data.password === md5( req.body.password ) ) {
             // Store the new cookie in the user.
-            console.log( 'old sid:' );
-            console.log( res.locals.unparsedId );
-            console.log( req.session.id );
-            console.log( req.session.ctrl );
-
             req.session.regenerate( async () => {
                 try {
                     const newSid = req.session.id;
                     req.session.ctrl = newSid;
-                    console.log( 'in generate: new sid:' );
-                    console.log( newSid );
-                    console.log( req.session.id );
-                    console.log( req.session.ctrl );
 
                     // Store new session in database
                     const result = await saveSession( {
@@ -124,7 +112,6 @@ router
                     } );
 
                     req.session.save();
-                    console.log( 'log in successfully' );
                     res.redirect( '/index' );
                 }
                 catch ( err ) {
@@ -137,7 +124,6 @@ router
         }
         else {
             // Wrong account or password, should show warning message
-            console.log( 'wrong account or password.' );
             res.json( {
                 error: 'Wrong account or password.',
             } );
@@ -145,7 +131,6 @@ router
     }
     catch ( error ) {
         if ( error.status === 404 ) {
-            console.log( 'wrong account or password' );
             res.json( {
                 error: 'Wrong account or password.',
             } );
@@ -167,8 +152,6 @@ router
 .route( '/logout' )
 .get( cors(), async ( req, res ) => {
     try {
-        console.log( 'in route /auth/logout (get)' );
-
         // Get sid in the cookie
         const cookie = req.cookies.sessionId;
         res.locals.unparsedId = cookie;
@@ -210,11 +193,6 @@ router
                     const newSid = req.session.id;
                     req.session.ctrl = newSid;
 
-                    console.log( 'in generate, new sid:' );
-                    console.log( newSid );
-                    console.log( req.session.id );
-                    console.log( req.session.ctrl );
-
                     // Store new session in database
                     await saveSession( {
                         sid:     newSid,
@@ -222,7 +200,6 @@ router
                     } );
 
                     req.session.save();
-                    console.log( 'log out successfully' );
                     res.redirect( '/index' );
                 }
                 catch ( err ) {

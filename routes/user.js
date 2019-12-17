@@ -22,7 +22,8 @@ import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
-import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
+
+// Import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
@@ -190,11 +191,9 @@ router
 .route( '/profile' )
 .get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     // Get id
-    console.log( res.locals.userId );
     const result = await getAdminByUserId( {
         userId: Number( res.locals.userId ),
     } );
-    console.log( result );
 
     // Res.sendFile(
     //     `static/dist/html/user/profile.${ req.query.languageId }.html`,
@@ -316,19 +315,19 @@ router
             else if ( data.dbTable === 'patent' ) {
                 const date = {
                     applicationDate: {
-                        day:   ( data.item.applicationDate_day === '' ) ? 1 : Number( data.item.applicationDate_day ),
-                        month: ( data.item.applicationDate_month === '' ) ? 0 : Number( data.item.applicationDate_month ) - 1,
-                        year:  ( data.item.applicationDate_year === '' ) ? null : Number( data.item.applicationDate_year ),
+                        day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
+                        month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
+                        year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
                     },
                     expireDate: {
-                        day:   ( data.item.expireDate_day === '' ) ? 1 : Number( data.item.expireDate_day ),
-                        month: ( data.item.expireDate_month === '' ) ? 0 : Number( data.item.expireDate_month ) - 1,
-                        year:  ( data.item.expireDate_year === '' ) ? null : Number( data.item.expireDate_year ),
+                        day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
+                        month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
+                        year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
                     },
                     issueDate: {
-                        day:   ( data.item.issueDate_day === '' ) ? 1 : Number( data.item.issueDate_day ),
-                        month: ( data.item.issueDate_month === '' ) ? 0 : Number( data.item.issueDate_month ) - 1,
-                        year:  ( data.item.issueDate_year === '' ) ? null : Number( data.item.issueDate_year ),
+                        day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
+                        month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
+                        year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
                     },
                 };
                 const item = {
@@ -631,19 +630,19 @@ router
             else if ( data.dbTable === 'patent' ) {
                 const date = {
                     applicationDate: {
-                        day:   ( data.item.applicationDate_day === '' ) ? 1 : Number( data.item.applicationDate_day ),
-                        month: ( data.item.applicationDate_month === '' ) ? 0 : Number( data.item.applicationDate_month ) - 1,
-                        year:  ( data.item.applicationDate_year === '' ) ? null : Number( data.item.applicationDate_year ),
+                        day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
+                        month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
+                        year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
                     },
                     expireDate: {
-                        day:   ( data.item.expireDate_day === '' ) ? 1 : Number( data.item.expireDate_day ),
-                        month: ( data.item.expireDate_month === '' ) ? 0 : Number( data.item.expireDate_month ) - 1,
-                        year:  ( data.item.expireDate_year === '' ) ? null : Number( data.item.expireDate_year ),
+                        day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
+                        month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
+                        year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
                     },
                     issueDate: {
-                        day:   ( data.item.issueDate_day === '' ) ? 1 : Number( data.item.issueDate_day ),
-                        month: ( data.item.issueDate_month === '' ) ? 0 : Number( data.item.issueDate_month ) - 1,
-                        year:  ( data.item.issueDate_year === '' ) ? null : Number( data.item.issueDate_year ),
+                        day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
+                        month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
+                        year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
                     },
                 };
                 const item = {

@@ -44,7 +44,7 @@ const ProfileValidationConstraints = {
             maximum: 30,
         },
         format: {
-            pattern: '(\([0-9]+\))*([0-9]+\-)*[0-9]+(\,[0-9]+)?',
+            pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?',
         },
     },
     labTel: {
@@ -54,7 +54,7 @@ const ProfileValidationConstraints = {
             maximum: 30,
         },
         format: {
-            pattern: '(\([0-9]+\))*([0-9]+\-)*[0-9]+(\,[0-9]+)?',
+            pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?',
         },
     },
     labWeb: {

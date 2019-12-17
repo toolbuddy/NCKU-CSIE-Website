@@ -13,7 +13,6 @@
     width: 100%;
     min-height: font__px-to-rem( 80 );
 
-
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       min-height: font__px-to-rem( 80 );
@@ -983,7 +982,8 @@
               @media screen and ( min-width: $large ) {
                 grid-template: {
                   areas: 'certification patent nation inventor patentOwner applicationDate duration';
-                  columns: font__px-to-rem( 100 ) font__px-to-rem( 400 ) font__px-to-rem( 80 ) font__px-to-rem( 200 ) font__px-to-rem( 200 ) font__px-to-rem( 150 ) font__px-to-rem( 150 );
+                  columns: font__px-to-rem( 100 ) font__px-to-rem( 400 ) font__px-to-rem( 80 ) font__px-to-rem( 200 )
+                    font__px-to-rem( 200 ) font__px-to-rem( 150 ) font__px-to-rem( 150 );
                   rows: auto;
                 }
                 gap: font__px-to-rem( 3 );
