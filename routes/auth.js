@@ -5,6 +5,7 @@
  * - `/auth/login`
  * - `/auth/logout`
  * - `/auth/report`
+ * - `/auth/reset-password`
  */
 
 import express from 'express';
@@ -12,6 +13,7 @@ import md5 from 'md5';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
+import staticHtml from 'routes/utils/static-html.js';
 import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
 import updateAdmin from 'models/auth/operations/update-admin.js';
 import getSession from 'models/auth/operations/get-session.js';
@@ -232,3 +234,11 @@ router
 } );
 
 export default router;
+
+/**
+ * Resolve URL `/auth/reset-password`.
+ */
+
+router
+.route( '/reset-password' )
+.get( staticHtml( 'auth/reset-password' ) );

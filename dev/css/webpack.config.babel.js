@@ -110,6 +110,7 @@ export default {
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
+        'auth/reset-password':    path.join( sassRoot, 'auth/reset-password.scss' ),
 
         // Route `developer`
         'developer/index':             path.join( sassRoot, 'developer/index.scss' ),
