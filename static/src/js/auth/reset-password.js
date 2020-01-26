@@ -1,9 +1,8 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import ControlMessageText from 'static/src/js/components/auth/message-text.js';
-import ControlButton from 'static/src/js/components/auth/button-control.js';
 import ResetPasswordEvent from 'static/src/js/components/auth/reset-password-event.js';
+import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 /*
 Header
@@ -49,6 +48,8 @@ try {
         currentPasswordDOM:      document.querySelector( '#form__block--current-password' ),
         checkNewPasswordDOM:     document.querySelector( '#form__block--check-new-password' ),
         checkButtonDOM:      document.querySelector( '#form__button' ),
+        errorMessageDOM:     document.querySelector( '#message--error' ),
+        languageId:          WebLanguageUtils.currentLanguageId,
     } );
     if ( !( resetPasswordEvent instanceof ResetPasswordEvent ) )
         throw new Error( 'resetPasswordEvent not found.' );
