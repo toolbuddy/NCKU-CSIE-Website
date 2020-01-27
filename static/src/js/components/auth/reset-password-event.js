@@ -7,8 +7,6 @@ export default class ResetPasswordEvent {
     constructor ( opt ) {
         opt = opt || {};
 
-        console.log( opt );
-
         if (
             typeof ( opt.newPasswordDOM ) === 'undefined' ||
             !ValidateUtils.isDomElement( opt.newPasswordDOM ) ||

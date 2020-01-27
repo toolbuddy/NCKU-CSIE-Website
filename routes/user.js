@@ -211,7 +211,7 @@ router
 
     if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
         res.sendFile(
-            `static/dist/html/user/profile.${ req.query.languageId }.html`,
+            `static/dist/html/user/faculty/profile.${ req.query.languageId }.html`,
             {
                 root:         projectRoot,
                 maxAge,
@@ -967,7 +967,7 @@ router
 
 router
 .route( '/award' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/award' ) );
 
 /**
  * Resolve URL `/user/project`.
@@ -975,7 +975,7 @@ router
 
 router
 .route( '/project' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/project' ) );
 
 /**
  * Resolve URL `/user/patent`.
@@ -983,7 +983,7 @@ router
 
 router
 .route( '/patent' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/patent' ) );
 
 /**
  * Resolve URL `/user/conference`.
@@ -991,7 +991,7 @@ router
 
 router
 .route( '/conference' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/conference' ) );
 
 /**
  * Resolve URL `/user/studentAward`.
@@ -999,7 +999,7 @@ router
 
 router
 .route( '/studentAward' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/student-award' ) );
 
 /**
  * Resolve URL `/user/uploadPhoto`.
@@ -1091,7 +1091,7 @@ router
 
 router
 .route( '/publication' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/publication' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/publication' ) );
 
 /**
  * Resolve URL `/user/technologyTransfer`.
@@ -1099,7 +1099,7 @@ router
 
 router
 .route( '/technologyTransfer' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/technologyTransfer' ) );
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/technology-transfer' ) );
 
 /**
  * Resolve URL `/user/staffProfile`.
