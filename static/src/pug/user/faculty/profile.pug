@@ -119,13 +119,13 @@ append data
         },
       },
     } );
-    const currentRoute = 'user/profile';
+    const currentRoute = 'user/faculty/profile';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/profile' )
+  +css( 'user/faculty/profile' )
 
 append header
 
@@ -134,7 +134,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/profile' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/profile' },
     ]
   )
 
@@ -206,4 +206,4 @@ append content
 append footer
 
 append scripts
-  +js( 'user/profile' )
+  +js( 'user/faculty/profile' )

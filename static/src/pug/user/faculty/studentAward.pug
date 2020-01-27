@@ -7,7 +7,7 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Conference',
+        title:      'Student Award',
         breadcrumb: {
           home:     'Home',
           user:     'User',
@@ -17,7 +17,7 @@ append data
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '參與會議',
+        title:      '指導學生獲獎',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
@@ -27,13 +27,13 @@ append data
         },        
       },
     } );
-    const currentRoute = 'user/conference';
+    const currentRoute = 'user/faculty/studentAward';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/conference' )
+  +css( 'user/faculty/studentAward' )
 
 append header
 
@@ -54,13 +54,13 @@ append content
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__conference-block.conference-block
-      +local-topic( 'conference-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'conference-block' )
-      +loading( 'conference-block' )
-      section.conference-block__conference.conference#conference
+    article.main__studentAward-block.studentAward-block
+      +local-topic( 'studentAward-block', i18n[ LANG.id ].title, true )
+      +refreshWithImage( 'studentAward-block' )
+      +loading( 'studentAward-block' )      
+      section.studentAward-block__studentAward.studentAward#studentAward
 
 append footer
 
 append scripts
-  +js( 'user/conference' )
+  +js( 'user/faculty/studentAward' )

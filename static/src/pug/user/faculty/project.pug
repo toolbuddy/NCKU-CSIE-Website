@@ -7,7 +7,7 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Award',
+        title:      'Project',
         breadcrumb: {
           home:     'Home',
           user:     'User',
@@ -17,7 +17,7 @@ append data
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '榮譽及獲獎',
+        title:      '專案',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
@@ -27,13 +27,13 @@ append data
         },        
       },
     } );
-    const currentRoute = 'user/award';
+    const currentRoute = 'user/faculty/project';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/award' )
+  +css( 'user/faculty/project' )
 
 append header
 
@@ -54,13 +54,13 @@ append content
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__award-block.award-block
-      +local-topic( 'award-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'award-block' )
-      +loading( 'award-block' )
-      section.award-block__award.award#award
+    article.main__project-block.project-block
+      +local-topic( 'project-block',i18n[ LANG.id ].title, true )
+      +refreshWithImage( 'project-block' )
+      +loading( 'project-block' )
+      section.project-block__project.project#project
 
 append footer
 
 append scripts
-  +js( 'user/award' )
+  +js( 'user/faculty/project' )

@@ -7,7 +7,7 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Patent',
+        title:      'Technology Transfer',
         breadcrumb: {
           home:     'Home',
           user:     'User',
@@ -17,7 +17,7 @@ append data
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '專利',
+        title:      '技術轉移',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
@@ -27,13 +27,13 @@ append data
         },        
       },
     } );
-    const currentRoute = 'user/patent';
+    const currentRoute = 'user/faculty/technologyTransfer';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/patent' )
+  +css( 'user/faculty/technologyTransfer' )
 
 append header
 
@@ -54,13 +54,13 @@ append content
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__patent-block.patent-block
-      +local-topic( 'patent-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'patent-block' )
-      +loading( 'patent-block' )
-      section.patent-block__patent.patent#patent
+    article.main__technologyTransfer-block.technologyTransfer-block
+      +local-topic( 'technologyTransfer-block', i18n[ LANG.id ].title, true )
+      +refreshWithImage( 'technologyTransfer-block' )
+      +loading( 'technologyTransfer-block' )      
+      section.technologyTransfer-block__technologyTransfer.technologyTransfer#technologyTransfer
 
 append footer
 
 append scripts
-  +js( 'user/patent' )
+  +js( 'user/faculty/technologyTransfer' )

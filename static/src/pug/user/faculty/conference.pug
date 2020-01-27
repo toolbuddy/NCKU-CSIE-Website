@@ -7,7 +7,7 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Technology Transfer',
+        title:      'Conference',
         breadcrumb: {
           home:     'Home',
           user:     'User',
@@ -17,7 +17,7 @@ append data
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '技術轉移',
+        title:      '參與會議',
         breadcrumb: {
           home:     '首頁',
           user:     '使用者',
@@ -27,13 +27,13 @@ append data
         },        
       },
     } );
-    const currentRoute = 'user/technologyTransfer';
+    const currentRoute = 'user/faculty/conference';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/technologyTransfer' )
+  +css( 'user/faculty/conference' )
 
 append header
 
@@ -54,13 +54,13 @@ append content
   +navigation-bar( 'content' )
   main.content__main
     +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__technologyTransfer-block.technologyTransfer-block
-      +local-topic( 'technologyTransfer-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'technologyTransfer-block' )
-      +loading( 'technologyTransfer-block' )      
-      section.technologyTransfer-block__technologyTransfer.technologyTransfer#technologyTransfer
+    article.main__conference-block.conference-block
+      +local-topic( 'conference-block', i18n[ LANG.id ].title, true )
+      +refreshWithImage( 'conference-block' )
+      +loading( 'conference-block' )
+      section.conference-block__conference.conference#conference
 
 append footer
 
 append scripts
-  +js( 'user/technologyTransfer' )
+  +js( 'user/faculty/conference' )
