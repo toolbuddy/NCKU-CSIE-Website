@@ -226,7 +226,7 @@ router
     }
     else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
         res.sendFile(
-            `static/dist/html/user/staffProfile.${ req.query.languageId }.html`,
+            `static/dist/html/user/staff/profile.${ req.query.languageId }.html`,
             {
                 root:         projectRoot,
                 maxAge,
@@ -962,43 +962,43 @@ router
 } );
 
 /**
- * Resolve URL `/user/award`.
+ * Resolve URL `/user/faculty/award`.
  */
 
 router
-.route( '/award' )
+.route( '/faculty/award' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/award' ) );
 
 /**
- * Resolve URL `/user/project`.
+ * Resolve URL `/user/faculty/project`.
  */
 
 router
-.route( '/project' )
+.route( '/faculty/project' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/project' ) );
 
 /**
- * Resolve URL `/user/patent`.
+ * Resolve URL `/user/faculty/patent`.
  */
 
 router
-.route( '/patent' )
+.route( '/faculty/patent' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/patent' ) );
 
 /**
- * Resolve URL `/user/conference`.
+ * Resolve URL `/user/faculty/conference`.
  */
 
 router
-.route( '/conference' )
+.route( '/faculty/conference' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/conference' ) );
 
 /**
- * Resolve URL `/user/studentAward`.
+ * Resolve URL `/user/faculty/student-award`.
  */
 
 router
-.route( '/studentAward' )
+.route( '/faculty/student-award' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/student-award' ) );
 
 /**
@@ -1086,19 +1086,19 @@ router
 } );
 
 /**
- * Resolve URL `/user/publication`.
+ * Resolve URL `/user/faculty/publication`.
  */
 
 router
-.route( '/publication' )
+.route( '/faculty/publication' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/publication' ) );
 
 /**
- * Resolve URL `/user/technologyTransfer`.
+ * Resolve URL `/user/faculty/technology-transfer`.
  */
 
 router
-.route( '/technologyTransfer' )
+.route( '/faculty/technology-transfer' )
 .get( urlEncoded, jsonParser, staticHtml( 'user/faculty/technology-transfer' ) );
 
 /**
@@ -1106,8 +1106,8 @@ router
  */
 
 router
-.route( '/staffProfile' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/staffProfile' ) );
+.route( '/staff/profile' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/staff/profile' ) );
 
 /**
  * Resolve URL `/user/resetPassword`.

@@ -23,14 +23,14 @@ class NavigationBar {
         };
 
         const classModifier = {
-            profile:            'profile',
-            award:              'award',
-            publication:        'publication',
-            conference:         'conference',
-            patent:             'patent',
-            project:            'project',
-            studentAward:       'student_award',
-            technologyTransfer: 'technology_transfer',
+            'profile':             'profile',
+            'award':               'award',
+            'publication':         'publication',
+            'conference':          'conference',
+            'patent':              'patent',
+            'project':             'project',
+            'student-award':       'student_award',
+            'technology-transfer': 'technology_transfer',
         };
 
         this.DOM.link = {};
@@ -51,7 +51,7 @@ class NavigationBar {
 
         Object.keys( this.DOM.link ).forEach( ( element ) => {
             this.DOM.link[ element ].addEventListener( 'click', () => {
-                window.location = `${ host }/user/${ element }?languageId=${ this.config.languageId }`;
+                window.location = `${ host }/user/faculty/${ element }?languageId=${ this.config.languageId }`;
                 this.closeNavigation();
             } );
         } );
