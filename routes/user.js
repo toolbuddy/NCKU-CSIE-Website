@@ -22,8 +22,9 @@ import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
+import updateStaffDetail from 'models/staff/operations/update-staff-detail.js';
+import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 
-// Import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
@@ -248,713 +249,803 @@ router
         const data = JSON.parse( Object.keys( req.body )[ 0 ] );
         let uploadData = '';
 
-        if ( data.method === 'add' ) {
-            if ( data.dbTable === 'specialty' ) {
+        // Get user information to check role
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+
+        if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+            if ( data.method === 'add' ) {
+                if ( data.dbTable === 'specialty' ) {
+                    uploadData = {
+                        profileId:    data.profileId,
+                        add:       {
+                            specialtyI18n: [
+                                Object.keys( data.i18n ).map( ( languageId ) => {
+                                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                                    dbTableItem.language = Number( languageId );
+                                    return dbTableItem;
+                                } ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'department' || data.dbTable === 'researchGroup' ) {
+                    uploadData = {
+                        profileId:    data.profileId,
+                        add:       {
+                            [ data.dbTable ]: [
+                                Number( data.dbTableItemId ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'title' ) {
+                    const item = {
+                        from:    data.item.from === '' ? null : Number( data.item.from ),
+                        to:      data.item.to === '' ? null : Number( data.item.to ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'project' ) {
+                    const item = {
+                        from:     data.item.from === '' ? null : Number( data.item.from ),
+                        to:       data.item.to === '' ? null : Number( data.item.to ),
+                        category: Number( data.item.category ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'patent' ) {
+                    const date = {
+                        applicationDate: {
+                            day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
+                            month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
+                            year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
+                        },
+                        expireDate: {
+                            day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
+                            month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
+                            year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
+                        },
+                        issueDate: {
+                            day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
+                            month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
+                            year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
+                        },
+                    };
+                    const item = {
+                        certificationNumber: data.item.certificationNumber,
+                        nation:              Number( data.item.nation ),
+                    };
+                    Object.keys( date ).forEach( ( element ) => {
+                        const temp = date[ element ];
+                        item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
+                    } );
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'publication' ) {
+                    const item = {
+                        category:      Number( data.item.category ),
+                        international: data.item.international,
+                        refereed:      data.item.refereed,
+                        issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
+                        issueMonth:    1,
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'conference' ) {
+                    const item = {
+                        hostYear:    data.item.hostYear === '' ? null : Number( data.item.hostYear ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'experience' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'technologyTransfer' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'education' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                        nation:       Number( data.item.nation ),
+                        degree:       Number( data.item.degree ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'technologyTransferPatent' ) {
+                    const item = {
+                        technologyTransferId: Number( data.dbTableId ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'student' ) {
+                    const item = {
+                        studentAwardId:    Number( data.dbTableId ),
+                        degree:            Number( data.item.degree ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'studentAward' ) {
+                    const item = {
+                        receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'award' ) {
+                    const item = {
+                        receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                    };
+                    item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
+                        const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
+                        dbTableItem.language = Number( languageId );
+                        return dbTableItem;
+                    } );
+                    uploadData = {
+                        profileId:            data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+
+                await addFacultyDetail( {
+                    profileId:                uploadData.profileId,
+                    department:               uploadData.add.department,
+                    education:                uploadData.add.education,
+                    experience:               uploadData.add.experience,
+                    technologyTransfer:       uploadData.add.technologyTransfer,
+                    researchGroup:            uploadData.add.researchGroup,
+                    specialtyI18n:            uploadData.add.specialtyI18n,
+                    title:                    uploadData.add.title,
+                    award:                    uploadData.add.award,
+                    conference:               uploadData.add.conference,
+                    publication:              uploadData.add.publication,
+                    patent:                   uploadData.add.patent,
+                    project:                  uploadData.add.project,
+                    studentAward:             uploadData.add.studentAward,
+                    student:                  uploadData.add.student,
+                    technologyTransferPatent: uploadData.add.technologyTransferPatent,
+                } );
+            }
+
+            if ( data.method === 'delete' ) {
+                const dbTable = ( data.dbTable === 'specialty' ) ? 'specialtyI18n' : data.dbTable;
                 uploadData = {
-                    profileId:    data.profileId,
-                    add:       {
-                        specialtyI18n: [
-                            Object.keys( data.i18n ).map( ( languageId ) => {
-                                const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                                dbTableItem.language = Number( languageId );
-                                return dbTableItem;
-                            } ),
+                    profileId:            data.profileId,
+                    [ data.method ]: {
+                        [ dbTable ]: [
+                            Number( data.dbTableItemId ),
                         ],
                     },
                 };
+                await deleteFacultyDetail( {
+                    profileId:                uploadData.profileId,
+                    department:               uploadData.delete.department,
+                    education:                uploadData.delete.education,
+                    experience:               uploadData.delete.experience,
+                    researchGroup:            uploadData.delete.researchGroup,
+                    specialtyI18n:            uploadData.delete.specialtyI18n,
+                    title:                    uploadData.delete.title,
+                    award:                    uploadData.delete.award,
+                    conference:               uploadData.delete.conference,
+                    publication:              uploadData.delete.publication,
+                    patent:                   uploadData.delete.patent,
+                    project:                  uploadData.delete.project,
+                    studentAward:             uploadData.delete.studentAward,
+                    technologyTransfer:       uploadData.delete.technologyTransfer,
+                    student:                  uploadData.delete.student,
+                    technologyTransferPatent: uploadData.delete.technologyTransferPatent,
+                } );
             }
-            else if ( data.dbTable === 'department' || data.dbTable === 'researchGroup' ) {
+
+            if ( data.method === 'update' ) {
+                if ( data.dbTable === 'title' ) {
+                    const item = {
+                        from:    data.item.from === '' ? null : Number( data.item.from ),
+                        to:      data.item.to === '' ? null : Number( data.item.to ),
+                        titleId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'publication' ) {
+                    const item = {
+                        category:      Number( data.item.category ),
+                        international: data.item.international,
+                        refereed:      data.item.refereed,
+                        issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
+                        issueMonth:    1,
+                        publicationId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'patent' ) {
+                    const date = {
+                        applicationDate: {
+                            day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
+                            month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
+                            year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
+                        },
+                        expireDate: {
+                            day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
+                            month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
+                            year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
+                        },
+                        issueDate: {
+                            day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
+                            month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
+                            year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
+                        },
+                    };
+                    const item = {
+                        certificationNumber: data.item.certificationNumber,
+                        nation:              Number( data.item.nation ),
+                        patentId:            Number( data.dbTableItemId ),
+                    };
+                    Object.keys( date ).forEach( ( element ) => {
+                        const temp = date[ element ];
+                        item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
+                    } );
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'conference' ) {
+                    const item = {
+                        hostYear:     data.item.hostYear === '' ? null : Number( data.item.hostYear ),
+                        conferenceId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'award' ) {
+                    const item = {
+                        receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                        awardId:       Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'studentAward' ) {
+                    const item = {
+                        receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
+                        studentAwardId:        Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'technologyTransferPatent' ) {
+                    const item = {
+                        technologyTransferPatentId:    Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'student' ) {
+                    const item = {
+                        degree:       Number( data.item.degree ),
+                        studentId:    Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'education' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                        nation:       Number( data.item.nation ),
+                        degree:       Number( data.item.degree ),
+                        educationId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'project' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                        category:       Number( data.item.category ),
+                        projectId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'experience' ) {
+                    const item = {
+                        from:         data.item.from === '' ? null : Number( data.item.from ),
+                        to:           data.item.to === '' ? null : Number( data.item.to ),
+                        experienceId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'technologyTransfer' ) {
+                    const item = {
+                        from:                 data.item.from === '' ? null : Number( data.item.from ),
+                        to:                   data.item.to === '' ? null : Number( data.item.to ),
+                        technologyTransferId: Number( data.dbTableItemId ),
+                    };
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: [
+                                Object.assign( {}, item ),
+                            ],
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'specialty' ) {
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            newData.specialtyId = Number( data.dbTableItemId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    uploadData = {
+                        profileId:    data.profileId,
+                        update:       {
+                            specialtyI18n: i18nData,
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'profile' ) {
+                    const item = {
+                        fax:         data.item.fax,
+                        email:       data.item.email,
+                        personalWeb: data.item.personalWeb,
+                        nation:      Number( data.item.nation ),
+                        photo:       data.item.photo,
+                        officeTel:   data.item.officeTel,
+                        labTel:      data.item.labTel,
+                        labWeb:      data.item.labWeb,
+                    };
+                    Object.keys( item ).forEach( ( key ) => {
+                        if ( typeof ( item[ key ] ) === 'undefined' || Number.isNaN( item[ key ] ) || item[ key ] === null )
+                            delete item[ key ];
+                    } );
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: Object.assign( {}, item ),
+                        },
+                    };
+                }
+                await updateFacultyDetail( {
+                    profileId:                uploadData.profileId,
+                    education:                uploadData.update.education,
+                    experience:               uploadData.update.experience,
+                    profile:                  uploadData.update.profile,
+                    specialtyI18n:            uploadData.update.specialtyI18n,
+                    title:                    uploadData.update.title,
+                    award:                    uploadData.update.award,
+                    conference:               uploadData.update.conference,
+                    publication:              uploadData.update.publication,
+                    patent:                   uploadData.update.patent,
+                    project:                  uploadData.update.project,
+                    studentAward:             uploadData.update.studentAward,
+                    technologyTransfer:       uploadData.update.technologyTransfer,
+                    technologyTransferPatent: uploadData.update.technologyTransferPatent,
+                    student:                  uploadData.update.student,
+                } );
+            }
+        }
+        else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+            if ( data.method === 'delete' ) {
                 uploadData = {
-                    profileId:    data.profileId,
-                    add:       {
+                    profileId:       data.profileId,
+                    [ data.method ]: {
                         [ data.dbTable ]: [
                             Number( data.dbTableItemId ),
                         ],
                     },
                 };
-            }
-            else if ( data.dbTable === 'title' ) {
-                const item = {
-                    from:    data.item.from === '' ? null : Number( data.item.from ),
-                    to:      data.item.to === '' ? null : Number( data.item.to ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
+                await deleteStaffDetail( {
+                    profileId:    uploadData.profileId,
+                    businessI18n: uploadData.delete.business,
+                    titleI18n:    uploadData.delete.title,
                 } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'project' ) {
-                const item = {
-                    from:     data.item.from === '' ? null : Number( data.item.from ),
-                    to:       data.item.to === '' ? null : Number( data.item.to ),
-                    category: Number( data.item.category ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'patent' ) {
-                const date = {
-                    applicationDate: {
-                        day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
-                        month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
-                        year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
-                    },
-                    expireDate: {
-                        day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
-                        month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
-                        year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
-                    },
-                    issueDate: {
-                        day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
-                        month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
-                        year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
-                    },
-                };
-                const item = {
-                    certificationNumber: data.item.certificationNumber,
-                    nation:              Number( data.item.nation ),
-                };
-                Object.keys( date ).forEach( ( element ) => {
-                    const temp = date[ element ];
-                    item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
-                } );
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'publication' ) {
-                const item = {
-                    category:      Number( data.item.category ),
-                    international: data.item.international,
-                    refereed:      data.item.refereed,
-                    issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
-                    issueMonth:    1,
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'conference' ) {
-                const item = {
-                    hostYear:    data.item.hostYear === '' ? null : Number( data.item.hostYear ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'experience' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'technologyTransfer' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'education' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                    nation:       Number( data.item.nation ),
-                    degree:       Number( data.item.degree ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'technologyTransferPatent' ) {
-                const item = {
-                    technologyTransferId: Number( data.dbTableId ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'student' ) {
-                const item = {
-                    studentAwardId:    Number( data.dbTableId ),
-                    degree:            Number( data.item.degree ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'studentAward' ) {
-                const item = {
-                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'award' ) {
-                const item = {
-                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
-                };
-                item.i18n = Object.keys( data.i18n ).map( ( languageId ) => {
-                    const dbTableItem = Object.assign( {}, data.i18n[ languageId ] );
-                    dbTableItem.language = Number( languageId );
-                    return dbTableItem;
-                } );
-                uploadData = {
-                    profileId:            data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
             }
 
-            await addFacultyDetail( {
-                profileId:                uploadData.profileId,
-                department:               uploadData.add.department,
-                education:                uploadData.add.education,
-                experience:               uploadData.add.experience,
-                technologyTransfer:       uploadData.add.technologyTransfer,
-                researchGroup:            uploadData.add.researchGroup,
-                specialtyI18n:            uploadData.add.specialtyI18n,
-                title:                    uploadData.add.title,
-                award:                    uploadData.add.award,
-                conference:               uploadData.add.conference,
-                publication:              uploadData.add.publication,
-                patent:                   uploadData.add.patent,
-                project:                  uploadData.add.project,
-                studentAward:             uploadData.add.studentAward,
-                student:                  uploadData.add.student,
-                technologyTransferPatent: uploadData.add.technologyTransferPatent,
-            } );
+            if ( data.method === 'update' ) {
+                if ( data.dbTable === 'title' ) {
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            newData.titleId = Number( data.dbTableItemId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    uploadData = {
+                        profileId:    data.profileId,
+                        update:       {
+                            titleI18n: i18nData,
+                        },
+                    };
+                }
+                if ( data.dbTable === 'business' ) {
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            newData.businessId = Number( data.dbTableItemId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    uploadData = {
+                        profileId:    data.profileId,
+                        update:       {
+                            businessI18n: i18nData,
+                        },
+                    };
+                }
+                else if ( data.dbTable === 'profile' ) {
+                    const item = {
+                        email:       data.item.email,
+                        photo:       data.item.photo,
+                        officeTel:   data.item.officeTel,
+                    };
+                    Object.keys( item ).forEach( ( key ) => {
+                        if ( typeof ( item[ key ] ) === 'undefined' || Number.isNaN( item[ key ] ) || item[ key ] === null )
+                            delete item[ key ];
+                    } );
+                    const i18nData = [];
+                    Object.keys( data.i18n ).forEach( ( languageId ) => {
+                        if ( !isEmpty( data.i18n[ languageId ] ) ) {
+                            const newData = Object.assign( {}, data.i18n[ languageId ] );
+                            newData.language = Number( languageId );
+                            i18nData.push( newData );
+                        }
+                    } );
+                    item.i18n = i18nData;
+                    uploadData = {
+                        profileId:       data.profileId,
+                        [ data.method ]: {
+                            [ data.dbTable ]: Object.assign( {}, item ),
+                        },
+                    };
+                }
+                await updateStaffDetail( {
+                    profileId:    uploadData.profileId,
+                    profile:      uploadData.update.profile,
+                    titleI18n:    uploadData.update.title,
+                    businessI18n: uploadData.update.business,
+                } );
+            }
         }
-
-        if ( data.method === 'delete' ) {
-            const dbTable = ( data.dbTable === 'specialty' ) ? 'specialtyI18n' : data.dbTable;
-            uploadData = {
-                profileId:            data.profileId,
-                [ data.method ]: {
-                    [ dbTable ]: [
-                        Number( data.dbTableItemId ),
-                    ],
-                },
-            };
-            await deleteFacultyDetail( {
-                profileId:                uploadData.profileId,
-                department:               uploadData.delete.department,
-                education:                uploadData.delete.education,
-                experience:               uploadData.delete.experience,
-                researchGroup:            uploadData.delete.researchGroup,
-                specialtyI18n:            uploadData.delete.specialtyI18n,
-                title:                    uploadData.delete.title,
-                award:                    uploadData.delete.award,
-                conference:               uploadData.delete.conference,
-                publication:              uploadData.delete.publication,
-                patent:                   uploadData.delete.patent,
-                project:                  uploadData.delete.project,
-                studentAward:             uploadData.delete.studentAward,
-                technologyTransfer:       uploadData.delete.technologyTransfer,
-                student:                  uploadData.delete.student,
-                technologyTransferPatent: uploadData.delete.technologyTransferPatent,
-            } );
-        }
-
-        if ( data.method === 'update' ) {
-            if ( data.dbTable === 'title' ) {
-                const item = {
-                    from:    data.item.from === '' ? null : Number( data.item.from ),
-                    to:      data.item.to === '' ? null : Number( data.item.to ),
-                    titleId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'publication' ) {
-                const item = {
-                    category:      Number( data.item.category ),
-                    international: data.item.international,
-                    refereed:      data.item.refereed,
-                    issueYear:     data.item.issueYear === '' ? null : Number( data.item.issueYear ),
-                    issueMonth:    1,
-                    publicationId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'patent' ) {
-                const date = {
-                    applicationDate: {
-                        day:   ( data.item.applicationDateDay === '' ) ? 1 : Number( data.item.applicationDateDay ),
-                        month: ( data.item.applicationDateMonth === '' ) ? 0 : Number( data.item.applicationDateMonth ) - 1,
-                        year:  ( data.item.applicationDateYear === '' ) ? null : Number( data.item.applicationDateYear ),
-                    },
-                    expireDate: {
-                        day:   ( data.item.expireDateDay === '' ) ? 1 : Number( data.item.expireDateDay ),
-                        month: ( data.item.expireDateMonth === '' ) ? 0 : Number( data.item.expireDateMonth ) - 1,
-                        year:  ( data.item.expireDateYear === '' ) ? null : Number( data.item.expireDateYear ),
-                    },
-                    issueDate: {
-                        day:   ( data.item.issueDateDay === '' ) ? 1 : Number( data.item.issueDateDay ),
-                        month: ( data.item.issueDateMonth === '' ) ? 0 : Number( data.item.issueDateMonth ) - 1,
-                        year:  ( data.item.issueDateYear === '' ) ? null : Number( data.item.issueDateYear ),
-                    },
-                };
-                const item = {
-                    certificationNumber: data.item.certificationNumber,
-                    nation:              Number( data.item.nation ),
-                    patentId:            Number( data.dbTableItemId ),
-                };
-                Object.keys( date ).forEach( ( element ) => {
-                    const temp = date[ element ];
-                    item[ element ] = ( temp.year === null ) ? null : new Date( temp.year, temp.month, temp.day );
-                } );
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'conference' ) {
-                const item = {
-                    hostYear:     data.item.hostYear === '' ? null : Number( data.item.hostYear ),
-                    conferenceId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'award' ) {
-                const item = {
-                    receivedYear:  data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
-                    awardId:       Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'studentAward' ) {
-                const item = {
-                    receivedYear:   data.item.receivedYear === '' ? null : Number( data.item.receivedYear ),
-                    studentAwardId:        Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'technologyTransferPatent' ) {
-                const item = {
-                    technologyTransferPatentId:    Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'student' ) {
-                const item = {
-                    degree:       Number( data.item.degree ),
-                    studentId:    Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'education' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                    nation:       Number( data.item.nation ),
-                    degree:       Number( data.item.degree ),
-                    educationId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'project' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                    category:       Number( data.item.category ),
-                    projectId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'experience' ) {
-                const item = {
-                    from:         data.item.from === '' ? null : Number( data.item.from ),
-                    to:           data.item.to === '' ? null : Number( data.item.to ),
-                    experienceId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'technologyTransfer' ) {
-                const item = {
-                    from:                 data.item.from === '' ? null : Number( data.item.from ),
-                    to:                   data.item.to === '' ? null : Number( data.item.to ),
-                    technologyTransferId: Number( data.dbTableItemId ),
-                };
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: [
-                            Object.assign( {}, item ),
-                        ],
-                    },
-                };
-            }
-            else if ( data.dbTable === 'specialty' ) {
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        newData.specialtyId = Number( data.dbTableItemId );
-                        i18nData.push( newData );
-                    }
-                } );
-                uploadData = {
-                    profileId:    data.profileId,
-                    update:       {
-                        specialtyI18n: i18nData,
-                    },
-                };
-            }
-            else if ( data.dbTable === 'profile' ) {
-                const item = {
-                    fax:         data.item.fax,
-                    email:       data.item.email,
-                    personalWeb: data.item.personalWeb,
-                    nation:      Number( data.item.nation ),
-                    photo:       data.item.photo,
-                    officeTel:   data.item.officeTel,
-                    labTel:      data.item.labTel,
-                    labWeb:      data.item.labWeb,
-                };
-                Object.keys( item ).forEach( ( key ) => {
-                    if ( typeof ( item[ key ] ) === 'undefined' || Number.isNaN( item[ key ] ) || item[ key ] === null )
-                        delete item[ key ];
-                } );
-                const i18nData = [];
-                Object.keys( data.i18n ).forEach( ( languageId ) => {
-                    if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                        const newData = Object.assign( {}, data.i18n[ languageId ] );
-                        newData.language = Number( languageId );
-                        i18nData.push( newData );
-                    }
-                } );
-                item.i18n = i18nData;
-                uploadData = {
-                    profileId:       data.profileId,
-                    [ data.method ]: {
-                        [ data.dbTable ]: Object.assign( {}, item ),
-                    },
-                };
-            }
-            await updateFacultyDetail( {
-                profileId:                uploadData.profileId,
-                education:                uploadData.update.education,
-                experience:               uploadData.update.experience,
-                profile:                  uploadData.update.profile,
-                specialtyI18n:            uploadData.update.specialtyI18n,
-                title:                    uploadData.update.title,
-                award:                    uploadData.update.award,
-                conference:               uploadData.update.conference,
-                publication:              uploadData.update.publication,
-                patent:                   uploadData.update.patent,
-                project:                  uploadData.update.project,
-                studentAward:             uploadData.update.studentAward,
-                technologyTransfer:       uploadData.update.technologyTransfer,
-                technologyTransferPatent: uploadData.update.technologyTransferPatent,
-                student:                  uploadData.update.student,
-            } );
-        }
-
         res.json();
-
-        // Check updating faculty or staff -> call the corresponding model operation
     }
     catch ( error ) {
         console.error( error );
