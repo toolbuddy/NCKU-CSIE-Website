@@ -4,15 +4,18 @@ import {
 import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function for updating a specific user data by the given user id.
  *
  * @async
- * @param {number} [userId=1]                   - Id of the requested announcement.
- * @returns {object}                           Related information of the requested announcement, including:
- * - sid
- * - expires
- * - data
- * - userId
+ * @param   {number} userId   - Id of the user. Used for deciding which data to update.
+ * @param   {string} account  - The updated account of the user account. If not null, the value will be rewritten by the given value.
+ * @param   {string} password - The updated password of the user account. If not null, the value will be rewritten by the given value.
+ * @param   {number} role     - This indicates the user is a member of staff or faculty. If not null, the value will be rewritten by the given value.
+ * @param   {number} sid      - The session id of the user. If not null, the value will be rewritten by the given value.
+ * @param   {bool}   isValid  - This indicates if this user is a valid user. If not null, the value will be rewritten by the given value.
+ * @param   {string} name     - The name of the user. If not null, the value will be rewritten by the given value.
+ * @param   {number} roleId   - The corresponding id in staff or faculty table. If not null, the value will be rewritten by the given value.
+ * @returns {object}            A Promise.
  *
  */
 

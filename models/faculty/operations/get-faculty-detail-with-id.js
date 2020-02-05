@@ -32,6 +32,30 @@ import {
     TitleI18n,
 } from 'models/faculty/operations/associations.js';
 
+/**
+ * A function for getting full information (including data id in databases) of a specific faculty by given profileId and language.
+ *
+ * @async
+ * @param   {number} profileId  - ProfileId of the faculty. Deciding which user information to get.
+ * @param   {number} languageId - The ID of language. Deciding the langauge of the requested information.
+ * @returns {object}            - Information of the faculty. Including:
+ * - award
+ * - conference
+ * - department
+ * - education
+ * - experience
+ * - patent
+ * - profile
+ * - project
+ * - publication
+ * - researchGroup
+ * - specialty
+ * - studentAward
+ * - technologyTransfer
+ * - title
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

@@ -14,6 +14,24 @@ import FileI18nValidationConstraints from 'models/announcement/constraints/patch
 import TagValidationConstraints from 'models/announcement/constraints/patch/tag.js';
 import validate from 'validate.js';
 
+/**
+ * A function for updating a specific announcement data by the given announcement id.
+ *
+ * @async
+ * @param {number}    announcementId - Id of the announcement. Used for deciding which data to update.
+ * @param {date}      publishTime    - If not null, the value will be rewritten by the given value.
+ * @param {date}      updateTime     - If not null, the value will be rewritten by the given value.
+ * @param {number}    author         - If not null, the value will be rewritten by the given value.
+ * @param {boolean}   isPinned       - If not null, the value will be rewritten by the given value.
+ * @param {boolean}   isPublished    - If not null, the value will be rewritten by the given value.
+ * @param {string}    imageUrl       - If not null, the value will be rewritten by the given value.
+ * @param {number}    views          - If not null, the value will be rewritten by the given value.
+ * @param {object []} i18n           - If not null, the value will be rewritten by the given value.
+ * @param {object []} tags           - If not null, the value will be rewritten by the given value.
+ * @param {object []} fileI18n       - If not null, the value will be rewritten by the given value.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

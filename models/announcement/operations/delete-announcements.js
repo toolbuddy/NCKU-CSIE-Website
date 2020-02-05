@@ -4,6 +4,14 @@ import {
 } from 'models/announcement/operations/associations.js';
 import { announcement, } from 'models/common/utils/connect.js';
 
+/**
+ * A function for soft-deleting announcements by given IDs of the announcements.
+ *
+ * @async
+ * @param {number []} announcementIds - Ids of the announcements. Deciding which announcements to delete.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

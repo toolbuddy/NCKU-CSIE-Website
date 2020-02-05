@@ -80,6 +80,29 @@ function equalArray ( a, b ) {
     return true;
 }
 
+/**
+ * A function for adding information of a specific faculty by a given profileId. Given columns will be added.
+ *
+ * @async
+ * @param   {number}    profileId                - ProfileId of the staff. Deciding which user information to get.
+ * @param   {object []} award                    - Given information will be added to the specific user.
+ * @param   {object []} conference               - Given information will be added to the specific user.
+ * @param   {number []} department               - Given information will be added to the specific user.
+ * @param   {number []} researchGroup            - Given information will be added to the specific user.
+ * @param   {object []} education                - Given information will be added to the specific user.
+ * @param   {object []} experience               - Given information will be added to the specific user.
+ * @param   {object []} patent                   - Given information will be added to the specific user.
+ * @param   {object []} project                  - Given information will be added to the specific user.
+ * @param   {object []} publication              - Given information will be added to the specific user.
+ * @param   {object []} specialtyI18n            - Given information will be added to the specific user.
+ * @param   {object []} student                  - Given information will be added to the specific user.
+ * @param   {object []} studentAward             - Given information will be added to the specific user.
+ * @param   {object []} technologyTransfer       - Given information will be added to the specific user.
+ * @param   {object []} technologyTransferPatent - Given information will be added to the specific user.
+ * @param   {object []} title                    - Given information will be added to the specific user.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

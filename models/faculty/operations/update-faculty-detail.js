@@ -58,6 +58,28 @@ import TitleI18nValidationConstraints from 'models/faculty/constraints/update/ti
 import validate from 'validate.js';
 import { faculty, } from 'models/common/utils/connect.js';
 
+/**
+ * A function for updating a specific faculty data by the given faculty id.
+ *
+ * @async
+ * @param {number}    profileId                - Id of the faculty. Used for deciding which data to update.
+ * @param {object []} award                    - If not null, the value will be rewritten by the given value.
+ * @param {object []} conference               - If not null, the value will be rewritten by the given value.
+ * @param {object []} education                - If not null, the value will be rewritten by the given value.
+ * @param {object []} experience               - If not null, the value will be rewritten by the given value.
+ * @param {object []} patent                   - If not null, the value will be rewritten by the given value.
+ * @param {object []} project                  - If not null, the value will be rewritten by the given value.
+ * @param {object []} publication              - If not null, the value will be rewritten by the given value.
+ * @param {object []} profile                  - If not null, the value will be rewritten by the given value.
+ * @param {object []} specialtyI18n            - If not null, the value will be rewritten by the given value.
+ * @param {object []} student                  - If not null, the value will be rewritten by the given value.
+ * @param {object []} studentAward             - If not null, the value will be rewritten by the given value.
+ * @param {object []} technologyTransfer       - If not null, the value will be rewritten by the given value.
+ * @param {object []} technologyTransferPatent - If not null, the value will be rewritten by the given value.
+ * @param {object []} title                    - If not null, the value will be rewritten by the given value.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

@@ -1,10 +1,3 @@
-/**
- * Language map module.
- * @namespace
- * @readonly
- * @property {string[]} support - Supporting language list.
- */
-
 import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 

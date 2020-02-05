@@ -7,6 +7,24 @@ import {
     TitleI18n,
 } from 'models/staff/operations/associations.js';
 
+/**
+ * A function for getting information of all staff in a specific language .
+ *
+ * @async
+ * @param   {number}    languageId  - The ID of language. Deciding the langauge of the requested information.
+ * @returns {object []}             - Information of all staff. Including:
+ * - business
+ * - email
+ * - officeTel
+ * - photo
+ * - profileId
+ * - name
+ * - officeAddress
+ * - title
+ * - order
+ *
+ */
+
 export default async ( languageId = null ) => {
     try {
         /**

@@ -7,8 +7,8 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * A function for getting a specific session information by the sid of the session.
  *
  * @async
- * @param {number} [sid=1]                   - sid of the requested session.
- * @returns {object}                         - Related information of the requested session, including:
+ * @param {number} sid - sid of the requested session.
+ * @returns {object}   - Related information of the requested session, including:
  * - sid
  * - expires
  * - data

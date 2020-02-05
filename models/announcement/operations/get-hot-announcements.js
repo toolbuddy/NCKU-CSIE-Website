@@ -9,17 +9,18 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 
 /**
- * A function for getting all announcements.
+ * A function for getting all hot announcements (announcements with most views).
  *
  * @async
- * @param {string[]} [tags = []]                          - Specifying the announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                          announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
- *                                                          announcements were post.
- * @param {number}   [page = defaultValue.page]           - Specify the announcements under the given page number.
- * @param {string} [language = defaultValue.language]     - Language option of the announcements.
- * @returns {object[]}                                      Requested announcements, including:
+ * @param   {number[]} [tags = []]                - Specifying the announcements with the given tags.
+ * @param   {date}     from                       - A string of the js Date object, specifying the earliest time of filter interval when
+ *                                                  announcements were post.
+ * @param   {date}     to                         - A string of the js Date object, specifying the latest time of filter interval when
+ *                                                  announcements were post.
+ * @param   {number}   amount                     - Specify the amount of announcements to be shown per page.
+ * @param   {number}   [page = defaultValue.page] - Specify the announcements under the given page number.
+ * @param   {number}   languageId                 - Language option of the announcements.
+ * @returns {object[]}                              Requested announcements, including:
  * - id
  * - title
  * - content

@@ -4,6 +4,15 @@ import {
 } from 'models/announcement/operations/associations.js';
 import { announcement, } from 'models/common/utils/connect.js';
 
+/**
+ * A function for deleting the associated files of a specific announcement by given IDs of the files.
+ *
+ * @async
+ * @param {number}    announcementId - Id of the announcement. Deciding which announcement file to delete.
+ * @param {number []} fileId - IDs of files to be deleted.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

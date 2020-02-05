@@ -4,6 +4,19 @@ import {
     ProfileI18n,
 } from 'models/faculty/operations/associations.js';
 
+/**
+ * A function for getting information of a specific faculty to be shown on the header by given profileId and language.
+ *
+ * @async
+ * @param   {number} profileId  - ProfileId of the faculty. Deciding which user information to get.
+ * @param   {number} languageId - The ID of language. Deciding the langauge of the requested information.
+ * @returns {object}            - Mini information of the faculty. Including:
+ * - photo
+ * - profileId
+ * - name
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

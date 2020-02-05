@@ -9,6 +9,28 @@ import {
     TitleI18n,
 } from 'models/faculty/operations/associations.js';
 
+/**
+ * A function for getting information of all faculty in a specific language .
+ *
+ * @async
+ * @param   {number}    languageId  - The ID of language. Deciding the langauge of the requested information.
+ * @returns {object []}             - Information of all faculty. Including:
+ * - profileId
+ * - department
+ * - email
+ * - labWeb
+ * - officeTel
+ * - photo
+ * - labAddress
+ * - labName
+ * - name
+ * - officeAddress
+ * - researchGroup
+ * - title
+ * - order
+ *
+ */
+
 export default async ( languageId = null ) => {
     try {
         /**

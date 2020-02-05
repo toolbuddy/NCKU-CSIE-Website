@@ -5,6 +5,26 @@ import {
     PublicationI18n,
 } from 'models/faculty/operations/associations.js';
 
+/**
+ * A function for getting information of all faculty publication in a specific language .
+ *
+ * @async
+ * @param   {number}    languageId  - The ID of language. Deciding the langauge of the requested information.
+ * @param   {number}    from        - The beginning year of the requested time range.
+ * @param   {number}    to          - The end year of the requested time range.
+ * @returns {object []}             - Information of all faculty publication. Including:
+ * - publicationId
+ * - profileId
+ * - issueYear
+ * - issueMonth
+ * - category
+ * - international
+ * - refereed
+ * - title
+ * - authors
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

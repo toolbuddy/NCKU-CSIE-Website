@@ -6,6 +6,16 @@ import {
 
 import { staff, } from 'models/common/utils/connect.js';
 
+/**
+ * A function for hard-deleting the business or/and title information of a specific staff by a given profileId of the staff.
+ *
+ * @async
+ * @param {number}    profileId    - ProfileId of the staff. Deciding which user information to delete.
+ * @param {number []} businessI18n - IDs of businessI18n to be deleted.
+ * @param {number []} titleI18n    - IDs of titleI18n to be deleted.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

@@ -12,9 +12,9 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * A function for getting a specific announcement in specific languages by the id of the announcement.
  *
  * @async
- * @param {string} [language = defaultValue.language]   - Language option of the announcements.
- * @param {number} [announcementId=1]                   - Id of the requested announcement.
- * @returns {object}                                      Related information of the requested announcement, including:
+ * @param   {number} languageId     - Language option of the announcements.
+ * @param   {number} announcementId - Id of the requested announcement.
+ * @returns {object}                  Related information of the requested announcement, including:
  * - id
  * - title
  * - content

@@ -10,12 +10,13 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * A function for getting the number of pages to display all requested announcements.
  *
  * @async
- * @param {string[]} [tags=[]]                            - Specifying the announcements with the given tags.
- * @param {string}   [from = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                          announcements were post.
- * @param {string}   [to = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
- *                                                          announcements were post.
- * @returns {object}                                        The number of pages required to display all the requested announcements.
+ * @param   {number[]} [tags=[]] - Specifying the announcements with the given tags.
+ * @param   {date}     from      - A string of the js Date object, specifying the earliest time of filter interval when
+ *                                 announcements were post.
+ * @param   {date}     to        - A string of the js Date object, specifying the latest time of filter interval when
+ *                                 announcements were post.
+ * @param   {number}   amount    - Specify the amount of announcements to be shown per page.
+ * @returns {object}               The number of pages required to display all the requested announcements.
  *
  * Announcements which contain at least one of the given tags are taken into account.
  */

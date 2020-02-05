@@ -4,15 +4,19 @@ import {
 import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function for getting a specific user data by a given user ID.
  *
  * @async
- * @param {number} [userId=1]                   - Id of the requested announcement.
- * @returns {object}                           Related information of the requested announcement, including:
- * - sid
- * - expires
- * - data
+ * @param   {number} userId - Id of the requested user.
+ * @returns {object}        Related information of the requested user, including:
  * - userId
+ * - account
+ * - password
+ * - role (staff or faculty)
+ * - sid
+ * - isValid
+ * - name
+ * - roleId (corresponding ID in staff or faculty table)
  *
  */
 

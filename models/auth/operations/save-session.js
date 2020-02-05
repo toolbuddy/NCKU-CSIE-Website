@@ -2,11 +2,14 @@ import { Session, } from 'models/auth/operations/associations.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function for saving a session information.
  *
  * @async
- * @param {number} [sid=1]                   - Id of the requested announcement.
- * @returns {object}                           Related information of the requested announcement, including:
+ * @param {number} [sid=1] - sid of the session.
+ * @param {date}   expire  - the expire time of the session
+ * @param {string} data    - data of session
+ * @param {number} userId  - user id to which the session belongs
+ * @returns {object}       - Related information of the saved session, including:
  * - sid
  * - expires
  * - data

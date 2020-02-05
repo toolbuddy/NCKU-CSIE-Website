@@ -34,6 +34,24 @@ function equalArray ( a, b ) {
     return true;
 }
 
+/**
+ * A function for creating an announcement.
+ *
+ * @async
+ * @param {date}      publishTime
+ * @param {date}      updateTime
+ * @param {number}    author           - The user ID of the author.
+ * @param {boolean}   isPinned
+ * @param {boolean}   isPublished
+ * @param {string}    imageUrl
+ * @param {number}    views
+ * @param {object []} tag
+ * @param {object []} announcementI18n
+ * @param {object []} fileI18n
+ * @returns {object}                   - A Promise.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};

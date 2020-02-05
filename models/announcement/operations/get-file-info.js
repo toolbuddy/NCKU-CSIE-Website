@@ -5,6 +5,20 @@ import {
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
+/**
+ * A function for getting a specific file information in specific languages by the id of the announcement file.
+ *
+ * @async
+ * @param   {number} languageId     - Language option of the announcements.
+ * @param   {number} announcementId - Id of the requested announcement.
+ * @param   {number} fileId         - Id of the requested file.
+ * @returns {object}                Related information of the requested announcement file, including:
+ * - name
+ * - path
+ * - announcementId
+ *
+ */
+
 export default async ( opt ) => {
     try {
         const {

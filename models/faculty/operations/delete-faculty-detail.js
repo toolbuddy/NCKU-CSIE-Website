@@ -33,6 +33,29 @@ import departmentUtils from 'models/faculty/utils/department.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import { faculty, } from 'models/common/utils/connect.js';
 
+/**
+ * A function for hard-deleting the associated information of a specific faculty by a given profileId of the faculty.
+ *
+ * @async
+ * @param {number}    profileId                - ProfileId of the faculty. Deciding which faculty information to delete.
+ * @param {number []} award                    - IDs of award to be deleted.
+ * @param {number []} conference               - IDs of conference to be deleted.
+ * @param {number []} department               - IDs of department to be deleted.
+ * @param {number []} education                - IDs of education to be deleted.
+ * @param {number []} researchGroup            - IDs of researchGroup to be deleted.
+ * @param {number []} experience               - IDs of experience to be deleted.
+ * @param {number []} patent                   - IDs of patent to be deleted.
+ * @param {number []} project                  - IDs of project to be deleted.
+ * @param {number []} publication              - IDs of publication to be deleted.
+ * @param {number []} specialtyI18n            - IDs of specialtyI18n to be deleted.
+ * @param {number []} student                  - IDs of student to be deleted.
+ * @param {number []} studentAward             - IDs of studentAward to be deleted.
+ * @param {number []} technologyTransfer       - IDs of technologyTransfer to be deleted.
+ * @param {number []} technologyTransferPatent - IDs of technologyTransferPatent to be deleted.
+ * @param {number []} title                    - IDs of title to be deleted.
+ *
+ */
+
 export default async ( opt ) => {
     try {
         opt = opt || {};
