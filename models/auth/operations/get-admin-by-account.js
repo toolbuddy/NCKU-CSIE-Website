@@ -7,8 +7,8 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * A function for getting a specific user data by a given user account.
  *
  * @async
- * @param {string} account - Id of the requested user.
- * @returns {object} - Related information of the requested user, including:
+ * @param   {string} account - Id of the requested user.
+ * @returns {object}         - Related information of the requested user, including:
  * - userId
  * - account
  * - password

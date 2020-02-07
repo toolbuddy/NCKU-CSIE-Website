@@ -15,7 +15,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * @param   {bool}   isValid  - This indicates if this user is a valid user. If not null, the value will be rewritten by the given value.
  * @param   {string} name     - The name of the user. If not null, the value will be rewritten by the given value.
  * @param   {number} roleId   - The corresponding id in staff or faculty table. If not null, the value will be rewritten by the given value.
- * @returns {object}            A Promise.
+ * @returns {object}            The instance of the admin.
  *
  */
 

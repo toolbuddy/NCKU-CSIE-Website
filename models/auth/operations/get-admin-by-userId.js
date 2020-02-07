@@ -8,7 +8,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
  *
  * @async
  * @param   {number} userId - Id of the requested user.
- * @returns {object}        Related information of the requested user, including:
+ * @returns {object}          Related information of the requested user, including:
  * - userId
  * - account
  * - password

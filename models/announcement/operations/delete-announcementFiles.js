@@ -5,7 +5,8 @@ import {
 import { announcement, } from 'models/common/utils/connect.js';
 
 /**
- * A function for deleting the associated files of a specific announcement by given IDs of the files.
+ * A function for soft-deleting the associated files of a specific announcement by given IDs of the files.
+ * Only `isValid` column will be modified to 0.
  *
  * @async
  * @param {number}    announcementId - Id of the announcement. Deciding which announcement file to delete.

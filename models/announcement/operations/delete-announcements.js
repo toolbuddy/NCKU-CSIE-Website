@@ -6,6 +6,7 @@ import { announcement, } from 'models/common/utils/connect.js';
 
 /**
  * A function for soft-deleting announcements by given IDs of the announcements.
+ * Only the column `isPublished` will be modified to 0.
  *
  * @async
  * @param {number []} announcementIds - Ids of the announcements. Deciding which announcements to delete.

@@ -27,8 +27,8 @@ import validate from 'validate.js';
  * @param {string}    imageUrl       - If not null, the value will be rewritten by the given value.
  * @param {number}    views          - If not null, the value will be rewritten by the given value.
  * @param {object []} i18n           - If not null, the value will be rewritten by the given value.
- * @param {object []} tags           - If not null, the value will be rewritten by the given value.
- * @param {object []} fileI18n       - If not null, the value will be rewritten by the given value.
+ * @param {object []} tags           - This column is required. The value will always be updated even if it is null.
+ * @param {object []} fileI18n       - If not null, the value will be rewritten by the given value. Used for modifying `name` and `path` of a file.
  *
  */
 

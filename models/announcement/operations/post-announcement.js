@@ -38,17 +38,17 @@ function equalArray ( a, b ) {
  * A function for creating an announcement.
  *
  * @async
- * @param {date}      publishTime
- * @param {date}      updateTime
- * @param {number}    author           - The user ID of the author.
- * @param {boolean}   isPinned
- * @param {boolean}   isPublished
- * @param {string}    imageUrl
- * @param {number}    views
- * @param {object []} tag
- * @param {object []} announcementI18n
- * @param {object []} fileI18n
- * @returns {object}                   - A Promise.
+ * @param   {date}      publishTime
+ * @param   {date}      updateTime
+ * @param   {number}    author           - The user ID of the author.
+ * @param   {boolean}   isPinned
+ * @param   {boolean}   isPublished
+ * @param   {string}    imageUrl
+ * @param   {number}    views
+ * @param   {object []} tag
+ * @param   {object []} announcementI18n
+ * @param   {object []} fileI18n
+ * @returns {object}                     - The instance of the announcement.
  *
  */
 
