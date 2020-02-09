@@ -11,7 +11,7 @@ import tagUtils from 'models/announcement/utils/tag.js';
 const op = Sequelize.Op;
 
 /**
- * A function for getting all tv announcements to be shown in the main page.
+ * A function for getting all tv announcements (announcements with image) to be shown in the main page.
  *
  * @async
  * @param   {number[]} [tags = []] - Specifying the pinned announcements with the given tags.
