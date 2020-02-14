@@ -195,6 +195,7 @@ router
          */
 
         else if ( data.method === 'patch' ) {
+            console.log( dataFiles ); // eslint-disable-line no-console
             await patchAnnouncement( {
                 announcementId:   data.announcementId,
                 updateTime:       new Date(),
@@ -215,7 +216,7 @@ router
                     },
                 ],
                 tags:     dataTags,
-                fileI18n: [],
+                fileI18n: dataFiles,
             } );
         }
 
