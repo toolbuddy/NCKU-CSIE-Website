@@ -37,6 +37,13 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 
+import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import degreeUtils from 'models/faculty/utils/degree.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -1250,6 +1257,66 @@ router
                 }
                 res.send( html );
                 resolve();
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
+
+
+/* For Test */
+
+/**
+ * Resolve URL `/user/.`.
+ * If sid not found or invalid, redirect to /index.
+ */
+
+router
+.route( '/teacher/profile' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetail( {
+            profileId,
+            languageId,
+        } );
+
+        const dataWithId = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            researchGroupUtils,
+            departmentUtils,
+            nationUtils,
+            degreeUtils,
+        };
+
+        console.log( dataWithId.researchGroup );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/teacher/profile.pug', {
+                data,
+                dataWithId,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
             } );
         } );
     }

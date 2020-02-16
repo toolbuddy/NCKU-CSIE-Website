@@ -1,0 +1,274 @@
+// set all the tags in the correct position
+@mixin navigation-bar () {
+  // .content > .content__navigation.navigation
+  > .navigation {
+    // [ variable ]
+    $small: 500px;
+    $medium: 700px;
+    $large: 1180px;
+
+    // [ layout ]
+    position: relative;
+    display: block;
+    z-index: 1;
+
+    // [ position ]
+    width: 94%;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: block;
+      position: static;
+      z-index: 0;
+
+      // [ position ]
+      margin: {
+        left:  auto;
+        right: auto;
+        top:   font__px-to-rem( 100 );
+        bottom: font__px-to-rem( 80 );
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 200 );
+      height: font__px-to-rem( 720 );
+      border-radius: 6px;
+      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+    }
+
+    // .content > .content__navigation.navigation > .navigation__title
+    > .navigation__title {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: font__px-to-rem( 200 );
+      height: auto;
+      padding: {
+        bottom: font__px-to-rem( 5 );
+        top: font__px-to-rem( 5 );
+      }
+      margin: {
+        top: font__px-to-rem( 20 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      border: 2px solid #63707e;
+      border-radius: font__px-to-rem( 10 );
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba( 99, 112, 126, .5 );
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        display: flex;
+        align-content: center;
+        justify-content: center;
+
+        // [ skin ]
+        background-color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0;
+        height: font__px-to-rem( 84 );
+        width: 100%;
+
+        &:hover {
+          background-color: white;
+        }
+      }
+
+      // .content > .content__navigation.navigation > .navigation__block
+      > .title__word {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        margin: {
+          left: auto;
+          right: auto;
+        }
+
+        // [ skin ]
+        width: auto;
+        height: font__px-to-rem( 22 );
+        font: {
+          size: font__px-to-rem( 18 );
+          weight: bold;
+          style: normal;
+          stretch: normal;
+        }
+        text-align: center;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #63707e;
+
+        &:hover {
+          cursor: pointer;
+          color: #f2f6f5;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          display: flex;
+          align-self: center;
+          justify-self: center;
+
+          // [ position ]
+          height: font__px-to-rem( 25 );
+
+          // [ skin ]
+          color: rgba( 0, 0, 0, .87 );
+          font-size: font__px-to-rem( 24 );
+
+          &:hover {
+            cursor: default;
+            color: rgba( 0, 0, 0, .87 );
+          }
+        }
+      }
+    }
+
+    // .content > .content__navigation.navigation > .navigation__block
+    > .navigation__content {
+      // [ layout ]
+      display: none;
+      align-content: center;
+      flex-wrap: wrap;
+      position: absolute;
+
+      // [ position ]
+      width: 100%;
+      margin-top: font__px-to-rem( 5 );
+
+      // [ skin ]
+      background-color: #f2f6f5;
+      border-radius: font__px-to-rem( 10 );
+      border: 1px solid rgba( 147, 181, 179, .5 );
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        display: block;
+        position: static;
+
+        // [ position ]
+        margin: 0;
+        width: auto;
+
+        // [ skin ]
+        background-color: white;
+        border: none;
+      }
+
+      > .content__block {
+        // [ layout ]
+        display: flex;
+
+        // [ skin ]
+        height: font__px-to-rem( 40 );
+        width: 100%;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba( 147, 181, 179, .7 );
+        }
+
+        // [ RWD: $small ]
+        @media screen and ( min-width: $small ) {
+          width: 50%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $medium ) {
+          width: 33%;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          display: inline-flex;
+          width: font__px-to-rem( 200 );
+          height: font__px-to-rem( 76 );
+        }
+
+        // .content > .content__navigation.navigation > .navigation__block > .block__number
+        > .block__number {
+          // [ layout ]
+          display: inline-block;
+          align-self: center;
+          justify-self: center;
+
+          // [ position ]
+          margin: {
+            left:   auto;
+            right:  auto;
+          }
+
+          // [ skin ]
+          width: 30%;
+          font: {
+            family: roboto;
+            size: font__px-to-rem( 24 );
+            weight: bold;
+            style: normal;
+            stretch: normal;
+          }
+          text-align: center;
+          line-height: 1.33;
+          letter-spacing: normal;
+          color: #adacad;
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ skin ]
+            width: font__px-to-rem( 70 );
+          }
+        }
+
+        // .content > .content__navigation.navigation > .navigation__block > .block__content
+        > .block__content {
+          // [ layout ]
+          display: inline-block;
+          align-self: center;
+          justify-self: left;
+
+          // [ skin ]
+          width: 70%;
+          font: {
+            size: font__px-to-rem( 16 );
+            weight: bold;
+            style: normal;
+            stretch: normal;
+          }
+          line-height: 1.5;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ skin ]
+            width: font__px-to-rem( 150 );
+          }
+        }
+      }
+    }
+
+    > .navigation__content--active {
+      display: flex;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

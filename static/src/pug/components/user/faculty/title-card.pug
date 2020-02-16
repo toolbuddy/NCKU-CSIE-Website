@@ -1,0 +1,36 @@
+include /components/common/image.pug
+
+mixin title-card( data )
+  - 
+    const i18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        now: 'NOW',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        now: '現在',
+      },
+    })
+  section.title-card.title__title-card
+    section.title-card__value
+      time.value__time
+        if data.from !== null
+          p.time__from.from= data.from
+        else
+          p.time__from.from= '----'
+        hr.time__till
+        if data.to !== null
+          p.time__to.to= data.to
+        else 
+          p.time__to.to= i18n[ LANG.id ].now
+      p.value__title= data.title
+    +image( {
+      alt: 'patch',
+      className: `title-card__patch title-card__patch--${ data.titleId }`,
+      src: 'icon/edit.png',
+    } )   
+    +image( {
+      alt: 'delete',
+      className: `title-card__delete title-card__delete--${ data.titleId }`,
+      src: 'icon/delete.png',
+    } )    
+

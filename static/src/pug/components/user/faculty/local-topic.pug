@@ -1,0 +1,14 @@
+mixin local-topic( belongBlock, topic )
+  - 
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        add: 'add',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        add: '新增',
+      },
+    } )
+
+  section.local-topic( class= `${ belongBlock }__local-topic` )
+    h2.local-topic__topic= `${ topic }`
+    button.local-topic__post-button.post-button( id=`local-topic__post-button--${ belongBlock }` )= i18n[LANG.id].add

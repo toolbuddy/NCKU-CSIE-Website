@@ -1,0 +1,184 @@
+@mixin experience-card ( ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .experience-card.experience__experience-card {
+    // [ variable ]
+    $large: 750px;
+    $small: 500px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas: '. value patch delete .';
+      columns: 1rem auto 1.2rem 1.2rem .5rem;
+    };
+
+    // [ position ]
+    width: 100%;
+    height: font__px-to-rem( 80 );
+
+    // [ skin ]
+    border: {
+      bottom: solid font__px-to-rem( 2 ) #adacad;
+      radius: font__px-to-rem( 3 );
+    }
+
+    > .experience-card__value {
+      // [ layout ]
+      display: flex;
+      grid-area: value;
+      align-self: center;
+      padding-left: font__px-to-rem( 15 );
+
+      // [ position ]
+      width: 100%;
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+
+      > .value__time {
+        // [ layout ]
+        display: flex;
+
+        // [ position ]
+        margin: {
+          left: .25rem;
+          right: .25rem;
+        }
+
+        %time__year {
+          // [ layout ]
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          // [ position ]
+          min-width: font__px-to-rem( 75 );
+
+          // [ skin ]
+          border: font__px-to-rem( 1 ) solid #757575;
+          border-radius: font__px-to-rem( 16 );
+          padding: {
+            top: font__px-to-rem( 10 );
+            bottom: font__px-to-rem( 10 );
+            left: font__px-to-rem( 15 );
+            right: font__px-to-rem( 15 );
+          }
+          font-size: font__px-to-rem( 16 );
+        }
+
+        > .time__from.from {
+          @extend %time__year;
+        }
+
+        > .time__to.to {
+          @extend %time__year;
+        }
+
+        > .time__till {
+          // [ layout ]
+          display: inline-block;
+          margin: {
+            top: font__px-to-rem( 12 );
+            bottom: font__px-to-rem( 12 );
+            left: font__px-to-rem( 7 );
+            right: font__px-to-rem( 7 );
+          }
+          vertical-align: top;
+
+          // [ skin ]
+          width: font__px-to-rem( 15 );
+          height: font__px-to-rem( 2 );
+          color: #757575;
+          background-color: #757575;
+        }
+      }
+
+      > .value__text {
+        // [ layout ]
+        display: inline-block;
+        grid-area: title;
+
+        // [ position ]
+        width: auto;
+        height: auto;
+        padding-right: font__px-to-rem( 5 );
+        align-self: center;
+        margin: {
+          left: .25rem;
+          right: .25rem;
+        }
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+        text-align: right;
+        line-height: font__px-to-rem( 17 );
+        letter-spacing: normal;
+        word-break: break-all;
+        color: rgba( 81, 81, 81, .87 );
+        overflow: visible;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: font__px-to-rem( 20 );
+          word: {
+            break: normal;
+            wrap: break-word;
+          }
+        }
+      }
+    }
+
+    > .experience-card__patch {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: patch;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    > .experience-card__delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: delete;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

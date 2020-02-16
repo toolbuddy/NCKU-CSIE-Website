@@ -1,0 +1,138 @@
+@mixin image ( $belongBlock ) {
+  > .image.#{ $belongBlock }__image {
+    // > .profile__image {
+    // [ layout ]
+    display: grid;
+    grid: {
+      area: image;
+      template: {
+        areas:
+          ' image image  image '
+          ' .     check .      '
+          ' .     cancel .     ';
+        columns: 1fr font__px-to-rem( 126 ) 1fr;
+        rows: font__px-to-rem( 275 ) 1rem 1rem;
+      }
+    }
+    margin-bottom: font__px-to-rem( 20 );
+    width: 100%;
+    height: auto;
+
+    %image__button {
+      // [ layout ]
+      display: none;
+      grid-area: check;
+
+      // [ position ]
+      width: font__px-to-rem( 100 );
+      margin: {
+        bottom: font__px-to-rem( 10 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      background-color: rgba( 0, 0, 0, .54 );
+      font-size: font__px-to-rem( 16 );
+      text-align: center;
+      line-height: 1.5;
+      letter-spacing: 3.2px;
+      color: rgba( 255, 255, 255, .76 );
+      border-radius: font__px-to-rem( 10 );
+
+      &:hover {
+        // [ skin ]
+        cursor: pointer;
+        background-color: rgba( 0, 0, 0, .32 );
+        color: rgba( 0, 0, 0, .87 );
+      }
+    }
+
+    > .image__check.check {
+      // [ element ]
+      @extend %image__button;
+
+      // [ layout ]
+      grid-area: check;
+    }
+
+    > .image__cancel.cancel {
+      // [ element ]
+      @extend %image__button;
+
+      // [ layout ]
+      grid-area: cancel;
+    }
+
+    > .image__button--active {
+      // [ layout ]
+      display: block;
+    }
+
+    > .image__frame {
+      // [ layout ]
+      display: block;
+      grid-area: image;
+
+      // [ position ]
+      position: relative;
+      width: font__px-to-rem( 255 );
+      height: font__px-to-rem( 255 );
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      border-radius: 50%;
+      border: 2px solid gray;
+      background: {
+        color: white;
+        size: 100%;
+        repeat: no-repeat;
+        position: center;
+      };
+      overflow: hidden;
+
+      > .frame__upload {
+        // [ layout ]
+        display: none;
+      }
+
+      // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
+      > .frame__button {
+        // [ layout ]
+        display: block;
+        position: absolute;
+
+        // [ position ]
+        width: 100%;
+        height: 30%;
+        bottom: 0;
+
+        padding: {
+          top: 5%;
+          bottom: 5%;
+        }
+
+        // [ skin ]
+        background-color: rgba( 0, 0, 0, .54 );
+        font-size: font__px-to-rem( 16 );
+        text-align: center;
+        line-height: 1.5;
+        letter-spacing: 3.2px;
+        color: rgba( 255, 255, 255, .76 );
+
+        &:hover {
+          // [ skin ]
+          background-color: rgba( 255, 255, 255, .5 );
+          color: black;
+          cursor: pointer;
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

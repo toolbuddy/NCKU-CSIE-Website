@@ -1,0 +1,34 @@
+include /components/common/image.pug
+
+mixin education-card( data, UTILS, LANG )
+  section.education-card.education__education-card
+    section.education-card__value
+      time.value__time
+        if data.from !== null
+          p.time__from.from= data.from
+        else
+          p.time__from.from= '2008'
+        hr.time__till
+        if data.to !== null
+          p.time__to.to= data.to
+        else 
+          p.time__to.to= '----'
+      +image( {
+        alt: 'nation',
+        className: 'value__flag',
+        src: `icon/${ UTILS.faculty.nationUtils.getOptionById( id = data.nation ) }.png`,
+      } )   
+      p.value__text.value__text--school= data.school
+      p.value__text.value__text--major= data.major
+      p.value__text.value__text--degree= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
+    +image( {
+      alt: 'patch',
+      className: `education-card__patch education-card__patch--${ data.educationId }`,
+      src: 'icon/edit.png',
+    } )   
+    +image( {
+      alt: 'delete',
+      className: `education-card__delete education-card__delete--${ data.educationId }`,
+      src: 'icon/delete.png',
+    } )    
+

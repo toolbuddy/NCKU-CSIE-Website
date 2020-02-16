@@ -1,23 +1,6 @@
 include /components/common/image.pug
 
 mixin input-block( belongBlock, title, content, modifier )
-  - 
-    const i18n = Object.freeze( {
-      [ LANG.getLanguageId( 'en-US' ) ]: {
-        button: {
-          edit: 'edit',
-          remove: 'remove',
-          add: 'add',
-        },
-      },
-      [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        button: {
-          edit: '編輯',
-          remove: '刪除',
-          add: '新增',
-        },
-      },
-    } );
   section.input-block(class=`${belongBlock}__input-block ${belongBlock}__input-block--${modifier}` modifier=`${modifier}` )
     main.input-block__block.block
       h1.block__title=`${title}`
@@ -27,4 +10,4 @@ mixin input-block( belongBlock, title, content, modifier )
           alt: 'edit',
           className: `content__modify`,
           src: 'icon/edit.png',
-        } )
+        } ) 

@@ -1,0 +1,335 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/loading';
+@import 'components/common/refresh';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/edit-page';
+@import 'components/user/image';
+@import 'components/user/faculty/local-topic';
+@import 'components/user/faculty/navigation-bar';
+@import 'components/user/faculty/profile-card';
+@import 'components/user/faculty/title-card';
+@import 'components/user/faculty/specialty-card';
+@import 'components/user/faculty/education-card';
+@import 'components/user/faculty/experience-card';
+@import 'components/user/faculty/option';
+@import 'components/announcement/tags';
+
+.body {
+  // [ variable ]
+  $large: 1180px;
+  $medium: 710px;
+  $small: 535px;
+
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__edit-page`
+  > .body__edit-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+
+    // [ componment ]
+    @include edit-page();
+  }
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' breadcrumb '
+        ' topic      '
+        ' navigation '
+        ' profile    '
+        ' title      '
+        ' specialty   '
+        ' education  '
+        ' experience ';
+      columns: 100%;
+      rows: 2.5rem 2.5rem 2rem auto;
+    }
+
+    // [ position ]
+    height: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    // [ skin ]
+    background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb '
+          ' navigation topic      '
+          ' navigation profile    '
+          ' navigation title      '
+          ' navigation specialty   '
+          ' navigation education  '
+          ' navigation experience ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+        rows: 2.5rem 2rem auto;
+      }
+    }
+
+    // element
+    // `.body > .content > .content__topic`
+    @include topic( 'content' ) {
+      // [ layout ]
+      display: block;
+      grid-area: topic;
+
+      // [ skin ]
+      width: 94%;
+      height: 1rem;
+      box-sizing: content-box;
+
+      // position
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // element
+      // `.body > .content > .content__topic` > .topic__text
+      > .topic__text {
+        height: 100%;
+      }
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__profile
+    > .content__profile.profile {
+      // [ layout ]
+      display: grid;
+      grid-area: profile;
+      grid-template: {
+        areas:
+          'image          '
+          'name           '
+          'nation         '
+          'email          '
+          'fax            '
+          'personal-web   '
+          'department     '
+          'research-group '
+          'office-address '
+          'office-tel     '
+          'lab-name       '
+          'lab-address    '
+          'lab-tel        '
+          'lab-web        ';
+        columns: 100%;
+      }
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            'name            image          '
+            'nation          image          '
+            'email           image          '
+            'fax             image          '
+            'personal-web    image          '
+            'department      department     '
+            'research-group  research-group '
+            'office-address  office-address '
+            'office-tel      office-tel     '
+            'lab-name        lab-name       '
+            'lab-address     lab-address    '
+            'lab-tel         lab-tel        '
+            'lab-web         lab-web        ';
+          columns: auto font__px-to-rem( 400 );
+        }
+      }
+      @include image('profile') {
+        // [ layout ]
+        grid-area: image;
+
+        // [ position ]
+        margin-top: 1.5rem;
+      }
+      @include profile-card( 'name' ) {
+        // [ layout ]
+        grid-area: name;
+      }
+      @include profile-card( 'fax' ) {
+        // [ layout ]
+        grid-area: fax;
+      }
+      @include profile-card( 'nation' ) {
+        // [ layout ]
+        grid-area: nation;
+      }
+      @include profile-card( 'personal-web' ) {
+        // [ layout ]
+        grid-area: personal-web;
+      }
+      @include profile-card( 'email' ) {
+        // [ layout ]
+        grid-area: email;
+      }
+      @include profile-card( 'office-address' ) {
+        // [ layout ]
+        grid-area: office-address;
+      }
+      @include profile-card( 'office-tel' ) {
+        // [ layout ]
+        grid-area: office-tel;
+      }
+      @include profile-card( 'lab-name' ) {
+        // [ layout ]
+        grid-area: lab-name;
+      }
+      @include profile-card( 'lab-address' ) {
+        // [ layout ]
+        grid-area: lab-address;
+      }
+      @include profile-card( 'lab-tel' ) {
+        // [ layout ]
+        grid-area: lab-tel;
+      }
+      @include profile-card( 'lab-web' ) {
+        // [ layout ]
+        grid-area: lab-web;
+      }
+      @include option( $block: 'profile', $modifier: 'department' ) {
+        // [ layout ]
+        grid-area: department;
+      }
+      @include option( $block: 'profile', $modifier: 'research-group' ) {
+        // [ layout ]
+        grid-area: research-group;
+      }
+    }
+
+    > .content__title.title {
+      // [ layout ]
+      display: block;
+      grid-area: title;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('title');
+      @include title-card();
+    }
+
+    > .content__specialty.specialty {
+      // [ layout ]
+      display: block;
+      grid-area: specialty;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('specialty');
+      @include specialty-card();
+    }
+
+    > .content__education.education {
+      // [ layout ]
+      display: block;
+      grid-area: education;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('education');
+      @include education-card();
+    }
+
+    > .content__experience.experience {
+      // [ layout ]
+      display: block;
+      grid-area: experience;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('experience');
+      @include experience-card();
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ position ]
+      width: 100%;
+      margin-bottom: 1rem;
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

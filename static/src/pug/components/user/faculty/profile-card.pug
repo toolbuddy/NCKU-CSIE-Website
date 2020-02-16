@@ -1,0 +1,14 @@
+include /components/common/image.pug
+
+mixin profile-card( modifier, title, value )
+  section.profile-card.profile__profile-card(class=`profile__profile-card--${modifier}`)
+    h3.profile-card__title=`${title}`
+    if value !== null
+      p.profile-card__value=`${value}`
+    else
+      p.profile-card__value= ''
+    +image( {
+        alt: 'patch',
+        className: `profile-card__patch`,
+        src: 'icon/edit.png',
+    } )    
