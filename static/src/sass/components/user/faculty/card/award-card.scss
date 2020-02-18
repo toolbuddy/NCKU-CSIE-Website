@@ -1,6 +1,6 @@
-@mixin specialty-card ( ) {
+@mixin award-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .specialty-card.specialty__specialty-card {
+  > .award-card.cards__award-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;
@@ -22,7 +22,7 @@
       radius: font__px-to-rem( 3 );
     }
 
-    > .specialty-card__value {
+    > .award-card__value {
       // [ layout ]
       display: flex;
       grid-area: value;
@@ -41,7 +41,7 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
 
-      > .value__specialty {
+      > .value__text {
         // [ layout ]
         display: inline-block;
         grid-area: title;
@@ -55,7 +55,7 @@
 
         // [ skin ]
         font-size: font__px-to-rem( 16 );
-        text-align: right;
+        text-align: left;
         line-height: font__px-to-rem( 17 );
         letter-spacing: normal;
         word-break: break-all;
@@ -75,7 +75,7 @@
       }
     }
 
-    > .specialty-card__patch {
+    > .award-card__patch {
       // [ layout ]
       display: inline-flex;
       grid-area: patch;
@@ -96,7 +96,7 @@
       }
     }
 
-    > .specialty-card__delete {
+    > .award-card__delete {
       // [ layout ]
       display: inline-flex;
       grid-area: delete;
@@ -109,14 +109,14 @@
 
       // [ skin ]
       filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
-    
+
       &:hover {
         // [ skin ]
         filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
         cursor: pointer;
       }
     }
-  
+
     // [ customization ]
     @content;
   }

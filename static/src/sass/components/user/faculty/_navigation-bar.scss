@@ -36,9 +36,9 @@
 
       // [ skin ]
       width: font__px-to-rem( 200 );
-      height: font__px-to-rem( 720 );
+      height: font__px-to-rem( 710 );
       border-radius: 6px;
-      box-shadow: 0 2px 24px 0 rgba( 0, 0, 0, .14 ), 0 8px 10px 0 rgba( 0, 0, 0, .2 );
+      border: solid, 2px, rgba( 217, 217, 217, .6 );
     }
 
     // .content > .content__navigation.navigation > .navigation__title
@@ -75,16 +75,19 @@
         align-content: center;
         justify-content: center;
 
-        // [ skin ]
-        background-color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 0;
+        // [ position ]
+        margin-top: 0;
         height: font__px-to-rem( 84 );
         width: 100%;
 
+        // [ skin ]
+        background-color: rgba( 242, 242, 242, .6 );
+        border: none;
+        border-radius: 6px;
+        padding: 0;
+
         &:hover {
-          background-color: white;
+          background-color: rgba( 242, 242, 242, .6 );
         }
       }
 

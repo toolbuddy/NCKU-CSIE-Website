@@ -10,13 +10,13 @@ mixin experience-card( data )
         now: '現在',
       },
     })
-  section.experience-card.experience__experience-card
+  section.experience-card.cards__experience-card
     section.experience-card__value
       time.value__time
         if data.from !== null
           p.time__from.from= data.from
         else
-          p.time__from.from= '2008'
+          p.time__from.from= '----'
         hr.time__till
         if data.to !== null
           p.time__to.to= data.to

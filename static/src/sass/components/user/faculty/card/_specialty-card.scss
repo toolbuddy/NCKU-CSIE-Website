@@ -1,6 +1,6 @@
-@mixin title-card ( ) {
+@mixin specialty-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .title-card.title__title-card {
+  > .specialty-card.cards__specialty-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;
@@ -22,7 +22,7 @@
       radius: font__px-to-rem( 3 );
     }
 
-    > .title-card__value {
+    > .specialty-card__value {
       // [ layout ]
       display: flex;
       grid-area: value;
@@ -41,59 +41,7 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
 
-      > .value__time {
-        // [ layout ]
-        display: flex;
-
-        %time__year {
-          // [ layout ]
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-
-          // [ position ]
-          min-width: font__px-to-rem( 75 );
-
-          // [ skin ]
-          border: font__px-to-rem( 1 ) solid #757575;
-          border-radius: font__px-to-rem( 16 );
-          padding: {
-            top: font__px-to-rem( 10 );
-            bottom: font__px-to-rem( 10 );
-            left: font__px-to-rem( 15 );
-            right: font__px-to-rem( 15 );
-          }
-          font-size: font__px-to-rem( 16 );
-        }
-
-        > .time__from.from {
-          @extend %time__year;
-        }
-
-        > .time__to.to {
-          @extend %time__year;
-        }
-
-        > .time__till {
-          // [ layout ]
-          display: inline-block;
-          margin: {
-            top: font__px-to-rem( 12 );
-            bottom: font__px-to-rem( 12 );
-            left: font__px-to-rem( 7 );
-            right: font__px-to-rem( 7 );
-          }
-          vertical-align: top;
-
-          // [ skin ]
-          width: font__px-to-rem( 15 );
-          height: font__px-to-rem( 2 );
-          color: #757575;
-          background-color: #757575;
-        }
-      }
-
-      > .value__title {
+      > .value__text {
         // [ layout ]
         display: inline-block;
         grid-area: title;
@@ -127,7 +75,7 @@
       }
     }
 
-    > .title-card__patch {
+    > .specialty-card__patch {
       // [ layout ]
       display: inline-flex;
       grid-area: patch;
@@ -148,7 +96,7 @@
       }
     }
 
-    > .title-card__delete {
+    > .specialty-card__delete {
       // [ layout ]
       display: inline-flex;
       grid-area: delete;

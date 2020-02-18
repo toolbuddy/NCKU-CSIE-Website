@@ -1304,8 +1304,6 @@ router
             degreeUtils,
         };
 
-        console.log( dataWithId.researchGroup );
-
         await new Promise( ( resolve, reject ) => {
             res.render( 'user/teacher/profile.pug', {
                 data,
@@ -1327,4 +1325,57 @@ router
             next( err );
     }
 } );
+
+router
+.route( '/teacher/award' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetail( {
+            profileId,
+            languageId,
+        } );
+
+        const dataWithId = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        console.log( dataWithId.award );
+
+        res.locals.UTILS.faculty = {
+            researchGroupUtils,
+            departmentUtils,
+            nationUtils,
+            degreeUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/teacher/award.pug', {
+                data,
+                dataWithId,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 export default router;
+

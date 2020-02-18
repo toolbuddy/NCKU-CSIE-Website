@@ -11,11 +11,11 @@
 @import 'components/user/image';
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
-@import 'components/user/faculty/profile-card';
-@import 'components/user/faculty/title-card';
-@import 'components/user/faculty/specialty-card';
-@import 'components/user/faculty/education-card';
-@import 'components/user/faculty/experience-card';
+@import 'components/user/faculty/card/profile-card';
+@import 'components/user/faculty/card/title-card';
+@import 'components/user/faculty/card/specialty-card';
+@import 'components/user/faculty/card/education-card';
+@import 'components/user/faculty/card/experience-card';
 @import 'components/user/faculty/option';
 @import 'components/announcement/tags';
 
@@ -153,6 +153,7 @@
 
       // [ position ]
       margin: {
+        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
@@ -248,13 +249,39 @@
 
       // [ position ]
       margin: {
+        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
       width: 94%;
       height: auto;
       @include local-topic('title');
-      @include title-card();
+
+      > .title__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include title-card();
+      }
+      @include refresh( $block: 'title' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'title' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
     }
 
     > .content__specialty.specialty {
@@ -264,13 +291,39 @@
 
       // [ position ]
       margin: {
+        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
       width: 94%;
       height: auto;
       @include local-topic('specialty');
-      @include specialty-card();
+
+      > .specialty__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include specialty-card();
+      }
+      @include refresh( $block: 'specialty' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'specialty' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
     }
 
     > .content__education.education {
@@ -280,13 +333,39 @@
 
       // [ position ]
       margin: {
+        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
       width: 94%;
       height: auto;
+
+      > .education__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include education-card();
+      }
       @include local-topic('education');
-      @include education-card();
+      @include refresh( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
     }
 
     > .content__experience.experience {
@@ -301,8 +380,33 @@
       }
       width: 94%;
       height: auto;
+
+      > .experience__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include experience-card();
+      }
       @include local-topic('experience');
-      @include experience-card();
+      @include refresh( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
     }
 
     // element

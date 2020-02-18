@@ -1,14 +1,12 @@
 extends /layouts/base.pug
 include /components/common/topic.pug
-include /components/user/dropdown.pug
-include /components/user/input-block.pug
 include /components/user/faculty/navigation-bar.pug
-include /components/user/faculty/profile-card.pug
-include /components/user/faculty/title-card.pug
-include /components/user/faculty/specialty-card.pug
-include /components/user/faculty/education-card.pug
-include /components/user/faculty/experience-card.pug
 include /components/user/faculty/local-topic.pug
+include /components/user/faculty/card/profile-card.pug
+include /components/user/faculty/card/title-card.pug
+include /components/user/faculty/card/specialty-card.pug
+include /components/user/faculty/card/education-card.pug
+include /components/user/faculty/card/experience-card.pug
 
 append data
   -
@@ -169,45 +167,52 @@ append content
             )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
   section.content__title.title
     +local-topic( 'title', i18n[ LANG.id ].content.title.topic )
-    if Array.isArray( dataWithId.title ) && dataWithId.title.length
-      each titleObj in dataWithId.title
-        +title-card( titleObj )
+    +refreshWithImage( 'title' )
+    +loading( 'title' ) 
+    section.title__cards.cards
+      if Array.isArray( dataWithId.title ) && dataWithId.title.length
+        each titleObj in dataWithId.title
+          +title-card( titleObj )
   section.content__specialty.specialty
     +local-topic( 'specialty', i18n[ LANG.id ].content.specialty.topic )
-    if Array.isArray( dataWithId.specialty ) && dataWithId.specialty.length
-      each specialtyObj in dataWithId.specialty
-        +specialty-card( specialtyObj )
+    +refreshWithImage( 'specialty' )
+    +loading( 'specialty' ) 
+    section.specialty__cards.cards
+      if Array.isArray( dataWithId.specialty ) && dataWithId.specialty.length
+        each specialtyObj in dataWithId.specialty
+          +specialty-card( specialtyObj )
   section.content__education.education
     +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
-    if Array.isArray( dataWithId.education ) && dataWithId.education.length
-      -
-        dataWithId.education.sort( (educationA, educationB)=>{
-          if(educationA.to === null )
-            return -1
-          else if(educationB.to === null)
-            return 1
-          return educationB.to - educationA.to
-        })
-      each educationObj in dataWithId.education
-        +education-card( educationObj, UTILS, LANG )
+    +refreshWithImage( 'education' )
+    +loading( 'education' ) 
+    section.education__cards.cards
+      if Array.isArray( dataWithId.education ) && dataWithId.education.length
+        -
+          dataWithId.education.sort( (educationA, educationB)=>{
+            if(educationA.to === null )
+              return -1
+            else if(educationB.to === null)
+              return 1
+            return educationB.to - educationA.to
+          })
+        each educationObj in dataWithId.education
+          +education-card( educationObj )
   section.content__experience.experience
-    +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )    
-    if Array.isArray( dataWithId.experience ) && dataWithId.experience.length
-      -
-        dataWithId.experience.sort( (experienceA, experienceB)=>{
-          if(experienceA.to === null )
-            return -1
-          else if(experienceB.to === null)
-            return 1
-          return experienceB.to - experienceA.to
-        })
-      each experienceObj in dataWithId.experience
-        +experience-card( experienceObj )
-    //- article.information__experience-block.experience-block
-    //-   +local-topic( 'experience-block', i18n[ LANG.id ].content.experience.topic, true ) 
-    //-   +refreshWithImage( 'experience-block' )
-    //-   +loading( 'experience-block' )      
-    //-   section.experience-block__experience.experience#experience
+    +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )
+    +refreshWithImage( 'experience' )
+    +loading( 'experience' ) 
+    section.experience__cards.cards     
+      if Array.isArray( dataWithId.experience ) && dataWithId.experience.length
+        -
+          dataWithId.experience.sort( (experienceA, experienceB)=>{
+            if(experienceA.to === null )
+              return -1
+            else if(experienceB.to === null)
+              return 1
+            return experienceB.to - experienceA.to
+          })
+        each experienceObj in dataWithId.experience
+          +experience-card( experienceObj )
 
 append footer
 

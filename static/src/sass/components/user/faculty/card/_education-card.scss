@@ -1,6 +1,6 @@
 @mixin education-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .education-card.education__education-card {
+  > .education-card.cards__education-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;

@@ -1,6 +1,6 @@
-@mixin experience-card ( ) {
+@mixin title-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .experience-card.experience__experience-card {
+  > .title-card.cards__title-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;
@@ -22,7 +22,7 @@
       radius: font__px-to-rem( 3 );
     }
 
-    > .experience-card__value {
+    > .title-card__value {
       // [ layout ]
       display: flex;
       grid-area: value;
@@ -44,12 +44,6 @@
       > .value__time {
         // [ layout ]
         display: flex;
-
-        // [ position ]
-        margin: {
-          left: .25rem;
-          right: .25rem;
-        }
 
         %time__year {
           // [ layout ]
@@ -99,7 +93,7 @@
         }
       }
 
-      > .value__text {
+      > .value__title {
         // [ layout ]
         display: inline-block;
         grid-area: title;
@@ -109,10 +103,7 @@
         height: auto;
         padding-right: font__px-to-rem( 5 );
         align-self: center;
-        margin: {
-          left: .25rem;
-          right: .25rem;
-        }
+        margin-left: 1rem;
 
         // [ skin ]
         font-size: font__px-to-rem( 16 );
@@ -136,7 +127,7 @@
       }
     }
 
-    > .experience-card__patch {
+    > .title-card__patch {
       // [ layout ]
       display: inline-flex;
       grid-area: patch;
@@ -157,7 +148,7 @@
       }
     }
 
-    > .experience-card__delete {
+    > .title-card__delete {
       // [ layout ]
       display: inline-flex;
       grid-area: delete;
