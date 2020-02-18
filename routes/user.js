@@ -1347,8 +1347,6 @@ router
             languageId,
         } );
 
-        console.log( dataWithId.award );
-
         res.locals.UTILS.faculty = {
             researchGroupUtils,
             departmentUtils,

@@ -1,0 +1,9 @@
+mixin text ( config, i18n )
+  section.content__text.text
+    h4.text__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
+    input.text__text-input.text-input(
+      type='text', 
+      defaultValue=i18n[ LANG.id ].default[ config.columnName ],
+      name= config.columnName,
+    )
+    

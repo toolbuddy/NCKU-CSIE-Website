@@ -13,6 +13,7 @@
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
 @import 'components/user/faculty/card/award-card';
+@import 'components/user/faculty/form';
 
 .body {
   // [ variable ]
@@ -177,6 +178,12 @@
       }
     }
   }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
 
   // element
   // `.body > .body__footer`

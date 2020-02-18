@@ -1,0 +1,14 @@
+include /components/user/faculty/form/text.pug
+include /components/user/faculty/form/i18n-text.pug
+
+
+mixin form-input( modifier, method, i18n, inputConfig )
+  form.form-input.form__form-input(id=`form-${modifier}-${method}`)
+    h2.form-input__title.title= i18n[ LANG.id ][ method ]
+    section.form-input__content.content
+      each config in inputConfig
+        if config.type === 'i18n-text'
+          +i18n-text( config, i18n )
+        if config.type === 'text'
+          +text( config, i18n )
+    
