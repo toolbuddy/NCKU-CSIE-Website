@@ -1,16 +1,16 @@
-include /components/common/image.pug
-
 mixin award-card( data )
   section.award-card.cards__award-card
     section.award-card__value
       p.value__text.value__text--award= data.award
-    +image( {
-      alt: 'patch',
-      className: `award-card__patch award-card__patch--${ data.awardId }`,
-      src: 'icon/edit.png',
-    } )   
-    +image( {
-      alt: 'delete',
-      className: `award-card__delete award-card__delete--${ data.awardId }`,
-      src: 'icon/delete.png',
-    } )    
+    img.award-card__patch( 
+      alt = 'patch', 
+      id = `award-card__patch--${ data.awardId }`, 
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.awardId
+    )
+    img.award-card__delete( 
+      alt = 'delete', 
+      id = `award-card__delete--${ data.awardId }`, 
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } ) 
+      data-id = data.awardId
+    ) 

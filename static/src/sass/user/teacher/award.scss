@@ -16,7 +16,7 @@
 @import 'components/user/faculty/form';
 
 .body {
-  // [ variable ]
+  // [ variable ] 
   $large: 1180px;
   $medium: 710px;
   $small: 535px;
@@ -139,6 +139,11 @@
         // [ element ]
         @include award-card();
         @include classfication-title();
+      }
+
+      > .cards--hidden {
+        // [ layout ]
+        display: none;
       }
       @include local-topic('award');
       @include refresh( $block: 'award' ) {

@@ -38,7 +38,7 @@ append data
     } );
     const formI18n = Object.freeze({
         [ LANG.getLanguageId( 'en-US' ) ]: {
-          put: 'Add Your Award',
+          post: 'Add Your Award',
           patch: 'Modify Your Award',
           delete: 'Remove Your Award',
           default: {
@@ -51,11 +51,11 @@ append data
           }
         },
         [ LANG.getLanguageId( 'zh-TW' ) ]:{
-          put: '新增您的榮譽及獲獎',
+          post: '新增您的榮譽及獲獎',
           patch: '編輯您的榮譽及獲獎',
           delete: '刪除您的榮譽及獲獎',
           default: {
-            award: '榮譽及獲獎名稱',
+            award: '獎項名稱',
             receivedYear: 'yyyy',
           },
           title: {
@@ -105,7 +105,7 @@ append content
     +local-topic( 'award', i18n[ LANG.id ].content.award.topic )
     +refreshWithImage( 'award' )
     +loading( 'award' ) 
-    section.award__cards.cards     
+    section#award__cards.award__cards.cards
       if Array.isArray( dataWithId.award ) && dataWithId.award.length
         -
           let receivedYear = null
@@ -124,7 +124,8 @@ append content
           +award-card( awardObj )
 
 append form
-  +form-input( 'award', 'put', formI18n, inputConfig )
+  +form-input( 'award', 'post', formI18n, inputConfig )
+  +form-input( 'award', 'patch', formI18n, inputConfig )
 
 append footer
 

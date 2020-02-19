@@ -11,7 +11,7 @@ mixin i18n-text ( config, i18n )
       } ) 
       input.zh-tw__text-input.text-input(
         type='text', 
-        defaultValue=i18n[ LANG.getLanguageId( 'zh-TW' ) ].default[ config.columnName ],
+        placeholder=i18n[ LANG.getLanguageId( 'zh-TW' ) ].default[ config.columnName ],
         name=`${ config.columnName }[${LANG.getLanguageId( 'zh-TW' )}]`,
         required= config.required
       )
@@ -23,7 +23,7 @@ mixin i18n-text ( config, i18n )
       } ) 
       input.en-us__text-input.text-input(
         type='text', 
-        defaultValue=i18n[ LANG.getLanguageId( 'en-US' ) ].default[ config.columnName ],
+        placeholder=i18n[ LANG.getLanguageId( 'en-US' ) ].default[ config.columnName ],
         name=`${ config.columnName }[${LANG.getLanguageId( 'en-US' )}]`,
         required= config.required
       )

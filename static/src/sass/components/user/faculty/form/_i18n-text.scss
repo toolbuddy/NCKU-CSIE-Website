@@ -51,13 +51,10 @@
           left: font__px-to-rem( 16 );
           right: font__px-to-rem( 16 );
         }
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: bold;
-        }
+        font-size: font__px-to-rem( 16 );
         text-align: center;
         line-height: normal;
-        color: rgba( 94, 94, 94, .87 );
+        color: rgba( 24, 24, 24, .87 );
       }
     }
 
@@ -105,13 +102,10 @@
           left: font__px-to-rem( 16 );
           right: font__px-to-rem( 16 );
         }
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: bold;
-        }
+        font-size: font__px-to-rem( 16 );
         text-align: center;
         line-height: normal;
-        color: rgba( 94, 94, 94, .87 );
+        color: rgba( 24, 24, 24, .87 );
       }
     }
 
