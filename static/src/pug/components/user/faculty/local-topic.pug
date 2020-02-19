@@ -11,4 +11,7 @@ mixin local-topic( belongBlock, topic )
 
   section.local-topic( class= `${ belongBlock }__local-topic` )
     h2.local-topic__topic= `${ topic }`
-    button.local-topic__post-button.post-button( id=`local-topic__post-button--${ belongBlock }` )= i18n[LANG.id].add
+    button.local-topic__post-button.post-button( 
+      class=`local-topic__post-button--${ belongBlock }`,
+      data-id= 0
+    )= i18n[LANG.id].add

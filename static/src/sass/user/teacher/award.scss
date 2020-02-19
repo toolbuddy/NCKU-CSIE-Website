@@ -13,9 +13,10 @@
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
 @import 'components/user/faculty/card/award-card';
+@import 'components/user/faculty/form';
 
 .body {
-  // [ variable ]
+  // [ variable ] 
   $large: 1180px;
   $medium: 710px;
   $small: 535px;
@@ -139,6 +140,11 @@
         @include award-card();
         @include classfication-title();
       }
+
+      > .cards--hidden {
+        // [ layout ]
+        display: none;
+      }
       @include local-topic('award');
       @include refresh( $block: 'award' ) {
         // [ layout ]
@@ -177,6 +183,12 @@
       }
     }
   }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
 
   // element
   // `.body > .body__footer`

@@ -1,0 +1,47 @@
+@import 'components/user/faculty/form/input-title';
+@mixin text () {
+  > .text.content__text {
+    // [ layout ]
+    display: flex;
+    flex-wrap: wrap;
+
+    // [ position ]
+    width: 100%;
+
+    > .text__text-input.text-input {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: 75%;
+      height: font__px-to-rem( 40 );
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 10 );
+        left: auto;
+        right: auto;
+      }
+      border-radius: font__px-to-rem( 15 );
+      border: solid 2px rgba( 214, 214, 214, .7 );
+
+      // [ skin ]
+      padding: {
+        left: font__px-to-rem( 16 );
+        right: font__px-to-rem( 16 );
+      }
+      font: {
+        size: font__px-to-rem( 16 );
+        weight: bold;
+      }
+      text-align: center;
+      line-height: normal;
+      color: rgba( 24, 24, 24, .87 );
+    }
+
+    // [ element ]
+    @include input-title( 'text' );
+
+    // [ customization ]
+    @content;
+  }
+}
