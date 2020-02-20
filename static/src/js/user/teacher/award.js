@@ -50,6 +50,7 @@ try {
         postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--award' ),
         languageId:      WebLanguageUtils.currentLanguageId,
         dbTable:         'award',
+        idColumnName:    'awardId',
     } );
     if ( !( awardDataManagement instanceof AwardDataManagement ) )
         throw new Error( 'award data management error' );

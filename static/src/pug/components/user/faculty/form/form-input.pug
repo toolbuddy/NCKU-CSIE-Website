@@ -20,13 +20,13 @@ mixin form-input( modifier, method, formI18n, inputConfig )
   form.form-input.form__form-input(id=`form-${modifier}-${method}`)
     h2.form-input__title.title= formI18n[ LANG.id ][ method ]
     section.form-input__content.content
-      if method === 'put' || method === 'post'
+      if method === 'patch' || method === 'post'
         each config in inputConfig
           if config.type === 'i18n-text'
-            +i18n-text( config, formI18n )
+            +i18n-text( config, formI18n, method )
           if config.type === 'text'
-            +text( config, formI18n )
-        p.content__error-message.error-message= '獎項不可為空'
+            +text( config, formI18n, method )
+        p.content__error-message.error-message= ''
     section.form-input__button.button
       button.button__check.check= i18n[ LANG.id ].button.check
       button.button__cancel.cancel= i18n[ LANG.id ].button.cancel

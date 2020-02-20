@@ -55,6 +55,11 @@
         text-align: center;
         line-height: normal;
         color: rgba( 24, 24, 24, .87 );
+
+        &:focus {
+          // [ skin ]
+          border: solid 3px rgba( 98, 148, 160, .5 );
+        }
       }
     }
 
@@ -106,6 +111,11 @@
         text-align: center;
         line-height: normal;
         color: rgba( 24, 24, 24, .87 );
+
+        &:focus {
+          // [ skin ]
+          border: solid 3px rgba( 98, 148, 160, .5 );
+        }
       }
     }
 
