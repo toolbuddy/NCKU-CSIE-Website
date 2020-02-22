@@ -42,15 +42,16 @@ catch ( err ) {
 
 try {
     const awardDataManagement = new AwardDataManagement( {
-        bodyFormDOM:     document.getElementById( 'form' ),
-        refreshDOM:      document.querySelector( '.content__award > .award__refresh' ),
-        loadingDOM:      document.querySelector( '.content__award > .award__loading' ),
-        cardsDOM:        document.getElementById( 'award__cards' ),
-        patchButtonsDOM: document.getElementsByClassName( 'award-card__patch' ),
+        bodyFormDOM:      document.getElementById( 'form' ),
+        refreshDOM:       document.querySelector( '.content__award > .award__refresh' ),
+        loadingDOM:       document.querySelector( '.content__award > .award__loading' ),
+        cardsDOM:         document.getElementById( 'award__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'award-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'award-card__delete' ),
         postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--award' ),
-        languageId:      WebLanguageUtils.currentLanguageId,
-        dbTable:         'award',
-        idColumnName:    'awardId',
+        languageId:       WebLanguageUtils.currentLanguageId,
+        dbTable:          'award',
+        idColumnName:     'awardId',
     } );
     if ( !( awardDataManagement instanceof AwardDataManagement ) )
         throw new Error( 'award data management error' );

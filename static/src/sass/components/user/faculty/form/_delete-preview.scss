@@ -1,0 +1,34 @@
+@mixin delete-preview () {
+  > .delete-preview.content__delete-preview {
+    // [ layout ]
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // [ position ]
+    width: 80%;
+    min-height: font__px-to-rem( 70 );
+    margin: {
+      top: font__px-to-rem( 10 );
+      bottom: font__px-to-rem( 10 );
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    padding: {
+      left: font__px-to-rem( 16 );
+      right: font__px-to-rem( 16 );
+    }
+    font: {
+      size: font__px-to-rem( 18 );
+      weight: bold;
+    }
+    text-align: center;
+    line-height: normal;
+    color: rgba( 24, 24, 24, .87 );
+
+    // [ customization ]
+    @content;
+  }
+}

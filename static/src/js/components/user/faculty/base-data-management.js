@@ -25,7 +25,8 @@ export default class BaseDataManagement {
         };
 
         this.status = {
-            dataId: -1,
+            dataId:      -1,
+            patchButton: null,
         };
 
         const checkButtonQuerySelector = method => ` #form-${ opt.dbTable }-${ method } > .form-input__button > .button__check`;
@@ -49,6 +50,12 @@ export default class BaseDataManagement {
                 input:        opt.bodyFormDOM.querySelectorAll( inputQuerySelector( 'post' ) ),
                 form:         opt.bodyFormDOM.querySelector( formQuerySelector( 'post' ) ),
             },
+            delete: {
+                checkButton:  opt.bodyFormDOM.querySelector( checkButtonQuerySelector( 'delete' ) ),
+                cancelButton: opt.bodyFormDOM.querySelector( cancelButtonQuerySelector( 'delete' ) ),
+                preview:      opt.bodyFormDOM.querySelector( `#form-${ opt.dbTable }-delete > .form-input__content > .content__delete-preview` ),
+                form:         opt.bodyFormDOM.querySelector( formQuerySelector( 'delete' ) ),
+            },
             formBackground: opt.bodyFormDOM,
             cards:          {
                 cards: opt.cardsDOM,
@@ -63,6 +70,15 @@ export default class BaseDataManagement {
                 };
             } ),
             patchButtons: Array.from( opt.patchButtonsDOM ).map( ( node ) => {
+                const buttonId = node.getAttribute( 'data-id' );
+                if ( buttonId === null )
+                    throw new Error( 'DOM attribute `data-id` not found.' );
+                return {
+                    node,
+                    id:   Number( buttonId ),
+                };
+            } ),
+            deleteButtons: Array.from( opt.deleteButtonsDOM ).map( ( node ) => {
                 const buttonId = node.getAttribute( 'data-id' );
                 if ( buttonId === null )
                     throw new Error( 'DOM attribute `data-id` not found.' );
@@ -88,6 +104,13 @@ export default class BaseDataManagement {
          */
 
         this.subscribePatchCheckButton();
+
+        /**
+         * @abstract
+         * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-delete > .form-input__button > .button__check`.
+         */
+
+        this.subscribeDeleteCheckButton();
     }
 
     renderLoading () {
@@ -104,7 +127,8 @@ export default class BaseDataManagement {
 
     subscribeCancelButton () {
         const methods = [ 'post',
-            'patch', ];
+            'patch',
+            'delete', ];
         methods.forEach( ( method ) => {
             this.DOM[ method ].cancelButton.addEventListener( 'click', ( element ) => {
                 element.preventDefault();
@@ -115,6 +139,15 @@ export default class BaseDataManagement {
 
     subscribePostButton () {
         this.showPostForm();
+    }
+
+    /**
+     * @abstract
+     * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-patch > .form-input__button > .button__check`.
+     */
+
+    subscribeDeleteButton ( e ) {
+        throw new Error( 'You have to implement the method subscribeDeleteButton!' );
     }
 
     queryApi ( languageId ) {
@@ -138,6 +171,7 @@ export default class BaseDataManagement {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
             this.status.dataId = element.target.getAttribute( 'data-id' );
+            this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
                 const dict = {};
@@ -151,8 +185,7 @@ export default class BaseDataManagement {
         } )
         .then( ( data ) => {
             const dataId = element.target.getAttribute( 'data-id' );
-            this.setPatchFormValue( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
-            this.showPatchForm();
+            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
         } );
     }
 
@@ -164,20 +197,35 @@ export default class BaseDataManagement {
         } );
     }
 
-    showPatchForm () {
+    showPatchForm ( data ) {
+        Array.from( this.DOM.patch.input ).forEach( ( element ) => {
+            const columnName = element.getAttribute( 'column-name' );
+            const languageId = element.getAttribute( 'languageId' );
+            element.value = data[ languageId ][ columnName ];
+        } );
+        this.DOM.patch.errorMessage.innerHTML = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.patch.form, 'form-input--active' );
     }
 
     showPostForm () {
+        Array.from( this.DOM.post.input ).forEach( ( element ) => {
+            element.value = '';
+        } );
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.post.form, 'form-input--active' );
+    }
+
+    showDeleteForm () {
+        classAdd( this.DOM.formBackground, 'form--active' );
+        classAdd( this.DOM.delete.form, 'form-input--active' );
     }
 
     hideForm () {
         classRemove( this.DOM.formBackground, 'form--active' );
         classRemove( this.DOM.patch.form, 'form-input--active' );
         classRemove( this.DOM.post.form, 'form-input--active' );
+        classRemove( this.DOM.delete.form, 'form-input--active' );
     }
 
     async exec () {
@@ -194,6 +242,11 @@ export default class BaseDataManagement {
         .then( () => {
             this.renderSuccess();
             this.subscribeCancelButton();
+            this.DOM.deleteButtons.forEach( ( element ) => {
+                element.node.addEventListener( 'click', ( node ) => {
+                    this.subscribeDeleteButton( node );
+                } );
+            } );
             this.DOM.patchButtons.forEach( ( element ) => {
                 element.node.addEventListener( 'click', ( node ) => {
                     this.subscribePatchButton( node );
