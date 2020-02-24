@@ -1,6 +1,6 @@
 include /components/common/image.pug
 
-mixin i18n-text ( config, i18n )
+mixin i18n-text ( config, i18n, method )
   section.content__i18n-text.i18n-text
     h4.i18n-text__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
     section.i18n-text__zh-tw.zh-tw
@@ -11,8 +11,12 @@ mixin i18n-text ( config, i18n )
       } ) 
       input.zh-tw__text-input.text-input(
         type='text', 
+        input-type= 'i18n-text',
+        languageId= LANG.getLanguageId( 'zh-TW' ),
         placeholder=i18n[ LANG.getLanguageId( 'zh-TW' ) ].default[ config.columnName ],
-        name=`${ config.columnName }[${LANG.getLanguageId( 'zh-TW' )}]`,
+        name=`${ config.columnName }TW`,
+        column-name= config.columnName,
+        method= method,
         required= config.required
       )
     section.i18n-text__en-us.en-us
@@ -23,8 +27,12 @@ mixin i18n-text ( config, i18n )
       } ) 
       input.en-us__text-input.text-input(
         type='text', 
+        input-type= 'i18n-text',
+        languageId= LANG.getLanguageId( 'en-US' ),
         placeholder=i18n[ LANG.getLanguageId( 'en-US' ) ].default[ config.columnName ],
-        name=`${ config.columnName }[${LANG.getLanguageId( 'en-US' )}]`,
+        name=`${ config.columnName }EN`,
+        column-name= config.columnName,
+        method= method,
         required= config.required
       )
     

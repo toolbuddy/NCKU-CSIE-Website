@@ -1,5 +1,5 @@
 mixin award-card( data )
-  section.award-card.cards__award-card
+  section.award-card.cards__award-card( id=`cards__award-card--${ data.awardId }` )
     section.award-card__value
       p.value__text.value__text--award= data.award
     img.award-card__patch( 
