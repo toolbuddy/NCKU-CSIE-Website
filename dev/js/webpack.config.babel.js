@@ -92,6 +92,7 @@ export default {
         'user/faculty/student-award':       path.join( jsSrcRoot, 'user/faculty/student-award.js' ),
         'user/faculty/technology-transfer': path.join( jsSrcRoot, 'user/faculty/technology-transfer.js' ),
         'user/staff/profile':                path.join( jsSrcRoot, 'user/staff/profile.js' ),
+        'user/test/profile':                path.join( jsSrcRoot, 'user/test/profile.js' ),
         'user/resetPassword':               path.join( jsSrcRoot, 'user/resetPassword.js' ),
         'user/announcement/index':          path.join( jsSrcRoot, 'user/announcement/index.js' ),
         'user/announcement/add':            path.join( jsSrcRoot, 'user/announcement/add.js' ),

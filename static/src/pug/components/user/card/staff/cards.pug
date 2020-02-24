@@ -1,0 +1,7 @@
+include /components/user/card/staff/titleI18n-card.pug
+include /components/user/card/staff/businessI18n-card.pug
+
+if modifier === 'titleI18n'
+  +titleI18n-card( data )
+if modifier === 'businessI18n'
+  +businessI18n-card( data )

@@ -1,47 +1,31 @@
-import BaseDataManagement from 'static/src/js/components/user/faculty/base-data-management.js';
+import BaseDataManagement from 'static/src/js/components/user/staff/base-data-management.js';
 import validate from 'validate.js';
-import awardErrorMessageUtils from 'models/faculty/utils/award-error-message.js';
+import businessI18nErrorMessageUtils from 'models/staff/utils/businessI18n-error-message.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
-import cardsHTML from 'static/src/pug/components/user/card/faculty/cards.pug';
+import cardsHTML from 'static/src/pug/components/user/card/staff/cards.pug';
 import UrlUtils from 'static/src/js/utils/url.js';
 import { host, staticHost, } from 'settings/server/config.js';
 
-export default class AwardDataManagement extends BaseDataManagement {
+export default class BusinessI18nDataManagement extends BaseDataManagement {
     constructor ( opt ) {
         super( opt );
 
         this.constraints = {
-            'receivedYear': {
-                presence:   {
+            'businessTW': {
+                presence: {
                     allowEmpty: false,
-                    message:    awardErrorMessageUtils.getValueByOption( {
-                        option:     'receieveYearEmpty',
-                        languageId: this.config.languageId,
-                    } ),
-                },
-                numericality: {
-                    greaterThanOrEqualTo: 1970,
-                    message:              awardErrorMessageUtils.getValueByOption( {
-                        option:     'receieveYearRangeError',
+                    message:    businessI18nErrorMessageUtils.getValueByOption( {
+                        option:     'businessTWBlank',
                         languageId: this.config.languageId,
                     } ),
                 },
             },
-            'awardTW': {
+            'businessEN': {
                 presence: {
                     allowEmpty: false,
-                    message:    awardErrorMessageUtils.getValueByOption( {
-                        option:     'awardTWEmpty',
-                        languageId: this.config.languageId,
-                    } ),
-                },
-            },
-            'awardEN': {
-                presence: {
-                    allowEmpty: false,
-                    message:    awardErrorMessageUtils.getValueByOption( {
-                        option:     'awardENEmpty',
+                    message:    businessI18nErrorMessageUtils.getValueByOption( {
+                        option:     'businessENBlank',
                         languageId: this.config.languageId,
                     } ),
                 },
@@ -53,9 +37,9 @@ export default class AwardDataManagement extends BaseDataManagement {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
             this.status.dataId = e.target.getAttribute( 'data-id' );
-            const awardData = data.award.find( item => item.awardId === Number( e.target.getAttribute( 'data-id' ) ) );
+            const businessI18nData = data.businessI18n.find( item => item.businessId === Number( e.target.getAttribute( 'data-id' ) ) );
 
-            this.DOM.delete.preview.innerHTML = awardData.award;
+            this.DOM.delete.preview.innerHTML = businessI18nData.business;
         } )
         .then( () => {
             this.showDeleteForm();
@@ -80,15 +64,12 @@ export default class AwardDataManagement extends BaseDataManagement {
                         dbTableId:     0,
                         method:        'add',
                         dbTable:       this.config.dbTable,
-                        item:          {
-                            receivedYear: data.receivedYear,
-                        },
-                        i18n: {
+                        i18n:      {
                             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                                award: data.awardTW,
+                                business: data.businessTW,
                             },
                             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                                award: data.awardEN,
+                                business: data.businessEN,
                             },
                         },
                     } ),
@@ -121,17 +102,14 @@ export default class AwardDataManagement extends BaseDataManagement {
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
                         method:        'update',
-                        dbTable:       this.config.dbTable,
+                        dbTable:       'business',
                         dbTableItemId:    this.status.dataId,
-                        item:          {
-                            receivedYear: data.receivedYear,
-                        },
-                        i18n: {
+                        i18n:          {
                             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                                award: data.awardTW,
+                                business: data.businessTW,
                             },
                             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                                award: data.awardEN,
+                                business: data.businessEN,
                             },
                         },
                     } ),
@@ -173,9 +151,7 @@ export default class AwardDataManagement extends BaseDataManagement {
     }
 
     async removeCard () {
-        const cardDOM =  this.DOM.cards.cards.querySelector( `#cards__award-card--${ this.status.dataId }` );
-        if ( cardDOM.previousSibling.nodeName === 'H4' && ( cardDOM.nextSibling === null || cardDOM.nextSibling.nodeName === 'H4' ) )
-            cardDOM.previousSibling.remove();
+        const cardDOM =  this.DOM.cards.cards.querySelector( `#cards__businessI18n-card--${ this.status.dataId }` );
         cardDOM.remove();
     }
 
@@ -204,69 +180,32 @@ export default class AwardDataManagement extends BaseDataManagement {
 
     insertCard ( method ) {
         this.fetchData( this.config.languageId )
+        .then( data => data.businessI18n )
         .then( ( data ) => {
-            data.award.sort( ( dataA, dataB ) => {
-                if ( dataA.receivedYear === null )
-                    return -1;
-                else if ( dataB.receivedYear === null )
-                    return 1;
-                return dataB.receivedYear - dataA.receivedYear;
-            } );
-            return data.award;
-        } )
-        .then( ( data ) => {
-            const awardId = ( method === 'post' ) ? Math.max( ...data.map( item => item.awardId ) ) : this.status.dataId;
-            const awardData = data.find( item => item.awardId === Number( awardId ) );
-            const awardDataIndex = data.indexOf( awardData );
+            const dataId = ( method === 'post' ) ? Math.max( ...data.map( item => item.businessId ) ) : this.status.dataId;
+            const businessData = data.find( item => item.businessId === Number( dataId ) );
 
-            const tempAwardDOM = document.createElement( 'temp-section' );
-            tempAwardDOM.innerHTML = cardsHTML( {
+            const tempBusinessDOM = document.createElement( 'temp-section' );
+            tempBusinessDOM.innerHTML = cardsHTML( {
                 LANG: {
                     id: this.config.languageId,
                 },
                 UTILS: {
                     staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, this.config.languageId ) ),
                 },
-                data:     awardData,
+                data:     businessData,
                 modifier: this.config.dbTable,
             } );
 
-            if ( awardDataIndex !== 0 && ( data[ awardDataIndex - 1 ].receivedYear === data[ awardDataIndex ].receivedYear ) ) {
-                const preDOM = this.DOM.cards.cards.querySelector( `#cards__award-card--${ data[ awardDataIndex - 1 ].awardId }` );
-                this.DOM.cards.cards.insertBefore( tempAwardDOM.firstChild, preDOM.nextSibling );
-            }
-            else if ( awardDataIndex !== data.length - 1 && ( data[ awardDataIndex + 1 ].receivedYear === data[ awardDataIndex ].receivedYear ) ) {
-                const postDOM = this.DOM.cards.cards.querySelector( `#cards__award-card--${ data[ awardDataIndex + 1 ].awardId }` );
-                this.DOM.cards.cards.insertBefore( tempAwardDOM.firstChild, postDOM );
-            }
-            else {
-                const tempTitleDOM = document.createElement( 'temp-section' );
-                tempTitleDOM.innerHTML = cardsHTML( {
-                    data:     awardData.receivedYear,
-                    modifier: 'classfication-title',
-                } );
+            this.DOM.cards.cards.appendChild( tempBusinessDOM.firstChild );
 
-                if ( data.length === 1 ) {
-                    this.DOM.cards.cards.appendChild( tempTitleDOM.firstChild );
-                    this.DOM.cards.cards.appendChild( tempAwardDOM.firstChild );
-                }
-                else if ( awardDataIndex === 0 ) {
-                    this.DOM.cards.cards.insertBefore( tempAwardDOM.firstChild, this.DOM.cards.cards.firstChild );
-                    this.DOM.cards.cards.insertBefore( tempTitleDOM.firstChild, this.DOM.cards.cards.firstChild );
-                }
-                else {
-                    const preDOM = this.DOM.cards.cards.querySelector( `#cards__award-card--${ data[ awardDataIndex - 1 ].awardId }` );
-                    this.DOM.cards.cards.insertBefore( tempAwardDOM.firstChild, preDOM.nextSibling );
-                    this.DOM.cards.cards.insertBefore( tempTitleDOM.firstChild, preDOM.nextSibling );
-                }
-            }
-            return awardId;
+            return dataId;
         } )
-        .then( ( awardId ) => {
-            document.getElementById( `award-card__delete--${ awardId }` ).addEventListener( 'click', ( e ) => {
+        .then( ( dataId ) => {
+            document.getElementById( `business18n-card__delete--${ dataId }` ).addEventListener( 'click', ( e ) => {
                 this.subscribeDeleteButton( e );
             } );
-            document.getElementById( `award-card__patch--${ awardId }` ).addEventListener( 'click', ( e ) => {
+            document.getElementById( `businessI18n-card__patch--${ dataId }` ).addEventListener( 'click', ( e ) => {
                 this.subscribePatchButton( e );
             } );
         } );

@@ -104,6 +104,7 @@ export default {
         'user/faculty/patent':              path.join( sassRoot, 'user/faculty/patent.scss' ),
         'user/faculty/technology-transfer': path.join( sassRoot, 'user/faculty/technology-transfer.scss' ),
         'user/staff/profile':                path.join( sassRoot, 'user/staff/profile.scss' ),
+        'user/test/profile':                path.join( sassRoot, 'user/test/profile.scss' ),
         'user/resetPassword':               path.join( sassRoot, 'user/resetPassword.scss' ),
         'user/announcement/edit':           path.join( sassRoot, 'user/announcement/edit.scss' ),
         'user/announcement/add':            path.join( sassRoot, 'user/announcement/add.scss' ),

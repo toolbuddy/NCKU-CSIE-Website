@@ -44,6 +44,8 @@ import nationUtils from 'models/faculty/utils/nation.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
+import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -984,7 +986,9 @@ router
             }
 
             if ( data.method === 'update' ) {
+                console.log( 'staff update' );
                 if ( data.dbTable === 'title' ) {
+                    console.log( 'staff update title' );
                     const i18nData = [];
                     Object.keys( data.i18n ).forEach( ( languageId ) => {
                         if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -1000,6 +1004,7 @@ router
                             titleI18n: i18nData,
                         },
                     };
+                    console.log( uploadData );
                 }
                 if ( data.dbTable === 'business' ) {
                     const i18nData = [];
@@ -1205,7 +1210,40 @@ router
 
 router
 .route( '/staff/profile' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/staff/profile' ) );
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getStaffDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/test/profile.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/resetPassword`.
