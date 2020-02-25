@@ -1,5 +1,5 @@
 mixin businessI18n-card( data )
-  section.businessI18n-card.cards__businessI18n-card
+  section.businessI18n-card.cards__businessI18n-card( id=`cards__businessI18n-card--${ data.businessId }` )
     section.businessI18n-card__value
       p.value__text.value__text--bussiness= data.business
     img.businessI18n-card__patch( 

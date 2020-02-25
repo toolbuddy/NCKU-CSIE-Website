@@ -1,11 +1,10 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
+import ProfileDataManagement from 'static/src/js/components/user/staff/profile-data-managament.js';
+import TitleI18nDataManagement from 'static/src/js/components/user/staff/titleI18n-data-management.js';
+import BusinessI18nDataManagement from 'static/src/js/components/user/staff/businessI18n-data-management.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import SetStaffProfile from 'static/src/js/components/user/set-staff-profile.js';
-import SetStaffData from 'static/src/js/components/user/set-staff-data.js';
-import { host, } from 'settings/server/config.js';
-import roleUtils from 'models/auth/utils/role.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -43,80 +42,59 @@ catch ( err ) {
     console.error( err );
 }
 
-async function fetchData () {
-    try {
-        const res = await fetch( `${ host }/user/id`, {
-            credentials: 'include',
-            method:      'post',
-        } );
-
-        if ( !res.ok )
-            throw new Error( 'No faculty found' );
-
-        return res.json();
-    }
-    catch ( err ) {
-        throw err;
-    }
+try {
+    const titleI18nDataManagement = new TitleI18nDataManagement( {
+        bodyFormDOM:      document.getElementById( 'form' ),
+        refreshDOM:       document.querySelector( '.content__titleI18n > .titleI18n__refresh' ),
+        loadingDOM:       document.querySelector( '.content__titleI18n > .titleI18n__loading' ),
+        cardsDOM:         document.getElementById( 'titleI18n__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'titleI18n-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'titleI18n-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--titleI18n' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        dbTable:          'titleI18n',
+        idColumnName:     'titleId',
+    } );
+    if ( !( titleI18nDataManagement instanceof TitleI18nDataManagement ) )
+        throw new Error( 'award data management error' );
+    titleI18nDataManagement.exec();
+}
+catch ( err ) {
+    console.error( err );
 }
 
-( async () => {
-    try {
-        const result = await fetchData();
-        if ( result.redirect )
-            window.location = result.redirect;
+try {
+    const businessI18nDataManagement = new BusinessI18nDataManagement( {
+        bodyFormDOM:      document.getElementById( 'form' ),
+        refreshDOM:       document.querySelector( '.content__businessI18n > .businessI18n__refresh' ),
+        loadingDOM:       document.querySelector( '.content__businessI18n > .businessI18n__loading' ),
+        cardsDOM:         document.getElementById( 'businessI18n__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'businessI18n-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'businessI18n-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--businessI18n' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        dbTable:          'businessI18n',
+        idColumnName:     'businessId',
+    } );
+    if ( !( businessI18nDataManagement instanceof BusinessI18nDataManagement ) )
+        throw new Error( 'award data management error' );
+    businessI18nDataManagement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}
 
-        if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'staff' ) ) {
-            try {
-                const setStaffProfile = new SetStaffProfile( {
-                    profileDOM:       document.getElementById( 'profile' ),
-                    languageId:       WebLanguageUtils.currentLanguageId,
-                    profileId:        result.roleId,
-                } );
-
-                setStaffProfile.exec();
-            }
-            catch ( err ) {
-                console.error( err );
-            }
-
-            try {
-                const setTitleData = new SetStaffData( {
-                    blockDOM:       document.getElementById( 'title' ),
-                    addButtonDOM:     document.getElementById( 'add__button--title-block' ),
-                    refreshDOM:      document.querySelector( '.content__information > .information__title-block > .title-block__refresh' ),
-                    loadingDOM:       document.querySelector( '.content__information > .information__title-block > .title-block__loading' ),
-                    languageId:       WebLanguageUtils.currentLanguageId,
-                    dbTable:          'title',
-                    profileId:        result.roleId,
-                } );
-
-                setTitleData.exec();
-            }
-            catch ( err ) {
-                console.error( err );
-            }
-
-            try {
-                const setBusinessData = new SetStaffData( {
-                    blockDOM:       document.getElementById( 'business' ),
-                    addButtonDOM:     document.getElementById( 'add__button--business-block' ),
-                    refreshDOM:      document.querySelector( '.content__information > .information__business-block > .business-block__refresh' ),
-                    loadingDOM:       document.querySelector( '.content__information > .information__business-block > .business-block__loading' ),
-                    languageId:       WebLanguageUtils.currentLanguageId,
-                    dbTable:          'business',
-                    profileId:        result.roleId,
-                } );
-
-                setBusinessData.exec();
-            }
-            catch ( err ) {
-                console.error( err );
-            }
-        }
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-} )();
-
+try {
+    const profileDataManagement = new ProfileDataManagement( {
+        bodyFormDOM:       document.getElementById( 'form' ),
+        porfileContentDOM: document.getElementById( 'content__profile' ),
+        patchButtonsDOM:   document.getElementsByClassName( 'profile-card__patch' ),
+        languageId:        WebLanguageUtils.currentLanguageId,
+    } );
+    if ( !( profileDataManagement instanceof ProfileDataManagement ) )
+        throw new Error( 'award data management error' );
+    profileDataManagement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}

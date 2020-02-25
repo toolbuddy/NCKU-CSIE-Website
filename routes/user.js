@@ -235,19 +235,26 @@ router
         );
     }
     else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
-        res.sendFile(
-            `static/dist/html/user/staff/profile.${ req.query.languageId }.html`,
-            {
-                root:         projectRoot,
-                maxAge,
-                dotfiles:     'deny',
-                cacheControl: true,
-            },
-            ( err ) => {
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getStaffDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/staff/profile.pug', {
+                data,
+            }, ( err, html ) => {
                 if ( err )
-                    next( err );
-            }
-        );
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
     }
     else
         res.redirect( '/index' );
@@ -986,9 +993,7 @@ router
             }
 
             if ( data.method === 'update' ) {
-                console.log( 'staff update' );
                 if ( data.dbTable === 'title' ) {
-                    console.log( 'staff update title' );
                     const i18nData = [];
                     Object.keys( data.i18n ).forEach( ( languageId ) => {
                         if ( !isEmpty( data.i18n[ languageId ] ) ) {
@@ -1004,7 +1009,6 @@ router
                             titleI18n: i18nData,
                         },
                     };
-                    console.log( uploadData );
                 }
                 if ( data.dbTable === 'business' ) {
                     const i18nData = [];
@@ -1225,7 +1229,7 @@ router
         } );
 
         await new Promise( ( resolve, reject ) => {
-            res.render( 'user/test/profile.pug', {
+            res.render( 'user/staff/profile.pug', {
                 data,
             }, ( err, html ) => {
                 if ( err )

@@ -49,6 +49,7 @@ export default class BusinessI18nDataManagement extends BaseDataManagement {
     subscribePostCheckButton () {
         this.DOM.post.checkButton.addEventListener( 'click', async ( e ) => {
             e.preventDefault();
+
             const isValid = await this.dataValidation( 'post' );
 
             const data = {};
@@ -57,6 +58,7 @@ export default class BusinessI18nDataManagement extends BaseDataManagement {
             } );
 
             if ( isValid ) {
+                console.log( data );
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     body:   JSON.stringify( {
@@ -202,7 +204,7 @@ export default class BusinessI18nDataManagement extends BaseDataManagement {
             return dataId;
         } )
         .then( ( dataId ) => {
-            document.getElementById( `business18n-card__delete--${ dataId }` ).addEventListener( 'click', ( e ) => {
+            document.getElementById( `businessI18n-card__delete--${ dataId }` ).addEventListener( 'click', ( e ) => {
                 this.subscribeDeleteButton( e );
             } );
             document.getElementById( `businessI18n-card__patch--${ dataId }` ).addEventListener( 'click', ( e ) => {

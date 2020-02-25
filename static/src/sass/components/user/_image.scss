@@ -48,6 +48,26 @@
       }
     }
 
+    > .image__button {
+      // [ element ]
+      @extend %image__button;
+      
+      &--check {
+        // [ layout ]
+        grid-area: check;        
+      }
+
+      &--cancel {
+        // [ layout ]
+        grid-area: cancel;        
+      }
+
+      &--active {
+        // [ layout ]
+        display: block;        
+      }
+    }
+
     > .image__check.check {
       // [ element ]
       @extend %image__button;
@@ -62,11 +82,6 @@
 
       // [ layout ]
       grid-area: cancel;
-    }
-
-    > .image__button--active {
-      // [ layout ]
-      display: block;
     }
 
     > .image__frame {

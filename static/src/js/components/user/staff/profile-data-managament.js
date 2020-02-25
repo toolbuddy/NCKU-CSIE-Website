@@ -31,7 +31,15 @@ export default class ProfileDataManagement {
 
         this.DOM = {
             formBackground: opt.bodyFormDOM,
+            image:          {
+                checkButton:  opt.porfileContentDOM.querySelector( ' .profile__image > .image__button--check ' ),
+                cancelButton: opt.porfileContentDOM.querySelector( ' .profile__image > .image__button--cancel ' ),
+                preview:      opt.porfileContentDOM.querySelector( ' .profile__image > .image__frame ' ),
+                uploadButton: opt.porfileContentDOM.querySelector( ' .profile__image > .image__frame > .frame__upload ' ),
+            },
         };
+
+        this.imageFile = null;
 
         this.modifier = {
             name:          'name',
@@ -144,6 +152,41 @@ export default class ProfileDataManagement {
         }
     }
 
+    subscribeUploadImageButton () {
+        this.DOM.image.uploadButton.addEventListener( 'change', ( element ) => {
+            const reader = new FileReader();
+
+            reader.onload = ( e ) => {
+                classAdd( this.DOM.image.checkButton, 'image__button--active' );
+                classAdd( this.DOM.image.cancelButton, 'image__button--active' );
+                this.DOM.image.preview.style.backgroundImage = `url('${ e.target.result }')`;
+                this.imageFile = element.target.files[ 0 ];
+            };
+
+            reader.readAsDataURL( element.target.files[ 0 ] );
+        } );
+        this.DOM.image.checkButton.addEventListener( 'click', async ( e ) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append( 'file', this.imageFile );
+
+            await fetch( `${ host }/user/uploadPhoto`, {
+                credentials: 'include',
+                method:      'post',
+                body:        formData,
+            } );
+
+            classRemove( this.DOM.image.checkButton, 'image__button--active' );
+            classRemove( this.DOM.image.cancelButton, 'image__button--active' );
+        } );
+        this.DOM.image.cancelButton.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            this.setProfileImage();
+            classRemove( this.DOM.image.checkButton, 'image__button--active' );
+            classRemove( this.DOM.image.cancelButton, 'image__button--active' );
+        } );
+    }
+
     subscribePatchButton () {
         Object.keys( this.modifier ).forEach( ( columnName ) => {
             this.DOM[ columnName ].patchButton.addEventListener( 'click', () => {
@@ -165,39 +208,51 @@ export default class ProfileDataManagement {
                 e.preventDefault();
                 const isValid = await this.dataValidation( columnName );
 
-                const item = {};
-                const i18n = {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
-                };
                 if ( isValid ) {
                     new Promise( ( res ) => {
+                        const item = {};
+                        const i18n = {
+                            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
+                            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
+                        };
                         Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
-                            if ( element.getAttribute( 'input-type' ) === 'text-i18n' )
+                            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
                                 i18n[ element.getAttribute( 'languageid' ) ][ columnName ] = element.value;
                             else
                                 item[ columnName ] = element.value;
                         } );
-                        res();
+
+                        res( { item, i18n, } );
                     } )
-                    .then( () => {
+                    .then( ( opt ) => {
                         fetch( `${ host }/user/profile`, {
                             method:   'POST',
                             body:   JSON.stringify( {
                                 profileId:     this.config.profileId,
                                 method:        'update',
                                 dbTable:       'profile',
-                                item,
-                                i18n,
+                                item:      opt.item,
+                                i18n:      opt.i18n,
                             } ),
+                        } )
+                        .then( () => {
+                            this.updateCard( columnName );
+                            this.hideForm();
                         } );
-                    } )
-                    .then( () => {
-                        this.updateCard( columnName );
-                        this.hideForm();
                     } );
                 }
             } );
+        } );
+    }
+
+    setProfileImage () {
+        this.fetchData( this.config.languageId )
+        .then( data => data.profile )
+        .then( ( data ) => {
+            if ( data.photo !== null ) {
+                const photoUrl = `${ host }/static/image/staff/${ data.photo }`;
+                this.DOM.image.preview.style.backgroundImage = `url('${ photoUrl }')`;
+            }
         } );
     }
 
@@ -205,7 +260,6 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile[ columnName ] )
         .then( ( data ) => {
-            console.log( this.DOM[ columnName ] );
             this.DOM[ columnName ].cardValue.innerHTML = data;
         } );
     }
@@ -262,6 +316,8 @@ export default class ProfileDataManagement {
             this.subscribeCancelButton();
             this.subscribePatchButton();
             this.subscribePatchCheckButton();
+            this.subscribeUploadImageButton();
+            this.setProfileImage();
         } );
     }
 }
