@@ -8,42 +8,29 @@ const AnnouncementValidationConstraints = {
         },
     },
     publishTime: {
-        presence:     false,
+        presence:     true,
         type:     {
             type: ValidateUtils.isValidDate,
         },
     },
     updateTime: {
-        presence:     false,
+        presence:     true,
         type:     {
             type: ValidateUtils.isValidDate,
         },
     },
-    author: {
-        presence:     false,
-        type:     {
-            type: ValidateUtils.isValidId,
-        },
-    },
-    views: {
-        presence:     false,
-        type:         'integer',
-        numericality: {
-            greaterThanOrEqualTo: 0,
-        },
-    },
     isPinned: {
-        presence:     false,
+        presence:     true,
         type:     {
             type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
-    isPublished: {
-        presence:     false,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
-        },
-    },
+    // isPublished: {
+    //     presence:     true,
+    //     type:     {
+    //         type: value => ValidateUtils.isValidBoolean( value ),
+    //     },
+    // },
     image: {
         presence:     false,
         type:       'string',
@@ -51,18 +38,29 @@ const AnnouncementValidationConstraints = {
             maximum: 2083,
         },
     },
-    i18n: {
-        presence: false,
+    announcementI18n: {
+        presence: {
+            allowEmpty: false,
+        },
+        type:     'array',
+        length: {
+            is: LanguageUtils.supportedLanguage.length,
+        },
+    },
+    addedFiles: {
+        presence: true,
+        type:     'array',
+    },
+    deletedFiles: {
+        presence: true,
         type:     'array',
     },
     tags: {
-        presence: false,
+        presence: {
+            allowEmpty: false,
+        },
         type:     'array',
-    },
-    fileI18n: {
-        presence: false,
-        type:     'array',
-    },
+    }
 };
 
 export default AnnouncementValidationConstraints;

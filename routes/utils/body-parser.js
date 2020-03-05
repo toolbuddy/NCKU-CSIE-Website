@@ -19,7 +19,6 @@ const urlEncoded = express.urlencoded( {
         'application/x-www-form-urlencoded',
         'multipart/form-data',
         'text/*',
-        '*/json',
         'application/xhtml+xml',
         'application/xml',
     ],

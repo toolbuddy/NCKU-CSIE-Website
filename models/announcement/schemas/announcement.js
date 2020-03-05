@@ -36,9 +36,13 @@ const Announcement = announcement.define( 'announcement', {
         defaultValue: '1',
     },
     image: {
-        type:      Sequelize.STRING( 2083 ),
+        type:      Sequelize.BLOB('medium'),
         allowNull: true,
     },
-} );
+}, {
+    timestamps: true,
+    createdAt: 'publishTime',
+    updatedAt: 'updateTime',
+});
 
 export default Announcement;

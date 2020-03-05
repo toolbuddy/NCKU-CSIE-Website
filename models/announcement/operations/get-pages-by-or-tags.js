@@ -66,7 +66,7 @@ export default async ( opt ) => {
                 as:         'tag',
                 attributes: [],
                 where:      {
-                    typeId: {
+                    tagId: {
                         [ Op.in ]: tags,
                     },
                 },

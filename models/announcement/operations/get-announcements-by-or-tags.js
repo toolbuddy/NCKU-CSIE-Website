@@ -12,14 +12,14 @@ import tagUtils from 'models/announcement/utils/tag.js';
  * A function for getting all announcements.
  *
  * @async
- * @param {string[]} [tags = []]                          - Specify the announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                          announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval when
- *                                                          announcements were post.
- * @param {number}   [page = defaultValue.page]           - Specify the announcements under the given page number.
- * @param {string}   [language = defaultValue.language]   - Language option of the announcements.
- * @returns {object[]}                                      Requested pinned announcements, including:
+ * @param {string[]} [tags = []]                              - Specify the announcements with the given tags.
+ * @param {string}   [startTime = defaultValue.startTime]     - A string of the js Date object, specifying the earliest time of filter interval when
+ *                                                              announcements were post.
+ * @param {string}   [endTime = defaultValue.endTime]         - A string of the js Date object, specifying the latest time of filter interval when
+ *                                                              announcements were post.
+ * @param {number}   [page = defaultValue.page]               - Specify the announcements under the given page number.
+ * @param {number}   [languageId = defaultValue.languageId]   - Language option of the announcements.
+ * @returns {object[]}                                        Requested pinned announcements, including:
  * - id
  * - title
  * - content
@@ -91,7 +91,7 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [],
                     where:      {
-                        typeId: {
+                        tagId: {
                             [ Op.in ]: tags,
                         },
                     },
@@ -139,7 +139,7 @@ export default async ( opt ) => {
                 {
                     model:      Tag,
                     as:         'tag',
-                    attributes: [ 'typeId', ],
+                    attributes: [ 'tagId', ],
                 },
             ],
         } ) ) );
@@ -149,7 +149,7 @@ export default async ( opt ) => {
             updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tag.map( tag => tag.typeId ),
+            tags:           announcement.tag.map( tag => tag.tagId ),
         } ) );
 
         data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );

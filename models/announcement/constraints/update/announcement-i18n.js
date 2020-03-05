@@ -1,26 +1,23 @@
 import LanguageUtils from 'models/common/utils/language.js';
 
-const FileI18nValidationConstraints = {
+const AnnouncementI18nValidationConstraints = {
     languageId: {
         presence: true,
         type:     {
             type: LanguageUtils.isSupportedLanguageId,
         },
     },
-    name: {
+    title: {
         presence: true,
         type:       'string',
         length:   {
-            maximum: 2083,
+            maximum: 300,
         },
     },
-    path: {
+    content: {
         presence: true,
         type:       'string',
-        length:   {
-            maximum: 2083,
-        },
     },
 };
 
-export default FileI18nValidationConstraints;
+export default AnnouncementI18nValidationConstraints;

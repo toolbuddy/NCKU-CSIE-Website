@@ -23,6 +23,7 @@ const connect = databaseName => new Sequelize(
         host:             config.domainName,
         port:             config.port,
         dialect:          config.dialect,
+        timezone:         config.timezone, // for writing to database
         operatorsAliases: false,
         logging:          false,
         define:           {
@@ -31,6 +32,14 @@ const connect = databaseName => new Sequelize(
         },
         dialectOptions: {
             connectTimeout: 1000000,
+            dateStrings:    true,
+            typeCast(field, next) {
+                // for reading from database
+                if (field.type === 'DATETIME') {
+                    return field.string();
+                }
+                return next();
+            }
         },
         pool: {
             max:     5,

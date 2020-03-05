@@ -2,7 +2,6 @@ import {
     Announcement,
     AnnouncementI18n,
     File,
-    FileI18n,
     Tag,
 } from 'models/announcement/operations/associations.js';
 import LanguageUtils from 'models/common/utils/language.js';
@@ -12,9 +11,9 @@ import ValidateUtils from 'models/common/utils/validate.js';
  * A function for getting a specific announcement in specific languages by the id of the announcement.
  *
  * @async
- * @param {string} [language = defaultValue.language]   - Language option of the announcements.
- * @param {number} [announcementId=1]                   - Id of the requested announcement.
- * @returns {object}                                      Related information of the requested announcement, including:
+ * @param {number} [languageId = defaultValue.languageId]   - Language option of the announcements.
+ * @param {number} [announcementId = 1]                     - Id of the requested announcement.
+ * @returns {object}                                        - Related information of the requested announcement, including:
  * - id
  * - title
  * - content
@@ -71,32 +70,26 @@ export default async ( opt ) => {
                     },
                 },
                 {
+                    model:      File,
+                    as:         'file',
+                    attributes: [
+                        'fileId',
+                        'name',
+                    ],
+                    where: {
+                        announcementId,
+                    },
+                },
+                {
                     model:      Tag,
                     as:         'tag',
                     attributes: [
-                        'typeId',
-                    ],
-                },
-                {
-                    model:      File,
-                    as:         'file',
-                    attributes: [ 'fileId', ],
-                    include:    [
-                        {
-                            model:      FileI18n,
-                            as:         'fileI18n',
-                            attributes: [
-                                'name',
-                                'path',
-                            ],
-                            where: {
-                                languageId,
-                            },
-                        },
+                        'tagId',
                     ],
                 },
             ],
         } );
+
         if ( !data ) {
             const error = new Error( 'no result' );
             error.status = 404;
@@ -113,12 +106,8 @@ export default async ( opt ) => {
             image:          data.image,
             title:          data.announcementI18n[ 0 ].title,
             content:        data.announcementI18n[ 0 ].content,
-            tags:           data.tag.map( tag => tag.typeId ),
-            files:          data.file.map( file => ( {
-                fileId: file.fileId,
-                name:   file.fileI18n[ 0 ].name,
-                path:   file.fileI18n[ 0 ].path,
-            } ) ),
+            tags:           data.tag.map( tag => tag.tagId ),
+            files:          data.file,
         };
     }
     catch ( err ) {

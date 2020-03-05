@@ -20,25 +20,18 @@ const AnnouncementValidationConstraints = {
             type: ValidateUtils.isValidId,
         },
     },
-    views: {
-        presence:     true,
-        type:         'integer',
-        numericality: {
-            greaterThanOrEqualTo: 0,
-        },
-    },
     isPinned: {
         presence:     true,
         type:     {
             type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
-    isPublished: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
-        },
-    },
+    // isPublished: {
+    //     presence:     true,
+    //     type:     {
+    //         type: value => ValidateUtils.isValidBoolean( value ),
+    //     },
+    // },
     image: {
         presence:     false,
         type:       'string',
@@ -46,7 +39,7 @@ const AnnouncementValidationConstraints = {
             maximum: 2083,
         },
     },
-    i18n: {
+    announcementI18n: {
         presence: {
             allowEmpty: false,
         },
@@ -55,6 +48,16 @@ const AnnouncementValidationConstraints = {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
+    files: {
+        presence: true,
+        type:     'array',
+    },
+    tags: {
+        presence: {
+            allowEmpty: false,
+        },
+        type:     'array',
+    }
 };
 
 export default AnnouncementValidationConstraints;

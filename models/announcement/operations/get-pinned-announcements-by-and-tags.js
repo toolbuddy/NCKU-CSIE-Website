@@ -14,13 +14,13 @@ const op = Sequelize.Op;
  * A function for getting all pinned announcements.
  *
  * @async
- * @param {string[]} [tags = []]                          - Specifying the pinned announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime] - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                          announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]     - A string of the js Date object, specifying the latest time of filter interval
- *                                                          when announcements were post.
- * @param {string} [language = defaultValue.language]     - Language option of the announcements.
- * @returns {object[]}                                      Requested announcements, including:
+ * @param {string[]} [tags = []]                                - Specifying the pinned announcements with the given tags.
+ * @param {string}   [startTime = defaultValue.startTime]       - A string of the js Date object, specifying the earliest time of filter interval when
+ *                                                                announcements were post.
+ * @param {string}   [endTime = defaultValue.endTime]           - A string of the js Date object, specifying the latest time of filter interval
+ *                                                                when announcements were post.
+ * @param {number}   [languageId = defaultValue.languageId]     - Language option of the announcements.
+ * @returns {object[]}                                            Requested announcements, including:
  * - id
  * - title
  * - content
@@ -55,7 +55,7 @@ export default async ( opt ) => {
             throw error;
         }
         if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
-            const error = new Error( 'invalid languageId' );
+            const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
         }
@@ -78,7 +78,7 @@ export default async ( opt ) => {
                     as:         'tag',
                     attributes: [],
                     where:      {
-                        typeId: {
+                        tagId: {
                             [ op.in ]: tags,
                         },
                     },
@@ -119,7 +119,7 @@ export default async ( opt ) => {
                 {
                     model:      Tag,
                     as:         'tag',
-                    attributes: [ 'typeId', ],
+                    attributes: [ 'tagId', ],
                 },
             ],
         } ) ) );
@@ -129,7 +129,7 @@ export default async ( opt ) => {
             updateTime:     Number( announcement.updateTime ),
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tag.map( tag => tag.typeId ),
+            tags:           announcement.tag.map( tag => tag.tagId ),
         } ) );
 
         data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );

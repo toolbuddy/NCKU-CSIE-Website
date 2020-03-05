@@ -8,10 +8,11 @@ import {
 } from 'models/announcement/operations/associations.js';
 import { announcement, } from 'models/common/utils/connect.js';
 
-import AnnouncementValidationConstraints from 'models/announcement/constraints/post/announcement.js';
-import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/post/announcement-i18n.js';
-import FileValidationConstraints from 'models/announcement/constraints/post/file.js';
-import TagValidationConstraints from 'models/announcement/constraints/post/tag.js';
+import AnnouncementValidationConstraints from 'models/announcement/constraints/update/announcement.js';
+import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/update/announcement-i18n.js';
+import AddedFileValidationConstraints from 'models/announcement/constraints/update/addedFiles.js';
+import DeletedFileValidationConstraints from 'models/announcement/constraints/update/deletedFiles.js';
+import TagValidationConstraints from 'models/announcement/constraints/update/tag.js';
 import validate from 'validate.js';
 
 function sortByValue ( a, b ) {
@@ -37,25 +38,27 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
+            announcementId = null,
             publishTime = null,
             updateTime = null,
-            author = null,
             isPinned = null,
             image = null,
             announcementI18n = null,
+            addedFiles = null,
+            deletedFiles = null,
             tags = null,
-            files = null,
         } = opt;
 
         if ( typeof ( validate( {
+            announcementId,
             publishTime,
             updateTime,
-            author,
             isPinned,
             image,
             announcementI18n,
+            addedFiles,
+            deletedFiles,
             tags,
-            files,
         }, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
             const error = new Error( 'Invalid announcement object' );
             error.status = 400;
@@ -69,11 +72,6 @@ export default async ( opt ) => {
                 error.status = 400;
                 throw error;
             }
-            if ( !ValidateUtils.isValidArray( i18nData.fileI18n ) ) {
-                const error = new Error( 'Invalid fileI18n object' );
-                error.status = 400;
-                throw error;
-            }
             langArr.push( i18nData.languageId );
         });
         if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
@@ -82,48 +80,75 @@ export default async ( opt ) => {
             throw error;
         }
 
-        files.forEach( ( file ) => {
-            if ( typeof ( validate( file, FileValidationConstraints ) ) !== 'undefined' || !ValidateUtils.isValidBlob( file.content ) ) {
-                const error = new Error( 'Invalid file object' );
+        addedFiles.forEach( ( file ) => {
+            if ( typeof ( validate( file, AddedFileValidationConstraints ) ) !== 'undefined' || !ValidateUtils.isValidBlob( file.content ) ) {
+                const error = new Error( 'Invalid added file object' );
                 error.status = 400;
                 throw error;
             }
         } );
 
-        tag.forEach( ( tagObj ) => {
-            if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+        deletedFiles.forEach( ( file ) => {
+            if ( typeof ( validate( file, DeletedFileValidationConstraints ) ) !== 'undefined' ) {
+                const error = new Error( 'Invalid deleted file object' );
+                error.status = 400;
+                throw error;
+            }
+        } );
+
+        tags.forEach( ( tag ) => {
+            if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
                 throw error;
             }
         } );
 
-        const res = await announcement.transaction( t => Announcement.create( {
+        await announcement.transaction( t => Announcement.update( {
             publishTime,
             updateTime,
-            author,
             isPinned,
             image,
-            announcementI18n,
-            tags,
-            files,
         }, {
-            include: [
-                {
-                    model: AnnouncementI18n,
-                    as:    'announcementI18n',
-                },
-                {
-                    model: File,
-                    as:    'files',
-                },
-                {
-                    model: Tag,
-                    as:    'tags',
-                },
-            ],
+            where: {
+                announcementId,
+            },
             transaction: t,
-        } ) ).then( () => {
+        } ).then( () => {
+            return Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update( {
+                title:   i18nObj.title,
+                content: i18nObj.content,
+            }, {
+                where: {
+                    announcementId,
+                    language: i18nObj.language,
+                },
+                transaction: t,
+            } ) ) );
+        } ).then(() => {
+            return Tag.destroy({
+                where: {
+                    announcementId,
+                },
+                transaction: t,
+            });
+        }).then(() => {
+            return Tag.bulkCreate(tags, {
+                transaction: t,
+            });
+        }).then(() => {
+            return File.destroy({
+                where: {
+                    fileId: deletedFiles,
+                },
+                transaction: t,
+            });
+        }).then(() => {
+            return File.bulkCreate(addedFiles,
+            {
+                transaction: t,
+            });
+        })).then( () => {
             return { 'message': 'success' };
         })
         .catch( ( err ) => {

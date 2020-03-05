@@ -19,6 +19,9 @@ import path from 'path';
 
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
+import postAnnouncement from 'models/announcement/operations/post-announcement.js';
+import updateAnnouncement from 'models/announcement/operations/update-announcement.js';
+import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
@@ -195,21 +198,6 @@ router
     const result = await getAdminByUserId( {
         userId: Number( res.locals.userId ),
     } );
-
-    // Res.sendFile(
-    //     `static/dist/html/user/profile.${ req.query.languageId }.html`,
-    //     {
-    //         root:         projectRoot,
-    //         maxAge,
-    //         dotfiles:     'deny',
-    //         cacheControl: true,
-    //     },
-    //     ( err ) => {
-    //         if ( err )
-    //             next( err );
-    //     }
-    // );
-
     if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
         res.sendFile(
             `static/dist/html/user/profile.${ req.query.languageId }.html`,
@@ -1053,46 +1041,6 @@ router
 } );
 
 /**
- * Resolve URL `/user/award`.
- */
-
-router
-.route( '/award' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
-
-/**
- * Resolve URL `/user/project`.
- */
-
-router
-.route( '/project' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
-
-/**
- * Resolve URL `/user/patent`.
- */
-
-router
-.route( '/patent' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
-
-/**
- * Resolve URL `/user/conference`.
- */
-
-router
-.route( '/conference' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
-
-/**
- * Resolve URL `/user/studentAward`.
- */
-
-router
-.route( '/studentAward' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
-
-/**
  * Resolve URL `/user/uploadPhoto`.
  */
 
@@ -1177,6 +1125,46 @@ router
 } );
 
 /**
+ * Resolve URL `/user/award`.
+ */
+
+router
+.route( '/award' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
+
+/**
+ * Resolve URL `/user/project`.
+ */
+
+router
+.route( '/project' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
+
+/**
+ * Resolve URL `/user/patent`.
+ */
+
+router
+.route( '/patent' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
+
+/**
+ * Resolve URL `/user/conference`.
+ */
+
+router
+.route( '/conference' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
+
+/**
+ * Resolve URL `/user/studentAward`.
+ */
+
+router
+.route( '/studentAward' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
+
+/**
  * Resolve URL `/user/publication`.
  */
 
@@ -1222,7 +1210,41 @@ router
 
 router
 .route( '/announcement/add' )
-.get( urlEncoded, jsonParser, allowUserOnly, staticHtml( 'user/announcement/add' ) );
+.get( urlEncoded, jsonParser, allowUserOnly, staticHtml( 'user/announcement/add' ) )
+// .post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+.post( cors(), multer( {
+    dest:     `${ projectRoot }/static/src/image/`,
+    storage: multer.diskStorage( {
+        destination: `${ projectRoot }/static/src/image/`,
+    } ),
+} ).single( 'file' ), async ( req, res ) => {
+    try {
+        // Save file & rename
+        if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
+            fs.rename( req.file.path, `${ req.file.destination }faculty/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
+                if ( err )
+                    throw err;
+            } );
+        }
+        else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
+            fs.rename( req.file.path, `${ req.file.destination }staff/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
+                if ( err )
+                    throw err;
+            } );
+        }
+    }
+    catch ( error ) {
+        console.error( error );
+    }
+
+    try {
+        res.send( await postAnnouncement( req.body ) );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.status( error.status ).send( error.message );
+    }
+} );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
@@ -1259,5 +1281,65 @@ router
         else
             next( err );
     }
+} )
+.put( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        res.send( await updateAnnouncement( req.body ) );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.status( error.status ).send( error.message );
+    }
 } );
+
+/**
+ * Resolve URL `/user/announcement/pin`.
+ */
+
+router
+.route( '/announcement/pin' )
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+
+        await updateAnnouncement( {
+            announcementId:   data.announcementId,
+            author:           Number( data.author ),
+            isPinned:         Number( data.isPinned ),
+            i18n:             [],
+            fileI18n:       [],
+        } );
+
+        res.send( { 'message': 'success', } );
+    }
+    catch ( error ) {
+        // TODO: handle error message
+        console.error( error );
+    }
+} );
+
+/**
+ * Resolve URL `/user/announcement/delete`.
+ */
+
+router
+.route( '/announcement/delete' )
+.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+
+        await deleteAnnouncements( {
+            announcementIds: [
+                data.announcementId,
+            ],
+        } );
+
+        res.send( { 'message': 'success', } );
+    }
+    catch ( error ) {
+        // TODO: handle error message
+        console.error( error );
+    }
+} );
+
 export default router;
