@@ -1,0 +1,312 @@
+extends /layouts/faculty/base.pug
+include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/card/staff/profile-card.pug
+include /components/user/card/staff/titleI18n-card.pug
+include /components/user/card/staff/businessI18n-card.pug
+include /components/user/form/form-input.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'User Profile',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User Profile',
+        },
+        content: {
+          topic: 'Teacher profile settings',
+          image: {
+            select:  'select picture',
+            cancel:  'cancel',
+            check:   'check',
+          },
+          profile: {
+            name:         'name',
+            officeAddress: 'Office Address',
+            officeTel:    'Office Tel',
+            email:        'Email',
+          },
+          titleI18n: {
+            topic: 'title',
+          },
+          businessI18n: {
+            topic: 'business',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '使用者資料管理',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者資料',
+        },
+        content: {
+          topic: '教師資料維護',
+          image: {
+            select:  '編輯相片',
+            cancel:  '取消',
+            check:   '確認',
+          },
+          profile: {
+            name:         '姓名',
+            officeAddress:  '辦公室位置',
+            officeTel:    '辦公室電話',
+            email:        'Email',
+          },
+          titleI18n: {
+            topic: '職稱',
+          },
+          businessI18n: {
+            topic: '業務項目',
+          },
+        },
+      },
+    } );
+    const formI18n = Object.freeze({
+      profile: {
+        name: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Name',
+            default: {
+              name: 'name',
+            },
+            title: {
+              name: 'name',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的姓名',
+            default: {
+              name: '姓名',
+            },
+            title: {
+              name: '姓名',
+            }
+          },
+        },
+        email: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Email',
+            default: {
+              email: 'email',
+            },
+            title: {
+              email: 'email',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的 Email',
+            default: {
+              email: 'email',
+            },
+            title: {
+              email: 'email',
+            }
+          },
+        },
+        officeAddress: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Office Address',
+            default: {
+              officeAddress: 'office address',
+            },
+            title: {
+              officeAddress: 'office address',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的辦公室地址',
+            default: {
+              officeAddress: '辦公室地址',
+            },
+            title: {
+              officeAddress: '辦公室地址',
+            }
+          },
+        },
+        officeTel: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Office Tel',
+            default: {
+              officeTel: 'office tel',
+            },
+            title: {
+              officeTel: 'office tel',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的辦公室電話',
+            default: {
+              officeTel: '辦公室電話',
+            },
+            title: {
+              officeTel: '辦公室電話',
+            }
+          },
+        },
+      },
+      businessI18n: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Business',
+          patch: 'Modify Your Business',
+          delete: 'Remove Your Business',
+          default: {
+            business: 'business',
+          },
+          title: {
+            business: 'Business',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的負責項目',
+          patch: '變更您的負責項目',
+          delete: '刪除您的負責項目',
+          default: {
+            business: '負責項目',
+          },
+          title: {
+            business: '負責項目',
+          }
+        },
+      },
+      titleI18n: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Title',
+          patch: 'Modify Your Title',
+          delete: 'Remove Your Title',
+          default: {
+            title: 'title',
+          },
+          title: {
+            title: 'title',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的職稱',
+          patch: '變更您的職稱',
+          delete: '刪除您的職稱',
+          default: {
+            title: '職稱',
+          },
+          title: {
+            title: '職稱',
+          }
+        },
+      },
+    })
+    const inputConfig = {
+      profile: {
+        name: [
+          {
+            type: 'i18n-text',
+            columnName: 'name',
+            required: true,
+          }
+        ],
+        email: [
+          {
+            type: 'text',
+            columnName: 'email',
+            required: true,
+          }
+        ],
+        officeAddress: [
+          {
+            type: 'i18n-text',
+            columnName: 'officeAddress',
+            required: true,
+          }
+        ],
+        officeTel: [
+          {
+            type: 'text',
+            columnName: 'officeTel',
+            required: true,
+          }
+        ],
+      },
+      businessI18n:  [
+        {
+          type: 'i18n-text',
+          columnName: 'business',
+          required: true,
+        },
+      ],
+      titleI18n: [
+        {
+          type: 'i18n-text',
+          columnName: 'title',
+          required: true,
+        },          
+      ]
+    }
+    const currentRoute = 'user/faculty/profile';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/staff/profile' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/profile' },
+    ]
+  )
+
+append content
+  include /components/common/loading.pug
+  include /components/common/refresh.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  section#content__profile.content__profile.profile
+    form.profile__image.image( method= 'post' )
+      section.image__frame.frame
+        label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.image.select
+        input.frame__upload#frame__upload( type= 'file' )
+      button.image__button.image__button--check.check#image-check= i18n[ LANG.id ].content.image.check
+      button.image__button.image__button--cancel.cancel#image-cancel= i18n[ LANG.id ].content.image.cancel
+    +profile-card( 'name',   i18n[ LANG.id ].content.profile.name, data.profile.name )
+    +profile-card( 'email', i18n[ LANG.id ].content.profile.email, data.profile.email )
+    +profile-card( 'office-address', i18n[ LANG.id ].content.profile.officeAddress, data.profile.officeAddress )
+    +profile-card( 'office-tel', i18n[ LANG.id ].content.profile.officeTel, data.profile.officeTel )
+  section.content__titleI18n.titleI18n
+    +local-topic( 'titleI18n', i18n[ LANG.id ].content.titleI18n.topic )
+    +refreshWithImage( 'titleI18n' )
+    +loading( 'titleI18n' ) 
+    section#titleI18n__cards.titleI18n__cards.cards
+      if Array.isArray( data.titleI18n ) && data.titleI18n.length
+        each titleI18nObj in data.titleI18n
+          +titleI18n-card( titleI18nObj )
+
+  section.content__businessI18n.businessI18n
+    +local-topic( 'businessI18n', i18n[ LANG.id ].content.businessI18n.topic )
+    +refreshWithImage( 'businessI18n' )
+    +loading( 'businessI18n' ) 
+    section#businessI18n__cards.businessI18n__cards.cards
+      if Array.isArray( data.businessI18n ) && data.businessI18n.length
+        each businessObj in data.businessI18n
+          +businessI18n-card( businessObj )
+
+append form
+  +form-input( 'businessI18n', 'post', formI18n.businessI18n, inputConfig.businessI18n )
+  +form-input( 'businessI18n', 'patch', formI18n.businessI18n, inputConfig.businessI18n )
+  +form-input( 'businessI18n', 'delete', formI18n.businessI18n, inputConfig.businessI18n )
+  +form-input( 'titleI18n', 'post', formI18n.titleI18n, inputConfig.titleI18n )
+  +form-input( 'titleI18n', 'patch', formI18n.titleI18n, inputConfig.titleI18n )
+  +form-input( 'titleI18n', 'delete', formI18n.titleI18n, inputConfig.titleI18n )
+  each val, key in formI18n.profile
+    +form-input( key, 'patch', formI18n.profile[ key ], inputConfig.profile[ key ] )
+
+append footer
+
+append scripts
+  +js( 'user/staff/profile' )

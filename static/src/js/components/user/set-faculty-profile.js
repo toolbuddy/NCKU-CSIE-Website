@@ -256,12 +256,20 @@ export default class SetFacultyProfile {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
         };
+        const i18nItem = [];
         Array.from( input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'i18n' ) !== null )
+            if ( element.getAttribute( 'i18n' ) !== null ) {
+                const temp = {};
                 i18n[ element.getAttribute( 'languageId' ) ][ element.getAttribute( 'dbTableItem' ) ] = element.value;
+                temp.language = element.getAttribute( 'languageId' );
+                temp[ element.getAttribute( 'dbTableItem' ) ] = element.value;
+                i18nItem.push( temp );
+            }
             else
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
+
+        // Console.log( i18nItem );
 
         fetch( `${ host }/user/profile`, {
             method:   'POST',

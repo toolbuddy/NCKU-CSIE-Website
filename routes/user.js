@@ -40,6 +40,15 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 
+import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import degreeUtils from 'models/faculty/utils/degree.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
+
+import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -198,39 +207,62 @@ router
     const result = await getAdminByUserId( {
         userId: Number( res.locals.userId ),
     } );
-    if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
-        res.sendFile(
-            `static/dist/html/user/profile.${ req.query.languageId }.html`,
-            {
-                root:         projectRoot,
-                maxAge,
-                dotfiles:     'deny',
-                cacheControl: true,
-            },
-            ( err ) => {
-                if ( err )
-                    next( err );
-            }
-        );
-    }
-    else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
-        res.sendFile(
-            `static/dist/html/user/staffProfile.${ req.query.languageId }.html`,
-            {
-                root:         projectRoot,
-                maxAge,
-                dotfiles:     'deny',
-                cacheControl: true,
-            },
-            ( err ) => {
-                if ( err )
-                    next( err );
-            }
-        );
-    }
+    if ( result.role === roleUtils.getIdByOption( 'faculty' ) )
+        res.redirect('/faculty/profile');
+    else if ( result.role === roleUtils.getIdByOption( 'staff' ) )
+        res.redirect('/staff/profile');
     else
         res.redirect( '/index' );
+} );
+
+router
+.route( '/faculty/profile' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    res.sendFile(
+        `static/dist/html/user/faculty/profile.${ req.query.languageId }.html`,
+        {
+            root:         projectRoot,
+            maxAge,
+            dotfiles:     'deny',
+            cacheControl: true,
+        },
+        ( err ) => {
+            if ( err )
+                next( err );
+        }
+    );
 } )
+
+router
+.route( '/profile' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    const result = await getAdminByUserId( {
+        userId: Number( res.locals.userId ),
+    } );
+
+    const data = await getStaffDetailWithId( {
+        profileId: result.roleId,
+        languageId: req.query.languageId,
+    } );
+
+    await new Promise( ( resolve, reject ) => {
+        res.render( 'user/staff/profile.pug', {
+            data,
+        }, ( err, html ) => {
+            if ( err )
+                reject( err );
+            else {
+                res.send( html );
+                resolve();
+            }
+        } );
+    } );
+} )
+
+/* ======= */
+
+router
+.route( '/profile' )
 .post( allowUserOnly, urlEncoded, jsonParser, cors(), async ( req, res ) => {
     try {
         // Get data
@@ -1040,6 +1072,50 @@ router
     }
 } );
 
+
+/* ============*/
+
+
+/**
+ * Resolve URL `/user/faculty/award`.
+ */
+
+router
+.route( '/faculty/award' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/award' ) );
+
+/**
+ * Resolve URL `/user/faculty/project`.
+ */
+
+router
+.route( '/faculty/project' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/project' ) );
+
+/**
+ * Resolve URL `/user/faculty/patent`.
+ */
+
+router
+.route( '/faculty/patent' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/patent' ) );
+
+/**
+ * Resolve URL `/user/faculty/conference`.
+ */
+
+router
+.route( '/faculty/conference' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/conference' ) );
+
+/**
+ * Resolve URL `/user/faculty/student-award`.
+ */
+
+router
+.route( '/faculty/student-award' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/student-award' ) );
+
 /**
  * Resolve URL `/user/uploadPhoto`.
  */
@@ -1125,68 +1201,61 @@ router
 } );
 
 /**
- * Resolve URL `/user/award`.
+ * Resolve URL `/user/faculty/publication`.
  */
 
 router
-.route( '/award' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/award' ) );
+.route( '/faculty/publication' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/publication' ) );
 
 /**
- * Resolve URL `/user/project`.
+ * Resolve URL `/user/faculty/technology-transfer`.
  */
 
 router
-.route( '/project' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/project' ) );
-
-/**
- * Resolve URL `/user/patent`.
- */
-
-router
-.route( '/patent' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/patent' ) );
-
-/**
- * Resolve URL `/user/conference`.
- */
-
-router
-.route( '/conference' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/conference' ) );
-
-/**
- * Resolve URL `/user/studentAward`.
- */
-
-router
-.route( '/studentAward' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/studentAward' ) );
-
-/**
- * Resolve URL `/user/publication`.
- */
-
-router
-.route( '/publication' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/publication' ) );
-
-/**
- * Resolve URL `/user/technologyTransfer`.
- */
-
-router
-.route( '/technologyTransfer' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/technologyTransfer' ) );
+.route( '/faculty/technology-transfer' )
+.get( urlEncoded, jsonParser, staticHtml( 'user/faculty/technology-transfer' ) );
 
 /**
  * Resolve URL `/user/staffProfile`.
  */
 
 router
-.route( '/staffProfile' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/staffProfile' ) );
+.route( '/staff/profile' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getStaffDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/staff/profile.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/resetPassword`.

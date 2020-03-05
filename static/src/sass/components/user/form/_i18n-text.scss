@@ -1,0 +1,128 @@
+@import 'components/user/form/input-title';
+@mixin i18n-text () {
+  > .i18n-text.content__i18n-text {
+    // [ layout ]
+    display: block;
+
+    // [ position ]
+    width: 100%;
+
+    > .i18n-text__zh-tw.zh-tw {
+      // [ layout ]
+      display: grid;
+      grid-template: {
+        areas: 'flag text-input';
+        columns: font__px-to-rem( 40 ) auto;
+      }
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 85%;
+      height: font__px-to-rem( 60 );
+
+      > .zh-tw__flag.flag {
+        // [ layout ]
+        display: flex;
+        align-self: center;
+        justify-self: center;
+
+        // [ position ]
+        width: 90%;
+        height: auto;
+      }
+
+      > .zh-tw__text-input.text-input {
+        // [ layout ]
+        display: flex;
+        align-self: center;
+        justify-self: center;
+
+        // [ position ]
+        width: 90%;
+        height: font__px-to-rem( 40 );
+        border-radius: font__px-to-rem( 15 );
+        border: solid 2px rgba( 214, 214, 214, .7 );
+
+        // [ skin ]
+        padding: {
+          left: font__px-to-rem( 16 );
+          right: font__px-to-rem( 16 );
+        }
+        font-size: font__px-to-rem( 16 );
+        text-align: center;
+        line-height: normal;
+        color: rgba( 24, 24, 24, .87 );
+
+        &:focus {
+          // [ skin ]
+          border: solid 3px rgba( 98, 148, 160, .5 );
+        }
+      }
+    }
+
+    > .i18n-text__en-us.en-us {
+      // [ layout ]
+      display: grid;
+      grid-template: {
+        areas: 'flag text-input';
+        columns: font__px-to-rem( 40 ) auto;
+      }
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 85%;
+      height: font__px-to-rem( 60 );
+
+      > .en-us__flag.flag {
+        // [ layout ]
+        display: flex;
+        align-self: center;
+        justify-self: center;
+
+        // [ position ]
+        width: 90%;
+        height: auto;
+      }
+
+      > .en-us__text-input.text-input {
+        // [ layout ]
+        display: flex;
+        align-self: center;
+        justify-self: center;
+
+        // [ position ]
+        width: 90%;
+        height: font__px-to-rem( 40 );
+        border-radius: font__px-to-rem( 15 );
+        border: solid 2px rgba( 214, 214, 214, .7 );
+
+        // [ skin ]
+        padding: {
+          left: font__px-to-rem( 16 );
+          right: font__px-to-rem( 16 );
+        }
+        font-size: font__px-to-rem( 16 );
+        text-align: center;
+        line-height: normal;
+        color: rgba( 24, 24, 24, .87 );
+
+        &:focus {
+          // [ skin ]
+          border: solid 3px rgba( 98, 148, 160, .5 );
+        }
+      }
+    }
+
+    // [ element ]
+    @include input-title( 'i18n-text' );
+
+    // [ customization ]
+    @content;
+  }
+}

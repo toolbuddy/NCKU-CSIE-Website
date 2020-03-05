@@ -1,0 +1,220 @@
+extends /layouts/base.pug
+include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/card/faculty/profile-card.pug
+include /components/user/card/faculty/title-card.pug
+include /components/user/card/faculty/specialty-card.pug
+include /components/user/card/faculty/education-card.pug
+include /components/user/card/faculty/experience-card.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'User Profile',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User Profile',
+        },
+        content: {
+          topic: 'Teacher profile settings',
+          image: {
+            select:  'select picture',
+            cancel:  'cancel',
+            check:   'check',
+          },
+          profile: {
+            name:         'name',
+            title:        'title',
+            nation:       'nation',
+            officeAddress: 'Office Address',
+            labName:      'Lab Name',
+            labAddress:   'Lab Location',
+            labTel:       'Lab Tel',
+            labWeb:       'Lab Web',
+            officeTel:    'Office Tel',
+            email:        'Email',
+            fax:          'Fax',
+            personalWeb:  'Personal Web',
+          },
+          department:      'department',
+          researchGroup:   'research group',
+          title: {
+            topic: 'title',
+          },
+          specialty: {
+            topic: 'specialty',
+          },
+          education: {
+            topic:         'Education',
+          },
+          experience: {
+            topic:        'Experience',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '使用者資料管理',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者資料',
+        },
+        content: {
+          topic: '教師資料維護',
+          image: {
+            select:  '編輯相片',
+            cancel:  '取消',
+            check:   '確認',
+          },
+          profile: {
+            name:         '姓名',
+            title:        '職稱',
+            nation:       '國籍',
+            officeAddress:  '辦公室位置',
+            labName:      '實驗室名稱',
+            labAddress:  '實驗室位置',
+            labTel:       '實驗室電話',
+            labWeb:       '實驗室網站',
+            officeTel:    '辦公室電話',
+            email:        'Email',
+            fax:          '傳真',
+            personalWeb:  '個人網站',
+          },
+          department:      '系所別',
+          researchGroup:   '研究群',
+          title: {
+            topic: '職稱',
+          },
+          specialty: {
+            topic: '專長領域',
+          },
+          education: {
+            topic:         '學歷',
+          },
+          experience: {
+            topic:        '經歷',
+          },
+        },
+      },
+    } );
+    const currentRoute = 'user/faculty/profile';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/teacher/profile' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/profile' },
+    ]
+  )
+
+append content
+  include /components/common/loading.pug
+  include /components/common/refresh.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  +navigation-bar( 'content' )
+  section.content__profile.profile
+    form.profile__image.image( method= 'post' )
+      section.image__frame.frame
+        label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.image.select
+        input.frame__upload#frame__upload( type= 'file' )
+      button.image__check.check#image-check= i18n[ LANG.id ].content.image.check
+      button.image__cancel.cancel#image-cancel= i18n[ LANG.id ].content.image.cancel
+    +profile-card( 'name',   i18n[ LANG.id ].content.profile.name, data.profile.name )
+    +profile-card( 'email', i18n[ LANG.id ].content.profile.email, data.profile.email )
+    +profile-card( 'fax', i18n[ LANG.id ].content.profile.fax, data.profile.fax )
+    +profile-card( 'nation', i18n[ LANG.id ].content.profile.nation, data.profile.nation )
+    +profile-card( 'personal-web', i18n[ LANG.id ].content.profile.personalWeb, data.profile.personalWeb )
+    +profile-card( 'office-address', i18n[ LANG.id ].content.profile.officeAddress, data.profile.officeAddress )
+    +profile-card( 'office-tel', i18n[ LANG.id ].content.profile.officeTel, data.profile.officeTel )
+    +profile-card( 'lab-name', i18n[ LANG.id ].content.profile.labName, data.profile.labName )
+    +profile-card( 'lab-address', i18n[ LANG.id ].content.profile.labAddress, data.profile.labAddress )
+    +profile-card( 'lab-tel', i18n[ LANG.id ].content.profile.labTel, data.profile.labTel )
+    +profile-card( 'lab-web', i18n[ LANG.id ].content.profile.labWeb, data.profile.labWeb )
+    section.option.profile__option.profile__option--department
+      h3.option__title= i18n[ LANG.id ].content.department
+      article.option__tags.tags
+        each departmentId in UTILS.faculty.departmentUtils.supportedId
+          if Array.from( dataWithId.department, department => department.type ).includes( departmentId ) 
+            button.tags__tag.tags__tag--blue.tags__tag--active(
+              data-department-id = `${ departmentId }`
+            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+          else
+            button.tags__tag.tags__tag--blue(
+              data-department-id = `${ departmentId }`
+            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+    section.option.profile__option.profile__option--research-group
+      h3.option__title= i18n[ LANG.id ].content.researchGroup
+      article.option__tags.tags
+        each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+          if Array.from( dataWithId.researchGroup, researchGroup => researchGroup.type ).includes( researchGroupId ) 
+            button.tags__tag.tags__tag--red.tags__tag--active(
+              data-research-id = `${ researchGroupId }`,
+            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+          else
+            button.tags__tag.tags__tag--red(
+              data-research-id = `${ researchGroupId }`,
+            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+  section.content__title.title
+    +local-topic( 'title', i18n[ LANG.id ].content.title.topic )
+    +refreshWithImage( 'title' )
+    +loading( 'title' ) 
+    section.title__cards.cards
+      if Array.isArray( dataWithId.title ) && dataWithId.title.length
+        each titleObj in dataWithId.title
+          +title-card( titleObj )
+  section.content__specialty.specialty
+    +local-topic( 'specialty', i18n[ LANG.id ].content.specialty.topic )
+    +refreshWithImage( 'specialty' )
+    +loading( 'specialty' ) 
+    section.specialty__cards.cards
+      if Array.isArray( dataWithId.specialty ) && dataWithId.specialty.length
+        each specialtyObj in dataWithId.specialty
+          +specialty-card( specialtyObj )
+  section.content__education.education
+    +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
+    +refreshWithImage( 'education' )
+    +loading( 'education' ) 
+    section.education__cards.cards
+      if Array.isArray( dataWithId.education ) && dataWithId.education.length
+        -
+          dataWithId.education.sort( (educationA, educationB)=>{
+            if(educationA.to === null )
+              return -1
+            else if(educationB.to === null)
+              return 1
+            return educationB.to - educationA.to
+          })
+        each educationObj in dataWithId.education
+          +education-card( educationObj )
+  section.content__experience.experience
+    +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )
+    +refreshWithImage( 'experience' )
+    +loading( 'experience' ) 
+    section.experience__cards.cards     
+      if Array.isArray( dataWithId.experience ) && dataWithId.experience.length
+        -
+          dataWithId.experience.sort( (experienceA, experienceB)=>{
+            if(experienceA.to === null )
+              return -1
+            else if(experienceB.to === null)
+              return 1
+            return experienceB.to - experienceA.to
+          })
+        each experienceObj in dataWithId.experience
+          +experience-card( experienceObj )
+
+append footer
+
+append scripts
+  +js( 'user/teacher/profile' )

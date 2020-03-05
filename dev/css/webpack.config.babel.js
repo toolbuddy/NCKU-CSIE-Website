@@ -94,22 +94,25 @@ export default {
         'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
 
         // Route `user`
-        'user/index':              path.join( sassRoot, 'user/index.scss' ),
-        'user/profile':            path.join( sassRoot, 'user/profile.scss' ),
-        'user/studentAward':       path.join( sassRoot, 'user/studentAward.scss' ),
-        'user/resetPassword':      path.join( sassRoot, 'user/resetPassword.scss' ),
-        'user/award':              path.join( sassRoot, 'user/award.scss' ),
-        'user/publication':        path.join( sassRoot, 'user/publication.scss' ),
-        'user/conference':         path.join( sassRoot, 'user/conference.scss' ),
-        'user/project':            path.join( sassRoot, 'user/project.scss' ),
-        'user/patent':             path.join( sassRoot, 'user/patent.scss' ),
-        'user/staffProfile':       path.join( sassRoot, 'user/staffProfile.scss' ),
-        'user/technologyTransfer': path.join( sassRoot, 'user/technologyTransfer.scss' ),
-        'user/announcement/edit':  path.join( sassRoot, 'user/announcement/edit.scss' ),
-        'user/announcement/add':   path.join( sassRoot, 'user/announcement/add.scss' ),
+        'user/index':                       path.join( sassRoot, 'user/index.scss' ),
+        'user/faculty/profile':             path.join( sassRoot, 'user/faculty/profile.scss' ),
+        'user/faculty/student-award':       path.join( sassRoot, 'user/faculty/student-award.scss' ),
+        'user/faculty/award':               path.join( sassRoot, 'user/faculty/award.scss' ),
+        'user/faculty/publication':         path.join( sassRoot, 'user/faculty/publication.scss' ),
+        'user/faculty/conference':          path.join( sassRoot, 'user/faculty/conference.scss' ),
+        'user/faculty/project':             path.join( sassRoot, 'user/faculty/project.scss' ),
+        'user/faculty/patent':              path.join( sassRoot, 'user/faculty/patent.scss' ),
+        'user/faculty/technology-transfer': path.join( sassRoot, 'user/faculty/technology-transfer.scss' ),
+        'user/staff/profile':                path.join( sassRoot, 'user/staff/profile.scss' ),
+        'user/resetPassword':               path.join( sassRoot, 'user/resetPassword.scss' ),
+        'user/announcement/edit':           path.join( sassRoot, 'user/announcement/edit.scss' ),
+        'user/announcement/add':            path.join( sassRoot, 'user/announcement/add.scss' ),
+        'user/teacher/profile':             path.join( sassRoot, 'user/teacher/profile.scss' ),
+        'user/teacher/award':               path.join( sassRoot, 'user/teacher/award.scss' ),
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
+        'auth/reset-password':    path.join( sassRoot, 'auth/reset-password.scss' ),
 
         // Route `developer`
         'developer/index':             path.join( sassRoot, 'developer/index.scss' ),

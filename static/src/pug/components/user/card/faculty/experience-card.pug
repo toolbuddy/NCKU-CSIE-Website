@@ -1,0 +1,41 @@
+include /components/common/image.pug
+
+mixin experience-card( data )
+  - 
+    const i18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        now: 'NOW',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        now: '現在',
+      },
+    })
+  section.experience-card.cards__experience-card
+    section.experience-card__value
+      time.value__time
+        if data.from !== null
+          p.time__from.from= data.from
+        else
+          p.time__from.from= '----'
+        hr.time__till
+        if data.to !== null
+          p.time__to.to= data.to
+        else 
+          p.time__to.to= i18n[ LANG.id ].now
+      if data.organization !== null
+        p.value__text.value__text--organization= data.organization
+      if data.department !== null
+        p.value__text.value__text--department= data.department
+      if data.title !== null
+        p.value__text.value__text--title= data.title
+    +image( {
+      alt: 'patch',
+      className: `experience-card__patch experience-card__patch--${ data.experienceId }`,
+      src: 'icon/edit.png',
+    } )   
+    +image( {
+      alt: 'delete',
+      className: `experience-card__delete experience-card__delete--${ data.experienceId }`,
+      src: 'icon/delete.png',
+    } )    
+
