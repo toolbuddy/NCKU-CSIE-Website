@@ -1,4 +1,6 @@
-import express from 'express';
+// Import express from 'express';
+import bodyParser from 'body-parser';
+
 
 /**
  * Url-encoded parser for HTTP request body.
@@ -12,19 +14,12 @@ import express from 'express';
  * Maximum supported JSON size is 5GB.
  */
 
-const urlEncoded = express.urlencoded( {
+const urlEncoded = bodyParser.urlencoded( {
     extended: true,
     limit:    '5GB',
-    type:     [
-        'application/x-www-form-urlencoded',
-        'multipart/form-data',
-        'text/*',
-        'application/xhtml+xml',
-        'application/xml',
-    ],
 } );
 
-const jsonParser = express.json( {
+const jsonParser = bodyParser.json( {
     limit: '5GB',
     type:  '*/json',
 } );

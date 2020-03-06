@@ -7,6 +7,7 @@ const FileValidationConstraints = {
         },
     },
     content: {
+        type:     'string',
         presence: true,
     },
 };

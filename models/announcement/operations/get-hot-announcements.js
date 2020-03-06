@@ -89,7 +89,7 @@ export default async ( opt ) => {
             include: [
                 {
                     model:      Tag,
-                    as:         'tag',
+                    as:         'tags',
                     attributes: [],
                     where:      {
                         tagId: {
@@ -148,7 +148,7 @@ export default async ( opt ) => {
             announcementId: announcement.announcementId,
             content:        announcement.announcementI18n[ 0 ].content,
             title:          announcement.announcementI18n[ 0 ].title,
-            updateTime:     Number( announcement.updateTime ),
+            updateTime:     announcement.updateTime,
             views:          announcement.views,
         } ) );
 

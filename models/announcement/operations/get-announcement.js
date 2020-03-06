@@ -70,47 +70,49 @@ export default async ( opt ) => {
                     },
                 },
                 {
-                    model:      File,
-                    as:         'file',
+                    model:      Tag,
+                    as:         'tags',
                     attributes: [
-                        'fileId',
-                        'name',
+                        'tagId',
                     ],
                     where: {
                         announcementId,
                     },
                 },
-                {
-                    model:      Tag,
-                    as:         'tag',
-                    attributes: [
-                        'tagId',
-                    ],
-                },
             ],
         } );
-
         if ( !data ) {
             const error = new Error( 'no result' );
             error.status = 404;
             throw error;
         }
 
+        const files = await File.findAll( {
+            attributes: [
+                'fileId',
+                'name',
+            ],
+            where: {
+                announcementId,
+            },
+        } );
+
         return {
             announcementId: data.announcementId,
             author:         data.author,
-            publishTime:    Number( data.publishTime ),
-            updateTime:     Number( data.updateTime ),
+            publishTime:    data.publishTime,
+            updateTime:     data.updateTime,
             views:          data.views,
             isPinned:       data.isPinned,
             image:          data.image,
             title:          data.announcementI18n[ 0 ].title,
             content:        data.announcementI18n[ 0 ].content,
-            tags:           data.tag.map( tag => tag.tagId ),
-            files:          data.file,
+            tags:           data.tags.map( tag => tag.tagId ),
+            files,
         };
     }
     catch ( err ) {
+        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();

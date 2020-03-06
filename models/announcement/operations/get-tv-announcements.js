@@ -15,7 +15,7 @@ export default async ( opt ) => {
         const {
             tags = [],
             amount = null,
-            language = null,
+            languageId = null,
         } = opt || {};
 
         if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
@@ -28,7 +28,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -47,7 +47,7 @@ export default async ( opt ) => {
             include: [
                 {
                     model:      Tag,
-                    as:         'tag',
+                    as:         'tags',
                     attributes: [],
                     where:      {
                         tagId: {
@@ -94,7 +94,7 @@ export default async ( opt ) => {
                         'content',
                     ],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
             ],

@@ -75,7 +75,7 @@ export default async ( opt ) => {
             include: [
                 {
                     model:      Tag,
-                    as:         'tag',
+                    as:         'tags',
                     attributes: [],
                     where:      {
                         tagId: {
@@ -117,7 +117,7 @@ export default async ( opt ) => {
                 },
                 {
                     model:      Tag,
-                    as:         'tag',
+                    as:         'tags',
                     attributes: [ 'tagId', ],
                 },
             ],
@@ -125,13 +125,13 @@ export default async ( opt ) => {
 
         data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            updateTime:     Number( announcement.updateTime ),
+            updateTime:     announcement.updateTime,
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tag.map( tag => tag.tagId ),
+            tags:           announcement.tags.map( tag => tag.tagId ),
         } ) );
 
-        data.sort( ( announcementA, announcementB ) => Number( announcementA.updateTime ) < Number( announcementB.updateTime ) );
+        data.sort( ( announcementA, announcementB ) => new Date( announcementA.updateTime ) < new Date( announcementB.updateTime ) );
 
         return data;
     }

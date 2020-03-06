@@ -1,3 +1,4 @@
+import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 const AnnouncementValidationConstraints = {
@@ -7,25 +8,8 @@ const AnnouncementValidationConstraints = {
             type: ValidateUtils.isValidId,
         },
     },
-    publishTime: {
-        presence:     true,
-        type:     {
-            type: ValidateUtils.isValidDate,
-        },
-    },
-    updateTime: {
-        presence:     true,
-        type:     {
-            type: ValidateUtils.isValidDate,
-        },
-    },
-    isPinned: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
-        },
-    },
-    // isPublished: {
+
+    // IsPublished: {
     //     presence:     true,
     //     type:     {
     //         type: value => ValidateUtils.isValidBoolean( value ),
@@ -60,7 +44,7 @@ const AnnouncementValidationConstraints = {
             allowEmpty: false,
         },
         type:     'array',
-    }
+    },
 };
 
 export default AnnouncementValidationConstraints;

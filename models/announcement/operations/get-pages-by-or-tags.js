@@ -63,7 +63,7 @@ export default async ( opt ) => {
             },
             include: [ {
                 model:      Tag,
-                as:         'tag',
+                as:         'tags',
                 attributes: [],
                 where:      {
                     tagId: {

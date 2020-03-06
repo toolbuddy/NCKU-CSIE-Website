@@ -18,7 +18,6 @@ import getFile from 'models/announcement/operations/get-file.js';
 
 import tagUtils from 'models/announcement/utils/tag.js';
 import staticHtml from 'routes/utils/static-html.js';
-import { projectRoot, } from 'settings/server/config.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -96,6 +95,7 @@ router
             announcementId: Number( req.params.announcementId ),
             languageId:     req.query.languageId,
         } );
+
         res.locals.UTILS.announcement = {
             tagUtils,
         };
@@ -103,7 +103,6 @@ router
             breaks:  true,
             linkify: true,
         } );
-
         await new Promise( ( resolve, reject ) => {
             res.render( 'announcement/detail.pug', {
                 data,
@@ -129,8 +128,8 @@ router
 .route( '/:announcementId/file/:fileId' )
 .get( async ( req, res, next ) => {
     try {
-        res.set('Content-Type', 'application/octet-stream');
-        res.send(Buffer.from(await getFile( req.params.fileId ), 'binary'));
+        res.set( 'Content-Type', 'application/octet-stream' );
+        res.send( Buffer.from( await getFile( req.params.fileId ), 'binary' ) );
     }
     catch ( err ) {
         if ( err.status === 404 )

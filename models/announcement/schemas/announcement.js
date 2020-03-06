@@ -8,14 +8,6 @@ const Announcement = announcement.define( 'announcement', {
         primaryKey:    true,
         autoIncrement: true,
     },
-    publishTime: {
-        type:      Sequelize.DATE,
-        allowNull: true,
-    },
-    updateTime: {
-        type:      Sequelize.DATE,
-        allowNull: true,
-    },
     author: {
         type:      Sequelize.INTEGER,
         allowNull: true,
@@ -36,13 +28,18 @@ const Announcement = announcement.define( 'announcement', {
         defaultValue: '1',
     },
     image: {
-        type:      Sequelize.BLOB('medium'),
+        type:      Sequelize.BLOB( 'medium' ),
         allowNull: true,
+        get () {
+            if ( this.getDataValue( 'image' ) )
+                return this.getDataValue( 'image' ).toString( 'base64' );
+            return null;
+        },
     },
 }, {
     timestamps: true,
-    createdAt: 'publishTime',
-    updatedAt: 'updateTime',
-});
+    createdAt:  'publishTime',
+    updatedAt:  'updateTime',
+} );
 
 export default Announcement;

@@ -1,4 +1,3 @@
-import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import {
     Announcement,
@@ -37,8 +36,6 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            publishTime = null,
-            updateTime = null,
             author = null,
             isPinned = null,
             image = null,
@@ -48,8 +45,6 @@ export default async ( opt ) => {
         } = opt;
 
         if ( typeof ( validate( {
-            publishTime,
-            updateTime,
             author,
             isPinned,
             image,
@@ -63,19 +58,14 @@ export default async ( opt ) => {
         }
 
         const langArr = [];
-        announcementI18n.forEach( i18nData => {
+        announcementI18n.forEach( ( i18nData ) => {
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
                 throw error;
             }
-            if ( !ValidateUtils.isValidArray( i18nData.fileI18n ) ) {
-                const error = new Error( 'Invalid fileI18n object' );
-                error.status = 400;
-                throw error;
-            }
             langArr.push( i18nData.languageId );
-        });
+        } );
         if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
             const error = new Error( 'Invalid announcementI18n object' );
             error.status = 400;
@@ -83,14 +73,14 @@ export default async ( opt ) => {
         }
 
         files.forEach( ( file ) => {
-            if ( typeof ( validate( file, FileValidationConstraints ) ) !== 'undefined' || !ValidateUtils.isValidBlob( file.content ) ) {
+            if ( typeof ( validate( file, FileValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid file object' );
                 error.status = 400;
                 throw error;
             }
         } );
 
-        tag.forEach( ( tagObj ) => {
+        tags.forEach( ( tagObj ) => {
             if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
@@ -99,8 +89,6 @@ export default async ( opt ) => {
         } );
 
         const res = await announcement.transaction( t => Announcement.create( {
-            publishTime,
-            updateTime,
             author,
             isPinned,
             image,
@@ -123,11 +111,9 @@ export default async ( opt ) => {
                 },
             ],
             transaction: t,
-        } ) ).then( () => {
-            return { 'message': 'success' };
-        })
+        } ) ).then( () => ( { 'message': 'success', } ) )
         .catch( ( err ) => {
-            error.status = 500;
+            err.status = 500;
             throw err;
         } );
 

@@ -2,18 +2,6 @@ import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 const AnnouncementValidationConstraints = {
-    publishTime: {
-        presence:     true,
-        type:     {
-            type: ValidateUtils.isValidDate,
-        },
-    },
-    updateTime: {
-        presence:     true,
-        type:     {
-            type: ValidateUtils.isValidDate,
-        },
-    },
     author: {
         presence:     true,
         type:     {
@@ -26,7 +14,8 @@ const AnnouncementValidationConstraints = {
             type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
-    // isPublished: {
+
+    // IsPublished: {
     //     presence:     true,
     //     type:     {
     //         type: value => ValidateUtils.isValidBoolean( value ),
@@ -34,6 +23,8 @@ const AnnouncementValidationConstraints = {
     // },
     image: {
         presence:     false,
+
+        // TODO: type should be blob
         type:       'string',
         length:   {
             maximum: 2083,
@@ -57,7 +48,7 @@ const AnnouncementValidationConstraints = {
             allowEmpty: false,
         },
         type:     'array',
-    }
+    },
 };
 
 export default AnnouncementValidationConstraints;

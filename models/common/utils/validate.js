@@ -33,10 +33,6 @@ class ValidateUtils {
     static isValidArray ( arr ) {
         return validate.isArray( arr );
     }
-
-    static isValidBlob( blob ) {
-        return blob instanceof Blob;
-    }
 }
 
 export default ValidateUtils;

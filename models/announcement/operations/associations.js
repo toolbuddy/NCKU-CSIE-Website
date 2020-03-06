@@ -10,16 +10,16 @@ Announcement.hasMany( AnnouncementI18n, {
 } );
 
 Announcement.hasMany( Tag, {
-    as:         'tag',
+    as:         'tags',
     foreignKey: 'announcementId',
     sourceKey:  'announcementId',
 } );
 
 Announcement.hasMany( File, {
-    as:         'file',
+    as:         'files',
     foreignKey: 'announcementId',
     sourceKey:  'announcementId',
-});
+} );
 
 export {
     Announcement,

@@ -183,7 +183,7 @@ export default class AnnouncementEvent {
                 if ( this.config.method === 'add' )
                     this.uploadPostAnnouncement();
                 else
-                    this.uploadPatchAnnouncement();
+                    this.uploadPutAnnouncement();
             }
         } );
     }
@@ -282,28 +282,27 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        fetch( `${ host }/announcement/add`, {
+        fetch( `${ host }/user/announcement/add`, {
             method:   'POST',
-            type:     'string',
+            headers: {
+                'user-agent':   'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json',
+            },
             body:   JSON.stringify( {
-                'method':           'post',
                 'author':           this.config.author,
-                'isPinned':         0,
-                'isPublished':      1,
-                'imageUrl':         null,
-                'views':            0,
-                'tags':             this.state.tags.map( tagId => ( {
-                    tagId,
-                } ) ),
+                'image':            null,
                 'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
                     languageId,
                     title:      this.data[ languageId ].title,
                     content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
                 } ) ),
-                'fileI18n': this.state.newFiles.map( file => ( {
+                'files': this.state.newFiles.map( file => ( {
                     languageId: this.state.languageId,
                     name:       file.name,
                     content:    file.content,
+                } ) ),
+                'tags':             this.state.tags.map( tagId => ( {
+                    tagId,
                 } ) ),
             } ),
         } )
@@ -312,48 +311,36 @@ export default class AnnouncementEvent {
         } );
     }
 
-    uploadPatchAnnouncement () {
-        let tagString = '';
-
-        /***
-         * Use a string to submit which tags be choosed
-         * ex. `tag1 tag2 tag3 ...`
-         */
-
-        this.state.tags.forEach( ( tag ) => {
-            tagString += `${ tag } `;
-        } );
+    uploadPutAnnouncement () {
         const files = {};
         this.state.files.forEach( ( file ) => {
             files[ file.fileId ] = file.name;
         } );
-
-        fetch( `${ host }/announcement/add`, {
-            method:   'POST',
-            type:     'string',
+        fetch( `${ host }/user/announcement/edit/${ this.config.id }`, {
+            method:   'PUT',
+            headers: {
+                'user-agent':   'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json',
+            },
             body:   JSON.stringify( {
-                'method':           'patch',
-                'isPublished':      1,
                 'announcementId':   this.config.id,
-                'author':           this.config.author,
-                'imageUrl':         null,
-                'views':            0,
-                'i18n':           {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                },
-                'tags':           tagString,
-                'fileI18n':       {},
+                'image':            null,
+                'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
+                    languageId,
+                    title:      this.data[ languageId ].title,
+                    content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+                } ) ),
+
+                // TODO: maintain these file array. `addedFiles` contains objects that
+                // contain file content and file name; `deletedFiles` contains file ids
+                // that are gonna be deleted
+                'addedFiles':   [],
+                'deletedFiles': [],
+                'tags':          this.state.tags.map( tag => ( { tagId: tag, } ) ),
             } ),
         } )
         .then( () => {
-            location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+            Location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
         } );
     }
 
