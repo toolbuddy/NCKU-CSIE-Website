@@ -37,7 +37,6 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             author = null,
-            isPinned = null,
             image = null,
             announcementI18n = null,
             tags = null,
@@ -46,7 +45,6 @@ export default async ( opt ) => {
 
         if ( typeof ( validate( {
             author,
-            isPinned,
             image,
             announcementI18n,
             tags,
@@ -90,7 +88,6 @@ export default async ( opt ) => {
 
         const res = await announcement.transaction( t => Announcement.create( {
             author,
-            isPinned,
             image,
             announcementI18n,
             tags,

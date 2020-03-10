@@ -113,6 +113,7 @@ router
             }
             catch ( error ) {
                 console.error( error );
+                res.status( error.status ).send( error.message );
             }
         }
         else {
@@ -186,8 +187,10 @@ router
                         res.json( { userId: -1, } );
                     } );
                 }
-                else
+                else{
                     console.error( error );
+                    res.status( error.status ).send( error.message );
+                }
             }
         }
     }
@@ -1205,13 +1208,16 @@ router
                     } );
                 } );
             }
-            else
+            else{
                 console.error( error );
+                res.status( error.status ).send( error.message );
+            }
         }
         return res.end();
     }
     catch ( error ) {
         console.error( error );
+        res.status( error.status ).send( error.message );
     }
 } );
 
@@ -1397,11 +1403,11 @@ router
             fileI18n:       [],
         } );
 
-        res.send( { 'message': 'success', } );
+        res.send( { message: 'success', } );
     }
     catch ( error ) {
-        // TODO: handle error message
         console.error( error );
+        res.status( error.status ).send( error.message );
     }
 } );
 
@@ -1413,19 +1419,13 @@ router
 .route( '/announcement/delete' )
 .post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
+        await deleteAnnouncements( req.body );
 
-        await deleteAnnouncements( {
-            announcementIds: [
-                data.announcementId,
-            ],
-        } );
-
-        res.send( { 'message': 'success', } );
+        res.send( { message: 'success', } );
     }
     catch ( error ) {
-        // TODO: handle error message
         console.error( error );
+        res.status( error.status ).send( error.message );
     }
 } );
 
