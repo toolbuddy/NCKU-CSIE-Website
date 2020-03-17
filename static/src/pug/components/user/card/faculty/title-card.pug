@@ -1,7 +1,7 @@
 include /components/common/image.pug
 
 mixin title-card( data )
-  - 
+  -
     const i18n = Object.freeze({
       [ LANG.getLanguageId( 'en-US' ) ]: {
         now: 'NOW',
@@ -20,17 +20,17 @@ mixin title-card( data )
         hr.time__till
         if data.to !== null
           p.time__to.to= data.to
-        else 
+        else
           p.time__to.to= i18n[ LANG.id ].now
       p.value__title= data.title
     +image( {
       alt: 'patch',
       className: `title-card__patch title-card__patch--${ data.titleId }`,
       src: 'icon/edit.png',
-    } )   
+    } )
     +image( {
       alt: 'delete',
       className: `title-card__delete title-card__delete--${ data.titleId }`,
       src: 'icon/delete.png',
-    } )    
+    } )
 

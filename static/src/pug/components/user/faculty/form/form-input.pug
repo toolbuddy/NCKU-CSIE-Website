@@ -3,7 +3,7 @@ include /components/user/faculty/form/i18n-text.pug
 include /components/user/faculty/form/delete-preview.pug
 
 mixin form-input( modifier, method, formI18n, inputConfig )
-  - 
+  -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         button: {
@@ -30,9 +30,7 @@ mixin form-input( modifier, method, formI18n, inputConfig )
         p.content__error-message.error-message= ''
       if method === 'delete'
         +delete-preview()
-        
+
     section.form-input__button.button
       button.button__check.check= i18n[ LANG.id ].button.check
       button.button__cancel.cancel= i18n[ LANG.id ].button.cancel
-    
-    

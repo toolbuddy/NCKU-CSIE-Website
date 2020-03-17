@@ -2,13 +2,13 @@ extends /layouts/base.pug
 include /components/user/announcement/time-selector.pug
 include /components/common/topic.pug
 include /components/user/announcement/edit-block.pug
- 
+
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
         title: 'Create Announcement',
-        breadcrumb: { 
+        breadcrumb: {
           home:     'home',
           announcement:     'announcement',
         },
@@ -46,7 +46,7 @@ append content
     +topic( 'main', i18n[ LANG.id ].title )
     +edit-block( 'main', 'add', null )
 
-append footer 
+append footer
 
 append scripts
   +js( 'user/announcement/add' )

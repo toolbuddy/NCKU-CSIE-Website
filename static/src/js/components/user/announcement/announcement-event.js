@@ -108,11 +108,11 @@ export default class AnnouncementEvent {
             statusbar: false,
             plugins:   'table lists',
             menubar:   'table',
-            toolbar:   `formatselect | 
-                        bold italic strikethrough forecolor backcolor | 
-                        link | 
-                        alignleft aligncenter alignright alignjustify  | 
-                        numlist bullist outdent indent  | 
+            toolbar:   `formatselect |
+                        bold italic strikethrough forecolor backcolor |
+                        link |
+                        alignleft aligncenter alignright alignjustify  |
+                        numlist bullist outdent indent  |
                         removeformat`,
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {

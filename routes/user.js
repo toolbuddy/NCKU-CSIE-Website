@@ -1369,6 +1369,56 @@ router
 } );
 
 router
+.route( '/teacher/technology-transfer' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetail( {
+            profileId,
+            languageId,
+        } );
+
+        const dataWithId = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            researchGroupUtils,
+            departmentUtils,
+            nationUtils,
+            degreeUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/teacher/technology-transfer.pug', {
+                data,
+                dataWithId,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
+
+router
 .route( '/teacher/award' )
 .get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
     try {

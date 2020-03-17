@@ -8,9 +8,9 @@ mixin i18n-text ( config, i18n, method )
         alt: 'zh-tw',
         className: 'zh-tw__flag flag',
         src: `icon/tw.png`,
-      } ) 
+      } )
       input.zh-tw__text-input.text-input(
-        type='text', 
+        type='text',
         input-type= 'i18n-text',
         languageId= LANG.getLanguageId( 'zh-TW' ),
         placeholder=i18n[ LANG.getLanguageId( 'zh-TW' ) ].default[ config.columnName ],
@@ -24,9 +24,9 @@ mixin i18n-text ( config, i18n, method )
         alt: 'en-us',
         className: 'en-us__flag flag',
         src: `icon/us.png`,
-      } ) 
+      } )
       input.en-us__text-input.text-input(
-        type='text', 
+        type='text',
         input-type= 'i18n-text',
         languageId= LANG.getLanguageId( 'en-US' ),
         placeholder=i18n[ LANG.getLanguageId( 'en-US' ) ].default[ config.columnName ],
@@ -35,4 +35,3 @@ mixin i18n-text ( config, i18n, method )
         method= method,
         required= config.required
       )
-    

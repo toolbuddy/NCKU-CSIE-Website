@@ -62,14 +62,14 @@ mixin edit-block( belongBlock, method, dbData )
         } ),
         tagName: tag,
         checked: ( data.tags.indexOf( tagId ) === -1)? true: false,
-      }; 
+      };
     } );
   form#edit-block.edit-block( class= `${ belongBlock }__edit-block` name='edit-block' )
     aside.edit-block__tags.tags
       each tagObj, tagName in allTags
         if tagObj.checked
           button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
-        else  
+        else
           button.tags__tag( class = `tags__tag--${ tagObj.color } tags__tag--active`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
     aside.edit-block__language.language
       if LANG.id === LANG.getLanguageId( 'zh-TW' )
