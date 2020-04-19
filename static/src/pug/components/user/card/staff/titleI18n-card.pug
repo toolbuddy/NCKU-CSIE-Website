@@ -2,15 +2,15 @@ mixin titleI18n-card( data )
   section.titleI18n-card.cards__titleI18n-card( id=`cards__titleI18n-card--${ data.titleId }` )
     section.titleI18n-card__value
       p.value__text.value__text--titleI18n= data.title
-    img.titleI18n-card__patch( 
-      alt = 'patch', 
-      id = `titleI18n-card__patch--${ data.titleId }`, 
+    img.titleI18n-card__patch(
+      alt = 'patch',
+      id = `titleI18n-card__patch--${ data.titleId }`,
       src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
       data-id = data.titleId
     )
-    img.titleI18n-card__delete( 
-      alt = 'delete', 
-      id = `titleI18n-card__delete--${ data.titleId }`, 
-      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } ) 
+    img.titleI18n-card__delete(
+      alt = 'delete',
+      id = `titleI18n-card__delete--${ data.titleId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
       data-id = data.titleId
-    ) 
+    )

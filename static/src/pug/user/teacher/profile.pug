@@ -145,7 +145,7 @@ append content
       h3.option__title= i18n[ LANG.id ].content.department
       article.option__tags.tags
         each departmentId in UTILS.faculty.departmentUtils.supportedId
-          if Array.from( dataWithId.department, department => department.type ).includes( departmentId ) 
+          if Array.from( dataWithId.department, department => department.type ).includes( departmentId )
             button.tags__tag.tags__tag--blue.tags__tag--active(
               data-department-id = `${ departmentId }`
             )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
@@ -157,7 +157,7 @@ append content
       h3.option__title= i18n[ LANG.id ].content.researchGroup
       article.option__tags.tags
         each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
-          if Array.from( dataWithId.researchGroup, researchGroup => researchGroup.type ).includes( researchGroupId ) 
+          if Array.from( dataWithId.researchGroup, researchGroup => researchGroup.type ).includes( researchGroupId )
             button.tags__tag.tags__tag--red.tags__tag--active(
               data-research-id = `${ researchGroupId }`,
             )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
@@ -168,7 +168,7 @@ append content
   section.content__title.title
     +local-topic( 'title', i18n[ LANG.id ].content.title.topic )
     +refreshWithImage( 'title' )
-    +loading( 'title' ) 
+    +loading( 'title' )
     section.title__cards.cards
       if Array.isArray( dataWithId.title ) && dataWithId.title.length
         each titleObj in dataWithId.title
@@ -176,7 +176,7 @@ append content
   section.content__specialty.specialty
     +local-topic( 'specialty', i18n[ LANG.id ].content.specialty.topic )
     +refreshWithImage( 'specialty' )
-    +loading( 'specialty' ) 
+    +loading( 'specialty' )
     section.specialty__cards.cards
       if Array.isArray( dataWithId.specialty ) && dataWithId.specialty.length
         each specialtyObj in dataWithId.specialty
@@ -184,7 +184,7 @@ append content
   section.content__education.education
     +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
     +refreshWithImage( 'education' )
-    +loading( 'education' ) 
+    +loading( 'education' )
     section.education__cards.cards
       if Array.isArray( dataWithId.education ) && dataWithId.education.length
         -
@@ -200,8 +200,8 @@ append content
   section.content__experience.experience
     +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )
     +refreshWithImage( 'experience' )
-    +loading( 'experience' ) 
-    section.experience__cards.cards     
+    +loading( 'experience' )
+    section.experience__cards.cards
       if Array.isArray( dataWithId.experience ) && dataWithId.experience.length
         -
           dataWithId.experience.sort( (experienceA, experienceB)=>{

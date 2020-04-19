@@ -225,8 +225,8 @@ export default class ProfileDataManagement {
                         res( { item, i18n, } );
                     } )
                     .then( ( opt ) => {
-                        fetch( `${ host }/user/profile`, {
-                            method:   'POST',
+                        fetch( `${ host }/user/staff/profile`, {
+                            method:   'PATCH',
                             body:   JSON.stringify( {
                                 profileId:     this.config.profileId,
                                 method:        'update',

@@ -16,13 +16,13 @@
 article.info__input#input
   if type === 'text'
     section.input__text
-      if flag !== null 
+      if flag !== null
         img.input__flag( src= flag alt= '>' )
       if content !== null
-        input.input__content( 
+        input.input__content(
           placeholder= placeholder
           value= value
-          name= name 
+          name= name
           dbTableItem= dbTableItem
           languageId= languageId
           i18n= isI18n
@@ -33,63 +33,62 @@ article.info__input#input
       aside.time__from.from
         label.from__text= i18n[ languageId ].time.from
         span.from__input.input
-          input.input__year( 
-            type = 'number', 
+          input.input__year(
+            type = 'number',
             value = valueFrom,
-            dbTableItem= 'from' 
-            placeholder = 'yyyy' 
+            dbTableItem= 'from'
+            placeholder = 'yyyy'
             name= nameFrom
           )
       aside.time__to.to
         label.to__text= i18n[ languageId ].time.to
         span.to__input.input
-          input.input__year( 
-            type = 'number', 
-            value = valueTo, 
-            placeholder = 'yyyy' 
+          input.input__year(
+            type = 'number',
+            value = valueTo,
+            placeholder = 'yyyy'
             name= nameTo
             dbTableItem= 'to'
           )
 
   else if type === 'local-topic'
-    section.input__local-topic.local-topic  
+    section.input__local-topic.local-topic
       p.local-topic__text= localTopic
 
   else if type === 'dropdown'
     section.input__dropdown.dropdown
-      section.dropdown__top( 
-        class=`dropdown__top--${ dbTableItem }` 
+      section.dropdown__top(
+        class=`dropdown__top--${ dbTableItem }`
       )= top
       article.dropdown__button.button( class= `dropdown__button--${ dbTableItem }` )
-        input.button__submit( 
+        input.button__submit(
           class= `button__submit--${ dbTableItem }`
-          type = 'hidden' 
-          name= name 
-          value= value 
+          type = 'hidden'
+          name= name
+          value= value
           dbTableItem= dbTableItem
         )
         section.button__content.content
-          each val, index in data  
-            section.content__item( 
+          each val, index in data
+            section.content__item(
               class= `content__item--${ dbTableItem }`
-              value= index  
+              value= index
             )= val
-  
+
   else if type === 'time-detail'
     aside.input__time-detail.time-detail
       span.time-detail__input.input
         input.input__year( type = 'number', value = year, placeholder = 'yyyy', min = '1999' name = dbTableYear dbTableItem = dbTableYear)
         input.input__month( type = 'number', value = month, placeholder = 'mm', min = '01', max = '12' name = dbTableMonth dbTableItem = dbTableMonth)
         input.input__date( type = 'number', value = day, placeholder = 'dd', min = '01', max = '31' name = dbTableDay dbTableItem = dbTableDay)
-  
+
   else if type === 'checkbox'
     aside.input__checkbox.checkbox( class = `input__checkbox--${ dbTableItem }` )
       input.checkbox__choose(
-        type = 'checkbox' 
-        name = dbTableItem 
-        id=dbTableItem 
-        dbTableItem=dbTableItem 
+        type = 'checkbox'
+        name = dbTableItem
+        id=dbTableItem
+        dbTableItem=dbTableItem
         checked = checked
       )
       label.checkbox__text( for=dbTableItem )= content
-      

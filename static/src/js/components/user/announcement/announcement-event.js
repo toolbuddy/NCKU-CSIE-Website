@@ -40,7 +40,7 @@ export default class AnnouncementEvent {
         this.state = {
             languageId:  opt.languageId,
             newFileId:   0,
-            newFiles:    [],
+            addFiles:    [],
             files:       [],
             tags:        [],
             deleteFiles: [],
@@ -108,11 +108,11 @@ export default class AnnouncementEvent {
             statusbar: false,
             plugins:   'table lists',
             menubar:   'table',
-            toolbar:   `formatselect | 
-                        bold italic strikethrough forecolor backcolor | 
-                        link | 
-                        alignleft aligncenter alignright alignjustify  | 
-                        numlist bullist outdent indent  | 
+            toolbar:   `formatselect |
+                        bold italic strikethrough forecolor backcolor |
+                        link |
+                        alignleft aligncenter alignright alignjustify  |
+                        numlist bullist outdent indent  |
                         removeformat`,
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
@@ -183,8 +183,63 @@ export default class AnnouncementEvent {
                 if ( this.config.method === 'add' )
                     this.uploadPostAnnouncement();
                 else
-                    this.uploadPatchAnnouncement();
+                    this.uploadPutAnnouncement();
             }
+        } );
+    }
+
+    subscribeExistFileDelete ( fileId ) {
+        const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ fileId }` );
+
+        deleteDOM.addEventListener( 'click', () => {
+            this.state.deleteFiles.push( fileId );
+            deleteDOM.parentNode.remove();
+        } );
+    }
+
+    subscribeNewFileDelete ( file, fileId ) {
+        const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ fileId }` );
+        classAdd( loaderDOM, 'file-preview__loader--active' );
+
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            const unit8Array = new Uint8Array( fileReader.result );
+            this.state.addFiles.push( {
+                tempId:  fileId,
+                name:    file.name,
+                content: Array.from( unit8Array ),
+            } );
+            classRemove( loaderDOM, 'file-preview__loader--active' );
+        };
+        fileReader.readAsArrayBuffer( file );
+
+        const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ fileId }` );
+
+        deleteDOM.addEventListener( 'click', () => {
+            this.state.addFiles = this.state.addFiles.filter( e => e.tempId !== fileId );
+
+            deleteDOM.parentNode.remove();
+        } );
+    }
+
+    async generateFilePreview ( opt ) {
+        const { file, fileId, isExist, } = opt;
+        new Promise( ( res ) => {
+            const tempDOM = document.createElement( 'temp-section' );
+            tempDOM.innerHTML = FilePreview( {
+                host,
+                name: file.name,
+                id:   fileId,
+            } );
+
+            this.DOM.filePreview.appendChild( tempDOM.firstChild );
+            res();
+        } )
+        .then( () => {
+            if ( isExist )
+                this.subscribeExistFileDelete( fileId );
+            else
+                this.subscribeNewFileDelete( file, fileId );
         } );
     }
 
@@ -211,7 +266,7 @@ export default class AnnouncementEvent {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const unit8Array = new Uint8Array( fileReader.result );
-                this.state.newFiles.push( {
+                this.state.addFiles.push( {
                     tempId:  id,
                     name:    file.name,
                     content: Array.from( unit8Array ),
@@ -231,7 +286,7 @@ export default class AnnouncementEvent {
                     this.state.deleteFiles.push( id );
 
                 else
-                    this.state.newFiles = this.state.newFiles.filter( e => e.tempId !== id );
+                    this.state.addFiles = this.state.addFiles.filter( e => e.tempId !== id );
 
                 deleteDOM.parentNode.remove();
             } );
@@ -282,78 +337,153 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        fetch( `${ host }/announcement/add`, {
-            method:   'POST',
-            type:     'string',
-            body:   JSON.stringify( {
-                'method':           'post',
-                'author':           this.config.author,
-                'isPinned':         0,
-                'isPublished':      1,
-                'imageUrl':         null,
-                'views':            0,
-                'tags':             this.state.tags.map( tagId => ( {
-                    tagId,
-                } ) ),
-                'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
-                    languageId,
-                    title:      this.data[ languageId ].title,
-                    content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                } ) ),
-                'fileI18n': this.state.newFiles.map( file => ( {
-                    languageId: this.state.languageId,
-                    name:       file.name,
-                    content:    file.content,
-                } ) ),
-            } ),
+        new Promise( ( res ) => {
+            const formData = new FormData();
+            formData.append( 'announcementId', this.config.id );
+            formData.append( 'image', null );
+            formData.append( 'announcementI18n', LanguageUtils.supportedLanguageId.map( languageId => ( {
+                languageId,
+                title:      this.data[ languageId ].title,
+                content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+            } ) ) );
+            formData.append( 'addedFiles', Array.from( this.DOM.uploadFile.files ).map( file => ( {
+                name:       file.name,
+                content:    file,
+            } ) ) );
+            formData.append( 'deleteFiles', [] );
+            formData.append( 'tags', this.state.tags.map( tagId => ( {
+                tagId,
+            } ) ), );
+
+            res( formData );
         } )
-        .then( () => {
-            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+        .then( ( formData ) => {
+            console.log( formData.getAll( 'announcementId' ) );
+            fetch( `${ host }/user/announcement/add`, {
+                method:   'POST',
+                headers: {
+                    'user-agent':   'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json',
+                },
+                body:   JSON.stringify( {
+                    'author':           this.config.author,
+                    'image':            null,
+                    'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
+                        languageId,
+                        title:      this.data[ languageId ].title,
+                        content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+                    } ) ),
+                    'addedFiles':   [],
+                    'tags':         this.state.tags.map( tagId => ( {
+                        tagId,
+                    } ) ),
+                } ),
+            } )
+            .then( ( res ) => {
+                console.log( res );
+
+                // Location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+            } );
         } );
+
+        // Fetch( `${ host }/user/announcement/add`, {
+        //     method:   'POST',
+        //     headers: {
+        //         'user-agent':   'Mozilla/4.0 MDN Example',
+        //         'content-type': 'application/json',
+        //     },
+        //     body:   JSON.stringify( {
+        //         'author':           this.config.author,
+        //         'image':            null,
+        //         'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
+        //             languageId,
+        //             title:      this.data[ languageId ].title,
+        //             content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+        //         } ) ),
+        //         'files': this.state.addFiles.map( file => ( {
+        //             languageId: this.state.languageId,
+        //             name:       file.name,
+        //             content:    file.content,
+        //         } ) ),
+        //         'tags':             this.state.tags.map( tagId => ( {
+        //             tagId,
+        //         } ) ),
+        //     } ),
+        // } )
+        // .then( () => {
+        //     location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+        // } );
     }
 
-    uploadPatchAnnouncement () {
-        let tagString = '';
+    uploadPutAnnouncement () {
+        new Promise( ( res ) => {
+            const formData = new FormData();
+            formData.append( 'announcementId', this.config.id );
+            formData.append( 'image', null );
+            formData.append( 'announcementI18n', LanguageUtils.supportedLanguageId.map( languageId => ( {
+                languageId,
+                title:      this.data[ languageId ].title,
+                content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+            } ) ) );
 
-        /***
-         * Use a string to submit which tags be choosed
-         * ex. `tag1 tag2 tag3 ...`
-         */
+            // FormData.append( 'addedFiles', Array.from( this.DOM.uploadFile.files ).map( file => ( {
+            //     name:       file.name,
+            //     content:    file,
+            // } ) ) );
+            formData.append( 'addedFiles', [] );
+            formData.append( 'deletedFiles', [] );
+            formData.append( 'tags', this.state.tags.map( tagId => ( {
+                tagId,
+            } ) ), );
 
-        this.state.tags.forEach( ( tag ) => {
-            tagString += `${ tag } `;
-        } );
-        const files = {};
-        this.state.files.forEach( ( file ) => {
-            files[ file.fileId ] = file.name;
-        } );
-
-        fetch( `${ host }/announcement/add`, {
-            method:   'POST',
-            type:     'string',
-            body:   JSON.stringify( {
-                'method':           'patch',
-                'isPublished':      1,
-                'announcementId':   this.config.id,
-                'author':           this.config.author,
-                'imageUrl':         null,
-                'views':            0,
-                'i18n':           {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                },
-                'tags':           tagString,
-                'fileI18n':       {},
-            } ),
+            res( formData );
         } )
-        .then( () => {
-            location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+        .then( ( formData ) => {
+            console.log( formData.get( 'tags' ) );
+            fetch( `${ host }/user/announcement/edit/${ this.config.id }`, {
+                method:   'PUT',
+
+                // Headers: {
+                //     'user-agent':   'Mozilla/4.0 MDN Example',
+                //     'content-type': 'multipart/form-data',
+                // },
+                body:   formData,
+            } )
+            .then( () => {
+                // Location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+            } );
+
+            // Fetch( `${ host }/user/announcement/edit/${ this.config.id }`, {
+            //     method:   'PUT',
+            //     headers: {
+            //         'user-agent':   'Mozilla/4.0 MDN Example',
+            //         'content-type': 'application/json',
+            //     },
+            //     body:   JSON.stringify( {
+            //         'announcementId':   this.config.id,
+            //         'image':            null,
+            //         'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
+            //             languageId,
+            //             title:      this.data[ languageId ].title,
+            //             content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+            //         } ) ),
+
+            //         // TODO: maintain these file array. `addedFiles` contains objects that
+            //         // contain file content and file name; `deletedFiles` contains file ids
+            //         // that are gonna be deleted
+            //         'addedFiles':    this.state.addFiles.map( file => ( {
+            //             name:    file.name,
+            //             content: file.content,
+            //         } ) ),
+            //         'deletedFiles':  [],
+
+            //         // 'deletedFiles':  this.state.deleteFiles.map( fileId => ({fileId: fileId}) ),
+            //         'tags':          this.state.tags.map( tag => ( { tagId: tag, } ) ),
+            //     } ),
+            // } )
+            // .then( () => {
+            //     // Location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+            // } );
         } );
     }
 
@@ -369,6 +499,7 @@ export default class AnnouncementEvent {
                 this.config.author = res.roleId;
             } );
             this.data = data;
+            console.log( data );
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;
                 this.state.files = data[ this.config.languageId ].files;
@@ -381,7 +512,11 @@ export default class AnnouncementEvent {
             this.subscribeSubmitButton();
             this.DOM.filePreview.innerHTML = '';
             this.state.files.forEach( async ( file ) => {
-                await this.addFilePreviewBlock( file, file.fileId );
+                await this.generateFilePreview( {
+                    file,
+                    fileId:  file.fileId,
+                    isExist: true,
+                } );
             } );
         } );
     }

@@ -9,14 +9,14 @@ const AnnouncementI18nValidationConstraints = {
     },
     title: {
         presence: true,
-        type:       'string',
+        type:     'string',
         length:   {
             maximum: 300,
         },
     },
     content: {
         presence: true,
-        type:       'string',
+        type:     'string',
     },
 };
 

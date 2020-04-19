@@ -1,4 +1,9 @@
-import associations from 'models/announcement/operation/associations.js';
+import {
+    Announcement,
+    AnnouncementI18n,
+    File,
+    Tag,
+} from 'models/announcement/operations/associations.js';
 
 /**
  * A function for getting a specific announcement in all languages
@@ -20,38 +25,7 @@ import associations from 'models/announcement/operation/associations.js';
  */
 
 export default async ( { announcementId = 1, } = {} ) => {
-    const table = await associations();
-
-    const data = await table.announcement.findOne( {
-        include: [
-            {
-                model:      table.announcementI18n,
-                as:         'announcementI18n',
-                attributes: [
-                    'title',
-                    'content',
-                ],
-            },
-            {
-                model:   table.tag,
-                as:      'tag',
-            },
-            {
-                model:   table.announcementFile,
-                as:      'announcementFile',
-                include: [
-                    {
-                        model:      table.announcementFileI18n,
-                        as:         'announcementFileI18n',
-                        attributes: [
-                            'filepath',
-                            'name',
-                            'path',
-                        ],
-                    },
-                ],
-            },
-        ],
+    const data = await Announcement.findOne( {
         attributes: [
             'announcementId',
             'author',
@@ -63,6 +37,31 @@ export default async ( { announcementId = 1, } = {} ) => {
         where: {
             announcementId,
         },
+        include: [
+            {
+                model:      AnnouncementI18n,
+                as:         'announcementI18n',
+                attributes: [
+                    'title',
+                    'content',
+                ],
+            },
+            {
+                model:      File,
+                as:         'files',
+                attributes: [
+                    'fileId',
+                    'name',
+                ],
+            },
+            {
+                model:      Tag,
+                as:         'tags',
+                attributes: [
+                    'tagId',
+                ],
+            },
+        ],
     } )
     .then(
         announcement => ( {
@@ -80,20 +79,17 @@ export default async ( { announcementId = 1, } = {} ) => {
                 title:   announcement.announcementI18n[ 1 ].title,
                 content: announcement.announcementI18n[ 1 ].content,
             },
-            'files':       announcement.announcementFile.map(
-                announcementFile => ( {
-                    url:        announcementFile.announcementFileI18n[ 0 ].filepath,
-                    name:       announcementFile.announcementFileI18n[ 0 ].name,
-                    path:       announcementFile.announcementFileI18n[ 0 ].path,
+            'files':       announcement.files.map(
+                file => ( {
+                    id:   file.fileId,
+                    name: file.name,
                 } ),
             ),
-            'tags':        announcement.tag.map(
-                tag => tag.type,
+            'tags':        announcement.tags.map(
+                tag => tag.tagId,
             ),
         } )
     );
-
-    table.database.close();
 
     return data;
 };

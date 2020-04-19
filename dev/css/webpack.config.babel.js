@@ -109,6 +109,7 @@ export default {
         'user/announcement/add':            path.join( sassRoot, 'user/announcement/add.scss' ),
         'user/teacher/profile':             path.join( sassRoot, 'user/teacher/profile.scss' ),
         'user/teacher/award':               path.join( sassRoot, 'user/teacher/award.scss' ),
+        'user/teacher/technology-transfer': path.join( sassRoot, 'user/teacher/technology-transfer.scss' ),
 
         // Route `auth`
         'auth/login':             path.join( sassRoot, 'auth/login.scss' ),

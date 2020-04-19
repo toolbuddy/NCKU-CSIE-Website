@@ -2,16 +2,10 @@ import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 const AnnouncementValidationConstraints = {
-    author: {
-        presence:     true,
+    announcementId: {
+        presence: true,
         type:     {
             type: ValidateUtils.isValidId,
-        },
-    },
-    isPinned: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
 
@@ -23,8 +17,6 @@ const AnnouncementValidationConstraints = {
     // },
     image: {
         presence:     false,
-
-        // TODO: type should be blob
         type:       'string',
         length:   {
             maximum: 2083,
@@ -39,7 +31,11 @@ const AnnouncementValidationConstraints = {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
-    files: {
+    addedFiles: {
+        presence: true,
+        type:     'array',
+    },
+    deletedFiles: {
         presence: true,
         type:     'array',
     },

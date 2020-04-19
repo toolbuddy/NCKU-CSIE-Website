@@ -9,11 +9,11 @@ include /components/common/image.pug
     },
   } );
 figure.series__show.show.show--hide
-  +image( {
-    alt: data.title,
-    className: 'show__ad',
-    src: `announcement/${ data.image }`,
-  } )
+  img(
+    alt = data.title,
+    class = 'show__ad',
+    src = `data:image/jpeg;base64,${ data.image }`
+  )
   figcaption.show__detail.detail
     header.detail__title= data.title
     p.detail__content= data.content

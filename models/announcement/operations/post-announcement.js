@@ -1,17 +1,15 @@
-import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import {
     Announcement,
     AnnouncementI18n,
     File,
-    FileI18n,
     Tag,
 } from 'models/announcement/operations/associations.js';
 import { announcement, } from 'models/common/utils/connect.js';
 
 import AnnouncementValidationConstraints from 'models/announcement/constraints/post/announcement.js';
 import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/post/announcement-i18n.js';
-import FileI18nValidationConstraints from 'models/announcement/constraints/post/file-i18n.js';
+import FileValidationConstraints from 'models/announcement/constraints/post/file.js';
 import TagValidationConstraints from 'models/announcement/constraints/post/tag.js';
 import validate from 'validate.js';
 
@@ -38,53 +36,49 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            publishTime = null,
-            updateTime = null,
             author = null,
-            isPinned = null,
-            isPublished = null,
-            views = null,
-            imageUrl = null,
-            tag = null,
+            image = null,
             announcementI18n = null,
-            fileI18n = null,
+            tags = null,
+            files = null,
         } = opt;
 
         if ( typeof ( validate( {
-            publishTime,
-            updateTime,
             author,
-            isPinned,
-            isPublished,
-            views,
-            image: imageUrl,
-            i18n:  announcementI18n,
+            image,
+            announcementI18n,
+            tags,
+            files,
         }, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
             const error = new Error( 'Invalid announcement object' );
             error.status = 400;
             throw error;
         }
+
         const langArr = [];
-        for ( const i18nData of announcementI18n ) {
+        announcementI18n.forEach( ( i18nData ) => {
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
                 throw error;
             }
             langArr.push( i18nData.languageId );
-        }
+        } );
         if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
             const error = new Error( 'Invalid announcementI18n object' );
             error.status = 400;
             throw error;
         }
 
-        if ( !ValidateUtils.isValidArray( tag ) ) {
-            const error = new Error( 'Invalid tag object' );
-            error.status = 400;
-            throw error;
-        }
-        tag.forEach( ( tagObj ) => {
+        files.forEach( ( file ) => {
+            if ( typeof ( validate( file, FileValidationConstraints ) ) !== 'undefined' ) {
+                const error = new Error( 'Invalid file object' );
+                error.status = 400;
+                throw error;
+            }
+        } );
+
+        tags.forEach( ( tagObj ) => {
             if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
@@ -92,44 +86,12 @@ export default async ( opt ) => {
             }
         } );
 
-        if ( !ValidateUtils.isValidArray( fileI18n ) ) {
-            const error = new Error( 'Invalid fileI18n object' );
-            error.status = 400;
-            throw error;
-        }
-        fileI18n.forEach( ( fileI18nArr ) => {
-            if ( !ValidateUtils.isValidArray( fileI18nArr ) ) {
-                const error = new Error( 'Invalid fileI18n object' );
-                error.status = 400;
-                throw error;
-            }
-            const langArr = [];
-            fileI18nArr.forEach( ( fileI18nObj ) => {
-                if ( typeof ( validate( fileI18nObj, FileI18nValidationConstraints ) ) !== 'undefined' ) {
-                    const error = new Error( 'Invalid fileI18n object' );
-                    error.status = 400;
-                    throw error;
-                }
-                langArr.push( fileI18nObj.languageId );
-            } );
-            if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
-                const error = new Error( 'Invalid fileI18n object' );
-                error.status = 400;
-                throw error;
-            }
-        } );
-
         const res = await announcement.transaction( t => Announcement.create( {
-            publishTime,
-            updateTime,
             author,
-            isPinned,
-            isPublished,
-            image: imageUrl,
-            views,
+            image,
             announcementI18n,
-            fileI18n,
-            tag,
+            tags,
+            files,
         }, {
             include: [
                 {
@@ -137,25 +99,18 @@ export default async ( opt ) => {
                     as:    'announcementI18n',
                 },
                 {
+                    model: File,
+                    as:    'files',
+                },
+                {
                     model: Tag,
-                    as:    'tag',
+                    as:    'tags',
                 },
             ],
             transaction: t,
-        } ).then( ann => Promise.all( fileI18n.map( async ( fileI18nInfo ) => {
-            const result = await File.create( {
-                announcementId: ann.announcementId,
-                fileI18n:       fileI18nInfo,
-                isValid:        1,
-            }, {
-                include: [ {
-                    model: FileI18n,
-                    as:    'fileI18n',
-                }, ],
-                transaction: t,
-            } );
-            return result;
-        } ) ) ) ).catch( ( err ) => {
+        } ) ).then( () => ( { 'message': 'success', } ) )
+        .catch( ( err ) => {
+            err.status = 500;
             throw err;
         } );
 

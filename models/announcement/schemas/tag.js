@@ -8,7 +8,7 @@ const Tag = announcement.define( 'tag', {
         allowNull:  false,
         primaryKey: true,
     },
-    typeId: {
+    tagId: {
         type:         Sequelize.INTEGER.UNSIGNED,
         allowNull:    false,
         defaultValue: tagUtils.defaultId,

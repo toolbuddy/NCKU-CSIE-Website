@@ -68,10 +68,10 @@ export default async ( opt ) => {
             include: [
                 {
                     model:      Tag,
-                    as:         'tag',
+                    as:         'tags',
                     attributes: [],
                     where:      {
-                        typeId: {
+                        tagId: {
                             [ op.in ]: tags,
                         },
                     },

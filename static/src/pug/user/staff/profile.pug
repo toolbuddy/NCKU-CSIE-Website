@@ -240,7 +240,7 @@ append data
           type: 'i18n-text',
           columnName: 'title',
           required: true,
-        },          
+        },
       ]
     }
     const currentRoute = 'user/faculty/profile';
@@ -281,7 +281,7 @@ append content
   section.content__titleI18n.titleI18n
     +local-topic( 'titleI18n', i18n[ LANG.id ].content.titleI18n.topic )
     +refreshWithImage( 'titleI18n' )
-    +loading( 'titleI18n' ) 
+    +loading( 'titleI18n' )
     section#titleI18n__cards.titleI18n__cards.cards
       if Array.isArray( data.titleI18n ) && data.titleI18n.length
         each titleI18nObj in data.titleI18n
@@ -290,7 +290,7 @@ append content
   section.content__businessI18n.businessI18n
     +local-topic( 'businessI18n', i18n[ LANG.id ].content.businessI18n.topic )
     +refreshWithImage( 'businessI18n' )
-    +loading( 'businessI18n' ) 
+    +loading( 'businessI18n' )
     section#businessI18n__cards.businessI18n__cards.cards
       if Array.isArray( data.businessI18n ) && data.businessI18n.length
         each businessObj in data.businessI18n
