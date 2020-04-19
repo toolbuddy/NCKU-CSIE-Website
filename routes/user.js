@@ -1377,7 +1377,6 @@ router
 } )
 .put( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        console.log( req.body );
         res.send( await updateAnnouncement( req.body ) );
     }
     catch ( error ) {
