@@ -140,6 +140,6 @@ export default class BaseDataManagement {
         await this.setProfileId();
         this.renderSuccess();
         this.subscribePostButton();
-        this.subscribePatchButton(); 
+        this.subscribePatchButton();
     }
 }
