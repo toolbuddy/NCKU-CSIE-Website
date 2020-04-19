@@ -44,6 +44,8 @@ import nationUtils from 'models/faculty/utils/nation.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
+import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -233,19 +235,26 @@ router
         );
     }
     else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
-        res.sendFile(
-            `static/dist/html/user/staff/profile.${ req.query.languageId }.html`,
-            {
-                root:         projectRoot,
-                maxAge,
-                dotfiles:     'deny',
-                cacheControl: true,
-            },
-            ( err ) => {
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getStaffDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/staff/profile.pug', {
+                data,
+            }, ( err, html ) => {
                 if ( err )
-                    next( err );
-            }
-        );
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
     }
     else
         res.redirect( '/index' );
@@ -1205,7 +1214,40 @@ router
 
 router
 .route( '/staff/profile' )
-.get( urlEncoded, jsonParser, staticHtml( 'user/staff/profile' ) );
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getStaffDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/staff/profile.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/resetPassword`.

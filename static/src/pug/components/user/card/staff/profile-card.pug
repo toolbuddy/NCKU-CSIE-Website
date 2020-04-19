@@ -1,0 +1,15 @@
+include /components/common/image.pug
+
+mixin profile-card( modifier, title, value )
+  section.profile-card.profile__profile-card(class=`profile__profile-card--${modifier}`)
+    h3.profile-card__title=`${title}`
+    if value !== null
+      p.profile-card__value( id=`profile-card__value--${ modifier }` )=`${value}`
+    else
+      p.profile-card__value( id=`profile-card__value--${ modifier }` )= ''
+    img.profile-card__patch( 
+      alt = 'patch', 
+      id = `profile-card__patch--${ modifier }`, 
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      column-name = modifier
+    ) 

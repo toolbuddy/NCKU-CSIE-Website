@@ -40,10 +40,11 @@ export default class AnnouncementEvent {
         this.state = {
             languageId:  opt.languageId,
             newFileId:   0,
+            newFiles:    [],
             files:       [],
             tags:        [],
-            newFiles:    {},
             deleteFiles: [],
+            formData:    new FormData(),
         };
 
         this.DOM = {
@@ -165,29 +166,9 @@ export default class AnnouncementEvent {
     subscribeFileUploadButton () {
         this.DOM.uploadFile.addEventListener( 'change', ( e ) => {
             this.state.newFileId -= e.target.files.length;
+
             Array.from( e.target.files ).forEach( async ( file, index ) => {
-                const tempId = this.state.newFileId + index;
-                await this.addFilePreviewBlock( file, tempId );
-
-                // Send file
-                const formData = new FormData();
-
-                formData.append( 'file', file );
-
-                await fetch( `${ host }/announcement/uploadFile`, {
-                    credentials: 'include',
-                    method:      'post',
-                    body:        formData,
-                } )
-                .then( res => res.json() )
-                .then( ( fileRes ) => {
-                    fileRes.forEach( ( text ) => {
-                        this.state.newFiles[ tempId ] = {
-                            res:          text.resName,
-                            originalName: file.name,
-                        };
-                    } );
-                } );
+                await this.addFilePreviewBlock( file, this.state.newFileId + index );
             } );
         } );
     }
@@ -209,15 +190,36 @@ export default class AnnouncementEvent {
 
     async addFilePreviewBlock ( file, id ) {
         new Promise( ( res ) => {
-            this.DOM.filePreview.innerHTML += FilePreview( {
+            const tempDOM = document.createElement( 'temp-section' );
+            tempDOM.innerHTML = FilePreview( {
                 host,
                 name: file.name,
                 id,
             } );
+
+            this.DOM.filePreview.appendChild( tempDOM.firstChild );
             res();
         } )
+        .then( () => {
+            if ( id < 0 ) {
+                const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
+                classAdd( loaderDOM, 'file-preview__loader--active' );
+            }
+        } )
         .then( async () => {
-            // Const deleteDOM = this.DOM.filePreview.querySelectorAll( `.file__file-preview > .file-preview__delete` );
+            const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                const unit8Array = new Uint8Array( fileReader.result );
+                this.state.newFiles.push( {
+                    tempId:  id,
+                    name:    file.name,
+                    content: Array.from( unit8Array ),
+                } );
+                classRemove( loaderDOM, 'file-preview__loader--active' );
+            };
+            fileReader.readAsArrayBuffer( file );
+
             const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
 
             /***
@@ -227,27 +229,12 @@ export default class AnnouncementEvent {
             deleteDOM.addEventListener( 'click', () => {
                 if ( id > 0 )
                     this.state.deleteFiles.push( id );
+
                 else
-                    delete this.state.newFiles[ id ];
+                    this.state.newFiles = this.state.newFiles.filter( e => e.tempId !== id );
+
                 deleteDOM.parentNode.remove();
             } );
-
-            /***
-            *   Add loader event listener
-            */
-
-            // if ( id < 0 ) {
-            //     const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-            //     classAdd( loaderDOM, 'file-preview__loader--active' );
-
-            //     await delay( this.config.animationDelayTime );
-
-            //     const reader = new FileReader();
-            //     reader.readAsDataURL( file );
-            //     reader.onload = () => {
-            //         classRemove( loaderDOM, 'file-preview__loader--active' );
-            //     };
-            // }
         } );
     }
 
@@ -295,43 +282,29 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        let tagString = '';
-
-        /***
-         * Use a string to submit which tags be choosed
-         * ex. `tag1 tag2 tag3 ...`
-         */
-
-        this.state.tags.forEach( ( tag ) => {
-            tagString += `${ tag } `;
-        } );
-
-        // This.state.files.forEach( ( file ) => {
-        //     files[ file.fileId ] = file.name;
-        // } );
-
         fetch( `${ host }/announcement/add`, {
             method:   'POST',
             type:     'string',
             body:   JSON.stringify( {
                 'method':           'post',
-                'isPublished':      1,
                 'author':           this.config.author,
                 'isPinned':         0,
+                'isPublished':      1,
                 'imageUrl':         null,
                 'views':            0,
-                'i18n':           {
-                    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'en-US' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-                        title:   this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].title,
-                        content: this.data[ LanguageUtils.getLanguageId( 'zh-TW' ) ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                    },
-                },
-                'tags':     tagString,
-                'fileI18n': {},
+                'tags':             this.state.tags.map( tagId => ( {
+                    tagId,
+                } ) ),
+                'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
+                    languageId,
+                    title:      this.data[ languageId ].title,
+                    content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
+                } ) ),
+                'fileI18n': this.state.newFiles.map( file => ( {
+                    languageId: this.state.languageId,
+                    name:       file.name,
+                    content:    file.content,
+                } ) ),
             } ),
         } )
         .then( () => {

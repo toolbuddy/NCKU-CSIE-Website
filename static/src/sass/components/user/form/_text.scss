@@ -1,4 +1,4 @@
-@import 'components/user/faculty/form/input-title';
+@import 'components/user/form/input-title';
 @mixin text () {
   > .text.content__text {
     // [ layout ]
@@ -29,13 +29,15 @@
         left: font__px-to-rem( 16 );
         right: font__px-to-rem( 16 );
       }
-      font: {
-        size: font__px-to-rem( 16 );
-        weight: bold;
-      }
+      font-size: font__px-to-rem( 16 );
       text-align: center;
       line-height: normal;
       color: rgba( 24, 24, 24, .87 );
+
+      &:focus {
+        // [ skin ]
+        border: solid 3px rgba( 98, 148, 160, .5 );
+      }
     }
 
     // [ element ]
