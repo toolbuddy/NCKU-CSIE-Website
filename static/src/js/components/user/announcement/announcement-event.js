@@ -355,10 +355,9 @@ export default class AnnouncementEvent {
                 tagId,
             } ) ), );
 
-            res( formData );
+            res();
         } )
-        .then( ( formData ) => {
-            console.log( formData.getAll( 'announcementId' ) );
+        .then( () => {
             fetch( `${ host }/user/announcement/add`, {
                 method:   'POST',
                 headers: {
@@ -378,11 +377,6 @@ export default class AnnouncementEvent {
                         tagId,
                     } ) ),
                 } ),
-            } )
-            .then( ( res ) => {
-                console.log( res );
-
-                // Location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
             } );
         } );
 
@@ -439,7 +433,6 @@ export default class AnnouncementEvent {
             res( formData );
         } )
         .then( ( formData ) => {
-            console.log( formData.get( 'tags' ) );
             fetch( `${ host }/user/announcement/edit/${ this.config.id }`, {
                 method:   'PUT',
 
@@ -499,7 +492,6 @@ export default class AnnouncementEvent {
                 this.config.author = res.roleId;
             } );
             this.data = data;
-            console.log( data );
             if ( data !== null ) {
                 this.state.tags = data[ this.config.languageId ].tags;
                 this.state.files = data[ this.config.languageId ].files;

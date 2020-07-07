@@ -146,7 +146,8 @@ export default class BaseDataManagement {
      * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-patch > .form-input__button > .button__check`.
      */
 
-    subscribeDeleteButton ( e ) {
+    subscribeDeleteButton () {
+        this.showDeleteForm();
         throw new Error( 'You have to implement the method subscribeDeleteButton!' );
     }
 

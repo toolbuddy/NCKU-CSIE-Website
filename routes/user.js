@@ -40,12 +40,12 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 
-// Import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
-// import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
-// import departmentUtils from 'models/faculty/utils/department.js';
-// import nationUtils from 'models/faculty/utils/nation.js';
-// import degreeUtils from 'models/faculty/utils/degree.js';
-// import researchGroupUtils from 'models/faculty/utils/research-group.js';
+import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import degreeUtils from 'models/faculty/utils/degree.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 
@@ -1377,7 +1377,6 @@ router
 } )
 .put( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
-        console.log( req.body );
         res.send( await updateAnnouncement( req.body ) );
     }
     catch ( error ) {
@@ -1416,105 +1415,105 @@ router
  * Resolve URL `/user/announcement/delete`.
  */
 
-// router
-// .route( '/teacher/technology-transfer' )
-// .get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
-//     try {
-//         // Get id
-//         const result = await getAdminByUserId( {
-//             userId: Number( res.locals.userId ),
-//         } );
-//         const profileId = result.roleId;
-//         const languageId = req.query.languageId;
+router
+.route( '/teacher/technology-transfer' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
 
-//         const data = await getFacultyDetail( {
-//             profileId,
-//             languageId,
-//         } );
+        const data = await getFacultyDetail( {
+            profileId,
+            languageId,
+        } );
 
-//         const dataWithId = await getFacultyDetailWithId( {
-//             profileId,
-//             languageId,
-//         } );
+        const dataWithId = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
 
-//         res.locals.UTILS.faculty = {
-//             researchGroupUtils,
-//             departmentUtils,
-//             nationUtils,
-//             degreeUtils,
-//         };
+        res.locals.UTILS.faculty = {
+            researchGroupUtils,
+            departmentUtils,
+            nationUtils,
+            degreeUtils,
+        };
 
-//         await new Promise( ( resolve, reject ) => {
-//             res.render( 'user/teacher/technology-transfer.pug', {
-//                 data,
-//                 dataWithId,
-//             }, ( err, html ) => {
-//                 if ( err )
-//                     reject( err );
-//                 else {
-//                     res.send( html );
-//                     resolve();
-//                 }
-//             } );
-//         } );
-//     }
-//     catch ( err ) {
-//         if ( err.status === 404 )
-//             next();
-//         else
-//             next( err );
-//     }
-// } );
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/teacher/technology-transfer.pug', {
+                data,
+                dataWithId,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
-// router
-// .route( '/teacher/award' )
-// .get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
-//     try {
-//         // Get id
-//         const result = await getAdminByUserId( {
-//             userId: Number( res.locals.userId ),
-//         } );
-//         const profileId = result.roleId;
-//         const languageId = req.query.languageId;
+router
+.route( '/teacher/award' )
+.get( allowUserOnly, urlEncoded, jsonParser, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
 
-//         const data = await getFacultyDetail( {
-//             profileId,
-//             languageId,
-//         } );
+        const data = await getFacultyDetail( {
+            profileId,
+            languageId,
+        } );
 
-//         const dataWithId = await getFacultyDetailWithId( {
-//             profileId,
-//             languageId,
-//         } );
+        const dataWithId = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
 
-//         res.locals.UTILS.faculty = {
-//             researchGroupUtils,
-//             departmentUtils,
-//             nationUtils,
-//             degreeUtils,
-//         };
+        res.locals.UTILS.faculty = {
+            researchGroupUtils,
+            departmentUtils,
+            nationUtils,
+            degreeUtils,
+        };
 
-//         await new Promise( ( resolve, reject ) => {
-//             res.render( 'user/teacher/award.pug', {
-//                 data,
-//                 dataWithId,
-//             }, ( err, html ) => {
-//                 if ( err )
-//                     reject( err );
-//                 else {
-//                     res.send( html );
-//                     resolve();
-//                 }
-//             } );
-//         } );
-//     }
-//     catch ( err ) {
-//         if ( err.status === 404 )
-//             next();
-//         else
-//             next( err );
-//     }
-// } );
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/teacher/award.pug', {
+                data,
+                dataWithId,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 router
 .route( '/announcement/delete' )
