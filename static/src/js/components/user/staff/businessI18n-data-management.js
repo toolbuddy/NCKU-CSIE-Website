@@ -58,7 +58,6 @@ export default class BusinessI18nDataManagement extends BaseDataManagement {
             } );
 
             if ( isValid ) {
-                console.log( data );
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     body:   JSON.stringify( {
