@@ -25,7 +25,7 @@ export default class ProfileDataManagement {
         const patchButtonQuerySelector = modifier => `.profile-card > #profile-card__patch--${ modifier }`;
         const checkButtonQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__button > .button__check`;
         const cancelButtonQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__button > .button__cancel`;
-        const inputQuerySelector = modifier => `input[ column-name = ${ modifier }]`;
+        const inputQuerySelector = modifier => `input[ column = ${ modifier }]`;
         const errorMessageQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__content > .content__error-message`;
         const cardValueQuerySelector = modifier => `.profile-card > #profile-card__value--${ modifier }`;
 

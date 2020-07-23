@@ -2,8 +2,9 @@ import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import ProfileDataManagement from 'static/src/js/components/user/staff/profile-data-managament.js';
-import TitleI18nDataManagement from 'static/src/js/components/user/staff/titleI18n-data-management.js';
-import BusinessI18nDataManagement from 'static/src/js/components/user/staff/businessI18n-data-management.js';
+import DefaultDataManagement from 'static/src/js/components/user/staff/default-data-management.js';
+import businessI18nErrorMessageUtils from 'models/staff/utils/businessI18n-error-message.js';
+import titleI18nErrorMessageUtils from 'models/staff/utils/titleI18n-error-message.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
@@ -43,7 +44,7 @@ catch ( err ) {
 }
 
 try {
-    const titleI18nDataManagement = new TitleI18nDataManagement( {
+    const titleI18nDataManagement = new DefaultDataManagement( {
         bodyFormDOM:      document.getElementById( 'form' ),
         refreshDOM:       document.querySelector( '.content__titleI18n > .titleI18n__refresh' ),
         loadingDOM:       document.querySelector( '.content__titleI18n > .titleI18n__loading' ),
@@ -52,10 +53,32 @@ try {
         deleteButtonsDOM: document.getElementsByClassName( 'titleI18n-card__delete' ),
         postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--titleI18n' ),
         languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'titleI18n',
-        idColumnName:     'titleId',
+        table:            'titleI18n',
+        idColumn:         'titleId',
+        constraints:      {
+            'titleTW': {
+                presence: {
+                    allowEmpty: false,
+                    message:    titleI18nErrorMessageUtils.getValueByOption( {
+                        option:     'titleTWBlank',
+                        languageId: WebLanguageUtils.currentLanguageId,
+                    } ),
+                },
+            },
+            'titleEN': {
+                presence: {
+                    allowEmpty: false,
+                    message:    titleI18nErrorMessageUtils.getValueByOption( {
+                        option:     'titleENBlank',
+                        languageId: WebLanguageUtils.currentLanguageId,
+                    } ),
+                },
+            },
+            'deletePreview':    data => `${ data.title }`,
+        },
+        deletePreview:    data => `${ data.title }`,
     } );
-    if ( !( titleI18nDataManagement instanceof TitleI18nDataManagement ) )
+    if ( !( titleI18nDataManagement instanceof DefaultDataManagement ) )
         throw new Error( 'award data management error' );
     titleI18nDataManagement.exec();
 }
@@ -64,7 +87,7 @@ catch ( err ) {
 }
 
 try {
-    const businessI18nDataManagement = new BusinessI18nDataManagement( {
+    const businessI18nDataManagement = new DefaultDataManagement( {
         bodyFormDOM:      document.getElementById( 'form' ),
         refreshDOM:       document.querySelector( '.content__businessI18n > .businessI18n__refresh' ),
         loadingDOM:       document.querySelector( '.content__businessI18n > .businessI18n__loading' ),
@@ -73,10 +96,31 @@ try {
         deleteButtonsDOM: document.getElementsByClassName( 'businessI18n-card__delete' ),
         postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--businessI18n' ),
         languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'businessI18n',
-        idColumnName:     'businessId',
+        table:            'businessI18n',
+        idColumn:         'businessId',
+        constraints:      {
+            'businessTW': {
+                presence: {
+                    allowEmpty: false,
+                    message:    businessI18nErrorMessageUtils.getValueByOption( {
+                        option:     'businessTWBlank',
+                        languageId: WebLanguageUtils.currentLanguageId,
+                    } ),
+                },
+            },
+            'businessEN': {
+                presence: {
+                    allowEmpty: false,
+                    message:    businessI18nErrorMessageUtils.getValueByOption( {
+                        option:     'businessENBlank',
+                        languageId: WebLanguageUtils.currentLanguageId,
+                    } ),
+                },
+            },
+        },
+        deletePreview:    data => `${ data.business }`,
     } );
-    if ( !( businessI18nDataManagement instanceof BusinessI18nDataManagement ) )
+    if ( !( businessI18nDataManagement instanceof DefaultDataManagement ) )
         throw new Error( 'award data management error' );
     businessI18nDataManagement.exec();
 }
