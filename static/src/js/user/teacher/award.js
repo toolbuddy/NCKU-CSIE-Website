@@ -1,8 +1,6 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-
-// Import AwardDataManagement from 'static/src/js/components/user/faculty/award-data-management.js';
 import awardErrorMessageUtils from 'models/faculty/utils/award-error-message.js';
 import DefaultDataManagement from 'static/src/js/components/user/faculty/default-data-management.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';

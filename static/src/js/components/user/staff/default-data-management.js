@@ -328,8 +328,6 @@ export default class DefaultDataManagement {
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
-
-
             else
                 data[ element.name ] = element.value;
         } );

@@ -1,8 +1,9 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import AwardDataManagement from 'static/src/js/components/user/faculty/award-data-management.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
+
+// Import AwardDataManagement from 'static/src/js/components/user/faculty/award-data-management.js';
+// import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -40,23 +41,23 @@ catch ( err ) {
     console.error( err );
 }
 
-try {
-    const awardDataManagement = new AwardDataManagement( {
-        bodyFormDOM:      document.getElementById( 'form' ),
-        refreshDOM:       document.querySelector( '.content__award > .award__refresh' ),
-        loadingDOM:       document.querySelector( '.content__award > .award__loading' ),
-        cardsDOM:         document.getElementById( 'award__cards' ),
-        patchButtonsDOM:  document.getElementsByClassName( 'award-card__patch' ),
-        deleteButtonsDOM: document.getElementsByClassName( 'award-card__delete' ),
-        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--award' ),
-        languageId:       WebLanguageUtils.currentLanguageId,
-        dbTable:          'award',
-        idColumnName:     'awardId',
-    } );
-    if ( !( awardDataManagement instanceof AwardDataManagement ) )
-        throw new Error( 'award data management error' );
-    awardDataManagement.exec();
-}
-catch ( err ) {
-    console.error( err );
-}
+// Try {
+//     const awardDataManagement = new AwardDataManagement( {
+//         bodyFormDOM:      document.getElementById( 'form' ),
+//         refreshDOM:       document.querySelector( '.content__award > .award__refresh' ),
+//         loadingDOM:       document.querySelector( '.content__award > .award__loading' ),
+//         cardsDOM:         document.getElementById( 'award__cards' ),
+//         patchButtonsDOM:  document.getElementsByClassName( 'award-card__patch' ),
+//         deleteButtonsDOM: document.getElementsByClassName( 'award-card__delete' ),
+//         postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--award' ),
+//         languageId:       WebLanguageUtils.currentLanguageId,
+//         dbTable:          'award',
+//         idColumnName:     'awardId',
+//     } );
+//     if ( !( awardDataManagement instanceof AwardDataManagement ) )
+//         throw new Error( 'award data management error' );
+//     awardDataManagement.exec();
+// }
+// catch ( err ) {
+//     console.error( err );
+// }

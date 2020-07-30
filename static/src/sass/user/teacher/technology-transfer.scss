@@ -7,17 +7,12 @@
 @import 'components/common/refresh';
 @import 'components/common/footer';
 @import 'components/common/topic';
-@import 'components/user/edit-page';
 @import 'components/user/image';
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
-@import 'components/user/card/faculty/profile-card';
-@import 'components/user/card/faculty/title-card';
-@import 'components/user/card/faculty/specialty-card';
-@import 'components/user/card/faculty/education-card';
-@import 'components/user/card/faculty/experience-card';
-@import 'components/user/faculty/option';
-@import 'components/announcement/tags';
+@import 'components/user/faculty/classfication-title';
+@import 'components/user/card/faculty/technology-transfer-card';
+@import 'components/user/form/form';
 
 .body {
   // [ variable ]
@@ -37,20 +32,6 @@
   @include header--large( $block: 'body' );
 
   // element
-  // `.body > .body__edit-page`
-  > .body__edit-page {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: 10;
-
-    // [ componment ]
-    @include edit-page();
-  }
-
-  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
@@ -62,11 +43,7 @@
         ' breadcrumb '
         ' topic      '
         ' navigation '
-        ' profile    '
-        ' title      '
-        ' specialty   '
-        ' education  '
-        ' experience ';
+        ' technology-transfer ';
       columns: 100%;
       rows: 2.5rem 2.5rem 2rem auto;
     }
@@ -74,7 +51,12 @@
     // [ position ]
     height: auto;
     width: 100%;
-    margin-bottom: 1rem;
+    max-width: font__px-to-rem( 1600 );
+    margin: {
+      bottom: 1rem;
+      left: auto;
+      right: auto;
+    }
 
     // [ skin ]
     background-color: #ffffff;
@@ -85,11 +67,7 @@
         areas:
           ' breadcrumb breadcrumb '
           ' navigation topic      '
-          ' navigation profile    '
-          ' navigation title      '
-          ' navigation specialty   '
-          ' navigation education  '
-          ' navigation experience ';
+          ' navigation technology-transfer ';
         columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
         rows: 2.5rem 2rem auto;
       }
@@ -127,137 +105,20 @@
       grid-area: navigation;
     }
 
-    // `.body` > .content > .content__profile
-    > .content__profile.profile {
-      // [ layout ]
-      display: grid;
-      grid-area: profile;
-      grid-template: {
-        areas:
-          'image          '
-          'name           '
-          'nation         '
-          'email          '
-          'fax            '
-          'personal-web   '
-          'department     '
-          'research-group '
-          'office-address '
-          'office-tel     '
-          'lab-name       '
-          'lab-address    '
-          'lab-tel        '
-          'lab-web        ';
-        columns: 100%;
-      }
-
-      // [ position ]
-      margin: {
-        bottom: font__px-to-rem( 30 );
-        left: auto;
-        right: auto;
-      }
-      width: 94%;
-      height: auto;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        grid-template: {
-          areas:
-            'name            image          '
-            'nation          image          '
-            'email           image          '
-            'fax             image          '
-            'personal-web    image          '
-            'department      department     '
-            'research-group  research-group '
-            'office-address  office-address '
-            'office-tel      office-tel     '
-            'lab-name        lab-name       '
-            'lab-address     lab-address    '
-            'lab-tel         lab-tel        '
-            'lab-web         lab-web        ';
-          columns: auto font__px-to-rem( 400 );
-        }
-      }
-      @include image('profile') {
-        // [ layout ]
-        grid-area: image;
-
-        // [ position ]
-        margin-top: 1.5rem;
-      }
-      @include profile-card( 'name' ) {
-        // [ layout ]
-        grid-area: name;
-      }
-      @include profile-card( 'fax' ) {
-        // [ layout ]
-        grid-area: fax;
-      }
-      @include profile-card( 'nation' ) {
-        // [ layout ]
-        grid-area: nation;
-      }
-      @include profile-card( 'personal-web' ) {
-        // [ layout ]
-        grid-area: personal-web;
-      }
-      @include profile-card( 'email' ) {
-        // [ layout ]
-        grid-area: email;
-      }
-      @include profile-card( 'office-address' ) {
-        // [ layout ]
-        grid-area: office-address;
-      }
-      @include profile-card( 'office-tel' ) {
-        // [ layout ]
-        grid-area: office-tel;
-      }
-      @include profile-card( 'lab-name' ) {
-        // [ layout ]
-        grid-area: lab-name;
-      }
-      @include profile-card( 'lab-address' ) {
-        // [ layout ]
-        grid-area: lab-address;
-      }
-      @include profile-card( 'lab-tel' ) {
-        // [ layout ]
-        grid-area: lab-tel;
-      }
-      @include profile-card( 'lab-web' ) {
-        // [ layout ]
-        grid-area: lab-web;
-      }
-      @include option( $block: 'profile', $modifier: 'department' ) {
-        // [ layout ]
-        grid-area: department;
-      }
-      @include option( $block: 'profile', $modifier: 'research-group' ) {
-        // [ layout ]
-        grid-area: research-group;
-      }
-    }
-
-    > .content__title.title {
+    > .content__technology-transfer.technology-transfer {
       // [ layout ]
       display: block;
-      grid-area: title;
+      grid-area: technology-transfer;
 
       // [ position ]
       margin: {
-        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
       width: 94%;
       height: auto;
-      @include local-topic('title');
 
-      > .title__cards.cards {
+      > .technology-transfer__cards.cards {
         // [ layout ]
         display: block;
 
@@ -266,141 +127,23 @@
         height: auto;
 
         // [ element ]
-        @include title-card();
+        @include technology-transfer-card();
+        @include classfication-title();
       }
-      @include refresh( $block: 'title' ) {
+
+      > .cards--hidden {
+        // [ layout ]
+        display: none;
+      }
+      @include local-topic('technology-transfer');
+      @include refresh( $block: 'technology-transfer' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );
           bottom: font__px-to-rem( 64 );
         }
       }
-      @include loading( $block: 'title' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-    }
-
-    > .content__specialty.specialty {
-      // [ layout ]
-      display: block;
-      grid-area: specialty;
-
-      // [ position ]
-      margin: {
-        bottom: font__px-to-rem( 30 );
-        left: auto;
-        right: auto;
-      }
-      width: 94%;
-      height: auto;
-      @include local-topic('specialty');
-
-      > .specialty__cards.cards {
-        // [ layout ]
-        display: block;
-
-        // [ position ]
-        width: 100%;
-        height: auto;
-
-        // [ element ]
-        @include specialty-card();
-      }
-      @include refresh( $block: 'specialty' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-      @include loading( $block: 'specialty' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-    }
-
-    > .content__education.education {
-      // [ layout ]
-      display: block;
-      grid-area: education;
-
-      // [ position ]
-      margin: {
-        bottom: font__px-to-rem( 30 );
-        left: auto;
-        right: auto;
-      }
-      width: 94%;
-      height: auto;
-
-      > .education__cards.cards {
-        // [ layout ]
-        display: block;
-
-        // [ position ]
-        width: 100%;
-        height: auto;
-
-        // [ element ]
-        @include education-card();
-      }
-      @include local-topic('education');
-      @include refresh( $block: 'education' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-      @include loading( $block: 'education' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-    }
-
-    > .content__experience.experience {
-      // [ layout ]
-      display: block;
-      grid-area: experience;
-
-      // [ position ]
-      margin: {
-        left: auto;
-        right: auto;
-      }
-      width: 94%;
-      height: auto;
-
-      > .experience__cards.cards {
-        // [ layout ]
-        display: block;
-
-        // [ position ]
-        width: 100%;
-        height: auto;
-
-        // [ element ]
-        @include experience-card();
-      }
-      @include local-topic('experience');
-      @include refresh( $block: 'experience' ) {
-        // [ layout ]
-        margin: {
-          top: font__px-to-rem( 64 );
-          bottom: font__px-to-rem( 64 );
-        }
-      }
-      @include loading( $block: 'experience' ) {
+      @include loading( $block: 'technology-transfer' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );
@@ -430,6 +173,12 @@
       }
     }
   }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
 
   // element
   // `.body > .body__footer`

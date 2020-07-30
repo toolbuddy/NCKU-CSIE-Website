@@ -4,21 +4,22 @@ include /components/user/faculty/navigation-bar.pug
 include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/faculty/form/form-input.pug
-include /components/user/card/faculty/award-card.pug
+include /components/user/card/faculty/technology-transfer-card.pug
+include /components/user/card/faculty/technology-transfer-head.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'User Award',
+        title:      'User Technology Transfer',
         breadcrumb: {
           home:     'Home',
-          user:     'User Award',
+          user:     'User Technology Transfer',
         },
         content: {
-          topic: 'Teacher profile settings',
-          award: {
-            topic:        'Award',
+          topic: 'Faculty profile settings',
+          technologyTransfer: {
+            topic:   'Technology Transfer',
           },
         },
       },
@@ -30,37 +31,43 @@ append data
         },
         content: {
           topic: '教師資料維護',
-          award: {
-            topic:        '榮譽及獲獎',
+          technologyTransfer: {
+            topic:   '技術轉移',
           },
         },
       },
     } );
     const formI18n = Object.freeze({
         [ LANG.getLanguageId( 'en-US' ) ]: {
-          post: 'Add Your Award',
-          patch: 'Modify Your Award',
-          delete: 'Remove Your Award',
+          post: 'Add Your Technology Transfer',
+          patch: 'Modify Your Technology Transfer',
+          delete: 'Remove Your Technology Transfer',
           default: {
-            award: 'award',
-            receivedYear: 'yyyy',
+            authorizingParty: '',
+            authorizedParty:  '',
+            technology:       '',
           },
           title: {
-            award: 'Award',
-            receivedYear: 'Received Year',
+            authorizingParty: 'authorizing party',
+            authorizedParty:  'authorized party',
+            technology:       'technology',
+            time:             'duration',
           }
         },
         [ LANG.getLanguageId( 'zh-TW' ) ]:{
-          post: '新增您的榮譽及獲獎',
-          patch: '編輯您的榮譽及獲獎',
-          delete: '刪除您的榮譽及獲獎',
+          post: '新增您的技術轉移',
+          patch: '編輯您的技術轉移',
+          delete: '刪除您的技術轉移',
           default: {
-            award: '獎項名稱',
-            receivedYear: 'yyyy',
+            authorizingParty: '',
+            authorizedParty:  '',
+            technology:       '',
           },
           title: {
-            award: '獎項',
-            receivedYear: '獲獎年份',
+            authorizingParty: '授權方名稱',
+            authorizedParty:  '接受方名稱',
+            technology:       '技術名稱',
+            time:             '合約期間',
           },
        }
     })
@@ -76,13 +83,13 @@ append data
         required: true,
       }
     ]
-    const currentRoute = 'user/faculty/award';
+    const currentRoute = 'user/faculty/technology-transfer';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'user/teacher/award' )
+  +css( 'user/teacher/technology-transfer' )
 
 append header
 
@@ -91,7 +98,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/award' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/technology-transfer' },
     ]
   )
 
@@ -101,32 +108,28 @@ append content
 
   +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  section.content__award.award
-    +local-topic( 'award', i18n[ LANG.id ].content.award.topic )
-    +refreshWithImage( 'award' )
-    +loading( 'award' )
-    section#award__cards.award__cards.cards
-      if Array.isArray( dataWithId.award ) && dataWithId.award.length
+  section.content__technology-transfer.technology-transfer
+    +local-topic( 'technology-transfer', i18n[ LANG.id ].content.technologyTransfer.topic )
+    +refreshWithImage( 'technology-transfer' )
+    +loading( 'technology-transfer' )
+    section#technology-transfer__cards.technology-transfer__cards.cards
+      if Array.isArray( dataWithId.technologyTransfer ) && dataWithId.technologyTransfer.length
         -
-          let receivedYear = null
-          dataWithId.award.sort( (awardA, awardB)=>{
-            if(awardA.receivedYear === null )
+          dataWithId.technologyTransfer.sort( (a, b)=>{
+            if(a.from === null )
               return -1
-            else if(awardB.receivedYear === null)
+            else if(b.from === null)
               return 1
-            return awardB.receivedYear - awardA.receivedYear
+            return a.from - b.from
           })
-        each awardObj in dataWithId.award
-          if receivedYear === null || receivedYear !== awardObj.receivedYear
-            +classfication-title( awardObj.receivedYear )
-            -
-              receivedYear = awardObj.receivedYear
-          +award-card( awardObj )
+        +technology-transfer-head()
+        each obj in dataWithId.technologyTransfer
+          +technology-transfer-card( obj )
 
 append form
-  +form-input( 'award', 'post', formI18n, inputConfig )
-  +form-input( 'award', 'patch', formI18n, inputConfig )
-  +form-input( 'award', 'delete', formI18n, inputConfig )
+  //- +form-input( 'award', 'post', formI18n, inputConfig )
+  //- +form-input( 'award', 'patch', formI18n, inputConfig )
+  //- +form-input( 'award', 'delete', formI18n, inputConfig )
 
 append footer
 

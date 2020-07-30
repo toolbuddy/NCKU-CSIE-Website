@@ -51,7 +51,12 @@
     // [ position ]
     height: auto;
     width: 100%;
-    margin-bottom: 1rem;
+    max-width: font__px-to-rem( 1600 );
+    margin: {
+      bottom: 1rem;
+      left: auto;
+      right: auto;
+    }
 
     // [ skin ]
     background-color: #ffffff;
