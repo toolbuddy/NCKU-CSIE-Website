@@ -13,17 +13,6 @@ export default class AnnouncementEvent {
     constructor ( opt ) {
         opt = opt || {};
 
-        /***
-         * Data validation
-         * @parm
-         * - `blockDOM:     DOM of information block`
-         * - `addButtonDOM: DOM of add button to add information`
-         * - `loadingDOM:   DOM of loading logo`
-         * - `languageId:   Id  of languageId`
-         * - `profileId:    Id  of profileId`
-         * - `dbTable:      String of the table name of database`
-         */
-
         if ( !ValidateUtils.isValidId( opt.id ) ||
             !ValidateUtils.isValidId( opt.languageId ) ||
             !ValidateUtils.isDomElement( opt.editBlockDOM ) )
@@ -156,7 +145,13 @@ export default class AnnouncementEvent {
             this.state.newFileId -= e.target.files.length;
 
             Array.from( e.target.files ).forEach( async ( file, index ) => {
-                await this.addFilePreviewBlock( file, this.state.newFileId + index );
+                await this.generateFilePreview(
+                    {
+                        file,
+                        fileId:  this.state.newFileId + index,
+                        isExist: false,
+                    }
+                );
             } );
         } );
     }
@@ -230,59 +225,8 @@ export default class AnnouncementEvent {
         } );
     }
 
-    async addFilePreviewBlock ( file, id ) {
-        new Promise( ( res ) => {
-            const tempDOM = document.createElement( 'temp-section' );
-            tempDOM.innerHTML = FilePreview( {
-                host,
-                name: file.name,
-                id,
-            } );
-
-            this.DOM.filePreview.appendChild( tempDOM.firstChild );
-            res();
-        } )
-        .then( () => {
-            if ( id < 0 ) {
-                const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-                classAdd( loaderDOM, 'file-preview__loader--active' );
-            }
-        } )
-        .then( async () => {
-            const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                const unit8Array = new Uint8Array( fileReader.result );
-                this.state.addFiles.push( {
-                    tempId:  id,
-                    name:    file.name,
-                    content: Array.from( unit8Array ),
-                    file,
-                } );
-                classRemove( loaderDOM, 'file-preview__loader--active' );
-            };
-            fileReader.readAsArrayBuffer( file );
-
-            const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
-
-            deleteDOM.addEventListener( 'click', () => {
-                if ( id > 0 )
-                    this.state.deleteFiles.push( id );
-
-                else
-                    this.state.addFiles = this.state.addFiles.filter( e => e.tempId !== id );
-
-                deleteDOM.parentNode.remove();
-            } );
-        } );
-    }
-
     isDataValidate () {
         let errorMessage = '';
-
-        /***
-         * Validate data and set error message
-         */
 
         if ( this.state.tags.length <= 0 )
             errorMessage = '請至少選擇一個標籤';
