@@ -51,20 +51,20 @@
     > .image__button {
       // [ element ]
       @extend %image__button;
-      
+
       &--check {
         // [ layout ]
-        grid-area: check;        
+        grid-area: check;
       }
 
       &--cancel {
         // [ layout ]
-        grid-area: cancel;        
+        grid-area: cancel;
       }
 
       &--active {
         // [ layout ]
-        display: block;        
+        display: block;
       }
     }
 

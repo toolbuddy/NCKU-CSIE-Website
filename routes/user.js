@@ -187,7 +187,7 @@ router
                         res.json( { userId: -1, } );
                     } );
                 }
-                else{
+                else {
                     console.error( error );
                     res.status( error.status ).send( error.message );
                 }
@@ -1208,7 +1208,7 @@ router
                     } );
                 } );
             }
-            else{
+            else {
                 console.error( error );
                 res.status( error.status ).send( error.message );
             }
