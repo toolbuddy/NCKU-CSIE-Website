@@ -149,6 +149,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -200,6 +201,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -238,6 +240,7 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
+                window.location.reload();
             } );
         } );
     }
@@ -273,7 +276,7 @@ export default class DefaultDataManagement {
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ][ columnName ];
         } );
-        this.DOM.patch.errorMessage.innerHTML = '';
+        this.DOM.patch.errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.patch.form, 'form-input--active' );
     }
@@ -314,7 +317,7 @@ export default class DefaultDataManagement {
             if ( errorMessage === '' )
                 return true;
 
-            this.DOM[ method ].errorMessage.innerHTML = errorMessage;
+            this.DOM[ method ].errorMessage.innerText = errorMessage;
             return false;
         } );
 

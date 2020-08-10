@@ -260,7 +260,7 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile[ columnName ] )
         .then( ( data ) => {
-            this.DOM[ columnName ].cardValue.innerHTML = data;
+            this.DOM[ columnName ].cardValue.innerText = data;
         } );
     }
 
@@ -269,7 +269,7 @@ export default class ProfileDataManagement {
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ];
         } );
-        this.DOM[ columnName ].errorMessage.innerHTML = '';
+        this.DOM[ columnName ].errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM[ columnName ].form, 'form-input--active' );
     }
