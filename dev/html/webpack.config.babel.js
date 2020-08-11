@@ -117,8 +117,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'user/announcement/add':            path.join( pugRoot, 'user/announcement/add.pug' ),
         'user/announcement/edit':           path.join( pugRoot, 'user/announcement/edit.pug' ),
 
-        // 'user/teacher/profile':             path.join( pugRoot, 'user/teacher/profile.pug' ),
-
         // Route `auth`
         'auth/login':              path.join( pugRoot, 'auth/login.pug' ),
         'auth/reset-password':              path.join( pugRoot, 'auth/reset-password.pug' ),
