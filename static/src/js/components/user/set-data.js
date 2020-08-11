@@ -737,11 +737,10 @@ class SetData {
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
 
-        fetch( `${ host }/user/profile`, {
-            method:   'POST',
+        fetch( `${ host }/user/faculty`, {
+            method:   'PATCH',
             body:   JSON.stringify( {
                 'profileId':    this.config.profileId,
-                'method':       'update',
                 dbTable,
                 dbTableItemId,
                 item,
@@ -763,7 +762,7 @@ class SetData {
     uploadAddData ( dbTable, dbTableId ) {
         const editPageDOM = document.getElementById( 'edit-page' );
         const input = editPageDOM.getElementsByTagName( 'input' );
-        const item = {};
+        const item = ( dbTableId === -1 ) ? {} : { parentId: dbTableId, };
         const i18n = {
             [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
             [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
@@ -777,12 +776,10 @@ class SetData {
                 item[ element.getAttribute( 'dbTableItem' ) ] = element.value;
         } );
 
-        fetch( `${ host }/user/profile`, {
+        fetch( `${ host }/user/faculty`, {
             method:   'POST',
             body:   JSON.stringify( {
                 profileId:    this.config.profileId,
-                dbTableId,
-                method:       'add',
                 dbTable,
                 item,
                 i18n,
@@ -801,11 +798,10 @@ class SetData {
     }
 
     uploadDeleteData ( dbTableItemId, dbTable ) {
-        fetch( `${ host }/user/profile`, {
-            method:   'POST',
+        fetch( `${ host }/user/faculty`, {
+            method:   'DELETE',
             body:   JSON.stringify( {
                 profileId:     this.config.profileId,
-                method:        'delete',
                 dbTable,
                 dbTableItemId,
             } ),

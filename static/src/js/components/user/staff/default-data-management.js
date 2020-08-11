@@ -26,7 +26,7 @@ export default class DefaultDataManagement {
         };
 
         this.status = {
-            dataId:      -1,
+            itemId:      -1,
             patchButton: null,
         };
 
@@ -135,12 +135,10 @@ export default class DefaultDataManagement {
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
-                        add:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        profileId: this.config.profileId,
+                        dbTable:   this.config.table,
+                        item:      data.item,
+                        i18n:      data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -158,7 +156,7 @@ export default class DefaultDataManagement {
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.dataId = element.target.getAttribute( 'data-id' );
+            this.status.itemId = element.target.getAttribute( 'data-id' );
             this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
@@ -172,8 +170,8 @@ export default class DefaultDataManagement {
             return tableData;
         } )
         .then( ( data ) => {
-            const dataId = element.target.getAttribute( 'data-id' );
-            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
+            const itemId = element.target.getAttribute( 'data-id' );
+            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ itemId ] ) );
         } );
     }
 
@@ -184,15 +182,14 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/profile`, {
-                    method:   'POST',
+                fetch( `${ host }/user/staff`, {
+                    method:   'PATCH',
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
-                        update:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        dbTable:       this.config.table,
+                        dbTableItemId: this.status.itemId,
+                        item:          data.item,
+                        i18n:          data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -210,7 +207,7 @@ export default class DefaultDataManagement {
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.dataId = e.target.getAttribute( 'data-id' );
+            this.status.itemId = e.target.getAttribute( 'data-id' );
             const rowData = data[ this.config.table ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
@@ -228,10 +225,9 @@ export default class DefaultDataManagement {
             fetch( `${ host }/user/profile`, {
                 method:   'POST',
                 body:   JSON.stringify( {
-                    profileId:     this.config.profileId,
-                    delete:    {
-                        [ this.config.table ]: this.status.dataId,
-                    },
+                    profileId:      this.config.profileId,
+                    dbTable:        this.config.table,
+                    dbTableItemId:  this.status.itemId,
                 } ),
             } )
             .then( () => {
@@ -326,13 +322,14 @@ export default class DefaultDataManagement {
 
     async formatFormData ( method ) {
         const data = {
+            item: {},
             i18n: Array.from( LanguageUtils.supportedLanguageId ).map( id => ( { language: id, } ) ),
         };
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else
-                data[ element.name ] = element.value;
+                data.item[ element.name ] = element.value;
         } );
 
         return data;

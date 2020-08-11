@@ -225,14 +225,14 @@ export default class ProfileDataManagement {
                         res( { item, i18n, } );
                     } )
                     .then( ( opt ) => {
-                        fetch( `${ host }/user/staff/profile`, {
+                        fetch( `${ host }/user/staff`, {
                             method:   'PATCH',
                             body:   JSON.stringify( {
                                 profileId:     this.config.profileId,
-                                method:        'update',
                                 dbTable:       'profile',
-                                item:      opt.item,
-                                i18n:      opt.i18n,
+                                dbTableItemId: this.config.profileId,
+                                item:          opt.item,
+                                i18n:          opt.i18n,
                             } ),
                         } )
                         .then( () => {
