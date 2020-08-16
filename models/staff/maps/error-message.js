@@ -9,20 +9,20 @@ import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
 const map = [
-    'titleTWBlank',
-    'titleENBlank',
+    'typeMismatch',
+    'valueMissing',
 ];
 
-const defaultOption = 'titleTWBlank';
+const defaultOption = 'typeMismatch';
 
 const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        titleTWBlank:           'title ( zh-TW ) can\'t be blank',
-        titleENBlank:           'title ( zh-TW ) can\'t be blank',
+        typeMismatch:  ' type mismatch',
+        valueMissing:  ' can\'t be blank',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        titleTWBlank:           '中文職稱為必填欄位',
-        titleENBlank:           '英文職稱為必填欄位',
+        typeMismatch:  '格式錯誤',
+        valueMissing:  '為必填欄位',
     },
 };
 

@@ -3,8 +3,8 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import ProfileDataManagement from 'static/src/js/components/user/staff/profile-data-managament.js';
 import DefaultDataManagement from 'static/src/js/components/user/staff/default-data-management.js';
-import businessI18nErrorMessageUtils from 'models/staff/utils/businessI18n-error-message.js';
-import titleI18nErrorMessageUtils from 'models/staff/utils/titleI18n-error-message.js';
+import businessI18nUtils from 'models/staff/utils/businessI18n.js';
+import titleI18nUtils from 'models/staff/utils/titleI18n.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
@@ -55,27 +55,7 @@ try {
         languageId:       WebLanguageUtils.currentLanguageId,
         table:            'titleI18n',
         idColumn:         'titleId',
-        constraints:      {
-            'titleTW': {
-                presence: {
-                    allowEmpty: false,
-                    message:    titleI18nErrorMessageUtils.getValueByOption( {
-                        option:     'titleTWBlank',
-                        languageId: WebLanguageUtils.currentLanguageId,
-                    } ),
-                },
-            },
-            'titleEN': {
-                presence: {
-                    allowEmpty: false,
-                    message:    titleI18nErrorMessageUtils.getValueByOption( {
-                        option:     'titleENBlank',
-                        languageId: WebLanguageUtils.currentLanguageId,
-                    } ),
-                },
-            },
-            'deletePreview':    data => `${ data.title }`,
-        },
+        columnUnits:      titleI18nUtils,
         deletePreview:    data => `${ data.title }`,
     } );
     if ( !( titleI18nDataManagement instanceof DefaultDataManagement ) )
@@ -98,26 +78,7 @@ try {
         languageId:       WebLanguageUtils.currentLanguageId,
         table:            'businessI18n',
         idColumn:         'businessId',
-        constraints:      {
-            'businessTW': {
-                presence: {
-                    allowEmpty: false,
-                    message:    businessI18nErrorMessageUtils.getValueByOption( {
-                        option:     'businessTWBlank',
-                        languageId: WebLanguageUtils.currentLanguageId,
-                    } ),
-                },
-            },
-            'businessEN': {
-                presence: {
-                    allowEmpty: false,
-                    message:    businessI18nErrorMessageUtils.getValueByOption( {
-                        option:     'businessENBlank',
-                        languageId: WebLanguageUtils.currentLanguageId,
-                    } ),
-                },
-            },
-        },
+        columnUnits:      businessI18nUtils,
         deletePreview:    data => `${ data.business }`,
     } );
     if ( !( businessI18nDataManagement instanceof DefaultDataManagement ) )

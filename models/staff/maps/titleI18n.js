@@ -9,20 +9,20 @@ import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
 const map = [
-    'businessTWBlank',
-    'businessENBlank',
+    'titleTW',
+    'titleEN',
 ];
 
-const defaultOption = 'businessTWBlank';
+const defaultOption = 'titleTW';
 
 const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        businessTWBlank:           'business ( zh-TW ) can\'t be blank',
-        businessENBlank:           'business ( zh-TW ) can\'t be blank',
+        titleTW:           'title',
+        titleEN:           'title',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        businessTWBlank:           '中文負責項目為必填欄位',
-        businessENBlank:           '英文負責項目為必填欄位',
+        titleTW:           '中文職稱',
+        titleEN:           '英文職稱',
     },
 };
 

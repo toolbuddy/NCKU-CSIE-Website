@@ -3,8 +3,8 @@ import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { host, } from 'settings/server/config.js';
-import profileErrorMessageUtils from 'models/staff/utils/profile-error-message.js';
-import validate from 'validate.js';
+import errorMessageUtils from 'models/staff/utils/error-message.js';
+import profileUtils from 'models/staff/utils/profile.js';
 
 export default class ProfileDataManagement {
     constructor ( opt ) {
@@ -59,71 +59,6 @@ export default class ProfileDataManagement {
                 errorMessage: opt.bodyFormDOM.querySelector( errorMessageQuerySelector( key ) ),
             };
         } );
-
-        this.constraints = {
-            name: {
-                nameTW: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'nameTWBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-                nameEN: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'nameENBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-            },
-            officeAddress: {
-                officeAddressTW: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'officeAddressTWBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-                officeAddressEN: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'officeAddressENBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-            },
-            email: {
-                email: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'emailBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-            },
-            officeTel: {
-                officeTel: {
-                    presence: {
-                        allowEmpty: false,
-                        message:    profileErrorMessageUtils.getValueByOption( {
-                            option:     'officeTelBlank',
-                            languageId: this.config.languageId,
-                        } ),
-                    },
-                },
-            },
-        };
     }
 
     subscribeCancelButton () {
@@ -211,12 +146,12 @@ export default class ProfileDataManagement {
                 if ( isValid ) {
                     new Promise( ( res ) => {
                         const item = {};
-                        const i18n = {
-                            [ LanguageUtils.getLanguageId( 'en-US' ) ]: {},
-                            [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {},
-                        };
+
+                        const i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+                            return { languageId: id, };
+                        } );
                         Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
-                            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
+                            if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                                 i18n[ element.getAttribute( 'languageid' ) ][ columnName ] = element.value;
                             else
                                 item[ columnName ] = element.value;
@@ -281,13 +216,28 @@ export default class ProfileDataManagement {
         } );
     }
 
+    getErrorMessage ( inputName, errorType ) {
+        const column = profileUtils.getValueByOption( {
+            option:     inputName,
+            languageId: this.config.languageId,
+        } );
+        const error = errorMessageUtils.getValueByOption( {
+            option:     errorType,
+            languageId: this.config.languageId,
+        } );
+        return `${ column }${ error }`;
+    }
+
     async dataValidation ( columnName ) {
         const isValid = new Promise( ( res ) => {
             let errorMessage = '';
             Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
-                const message = validate.single( element.value, this.constraints[ columnName ][ element.name ] );
-                if ( ValidateUtils.isValidArray( message ) ) {
-                    errorMessage = message[ 0 ];
+                if ( element.validity.typeMismatch || element.validity.patternMismatch ) {
+                    errorMessage = this.getErrorMessage( element.getAttribute( 'name' ), 'typeMismatch' );
+                    element.focus();
+                }
+                else if ( element.validity.valueMissing ) {
+                    errorMessage = this.getErrorMessage( element.getAttribute( 'name' ), 'valueMissing' );
                     element.focus();
                 }
             } );
