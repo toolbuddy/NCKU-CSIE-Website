@@ -64,6 +64,7 @@ try {
         languageId:       WebLanguageUtils.currentLanguageId,
         columnUnits:      awardColumnsUnits,
         table:            'award',
+        dbTable:          'award',
         idColumn:         'awardId',
         deletePreview:    data => `${ data.receivedYear } ${ data.award }`,
     } );

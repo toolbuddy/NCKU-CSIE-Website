@@ -2,6 +2,8 @@ include /components/user/form/text.pug
 include /components/user/form/i18n-text.pug
 include /components/user/form/delete-preview.pug
 include /components/user/form/single.pug
+include /components/user/form/hidden.pug
+include /components/user/form/duration.pug
 
 mixin form-input( table, method, formI18n, inputConfig )
   -
@@ -26,10 +28,12 @@ mixin form-input( table, method, formI18n, inputConfig )
         each config in inputConfig
           if config.inputPattern === 'i18n-text'
             +i18n-text( config, formI18n, method, table )
-          if config.inputPattern === 'text'
-            +text( config, formI18n, method, table )
           if config.inputPattern === 'single'
             +single( config, formI18n, method, table )
+          if config.inputPattern === 'duration'
+            +duration( config, formI18n, method, table )
+          if config.inputPattern === 'hidden' && method === 'post'
+            +hidden( config, formI18n, method, table )
         p.content__error-message.error-message= ''
       if method === 'delete'
         +delete-preview()

@@ -1,6 +1,6 @@
 @import 'components/user/form/i18n-text';
-@import 'components/user/form/text';
 @import 'components/user/form/single';
+@import 'components/user/form/duration';
 @import 'components/user/form/delete-preview';
 @mixin form () {
   > .body__form.form {
@@ -28,6 +28,8 @@
       margin-top: 10vh;
       width: font__px-to-rem( 500 );
       height: fit-content;
+      max-height: 70vh;
+      overflow: auto;
 
       // [ skin ]
       border-radius: font__px-to-rem( 3 );
@@ -80,7 +82,7 @@
 
         // [ layout ]
         @include i18n-text();
-        @include text();
+        @include duration();
         @include single();
         @include delete-preview();
       }

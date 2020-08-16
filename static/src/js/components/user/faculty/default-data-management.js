@@ -21,6 +21,7 @@ export default class DefaultDataManagement {
         this.config = {
             languageId:   opt.languageId,
             table:        opt.table,
+            dbTable:      opt.dbTable,
             idColumn:   opt.idColumn,
         };
 
@@ -119,7 +120,8 @@ export default class DefaultDataManagement {
         } );
     }
 
-    subscribePostButton () {
+    subscribePostButton ( element ) {
+        element.target.setAttribute( 'post', 'post' );
         this.showPostForm();
     }
 
@@ -131,11 +133,12 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
+
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     body:   JSON.stringify( {
                         profileId: this.config.profileId,
-                        dbTable:   this.config.table,
+                        dbTable:   this.config.dbTable,
                         item:      data.item,
                         i18n:      data.i18n,
                     } ),
@@ -160,7 +163,7 @@ export default class DefaultDataManagement {
 
             const tableData = data.map( ( i18nData ) => {
                 const dict = {};
-                i18nData[ this.config.table ].forEach( ( row ) => {
+                i18nData[ this.config.dbTable ].forEach( ( row ) => {
                     dict[ row[ this.config.idColumn ] ] = row;
                 } );
                 return dict;
@@ -185,7 +188,7 @@ export default class DefaultDataManagement {
                     method:   'PATCH',
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
-                        dbTable:       this.config.table,
+                        dbTable:       this.config.dbTable,
                         dbTableItemId: this.status.itemId,
                         item:          data.item,
                         i18n:          data.i18n,
@@ -225,7 +228,7 @@ export default class DefaultDataManagement {
                 method:   'POST',
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
-                    dbTable:        this.config.table,
+                    dbTable:        this.config.dbTable,
                     dbTableItemId:  this.status.itemId,
                 } ),
             } )
@@ -278,7 +281,8 @@ export default class DefaultDataManagement {
 
     showPostForm () {
         Array.from( this.DOM.post.input ).forEach( ( element ) => {
-            element.value = '';
+            if ( element.type !== 'hidden' )
+                element.value = '';
         } );
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.post.form, 'form-input--active' );
@@ -297,17 +301,18 @@ export default class DefaultDataManagement {
     }
 
     getErrorMessage ( opt ) {
+        const isI18n =  ( opt.element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false;
+        const languageId = Number( opt.element.getAttribute( 'languageid' ) );
+
         const column = this.columnUnits.getValueByOption( {
-            option:     opt.inputName,
+            option:     opt.element.getAttribute( 'column' ),
             languageId: this.config.languageId,
         } );
         const error = errorMessageUtils.getValueByOption( {
             option:     opt.errorType,
             languageId: this.config.languageId,
         } );
-        console.log( LanguageUtils.getLanguageById( 0 ) );
-        console.log( opt );
-        const language = ( opt.isI18n ) ? `(${ LanguageUtils.getLanguageById( opt.languageId ) })` : '';
+        const language = ( isI18n ) ? `(${ LanguageUtils.getLanguageById( languageId ) })` : '';
         return `${ column }${ language }${ error }`;
     }
 
@@ -317,28 +322,22 @@ export default class DefaultDataManagement {
             Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
                 if ( element.validity.typeMismatch || element.validity.patternMismatch ) {
                     errorMessage = this.getErrorMessage( {
-                        inputName:  element.getAttribute( 'column' ),
                         errorType:  'typeMismatch',
-                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
-                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                        element,
                     } );
                     element.focus();
                 }
                 else if ( element.validity.rangeUnderflow ) {
                     errorMessage = this.getErrorMessage( {
-                        inputName:  element.getAttribute( 'column' ),
                         errorType:  'rangeUnderflow',
-                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
-                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                        element,
                     } );
                     element.focus();
                 }
                 else if ( element.validity.valueMissing ) {
                     errorMessage = this.getErrorMessage( {
-                        inputName:  element.getAttribute( 'column' ),
                         errorType:  'valueMissing',
-                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
-                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                        element,
                     } );
                     element.focus();
                 }
@@ -367,6 +366,9 @@ export default class DefaultDataManagement {
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+            else if ( element.getAttribute( 'datatype' ) === 'int' )
+                data.item[ element.name ] = Number( element.value );
+
             else
                 data.item[ element.name ] = element.value;
         } );
@@ -397,8 +399,8 @@ export default class DefaultDataManagement {
                 } );
             } );
             this.DOM.postButtons.forEach( ( element ) => {
-                element.node.addEventListener( 'click', () => {
-                    this.subscribePostButton();
+                element.node.addEventListener( 'click', ( node ) => {
+                    this.subscribePostButton( node );
                 } );
             } );
             this.DOM.patchButtons.forEach( ( element ) => {

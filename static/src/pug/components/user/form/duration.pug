@@ -1,0 +1,38 @@
+mixin duration ( config, i18n, method, table )
+  -
+    const durationI18n= Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        from: 'from',
+        to:   'to',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        from: '從',
+        to:   '至',
+      }
+    })
+  section.content__duration.duration
+    h4.duration__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
+    section.duration__block.duration__block--from.block
+      h5.block__title.title= durationI18n[ LANG.id ].from
+      input.block__input.input(
+        input-pattern='duration',
+        languageId= LANG.id,
+        placeholder= i18n[ LANG.id ].default[ config.columnName ],
+        name= 'from',
+        column= 'from',
+        table= table,
+        method= method,
+        datatype= 'int'
+      )&attributes(config.validation)
+    section.duration__block.duration__block--to.block
+      h5.block__title.title= durationI18n[ LANG.id ].to
+      input.block__input.input(
+        input-pattern='duration',
+        languageId= LANG.id,
+        placeholder= i18n[ LANG.id ].default[ config.columnName ],
+        name= 'to',
+        column= 'to',
+        table= table,
+        method= method,
+        datatype = 'int'          
+      )&attributes(config.validation)
