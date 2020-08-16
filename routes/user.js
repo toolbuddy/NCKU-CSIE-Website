@@ -42,6 +42,8 @@ import roleUtils from 'models/auth/utils/role.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -965,7 +967,7 @@ router
         userId: Number( res.locals.userId ),
     } );
 
-    const data = await getStaffDetailWithId( {
+    const data = await getFacultyDetailWithId( {
         profileId:  result.roleId,
         languageId: req.query.languageId,
     } );
@@ -1093,7 +1095,40 @@ router
 
 router
 .route( '/faculty/award' )
-.get( allowUserOnly, staticHtml( 'user/faculty/award' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/award.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/project`.

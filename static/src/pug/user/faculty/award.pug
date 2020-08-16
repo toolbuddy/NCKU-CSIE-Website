@@ -1,32 +1,89 @@
-extends /layouts/base.pug
-include /components/user/navigation-bar.pug
-include /components/user/local-topic.pug
+extends /layouts/faculty/base.pug
 include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/award-card.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Award',
+        title:      'User Award',
         breadcrumb: {
           home:     'Home',
-          user:     'User',
+          user:     'User Award',
         },
         content: {
           topic: 'Teacher profile settings',
-        }
+          award: {
+            topic:        'Award',
+          },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '榮譽及獲獎',
+        title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者',
+          user:     '使用者資料',
         },
         content: {
           topic: '教師資料維護',
+          award: {
+            topic:        '榮譽及獲獎',
+          },
         },
       },
     } );
+    const formI18n = Object.freeze({
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Award',
+          patch: 'Modify Your Award',
+          delete: 'Remove Your Award',
+          default: {
+            award: 'award',
+            receivedYear: 'yyyy',
+          },
+          title: {
+            award: 'Award',
+            receivedYear: 'Received Year',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]:{
+          post: '新增您的榮譽及獲獎',
+          patch: '編輯您的榮譽及獲獎',
+          delete: '刪除您的榮譽及獲獎',
+          default: {
+            award: '獎項名稱',
+            receivedYear: 'yyyy',
+          },
+          title: {
+            award: '獎項',
+            receivedYear: '獲獎年份',
+          },
+       }
+    })
+    const inputConfig = [
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'award',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+      {
+        inputPattern: 'single',
+        columnName: 'receivedYear',
+        validation: {
+          type: 'number',
+          min:  1970,
+          required: true,
+        }
+      }
+    ]
     const currentRoute = 'user/faculty/award';
 
 append title
@@ -42,8 +99,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].title },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/award' },
     ]
   )
 
@@ -51,14 +107,34 @@ append content
   include /components/common/loading.pug
   include /components/common/refresh.pug
 
+  +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  main.content__main
-    +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__award-block.award-block
-      +local-topic( 'award-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'award-block' )
-      +loading( 'award-block' )
-      section.award-block__award.award#award
+  section.content__award.award
+    +local-topic( 'award', i18n[ LANG.id ].content.award.topic )
+    +refreshWithImage( 'award' )
+    +loading( 'award' )
+    section#award__cards.award__cards.cards
+      if Array.isArray( data.award ) && data.award.length
+        -
+          let receivedYear = null
+          data.award.sort( (awardA, awardB)=>{
+            if(awardA.receivedYear === null )
+              return -1
+            else if(awardB.receivedYear === null)
+              return 1
+            return awardB.receivedYear - awardA.receivedYear
+          })
+        each awardObj in data.award
+          if receivedYear === null || receivedYear !== awardObj.receivedYear
+            +classfication-title( awardObj.receivedYear )
+            -
+              receivedYear = awardObj.receivedYear
+          +award-card( awardObj )
+
+append form
+  +form-input( 'award', 'post', formI18n, inputConfig )
+  +form-input( 'award', 'patch', formI18n, inputConfig )
+  +form-input( 'award', 'delete', formI18n, inputConfig )
 
 append footer
 

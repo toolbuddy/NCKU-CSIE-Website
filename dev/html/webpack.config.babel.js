@@ -105,7 +105,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         // Route `user`
         'user/index':                       path.join( pugRoot, 'user/index.pug' ),
         'user/faculty/profile':             path.join( pugRoot, 'user/faculty/profile.pug' ),
-        'user/faculty/award':               path.join( pugRoot, 'user/faculty/award.pug' ),
         'user/faculty/publication':         path.join( pugRoot, 'user/faculty/publication.pug' ),
         'user/faculty/conference':          path.join( pugRoot, 'user/faculty/conference.pug' ),
         'user/faculty/project':             path.join( pugRoot, 'user/faculty/project.pug' ),

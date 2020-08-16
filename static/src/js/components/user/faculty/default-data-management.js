@@ -1,8 +1,7 @@
 import ValidateUtils from 'models/common/utils/validate.js';
-import validate from 'validate.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import errorMessageUtils from 'models/user/utils/error-message.js';
 import { host, } from 'settings/server/config.js';
 
 export default class DefaultDataManagement {
@@ -14,7 +13,7 @@ export default class DefaultDataManagement {
             !ValidateUtils.isDomElement( opt.refreshDOM ) ||
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.cardsDOM ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
+            !LanguageUtils.isSupportedLanguageId( opt.languageId ) ||
             !ValidateUtils.isValidString( opt.table )
         )
             throw new TypeError( 'invalid arguments' );
@@ -26,12 +25,12 @@ export default class DefaultDataManagement {
         };
 
         this.status = {
-            dataId:      -1,
+            itemId:      -1,
             patchButton: null,
         };
 
-        this.constraints = opt.constraints;
         this.deletePreview = opt.deletePreview;
+        this.columnUnits = opt.columnUnits;
 
         const checkButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__check`;
         const cancelButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__cancel`;
@@ -135,12 +134,10 @@ export default class DefaultDataManagement {
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
-                        add:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        profileId: this.config.profileId,
+                        dbTable:   this.config.table,
+                        item:      data.item,
+                        i18n:      data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -149,6 +146,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -157,7 +155,7 @@ export default class DefaultDataManagement {
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.dataId = element.target.getAttribute( 'data-id' );
+            this.status.itemId = element.target.getAttribute( 'data-id' );
             this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
@@ -171,8 +169,8 @@ export default class DefaultDataManagement {
             return tableData;
         } )
         .then( ( data ) => {
-            const dataId = element.target.getAttribute( 'data-id' );
-            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
+            const itemId = element.target.getAttribute( 'data-id' );
+            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ itemId ] ) );
         } );
     }
 
@@ -183,15 +181,14 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/profile`, {
-                    method:   'POST',
+                fetch( `${ host }/user/staff`, {
+                    method:   'PATCH',
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
-                        update:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        dbTable:       this.config.table,
+                        dbTableItemId: this.status.itemId,
+                        item:          data.item,
+                        i18n:          data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -200,6 +197,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -208,7 +206,7 @@ export default class DefaultDataManagement {
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.dataId = e.target.getAttribute( 'data-id' );
+            this.status.itemId = e.target.getAttribute( 'data-id' );
             const rowData = data[ this.config.table ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
@@ -226,10 +224,9 @@ export default class DefaultDataManagement {
             fetch( `${ host }/user/profile`, {
                 method:   'POST',
                 body:   JSON.stringify( {
-                    profileId:     this.config.profileId,
-                    delete:    {
-                        [ this.config.table ]: this.status.dataId,
-                    },
+                    profileId:      this.config.profileId,
+                    dbTable:        this.config.table,
+                    dbTableItemId:  this.status.itemId,
                 } ),
             } )
             .then( () => {
@@ -238,6 +235,7 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
+                window.location.reload();
             } );
         } );
     }
@@ -273,7 +271,7 @@ export default class DefaultDataManagement {
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ][ columnName ];
         } );
-        this.DOM.patch.errorMessage.innerHTML = '';
+        this.DOM.patch.errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.patch.form, 'form-input--active' );
     }
@@ -298,13 +296,50 @@ export default class DefaultDataManagement {
         classRemove( this.DOM.delete.form, 'form-input--active' );
     }
 
+    getErrorMessage ( opt ) {
+        const column = this.columnUnits.getValueByOption( {
+            option:     opt.inputName,
+            languageId: this.config.languageId,
+        } );
+        const error = errorMessageUtils.getValueByOption( {
+            option:     opt.errorType,
+            languageId: this.config.languageId,
+        } );
+        console.log( LanguageUtils.getLanguageById( 0 ) );
+        console.log( opt );
+        const language = ( opt.isI18n ) ? `(${ LanguageUtils.getLanguageById( opt.languageId ) })` : '';
+        return `${ column }${ language }${ error }`;
+    }
+
     async dataValidation ( method ) {
         const isValid = new Promise( ( res ) => {
             let errorMessage = '';
             Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-                const message = validate.single( element.value, this.constraints[ element.name ] );
-                if ( ValidateUtils.isValidArray( message ) ) {
-                    errorMessage = message[ 0 ];
+                if ( element.validity.typeMismatch || element.validity.patternMismatch ) {
+                    errorMessage = this.getErrorMessage( {
+                        inputName:  element.getAttribute( 'column' ),
+                        errorType:  'typeMismatch',
+                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
+                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                    } );
+                    element.focus();
+                }
+                else if ( element.validity.rangeUnderflow ) {
+                    errorMessage = this.getErrorMessage( {
+                        inputName:  element.getAttribute( 'column' ),
+                        errorType:  'rangeUnderflow',
+                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
+                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                    } );
+                    element.focus();
+                }
+                else if ( element.validity.valueMissing ) {
+                    errorMessage = this.getErrorMessage( {
+                        inputName:  element.getAttribute( 'column' ),
+                        errorType:  'valueMissing',
+                        isI18n:     ( element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false,
+                        languageId: Number( element.getAttribute( 'languageid' ) ),
+                    } );
                     element.focus();
                 }
             } );
@@ -314,7 +349,7 @@ export default class DefaultDataManagement {
             if ( errorMessage === '' )
                 return true;
 
-            this.DOM[ method ].errorMessage.innerHTML = errorMessage;
+            this.DOM[ method ].errorMessage.innerText = errorMessage;
             return false;
         } );
 
@@ -323,15 +358,17 @@ export default class DefaultDataManagement {
 
     async formatFormData ( method ) {
         const data = {
-            i18n: Array.from( LanguageUtils.supportedLanguageId ).map( id => ( { language: id, } ) ),
+            item: {},
+            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+                return { languageId: id, };
+            } ),
         };
+
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
+            if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
-
-
             else
-                data[ element.name ] = element.value;
+                data.item[ element.name ] = element.value;
         } );
 
         return data;

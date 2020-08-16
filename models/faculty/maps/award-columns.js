@@ -9,23 +9,20 @@ import LanguageUtils from '../../common/utils/language.js';
 import deepFreeze from 'deep-freeze';
 
 const map = [
-    'typeMismatch',
-    'valueMissing',
-    'rangeUnderflow',
+    'receivedYear',
+    'award',
 ];
 
-const defaultOption = 'typeMismatch';
+const defaultOption = 'receivedYear';
 
 const i18n = {
     [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        typeMismatch:   ' type mismatch',
-        valueMissing:   ' can\'t be blank',
-        rangeUnderflow: ' range underflow',
+        receivedYear:      'received year',
+        award:           'award',
     },
     [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        typeMismatch:   '格式錯誤',
-        valueMissing:   '為必填欄位',
-        rangeUnderflow: '範圍錯誤',
+        receivedYear:  '獲獎日期',
+        award:         '獎項',
     },
 };
 
