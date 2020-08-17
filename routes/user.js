@@ -40,13 +40,6 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 
-// Import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
-// import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
-// import departmentUtils from 'models/faculty/utils/department.js';
-// import nationUtils from 'models/faculty/utils/nation.js';
-// import degreeUtils from 'models/faculty/utils/degree.js';
-// import researchGroupUtils from 'models/faculty/utils/research-group.js';
-
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -187,7 +180,7 @@ router
                         res.json( { userId: -1, } );
                     } );
                 }
-                else{
+                else {
                     console.error( error );
                     res.status( error.status ).send( error.message );
                 }
@@ -1208,7 +1201,7 @@ router
                     } );
                 } );
             }
-            else{
+            else {
                 console.error( error );
                 res.status( error.status ).send( error.message );
             }
@@ -1410,10 +1403,6 @@ router
         res.status( error.status ).send( error.message );
     }
 } );
-
-/**
- * Resolve URL `/user/announcement/delete`.
- */
 
 router
 .route( '/announcement/delete' )

@@ -334,21 +334,21 @@
               > .title__item--time {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: time;
               }
 
               > .title__item--name {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: name;
               }
 
               > .title__item--support {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: support;
                 display: none;
 
@@ -604,21 +604,21 @@
               > .title__item--time {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: time;
               }
 
               > .title__item--technology {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: technology;
               }
 
               > .title__item--authorizedParty {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: authorizedParty;
                 display: none;
 
@@ -631,7 +631,7 @@
               > .title__item--authorizingParty {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: authorizingParty;
                 display: none;
 
@@ -1033,21 +1033,21 @@
               > .title__item--certificationNumber {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: certification;
               }
 
               > .title__item--patent {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: patent;
               }
 
               > .title__item--nation {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: nation;
                 display: none;
 
@@ -1060,7 +1060,7 @@
               > .title__item--inventor {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: inventor;
                 display: none;
 
@@ -1073,7 +1073,7 @@
               > .title__item--patentOwner {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: patentOwner;
                 display: none;
 
@@ -1086,7 +1086,7 @@
               > .title__item--applicationDate {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: applicationDate;
                 display: none;
 
@@ -1099,7 +1099,7 @@
               > .title__item--duration {
                 @extend %title__item;
 
-                // [ layout ]  
+                // [ layout ]
                 grid-area: duration;
                 display: none;
 

@@ -245,7 +245,7 @@ d3Data.lineChart.forEach( ( chart ) => {
     // Line chart
     d3.select( `#${ chart.selector }` ).select( 'svg' )
     .attr( 'preserveAspectRatio', 'xMinYMin meet' )
-    .attr( 'viewBox', `0 0 ${ d3Data.plotAttribute.width + 2 * d3Data.plotAttribute.margin } 
+    .attr( 'viewBox', `0 0 ${ d3Data.plotAttribute.width + 2 * d3Data.plotAttribute.margin }
     ${ d3Data.plotAttribute.height + 2 * d3Data.plotAttribute.margin }` )
     .append( 'path' ).attr( 'd', scaling( chart.data ) )
     .attr( 'transform', `translate(-${ d3Data.plotAttribute.margin }, -${ d3Data.plotAttribute.margin })` );

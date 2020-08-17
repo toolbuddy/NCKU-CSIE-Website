@@ -1,10 +1,11 @@
 import ValidateUtils from 'models/common/utils/validate.js';
+import validate from 'validate.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import { host, } from 'settings/server/config.js';
 
-export default class BaseDataManagement {
+export default class DefaultDataManagement {
     constructor ( opt ) {
         opt = opt || {};
 
@@ -14,14 +15,14 @@ export default class BaseDataManagement {
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.cardsDOM ) ||
             !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
-            !ValidateUtils.isValidString( opt.dbTable )
+            !ValidateUtils.isValidString( opt.table )
         )
             throw new TypeError( 'invalid arguments' );
 
         this.config = {
             languageId:   opt.languageId,
-            dbTable:      opt.dbTable,
-            idColumnName: opt.idColumnName,
+            table:        opt.table,
+            idColumn:   opt.idColumn,
         };
 
         this.status = {
@@ -29,11 +30,14 @@ export default class BaseDataManagement {
             patchButton: null,
         };
 
-        const checkButtonQuerySelector = method => ` #form-${ opt.dbTable }-${ method } > .form-input__button > .button__check`;
-        const cancelButtonQuerySelector = method => ` #form-${ opt.dbTable }-${ method } > .form-input__button > .button__cancel`;
-        const errorMessageQuerySelector = method => ` #form-${ opt.dbTable }-${ method } > .form-input__content > .content__error-message`;
-        const inputQuerySelector = method => `input[ method = ${ method }]`;
-        const formQuerySelector = method => `#form-${ opt.dbTable }-${ method }`;
+        this.constraints = opt.constraints;
+        this.deletePreview = opt.deletePreview;
+
+        const checkButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__check`;
+        const cancelButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__cancel`;
+        const errorMessageQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__content > .content__error-message`;
+        const inputQuerySelector = method => `input[ method = ${ method }][table = ${ opt.table }]`;
+        const formQuerySelector = method => `#form-${ opt.table }-${ method }`;
 
         this.DOM = {
             patch: {
@@ -53,7 +57,7 @@ export default class BaseDataManagement {
             delete: {
                 checkButton:  opt.bodyFormDOM.querySelector( checkButtonQuerySelector( 'delete' ) ),
                 cancelButton: opt.bodyFormDOM.querySelector( cancelButtonQuerySelector( 'delete' ) ),
-                preview:      opt.bodyFormDOM.querySelector( `#form-${ opt.dbTable }-delete > .form-input__content > .content__delete-preview` ),
+                preview:      opt.bodyFormDOM.querySelector( `#form-${ opt.table }-delete > .form-input__content > .content__delete-preview` ),
                 form:         opt.bodyFormDOM.querySelector( formQuerySelector( 'delete' ) ),
             },
             formBackground: opt.bodyFormDOM,
@@ -90,27 +94,6 @@ export default class BaseDataManagement {
             refresh: opt.refreshDOM,
             loading: opt.loadingDOM,
         };
-
-        /**
-         * @abstract
-         * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-post > .form-input__button > .button__check`.
-         */
-
-        this.subscribePostCheckButton();
-
-        /**
-         * @abstract
-         * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-patch > .form-input__button > .button__check`.
-         */
-
-        this.subscribePatchCheckButton();
-
-        /**
-         * @abstract
-         * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-delete > .form-input__button > .button__check`.
-         */
-
-        this.subscribeDeleteCheckButton();
     }
 
     renderLoading () {
@@ -141,13 +124,122 @@ export default class BaseDataManagement {
         this.showPostForm();
     }
 
-    /**
-     * @abstract
-     * Subscribe click event for DOM elements ` #form-${ opt.dbTable }-patch > .form-input__button > .button__check`.
-     */
+    subscribePostCheckButton () {
+        this.DOM.post.checkButton.addEventListener( 'click', async ( e ) => {
+            e.preventDefault();
+
+            const isValid = await this.dataValidation( 'post' );
+
+            if ( isValid ) {
+                const data = await this.formatFormData( 'post' );
+                fetch( `${ host }/user/profile`, {
+                    method:   'POST',
+                    body:   JSON.stringify( {
+                        profileId:     this.config.profileId,
+                        add:       {
+                            [ this.config.table ]: [
+                                data,
+                            ],
+                        },
+                    } ),
+                } )
+                .then( () => {
+                    this.hideForm();
+                    this.renderLoading();
+                } )
+                .then( () => {
+                    this.renderSuccess();
+                } );
+            }
+        } );
+    }
+
+    subscribePatchButton ( element ) {
+        Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
+        .then( ( data ) => {
+            this.status.dataId = element.target.getAttribute( 'data-id' );
+            this.status.patchButton = element.target;
+
+            const tableData = data.map( ( i18nData ) => {
+                const dict = {};
+                i18nData[ this.config.table ].forEach( ( row ) => {
+                    dict[ row[ this.config.idColumn ] ] = row;
+                } );
+                return dict;
+            } );
+
+            return tableData;
+        } )
+        .then( ( data ) => {
+            const dataId = element.target.getAttribute( 'data-id' );
+            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
+        } );
+    }
+
+    subscribePatchCheckButton () {
+        this.DOM.patch.checkButton.addEventListener( 'click', async ( e ) => {
+            e.preventDefault();
+            const isValid = await this.dataValidation( 'patch' );
+
+            if ( isValid ) {
+                const data = await this.formatFormData( 'patch' );
+                fetch( `${ host }/user/profile`, {
+                    method:   'POST',
+                    body:   JSON.stringify( {
+                        profileId:     this.config.profileId,
+                        update:       {
+                            [ this.config.table ]: [
+                                data,
+                            ],
+                        },
+                    } ),
+                } )
+                .then( () => {
+                    this.hideForm();
+                    this.renderLoading();
+                } )
+                .then( () => {
+                    this.renderSuccess();
+                } );
+            }
+        } );
+    }
 
     subscribeDeleteButton ( e ) {
-        throw new Error( 'You have to implement the method subscribeDeleteButton!' );
+        this.fetchData( this.config.languageId )
+        .then( ( data ) => {
+            this.status.dataId = e.target.getAttribute( 'data-id' );
+            const rowData = data[ this.config.table ].find(
+                item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
+            );
+
+            this.DOM.delete.preview.innerHTML = this.deletePreview( rowData );
+        } )
+        .then( () => {
+            this.showDeleteForm();
+        } );
+    }
+
+    subscribeDeleteCheckButton () {
+        this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            fetch( `${ host }/user/profile`, {
+                method:   'POST',
+                body:   JSON.stringify( {
+                    profileId:     this.config.profileId,
+                    delete:    {
+                        [ this.config.table ]: this.status.dataId,
+                    },
+                } ),
+            } )
+            .then( () => {
+                this.hideForm();
+                this.renderLoading();
+            } )
+            .then( () => {
+                this.renderSuccess();
+            } );
+        } );
     }
 
     queryApi ( languageId ) {
@@ -167,31 +259,9 @@ export default class BaseDataManagement {
         }
     }
 
-    subscribePatchButton ( element ) {
-        Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
-        .then( ( data ) => {
-            this.status.dataId = element.target.getAttribute( 'data-id' );
-            this.status.patchButton = element.target;
-
-            const tableData = data.map( ( i18nData ) => {
-                const dict = {};
-                i18nData[ this.config.dbTable ].forEach( ( row ) => {
-                    dict[ row[ this.config.idColumnName ] ] = row;
-                } );
-                return dict;
-            } );
-
-            return tableData;
-        } )
-        .then( ( data ) => {
-            const dataId = element.target.getAttribute( 'data-id' );
-            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
-        } );
-    }
-
     setPatchFormValue ( data ) {
         Array.from( this.DOM.patch.input ).forEach( ( element ) => {
-            const columnName = element.getAttribute( 'column-name' );
+            const columnName = element.getAttribute( 'column' );
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ][ columnName ];
         } );
@@ -199,7 +269,7 @@ export default class BaseDataManagement {
 
     showPatchForm ( data ) {
         Array.from( this.DOM.patch.input ).forEach( ( element ) => {
-            const columnName = element.getAttribute( 'column-name' );
+            const columnName = element.getAttribute( 'column' );
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ][ columnName ];
         } );
@@ -228,6 +298,45 @@ export default class BaseDataManagement {
         classRemove( this.DOM.delete.form, 'form-input--active' );
     }
 
+    async dataValidation ( method ) {
+        const isValid = new Promise( ( res ) => {
+            let errorMessage = '';
+            Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
+                const message = validate.single( element.value, this.constraints[ element.name ] );
+                if ( ValidateUtils.isValidArray( message ) ) {
+                    errorMessage = message[ 0 ];
+                    element.focus();
+                }
+            } );
+            res( errorMessage );
+        } )
+        .then( ( errorMessage ) => {
+            if ( errorMessage === '' )
+                return true;
+
+            this.DOM[ method ].errorMessage.innerHTML = errorMessage;
+            return false;
+        } );
+
+        return isValid;
+    }
+
+    async formatFormData ( method ) {
+        const data = {
+            i18n: Array.from( LanguageUtils.supportedLanguageId ).map( id => ( { language: id, } ) ),
+        };
+        Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
+            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
+                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+
+
+            else
+                data[ element.name ] = element.value;
+        } );
+
+        return data;
+    }
+
     async exec () {
         this.renderLoading();
 
@@ -242,19 +351,22 @@ export default class BaseDataManagement {
         .then( () => {
             this.renderSuccess();
             this.subscribeCancelButton();
+            this.subscribePostCheckButton();
+            this.subscribeDeleteCheckButton();
+            this.subscribePatchCheckButton();
             this.DOM.deleteButtons.forEach( ( element ) => {
                 element.node.addEventListener( 'click', ( node ) => {
                     this.subscribeDeleteButton( node );
                 } );
             } );
-            this.DOM.patchButtons.forEach( ( element ) => {
-                element.node.addEventListener( 'click', ( node ) => {
-                    this.subscribePatchButton( node );
-                } );
-            } );
             this.DOM.postButtons.forEach( ( element ) => {
                 element.node.addEventListener( 'click', () => {
                     this.subscribePostButton();
+                } );
+            } );
+            this.DOM.patchButtons.forEach( ( element ) => {
+                element.node.addEventListener( 'click', ( node ) => {
+                    this.subscribePatchButton( node );
                 } );
             } );
         } );
