@@ -134,6 +134,13 @@ export default class DefaultDataManagement {
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
 
+                console.log( {
+                    profileId: this.config.profileId,
+                    dbTable:   this.config.dbTable,
+                    item:      data.item,
+                    i18n:      data.i18n,
+                } );
+
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
                     header: {
@@ -152,7 +159,8 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
-                    window.location.reload();
+
+                    // Window.location.reload();
                 } );
             }
         } );
@@ -232,7 +240,12 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            fetch( `${ host }/user/faculty/profile`, {
+            console.log( {
+                profileId:      this.config.profileId,
+                dbTable:        this.config.dbTable,
+                dbTableItemId:  this.status.itemId,
+            } );
+            fetch( `${ host }/user/profile`, {
                 method:   'DELETE',
                 header: {
                     'content-type': 'application/json',
@@ -240,7 +253,7 @@ export default class DefaultDataManagement {
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.dbTable,
-                    dbTableItemId:  this.status.itemId,
+                    dbTableItemId:  Number( this.status.itemId ),
                 } ),
             } )
             .then( () => {
@@ -249,7 +262,8 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
-                window.location.reload();
+
+                // Window.location.reload();
             } );
         } );
     }

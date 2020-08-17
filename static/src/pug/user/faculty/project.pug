@@ -1,32 +1,109 @@
-extends /layouts/base.pug
-include /components/user/navigation-bar.pug
-include /components/user/local-topic.pug
+extends /layouts/faculty/base.pug
 include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/project-card.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Project',
+        title:      'User Project',
         breadcrumb: {
           home:     'Home',
-          user:     'User',
+          user:     'User Project',
         },
         content: {
           topic: 'Teacher profile settings',
-        }
+          project: {
+            topic:        'Project',
+          },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '專案',
+        title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者',
+          user:     '使用者資料',
         },
         content: {
           topic: '教師資料維護',
+          project: {
+            topic:        '專案',
+          },
         },
       },
     } );
+    const formI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Project',
+        patch: 'Modify Your Project',
+        delete: 'Remove Your Project',
+        default: {
+          name:    '',
+          support: '',
+          category: '',
+        },
+        title: {
+          name:     'name',
+          support:  'support',
+          category: 'category',
+          duration: 'duration',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的專案',
+        patch: '編輯您的專案',
+        delete: '刪除您的專案',
+        default: {
+          name:    '',
+          support: '',
+          category: '',
+        },
+        title: {
+          name:     '專案名稱',
+          support:  '補助單位',
+          category: '投稿對象',
+          duration: '合約期間',
+        },
+      }
+    })
+    const inputConfig = [
+      {
+        inputPattern: 'duration',
+        columnName: 'duration',
+        validation: {
+          type: 'number',
+          required: true,
+          min: 1970,
+        }
+      },
+      {
+        inputPattern: 'dropdown',
+        columnName: 'category',
+        utils: UTILS.faculty.projectCategoryUtils,
+      },
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'name',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'support',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+    ]
     const currentRoute = 'user/faculty/project';
 
 append title
@@ -42,8 +119,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].title },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/project' },
     ]
   )
 
@@ -51,14 +127,32 @@ append content
   include /components/common/loading.pug
   include /components/common/refresh.pug
 
+  +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  main.content__main
-    +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__project-block.project-block
-      +local-topic( 'project-block',i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'project-block' )
-      +loading( 'project-block' )
-      section.project-block__project.project#project
+  section.content__project.project
+    +local-topic( 'project', i18n[ LANG.id ].content.project.topic )
+    +refreshWithImage( 'project' )
+    +loading( 'project' )
+    section#project__cards.project__cards.cards
+      if Array.isArray( data.project ) && data.project.length
+        -
+          data.project.sort( (a, b)=>{
+            if(a.from === null )
+              return -1
+            else if(b.from === null)
+              return 1
+            return b.from - a.from
+          })
+        each category, i in UTILS.faculty.projectCategoryUtils.supportedValues( LANG.id )
+          +classfication-title(category)
+          each obj in data.project
+            if obj.category == i
+              +project-card(obj)
+
+append form
+  +form-input( 'project', 'post', formI18n, inputConfig )
+  +form-input( 'project', 'patch', formI18n, inputConfig )
+  +form-input( 'project', 'delete', formI18n, inputConfig )
 
 append footer
 
