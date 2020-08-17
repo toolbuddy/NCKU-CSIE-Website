@@ -136,6 +136,9 @@ export default class DefaultDataManagement {
 
                 fetch( `${ host }/user/profile`, {
                     method:   'POST',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId: this.config.profileId,
                         dbTable:   this.config.dbTable,
@@ -184,8 +187,12 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/staff`, {
+                console.log( data );
+                fetch( `${ host }/user/profile`, {
                     method:   'PATCH',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
                         dbTable:       this.config.dbTable,
@@ -200,7 +207,8 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
-                    window.location.reload();
+
+                    // Window.location.reload();
                 } );
             }
         } );
@@ -210,7 +218,7 @@ export default class DefaultDataManagement {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
             this.status.itemId = e.target.getAttribute( 'data-id' );
-            const rowData = data[ this.config.table ].find(
+            const rowData = data[ this.config.dbTable ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
 
@@ -224,8 +232,11 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            fetch( `${ host }/user/profile`, {
-                method:   'POST',
+            fetch( `${ host }/user/faculty/profile`, {
+                method:   'DELETE',
+                header: {
+                    'content-type': 'application/json',
+                },
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.dbTable,
@@ -363,12 +374,11 @@ export default class DefaultDataManagement {
             } ),
         };
 
-        Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
+        Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
                 data.item[ element.name ] = Number( element.value );
-
             else
                 data.item[ element.name ] = element.value;
         } );

@@ -1,0 +1,14 @@
+mixin dropdown ( config, i18n, method, table )
+  section.content__dropdown.dropdown
+    h4.dropdown__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
+    select.dropdown__input.input(
+        input-pattern='dropdown',
+        name=config.columnName,
+        table= table,
+        method= method,
+        datatype= 'int'
+    )
+        each obj, i in config.utils.supportedValues( LANG.id )
+            option.input__option(
+                value= i,
+            )= obj

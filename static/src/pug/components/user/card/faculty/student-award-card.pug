@@ -1,0 +1,34 @@
+include /components/user/card/faculty/student-card.pug
+
+mixin student-award-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        student: 'add student',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        student: '新增獲獎學生',
+      },
+    })
+  section.student-award-card.cards__student-award-card
+    section.student-award-card__value
+      p.value__text.value__text--award= data.award
+    section.student-award-card__student
+      if Array.isArray( data.student ) && data.student.length
+        each obj in data.student
+          +student-card(obj)
+      button.student__post-button(
+        data-id= data.awardId
+      )= i18n[ LANG.id ].student
+    img.student-award-card__patch(
+      alt = 'patch',
+      id = `student-award-card__patch--${ data.awardId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.awardId
+    )
+    img.student-award-card__delete(
+      alt = 'delete',
+      id = `student-award-card__delete--${ data.awardId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.awardId
+    )

@@ -4,6 +4,7 @@ include /components/user/form/delete-preview.pug
 include /components/user/form/single.pug
 include /components/user/form/hidden.pug
 include /components/user/form/duration.pug
+include /components/user/form/dropdown.pug
 
 mixin form-input( table, method, formI18n, inputConfig )
   -
@@ -32,6 +33,8 @@ mixin form-input( table, method, formI18n, inputConfig )
             +single( config, formI18n, method, table )
           if config.inputPattern === 'duration'
             +duration( config, formI18n, method, table )
+          if config.inputPattern === 'dropdown'
+            +dropdown( config, formI18n, method, table )
           if config.inputPattern === 'hidden' && method === 'post'
             +hidden( config, formI18n, method, table )
         p.content__error-message.error-message= ''

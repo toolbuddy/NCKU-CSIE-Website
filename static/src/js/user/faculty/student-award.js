@@ -3,9 +3,10 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import NavigationBar from 'static/src/js/components/user/navigation-bar.js';
-import { SetData, } from 'static/src/js/components/user/set-data.js';
-import { host, } from 'settings/server/config.js';
-import roleUtils from 'models/auth/utils/role.js';
+import StudentAwardColumnsUnits from 'models/faculty/utils/student-award-columns.js';
+import StudentColumnsUnits from 'models/faculty/utils/student-columns.js';
+import DefaultDataManagement from 'static/src/js/components/user/faculty/default-data-management.js';
+import StudentDataManagement from 'static/src/js/components/user/faculty/student-data-management.js';
 
 try {
     const headerBase = new GetHeaderBase( {
@@ -41,58 +42,62 @@ catch ( err ) {
     console.error( err );
 }
 
-async function fetchData () {
-    try {
-        const res = await fetch( `${ host }/user/id`, {
-            credentials: 'include',
-            method:      'post',
-        } );
+try {
+    const nevagationBar = new NavigationBar( {
+        navigationDOM: document.getElementById( 'navigation' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+    } );
 
-        if ( !res.ok )
-            throw new Error( 'No faculty found' );
-
-        return res.json();
-    }
-    catch ( err ) {
-        console.error( err );
-    }
+    nevagationBar.exec();
+}
+catch ( err ) {
+    console.error( err );
 }
 
-( async () => {
-    try {
-        const result = await fetchData();
-        if ( result.userId > -1 && result.role === roleUtils.getIdByOption( 'faculty' ) ) {
-            try {
-                const nevagationBar = new NavigationBar( {
-                    navigationDOM: document.getElementById( 'navigation' ),
-                    languageId:       WebLanguageUtils.currentLanguageId,
-                } );
+try {
+    const studentAwardDataManagement = new DefaultDataManagement( {
+        bodyFormDOM:      document.getElementById( 'form' ),
+        refreshDOM:       document.querySelector( '.content__student-award > .student-award__refresh' ),
+        loadingDOM:       document.querySelector( '.content__student-award > .student-award__loading' ),
+        cardsDOM:         document.getElementById( 'student-award__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'student-award-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'student-award-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--student-award' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        columnUnits:      StudentAwardColumnsUnits,
+        table:            'student-award',
+        dbTable:          'studentAward',
+        idColumn:         'awardId',
+        deletePreview:    data => `${ data.award }`,
+    } );
+    if ( !( studentAwardDataManagement instanceof DefaultDataManagement ) )
+        throw new Error( 'award data management error' );
+    studentAwardDataManagement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}
 
-                nevagationBar.exec();
-            }
-            catch ( err ) {
-                console.error( err );
-            }
-
-            try {
-                const setStudentAwardData = new SetData( {
-                    blockDOM:       document.getElementById( 'studentAward' ),
-                    addButtonDOM:     document.getElementById( 'add__button--studentAward-block' ),
-                    refreshDOM:      document.querySelector( '.content__main > .main__studentAward-block > .studentAward-block__refresh' ),
-                    loadingDOM:       document.querySelector( '.content__main > .main__studentAward-block > .studentAward-block__loading' ),
-                    languageId:       WebLanguageUtils.currentLanguageId,
-                    dbTable:          'studentAward',
-                    profileId:        result.roleId,
-                } );
-
-                setStudentAwardData.exec();
-            }
-            catch ( err ) {
-                console.error( err );
-            }
-        }
-    }
-    catch ( err ) {
-        console.error( err );
-    }
-} )();
+try {
+    const studentDataManagement = new StudentDataManagement( {
+        bodyFormDOM:      document.getElementById( 'form' ),
+        refreshDOM:       document.querySelector( '.content__student-award > .student-award__refresh' ),
+        loadingDOM:       document.querySelector( '.content__student-award > .student-award__loading' ),
+        cardsDOM:         document.getElementById( 'student-award__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'student-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'student-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'student__post-button' ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        columnUnits:      StudentColumnsUnits,
+        table:            'student',
+        dbTable:          'student',
+        idColumn:         'studentId',
+        deletePreview:    data => `${ data.name }`,
+    } );
+    if ( !( studentDataManagement instanceof StudentDataManagement ) )
+        throw new Error( 'award data management error' );
+    studentDataManagement.exec();
+}
+catch ( err ) {
+    console.error( err );
+}

@@ -1,6 +1,7 @@
 @import 'components/user/form/i18n-text';
 @import 'components/user/form/single';
 @import 'components/user/form/duration';
+@import 'components/user/form/dropdown';
 @import 'components/user/form/delete-preview';
 @mixin form () {
   > .body__form.form {
@@ -84,6 +85,7 @@
         @include i18n-text();
         @include duration();
         @include single();
+        @include dropdown();
         @include delete-preview();
       }
 
