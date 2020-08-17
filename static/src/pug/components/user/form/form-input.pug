@@ -5,6 +5,7 @@ include /components/user/form/single.pug
 include /components/user/form/hidden.pug
 include /components/user/form/duration.pug
 include /components/user/form/dropdown.pug
+include /components/user/form/checkbox.pug
 
 mixin form-input( table, method, formI18n, inputConfig )
   -
@@ -35,6 +36,8 @@ mixin form-input( table, method, formI18n, inputConfig )
             +duration( config, formI18n, method, table )
           if config.inputPattern === 'dropdown'
             +dropdown( config, formI18n, method, table )
+          if config.inputPattern === 'checkbox'
+            +checkbox( config, formI18n, method, table )
           if config.inputPattern === 'hidden' && method === 'post'
             +hidden( config, formI18n, method, table )
         p.content__error-message.error-message= ''

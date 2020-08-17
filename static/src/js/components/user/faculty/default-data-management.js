@@ -298,6 +298,8 @@ export default class DefaultDataManagement {
             const columnName = element.getAttribute( 'column' );
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ][ columnName ];
+            if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
+                element.checked = data[ languageId ][ columnName ];
         } );
         this.DOM.patch.errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
@@ -391,6 +393,8 @@ export default class DefaultDataManagement {
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+            else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
+                data.item[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
                 data.item[ element.name ] = Number( element.value );
             else

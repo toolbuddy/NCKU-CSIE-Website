@@ -2,6 +2,7 @@
 @import 'components/user/form/single';
 @import 'components/user/form/duration';
 @import 'components/user/form/dropdown';
+@import 'components/user/form/checkbox';
 @import 'components/user/form/delete-preview';
 @mixin form () {
   > .body__form.form {
@@ -86,6 +87,7 @@
         @include duration();
         @include single();
         @include dropdown();
+        @include checkbox();
         @include delete-preview();
       }
 
