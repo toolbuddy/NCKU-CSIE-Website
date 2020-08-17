@@ -40,6 +40,7 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
+import nationUtils from 'models/faculty/utils/nation.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 
@@ -1145,7 +1146,44 @@ router
 
 router
 .route( '/faculty/patent' )
-.get( allowUserOnly, staticHtml( 'user/faculty/patent' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            nationUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/patent.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/conference`.

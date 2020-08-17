@@ -108,7 +108,6 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'user/faculty/publication':         path.join( pugRoot, 'user/faculty/publication.pug' ),
         'user/faculty/conference':          path.join( pugRoot, 'user/faculty/conference.pug' ),
         'user/faculty/project':             path.join( pugRoot, 'user/faculty/project.pug' ),
-        'user/faculty/patent':              path.join( pugRoot, 'user/faculty/patent.pug' ),
         'user/resetPassword':               path.join( pugRoot, 'user/resetPassword.pug' ),
         'user/announcement/index':          path.join( pugRoot, 'user/announcement/index.pug' ),
         'user/announcement/add':            path.join( pugRoot, 'user/announcement/add.pug' ),

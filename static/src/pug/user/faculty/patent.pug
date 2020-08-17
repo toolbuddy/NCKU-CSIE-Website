@@ -1,34 +1,152 @@
-extends /layouts/base.pug
-include /components/user/navigation-bar.pug
-include /components/user/local-topic.pug
+extends /layouts/faculty/base.pug
 include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/patent-card.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Patent',
+        title:      'User Patent',
         breadcrumb: {
           home:     'Home',
-          user:     'User',
+          user:     'User Patent',
         },
         content: {
-          topic: 'Teacher profile settings',
-        }
+          topic: 'Faculty profile settings',
+          patent: {
+            topic:   'Patent',
+          },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '專利',
+        title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者',
+          user:     '使用者資料',
         },
         content: {
           topic: '教師資料維護',
+          patent: {
+            topic:   '專利',
+          },
         },
       },
     } );
+    const formI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Patent',
+        patch: 'Modify Your Patent',
+        delete: 'Remove Your Patent',
+        default: {
+          'applicationDate':     '',
+          'certificationNumber': '',
+          'expireDate':          '',
+          'issueDate':           '',
+          'nation':              '',
+          'inventor':            '',
+          'patent':              '',
+          'patentOwner':         '',
+        },
+        title: {
+          'applicationDate':     'application date',
+          'certificationNumber': 'certification number',
+          'expireDate':          'expire date',
+          'issueDate':           'issue date',
+          'nation':              'nation',
+          'inventor':            'inventor',
+          'patent':              'patent',
+          'patentOwner':         'patent owner',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的專利',
+        patch: '編輯您的專利',
+        delete: '刪除您的專利',
+        default: {
+          'applicationDate':     '',
+          'certificationNumber': '',
+          'expireDate':          '',
+          'issueDate':           '',
+          'nation':              '',
+          'inventor':            '',
+          'patent':              '',
+          'patentOwner':         '',
+        },
+        title: {
+          'applicationDate':     '申請日期',
+          'certificationNumber': '證書號',
+          'expireDate':          '到期日期',
+          'issueDate':           '核准日期',
+          'nation':              '專利國籍',
+          'inventor':            '發明人',
+          'patent':              '專利名稱',
+          'patentOwner':         '專利權人',
+        },
+      }
+    })
+    const inputConfig =  [
+      {
+        inputPattern: 'single',
+        columnName: 'certificationNumber',
+        validation: {
+          type: 'text',
+          required: true,
+        },
+      },{
+        inputPattern: 'dropdown',
+        columnName: 'nation',
+        utils: UTILS.faculty.nationUtils,
+      },{
+        inputPattern: 'i18n-text',
+        columnName: 'patent',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 100,
+        },
+      },{
+        inputPattern: 'i18n-text',
+        columnName: 'inventor',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 100,
+        },
+      },{
+        inputPattern: 'i18n-text',
+        columnName: 'patentOwner',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 100,
+        },
+      },{
+        inputPattern: 'single',
+        columnName: 'applicationDate',
+        validation: {
+          type: 'date',
+          required: true,
+        },
+      },{
+        inputPattern: 'single',
+        columnName: 'issueDate',
+        validation: {
+          type: 'date',
+        },
+      },
+      {
+        inputPattern: 'single',
+        columnName: 'expireDate',
+        validation: {
+          type: 'date',
+        },
+      },
+    ]
     const currentRoute = 'user/faculty/patent';
-
 append title
   +title( i18n[ LANG.id ].title )
 
@@ -42,8 +160,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].title },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/patent' },
     ]
   )
 
@@ -51,14 +168,29 @@ append content
   include /components/common/loading.pug
   include /components/common/refresh.pug
 
+  +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  main.content__main
-    +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__patent-block.patent-block
-      +local-topic( 'patent-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'patent-block' )
-      +loading( 'patent-block' )
-      section.patent-block__patent.patent#patent
+  section.content__patent.patent
+    +local-topic( 'patent', i18n[ LANG.id ].content.patent.topic )
+    +refreshWithImage( 'patent' )
+    +loading( 'patent' )
+    section#patent__cards.patent__cards.cards
+      if Array.isArray( data.patent ) && data.patent.length
+        -
+          data.patent.sort( (a, b)=>{
+            if(a.applicationDate === null )
+              return -1
+            else if(b.applicationDate === null)
+              return 1
+            return new Date(a.applicationDate) - new Date(b.applicationDate)
+          })
+      each obj in data.patent
+        +patent-card( obj )
+
+append form
+  +form-input( 'patent', 'post', formI18n, inputConfig )
+  +form-input( 'patent', 'patch', formI18n, inputConfig )
+  +form-input( 'patent', 'delete', formI18n, inputConfig )
 
 append footer
 
