@@ -243,7 +243,7 @@ export default class DefaultDataManagement {
             console.log( {
                 profileId:      this.config.profileId,
                 dbTable:        this.config.dbTable,
-                dbTableItemId:  this.status.itemId,
+                dbTableItemId:  Number( this.status.itemId ),
             } );
             fetch( `${ host }/user/profile`, {
                 method:   'DELETE',

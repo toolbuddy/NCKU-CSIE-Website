@@ -1,0 +1,41 @@
+mixin conference-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          conference: 'Conference',
+          title:      'Title',
+          hostYear:   'Host Year',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          conference: '會議名稱',
+          title:      '職稱',
+          hostYear:   '舉行年份',
+        },
+      },
+    })
+  section.conference-card.cards__conference-card
+    section.conference-card__content
+      article.content__element.content__element--conference
+        h4.element__topic.topic= i18n[ LANG.id ].topic.conference
+        p.element__value.value= data.conference
+      article.content__element.content__element--title
+        h4.element__topic.topic= i18n[ LANG.id ].topic.title
+        p.element__value.value= data.title
+      article.content__element.content__element--hostYear
+        h4.element__topic.topic= i18n[ LANG.id ].topic.hostYear
+        p.element__value.value= data.hostYear
+    img.conference-card__patch(
+      alt = 'patch',
+      id = `conference-card__patch--${ data.conferenceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.conferenceId
+    )
+    img.conference-card__delete(
+      alt = 'delete',
+      id = `conference-card__delete--${ data.conferenceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.conferenceId
+    )

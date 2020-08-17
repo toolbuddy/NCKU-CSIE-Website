@@ -37,6 +37,7 @@ import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import allowUserOnly from 'routes/utils/allow-user-only.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
@@ -44,7 +45,6 @@ import nationUtils from 'models/faculty/utils/nation.js';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
-
 import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -970,7 +970,7 @@ router
         userId: Number( res.locals.userId ),
     } );
 
-    const data = await getFacultyDetailWithId( {
+    const data = await getStaffDetailWithId( {
         profileId:  result.roleId,
         languageId: req.query.languageId,
     } );
@@ -1229,7 +1229,40 @@ router
 
 router
 .route( '/faculty/conference' )
-.get( allowUserOnly, staticHtml( 'user/faculty/conference' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/conference.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/student-award`.
@@ -1393,47 +1426,6 @@ router
 
         await new Promise( ( resolve, reject ) => {
             res.render( 'user/faculty/technology-transfer.pug', {
-                data,
-            }, ( err, html ) => {
-                if ( err )
-                    reject( err );
-                else {
-                    res.send( html );
-                    resolve();
-                }
-            } );
-        } );
-    }
-    catch ( err ) {
-        if ( err.status === 404 )
-            next();
-        else
-            next( err );
-    }
-} );
-
-/**
- * Resolve URL `/user/staffProfile`.
- */
-
-router
-.route( '/staff/profile' )
-.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
-    try {
-        // Get id
-        const result = await getAdminByUserId( {
-            userId: Number( res.locals.userId ),
-        } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
-        const data = await getStaffDetailWithId( {
-            profileId,
-            languageId,
-        } );
-
-        await new Promise( ( resolve, reject ) => {
-            res.render( 'user/staff/profile.pug', {
                 data,
             }, ( err, html ) => {
                 if ( err )
