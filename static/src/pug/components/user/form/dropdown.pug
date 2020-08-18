@@ -3,6 +3,7 @@ mixin dropdown ( config, i18n, method, table )
     h4.dropdown__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
     select.dropdown__input.input(
         input-pattern='dropdown',
+        column = config.columnName
         name=config.columnName,
         table= table,
         method= method,

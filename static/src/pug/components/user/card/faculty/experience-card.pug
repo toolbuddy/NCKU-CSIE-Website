@@ -28,14 +28,16 @@ mixin experience-card( data )
         p.value__text.value__text--department= data.department
       if data.title !== null
         p.value__text.value__text--title= data.title
-    +image( {
-      alt: 'patch',
-      className: `experience-card__patch experience-card__patch--${ data.experienceId }`,
-      src: 'icon/edit.png',
-    } )
-    +image( {
-      alt: 'delete',
-      className: `experience-card__delete experience-card__delete--${ data.experienceId }`,
-      src: 'icon/delete.png',
-    } )
+    img.experience-card__patch(
+      alt = 'patch',
+      id = `experience-card__patch--${ data.experienceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.experienceId
+    )
+    img.experience-card__delete(
+      alt = 'delete',
+      id = `experience-card__delete--${ data.experienceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.experienceId
+    )
 

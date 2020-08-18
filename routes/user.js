@@ -32,7 +32,7 @@ import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
+import { secret, host, projectRoot, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import allowUserOnly from 'routes/utils/allow-user-only.js';
@@ -44,6 +44,8 @@ import degreeUtils from 'models/faculty/utils/degree.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
@@ -219,20 +221,35 @@ router
 
 router
 .route( '/faculty/profile' )
-.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
-    res.sendFile(
-        `static/dist/html/user/faculty/profile.${ req.query.languageId }.html`,
-        {
-            root:         projectRoot,
-            maxAge,
-            dotfiles:     'deny',
-            cacheControl: true,
-        },
-        ( err ) => {
+.get( allowUserOnly, cors(), noCache, async ( req, res ) => {
+    const result = await getAdminByUserId( {
+        userId: Number( res.locals.userId ),
+    } );
+
+    const data = await getFacultyDetailWithId( {
+        profileId:  result.roleId,
+        languageId: req.query.languageId,
+    } );
+
+    res.locals.UTILS.faculty = {
+        departmentUtils,
+        researchGroupUtils,
+        degreeUtils,
+        nationUtils,
+    };
+
+    await new Promise( ( resolve, reject ) => {
+        res.render( 'user/faculty/profile.pug', {
+            data,
+        }, ( err, html ) => {
             if ( err )
-                next( err );
-        }
-    );
+                reject( err );
+            else {
+                res.send( html );
+                resolve();
+            }
+        } );
+    } );
 } )
 .post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     const data = JSON.parse( Object.keys( req.body )[ 0 ] );

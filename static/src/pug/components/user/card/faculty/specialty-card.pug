@@ -4,14 +4,16 @@ mixin specialty-card( data )
   section.specialty-card.cards__specialty-card
     section.specialty-card__value
       p.value__text.value__text--specialty= data.specialty
-    +image( {
-      alt: 'patch',
-      className: `specialty-card__patch specialty-card__patch--${ data.specialtyId }`,
-      src: 'icon/edit.png',
-    } )
-    +image( {
-      alt: 'delete',
-      className: `specialty-card__delete specialty-card__delete--${ data.specialtyId }`,
-      src: 'icon/delete.png',
-    } )
+    img.specialty-card__patch(
+      alt = 'patch',
+      id = `specialty-card__patch--${ data.specialtyId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.specialtyId
+    )
+    img.specialty-card__delete(
+      alt = 'delete',
+      id = `specialty-card__delete--${ data.specialtyId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.specialtyId
+    )
 

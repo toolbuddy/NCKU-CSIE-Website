@@ -7,15 +7,22 @@
 @import 'components/common/refresh';
 @import 'components/common/footer';
 @import 'components/common/topic';
-@import 'components/user/navigation-bar';
-@import 'components/user/local-topic';
-@import 'components/user/input-block';
 @import 'components/user/edit-page';
-@import 'components/user/dynamic-input-block.scss';
+@import 'components/user/image';
+@import 'components/user/form/form';
+@import 'components/user/faculty/local-topic';
+@import 'components/user/faculty/navigation-bar';
+@import 'components/user/card/faculty/profile-card';
+@import 'components/user/card/faculty/title-card';
+@import 'components/user/card/faculty/specialty-card';
+@import 'components/user/card/faculty/education-card';
+@import 'components/user/card/faculty/experience-card';
+@import 'components/user/faculty/option';
+@import 'components/announcement/tags';
 
 .body {
   // [ variable ]
-  $large: 1200px;
+  $large: 1180px;
   $medium: 710px;
   $small: 535px;
 
@@ -31,20 +38,6 @@
   @include header--large( $block: 'body' );
 
   // element
-  // `.body > .body__edit-page`
-  > .body__edit-page {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: 10;
-
-    // [ componment ]
-    @include edit-page();
-  }
-
-  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
@@ -53,366 +46,357 @@
     display: grid;
     grid-template: {
       areas:
-        ' . breadcrumb  .'
-        ' . navigation .'
-        ' . information .';
-      columns: 1fr 50fr 1fr;
+        ' breadcrumb '
+        ' topic      '
+        ' navigation '
+        ' profile    '
+        ' title      '
+        ' specialty   '
+        ' education  '
+        ' experience ';
+      columns: 100%;
+      rows: 2.5rem 2.5rem 2rem auto;
+    }
+
+    // [ position ]
+    height: auto;
+    width: 100%;
+    max-width: font__px-to-rem( 1600 );
+    margin: {
+      bottom: 1rem;
+      left: auto;
+      right: auto;
     }
 
     // [ skin ]
-    height: auto;
-    width: 100%;
     background-color: #ffffff;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
-      // [ layout ]
       grid-template: {
         areas:
-          ' breadcrumb breadcrumb  '
-          ' navigation information ';
+          ' breadcrumb breadcrumb '
+          ' navigation topic      '
+          ' navigation profile    '
+          ' navigation title      '
+          ' navigation specialty   '
+          ' navigation education  '
+          ' navigation experience ';
         columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+        rows: 2.5rem 2rem auto;
       }
     }
 
-    // template
-    // `.body > .content > .content__?.?`
-    %content__element {
+    // element
+    // `.body > .content > .content__topic`
+    @include topic( 'content' ) {
       // [ layout ]
+      display: block;
+      grid-area: topic;
+
+      // [ skin ]
+      width: 94%;
+      height: 1rem;
+      box-sizing: content-box;
+
+      // position
       margin: {
         left: auto;
         right: auto;
       }
 
-      // [ skin ]
-      max-width: font__px-to-rem( 1740 );
-      width: 94%;
+      // element
+      // `.body > .content > .content__topic` > .topic__text
+      > .topic__text {
+        height: 100%;
+      }
     }
 
     // block
     // `.body > .content > .navigation-bar`
     @include navigation-bar() {
-      // [ template ]
-      @extend %content__element;
-
       // [ layout ]
       grid-area: navigation;
     }
 
-    // `.body` > .content > .content__information
-    > .content__information {
+    // `.body` > .content > .content__profile
+    > .content__profile.profile {
       // [ layout ]
-      display: block;
-      grid-area: information;
+      display: grid;
+      grid-area: profile;
+      grid-template: {
+        areas:
+          'image          '
+          'name           '
+          'nation         '
+          'email          '
+          'fax            '
+          'personal-web   '
+          'department     '
+          'research-group '
+          'office-address '
+          'office-tel     '
+          'lab-name       '
+          'lab-address    '
+          'lab-tel        '
+          'lab-web        ';
+        columns: 100%;
+      }
 
       // [ position ]
-      width: 100%;
       margin: {
-        top: font__px-to-rem( 20 );
-        bottom: font__px-to-rem( 80 );
+        bottom: font__px-to-rem( 30 );
         left: auto;
         right: auto;
       }
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $small ) {
-        // [ position ]
-        width: 90%;
-      }
+      width: 94%;
+      height: auto;
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
-        max-width: font__px-to-rem( 1080 );
-        margin: {
-          left: 0;
-          top: font__px-to-rem( 80 );
-        };
+        // [ layout ]
+        grid-template: {
+          areas:
+            'name            image          '
+            'nation          image          '
+            'email           image          '
+            'fax             image          '
+            'personal-web    image          '
+            'department      department     '
+            'research-group  research-group '
+            'office-address  office-address '
+            'office-tel      office-tel     '
+            'lab-name        lab-name       '
+            'lab-address     lab-address    '
+            'lab-tel         lab-tel        '
+            'lab-web         lab-web        ';
+          columns: auto font__px-to-rem( 400 );
+        }
       }
+      @include image('profile') {
+        // [ layout ]
+        grid-area: image;
 
-      // element
-      // `.body > .content > .content__information > .information__topic`
-      @include topic( information ) {
+        // [ position ]
+        margin-top: 1.5rem;
+      }
+      @include profile-card( 'name' ) {
+        // [ layout ]
+        grid-area: name;
+      }
+      @include profile-card( 'fax' ) {
+        // [ layout ]
+        grid-area: fax;
+      }
+      @include profile-card( 'nation' ) {
+        // [ layout ]
+        grid-area: nation;
+      }
+      @include profile-card( 'personal-web' ) {
+        // [ layout ]
+        grid-area: personal-web;
+      }
+      @include profile-card( 'email' ) {
+        // [ layout ]
+        grid-area: email;
+      }
+      @include profile-card( 'office-address' ) {
+        // [ layout ]
+        grid-area: office-address;
+      }
+      @include profile-card( 'office-tel' ) {
+        // [ layout ]
+        grid-area: office-tel;
+      }
+      @include profile-card( 'lab-name' ) {
+        // [ layout ]
+        grid-area: lab-name;
+      }
+      @include profile-card( 'lab-address' ) {
+        // [ layout ]
+        grid-area: lab-address;
+      }
+      @include profile-card( 'lab-tel' ) {
+        // [ layout ]
+        grid-area: lab-tel;
+      }
+      @include profile-card( 'lab-web' ) {
+        // [ layout ]
+        grid-area: lab-web;
+      }
+      @include option( $block: 'profile', $modifier: 'department' ) {
+        // [ layout ]
+        grid-area: department;
+      }
+      @include option( $block: 'profile', $modifier: 'research-group' ) {
+        // [ layout ]
+        grid-area: research-group;
+      }
+    }
+
+    > .content__title.title {
+      // [ layout ]
+      display: block;
+      grid-area: title;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('title');
+
+      > .title__cards.cards {
         // [ layout ]
         display: block;
 
-        // [ skin ]
+        // [ position ]
         width: 100%;
         height: auto;
 
-        // position
+        // [ element ]
+        @include title-card();
+      }
+      @include refresh( $block: 'title' ) {
+        // [ layout ]
         margin: {
-          left: auto;
-          right: auto;
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
       }
+      @include loading( $block: 'title' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+    }
 
-      // `.body > .content > .content__information > .information__profile`
-      > .information__profile.profile {
+    > .content__specialty.specialty {
+      // [ layout ]
+      display: block;
+      grid-area: specialty;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('specialty');
+
+      > .specialty__cards.cards {
         // [ layout ]
         display: block;
-        width: 95%;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include specialty-card();
+      }
+      @include refresh( $block: 'specialty' ) {
+        // [ layout ]
         margin: {
-          left: auto;
-          right: auto;
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
-
-        // [ RWD: $medium ]
-        @media screen and ( min-width: $medium ) {
-          // [ layout ]
-          width: 95%;
+      }
+      @include loading( $block: 'specialty' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
+      }
+    }
 
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          max-width: font__px-to-rem( 1200 );
+    > .content__education.education {
+      // [ layout ]
+      display: block;
+      grid-area: education;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      > .education__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include education-card();
+      }
+      @include local-topic('education');
+      @include refresh( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
-
-        // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-        @include local-topic( profile );
-        @include input-block( $block: 'profile', $modifier: 'name' );
-        @include refresh( $block: 'title' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
+      }
+      @include loading( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
-        @include loading( $block: 'title' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
+      }
+    }
+
+    > .content__experience.experience {
+      // [ layout ]
+      display: block;
+      grid-area: experience;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      > .experience__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include experience-card();
+      }
+      @include local-topic('experience');
+      @include refresh( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
-        @include refresh( $block: 'speciaty' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
-        }
-        @include loading( $block: 'speciaty' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
-        }
-
-        > .profile__title {
-          @include dynamic-input-block( $block: 'title' );
-        }
-
-        > .profile__specialty {
-          @include dynamic-input-block( $block: 'specialty' );
-        }
-        @include local-topic( 'title' );
-        @include local-topic( 'specialty' );
-        @include input-block( $block: 'profile', $modifier: 'nation' );
-        @include input-block( $block: 'profile', $modifier: 'office-location' );
-        @include input-block( $block: 'profile', $modifier: 'lab-name' );
-        @include input-block( $block: 'profile', $modifier: 'lab-location' );
-        @include input-block( $block: 'profile', $modifier: 'lab-tel' );
-        @include input-block( $block: 'profile', $modifier: 'lab-web' );
-        @include input-block( $block: 'profile', $modifier: 'office-tel' );
-        @include input-block( $block: 'profile', $modifier: 'email' );
-        @include input-block( $block: 'profile', $modifier: 'fax' );
-        @include input-block( $block: 'profile', $modifier: 'personal-web' );
-        @include input-block( $block: 'profile', $modifier: 'specilty' );
-        @include input-block( $block: 'profile', $modifier: 'department' ) {
-          > .input-block.profile__input-block--department {
-            // [ layout ]
-            height: auto;
-
-            > .input-block__block.block > .block__content {
-              display: block;
-              height: auto;
-              padding: {
-                top: font__px-to-rem( 20 );
-                bottom: font__px-to-rem( 20 );
-              }
-            }
-          }
-        }
-        @include input-block( $block: 'profile', $modifier: 'research' ) {
-          > .input-block.profile__input-block--research {
-            // [ layout ]
-            height: auto;
-
-            > .input-block__block.block > .block__content {
-              display: block;
-              height: auto;
-              width: auto;
-              margin: {
-                left: auto;
-                right: auto;
-              }
-              padding: {
-                top: font__px-to-rem( 20 );
-                bottom: font__px-to-rem( 20 );
-              }
-            }
-          }
-        }
-
-        // `.body > .content > .content__information > .information__profile > .profile__image`
-        > .profile__image {
-          // [ layout ]
-          display: grid;
-          grid: {
-            area: image;
-            template: {
-              areas:
-                ' image image  image '
-                ' .     check .      '
-                ' .     cancel .     ';
-              columns: 1fr font__px-to-rem( 126 ) 1fr;
-              rows: font__px-to-rem( 300 ) 1fr 1fr;
-            }
-          }
-          margin-bottom: font__px-to-rem( 20 );
-          width: 100%;
-
-          > .image__check.check {
-            // [ layout ]
-            grid-area: check;
-            align-content: center;
-            justify-content: center;
-
-            // [ position ]
-            width: 100%;
-
-            > .check__button {
-              // [ position ]
-              width: font__px-to-rem( 100 );
-              margin-bottom: font__px-to-rem( 10 );
-
-              // [ skin ]
-              background-color: rgba( 0, 0, 0, .54 );
-              font: {
-                size: font__px-to-rem( 16 );
-                weight: normal;
-                style: normal;
-                stretch: normal;
-              }
-              text-align: center;
-              line-height: 1.5;
-              letter-spacing: 3.2px;
-              color: rgba( 255, 255, 255, .76 );
-              border-radius: font__px-to-rem( 10 );
-
-              &:hover {
-                // [ skin ]
-                cursor: pointer;
-                background-color: rgba( 0, 0, 0, .32 );
-                color: rgba( 0, 0, 0, .87 );
-              }
-            }
-          }
-
-          > .image__cancel.cancel {
-            // [ layout ]
-            grid-area: cancel;
-            align-content: center;
-            justify-content: center;
-
-            // [ position ]
-            width: 100%;
-
-            > .cancel__button {
-              // [ position ]
-              width: font__px-to-rem( 100 );
-              margin-bottom: font__px-to-rem( 10 );
-
-              // [ skin ]
-              background-color: rgba( 0, 0, 0, .54 );
-              font: {
-                size: font__px-to-rem( 16 );
-                weight: normal;
-                style: normal;
-                stretch: normal;
-              }
-              text-align: center;
-              line-height: 1.5;
-              letter-spacing: 3.2px;
-              color: rgba( 255, 255, 255, .76 );
-              border-radius: font__px-to-rem( 10 );
-
-              &:hover {
-                // [ skin ]
-                cursor: pointer;
-                background-color: rgba( 0, 0, 0, .32 );
-                color: rgba( 0, 0, 0, .87 );
-              }
-            }
-          }
-
-          > .image__button--active {
-            // [ layout ]
-            display: flex;
-          }
-
-          > .image__button--hide {
-            // [ layout ]
-            display: none;
-          }
-
-          > .image__frame {
-            // [ layout ]
-            display: block;
-            grid-area: image;
-
-            // [ position ]
-            position: relative;
-            width: font__px-to-rem( 255 );
-            height: font__px-to-rem( 255 );
-            margin: {
-              left: auto;
-              right: auto;
-            }
-
-            // [ skin ]
-            border-radius: 50%;
-            border: 2px solid gray;
-            background: {
-              color: white;
-              size: 100%;
-              repeat: no-repeat;
-              position: center;
-            };
-            overflow: hidden;
-
-            > .frame__upload {
-              // [ layout ]
-              display: none;
-            }
-
-            // `.body > .content > .content__information > .information__profile > .profile__image > .image__change`
-            > .frame__button {
-              // [ layout ]
-              display: block;
-              position: absolute;
-
-              // [ position ]
-              width: 100%;
-              height: 30%;
-              bottom: 0;
-
-              padding: {
-                top: 5%;
-                bottom: 5%;
-              }
-
-              // [ skin ]
-              background-color: rgba( 0, 0, 0, .54 );
-              font: {
-                size: font__px-to-rem( 16 );
-                weight: normal;
-                style: normal;
-                stretch: normal;
-              }
-              text-align: center;
-              line-height: 1.5;
-              letter-spacing: 3.2px;
-              color: rgba( 255, 255, 255, .76 );
-
-              &:hover {
-                // [ skin ]
-                background-color: rgba( 255, 255, 255, .5 );
-                color: black;
-                cursor: pointer;
-              }
-            }
-          }
+      }
+      @include loading( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
       }
     }
@@ -422,14 +406,12 @@
     // block
     // `.body > .content > .breadcrumb`
     @include breadcrumb( $block: 'content' ) {
-      // [ template ]
-      @extend %content__element;
-
       // [ layout ]
       grid-area: breadcrumb;
 
       // [ position ]
       width: 100%;
+      margin-bottom: 1rem;
 
       // [ skin ]
       border: {
@@ -439,83 +421,13 @@
         style: solid;
       }
     }
-
-    // `.body > .content > .content__information > .information__experience`
-    .information__experience-block.experience-block {
-      // [ layout ]
-      display: block;
-      width: 95%;
-      margin: {
-        left: auto;
-        right: auto;
-      }
-      @include refresh( $block: 'experience-block' ) {
-        // [ layout ]
-        margin-top: font__px-to-rem( 64 );
-      }
-      @include loading( $block: 'experience-block' ) {
-        // [ layout ]
-        margin-top: font__px-to-rem( 64 );
-      }
-
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
-        // [ layout ]
-        width: 95%;
-      }
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        max-width: font__px-to-rem( 1200 );
-      }
-
-      // `.body > .content > .content__information > .information__experience > .experience__persona. > .personal__topic`
-      @include local-topic( 'experience-block' );
-
-      > .experience-block__experience.experience {
-        @include dynamic-input-block( $block: 'experience' );
-      }
-    }
-
-    // `.body > .content > .content__information > .information__education`
-    .information__education-block.education-block {
-      // [ layout ]
-      display: block;
-      width: 95%;
-      margin: {
-        left: auto;
-        right: auto;
-      }
-      @include refresh( $block: 'education-block' ) {
-        // [ layout ]
-        margin-top: font__px-to-rem( 64 );
-      }
-      @include loading( $block: 'education-block' ) {
-        // [ layout ]
-        margin-top: font__px-to-rem( 64 );
-      }
-
-      // [ RWD: $medium ]
-      @media screen and ( min-width: $medium ) {
-        // [ layout ]
-        width: 95%;
-      }
-
-      // [ RWD: $small ]
-      @media screen and ( min-width: $large ) {
-        // [ layout ]
-        max-width: font__px-to-rem( 1200 );
-      }
-
-      // `.body > .content > .content__information > .information__profile > .profile__persona. > .personal__topic`
-      @include local-topic( 'education-block' );
-
-      > .education {
-        @include dynamic-input-block( $block: 'education' );
-      }
-    }
   }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
 
   // element
   // `.body > .body__footer`

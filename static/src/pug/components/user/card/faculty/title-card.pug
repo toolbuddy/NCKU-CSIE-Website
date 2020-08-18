@@ -23,14 +23,16 @@ mixin title-card( data )
         else
           p.time__to.to= i18n[ LANG.id ].now
       p.value__title= data.title
-    +image( {
-      alt: 'patch',
-      className: `title-card__patch title-card__patch--${ data.titleId }`,
-      src: 'icon/edit.png',
-    } )
-    +image( {
-      alt: 'delete',
-      className: `title-card__delete title-card__delete--${ data.titleId }`,
-      src: 'icon/delete.png',
-    } )
+    img.title-card__patch(
+      alt = 'patch',
+      id = `title-card__patch--${ data.titleId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.titleId
+    )
+    img.title-card__delete(
+      alt = 'delete',
+      id = `title-card__delete--${ data.titleId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.titleId
+    )
 

@@ -294,12 +294,15 @@ export default class DefaultDataManagement {
     }
 
     showPatchForm ( data ) {
-        Array.from( this.DOM.patch.input ).forEach( ( element ) => {
+        Array.from( this.DOM.patch.form.elements ).forEach( ( element ) => {
             const columnName = element.getAttribute( 'column' );
             const languageId = element.getAttribute( 'languageId' );
-            element.value = data[ languageId ][ columnName ];
             if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                element.checked = data[ languageId ][ columnName ];
+                element.checked = data[ this.config.languageId ][ columnName ];
+            else if ( element.getAttribute( 'input-pattern' ) === 'dropdown' )
+                element.value = data[ this.config.languageId ][ columnName ];
+            else if ( element.tagName === 'INPUT' )
+                element.value = data[ languageId ][ columnName ];
         } );
         this.DOM.patch.errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
@@ -397,7 +400,7 @@ export default class DefaultDataManagement {
                 data.item[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
                 data.item[ element.name ] = Number( element.value );
-            else
+            else if ( element.tagName === 'INPUT' )
                 data.item[ element.name ] = element.value;
         } );
 

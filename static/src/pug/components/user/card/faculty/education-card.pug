@@ -21,14 +21,16 @@ mixin education-card( data )
       p.value__text.value__text--school= data.school
       p.value__text.value__text--major= data.major
       p.value__text.value__text--degree= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
-    +image( {
-      alt: 'patch',
-      className: `education-card__patch education-card__patch--${ data.educationId }`,
-      src: 'icon/edit.png',
-    } )
-    +image( {
-      alt: 'delete',
-      className: `education-card__delete education-card__delete--${ data.educationId }`,
-      src: 'icon/delete.png',
-    } )
+    img.education-card__patch(
+      alt = 'patch',
+      id = `education-card__patch--${ data.educationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.educationId
+    )
+    img.education-card__delete(
+      alt = 'delete',
+      id = `education-card__delete--${ data.educationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.educationId
+    )
 
