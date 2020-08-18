@@ -1,5 +1,5 @@
 import ValidateUtils from 'models/common/utils/validate.js';
-import { File } from 'models/announcement/operations/associations.js';
+import { File, } from 'models/announcement/operations/associations.js';
 
 export default ( fileId ) => {
     try {

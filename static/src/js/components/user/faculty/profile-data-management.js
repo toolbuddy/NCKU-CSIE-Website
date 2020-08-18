@@ -204,13 +204,6 @@ export default class ProfileDataManagement {
 
                 if ( isValid ) {
                     const data = await this.formatFormData( columnName );
-                    console.log( {
-                        profileId:     this.config.profileId,
-                        dbTable:       this.config.dbTable,
-                        dbTableItemId: this.config.profileId,
-                        item:          data.item,
-                        i18n:          data.i18n,
-                    } );
                     fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
                         header: {
