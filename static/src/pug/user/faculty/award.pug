@@ -42,7 +42,7 @@ append data
           patch: 'Modify Your Award',
           delete: 'Remove Your Award',
           default: {
-            award: 'award',
+            award: '',
             receivedYear: 'yyyy',
           },
           title: {
@@ -79,6 +79,7 @@ append data
         columnName: 'receivedYear',
         validation: {
           type: 'number',
+          datatype: 'int',
           min:  1970,
           required: true,
         }

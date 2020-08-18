@@ -2,35 +2,158 @@
   // `> .#{ $block } > .#{ $block }__input-block`
   > .award-card.cards__award-card {
     // [ variable ]
-    $large: 750px;
-    $small: 500px;
+    $large: 1100px;
+    $medium: 700px;
 
     // [ layout ]
     display: grid;
     grid-template: {
-      areas: '. value patch delete .';
-      columns: 1rem auto 1.2rem 1.2rem .5rem;
+      areas:
+        '.       patch   delete '
+        'content content content';
+      columns: 1fr 1.2rem 1.2rem;
     };
 
     // [ position ]
     width: 100%;
-    height: font__px-to-rem( 80 );
+    min-height: font__px-to-rem( 120 );
 
     // [ skin ]
     border: {
       bottom: solid font__px-to-rem( 2 ) #adacad;
       radius: font__px-to-rem( 3 );
     }
+    padding: {
+      top: font__px-to-rem( 6 );
+      bottom: font__px-to-rem( 6 );
+    }
 
-    > .award-card__value {
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
       // [ layout ]
-      display: flex;
-      grid-area: value;
-      align-self: center;
+      grid-template: {
+        areas:
+          '. content patch delete .';
+        columns: 1rem auto 1.2rem 1.2rem .5rem;
+      };
+    }
+
+    > .award-card__content {
+      // [ layout ]
+      display: grid;
+      grid: {
+        area: content;
+        template: {
+          areas:
+            'award'
+            'receivedYear';
+          columns: 1fr;
+        }
+      }
+      align-self: space-around;
       padding-left: font__px-to-rem( 15 );
 
       // [ position ]
-      width: 100%;
+      width: 95%;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            'award '
+            'receivedYear';
+          columns: 1fr;
+        }
+      }
+
+      > .content__element {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:
+            'topic'
+            'value';
+          columns: 1fr;
+        }
+        padding-bottom: font__px-to-rem( 6 );
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic value';
+            columns: font__px-to-rem( 100 ) 1fr;
+          }
+        }
+
+        // [ element ]
+        > .element__topic {
+          // [ layout ]
+          display: flex;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: center;
+          }
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+          }
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .element__value {
+          // [ layout ]
+          display: flex;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: center;
+          }
+
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        &--receivedYear {
+          grid-area: receivedYear;
+        }
+
+        &--award {
+          grid-area: award;
+        }
+      }
 
       // [ skin ]
       font: {

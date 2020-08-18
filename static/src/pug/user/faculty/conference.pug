@@ -44,7 +44,7 @@ append data
           default: {
             conference: '',
             title: '',
-            hostYear: '',
+            hostYear: 'yyyy',
           },
           title: {
             conference: 'Conference',
@@ -59,7 +59,7 @@ append data
           default: {
             conference: '',
             title: '',
-            hostYear: '',
+            hostYear: 'yyyy',
           },
           title: {
             conference: '會議名稱',
@@ -83,6 +83,7 @@ append data
         columnName: 'hostYear',
         validation: {
           type: 'number',
+          datatype: 'int',
           min:  1970,
           required: true,
         }
