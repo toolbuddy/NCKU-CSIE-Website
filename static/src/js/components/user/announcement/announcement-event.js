@@ -265,33 +265,27 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        new Promise( ( res ) => {
-            const formData = new FormData();
-            formData.append( 'image', null );
-            Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
-                formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
-                formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
-                formData.append( `announcementI18n[${ languageId }][content]`, this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ) );
-            } );
-            this.state.addFiles.forEach( ( file, i ) => {
-                formData.append( `addFiles[${ i }][name]`, file.name );
-                formData.append( `addFiles[${ i }][content]`, file.content );
-            } );
-            this.state.tags.forEach( ( tagId, i ) => {
-                formData.append( `tags[${ i }][tagId]`, tagId );
-            } );
+        const formData = new FormData();
+        formData.append( 'image', null );
+        Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
+            formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
+            formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
+            formData.append( `announcementI18n[${ languageId }][content]`, this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ) );
+        } );
+        this.state.addFiles.forEach( ( file ) => {
+            formData.append( 'files', file.content );
+        } );
+        this.state.tags.forEach( ( tagId, i ) => {
+            formData.append( `tags[${ i }][tagId]`, tagId );
+        } );
 
-            res();
+        fetch( `${ host }/user/announcement`, {
+            method:   'POST',
+            body:   formData,
         } )
-        .then( ( formData ) => {
-            fetch( `${ host }/user/announcement`, {
-                method:   'POST',
-                body:   formData,
-            } )
-            .then( ( res ) => {
-                if ( res.ok )
-                    location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
-            } );
+        .then( ( res ) => {
+            if ( res.ok )
+                location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
         } );
     }
 

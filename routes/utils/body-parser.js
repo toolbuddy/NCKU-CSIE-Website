@@ -1,6 +1,4 @@
-// Import express from 'express';
 import bodyParser from 'body-parser';
-
 
 /**
  * Url-encoded parser for HTTP request body.
