@@ -2,15 +2,15 @@ mixin award-card( data )
   section.award-card.cards__award-card( id=`cards__award-card--${ data.awardId }` )
     section.award-card__value
       p.value__text.value__text--award= data.award
-    img.award-card__patch( 
-      alt = 'patch', 
-      id = `award-card__patch--${ data.awardId }`, 
+    img.award-card__patch(
+      alt = 'patch',
+      id = `award-card__patch--${ data.awardId }`,
       src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
       data-id = data.awardId
     )
-    img.award-card__delete( 
-      alt = 'delete', 
-      id = `award-card__delete--${ data.awardId }`, 
-      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } ) 
+    img.award-card__delete(
+      alt = 'delete',
+      id = `award-card__delete--${ data.awardId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
       data-id = data.awardId
-    ) 
+    )

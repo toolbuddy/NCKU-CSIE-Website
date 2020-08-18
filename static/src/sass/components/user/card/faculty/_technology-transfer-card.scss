@@ -1,0 +1,165 @@
+@mixin technology-transfer-card ( ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .technology-transfer-card.cards__technology-transfer-card {
+    // [ variable ]
+    $large: 750px;
+    $small: 500px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas: '. content patch delete .';
+      columns: 1rem auto 1.2rem 1.2rem .5rem;
+    };
+
+    // [ position ]
+    width: 100%;
+    height: font__px-to-rem( 120 );
+
+    // [ skin ]
+    border: {
+      bottom: solid font__px-to-rem( 2 ) #adacad;
+      radius: font__px-to-rem( 3 );
+    }
+
+    > .technology-transfer-card__content {
+      // [ layout ]
+      display: grid;
+      grid: {
+        area: content;
+        template: {
+          areas: 'duration  technology authorizing-party authorized-party';
+          columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+        }
+      }
+      align-self: space-around;
+      padding-left: font__px-to-rem( 15 );
+
+      // [ position ]
+      width: 95%;
+
+      > .content__element {
+        // [ layout ]
+        display: grid;
+        grid-template-areas:
+          'topic'
+          'value';
+
+        // [ element ]
+        > .element__topic {
+          // [ layout ]
+          display: flex;
+          justify-self: center;
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+          }
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .element__value {
+          // [ layout ]
+          display: flex;
+          justify-self: center;
+
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+      }
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+
+      > .value__text {
+        // [ layout ]
+        display: inline-block;
+        grid-area: title;
+
+        // [ position ]
+        width: auto;
+        height: auto;
+        padding-right: font__px-to-rem( 5 );
+        align-self: center;
+        margin-left: 1rem;
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+        text-align: left;
+        line-height: font__px-to-rem( 17 );
+        letter-spacing: normal;
+        word-break: break-all;
+        color: rgba( 81, 81, 81, .87 );
+        overflow: visible;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: font__px-to-rem( 20 );
+          word: {
+            break: normal;
+            wrap: break-word;
+          }
+        }
+      }
+    }
+
+    > .technology-transfer-card__patch {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: patch;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    > .technology-transfer-card__delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: delete;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

@@ -128,10 +128,13 @@ router
 .route( '/:announcementId/file/:fileId' )
 .get( async ( req, res, next ) => {
     try {
+        const file = await getFile( Number.parseInt( req.params.fileId, 10 ) );
         res.set( 'Content-Type', 'application/octet-stream' );
-        res.send( Buffer.from( await getFile( req.params.fileId ), 'binary' ) );
+        res.set( 'Content-Disposition', `attachment;filename*=UTF-8''${ encodeURIComponent( file.name ) }` );
+        res.send( Buffer.from( file.content, 'binary' ) );
     }
     catch ( err ) {
+        console.error( err );
         if ( err.status === 404 )
             next();
         else

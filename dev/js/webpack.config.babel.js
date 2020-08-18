@@ -96,8 +96,6 @@ export default {
         'user/announcement/index':          path.join( jsSrcRoot, 'user/announcement/index.js' ),
         'user/announcement/add':            path.join( jsSrcRoot, 'user/announcement/add.js' ),
         'user/announcement/edit':           path.join( jsSrcRoot, 'user/announcement/edit.js' ),
-        'user/teacher/profile':             path.join( jsSrcRoot, 'user/teacher/profile.js' ),
-        'user/teacher/award':               path.join( jsSrcRoot, 'user/teacher/award.js' ),
 
         // Route `auth`
         'auth/login':              path.join( jsSrcRoot, 'auth/login.js' ),

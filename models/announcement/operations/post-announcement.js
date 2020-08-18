@@ -5,7 +5,6 @@ import {
     File,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import { announcement, } from 'models/common/utils/connect.js';
 
 import AnnouncementValidationConstraints from 'models/announcement/constraints/post/announcement.js';
 import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/post/announcement-i18n.js';
@@ -32,7 +31,7 @@ function equalArray ( a, b ) {
     return true;
 }
 
-export default async ( opt ) => {
+export default ( opt ) => {
     try {
         opt = opt || {};
         const {
@@ -57,6 +56,7 @@ export default async ( opt ) => {
 
         const langArr = [];
         announcementI18n.forEach( ( i18nData ) => {
+            i18nData.languageId = Number.parseInt( i18nData.languageId, 10 );
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
@@ -79,6 +79,7 @@ export default async ( opt ) => {
         } );
 
         tags.forEach( ( tagObj ) => {
+            tagObj.tagId = Number.parseInt( tagObj.tagId, 10 );
             if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
@@ -86,7 +87,7 @@ export default async ( opt ) => {
             }
         } );
 
-        const res = await announcement.transaction( t => Announcement.create( {
+        return Announcement.create( {
             author,
             image,
             announcementI18n,
@@ -107,14 +108,12 @@ export default async ( opt ) => {
                     as:    'tags',
                 },
             ],
-            transaction: t,
-        } ) ).then( () => ( { 'message': 'success', } ) )
+        } )
+        .then( () => ( { 'message': 'success', } ) )
         .catch( ( err ) => {
             err.status = 500;
             throw err;
         } );
-
-        return res;
     }
     catch ( err ) {
         throw err;

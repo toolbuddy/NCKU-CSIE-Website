@@ -1,7 +1,7 @@
 include /components/common/image.pug
 
 mixin experience-card( data )
-  - 
+  -
     const i18n = Object.freeze({
       [ LANG.getLanguageId( 'en-US' ) ]: {
         now: 'NOW',
@@ -20,7 +20,7 @@ mixin experience-card( data )
         hr.time__till
         if data.to !== null
           p.time__to.to= data.to
-        else 
+        else
           p.time__to.to= i18n[ LANG.id ].now
       if data.organization !== null
         p.value__text.value__text--organization= data.organization
@@ -32,10 +32,10 @@ mixin experience-card( data )
       alt: 'patch',
       className: `experience-card__patch experience-card__patch--${ data.experienceId }`,
       src: 'icon/edit.png',
-    } )   
+    } )
     +image( {
       alt: 'delete',
       className: `experience-card__delete experience-card__delete--${ data.experienceId }`,
       src: 'icon/delete.png',
-    } )    
+    } )
 

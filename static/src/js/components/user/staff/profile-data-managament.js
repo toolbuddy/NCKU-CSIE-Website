@@ -25,7 +25,7 @@ export default class ProfileDataManagement {
         const patchButtonQuerySelector = modifier => `.profile-card > #profile-card__patch--${ modifier }`;
         const checkButtonQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__button > .button__check`;
         const cancelButtonQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__button > .button__cancel`;
-        const inputQuerySelector = modifier => `input[ column-name = ${ modifier }]`;
+        const inputQuerySelector = modifier => `input[ column = ${ modifier }]`;
         const errorMessageQuerySelector = modifier => ` #form-${ modifier }-patch > .form-input__content > .content__error-message`;
         const cardValueQuerySelector = modifier => `.profile-card > #profile-card__value--${ modifier }`;
 
@@ -225,14 +225,14 @@ export default class ProfileDataManagement {
                         res( { item, i18n, } );
                     } )
                     .then( ( opt ) => {
-                        fetch( `${ host }/user/profile`, {
-                            method:   'POST',
+                        fetch( `${ host }/user/staff`, {
+                            method:   'PATCH',
                             body:   JSON.stringify( {
                                 profileId:     this.config.profileId,
-                                method:        'update',
                                 dbTable:       'profile',
-                                item:      opt.item,
-                                i18n:      opt.i18n,
+                                dbTableItemId: this.config.profileId,
+                                item:          opt.item,
+                                i18n:          opt.i18n,
                             } ),
                         } )
                         .then( () => {
@@ -260,7 +260,7 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile[ columnName ] )
         .then( ( data ) => {
-            this.DOM[ columnName ].cardValue.innerHTML = data;
+            this.DOM[ columnName ].cardValue.innerText = data;
         } );
     }
 
@@ -269,7 +269,7 @@ export default class ProfileDataManagement {
             const languageId = element.getAttribute( 'languageId' );
             element.value = data[ languageId ];
         } );
-        this.DOM[ columnName ].errorMessage.innerHTML = '';
+        this.DOM[ columnName ].errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM[ columnName ].form, 'form-input--active' );
     }

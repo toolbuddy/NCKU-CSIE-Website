@@ -13,17 +13,6 @@ export default class AnnouncementEvent {
     constructor ( opt ) {
         opt = opt || {};
 
-        /***
-         * Data validation
-         * @parm
-         * - `blockDOM:     DOM of information block`
-         * - `addButtonDOM: DOM of add button to add information`
-         * - `loadingDOM:   DOM of loading logo`
-         * - `languageId:   Id  of languageId`
-         * - `profileId:    Id  of profileId`
-         * - `dbTable:      String of the table name of database`
-         */
-
         if ( !ValidateUtils.isValidId( opt.id ) ||
             !ValidateUtils.isValidId( opt.languageId ) ||
             !ValidateUtils.isDomElement( opt.editBlockDOM ) )
@@ -40,7 +29,7 @@ export default class AnnouncementEvent {
         this.state = {
             languageId:  opt.languageId,
             newFileId:   0,
-            newFiles:    [],
+            addFiles:    [],
             files:       [],
             tags:        [],
             deleteFiles: [],
@@ -108,36 +97,24 @@ export default class AnnouncementEvent {
             statusbar: false,
             plugins:   'table lists',
             menubar:   'table',
-            toolbar:   `formatselect | 
-                        bold italic strikethrough forecolor backcolor | 
-                        link | 
-                        alignleft aligncenter alignright alignjustify  | 
-                        numlist bullist outdent indent  | 
+            toolbar:   `formatselect |
+                        bold italic strikethrough forecolor backcolor |
+                        link |
+                        alignleft aligncenter alignright alignjustify  |
+                        numlist bullist outdent indent  |
                         removeformat`,
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {
                 e.preventDefault();
 
-                /***
-                 * Store content in another language
-                 */
-
                 this.data[ this.state.languageId ].title = this.DOM.title.value;
                 this.data[ this.state.languageId ].content = tinymce.get( 'content__textarea' ).getContent();
-
-                /***
-                 * Change button css
-                 */
 
                 Object.keys( this.DOM.languageButton ).forEach( ( id ) => {
                     classRemove( this.DOM.languageButton[ id ], 'language__button--active' );
                 } );
                 classAdd( this.DOM.languageButton[ languageId ], 'language__button--active' );
-
-                /***
-                 * Set content in selected language
-                 */
 
                 this.state.languageId = languageId;
                 this.DOM.title.value = this.data[ languageId ].title;
@@ -168,7 +145,13 @@ export default class AnnouncementEvent {
             this.state.newFileId -= e.target.files.length;
 
             Array.from( e.target.files ).forEach( async ( file, index ) => {
-                await this.addFilePreviewBlock( file, this.state.newFileId + index );
+                await this.generateFilePreview(
+                    {
+                        file,
+                        fileId:  this.state.newFileId + index,
+                        isExist: false,
+                    }
+                );
             } );
         } );
     }
@@ -188,62 +171,62 @@ export default class AnnouncementEvent {
         } );
     }
 
-    async addFilePreviewBlock ( file, id ) {
+    subscribeExistFileDelete ( fileId ) {
+        const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ fileId }` );
+
+        deleteDOM.addEventListener( 'click', () => {
+            this.state.deleteFiles.push( fileId );
+            deleteDOM.parentNode.remove();
+        } );
+    }
+
+    subscribeNewFileDelete ( file, fileId ) {
+        const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ fileId }` );
+        classAdd( loaderDOM, 'file-preview__loader--active' );
+
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.state.addFiles.push( {
+                tempId:  fileId,
+                name:    file.name,
+                content: file,
+            } );
+            classRemove( loaderDOM, 'file-preview__loader--active' );
+        };
+        fileReader.readAsArrayBuffer( file );
+
+        const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ fileId }` );
+
+        deleteDOM.addEventListener( 'click', () => {
+            this.state.addFiles = this.state.addFiles.filter( e => e.tempId !== fileId );
+
+            deleteDOM.parentNode.remove();
+        } );
+    }
+
+    async generateFilePreview ( opt ) {
+        const { file, fileId, isExist, } = opt;
         new Promise( ( res ) => {
             const tempDOM = document.createElement( 'temp-section' );
             tempDOM.innerHTML = FilePreview( {
                 host,
                 name: file.name,
-                id,
+                id:   fileId,
             } );
 
             this.DOM.filePreview.appendChild( tempDOM.firstChild );
             res();
         } )
         .then( () => {
-            if ( id < 0 ) {
-                const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-                classAdd( loaderDOM, 'file-preview__loader--active' );
-            }
-        } )
-        .then( async () => {
-            const loaderDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__loader--${ id }` );
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                const unit8Array = new Uint8Array( fileReader.result );
-                this.state.newFiles.push( {
-                    tempId:  id,
-                    name:    file.name,
-                    content: Array.from( unit8Array ),
-                } );
-                classRemove( loaderDOM, 'file-preview__loader--active' );
-            };
-            fileReader.readAsArrayBuffer( file );
-
-            const deleteDOM = this.DOM.filePreview.querySelector( `.file__file-preview > .file-preview__delete--${ id }` );
-
-            /***
-            *   Add delete button event listener
-            */
-
-            deleteDOM.addEventListener( 'click', () => {
-                if ( id > 0 )
-                    this.state.deleteFiles.push( id );
-
-                else
-                    this.state.newFiles = this.state.newFiles.filter( e => e.tempId !== id );
-
-                deleteDOM.parentNode.remove();
-            } );
+            if ( isExist )
+                this.subscribeExistFileDelete( fileId );
+            else
+                this.subscribeNewFileDelete( file, fileId );
         } );
     }
 
     isDataValidate () {
         let errorMessage = '';
-
-        /***
-         * Validate data and set error message
-         */
 
         if ( this.state.tags.length <= 0 )
             errorMessage = '請至少選擇一個標籤';
@@ -282,65 +265,62 @@ export default class AnnouncementEvent {
     }
 
     uploadPostAnnouncement () {
-        fetch( `${ host }/user/announcement/add`, {
+        const formData = new FormData();
+        formData.append( 'image', null );
+        Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
+            formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
+            formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
+            formData.append( `announcementI18n[${ languageId }][content]`, this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ) );
+        } );
+        this.state.addFiles.forEach( ( file ) => {
+            formData.append( 'files', file.content );
+        } );
+        this.state.tags.forEach( ( tagId, i ) => {
+            formData.append( `tags[${ i }][tagId]`, tagId );
+        } );
+
+        fetch( `${ host }/user/announcement`, {
             method:   'POST',
-            headers: {
-                'user-agent':   'Mozilla/4.0 MDN Example',
-                'content-type': 'application/json',
-            },
-            body:   JSON.stringify( {
-                'author':           this.config.author,
-                'image':            null,
-                'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
-                    languageId,
-                    title:      this.data[ languageId ].title,
-                    content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                } ) ),
-                'files': this.state.newFiles.map( file => ( {
-                    languageId: this.state.languageId,
-                    name:       file.name,
-                    content:    file.content,
-                } ) ),
-                'tags':             this.state.tags.map( tagId => ( {
-                    tagId,
-                } ) ),
-            } ),
+            body:   formData,
         } )
-        .then( () => {
-            location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+        .then( ( res ) => {
+            if ( res.ok )
+                location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
         } );
     }
 
     uploadPutAnnouncement () {
-        const files = {};
-        this.state.files.forEach( ( file ) => {
-            files[ file.fileId ] = file.name;
-        } );
-        fetch( `${ host }/user/announcement/edit/${ this.config.id }`, {
-            method:   'PUT',
-            headers: {
-                'user-agent':   'Mozilla/4.0 MDN Example',
-                'content-type': 'application/json',
-            },
-            body:   JSON.stringify( {
-                'announcementId':   this.config.id,
-                'image':            null,
-                'announcementI18n': LanguageUtils.supportedLanguageId.map( languageId => ( {
-                    languageId,
-                    title:      this.data[ languageId ].title,
-                    content:    this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ),
-                } ) ),
+        new Promise( ( res ) => {
+            const formData = new FormData();
+            formData.append( 'announcementId', this.config.id );
+            formData.append( 'image', null );
+            Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
+                formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
+                formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
+                formData.append( `announcementI18n[${ languageId }][content]`, this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ) );
+            } );
+            this.state.tags.forEach( ( tagId, i ) => {
+                formData.append( `tags[${ i }][tagId]`, tagId );
+            } );
+            this.state.addFiles.forEach( ( file, i ) => {
+                formData.append( `addFiles[${ i }][name]`, file.name );
+                formData.append( `addFiles[${ i }][content]`, file.content );
+            } );
+            this.state.deleteFiles.forEach( ( fileId, i ) => {
+                formData.append( `deleteFiles[${ i }][fileId]`, fileId );
+            } );
 
-                // TODO: maintain these file array. `addedFiles` contains objects that
-                // contain file content and file name; `deletedFiles` contains file ids
-                // that are gonna be deleted
-                'addedFiles':   [],
-                'deletedFiles': [],
-                'tags':          this.state.tags.map( tag => ( { tagId: tag, } ) ),
-            } ),
+            res( formData );
         } )
-        .then( () => {
-            Location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+        .then( ( formData ) => {
+            fetch( `${ host }/user/announcement`, {
+                method:   'PUT',
+                body:   formData,
+            } )
+            .then( ( res ) => {
+                if ( res.ok )
+                    location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+            } );
         } );
     }
 
@@ -368,7 +348,11 @@ export default class AnnouncementEvent {
             this.subscribeSubmitButton();
             this.DOM.filePreview.innerHTML = '';
             this.state.files.forEach( async ( file ) => {
-                await this.addFilePreviewBlock( file, file.fileId );
+                await this.generateFilePreview( {
+                    file,
+                    fileId:  file.fileId,
+                    isExist: true,
+                } );
             } );
         } );
     }

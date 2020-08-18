@@ -1,0 +1,30 @@
+mixin technology-transfer-head()
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          duration:         'duration',
+          authorizingParty: 'authorizing party',
+          authorizedParty:  'authorized party',
+          technology:       'technology',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          duration:         '合約期間',
+          authorizingParty: '授權方名稱',
+          authorizedParty:  '接受方名稱',
+          technology:       '技術名稱',
+        }
+      },
+    })
+  section.technology-transfer-card.cards__technology-transfer-card
+    section.technology-transfer-card__content
+      article.content__element.content__element--duration
+        h4.element__topic.topic= i18n[ LANG.id ].topic.duration
+      article.content__element.content__element--technology
+        h4.element__topic.topic= i18n[ LANG.id ].topic.technology
+      article.content__element.content__element--authorizing-party
+        h4.element__topic.topic= i18n[ LANG.id ].topic.authorizingParty
+      article.content__element.content__element--authorized-party
+        h4.element__topic.topic= i18n[ LANG.id ].topic.authorizedParty

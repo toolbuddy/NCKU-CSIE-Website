@@ -75,28 +75,21 @@ export default class EditorIcon {
     }
 
     async sendDeleteRequest () {
-        fetch( `${ host }/announcement/delete`, {
-            method: 'POST',
+        fetch( `${ host }/user/announcement`, {
+            method: 'DELETE',
             body:   JSON.stringify( {
-                announcementId: this.config.announcementId,
+                announcementIds: [ this.config.announcementId, ],
             } ),
+            headers: {
+                'content-type': 'application/json',
+            },
         } )
         .then( async () => {
-            /***
-             *  If delete announcement successful,
-             *  redirect to announcement/all.
-             */
-
             window.location.replace( `${ host }/announcement/all?languageId=${ this.config.languageId }` );
         } );
     }
 
     async exec () {
-        /***
-         *   Fetch user data
-         *   and check whether login and is staff
-        */
-
         fetch( `${ host }/user/id`, {
             credentials: 'include',
             method:      'post',

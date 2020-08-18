@@ -7,9 +7,9 @@ mixin profile-card( modifier, title, value )
       p.profile-card__value( id=`profile-card__value--${ modifier }` )=`${value}`
     else
       p.profile-card__value( id=`profile-card__value--${ modifier }` )= ''
-    img.profile-card__patch( 
-      alt = 'patch', 
-      id = `profile-card__patch--${ modifier }`, 
+    img.profile-card__patch(
+      alt = 'patch',
+      id = `profile-card__patch--${ modifier }`,
       src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
       column-name = modifier
-    ) 
+    )

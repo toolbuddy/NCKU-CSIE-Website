@@ -1,4 +1,4 @@
-- 
+-
   const i18n = Object.freeze( {
     [ LANG.getLanguageId( 'en-US' ) ]: {
       addStudent: 'add student',
@@ -16,7 +16,7 @@ if Array.isArray( opt.subtitle ) && opt.subtitle.length
       p.subtitle__word= subtitle
 
 section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block--${ opt.id }` )
-  main.input-block__block.block 
+  main.input-block__block.block
     article.block__content.content
       if dbTable === 'education'
         article.content__education.education
@@ -36,8 +36,8 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
                 time.time__year= new Date().getFullYear()
           ul.education__list.list
             if education.nation !== null
-              img.list__flag( 
-                alt = opt.nation,, 
+              img.list__flag(
+                alt = opt.nation,
                 src = `${ host }/static/image/icon/${ opt.nation }.png`,
               )
             if opt.res.school !== null
@@ -69,7 +69,7 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
 
       else if dbTable === 'project'
         article.content__project
-          if opt.isTitle 
+          if opt.isTitle
             section.project__title.title
               p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
               p.title__item.title__item--name= dataI18n[ languageId ].localTopic.name
@@ -101,13 +101,13 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
           if Array.isArray( opt.res.student ) && opt.res.student.length
             each student in opt.res.student
               section.word__student
-                img.student__button--remove( 
-                  alt = 'remove', 
+                img.student__button--remove(
+                  alt = 'remove',
                   class = `student__remove-${ student.studentId }`
                   src = `${ host }/static/image/icon/cross.png`,
                 )
-                img.student__button--modify( 
-                  alt = 'edit', 
+                img.student__button--modify(
+                  alt = 'edit',
                   class = `student__modify-${ student.studentId }`
                   src = `${ host }/static/image/icon/settings.png`,
                 )
@@ -118,7 +118,7 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
 
       else if dbTable === 'patent'
         article.content__patent
-          if opt.isTitle 
+          if opt.isTitle
             section.patent__title.title
               p.title__item.title__item--certificationNumber= dataI18n[ languageId ].localTopic.certificationNumber
               p.title__item.title__item--patent= dataI18n[ languageId ].localTopic.patent
@@ -127,7 +127,7 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
               p.title__item.title__item--patentOwner= dataI18n[ languageId ].localTopic.patentOwner
               p.title__item.title__item--applicationDate= dataI18n[ languageId ].localTopic.applicationDate
               p.title__item.title__item--duration= dataI18n[ languageId ].localTopic.duration
-              
+
           if !opt.isTitle
             section.patent__content.content
               article.content__item.content__item--certificationNumber
@@ -135,8 +135,8 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
               article.content__item.content__item--patent
                 p.item__word= opt.res.patent
               article.content__item.content__item--nation
-                img.item__nation( 
-                  alt = 'remove', 
+                img.item__nation(
+                  alt = 'remove',
                   src = `${ host }/static/image/icon/${ opt.nation }.png`,
                 )
               article.content__item.content__item--inventor
@@ -152,7 +152,7 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
 
       else if dbTable === 'technologyTransfer'
         article.content__technologyTransfer
-          if opt.isTitle 
+          if opt.isTitle
             section.technologyTransfer__title.title
               p.title__item.title__item--time= dataI18n[ languageId ].localTopic.time
               p.title__item.title__item--technology=dataI18n[ languageId ].localTopic.technology
@@ -183,19 +183,19 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
             if Array.isArray( opt.res.technologyTransferPatent ) && opt.res.technologyTransferPatent.length
               each patent in opt.res.technologyTransferPatent
                 section.technologyTransfer__patent
-                  img.patent__button--remove( 
-                    alt = 'remove', 
+                  img.patent__button--remove(
+                    alt = 'remove',
                     class = `patent__remove-${ patent.technologyTransferPatentId }`
                     src = `${ host }/static/image/icon/cross.png`,
                   )
-                  img.patent__button--modify( 
-                    alt = 'edit', 
+                  img.patent__button--modify(
+                    alt = 'edit',
                     class = `patent__modify-${ patent.technologyTransferPatentId }`
                     src = `${ host }/static/image/icon/settings.png`,
                   )
                   article.patent__detail
                     p.detail__text= patent.patent
-            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= i18n[ languageId ].addPatent     
+            p.technologyTransfer__add( class=`content__modify--technologyTransfer-${ opt.id }` )= i18n[ languageId ].addPatent
 
       else
         article.content__word
@@ -204,13 +204,13 @@ section.input-block( class=`${ dbTable }__input-block ${ dbTable }__input-block-
               p.word__text= content
 
       if !opt.isTitle
-        img.content__remove( 
-          alt = 'remove', 
+        img.content__remove(
+          alt = 'remove',
           class = `content__remove--${ dbTable }-${ opt.id }`
           src = `${ host }/static/image/icon/delete.png`,
         )
-        img.content__modify( 
-          alt = 'edit', 
+        img.content__modify(
+          alt = 'edit',
           class = `content__modify--${ dbTable }-${ opt.id }`
           src = `${ host }/static/image/icon/edit.png`,
         )

@@ -2,15 +2,15 @@ mixin businessI18n-card( data )
   section.businessI18n-card.cards__businessI18n-card( id=`cards__businessI18n-card--${ data.businessId }` )
     section.businessI18n-card__value
       p.value__text.value__text--bussiness= data.business
-    img.businessI18n-card__patch( 
-      alt = 'patch', 
-      id = `businessI18n-card__patch--${ data.businessId }`, 
+    img.businessI18n-card__patch(
+      alt = 'patch',
+      id = `businessI18n-card__patch--${ data.businessId }`,
       src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
       data-id = data.businessId
     )
-    img.businessI18n-card__delete( 
-      alt = 'delete', 
-      id = `businessI18n-card__delete--${ data.businessId }`, 
+    img.businessI18n-card__delete(
+      alt = 'delete',
+      id = `businessI18n-card__delete--${ data.businessId }`,
       src = UTILS.staticUrl( { href: 'image/icon/delete.png' } ),
       data-id = data.businessId
     )

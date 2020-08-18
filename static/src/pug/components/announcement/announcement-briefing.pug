@@ -7,7 +7,7 @@ a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ brie
   aside.briefing__tags.tags
     each tagObj in briefing.tags
       button.tags__tag( class=`tags__tag--${ tagObj.color }` )= tagObj.tag
-  if userId >= 0 
+  if userId >= 0
     aside.briefing__button.button
       +image( {
         alt: 'pin',

@@ -1050,17 +1050,6 @@ export default class DefaultTagFilter {
         }
     }
 
-    // SubscribePinnedButton (announcementId) {
-    //     e.preventDefault();
-    //     classAdd( this.DOM.preview.block, 'delete-preview--show' );
-    //     this.state.announcementId = announcementId;
-    //     this.state.preview = 'pin';
-    //     this.state.isPinned = isPinned;
-    //     this.DOM.preview.topic.innerText = ( isPinned ) ? '取消置頂公告' : '置頂公告';
-    //     this.DOM.preview.briefing.title.innerText = briefing.title;
-    //     this.DOM.preview.briefing.time.innerText = briefing.updateTime;
-    // }
-
     subscribeAddButton () {
         this.DOM.add.innerHTML += addButtonHTML( {
             host,
@@ -1088,34 +1077,26 @@ export default class DefaultTagFilter {
             body:   JSON.stringify( {
                 announcementId: this.state.announcementId,
                 isPinned:       ( this.state.isPinned ) ? 0 : 1,
-                isPublished:    1,
                 author:         this.config.userId,
             } ),
         } )
         .then( async () => {
-            /***
-             * If get response successful,
-             * reload this page.
-             */
-
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
             this.getPinnedAnnouncement();
         } );
     }
 
     async sendDeleteRequest () {
-        fetch( `${ host }/announcement/delete`, {
-            method: 'POST',
+        fetch( `${ host }/user/announcement`, {
+            method: 'DELETE',
             body:   JSON.stringify( {
-                announcementId: this.state.announcementId,
+                announcementIds: [ this.state.announcementId, ],
             } ),
+            headers: {
+                'content-type': 'application/json',
+            },
         } )
         .then( async () => {
-            /***
-             * If get response successful,
-             * reload this page.
-             */
-
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
             this.getAll();
         } );
@@ -1127,10 +1108,6 @@ export default class DefaultTagFilter {
             await this.getNormalAnnouncement();
             await this.getPinnedAnnouncement();
 
-            // Await Promise.all( [
-            //     this.getPinnedAnnouncement(),
-            //     this.getNormalAnnouncement(),
-            // ] );
             if ( this.config.userId !== -1 ) {
                 this.subscribeAddButton();
                 this.setPreview();
