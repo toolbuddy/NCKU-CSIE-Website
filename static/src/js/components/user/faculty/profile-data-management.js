@@ -91,7 +91,7 @@ export default class ProfileDataManagement {
             this.researchGroup, ].forEach( ( obj ) => {
             obj.forEach( ( tag ) => {
                 tag.node.addEventListener( 'click', () => {
-                    fetch( `${ host }/user/profile`, {
+                    fetch( `${ host }/user/faculty/profile`, {
                         method: ( tag.selected ) ? 'DELETE' : 'POST',
                         header: {
                             'content-type': 'application/json',
@@ -211,7 +211,7 @@ export default class ProfileDataManagement {
                         item:          data.item,
                         i18n:          data.i18n,
                     } );
-                    fetch( `${ host }/user/profile`, {
+                    fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
                         header: {
                             'content-type': 'application/json',

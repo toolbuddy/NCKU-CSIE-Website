@@ -132,8 +132,11 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-                fetch( `${ host }/user/profile`, {
+                fetch( `${ host }/user/staff/profile`, {
                     method:   'POST',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId: this.config.profileId,
                         dbTable:   this.config.table,
@@ -182,8 +185,11 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/staff`, {
+                fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
                         dbTable:       this.config.table,
@@ -222,8 +228,11 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            fetch( `${ host }/user/profile`, {
-                method:   'POST',
+            fetch( `${ host }/user/staff/profile`, {
+                method:   'DELETE',
+                header: {
+                    'content-type': 'application/json',
+                },
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.table,

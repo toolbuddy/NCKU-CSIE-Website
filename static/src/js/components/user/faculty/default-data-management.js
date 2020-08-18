@@ -134,14 +134,7 @@ export default class DefaultDataManagement {
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
 
-                console.log( {
-                    profileId: this.config.profileId,
-                    dbTable:   this.config.dbTable,
-                    item:      data.item,
-                    i18n:      data.i18n,
-                } );
-
-                fetch( `${ host }/user/profile`, {
+                fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
                     header: {
                         'content-type': 'application/json',
@@ -159,8 +152,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
-
-                    // Window.location.reload();
+                    window.location.reload();
                 } );
             }
         } );
@@ -195,8 +187,7 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                console.log( data );
-                fetch( `${ host }/user/profile`, {
+                fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
                     header: {
                         'content-type': 'application/json',
@@ -215,8 +206,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
-
-                    // Window.location.reload();
+                    window.location.reload();
                 } );
             }
         } );
@@ -240,12 +230,7 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            console.log( {
-                profileId:      this.config.profileId,
-                dbTable:        this.config.dbTable,
-                dbTableItemId:  Number( this.status.itemId ),
-            } );
-            fetch( `${ host }/user/profile`, {
+            fetch( `${ host }/user/faculty/profile`, {
                 method:   'DELETE',
                 header: {
                     'content-type': 'application/json',
@@ -262,8 +247,7 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
-
-                // Window.location.reload();
+                window.location.reload();
             } );
         } );
     }

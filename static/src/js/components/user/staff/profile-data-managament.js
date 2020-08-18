@@ -160,8 +160,11 @@ export default class ProfileDataManagement {
                         res( { item, i18n, } );
                     } )
                     .then( ( opt ) => {
-                        fetch( `${ host }/user/staff`, {
+                        fetch( `${ host }/user/staff/profile`, {
                             method:   'PATCH',
+                            header: {
+                                'content-type': 'application/json',
+                            },
                             body:   JSON.stringify( {
                                 profileId:     this.config.profileId,
                                 dbTable:       'profile',
