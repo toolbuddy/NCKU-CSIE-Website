@@ -1,8 +1,5 @@
 import ValidateUtils from 'models/common/utils/validate.js';
-import {
-    Announcement,
-} from 'models/announcement/operations/associations.js';
-import { announcement, } from 'models/common/utils/connect.js';
+import { Announcement, } from 'models/announcement/operations/associations.js';
 
 export default async ( opt ) => {
     try {
@@ -25,17 +22,17 @@ export default async ( opt ) => {
             }
         } );
 
-        await announcement.transaction( t => Announcement.update( {
+        return Announcement.update( {
             isPublished:    0,
         }, {
             where: {
                 announcementId: announcementIds,
             },
-            transaction: t,
-        } ) ).catch( ( err ) => {
+        } )
+        .then( () => ( { 'message': 'success', } ) )
+        .catch( ( err ) => {
             throw err;
         } );
-        return;
     }
     catch ( err ) {
         throw err;

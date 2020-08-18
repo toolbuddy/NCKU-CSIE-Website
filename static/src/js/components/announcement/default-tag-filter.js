@@ -1087,11 +1087,14 @@ export default class DefaultTagFilter {
     }
 
     async sendDeleteRequest () {
-        fetch( `${ host }/announcement`, {
+        fetch( `${ host }/user/announcement`, {
             method: 'DELETE',
             body:   JSON.stringify( {
                 announcementIds: [ this.state.announcementId, ],
             } ),
+            headers: {
+                'content-type': 'application/json',
+            },
         } )
         .then( async () => {
             classRemove( this.DOM.preview.block, 'delete-preview--show' );

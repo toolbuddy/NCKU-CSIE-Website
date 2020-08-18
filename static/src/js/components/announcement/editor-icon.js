@@ -75,11 +75,14 @@ export default class EditorIcon {
     }
 
     async sendDeleteRequest () {
-        fetch( `${ host }/announcement`, {
+        fetch( `${ host }/user/announcement`, {
             method: 'DELETE',
             body:   JSON.stringify( {
                 announcementIds: [ this.config.announcementId, ],
             } ),
+            headers: {
+                'content-type': 'application/json',
+            },
         } )
         .then( async () => {
             window.location.replace( `${ host }/announcement/all?languageId=${ this.config.languageId }` );

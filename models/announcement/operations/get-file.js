@@ -1,36 +1,32 @@
-import {
-    File,
-} from 'models/announcement/operations/associations.js';
 import ValidateUtils from 'models/common/utils/validate.js';
+import { File } from 'models/announcement/operations/associations.js';
 
-export default async ( opt ) => {
+export default ( fileId ) => {
     try {
-        const {
-            fileId = null,
-        } = opt || {};
-
         if ( !ValidateUtils.isPositiveInteger( fileId ) ) {
             const error = new Error( 'invalid file id' );
             error.status = 400;
             throw error;
         }
 
-        const data = await File.findOne( {
+        return File.findOne( {
             attributes: [
+                'name',
                 'content',
             ],
             where: {
                 fileId,
             },
+        } )
+        .then( ( data ) => {
+            if ( !data ) {
+                const error = new Error( 'no result' );
+                error.status = 404;
+                throw error;
+            }
+            else
+                return data;
         } );
-
-        if ( !data ) {
-            const error = new Error( 'no result' );
-            error.status = 404;
-            throw error;
-        }
-
-        return data.content;
     }
     catch ( err ) {
         if ( err.status )

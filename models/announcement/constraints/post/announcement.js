@@ -8,19 +8,6 @@ const AnnouncementValidationConstraints = {
             type: ValidateUtils.isValidId,
         },
     },
-    isPinned: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
-        },
-    },
-
-    // IsPublished: {
-    //     presence:     true,
-    //     type:     {
-    //         type: value => ValidateUtils.isValidBoolean( value ),
-    //     },
-    // },
     image: {
         presence:     false,
 

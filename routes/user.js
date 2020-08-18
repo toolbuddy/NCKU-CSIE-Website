@@ -1514,44 +1514,14 @@ router
 
 router
 .route( '/announcement' )
-.get( allowUserOnly, staticHtml( 'user/announcement/index' ) );
-
-/**
- * Resolve URL `/user/announcement/add`.
- */
-
-router
-.route( '/announcement/add' )
-.get( allowUserOnly, staticHtml( 'user/announcement/add' ) )
-.post( urlEncoded, jsonParser, allowUserOnly, cors(), multer( {
-    dest:     `${ projectRoot }/static/src/image/`,
-    storage: multer.diskStorage( {
-        destination: `${ projectRoot }/static/src/image/`,
-    } ),
-} ).single( 'file' ), async ( req, res ) => {
-    // Const result = await getAdminByUserId( {
-    //     userId: Number( res.locals.userId ),
-    // } );
-
-    // Try {
-    //     // Save file & rename
-    //     if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
-    //         fs.rename( req.file.path, `${ req.file.destination }faculty/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
-    //             if ( err )
-    //                 throw err;
-    //         } );
-    //     }
-    //     else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
-    //         fs.rename( req.file.path, `${ req.file.destination }staff/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
-    //             if ( err )
-    //                 throw err;
-    //         } );
-    //     }
-    // }
-    // catch ( error ) {
-    //     console.error( error );
-    // }
-
+.get( allowUserOnly, staticHtml( 'user/announcement/index' ) )
+.post( allowUserOnly, cors(), multer( {
+    storage: multer.memoryStorage(),
+} ).array( 'files' ), async ( req, res ) => {
+    req.body.files = req.files.map( file => ( {
+        name:    file.originalname,
+        content: file.buffer,
+    } ) );
     try {
         res.send( await postAnnouncement( req.body ) );
     }
@@ -1559,7 +1529,25 @@ router
         console.error( error );
         res.status( error.status ).send( error.message );
     }
+} )
+.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        res.send( await deleteAnnouncements( req.body ) );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.status( error.status ).send( error.message );
+    }
 } );
+
+
+/**
+ * Resolve URL `/user/announcement/add`.
+ */
+
+router
+.route( '/announcement/add' )
+.get( allowUserOnly, staticHtml( 'user/announcement/add' ) );
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
@@ -1624,20 +1612,6 @@ router
             i18n:             [],
             fileI18n:       [],
         } );
-
-        res.send( { message: 'success', } );
-    }
-    catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
-    }
-} );
-
-router
-.route( '/announcement/delete' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
-    try {
-        await deleteAnnouncements( req.body );
 
         res.send( { message: 'success', } );
     }
