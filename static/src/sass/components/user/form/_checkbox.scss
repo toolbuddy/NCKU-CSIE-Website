@@ -1,0 +1,57 @@
+@import 'components/user/form/input-title';
+@mixin checkbox () {
+  > .checkbox.content__checkbox {
+    // [ layout ]
+    display: flex;
+
+    // [ position ]
+    width: font__px-to-rem( 350 );
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    > .checkbox__input.input {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: font__px-to-rem( 20 );
+      height: font__px-to-rem( 40 );
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 10 );
+        right: 0;
+      }
+      border-radius: font__px-to-rem( 15 );
+      border: solid 2px rgba( 214, 214, 214, .7 );
+
+      // [ skin ]
+      padding: {
+        left: font__px-to-rem( 16 );
+        right: font__px-to-rem( 16 );
+      }
+      font-size: font__px-to-rem( 16 );
+      text-align: center;
+      line-height: normal;
+      color: rgba( 24, 24, 24, .87 );
+
+      &:focus {
+        // [ skin ]
+        border: solid 3px rgba( 98, 148, 160, .5 );
+      }
+    }
+
+    // [ element ]
+    @include input-title( 'checkbox' ) {
+      // [ layout ]
+      justify-content: flex-start;
+
+      // [ skin ]
+      border-bottom: none;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

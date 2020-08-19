@@ -1,8 +1,8 @@
 import ValidateUtils from 'models/common/utils/validate.js';
-import validate from 'validate.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import errorMessageUtils from 'models/staff/utils/error-message.js';
 import { host, } from 'settings/server/config.js';
 
 export default class DefaultDataManagement {
@@ -30,8 +30,8 @@ export default class DefaultDataManagement {
             patchButton: null,
         };
 
-        this.constraints = opt.constraints;
         this.deletePreview = opt.deletePreview;
+        this.columnUnits = opt.columnUnits;
 
         const checkButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__check`;
         const cancelButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__cancel`;
@@ -132,8 +132,11 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-                fetch( `${ host }/user/profile`, {
+                fetch( `${ host }/user/staff/profile`, {
                     method:   'POST',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId: this.config.profileId,
                         dbTable:   this.config.table,
@@ -182,8 +185,11 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/staff`, {
+                fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
                         dbTable:       this.config.table,
@@ -222,8 +228,11 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            fetch( `${ host }/user/profile`, {
-                method:   'POST',
+            fetch( `${ host }/user/staff/profile`, {
+                method:   'DELETE',
+                header: {
+                    'content-type': 'application/json',
+                },
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.table,
@@ -297,13 +306,28 @@ export default class DefaultDataManagement {
         classRemove( this.DOM.delete.form, 'form-input--active' );
     }
 
+    getErrorMessage ( inputName, errorType ) {
+        const column = this.columnUnits.getValueByOption( {
+            option:     inputName,
+            languageId: this.config.languageId,
+        } );
+        const error = errorMessageUtils.getValueByOption( {
+            option:     errorType,
+            languageId: this.config.languageId,
+        } );
+        return `${ column }${ error }`;
+    }
+
     async dataValidation ( method ) {
         const isValid = new Promise( ( res ) => {
             let errorMessage = '';
             Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-                const message = validate.single( element.value, this.constraints[ element.name ] );
-                if ( ValidateUtils.isValidArray( message ) ) {
-                    errorMessage = message[ 0 ];
+                if ( element.validity.typeMismatch || element.validity.patternMismatch ) {
+                    errorMessage = this.getErrorMessage( element.getAttribute( 'name' ), 'typeMismatch' );
+                    element.focus();
+                }
+                else if ( element.validity.valueMissing ) {
+                    errorMessage = this.getErrorMessage( element.getAttribute( 'name' ), 'valueMissing' );
                     element.focus();
                 }
             } );
@@ -323,10 +347,13 @@ export default class DefaultDataManagement {
     async formatFormData ( method ) {
         const data = {
             item: {},
-            i18n: Array.from( LanguageUtils.supportedLanguageId ).map( id => ( { language: id, } ) ),
+            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+                return { languageId: id, };
+            } ),
         };
+
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
+            if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else
                 data.item[ element.name ] = element.value;

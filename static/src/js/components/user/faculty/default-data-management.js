@@ -1,8 +1,7 @@
 import ValidateUtils from 'models/common/utils/validate.js';
-import validate from 'validate.js';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
 import LanguageUtils from 'models/common/utils/language.js';
+import errorMessageUtils from 'models/user/utils/error-message.js';
 import { host, } from 'settings/server/config.js';
 
 export default class DefaultDataManagement {
@@ -14,7 +13,7 @@ export default class DefaultDataManagement {
             !ValidateUtils.isDomElement( opt.refreshDOM ) ||
             !ValidateUtils.isDomElement( opt.loadingDOM ) ||
             !ValidateUtils.isDomElement( opt.cardsDOM ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId ) ||
+            !LanguageUtils.isSupportedLanguageId( opt.languageId ) ||
             !ValidateUtils.isValidString( opt.table )
         )
             throw new TypeError( 'invalid arguments' );
@@ -22,16 +21,17 @@ export default class DefaultDataManagement {
         this.config = {
             languageId:   opt.languageId,
             table:        opt.table,
+            dbTable:      opt.dbTable,
             idColumn:   opt.idColumn,
         };
 
         this.status = {
-            dataId:      -1,
+            itemId:      -1,
             patchButton: null,
         };
 
-        this.constraints = opt.constraints;
         this.deletePreview = opt.deletePreview;
+        this.columnUnits = opt.columnUnits;
 
         const checkButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__check`;
         const cancelButtonQuerySelector = method => ` #form-${ opt.table }-${ method } > .form-input__button > .button__cancel`;
@@ -120,7 +120,8 @@ export default class DefaultDataManagement {
         } );
     }
 
-    subscribePostButton () {
+    subscribePostButton ( element ) {
+        element.target.setAttribute( 'post', 'post' );
         this.showPostForm();
     }
 
@@ -132,15 +133,17 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-                fetch( `${ host }/user/profile`, {
+
+                fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
-                        add:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        profileId: this.config.profileId,
+                        dbTable:   this.config.dbTable,
+                        item:      data.item,
+                        i18n:      data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -149,6 +152,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -157,12 +161,12 @@ export default class DefaultDataManagement {
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.dataId = element.target.getAttribute( 'data-id' );
+            this.status.itemId = element.target.getAttribute( 'data-id' );
             this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
                 const dict = {};
-                i18nData[ this.config.table ].forEach( ( row ) => {
+                i18nData[ this.config.dbTable ].forEach( ( row ) => {
                     dict[ row[ this.config.idColumn ] ] = row;
                 } );
                 return dict;
@@ -171,8 +175,8 @@ export default class DefaultDataManagement {
             return tableData;
         } )
         .then( ( data ) => {
-            const dataId = element.target.getAttribute( 'data-id' );
-            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ dataId ] ) );
+            const itemId = element.target.getAttribute( 'data-id' );
+            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ itemId ] ) );
         } );
     }
 
@@ -183,15 +187,17 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
-                fetch( `${ host }/user/profile`, {
-                    method:   'POST',
+                fetch( `${ host }/user/faculty/profile`, {
+                    method:   'PATCH',
+                    header: {
+                        'content-type': 'application/json',
+                    },
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
-                        update:       {
-                            [ this.config.table ]: [
-                                data,
-                            ],
-                        },
+                        dbTable:       this.config.dbTable,
+                        dbTableItemId: this.status.itemId,
+                        item:          data.item,
+                        i18n:          data.i18n,
                     } ),
                 } )
                 .then( () => {
@@ -200,6 +206,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    window.location.reload();
                 } );
             }
         } );
@@ -208,8 +215,8 @@ export default class DefaultDataManagement {
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.dataId = e.target.getAttribute( 'data-id' );
-            const rowData = data[ this.config.table ].find(
+            this.status.itemId = e.target.getAttribute( 'data-id' );
+            const rowData = data[ this.config.dbTable ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
 
@@ -223,13 +230,15 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
-            fetch( `${ host }/user/profile`, {
-                method:   'POST',
+            fetch( `${ host }/user/faculty/profile`, {
+                method:   'DELETE',
+                header: {
+                    'content-type': 'application/json',
+                },
                 body:   JSON.stringify( {
-                    profileId:     this.config.profileId,
-                    delete:    {
-                        [ this.config.table ]: this.status.dataId,
-                    },
+                    profileId:      this.config.profileId,
+                    dbTable:        this.config.dbTable,
+                    dbTableItemId:  Number( this.status.itemId ),
                 } ),
             } )
             .then( () => {
@@ -238,6 +247,7 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
+                window.location.reload();
             } );
         } );
     }
@@ -268,19 +278,25 @@ export default class DefaultDataManagement {
     }
 
     showPatchForm ( data ) {
-        Array.from( this.DOM.patch.input ).forEach( ( element ) => {
+        Array.from( this.DOM.patch.form.elements ).forEach( ( element ) => {
             const columnName = element.getAttribute( 'column' );
             const languageId = element.getAttribute( 'languageId' );
-            element.value = data[ languageId ][ columnName ];
+            if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
+                element.checked = data[ this.config.languageId ][ columnName ];
+            else if ( element.getAttribute( 'input-pattern' ) === 'dropdown' )
+                element.value = data[ this.config.languageId ][ columnName ];
+            else if ( element.tagName === 'INPUT' )
+                element.value = data[ languageId ][ columnName ];
         } );
-        this.DOM.patch.errorMessage.innerHTML = '';
+        this.DOM.patch.errorMessage.innerText = '';
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.patch.form, 'form-input--active' );
     }
 
     showPostForm () {
         Array.from( this.DOM.post.input ).forEach( ( element ) => {
-            element.value = '';
+            if ( element.type !== 'hidden' )
+                element.value = '';
         } );
         classAdd( this.DOM.formBackground, 'form--active' );
         classAdd( this.DOM.post.form, 'form-input--active' );
@@ -298,13 +314,45 @@ export default class DefaultDataManagement {
         classRemove( this.DOM.delete.form, 'form-input--active' );
     }
 
+    getErrorMessage ( opt ) {
+        const isI18n =  ( opt.element.getAttribute( 'input-pattern' ) === 'i18n' ) ? true : false;
+        const languageId = Number( opt.element.getAttribute( 'languageid' ) );
+
+        const column = this.columnUnits.getValueByOption( {
+            option:     opt.element.getAttribute( 'column' ),
+            languageId: this.config.languageId,
+        } );
+        const error = errorMessageUtils.getValueByOption( {
+            option:     opt.errorType,
+            languageId: this.config.languageId,
+        } );
+        const language = ( isI18n ) ? `(${ LanguageUtils.getLanguageById( languageId ) })` : '';
+        return `${ column }${ language }${ error }`;
+    }
+
     async dataValidation ( method ) {
         const isValid = new Promise( ( res ) => {
             let errorMessage = '';
             Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-                const message = validate.single( element.value, this.constraints[ element.name ] );
-                if ( ValidateUtils.isValidArray( message ) ) {
-                    errorMessage = message[ 0 ];
+                if ( element.validity.typeMismatch || element.validity.patternMismatch ) {
+                    errorMessage = this.getErrorMessage( {
+                        errorType:  'typeMismatch',
+                        element,
+                    } );
+                    element.focus();
+                }
+                else if ( element.validity.rangeUnderflow ) {
+                    errorMessage = this.getErrorMessage( {
+                        errorType:  'rangeUnderflow',
+                        element,
+                    } );
+                    element.focus();
+                }
+                else if ( element.validity.valueMissing ) {
+                    errorMessage = this.getErrorMessage( {
+                        errorType:  'valueMissing',
+                        element,
+                    } );
                     element.focus();
                 }
             } );
@@ -314,7 +362,7 @@ export default class DefaultDataManagement {
             if ( errorMessage === '' )
                 return true;
 
-            this.DOM[ method ].errorMessage.innerHTML = errorMessage;
+            this.DOM[ method ].errorMessage.innerText = errorMessage;
             return false;
         } );
 
@@ -323,15 +371,21 @@ export default class DefaultDataManagement {
 
     async formatFormData ( method ) {
         const data = {
-            i18n: Array.from( LanguageUtils.supportedLanguageId ).map( id => ( { language: id, } ) ),
+            item: {},
+            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+                return { languageId: id, };
+            } ),
         };
-        Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
-            if ( element.getAttribute( 'input-type' ) === 'i18n-text' )
+
+        Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
+            if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                 data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
-
-
-            else
-                data[ element.name ] = element.value;
+            else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
+                data.item[ element.name ] = element.checked;
+            else if ( element.getAttribute( 'datatype' ) === 'int' )
+                data.item[ element.name ] = Number( element.value );
+            else if ( element.tagName === 'INPUT' )
+                data.item[ element.name ] = element.value;
         } );
 
         return data;
@@ -360,8 +414,8 @@ export default class DefaultDataManagement {
                 } );
             } );
             this.DOM.postButtons.forEach( ( element ) => {
-                element.node.addEventListener( 'click', () => {
-                    this.subscribePostButton();
+                element.node.addEventListener( 'click', ( node ) => {
+                    this.subscribePostButton( node );
                 } );
             } );
             this.DOM.patchButtons.forEach( ( element ) => {

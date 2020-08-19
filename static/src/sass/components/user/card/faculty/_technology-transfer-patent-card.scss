@@ -1,0 +1,90 @@
+@mixin technology-transfer-patent-card ( ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .technology-transfer-patent-card {
+    // [ variable ]
+    $large: 1100px;
+    $medium: 700px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+          '. patch delete content ';
+      columns: 1rem 1.2rem 1.2rem 1fr;
+    };
+
+    // [ position ]
+    width: 100%;
+
+    // [ skin ]
+    padding-top: font__px-to-rem( 6 );
+
+    > .technology-transfer-patent-card__content {
+      // [ layout ]
+      display: flex;
+      grid-area: content;
+      align-self: space-around;
+      padding-left: font__px-to-rem( 15 );
+
+      // [ position ]
+      width: 95%;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 16 );
+      text-align: left;
+      line-height: font__px-to-rem( 17 );
+      letter-spacing: normal;
+      word-break: break-all;
+      color: rgba( 81, 81, 81, .87 );
+      overflow: visible;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas: 'duration  technology authorizing-party authorized-party';
+          columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+        }
+      }
+    }
+
+    > .technology-transfer-patent-card__patch {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: patch;
+
+      // [ position ]
+      width: font__px-to-rem( 25 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    > .technology-transfer-patent-card__delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: delete;
+
+      // [ position ]
+      width: font__px-to-rem( 25 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      &:hover {
+        // [ skin ]
+        filter: sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

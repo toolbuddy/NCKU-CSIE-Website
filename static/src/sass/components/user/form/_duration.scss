@@ -1,0 +1,123 @@
+@import 'components/user/form/input-title';
+@mixin duration () {
+  > .duration.content__duration {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        'title title'
+        'from to';
+      columns: '1fr 1fr';
+    }
+
+    // [ position ]
+    width: 100%;
+
+    // [ skin ]
+    padding-top: font__px-to-rem( 8 );
+
+    > .duration__block {
+      // [ layout ]
+      display: grid;
+      grid-template-areas: 'title input';
+
+      // [ position ]
+      width: 60%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ element ]
+      > .block__title {
+        // [ layout ]
+        display: flex;
+        align-items: center;
+        grid-area: title;
+
+        // [ position ]
+        margin-right: font__px-to-rem( 6 );
+
+        // [ skin ]
+        line-height: 1;
+        font: {
+          size: font__px-to-rem( 18 );
+          weight: bold;
+        }
+      }
+
+      // [ element ]
+      > .block__input {
+        // [ layout ]
+        display: block;
+        grid-area: input;
+
+        // [ position ]
+        width: 100%;
+        height: font__px-to-rem( 40 );
+        margin: {
+          top: font__px-to-rem( 10 );
+          bottom: font__px-to-rem( 10 );
+          left: auto;
+          right: auto;
+        }
+        border-radius: font__px-to-rem( 15 );
+        border: solid 2px rgba( 214, 214, 214, .7 );
+
+        // [ skin ]
+        line-height: normal;
+        text-align: center;
+        color: rgba( 24, 24, 24, .87 );
+        font-size: font__px-to-rem( 16 );
+      }
+
+      &--from {
+        grid-area: from;
+      }
+
+      &--to {
+        grid-area: to;
+      }
+    }
+
+    > .single__input.input {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: 75%;
+      height: font__px-to-rem( 40 );
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 10 );
+        left: auto;
+        right: auto;
+      }
+      border-radius: font__px-to-rem( 15 );
+      border: solid 2px rgba( 214, 214, 214, .7 );
+
+      // [ skin ]
+      padding: {
+        left: font__px-to-rem( 16 );
+        right: font__px-to-rem( 16 );
+      }
+      font-size: font__px-to-rem( 16 );
+      text-align: center;
+      line-height: normal;
+      color: rgba( 24, 24, 24, .87 );
+
+      &:focus {
+        // [ skin ]
+        border: solid 3px rgba( 98, 148, 160, .5 );
+      }
+    }
+
+    // [ element ]
+    @include input-title( 'duration' ) {
+      grid-area: title;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

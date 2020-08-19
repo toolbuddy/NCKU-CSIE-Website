@@ -1,8 +1,12 @@
-include /components/user/form/text.pug
 include /components/user/form/i18n-text.pug
 include /components/user/form/delete-preview.pug
+include /components/user/form/single.pug
+include /components/user/form/hidden.pug
+include /components/user/form/duration.pug
+include /components/user/form/dropdown.pug
+include /components/user/form/checkbox.pug
 
-mixin form-input( modifier, method, formI18n, inputConfig )
+mixin form-input( table, method, formI18n, inputConfig )
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
@@ -18,15 +22,23 @@ mixin form-input( modifier, method, formI18n, inputConfig )
         }
       }
     })
-  form.form-input.form__form-input(id=`form-${modifier}-${method}`)
+  form.form-input.form__form-input(id=`form-${table}-${method}`)
     h2.form-input__title.title= formI18n[ LANG.id ][ method ]
     section.form-input__content.content
       if method === 'patch' || method === 'post'
         each config in inputConfig
-          if config.type === 'i18n-text'
-            +i18n-text( config, formI18n, method, modifier )
-          if config.type === 'text'
-            +text( config, formI18n, method, modifier )
+          if config.inputPattern === 'i18n-text'
+            +i18n-text( config, formI18n, method, table )
+          if config.inputPattern === 'single'
+            +single( config, formI18n, method, table )
+          if config.inputPattern === 'duration'
+            +duration( config, formI18n, method, table )
+          if config.inputPattern === 'dropdown'
+            +dropdown( config, formI18n, method, table )
+          if config.inputPattern === 'checkbox'
+            +checkbox( config, formI18n, method, table )
+          if config.inputPattern === 'hidden' && method === 'post'
+            +hidden( config, formI18n, method, table )
         p.content__error-message.error-message= ''
       if method === 'delete'
         +delete-preview()

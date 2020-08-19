@@ -68,22 +68,6 @@
       }
     }
 
-    > .image__check.check {
-      // [ element ]
-      @extend %image__button;
-
-      // [ layout ]
-      grid-area: check;
-    }
-
-    > .image__cancel.cancel {
-      // [ element ]
-      @extend %image__button;
-
-      // [ layout ]
-      grid-area: cancel;
-    }
-
     > .image__frame {
       // [ layout ]
       display: block;

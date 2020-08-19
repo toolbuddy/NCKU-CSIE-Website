@@ -1,25 +1,44 @@
+@import 'components/user/card/faculty/technology-transfer-patent-card';
 @mixin technology-transfer-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
   > .technology-transfer-card.cards__technology-transfer-card {
     // [ variable ]
-    $large: 750px;
-    $small: 500px;
+    $large: 1100px;
+    $medium: 700px;
 
     // [ layout ]
     display: grid;
     grid-template: {
-      areas: '. content patch delete .';
-      columns: 1rem auto 1.2rem 1.2rem .5rem;
+      areas:
+        '.       patch   delete '
+        'content content content'
+        'technology-transfer-patent technology-transfer-patent technology-transfer-patent';
+      columns: 1fr 1.2rem 1.2rem;
     };
 
     // [ position ]
     width: 100%;
-    height: font__px-to-rem( 120 );
+    min-height: font__px-to-rem( 120 );
 
     // [ skin ]
     border: {
       bottom: solid font__px-to-rem( 2 ) #adacad;
       radius: font__px-to-rem( 3 );
+    }
+    padding: {
+      top: font__px-to-rem( 6 );
+      bottom: font__px-to-rem( 6 );
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '. content                     patch delete .'
+          '. technology-transfer-patent  .     .      .';
+        columns: 1rem auto 1.2rem 1.2rem .5rem;
+      };
     }
 
     > .technology-transfer-card__content {
@@ -28,8 +47,12 @@
       grid: {
         area: content;
         template: {
-          areas: 'duration  technology authorizing-party authorized-party';
-          columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+          areas:
+            'technology'
+            'duration'
+            'authorizing-party'
+            'authorized-party';
+          columns: 1fr;
         }
       }
       align-self: space-around;
@@ -38,18 +61,66 @@
       // [ position ]
       width: 95%;
 
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas: 'duration  technology authorizing-party authorized-party';
+          columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+        }
+      }
+
       > .content__element {
         // [ layout ]
         display: grid;
-        grid-template-areas:
-          'topic'
-          'value';
+        grid-template: {
+          areas:
+            'topic'
+            'value';
+          columns: 1fr;
+        }
+        padding-bottom: font__px-to-rem( 6 );
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          grid-template: {
+            areas: 'topic value';
+            columns: 1fr 2fr;
+          }
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic'
+              'value';
+            columns: 1fr;
+          }
+        }
 
         // [ element ]
         > .element__topic {
           // [ layout ]
           display: flex;
-          justify-self: center;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: center;
+            align-items: flex-end;
+          }
 
           // [ skin ]
           font: {
@@ -64,13 +135,43 @@
         > .element__value {
           // [ layout ]
           display: flex;
-          justify-self: center;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: center;
+          }
 
           // [ skin ]
           font-size: font__px-to-rem( 18 );
           line-height: normal;
           letter-spacing: normal;
           color: rgba( 0, 0, 0, .87 );
+        }
+
+        &--duration {
+          grid-area: duration;
+        }
+
+        &--technology {
+          grid-area: technology;
+        }
+
+        &--authorizing-party {
+          grid-area: authorizing-party;
+        }
+
+        &--authorized-party {
+          grid-area: authorized-party;
         }
       }
 
@@ -115,6 +216,36 @@
           }
         }
       }
+    }
+
+    > .technology-transfer-card__technology-transfer-patent {
+      // [ layout ]
+      display: flex;
+      flex-wrap: wrap;
+      grid-area: technology-transfer-patent;
+
+      > .technology-transfer-patent__post-button {
+        // [ layout ]
+        display: flex;
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+        line-height: normal;
+        color: rgba( 144, 172, 218, .87 );
+        background-color: rgba( 255, 255, 255, 1 );
+        padding: {
+          left: font__px-to-rem( 50 );
+          top:  font__px-to-rem( 6 );
+          bottom: font__px-to-rem( 6 );
+        }
+
+        &:hover {
+          // [ skin ]
+          color: rgba( 144, 172, 218, 1 );
+          cursor: pointer;
+        }
+      }
+      @include technology-transfer-patent-card();
     }
 
     > .technology-transfer-card__patch {

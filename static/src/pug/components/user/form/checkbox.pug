@@ -1,0 +1,15 @@
+mixin checkbox ( config, i18n, method, table )
+  section.content__checkbox.checkbox
+    input.checkbox__input.input(
+      input-pattern='checkbox',
+      languageId= LANG.id
+      id= `${config.columnName}-${method}`,
+      name= `${ config.columnName }`,
+      column= config.columnName,
+      table= table,
+      method= method,
+      type= 'checkbox'
+    )
+    label.checkbox__input-title.input-title(
+      for= `${config.columnName}-${method}`
+    )= i18n[ LANG.id ].title[ config.columnName ]

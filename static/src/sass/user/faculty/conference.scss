@@ -3,20 +3,20 @@
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
 @import 'components/common/breadcrumb';
-@import 'components/common/footer';
-@import 'components/common/topic';
 @import 'components/common/loading';
 @import 'components/common/refresh';
-@import 'components/user/navigation-bar';
-@import 'components/user/local-topic';
-@import 'components/user/dynamic-input-block.scss';
-@import 'components/user/edit-page';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/image';
+@import 'components/user/faculty/local-topic';
+@import 'components/user/faculty/navigation-bar';
+@import 'components/user/faculty/classfication-title';
+@import 'components/user/card/faculty/conference-card';
+@import 'components/user/form/form';
 
-// block
-// `.body`
 .body {
   // [ variable ]
-  $large: 1200px;
+  $large: 1180px;
   $medium: 710px;
   $small: 535px;
 
@@ -32,20 +32,6 @@
   @include header--large( $block: 'body' );
 
   // element
-  // `.body > .body__edit-page`
-  > .body__edit-page {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: 10;
-
-    // [ componment ]
-    @include edit-page();
-  }
-
-  // element
   // `.body > .body__content`
   // block
   // `.body > .content`
@@ -54,134 +40,114 @@
     display: grid;
     grid-template: {
       areas:
-        ' . breadcrumb  .'
-        ' . navigation  .'
-        ' . main        .';
-      columns: 1fr 50fr 1fr;
+        ' breadcrumb '
+        ' topic      '
+        ' navigation '
+        ' conference ';
+      columns: 100%;
+      rows: 2.5rem 2.5rem 2rem auto;
+    }
+
+    // [ position ]
+    height: auto;
+    width: 100%;
+    max-width: font__px-to-rem( 1600 );
+    margin: {
+      bottom: 1rem;
+      left: auto;
+      right: auto;
     }
 
     // [ skin ]
-    height: auto;
-    width: 100%;
     background-color: #ffffff;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
-      // [ layout ]
       grid-template: {
         areas:
-          ' breadcrumb breadcrumb  '
-          ' navigation main        ';
+          ' breadcrumb breadcrumb '
+          ' navigation topic      '
+          ' navigation conference ';
         columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+        rows: 2.5rem 2rem auto;
       }
     }
 
-    // template
-    // `.body > .content > .content__?.?`
-    %content__element {
+    // element
+    // `.body > .content > .content__topic`
+    @include topic( 'content' ) {
       // [ layout ]
+      display: block;
+      grid-area: topic;
+
+      // [ skin ]
+      width: 94%;
+      height: 1rem;
+      box-sizing: content-box;
+
+      // position
       margin: {
         left: auto;
         right: auto;
       }
 
-      // [ skin ]
-      max-width: font__px-to-rem( 1740 );
-      width: 94%;
+      // element
+      // `.body > .content > .content__topic` > .topic__text
+      > .topic__text {
+        height: 100%;
+      }
     }
 
     // block
     // `.body > .content > .navigation-bar`
     @include navigation-bar() {
-      // [ template ]
-      @extend %content__element;
-
       // [ layout ]
       grid-area: navigation;
     }
 
-    // `.body` > .content > .content__main
-    > .content__main {
+    > .content__conference.conference {
       // [ layout ]
       display: block;
-      grid-area: main;
+      grid-area: conference;
 
       // [ position ]
-      width: 100%;
       margin: {
-        top: font__px-to-rem( 20 );
-        bottom: font__px-to-rem( 80 );
         left: auto;
         right: auto;
       }
+      width: 94%;
+      height: auto;
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $small ) {
-        // [ position ]
-        width: 90%;
-      }
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        max-width: font__px-to-rem( 1080 );
-        margin: {
-          left: 0;
-          top: font__px-to-rem( 80 );
-        };
-      }
-
-      // element
-      // `.body > .content > .content__information > .information__topic`
-      @include topic( main ) {
+      > .conference__cards.cards {
         // [ layout ]
         display: block;
 
-        // [ skin ]
+        // [ position ]
         width: 100%;
         height: auto;
 
-        // position
-        margin: {
-          left: auto;
-          right: auto;
-        }
+        // [ element ]
+        @include conference-card();
+        @include classfication-title();
       }
 
-      // `.body > .content > .content__main > .main__conference-block`
-      .main__conference-block.conference-block {
+      > .cards--hidden {
         // [ layout ]
-        display: block;
-        width: 95%;
+        display: none;
+      }
+      @include local-topic('conference');
+      @include refresh( $block: 'conference' ) {
+        // [ layout ]
         margin: {
-          left: auto;
-          right: auto;
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
-        @include refresh( $block: 'conference-block' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
-        }
-        @include loading( $block: 'conference-block' ) {
-          // [ layout ]
-          margin-top: font__px-to-rem( 64 );
-        }
-
-        // [ RWD: $medium ]
-        @media screen and ( min-width: $medium ) {
-          // [ layout ]
-          width: 95%;
-        }
-
-        // [ RWD: $small ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          max-width: font__px-to-rem( 1200 );
-        }
-
-        // `.body > .content > .content__main > .main__conference > conference__local-topic`
-        @include local-topic( 'conference-block' );
-
-        > .conference-block__conference.conference {
-          @include dynamic-input-block( $block: 'conference' );
+      }
+      @include loading( $block: 'conference' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
         }
       }
     }
@@ -191,11 +157,12 @@
     // block
     // `.body > .content > .breadcrumb`
     @include breadcrumb( $block: 'content' ) {
-      // [ template ]
-      @extend %content__element;
-
       // [ layout ]
       grid-area: breadcrumb;
+
+      // [ position ]
+      width: 100%;
+      margin-bottom: 1rem;
 
       // [ skin ]
       border: {
@@ -206,6 +173,12 @@
       }
     }
   }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
 
   // element
   // `.body > .body__footer`

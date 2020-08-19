@@ -1,32 +1,103 @@
-extends /layouts/base.pug
-include /components/user/navigation-bar.pug
-include /components/user/local-topic.pug
+extends /layouts/faculty/base.pug
 include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/conference-card.pug
 
 append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:      'Conference',
+        title:      'User Conference',
         breadcrumb: {
           home:     'Home',
-          user:     'User',
+          user:     'User Conference',
         },
         content: {
           topic: 'Teacher profile settings',
-        }
+          conference: {
+            topic:        'Conference',
+          },
+        },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '參與會議',
+        title:      '使用者資料管理',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者',
+          user:     '使用者資料',
         },
         content: {
           topic: '教師資料維護',
+          conference: {
+            topic: '參與會議',
+          },
         },
       },
     } );
+    const formI18n = Object.freeze({
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Conference',
+          patch: 'Modify Your Conference',
+          delete: 'Remove Your Conference',
+          default: {
+            conference: '',
+            title: '',
+            hostYear: 'yyyy',
+          },
+          title: {
+            conference: 'Conference',
+            title:      'Title',
+            hostYear:   'Host Year',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]:{
+          post: '新增您的參與會議',
+          patch: '編輯您的參與會議',
+          delete: '刪除您的參與會議',
+          default: {
+            conference: '',
+            title: '',
+            hostYear: 'yyyy',
+          },
+          title: {
+            conference: '會議名稱',
+            title:      '職稱',
+            hostYear:   '舉行年份',
+          },
+       }
+    })
+    const inputConfig = [
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'conference',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+      {
+        inputPattern: 'single',
+        columnName: 'hostYear',
+        validation: {
+          type: 'number',
+          datatype: 'int',
+          min:  1970,
+          required: true,
+        }
+      },
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'title',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+    ]
     const currentRoute = 'user/faculty/conference';
 
 append title
@@ -42,8 +113,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].title },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/conference' },
     ]
   )
 
@@ -51,14 +121,34 @@ append content
   include /components/common/loading.pug
   include /components/common/refresh.pug
 
+  +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  main.content__main
-    +topic( 'main', i18n[ LANG.id ].content.topic )
-    article.main__conference-block.conference-block
-      +local-topic( 'conference-block', i18n[ LANG.id ].title, true )
-      +refreshWithImage( 'conference-block' )
-      +loading( 'conference-block' )
-      section.conference-block__conference.conference#conference
+  section.content__conference.conference
+    +local-topic( 'conference', i18n[ LANG.id ].content.conference.topic )
+    +refreshWithImage( 'conference' )
+    +loading( 'conference' )
+    section#conference__cards.conference__cards.cards
+      if Array.isArray( data.conference ) && data.conference.length
+        -
+          let hostYear = null
+          data.conference.sort( (a, b)=>{
+            if(a.hostYear === null )
+              return -1
+            else if(b.hostYear === null)
+              return 1
+            return b.hostYear - a.hostYear
+          })
+        each obj in data.conference
+          if hostYear === null || hostYear !== obj.hostYear
+            +classfication-title( obj.hostYear )
+            -
+              hostYear = obj.hostYear
+          +conference-card( obj )
+
+append form
+  +form-input( 'conference', 'post', formI18n, inputConfig )
+  +form-input( 'conference', 'patch', formI18n, inputConfig )
+  +form-input( 'conference', 'delete', formI18n, inputConfig )
 
 append footer
 

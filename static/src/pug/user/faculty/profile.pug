@@ -1,9 +1,13 @@
-extends /layouts/base.pug
+extends /layouts/faculty/base.pug
 include /components/common/topic.pug
-include /components/user/navigation-bar.pug
-include /components/user/local-topic.pug
-include /components/user/dropdown.pug
-include /components/user/input-block.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/card/faculty/profile-card.pug
+include /components/user/card/faculty/title-card.pug
+include /components/user/card/faculty/specialty-card.pug
+include /components/user/card/faculty/education-card.pug
+include /components/user/card/faculty/experience-card.pug
+include /components/user/form/form-input.pug
 
 append data
   -
@@ -16,50 +20,38 @@ append data
         },
         content: {
           topic: 'Teacher profile settings',
+          image: {
+            select:  'select picture',
+            cancel:  'cancel',
+            check:   'check',
+          },
           profile: {
-            image:        'select picture',
             name:         'name',
             title:        'title',
             nation:       'nation',
-            department:   'department',
-            research:     'research group',
-            office:       'office',
-            lab_name:     'Lab Name',
-            lab_location: 'Lab Location',
-            lab_tel:      'Lab Tel',
-            lab_web:      'Lab Web',
-            office_tel:   'Office Tel',
+            officeAddress: 'Office Address',
+            labName:      'Lab Name',
+            labAddress:   'Lab Location',
+            labTel:       'Lab Tel',
+            labWeb:       'Lab Web',
+            officeTel:    'Office Tel',
             email:        'Email',
             fax:          'Fax',
-            personal_web: 'Personal Web',
-            specilty:     'Specilty',
-            image_check:  'check',
-            image_cancel: 'cancel',
+            personalWeb:  'Personal Web',
+          },
+          department:      'department',
+          researchGroup:   'research group',
+          title: {
+            topic: 'title',
+          },
+          specialty: {
+            topic: 'specialty',
           },
           education: {
             topic:         'Education',
-            duration_from: 'From',
-            duration_to:   'To',
-            nation:        'Nation',
-            school:        'School',
-            major:         'Major',
-            degree:        'Degree',
-            degree_dropdown: {
-              bachelor:    'Bachelor',
-              master:      'Master',
-              phd:         'Ph. D.',
-            },
           },
           experience: {
             topic:        'Experience',
-            organization: 'Organization',
-            department:   'Department',
-            title:        'title',
-          },
-          button: {
-            edit: 'edit',
-            add:  'add',
-            remove: 'remove',
           },
         },
       },
@@ -71,54 +63,609 @@ append data
         },
         content: {
           topic: '教師資料維護',
+          image: {
+            select:  '編輯相片',
+            cancel:  '取消',
+            check:   '確認',
+          },
           profile: {
-            image:        '編輯相片',
             name:         '姓名',
             title:        '職稱',
             nation:       '國籍',
-            department:   '系所別',
-            research:     '研究群',
-            office:       '辦公室位置',
-            lab_name:     '實驗室名稱',
-            lab_location: '實驗室位置',
-            lab_tel:      '實驗室電話',
-            lab_web:      '實驗室網站',
-            office_tel:   '辦公室電話',
+            officeAddress:  '辦公室位置',
+            labName:      '實驗室名稱',
+            labAddress:  '實驗室位置',
+            labTel:       '實驗室電話',
+            labWeb:       '實驗室網站',
+            officeTel:    '辦公室電話',
             email:        'Email',
             fax:          '傳真',
-            personal_web: '個人網站',
-            specilty:     '專長領域',
-            image_check:  '確認變更',
-            image_cancel: '取消變更',
+            personalWeb:  '個人網站',
+          },
+          department:      '系所別',
+          researchGroup:   '研究群',
+          title: {
+            topic: '職稱',
+          },
+          specialty: {
+            topic: '專長領域',
           },
           education: {
             topic:         '學歷',
-            duration_from: '從',
-            duration_to:   '至',
-            nation:        '國家',
-            school:        '學校',
-            major:         '主修',
-            degree:        '學位',
-            degree_dropdown: {
-              bachelor:    '學士',
-              master:      '碩士',
-              phd:         '博士',
-            },
           },
           experience: {
             topic:        '經歷',
-            organization: '任職單位',
-            department:   '任職部門',
-            title:        '職位',
-          },
-          button: {
-            edit: '編輯',
-            add:  '新增',
-            remove: '刪除',
           },
         },
       },
     } );
+    const formI18n = Object.freeze({
+      profile: {
+        name: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Name',
+            default: {
+              name: 'name',
+            },
+            title: {
+              name: 'name',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的姓名',
+            default: {
+              name: '姓名',
+            },
+            title: {
+              name: '姓名',
+            }
+          },
+        },
+        nation: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Nation',
+            default: {
+              nation: '',
+            },
+            title: {
+              nation: 'nation',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的國籍',
+            default: {
+              nation: '',
+            },
+            title: {
+              nation: '國籍',
+            }
+          },
+        },
+        email: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Email',
+            default: {
+              email: 'email',
+            },
+            title: {
+              email: 'email',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的 Email',
+            default: {
+              email: 'email',
+            },
+            title: {
+              email: 'email',
+            }
+          },
+        },
+        fax: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Fax',
+            default: {
+              fax: '',
+            },
+            title: {
+              fax: 'Fax',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的傳真',
+            default: {
+              fax: '',
+            },
+            title: {
+              fax: '傳真',
+            }
+          },
+        },
+        personalWeb: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Personal Web',
+            default: {
+              personalWeb: 'personal web',
+            },
+            title: {
+              personalWeb: 'personal web',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的個人網站',
+            default: {
+              personalWeb: 'personal web',
+            },
+            title: {
+              personalWeb: 'personal web',
+            }
+          },
+        },
+        officeAddress: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Office Address',
+            default: {
+              officeAddress: 'office address',
+            },
+            title: {
+              officeAddress: 'office address',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的辦公室地址',
+            default: {
+              officeAddress: '辦公室地址',
+            },
+            title: {
+              officeAddress: '辦公室地址',
+            }
+          },
+        },
+        officeTel: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Office Tel',
+            default: {
+              officeTel: 'office tel',
+            },
+            title: {
+              officeTel: 'office tel',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的辦公室電話',
+            default: {
+              officeTel: '辦公室電話',
+            },
+            title: {
+              officeTel: '辦公室電話',
+            }
+          },
+        },
+        labAddress: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Lab Address',
+            default: {
+              labAddress: '',
+            },
+            title: {
+              labAddress: 'lab address',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的實驗室位置',
+            default: {
+              labAddress: '',
+            },
+            title: {
+              labAddress: '實驗室位置',
+            }
+          },
+        },
+        labTel: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Lab Tel',
+            default: {
+              labTel: 'office tel',
+            },
+            title: {
+              labTel: 'office tel',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的實驗室電話',
+            default: {
+              labTel: '實驗室電話',
+            },
+            title: {
+              labTel: '實驗室電話',
+            }
+          },
+        },
+        labName: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Lab Name',
+            default: {
+              labName: 'office name',
+            },
+            title: {
+              labName: 'office name',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的實驗室名稱',
+            default: {
+              labName: '實驗室名稱',
+            },
+            title: {
+              labName: '實驗室名稱',
+            }
+          },
+        },
+        labWeb: {
+          [ LANG.getLanguageId( 'en-US' ) ]: {
+            patch: 'Modify Your Lab Web',
+            default: {
+              labWeb: '',
+            },
+            title: {
+              labWeb: 'office web',
+            }
+          },
+          [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            patch: '變更您的實驗室網站',
+            default: {
+              labWeb: '',
+            },
+            title: {
+              labWeb: '實驗室網站',
+            }
+          },
+        },
+      },
+      education: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Education',
+          patch: 'Modify Your Education',
+          delete: 'Remove Your Education',
+          default: {
+            school: '',
+          },
+          title: {
+            school: 'School',
+            major:  'Major',
+            duration: 'Duration',
+            degree:   'Degree',
+            nation:   'Nation',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的學歷',
+          patch: '變更您的學歷',
+          delete: '刪除您的學歷',
+          default: {
+            school: 'ex. 成功大學',
+          },
+          title: {
+            school: '學校',
+            major:  '主修',
+            duration: '就學期間',
+            degree:   '學位',
+            nation:   '國家',
+          }
+        },
+      },
+      experience: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Experience',
+          patch: 'Modify Your Experience',
+          delete: 'Remove Your Experience',
+          default: {
+            experience: '',
+          },
+          title: {
+            organization: 'Organization',
+            department:  'Department',
+            duration: 'Duration',
+            title:   'title',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的經歷',
+          patch: '變更您的經歷',
+          delete: '刪除您的經歷',
+          default: {
+            experience: '',
+          },
+          title: {
+            organization: '任職單位',
+            department:  '任職部門',
+            duration: '任職期間',
+            title:   '職位',
+          }
+        },
+      },
+      title: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Title',
+          patch: 'Modify Your Title',
+          delete: 'Remove Your Title',
+          default: {
+            title: 'title',
+          },
+          title: {
+            duration: 'duration',
+            title: 'title',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的職稱',
+          patch: '變更您的職稱',
+          delete: '刪除您的職稱',
+          default: {
+            title: '職稱',
+          },
+          title: {
+            duration: '期間',
+            title: '職稱',
+          }
+        },
+      },
+      specialty: {
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Specialty',
+          patch: 'Modify Your Specialty',
+          delete: 'Remove Your Specialty',
+          default: {
+            specialty: '',
+          },
+          title: {
+            specialty: 'specialty',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+          post: '新增您的專長領域',
+          patch: '變更您的專長領域',
+          delete: '刪除您的專長領域',
+          default: {
+            specialty: '',
+          },
+          title: {
+            specialty: '專長領域',
+          }
+        },
+      },
+    })
+    const inputConfig = {
+      profile: {
+        name: [
+          {
+            inputPattern: 'i18n-text',
+            columnName: 'name',
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
+          }
+        ],
+        nation: [
+          {
+            inputPattern: 'dropdown',
+            columnName: 'nation',
+            utils: UTILS.faculty.nationUtils
+          }
+        ],
+        email: [
+          {
+            inputPattern: 'single',
+            columnName: 'email',
+            validation: {
+              type: 'email',
+              required: true,
+              max: 2083,
+            },
+          }
+        ],
+        fax: [
+          {
+            inputPattern: 'single',
+            columnName: 'fax',
+            validation: {
+              type: 'tel',
+              required: true,
+              max: 30,
+              pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?'
+            },
+          }
+        ],
+        personalWeb: [
+          {
+            inputPattern: 'single',
+            columnName: 'personalWeb',
+            validation: {
+              type: 'text',
+              required: true,
+            },
+          }
+        ],
+        officeAddress: [
+          {
+            inputPattern: 'i18n-text',
+            columnName: 'officeAddress',
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
+          }
+        ],
+        officeTel: [
+          {
+            inputPattern: 'single',
+            columnName: 'officeTel',
+            validation: {
+              type: 'tel',
+              required: true,
+              max: 30,
+              pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?'
+            },
+          }
+        ],
+        labAddress: [
+          {
+            inputPattern: 'i18n-text',
+            columnName: 'labAddress',
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
+          }
+        ],
+        labTel: [
+          {
+            inputPattern: 'single',
+            columnName: 'labTel',
+            validation: {
+              type: 'tel',
+              required: true,
+              max: 30,
+              pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?'
+            },
+          }
+        ],
+        labName: [
+          {
+            inputPattern: 'i18n-text',
+            columnName: 'labName',
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
+          }
+        ],
+        labWeb: [
+          {
+            inputPattern: 'i18n-text',
+            columnName: 'labWeb',
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
+          }
+        ],
+      },
+      title: [
+        {
+          inputPattern: 'duration',
+          columnName: 'duration',
+          validation: {
+            type: 'number',
+            required: true,
+            min: 1970,
+          }
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'title',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+      ],
+      specialty: [
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'specialty',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+      ],
+      experience: [
+        {
+          inputPattern: 'duration',
+          columnName: 'duration',
+          validation: {
+            type: 'number',
+            required: true,
+            min: 1970,
+          }
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'organization',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'department',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'title',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+      ],
+      education: [
+        {
+          inputPattern: 'duration',
+          columnName: 'duration',
+          validation: {
+            type: 'number',
+            required: true,
+            min: 1970,
+          }
+        },
+        {
+          inputPattern: 'dropdown',
+          columnName: 'degree',
+          utils: UTILS.faculty.degreeUtils,
+        },
+        {
+          inputPattern: 'dropdown',
+          columnName: 'nation',
+          utils: UTILS.faculty.nationUtils,
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'school',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'major',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+      ],
+    }
     const currentRoute = 'user/faculty/profile';
 
 append title
@@ -142,66 +689,119 @@ append content
   include /components/common/loading.pug
   include /components/common/refresh.pug
 
+  +topic( 'content', i18n[ LANG.id ].content.topic )
   +navigation-bar( 'content' )
-  main.content__information.information
-    +topic( 'information', i18n[ LANG.id ].content.topic )
-    article.information__profile.profile#profile
-      +local-topic( 'profile', i18n[ LANG.id ].title, false )
-      form.profile__image.image( method= 'post' )
-        section.image__frame.frame
-          label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.profile.image
-          input.frame__upload#frame__upload( type= 'file' )
-        section.image__check.check
-          button.check__button#image-check= i18n[ LANG.id ].content.profile.image_check
-        section.image__cancel.cancel
-          button.cancel__button#image-cancel= i18n[ LANG.id ].content.profile.image_cancel
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.name, '高宏宇', 'name' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.nation, '台灣', 'nation' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.email, '教授', 'email' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.fax, '教授', 'fax' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.personal_web, '教授', 'personal-web' )
-      section.input-block.profile__input-block.profile__input-block--department
-        main.input-block__block.block
-          h1.block__title= i18n[ LANG.id ].content.profile.department
-          article.block__content
-            each departmentId in UTILS.faculty.departmentUtils.supportedId
-              button.content__tag--department(
-                data-department-id = `${ departmentId }`
-              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
-      section.input-block.profile__input-block.profile__input-block--research
-        main.input-block__block.block
-          h1.block__title= i18n[ LANG.id ].content.profile.research
-          article.block__content
-            each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
-              button.content__tag--research(
-                data-research-id = `${ researchGroupId }`,
-              )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.office, '教授', 'office-location' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.office_tel, '教授', 'office-tel' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_name, '教授', 'lab-name' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_location, '教授', 'lab-location' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_tel, '教授', 'lab-tel' )
-      +input-block( 'profile', i18n[ LANG.id ].content.profile.lab_web, '教授', 'lab-web' )
-      +local-topic( 'title',i18n[ LANG.id ].content.profile.title, true )
-      +refreshWithImage( 'title' )
-      +loading( 'title' )
-      section.profile__title.title#title
-      +local-topic( 'specialty',i18n[ LANG.id ].content.profile.specilty, true )
-      +refreshWithImage( 'speciaty' )
-      +loading( 'speciaty' )
-      section.profile__specialty.specialty#specialty
+  section.content__profile.profile#content__profile
+    form.profile__image.image( method= 'post' )
+      section.image__frame.frame
+        label.frame__button(for='frame__upload')= i18n[ LANG.id ].content.image.select
+        input.frame__upload#frame__upload( type= 'file' )
+      button.image__button.image__button--check#image-check= i18n[ LANG.id ].content.image.check
+      button.image__button.image__button--cancel#image-cancel= i18n[ LANG.id ].content.image.cancel
+    +profile-card( 'name',   i18n[ LANG.id ].content.profile.name, data.profile.name )
+    +profile-card( 'email', i18n[ LANG.id ].content.profile.email, data.profile.email )
+    +profile-card( 'fax', i18n[ LANG.id ].content.profile.fax, data.profile.fax )
+    +profile-card( 'nation', i18n[ LANG.id ].content.profile.nation, UTILS.faculty.nationUtils.supportedValues( LANG.id )[ data.profile.nation ] )
+    +profile-card( 'personal-web', i18n[ LANG.id ].content.profile.personalWeb, data.profile.personalWeb )
+    +profile-card( 'office-address', i18n[ LANG.id ].content.profile.officeAddress, data.profile.officeAddress )
+    +profile-card( 'office-tel', i18n[ LANG.id ].content.profile.officeTel, data.profile.officeTel )
+    +profile-card( 'lab-name', i18n[ LANG.id ].content.profile.labName, data.profile.labName )
+    +profile-card( 'lab-address', i18n[ LANG.id ].content.profile.labAddress, data.profile.labAddress )
+    +profile-card( 'lab-tel', i18n[ LANG.id ].content.profile.labTel, data.profile.labTel )
+    +profile-card( 'lab-web', i18n[ LANG.id ].content.profile.labWeb, data.profile.labWeb )
+    section.option.profile__option.profile__option--department
+      h3.option__title= i18n[ LANG.id ].content.department
+      article.option__tags.tags
+        each departmentId in UTILS.faculty.departmentUtils.supportedId
+          if Array.from( data.department, department => department.type ).includes( departmentId )
+            button.tags__tag.tags__tag--blue.tags__tag--active.tags__tag--department(
+              data-department-id = `${ departmentId }`,
+              selected = 'true'
+            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+          else
+            button.tags__tag.tags__tag--blue.tags__tag--department(
+              data-department-id = `${ departmentId }`,
+              selected = 'false'
+            )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+    section.option.profile__option.profile__option--research-group
+      h3.option__title= i18n[ LANG.id ].content.researchGroup
+      article.option__tags.tags
+        each researchGroupId in UTILS.faculty.researchGroupUtils.supportedId
+          if Array.from( data.researchGroup, researchGroup => researchGroup.type ).includes( researchGroupId )
+            button.tags__tag.tags__tag--red.tags__tag--active.tags__tag--researchGroup(
+              data-research-id = `${ researchGroupId }`,
+              selected = 'true'
+            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+          else
+            button.tags__tag.tags__tag--red.tags__tag--researchGroup(
+              data-research-id = `${ researchGroupId }`,
+              selected = 'false'
+            )= UTILS.faculty.researchGroupUtils.getValueById( { id: researchGroupId, languageId: LANG.id } )
+  section.content__title.title
+    +local-topic( 'title', i18n[ LANG.id ].content.title.topic )
+    +refreshWithImage( 'title' )
+    +loading( 'title' )
+    section.title__cards.cards#title__cards
+      if Array.isArray( data.title ) && data.title.length
+        each titleObj in data.title
+          +title-card( titleObj )
+  section.content__specialty.specialty
+    +local-topic( 'specialty', i18n[ LANG.id ].content.specialty.topic )
+    +refreshWithImage( 'specialty' )
+    +loading( 'specialty' )
+    section.specialty__cards.cards#specialty__cards
+      if Array.isArray( data.specialty ) && data.specialty.length
+        each specialtyObj in data.specialty
+          +specialty-card( specialtyObj )
+  section.content__education.education
+    +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
+    +refreshWithImage( 'education' )
+    +loading( 'education' )
+    section.education__cards.cards#education__cards
+      if Array.isArray( data.education ) && data.education.length
+        -
+          data.education.sort( (educationA, educationB)=>{
+            if(educationA.to === null )
+              return -1
+            else if(educationB.to === null)
+              return 1
+            return educationB.to - educationA.to
+          })
+        each educationObj in data.education
+          +education-card( educationObj )
+  section.content__experience.experience
+    +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )
+    +refreshWithImage( 'experience' )
+    +loading( 'experience' )
+    section.experience__cards.cards#experience__cards
+      if Array.isArray( data.experience ) && data.experience.length
+        -
+          data.experience.sort( (experienceA, experienceB)=>{
+            if(experienceA.to === null )
+              return -1
+            else if(experienceB.to === null)
+              return 1
+            return experienceB.to - experienceA.to
+          })
+        each experienceObj in data.experience
+          +experience-card( experienceObj )
 
-    article.information__education-block.education-block
-      +local-topic( 'education-block', i18n[ LANG.id ].content.education.topic , true )
-      +refreshWithImage( 'education-block' )
-      +loading( 'education-block' )
-      section.education-block__education.education#education
 
-    article.information__experience-block.experience-block
-      +local-topic( 'experience-block', i18n[ LANG.id ].content.experience.topic, true )
-      +refreshWithImage( 'experience-block' )
-      +loading( 'experience-block' )
-      section.experience-block__experience.experience#experience
+append form
+  +form-input( 'title', 'post', formI18n.title, inputConfig.title )
+  +form-input( 'title', 'patch', formI18n.title, inputConfig.title )
+  +form-input( 'title', 'delete', formI18n.title, inputConfig.title )
+  +form-input( 'specialty', 'post', formI18n.specialty, inputConfig.specialty )
+  +form-input( 'specialty', 'patch', formI18n.specialty, inputConfig.specialty )
+  +form-input( 'specialty', 'delete', formI18n.specialty, inputConfig.specialty )
+  +form-input( 'education', 'post', formI18n.education, inputConfig.education )
+  +form-input( 'education', 'patch', formI18n.education, inputConfig.education )
+  +form-input( 'education', 'delete', formI18n.education, inputConfig.education )
+  +form-input( 'experience', 'post', formI18n.experience, inputConfig.experience )
+  +form-input( 'experience', 'patch', formI18n.experience, inputConfig.experience )
+  +form-input( 'experience', 'delete', formI18n.experience, inputConfig.experience )
+  each val, key in formI18n.profile
+    +form-input( key, 'patch', formI18n.profile[ key ], inputConfig.profile[ key ] )
 
 append footer
 
