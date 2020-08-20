@@ -110,7 +110,6 @@ export default async ( opt ) => {
                 item.i18n = opt.i18n;
 
             if ( typeof ( validate( item, validationConstraints[ dbTable ] ) ) !== 'undefined' ) {
-                console.log(validate(item, validationConstraints[dbTable])) // eslint-disable-line
                 const error = new Error( `Invalid ${ dbTable } object` );
                 error.status = 400;
                 throw error;
@@ -129,19 +128,19 @@ export default async ( opt ) => {
                 langArr.push( i18nData.language );
             }
             if ( !equalArray( langArr.sort( sortByValue ), languageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
-                const error = new Error( `Invalid ${ dbTable }I18n object` );
+                const error = new Error( `Invalid length of ${ dbTable }I18n object` );
                 error.status = 400;
                 throw error;
             }
         }
 
-        // Insert with include clause only if data contain i18n part
-        if ( opt.i18n !== null ) {
+        // Insert data with both non-i18n and i18n part
+        if ( opt.item !== null && opt.i18n !== null ) {
             await tables[ dbTable ].create(
                 Object.assign(
                     {
-                        profileId: opt.profileId,
-                        i18n:      opt.i18n,
+                        profileId:                  opt.profileId,
+                        [ `${ opt.dbTable }I18n` ]:      opt.i18n,
                     },
                     opt.item
                 ),
@@ -156,7 +155,24 @@ export default async ( opt ) => {
                 throw err;
             } );
         }
-        else {
+
+        // Insert data with only i18n part
+        else if ( opt.i18n !== null ) {
+            await tables[ `${ dbTable }I18n` ].bulkCreate(
+                opt.i18n.map( obj => Object.assign(
+                    {
+                        profileId: opt.profileId,
+                    },
+                    obj
+                ) )
+            )
+            .catch( ( err ) => {
+                throw err;
+            } );
+        }
+
+        // Insert data with only non-i18n part
+        else if ( opt.item !== null ) {
             await tables[ dbTable ].create(
                 Object.assign(
                     {
@@ -172,6 +188,7 @@ export default async ( opt ) => {
         return;
     }
     catch ( err ) {
+        console.error( err );
         throw err;
     }
 };

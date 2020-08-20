@@ -134,7 +134,7 @@ export default class DefaultDataManagement {
                 const data = await this.formatFormData( 'post' );
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'POST',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -187,7 +187,7 @@ export default class DefaultDataManagement {
                 const data = await this.formatFormData( 'patch' );
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -230,7 +230,7 @@ export default class DefaultDataManagement {
             e.preventDefault();
             fetch( `${ host }/user/staff/profile`, {
                 method:   'DELETE',
-                header: {
+                headers: {
                     'content-type': 'application/json',
                 },
                 body:   JSON.stringify( {

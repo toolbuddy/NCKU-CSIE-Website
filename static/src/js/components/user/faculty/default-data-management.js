@@ -136,7 +136,7 @@ export default class DefaultDataManagement {
 
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -189,7 +189,7 @@ export default class DefaultDataManagement {
                 const data = await this.formatFormData( 'patch' );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -232,7 +232,7 @@ export default class DefaultDataManagement {
             e.preventDefault();
             fetch( `${ host }/user/faculty/profile`, {
                 method:   'DELETE',
-                header: {
+                headers: {
                     'content-type': 'application/json',
                 },
                 body:   JSON.stringify( {
@@ -373,7 +373,7 @@ export default class DefaultDataManagement {
         const data = {
             item: {},
             i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { languageId: id, };
+                return { language: id, };
             } ),
         };
 

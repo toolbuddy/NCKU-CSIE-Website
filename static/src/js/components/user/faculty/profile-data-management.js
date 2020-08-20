@@ -92,8 +92,8 @@ export default class ProfileDataManagement {
             obj.forEach( ( tag ) => {
                 tag.node.addEventListener( 'click', () => {
                     fetch( `${ host }/user/faculty/profile`, {
-                        method: ( tag.selected ) ? 'DELETE' : 'POST',
-                        header: {
+                        method:  ( tag.selected ) ? 'DELETE' : 'POST',
+                        headers: {
                             'content-type': 'application/json',
                         },
                         body:   JSON.stringify( {
@@ -206,7 +206,7 @@ export default class ProfileDataManagement {
                     const data = await this.formatFormData( columnName );
                     fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
-                        header: {
+                        headers: {
                             'content-type': 'application/json',
                         },
                         body:   JSON.stringify( {

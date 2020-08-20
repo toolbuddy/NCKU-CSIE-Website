@@ -162,7 +162,7 @@ export default class ProfileDataManagement {
                     .then( ( opt ) => {
                         fetch( `${ host }/user/staff/profile`, {
                             method:   'PATCH',
-                            header: {
+                            headers: {
                                 'content-type': 'application/json',
                             },
                             body:   JSON.stringify( {

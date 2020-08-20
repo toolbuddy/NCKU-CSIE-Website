@@ -34,8 +34,8 @@ function equalArray ( a, b ) {
 export default ( opt ) => {
     try {
         opt = opt || {};
+        const author = Number.parseInt( opt.author, 10 );
         const {
-            author = null,
             image = null,
             announcementI18n = null,
             tags = null,
