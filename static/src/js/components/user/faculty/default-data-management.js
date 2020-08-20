@@ -136,7 +136,7 @@ export default class DefaultDataManagement {
 
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -189,7 +189,7 @@ export default class DefaultDataManagement {
                 const data = await this.formatFormData( 'patch' );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
-                    header: {
+                    headers: {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
@@ -232,7 +232,7 @@ export default class DefaultDataManagement {
             e.preventDefault();
             fetch( `${ host }/user/faculty/profile`, {
                 method:   'DELETE',
-                header: {
+                headers: {
                     'content-type': 'application/json',
                 },
                 body:   JSON.stringify( {
@@ -341,7 +341,7 @@ export default class DefaultDataManagement {
                     } );
                     element.focus();
                 }
-                else if ( element.validity.rangeUnderflow ) {
+                else if ( element.validity.rangeUnderflow || element.validity.rangeOverflow ) {
                     errorMessage = this.getErrorMessage( {
                         errorType:  'rangeUnderflow',
                         element,
@@ -373,7 +373,7 @@ export default class DefaultDataManagement {
         const data = {
             item: {},
             i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { languageId: id, };
+                return { language: id, };
             } ),
         };
 
@@ -387,6 +387,11 @@ export default class DefaultDataManagement {
             else if ( element.tagName === 'INPUT' )
                 data.item[ element.name ] = element.value;
         } );
+
+        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
+            data.i18n = null;
+        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
+            data.item = null;
 
         return data;
     }
