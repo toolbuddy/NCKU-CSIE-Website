@@ -1,3 +1,5 @@
+include /components/user/card/faculty/technology-transfer-patent-card.pug
+
 mixin technology-transfer-card( data, head )
   -
     const i18n =  Object.freeze({
@@ -8,6 +10,7 @@ mixin technology-transfer-card( data, head )
           authorizedParty:  'authorized party',
           technology:       'technology',
         },
+        patent: 'add patent',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         topic: {
@@ -15,7 +18,8 @@ mixin technology-transfer-card( data, head )
           authorizingParty: '授權方名稱',
           authorizedParty:  '接受方名稱',
           technology:       '技術名稱',
-        }
+        },
+        patent: '新增專利名稱',
       },
     })
   section.technology-transfer-card.cards__technology-transfer-card( id=`cards__technology-transfer-card--${ data.technologyTransferId }` )
@@ -32,7 +36,13 @@ mixin technology-transfer-card( data, head )
       article.content__element.content__element--authorized-party
         h4.element__topic.topic= i18n[ LANG.id ].topic.authorizedParty
         p.element__value.value= data.authorizedParty
-
+    section.technology-transfer-card__technology-transfer-patent
+      if Array.isArray( data.technologyTransferPatent ) && data.technologyTransferPatent.length
+        each obj in data.technologyTransferPatent
+          +technology-transfer-patent-card( obj )
+      button.technology-transfer-patent__post-button(
+        data-id= data.technologyTransferId
+      )= i18n[ LANG.id ].patent
     img.technology-transfer-card__patch(
       alt = 'patch',
       id = `technology-transfer-card__patch--${ data.technologyTransferId }`,

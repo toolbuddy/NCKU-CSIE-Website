@@ -32,15 +32,23 @@ import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, projectRoot, maxAge, } from 'settings/server/config.js';
+import { secret, host, projectRoot, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import allowUserOnly from 'routes/utils/allow-user-only.js';
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
+
 import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
+import degreeUtils from 'models/faculty/utils/degree.js';
+import nationUtils from 'models/faculty/utils/nation.js';
+import projectCategoryUtils from 'models/faculty/utils/project-category.js';
+import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
+import departmentUtils from 'models/faculty/utils/department.js';
+import researchGroupUtils from 'models/faculty/utils/research-group.js';
 
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
@@ -213,20 +221,35 @@ router
 
 router
 .route( '/faculty/profile' )
-.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
-    res.sendFile(
-        `static/dist/html/user/faculty/profile.${ req.query.languageId }.html`,
-        {
-            root:         projectRoot,
-            maxAge,
-            dotfiles:     'deny',
-            cacheControl: true,
-        },
-        ( err ) => {
+.get( allowUserOnly, cors(), noCache, async ( req, res ) => {
+    const result = await getAdminByUserId( {
+        userId: Number( res.locals.userId ),
+    } );
+
+    const data = await getFacultyDetailWithId( {
+        profileId:  result.roleId,
+        languageId: req.query.languageId,
+    } );
+
+    res.locals.UTILS.faculty = {
+        departmentUtils,
+        researchGroupUtils,
+        degreeUtils,
+        nationUtils,
+    };
+
+    await new Promise( ( resolve, reject ) => {
+        res.render( 'user/faculty/profile.pug', {
+            data,
+        }, ( err, html ) => {
             if ( err )
-                next( err );
-        }
-    );
+                reject( err );
+            else {
+                res.send( html );
+                resolve();
+            }
+        } );
+    } );
 } )
 .post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
@@ -797,7 +820,40 @@ router
 
 router
 .route( '/faculty/award' )
-.get( allowUserOnly, staticHtml( 'user/faculty/award' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/award.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/project`.
@@ -805,7 +861,44 @@ router
 
 router
 .route( '/faculty/project' )
-.get( allowUserOnly, staticHtml( 'user/faculty/project' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            projectCategoryUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/project.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/patent`.
@@ -813,7 +906,44 @@ router
 
 router
 .route( '/faculty/patent' )
-.get( allowUserOnly, staticHtml( 'user/faculty/patent' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            nationUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/patent.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/conference`.
@@ -821,7 +951,40 @@ router
 
 router
 .route( '/faculty/conference' )
-.get( allowUserOnly, staticHtml( 'user/faculty/conference' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/conference.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/faculty/student-award`.
@@ -829,7 +992,44 @@ router
 
 router
 .route( '/faculty/student-award' )
-.get( allowUserOnly, staticHtml( 'user/faculty/student-award' ) );
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            degreeUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/student-award.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
 
 /**
  * Resolve URL `/user/uploadPhoto`.
@@ -924,22 +1124,6 @@ router
 
 router
 .route( '/faculty/publication' )
-.get( allowUserOnly, staticHtml( 'user/faculty/publication' ) );
-
-/**
- * Resolve URL `/user/faculty/technology-transfer`.
- */
-
-router
-.route( '/faculty/technology-transfer' )
-.get( allowUserOnly, staticHtml( 'user/faculty/technology-transfer' ) );
-
-/**
- * Resolve URL `/user/staffProfile`.
- */
-
-router
-.route( '/staff/profile' )
 .get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
     try {
         // Get id
@@ -949,13 +1133,58 @@ router
         const profileId = result.roleId;
         const languageId = req.query.languageId;
 
-        const data = await getStaffDetailWithId( {
+        const data = await getFacultyDetailWithId( {
+            profileId,
+            languageId,
+        } );
+
+        res.locals.UTILS.faculty = {
+            publicationCategoryUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/publication.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( err ) {
+        if ( err.status === 404 )
+            next();
+        else
+            next( err );
+    }
+} );
+
+/**
+ * Resolve URL `/user/faculty/technology-transfer`.
+ */
+
+router
+.route( '/faculty/technology-transfer' )
+.get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
+    try {
+        // Get id
+        const result = await getAdminByUserId( {
+            userId: Number( res.locals.userId ),
+        } );
+        const profileId = result.roleId;
+        const languageId = req.query.languageId;
+
+        const data = await getFacultyDetailWithId( {
             profileId,
             languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
-            res.render( 'user/staff/profile.pug', {
+            res.render( 'user/faculty/technology-transfer.pug', {
                 data,
             }, ( err, html ) => {
                 if ( err )

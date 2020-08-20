@@ -1,0 +1,12 @@
+mixin single ( config, i18n, method, table )
+  section.content__single.single
+    h4.single__input-title.input-title= i18n[ LANG.id ].title[ config.columnName ]
+    input.single__input.input(
+      input-pattern='single',
+      languageId= LANG.id,
+      placeholder= i18n[ LANG.id ].default[ config.columnName ],
+      name= `${ config.columnName }`,
+      column= config.columnName,
+      table= table,
+      method= method,
+    )&attributes(config.validation)

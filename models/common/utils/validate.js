@@ -2,6 +2,8 @@ import validate from 'validate.js';
 
 class ValidateUtils {
     static isValidDate ( date ) {
+        // TODO: the date can't be parsed as object, but still shouldn't coerce it here
+        date = new Date( date );
         return validate.isDate( date ) && !Number.isNaN( Number( date ) );
     }
 
@@ -26,8 +28,8 @@ class ValidateUtils {
     }
 
     static isValidBoolean ( bool ) {
-        return validate.isInteger( bool ) &&
-            ( bool === 0 || bool === 1 );
+        return ( validate.isInteger( bool ) && ( bool === 0 || bool === 1 ) ) ||
+            validate.isBoolean( bool );
     }
 
     static isValidArray ( arr ) {

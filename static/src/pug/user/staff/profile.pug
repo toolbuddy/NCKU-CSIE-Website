@@ -201,45 +201,70 @@ append data
       profile: {
         name: [
           {
-            type: 'i18n-text',
+            inputPattern: 'i18n-text',
             columnName: 'name',
-            required: true,
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
           }
         ],
         email: [
           {
-            type: 'text',
+            inputPattern: 'single',
             columnName: 'email',
-            required: true,
+            validation: {
+              type: 'email',
+              required: true,
+              max: 2083,
+            },
           }
         ],
         officeAddress: [
           {
-            type: 'i18n-text',
+            inputPattern: 'i18n-text',
             columnName: 'officeAddress',
-            required: true,
+            validation: {
+              type: 'text',
+              required: true,
+              max: 100,
+            },
           }
         ],
         officeTel: [
           {
-            type: 'text',
+            inputPattern: 'single',
             columnName: 'officeTel',
-            required: true,
+            validation: {
+              type: 'tel',
+              required: true,
+              max: 30,
+              pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?'
+            },
           }
         ],
       },
       businessI18n:  [
         {
-          type: 'i18n-text',
+          inputPattern: 'i18n-text',
           columnName: 'business',
-          required: true,
+          validation: {
+            type: 'text',
+            required: true,
+            max: 100,
+          },
         },
       ],
       titleI18n: [
         {
-          type: 'i18n-text',
+          inputPattern: 'i18n-text',
           columnName: 'title',
-          required: true,
+          validation: {
+            type: 'text',
+            required: true,
+            max: 100,
+          },
         },
       ]
     }

@@ -1,0 +1,10 @@
+mixin hidden ( config, i18n, method, table )
+  input.hidden__input.input(
+    input-pattern='hidden',
+    type='hidden'
+    name= `${ config.columnName }`,
+    column= config.columnName,
+    table= table,
+    method= method,
+    datatype= 'int'
+  )

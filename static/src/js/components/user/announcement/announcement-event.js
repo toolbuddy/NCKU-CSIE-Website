@@ -267,6 +267,7 @@ export default class AnnouncementEvent {
     uploadPostAnnouncement () {
         const formData = new FormData();
         formData.append( 'image', null );
+        formData.append( 'author', this.config.author );
         Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
             formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
             formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
