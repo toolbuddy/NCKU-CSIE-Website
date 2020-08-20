@@ -341,7 +341,7 @@ export default class DefaultDataManagement {
                     } );
                     element.focus();
                 }
-                else if ( element.validity.rangeUnderflow ) {
+                else if ( element.validity.rangeUnderflow || element.validity.rangeOverflow ) {
                     errorMessage = this.getErrorMessage( {
                         errorType:  'rangeUnderflow',
                         element,
@@ -387,6 +387,11 @@ export default class DefaultDataManagement {
             else if ( element.tagName === 'INPUT' )
                 data.item[ element.name ] = element.value;
         } );
+
+        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
+            data.i18n = null;
+        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
+            data.item = null;
 
         return data;
     }

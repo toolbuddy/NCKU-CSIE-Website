@@ -145,10 +145,10 @@ export default class ProfileDataManagement {
 
                 if ( isValid ) {
                     new Promise( ( res ) => {
-                        const item = {};
+                        let item = {};
 
-                        const i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
-                            return { languageId: id, };
+                        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+                            return { language: id, };
                         } );
                         Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
                             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
@@ -156,6 +156,11 @@ export default class ProfileDataManagement {
                             else
                                 item[ columnName ] = element.value;
                         } );
+
+                        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+                            i18n = null;
+                        if ( Object.keys( item ).length === 0 && item.constructor === Object )
+                            item = null;
 
                         res( { item, i18n, } );
                     } )

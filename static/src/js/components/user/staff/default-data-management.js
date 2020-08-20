@@ -348,7 +348,7 @@ export default class DefaultDataManagement {
         const data = {
             item: {},
             i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { languageId: id, };
+                return { language: id, };
             } ),
         };
 
@@ -358,6 +358,10 @@ export default class DefaultDataManagement {
             else
                 data.item[ element.name ] = element.value;
         } );
+        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
+            data.i18n = null;
+        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
+            data.item = null;
 
         return data;
     }
