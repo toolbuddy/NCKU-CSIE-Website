@@ -84,10 +84,13 @@
         // [ RWD: $medium ]
         @media screen and ( min-width: $medium ) {
           // [ layout ]
-          grid-template: {
-            areas:
-              'topic value';
-            columns: font__px-to-rem( 100 ) 1fr;
+          grid: {
+            gap: font__px-to-rem( 10 );
+            template: {
+              areas:
+                'topic value';
+              columns: font__px-to-rem( 100 ) 1fr;
+            }
           }
         }
 

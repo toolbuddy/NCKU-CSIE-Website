@@ -2,35 +2,173 @@
   // `> .#{ $block } > .#{ $block }__input-block`
   > .education-card.cards__education-card {
     // [ variable ]
-    $large: 750px;
-    $small: 500px;
+    $large: 1100px;
+    $medium: 700px;
 
     // [ layout ]
     display: grid;
     grid-template: {
-      areas: '. value patch delete .';
-      columns: 1rem auto 1.2rem 1.2rem .5rem;
+      areas:
+        '.       patch   delete '
+        'content content content';
+      columns: 1fr 1.2rem 1.2rem;
     };
 
     // [ position ]
     width: 100%;
-    height: font__px-to-rem( 80 );
+    min-height: font__px-to-rem( 120 );
 
     // [ skin ]
     border: {
       bottom: solid font__px-to-rem( 2 ) #adacad;
       radius: font__px-to-rem( 3 );
     }
+    padding: {
+      top: font__px-to-rem( 6 );
+      bottom: font__px-to-rem( 6 );
+    }
 
-    > .education-card__value {
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
       // [ layout ]
-      display: flex;
-      grid-area: value;
-      align-self: center;
+      grid-template: {
+        areas:
+          '. content patch delete .';
+        columns: 1rem auto 1.2rem 1.2rem .5rem;
+      };
+    }
+
+    > .education-card__content {
+      // [ layout ]
+      display: grid;
+      grid: {
+        area: content;
+        template: {
+          areas:
+            'school'
+            'major'
+            'degree'
+            'duration'
+            'nation ';
+          columns: 1fr;
+        }
+      }
+      align-self: space-around;
       padding-left: font__px-to-rem( 15 );
 
       // [ position ]
-      width: 100%;
+      width: 95%;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            'school major degree '
+            'duration nation .';
+          columns: 1fr 1fr 1fr;
+        }
+      }
+
+      > .content__element {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:
+            'topic'
+            'value';
+          columns: 1fr;
+        }
+        padding-bottom: font__px-to-rem( 6 );
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic value';
+            columns: font__px-to-rem( 100 ) 1fr;
+          }
+        }
+
+        // [ element ]
+        > .element__topic {
+          // [ layout ]
+          display: flex;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: center;
+          }
+
+          // [ skin ]
+          font: {
+            size: font__px-to-rem( 18 );
+            weight: bold;
+          }
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .element__value {
+          // [ layout ]
+          display: flex;
+          justify-self: flex-start;
+          align-items: flex-start;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: flex-start;
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            justify-self: flex-start;
+            align-items: center;
+          }
+
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        &--school {
+          grid-area: school;
+        }
+
+        &--major {
+          grid-area: major;
+        }
+
+        &--degree {
+          grid-area: degree;
+        }
+
+        &--duration {
+          grid-area: duration;
+        }
+
+        &--nation {
+          grid-area: nation;
+        }
+      }
 
       // [ skin ]
       font: {
@@ -40,79 +178,6 @@
       line-height: normal;
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
-
-      > .value__time {
-        // [ layout ]
-        display: flex;
-
-        // [ position ]
-        margin: {
-          left: .25rem;
-          right: .25rem;
-        }
-
-        %time__year {
-          // [ layout ]
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-
-          // [ position ]
-          min-width: font__px-to-rem( 75 );
-
-          // [ skin ]
-          border: font__px-to-rem( 1 ) solid #757575;
-          border-radius: font__px-to-rem( 16 );
-          padding: {
-            top: font__px-to-rem( 10 );
-            bottom: font__px-to-rem( 10 );
-            left: font__px-to-rem( 15 );
-            right: font__px-to-rem( 15 );
-          }
-          font-size: font__px-to-rem( 16 );
-        }
-
-        > .time__from.from {
-          @extend %time__year;
-        }
-
-        > .time__to.to {
-          @extend %time__year;
-        }
-
-        > .time__till {
-          // [ layout ]
-          display: inline-block;
-          margin: {
-            top: font__px-to-rem( 12 );
-            bottom: font__px-to-rem( 12 );
-            left: font__px-to-rem( 7 );
-            right: font__px-to-rem( 7 );
-          }
-          vertical-align: top;
-
-          // [ skin ]
-          width: font__px-to-rem( 15 );
-          height: font__px-to-rem( 2 );
-          color: #757575;
-          background-color: #757575;
-        }
-      }
-
-      > .value__flag {
-        // [ layout ]
-        display: inline-flex;
-
-        // [ position ]
-        width: font__px-to-rem( 30 );
-        height: auto;
-        justify-items: center;
-        align-self: center;
-        margin: {
-          left: .25rem;
-          right: .25rem;
-        }
-      }
 
       > .value__text {
         // [ layout ]
@@ -124,14 +189,11 @@
         height: auto;
         padding-right: font__px-to-rem( 5 );
         align-self: center;
-        margin: {
-          left: .25rem;
-          right: .25rem;
-        }
+        margin-left: 1rem;
 
         // [ skin ]
         font-size: font__px-to-rem( 16 );
-        text-align: right;
+        text-align: left;
         line-height: font__px-to-rem( 17 );
         letter-spacing: normal;
         word-break: break-all;

@@ -1,26 +1,46 @@
 include /components/common/image.pug
 
 mixin education-card( data )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          duration:   'Duration',
+          school:     'School',
+          nation:     'Nation',
+          major:      'Major',
+          degree:     'Degree'
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          duration:   '就學期間',
+          school:     '學校',
+          nation:     '國家',
+          major:      '主修科目',
+          degree:     '學位'
+        },
+      },
+    })
+    const to = (data.to === null)? '----' : data.to
+    const from = (data.from === null)? '----': data.from
   section.education-card.cards__education-card
-    section.education-card__value
-      time.value__time
-        if data.from !== null
-          p.time__from.from= data.from
-        else
-          p.time__from.from= '2008'
-        hr.time__till
-        if data.to !== null
-          p.time__to.to= data.to
-        else
-          p.time__to.to= '----'
-      +image( {
-        alt: 'nation',
-        className: 'value__flag',
-        src: `icon/${ UTILS.faculty.nationUtils.getOptionById( id = data.nation ) }.png`,
-      } )
-      p.value__text.value__text--school= data.school
-      p.value__text.value__text--major= data.major
-      p.value__text.value__text--degree= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
+    section.education-card__content
+      article.content__element.content__element--school
+        h4.element__topic.topic= i18n[ LANG.id ].topic.school
+        p.element__value.value= data.school
+      article.content__element.content__element--duration
+        h4.element__topic.topic= i18n[ LANG.id ].topic.duration
+        p.element__value.value= `${from} - ${to}`
+      article.content__element.content__element--major
+        h4.element__topic.topic= i18n[ LANG.id ].topic.major
+        p.element__value.value= data.major
+      article.content__element.content__element--nation
+        h4.element__topic.topic= i18n[ LANG.id ].topic.nation
+        p.element__value.value= UTILS.faculty.nationUtils.getValueById( { id: data.nation, languageId: LANG.id} )
+      article.content__element.content__element--degree
+        h4.element__topic.topic= i18n[ LANG.id ].topic.degree
+        p.element__value.value= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
     img.education-card__patch(
       alt = 'patch',
       id = `education-card__patch--${ data.educationId }`,

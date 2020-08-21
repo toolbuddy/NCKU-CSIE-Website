@@ -65,8 +65,11 @@
       @media screen and ( min-width: $large ) {
         // [ layout ]
         grid-template: {
-          areas: 'duration  technology authorizing-party authorized-party';
-          columns: font__px-to-rem( 100 ) 3fr 1fr 1fr;
+          areas:
+            'technology        technology        technology        technology'
+            'authorizing-party authorizing-party authorized-party  authorized-party'
+            'duration          .                 .                 .';
+          columns: 1fr 1fr 1fr 1fr;
         }
       }
 
@@ -84,20 +87,13 @@
         // [ RWD: $medium ]
         @media screen and ( min-width: $medium ) {
           // [ layout ]
-          grid-template: {
-            areas: 'topic value';
-            columns: 1fr 2fr;
-          }
-        }
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          // [ layout ]
-          grid-template: {
-            areas:
-              'topic'
-              'value';
-            columns: 1fr;
+          grid: {
+            gap: font__px-to-rem( 15 );
+            template: {
+              areas:
+                'topic value';
+              columns: font__px-to-rem( 100 ) 1fr;
+            }
           }
         }
 
@@ -118,8 +114,8 @@
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
             // [ layout ]
-            justify-self: center;
-            align-items: flex-end;
+            justify-self: flex-start;
+            align-items: center;
           }
 
           // [ skin ]
@@ -148,7 +144,8 @@
           // [ RWD: $large ]
           @media screen and ( min-width: $large ) {
             // [ layout ]
-            justify-self: center;
+            justify-self: flex-start;
+            align-items: center;
           }
 
           // [ skin ]

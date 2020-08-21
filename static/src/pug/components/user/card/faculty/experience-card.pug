@@ -2,32 +2,42 @@ include /components/common/image.pug
 
 mixin experience-card( data )
   -
-    const i18n = Object.freeze({
+    const i18n =  Object.freeze({
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        now: 'NOW',
+        topic: {
+          duration:      'Duration',
+          organization:  'Organization',
+          department:    'Department',
+          title:         'Title'
+        },
+        now: 'now'
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        now: '現在',
+        topic: {
+          duration:      '期間',
+          organization:  '任職單位',
+          department:    '任職部門',
+          title:         '職稱',
+        },
+        now: '現在'
       },
     })
+    const from = (data.from === null)? '----' : data.from
+    const to = (data.to === null)? i18n[ LANG.id ].now : data.to
   section.experience-card.cards__experience-card
-    section.experience-card__value
-      time.value__time
-        if data.from !== null
-          p.time__from.from= data.from
-        else
-          p.time__from.from= '----'
-        hr.time__till
-        if data.to !== null
-          p.time__to.to= data.to
-        else
-          p.time__to.to= i18n[ LANG.id ].now
-      if data.organization !== null
-        p.value__text.value__text--organization= data.organization
-      if data.department !== null
-        p.value__text.value__text--department= data.department
-      if data.title !== null
-        p.value__text.value__text--title= data.title
+    section.experience-card__content
+      article.content__element.content__element--duration
+        h4.element__topic.topic= i18n[ LANG.id ].topic.duration
+        p.element__value.value= `${ from } - ${ to }`
+      article.content__element.content__element--organization
+        h4.element__topic.topic= i18n[ LANG.id ].topic.organization
+        p.element__value.value= data.organization
+      article.content__element.content__element--department
+        h4.element__topic.topic= i18n[ LANG.id ].topic.department
+        p.element__value.value= data.department
+      article.content__element.content__element--title
+        h4.element__topic.topic= i18n[ LANG.id ].topic.title
+        p.element__value.value= data.title
     img.experience-card__patch(
       alt = 'patch',
       id = `experience-card__patch--${ data.experienceId }`,
