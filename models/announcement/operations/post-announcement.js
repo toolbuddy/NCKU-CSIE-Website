@@ -78,9 +78,9 @@ export default ( opt ) => {
             }
         } );
 
-        tags.forEach( ( tagObj ) => {
-            tagObj.tagId = Number.parseInt( tagObj.tagId, 10 );
-            if ( typeof ( validate( tagObj, TagValidationConstraints ) ) !== 'undefined' ) {
+        tags.forEach( ( tag ) => {
+            tag.tagId = Number.parseInt( tag.tagId, 10 );
+            if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
                 throw error;

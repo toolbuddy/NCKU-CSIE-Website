@@ -33,11 +33,11 @@ function equalArray ( a, b ) {
     return true;
 }
 
-export default async ( opt ) => {
+export default ( opt ) => {
     try {
         opt = opt || {};
+        const announcementId = Number.parseInt( opt.announcementId, 10 );
         const {
-            announcementId = null,
             image = null,
             announcementI18n = null,
             addedFiles = null,
@@ -60,6 +60,7 @@ export default async ( opt ) => {
 
         const langArr = [];
         announcementI18n.forEach( ( i18nData ) => {
+            i18nData.languageId = Number.parseInt( i18nData.languageId, 10 );
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
@@ -82,6 +83,7 @@ export default async ( opt ) => {
         } );
 
         deletedFiles.forEach( ( file ) => {
+            file.fileId = Number.parseInt( file.fileId, 10 );
             if ( typeof ( validate( file, DeletedFileValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid deleted file object' );
                 error.status = 400;
@@ -90,6 +92,7 @@ export default async ( opt ) => {
         } );
 
         tags.forEach( ( tag ) => {
+            tag.tagId = Number.parseInt( tag.tagId, 10 );
             if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
@@ -97,23 +100,23 @@ export default async ( opt ) => {
             }
         } );
 
-        await announcement.transaction( t => Announcement.update( {
+        return announcement.transaction( t => Announcement.update( {
             image,
         }, {
             where: {
                 announcementId,
             },
             transaction: t,
-        } ).then( () => Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update( {
-            title:   i18nObj.title,
-            content: i18nObj.content,
-        }, {
-            where: {
-                announcementId,
-                languageId: i18nObj.languageId,
-            },
-            transaction: t,
-        } ) ) ) ).then( () => Tag.destroy( {
+        } ).then( () => Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update(
+            i18nObj,
+            {
+                where: {
+                    announcementId,
+                    languageId: i18nObj.languageId,
+                },
+                transaction: t,
+            }
+        ) ) ) ).then( () => Tag.destroy( {
             where: {
                 announcementId,
             },
@@ -125,13 +128,16 @@ export default async ( opt ) => {
             transaction: t,
         } ) ).then( () => File.destroy( {
             where: {
-                fileId: deletedFiles,
+                fileId: deletedFiles.map( file => file.fileId ),
             },
             transaction: t,
-        } ) ).then( () => File.bulkCreate( addedFiles,
-            {
-                transaction: t,
-            } ) ) ).then( () => ( { 'message': 'success', } ) )
+        } ) ).then( () => File.bulkCreate( addedFiles.map( file => ( {
+            name:    file.name,
+            content: file.content,
+            announcementId,
+        } ) ), {
+            transaction: t,
+        } ) ) ).then( () => ( { 'message': 'success', } ) )
         .catch( ( err ) => {
             err.status = 500;
             throw err;

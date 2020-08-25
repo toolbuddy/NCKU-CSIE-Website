@@ -50,6 +50,10 @@ import researchGroupUtils from 'models/faculty/utils/research-group.js';
 import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
 import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
 
+const upload = multer( {
+    storage: multer.memoryStorage(),
+} );
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function isEmpty ( obj ) {
     if ( obj == null )
@@ -1219,15 +1223,26 @@ router
 router
 .route( '/announcement' )
 .get( allowUserOnly, staticHtml( 'user/announcement/index' ) )
-.post( allowUserOnly, cors(), multer( {
-    storage: multer.memoryStorage(),
-} ).array( 'files' ), async ( req, res ) => {
-    req.body.files = req.files.map( file => ( {
-        name:    file.originalname,
-        content: file.buffer,
-    } ) );
+.post( allowUserOnly, cors(), upload.array( 'files' ), async ( req, res ) => {
     try {
+        req.body.files = req.files.map( file => ( {
+            name:    file.originalname,
+            content: file.buffer,
+        } ) );
         res.send( await postAnnouncement( req.body ) );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.status( error.status ).send( error.message );
+    }
+} )
+.put( allowUserOnly, cors(), upload.array( 'addedFiles' ), async ( req, res ) => {
+    try {
+        req.body.addedFiles = req.files.map( file => ( {
+            name:    file.originalname,
+            content: file.buffer,
+        } ) );
+        res.send( await updateAnnouncement( req.body ) );
     }
     catch ( error ) {
         console.error( error );
@@ -1287,15 +1302,6 @@ router
             next();
         else
             next( err );
-    }
-} )
-.put( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
-    try {
-        res.send( await updateAnnouncement( req.body ) );
-    }
-    catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
     }
 } );
 

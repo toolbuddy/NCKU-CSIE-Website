@@ -8,13 +8,6 @@ const AnnouncementValidationConstraints = {
             type: ValidateUtils.isValidId,
         },
     },
-
-    // IsPublished: {
-    //     presence:     true,
-    //     type:     {
-    //         type: value => ValidateUtils.isValidBoolean( value ),
-    //     },
-    // },
     image: {
         presence:     false,
         type:       'string',
@@ -32,11 +25,11 @@ const AnnouncementValidationConstraints = {
         },
     },
     addedFiles: {
-        presence: true,
+        presence: false,
         type:     'array',
     },
     deletedFiles: {
-        presence: true,
+        presence: false,
         type:     'array',
     },
     tags: {

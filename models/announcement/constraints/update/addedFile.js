@@ -7,8 +7,9 @@ const AddedFileValidationConstraints = {
         },
     },
     content: {
-        type:     'string',
         presence: true,
+
+        // TODO: type should be blob
     },
 };
 

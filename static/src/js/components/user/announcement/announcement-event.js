@@ -303,12 +303,11 @@ export default class AnnouncementEvent {
             this.state.tags.forEach( ( tagId, i ) => {
                 formData.append( `tags[${ i }][tagId]`, tagId );
             } );
-            this.state.addFiles.forEach( ( file, i ) => {
-                formData.append( `addFiles[${ i }][name]`, file.name );
-                formData.append( `addFiles[${ i }][content]`, file.content );
+            this.state.addFiles.forEach( ( file ) => {
+                formData.append( 'addedFiles', file.content );
             } );
             this.state.deleteFiles.forEach( ( fileId, i ) => {
-                formData.append( `deleteFiles[${ i }][fileId]`, fileId );
+                formData.append( `deletedFiles[${ i }][fileId]`, fileId );
             } );
 
             res( formData );
