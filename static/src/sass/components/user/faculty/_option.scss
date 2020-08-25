@@ -49,6 +49,8 @@
       > .tags__tag {
         // [ skin ]
         word-break: keep-all;
+        min-height: font__px-to-rem( 30 );
+        height: auto;
       }
     }
 

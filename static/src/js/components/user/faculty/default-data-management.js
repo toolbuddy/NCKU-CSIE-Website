@@ -128,12 +128,11 @@ export default class DefaultDataManagement {
     subscribePostCheckButton () {
         this.DOM.post.checkButton.addEventListener( 'click', async ( e ) => {
             e.preventDefault();
-
             const isValid = await this.dataValidation( 'post' );
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-
+                e.target.disabled = true;
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
                     headers: {
@@ -152,6 +151,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    e.target.disabled = false;
                     window.location.reload();
                 } );
             }
@@ -187,6 +187,7 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
+                e.target.disabled = true;
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
                     headers: {
@@ -206,6 +207,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    e.target.disabled = false;
                     window.location.reload();
                 } );
             }
@@ -230,6 +232,7 @@ export default class DefaultDataManagement {
     subscribeDeleteCheckButton () {
         this.DOM.delete.checkButton.addEventListener( 'click', ( e ) => {
             e.preventDefault();
+            this.DOM.delete.checkButton.disabled = true;
             fetch( `${ host }/user/faculty/profile`, {
                 method:   'DELETE',
                 headers: {
@@ -247,6 +250,7 @@ export default class DefaultDataManagement {
             } )
             .then( () => {
                 this.renderSuccess();
+                this.DOM.delete.checkButton.disabled = false;
                 window.location.reload();
             } );
         } );

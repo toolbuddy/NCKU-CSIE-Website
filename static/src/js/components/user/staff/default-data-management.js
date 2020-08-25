@@ -132,6 +132,7 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
+                e.target.disabled = true;
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'POST',
                     headers: {
@@ -150,6 +151,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    e.target.disabled = false;
                     window.location.reload();
                 } );
             }
@@ -185,6 +187,7 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'patch' );
+                e.target.disabled = true;
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
                     headers: {
@@ -204,6 +207,7 @@ export default class DefaultDataManagement {
                 } )
                 .then( () => {
                     this.renderSuccess();
+                    e.target.disabled = false;
                     window.location.reload();
                 } );
             }
