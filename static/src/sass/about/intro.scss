@@ -632,6 +632,15 @@
       // block
       // `.body > .content > .develop > .context`
       > .develop__context.context {
+        // [ layout ]
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: {
+          bottom: font__px-to-rem( 10 );
+          top:    font__px-to-rem( 10 );
+        }
+
         // [ variable ]
         $small: 1300px;
         $medium: 1500px;
@@ -648,7 +657,6 @@
             // [ layout ]
             display: flex;
             flex-direction: row-reverse;
-            justify-content: flex-end;
           }
         }
 
