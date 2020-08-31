@@ -1079,8 +1079,8 @@ export default class DefaultTagFilter {
         formData.append( 'announcementI18n', null );
         formData.append( 'files', null );
         formData.append( 'tags', null );
-        formData.append( 'isPinned', ( this.state.isPinned )? false : true )
-        formData.append( 'announcementId', this.state.announcementId )
+        formData.append( 'isPinned', ( this.state.isPinned ) ? false : true );
+        formData.append( 'announcementId', this.state.announcementId );
 
         fetch( `${ host }/announcement`, {
             method: 'PUT',
