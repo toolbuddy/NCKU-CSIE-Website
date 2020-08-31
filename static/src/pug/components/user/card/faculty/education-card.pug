@@ -25,22 +25,16 @@ mixin education-card( data )
     const to = (data.to === null)? '----' : data.to
     const from = (data.from === null)? '----': data.from
   section.education-card.cards__education-card
-    section.education-card__content
-      article.content__element.content__element--school
-        h4.element__topic.topic= i18n[ LANG.id ].topic.school
-        p.element__value.value= data.school
-      article.content__element.content__element--duration
-        h4.element__topic.topic= i18n[ LANG.id ].topic.duration
-        p.element__value.value= `${from} - ${to}`
-      article.content__element.content__element--major
-        h4.element__topic.topic= i18n[ LANG.id ].topic.major
-        p.element__value.value= data.major
-      article.content__element.content__element--nation
-        h4.element__topic.topic= i18n[ LANG.id ].topic.nation
-        p.element__value.value= UTILS.faculty.nationUtils.getValueById( { id: data.nation, languageId: LANG.id} )
-      article.content__element.content__element--degree
-        h4.element__topic.topic= i18n[ LANG.id ].topic.degree
-        p.element__value.value= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
+    h4.education-card__topic.topic.topic--school= i18n[ LANG.id ].topic.school
+    p.education-card__value.value.value--school= data.school
+    h4.education-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.education-card__value.value.value--duration= `${from} - ${to}`
+    h4.education-card__topic.topic.topic--major= i18n[ LANG.id ].topic.major
+    p.education-card__value.value.value--major= data.major
+    h4.education-card__topic.topic.topic--nation= i18n[ LANG.id ].topic.nation
+    p.education-card__value.value.value--nation= UTILS.faculty.nationUtils.getValueById( { id: data.nation, languageId: LANG.id} )
+    h4.education-card__topic.topic.topic--degree= i18n[ LANG.id ].topic.degree
+    p.education-card__value.value.value--degree= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
     img.education-card__patch(
       alt = 'patch',
       id = `education-card__patch--${ data.educationId }`,

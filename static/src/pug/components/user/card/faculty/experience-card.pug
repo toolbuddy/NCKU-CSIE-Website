@@ -25,19 +25,14 @@ mixin experience-card( data )
     const from = (data.from === null)? '----' : data.from
     const to = (data.to === null)? i18n[ LANG.id ].now : data.to
   section.experience-card.cards__experience-card
-    section.experience-card__content
-      article.content__element.content__element--duration
-        h4.element__topic.topic= i18n[ LANG.id ].topic.duration
-        p.element__value.value= `${ from } - ${ to }`
-      article.content__element.content__element--organization
-        h4.element__topic.topic= i18n[ LANG.id ].topic.organization
-        p.element__value.value= data.organization
-      article.content__element.content__element--department
-        h4.element__topic.topic= i18n[ LANG.id ].topic.department
-        p.element__value.value= data.department
-      article.content__element.content__element--title
-        h4.element__topic.topic= i18n[ LANG.id ].topic.title
-        p.element__value.value= data.title
+    h4.experience-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.experience-card__value.value.value--duration= `${ from } - ${ to }`
+    h4.experience-card__topic.topic.topic--organization= i18n[ LANG.id ].topic.organization
+    p.experience-card__value.value.value--organization= data.organization
+    h4.experience-card__topic.topic.topic--department= i18n[ LANG.id ].topic.department
+    p.experience-card__value.value.value--department= data.department
+    h4.experience-card__topic.topic.topic--title= i18n[ LANG.id ].topic.title
+    p.experience-card__value.value.value--title= data.title
     img.experience-card__patch(
       alt = 'patch',
       id = `experience-card__patch--${ data.experienceId }`,

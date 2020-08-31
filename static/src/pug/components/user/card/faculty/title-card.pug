@@ -17,13 +17,10 @@ mixin title-card( data )
     const to = (data.to === null)? i18n[ LANG.id ].now : data.to
     const from = (data.from === null)? '----' : data.from
   section.title-card.cards__title-card
-    section.title-card__content
-      article.content__element.content__element--title
-        h4.element__topic.topic= i18n[ LANG.id ].title
-        p.element__value.value= data.title
-      article.content__element.content__element--duration
-        h4.element__topic.topic= i18n[ LANG.id ].duration
-        p.element__value.value= `${ from }  -  ${ to }`
+    h4.title-card__topic.topic.topic--title= i18n[ LANG.id ].title
+    p.title-card__value.value.value--title= data.title
+    h4.title-card__topic.topic.topic--duration= i18n[ LANG.id ].duration
+    p.title-card__value.value.value--duration= `${ from }  -  ${ to }`
     img.title-card__patch(
       alt = 'patch',
       id = `title-card__patch--${ data.titleId }`,

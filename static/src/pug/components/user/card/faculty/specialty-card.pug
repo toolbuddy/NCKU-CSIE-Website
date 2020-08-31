@@ -11,10 +11,8 @@ mixin specialty-card( data )
       },
     })
   section.specialty-card.cards__specialty-card
-    section.specialty-card__content
-      article.content__element.content__element--specialty
-        h4.element__topic.topic= i18n[ LANG.id ].specialty
-        p.element__value.value= data.specialty
+    h4.specialty-card__topic.topic= i18n[ LANG.id ].specialty
+    p.specialty-card__value.value= data.specialty
     img.specialty-card__patch(
       alt = 'patch',
       id = `specialty-card__patch--${ data.specialtyId }`,
