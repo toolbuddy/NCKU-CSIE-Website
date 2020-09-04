@@ -11,7 +11,7 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
-@import 'components/user/card/faculty/project-card';
+@import 'components/user/faculty/card';
 @import 'components/user/form/form';
 
 .body {
@@ -127,7 +127,83 @@
         height: auto;
 
         // [ element ]
-        @include project-card();
+        @include card( 'project' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-name        patch               delete '
+              'value-name        value-name         value-name '
+              'topic-support topic-support topic-support '
+              'value-support value-support value-support '
+              'topic-category topic-category topic-category '
+              'value-category value-category value-category '
+              'topic-duration topic-duration topic-duration '
+              'value-duration value-duration value-duration ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-name     patch delete '
+                'value-name     patch delete '
+                'topic-support  patch delete '
+                'value-support  patch delete '
+                'topic-category patch delete '
+                'value-category patch delete '
+                'topic-duration patch delete '
+                'value-duration patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-name    value-name    value-name     value-name     value-name     value-name     patch delete '
+                'topic-support value-support topic-category value-category topic-duration value-duration patch delete ';
+              columns: max-content 1fr max-content 1fr max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .project-card__topic.topic {
+            &--name {
+              grid-area: topic-name;
+            }
+
+            &--support {
+              grid-area: topic-support;
+            }
+
+            &--category {
+              grid-area: topic-category;
+            }
+
+            &--duration {
+              grid-area: topic-duration;
+            }
+          }
+
+          > .project-card__value.value {
+            &--name {
+              grid-area: value-name;
+            }
+
+            &--support {
+              grid-area: value-support;
+            }
+
+            &--category {
+              grid-area: value-category;
+            }
+
+            &--duration {
+              grid-area: value-duration;
+            }
+          }
+        }
         @include classfication-title();
       }
 

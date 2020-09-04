@@ -11,7 +11,7 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
-@import 'components/user/card/faculty/patent-card';
+@import 'components/user/faculty/card';
 @import 'components/user/form/form';
 
 .body {
@@ -127,7 +127,134 @@
         height: auto;
 
         // [ element ]
-        @include patent-card();
+        @include card( 'patent' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-patent        patch               delete '
+              'value-patent        value-patent         value-patent '
+              'topic-inventor topic-inventor topic-inventor '
+              'value-inventor value-inventor value-inventor '
+              'topic-patentOwner topic-patentOwner topic-patentOwner '
+              'value-patentOwner value-patentOwner value-patentOwner '
+              'topic-certificationNumber topic-certificationNumber topic-certificationNumber '
+              'value-certificationNumber value-certificationNumber value-certificationNumber '
+              'topic-nation topic-nation topic-nation '
+              'value-nation value-nation value-nation '
+              'topic-applicationDate topic-applicationDate topic-applicationDate '
+              'value-applicationDate value-applicationDate value-applicationDate '
+              'topic-issueDate topic-issueDate topic-issueDate '
+              'value-issueDate value-issueDate value-issueDate '
+              'topic-expireDate topic-expireDate topic-expireDate '
+              'value-expireDate value-expireDate value-expireDate ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-patent          patch delete '
+                'value-patent          patch delete '
+                'topic-inventor        patch delete '
+                'value-inventor        patch delete '
+                'topic-patentOwner     patch delete '
+                'value-patentOwner     patch delete '
+                'topic-certificationNumber patch delete '
+                'value-certificationNumber patch delete '
+                'topic-nation              patch delete '
+                'value-nation              patch delete '
+                'topic-applicationDate     patch delete '
+                'value-applicationDate     patch delete '
+                'topic-issueDate           patch delete '
+                'value-issueDate           patch delete '
+                'topic-expireDate          patch delete '
+                'value-expireDate          patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-patent              value-patent              value-patent      value-patent      value-patent      value-patent      patch delete '
+                'topic-inventor            value-inventor            value-inventor    value-inventor    value-inventor    value-inventor    patch delete '
+                'topic-patentOwner         value-patentOwner         value-patentOwner value-patentOwner value-patentOwner value-patentOwner patch delete '
+                'topic-certificationNumber value-certificationNumber topic-nation      value-nation      value-nation      value-nation      patch delete '
+                'topic-applicationDate     value-applicationDate     topic-issueDate   value-issueDate   topic-expireDate  value-expireDate  patch delete ';
+              columns: max-content 1fr max-content 1fr max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .patent-card__topic.topic {
+            &--patent {
+              grid-area: topic-patent;
+            }
+
+            &--inventor {
+              grid-area: topic-inventor;
+            }
+
+            &--patentOwner {
+              grid-area: topic-patentOwner;
+            }
+
+            &--certificationNumber {
+              grid-area: topic-certificationNumber;
+            }
+
+            &--nation {
+              grid-area: topic-nation;
+            }
+
+            &--applicationDate {
+              grid-area: topic-applicationDate;
+            }
+
+            &--issueDate {
+              grid-area: topic-issueDate;
+            }
+
+            &--expireDate {
+              grid-area: topic-expireDate;
+            }
+          }
+
+          > .patent-card__value.value {
+            &--patent {
+              grid-area: value-patent;
+            }
+
+            &--inventor {
+              grid-area: value-inventor;
+            }
+
+            &--patentOwner {
+              grid-area: value-patentOwner;
+            }
+
+            &--certificationNumber {
+              grid-area: value-certificationNumber;
+            }
+
+            &--nation {
+              grid-area: value-nation;
+            }
+
+            &--applicationDate {
+              grid-area: value-applicationDate;
+            }
+
+            &--issueDate {
+              grid-area: value-issueDate;
+            }
+
+            &--expireDate {
+              grid-area: value-expireDate;
+            }
+          }
+        }
         @include classfication-title();
       }
 

@@ -66,6 +66,8 @@ const d3Data = {
             yMin:     0,
             data:     [ 12,
                 11,
+                12,
+                12,
                 12, ],
         },
         {
@@ -88,7 +90,9 @@ const d3Data = {
             yMin:     0,
             data:     [ 29,
                 51,
-                32, ],
+                32,
+                53,
+                57, ],
         },
         {
             label: {
@@ -128,11 +132,13 @@ const d3Data = {
                 },
             },
             selector: 'astStudentNum',
-            yMax:     65,
-            yMin:     0,
+            yMax:     70,
+            yMin:     20,
             data:     [ 60,
                 38,
-                57, ],
+                57,
+                48,
+                65, ],
         },
         {
             label: {
@@ -154,7 +160,9 @@ const d3Data = {
             yMin:     350,
             data:     [ 375.20,
                 376.80,
-                394.15, ],
+                394.15,
+                395.90,
+                383.80, ],
         },
         {
             label: {

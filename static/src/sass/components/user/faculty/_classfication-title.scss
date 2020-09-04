@@ -5,7 +5,8 @@
     align-items: flex-end;
 
     // [ position ]
-    height: 1.5rem;
+    height: fit-content;
+    margin-top: font__px-to-rem( 20 );
 
     // [ skin ]
     font: {

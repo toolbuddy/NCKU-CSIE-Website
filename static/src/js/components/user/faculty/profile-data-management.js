@@ -208,6 +208,7 @@ export default class ProfileDataManagement {
 
                 if ( isValid ) {
                     const data = await this.formatFormData( columnName );
+                    e.target.disabled = true;
                     fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
                         headers: {
@@ -224,6 +225,7 @@ export default class ProfileDataManagement {
                     .then( () => {
                         this.updateCard( columnName );
                         this.hideForm();
+                        e.target.disabled = false;
                     } );
                 }
             } );

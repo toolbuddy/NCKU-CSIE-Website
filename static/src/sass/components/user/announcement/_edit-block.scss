@@ -60,7 +60,7 @@
               'zh'
               'en'
               '.';
-            rows: font__px-to-rem( 160 ) font__px-to-rem( 160 ) auto;
+            rows: font__px-to-rem( 180 ) font__px-to-rem( 180 ) auto;
           }
         }
       }
@@ -73,11 +73,14 @@
 
         // [ position ]
         width: 100%;
-        height: font__px-to-rem( 48 );
-        padding: {
-          left: font__px-to-rem( 14 );
-          right: font__px-to-rem( 14 );
-        }
+        min-height: font__px-to-rem( 48 );
+
+        // padding: {
+        //   top: font__px-to-rem( 14 );
+        //   left: font__px-to-rem( 14 );
+        //   right: font__px-to-rem( 14 );
+        // }
+        padding: font__px-to-rem( 14 );
 
         // [ skin ]
         font-size: font__px-to-rem( 24 );

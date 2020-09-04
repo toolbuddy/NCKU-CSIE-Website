@@ -3,8 +3,8 @@ mixin award-card( data )
     const i18n =  Object.freeze({
       [ LANG.getLanguageId( 'en-US' ) ]: {
         topic: {
-          award:         'Award',
-          receivedYear:  'Received Year',
+          award:         'award',
+          receivedYear:  'received year',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -15,13 +15,10 @@ mixin award-card( data )
       },
     })
   section.award-card.cards__award-card
-    section.award-card__content
-      article.content__element.content__element--award
-        h4.element__topic.topic= i18n[ LANG.id ].topic.award
-        p.element__value.value= data.award
-      article.content__element.content__element--receivedYear
-        h4.element__topic.topic= i18n[ LANG.id ].topic.receivedYear
-        p.element__value.value= data.receivedYear
+    h4.award-card__topic.topic.topic--award= i18n[ LANG.id ].topic.award
+    p.award-card__value.value.value--award= data.award
+    h4.award-card__topic.topic.topic--receivedYear= i18n[ LANG.id ].topic.receivedYear
+    p.award-card__value.value.value--receivedYear= data.receivedYear
     img.award-card__patch(
       alt = 'patch',
       id = `award-card__patch--${ data.awardId }`,
