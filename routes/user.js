@@ -21,6 +21,7 @@ import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import updateAnnouncement from 'models/announcement/operations/update-announcement.js';
+import pinAnnouncement from 'models/announcement/operations/pin-announcement.js';
 import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
@@ -1249,6 +1250,15 @@ router
         res.status( error.status ).send( error.message );
     }
 } )
+.patch( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
+    try {
+        res.send( await pinAnnouncement( req.body ) );
+    }
+    catch ( error ) {
+        console.error( error );
+        res.status( error.status ).send( error.message );
+    }
+} )
 .delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
     try {
         res.send( await deleteAnnouncements( req.body ) );
@@ -1302,32 +1312,6 @@ router
             next();
         else
             next( err );
-    }
-} );
-
-/**
- * Resolve URL `/user/announcement/pin`.
- */
-
-router
-.route( '/announcement/pin' )
-.post( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
-    try {
-        const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-
-        await updateAnnouncement( {
-            announcementId:   data.announcementId,
-            author:           Number( data.author ),
-            isPinned:         Number( data.isPinned ),
-            i18n:             [],
-            fileI18n:       [],
-        } );
-
-        res.send( { message: 'success', } );
-    }
-    catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
     }
 } );
 

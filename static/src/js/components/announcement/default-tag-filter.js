@@ -1072,19 +1072,15 @@ export default class DefaultTagFilter {
     }
 
     async sendPinRequest () {
-        const formData = new FormData();
-
-        formData.append( 'image', null );
-        formData.append( 'author', this.config.userId );
-        formData.append( 'announcementI18n', null );
-        formData.append( 'files', null );
-        formData.append( 'tags', null );
-        formData.append( 'isPinned', ( this.state.isPinned ) ? false : true );
-        formData.append( 'announcementId', this.state.announcementId );
-
-        fetch( `${ host }/announcement`, {
-            method: 'PUT',
-            body:   formData,
+        fetch( `${ host }/user/announcement`, {
+            method: 'PATCH',
+            body:   JSON.stringify( {
+                announcementId: this.state.announcementId,
+                isPinned:       !this.state.isPinned,
+            } ),
+            headers: {
+                'content-type': 'application/json',
+            },
         } )
         .then( async () => {
             classRemove( this.DOM.preview.block, 'delete-preview--show' );

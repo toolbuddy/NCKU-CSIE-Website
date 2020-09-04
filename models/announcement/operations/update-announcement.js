@@ -7,11 +7,11 @@ import {
 } from 'models/announcement/operations/associations.js';
 import { announcement, } from 'models/common/utils/connect.js';
 
-import AnnouncementValidationConstraints from 'models/announcement/constraints/update/announcement.js';
-import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/update/announcement-i18n.js';
-import AddedFileValidationConstraints from 'models/announcement/constraints/update/addedFile.js';
-import DeletedFileValidationConstraints from 'models/announcement/constraints/update/deletedFile.js';
-import TagValidationConstraints from 'models/announcement/constraints/update/tag.js';
+import AnnouncementValidationConstraints from 'models/announcement/constraints/put/announcement.js';
+import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/put/announcement-i18n.js';
+import AddedFileValidationConstraints from 'models/announcement/constraints/put/addedFile.js';
+import DeletedFileValidationConstraints from 'models/announcement/constraints/put/deletedFile.js';
+import TagValidationConstraints from 'models/announcement/constraints/put/tag.js';
 import validate from 'validate.js';
 
 function sortByValue ( a, b ) {
