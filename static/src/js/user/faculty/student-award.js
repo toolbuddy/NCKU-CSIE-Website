@@ -86,7 +86,7 @@ try {
         cardsDOM:         document.getElementById( 'student-award__cards' ),
         patchButtonsDOM:  document.getElementsByClassName( 'student-card__patch' ),
         deleteButtonsDOM: document.getElementsByClassName( 'student-card__delete' ),
-        postButtonsDOM:   document.getElementsByClassName( 'student__post-button' ),
+        postButtonsDOM:   document.getElementsByClassName( 'student-award-card__student-post' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         columnUnits:      StudentColumnsUnits,
         table:            'student',

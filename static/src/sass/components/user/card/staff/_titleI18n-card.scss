@@ -54,13 +54,11 @@
         margin-left: 1rem;
 
         // [ skin ]
-        font-size: font__px-to-rem( 16 );
-        text-align: right;
-        line-height: font__px-to-rem( 17 );
-        letter-spacing: normal;
         word-break: break-all;
-        color: rgba( 81, 81, 81, .87 );
-        overflow: visible;
+        font-size: font__px-to-rem( 18 );
+        line-height: normal;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {

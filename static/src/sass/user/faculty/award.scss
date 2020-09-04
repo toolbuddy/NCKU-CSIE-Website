@@ -11,7 +11,7 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
-@import 'components/user/card/faculty/award-card';
+@import 'components/user/faculty/card';
 @import 'components/user/form/form';
 
 .body {
@@ -127,7 +127,59 @@
         height: auto;
 
         // [ element ]
-        @include award-card();
+        @include card( 'award' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-award        patch               delete '
+              'value-award        value-award         value-award '
+              'topic-receivedYear topic-receivedYear topic-receivedYear '
+              'value-receivedYear value-receivedYear value-receivedYear ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-award        patch delete '
+                'value-award        patch delete '
+                'topic-receivedYear patch delete '
+                'value-receivedYear patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-award        value-award        patch delete '
+                'topic-receivedYear value-receivedYear patch delete ';
+              columns: max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .award-card__topic.topic {
+            &--award {
+              grid-area: topic-award;
+            }
+
+            &--receivedYear {
+              grid-area: topic-receivedYear;
+            }
+          }
+
+          > .award-card__value.value {
+            &--award {
+              grid-area: value-award;
+            }
+
+            &--receivedYear {
+              grid-area: value-receivedYear;
+            }
+          }
+        }
         @include classfication-title();
       }
 

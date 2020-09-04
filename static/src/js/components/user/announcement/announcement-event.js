@@ -266,6 +266,8 @@ export default class AnnouncementEvent {
 
     uploadPostAnnouncement () {
         const formData = new FormData();
+        this.DOM.submit.disabled = true;
+
         formData.append( 'image', null );
         formData.append( 'author', this.config.author );
         Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
@@ -287,12 +289,15 @@ export default class AnnouncementEvent {
         .then( ( res ) => {
             if ( res.ok )
                 location.href = `${ host }/announcement/all?languageId=${ this.config.languageId }`;
+            else
+                this.DOM.submit.disabled = false;
         } );
     }
 
     uploadPutAnnouncement () {
         new Promise( ( res ) => {
             const formData = new FormData();
+            this.DOM.submit.disabled = true;
             formData.append( 'announcementId', this.config.id );
             formData.append( 'image', null );
             Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
@@ -321,6 +326,8 @@ export default class AnnouncementEvent {
             .then( ( res ) => {
                 if ( res.ok )
                     location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
+                else
+                    this.DOM.submit.disabled = false;
             } );
         } );
     }

@@ -2,19 +2,22 @@
   // `> .#{ $block } > .#{ $block }__input-block`
   > .profile-card.profile__profile-card--#{ $modifier } {
     // [ variable ]
-    $large: 750px;
+    $large: 700px;
     $small: 500px;
 
     // [ layout ]
     display: grid;
+
     grid-template: {
-      areas: 'title value edit';
-      columns: 4rem 4fr 2rem;
+      areas:
+        'title   edit'
+        'value   value';
+      columns: 1fr font__px-to-rem( 30 );
     };
 
     // [ position ]
     width: 100%;
-    height: font__px-to-rem( 80 );
+    min-height: font__px-to-rem( 80 );
 
     // [ skin ]
     border: {
@@ -22,9 +25,18 @@
       radius: font__px-to-rem( 3 );
     }
 
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
+      // [ skin ]
+      grid-template: {
+        areas: 'title value edit';
+        columns: 4rem 4fr 2rem;
+      };
+    }
+
     > .profile-card__title {
       // [ layout ]
-      display: inline-flex;
+      display: flex;
       grid-area: title;
       align-self: center;
       padding-left: font__px-to-rem( 15 );
@@ -40,30 +52,38 @@
       line-height: normal;
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        grid-template: {
+          areas: 'title value edit';
+          columns: 4rem 4fr 2rem;
+        };
+      }
     }
 
     > .profile-card__value {
       // [ layout ]
-      display: inline-block;
+      display: flex;
+      grid-area: value;
 
       // [ position ]
       width: auto;
       height: auto;
-      padding-right: font__px-to-rem( 5 );
+      padding-left: font__px-to-rem( 15 );
       max-width: 90%;
       align-self: center;
 
       // [ skin ]
-      font-size: font__px-to-rem( 16 );
-      text-align: right;
-      line-height: font__px-to-rem( 17 );
+      font-size: font__px-to-rem( 18 );
+      line-height: normal;
       letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
       word-break: break-all;
-      color: rgba( 81, 81, 81, .87 );
-      overflow: visible;
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
         // [ skin ]
         font-size: font__px-to-rem( 18 );
         line-height: font__px-to-rem( 20 );
@@ -71,12 +91,14 @@
           break: normal;
           wrap: break-word;
         }
+        padding-right: font__px-to-rem( 5 );
       }
     }
 
     > .profile-card__patch {
       // [ layout ]
-      display: inline-flex;
+      display: flex;
+      grid-area: edit;
 
       // [ position ]
       width: font__px-to-rem( 30 );
