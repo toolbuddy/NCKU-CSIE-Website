@@ -3,9 +3,9 @@ mixin conference-card( data, head )
     const i18n =  Object.freeze({
       [ LANG.getLanguageId( 'en-US' ) ]: {
         topic: {
-          conference: 'Conference',
-          title:      'Title',
-          hostYear:   'Host Year',
+          conference: 'conference',
+          title:      'title',
+          hostYear:   'host year',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -17,16 +17,12 @@ mixin conference-card( data, head )
       },
     })
   section.conference-card.cards__conference-card
-    section.conference-card__content
-      article.content__element.content__element--conference
-        h4.element__topic.topic= i18n[ LANG.id ].topic.conference
-        p.element__value.value= data.conference
-      article.content__element.content__element--title
-        h4.element__topic.topic= i18n[ LANG.id ].topic.title
-        p.element__value.value= data.title
-      article.content__element.content__element--hostYear
-        h4.element__topic.topic= i18n[ LANG.id ].topic.hostYear
-        p.element__value.value= data.hostYear
+    h4.conference-card__topic.topic.topic--conference= i18n[ LANG.id ].topic.conference
+    p.conference-card__value.value.value--conference= data.conference
+    h4.conference-card__topic.topic.topic--title= i18n[ LANG.id ].topic.title
+    p.conference-card__value.value.value--title= data.title
+    h4.conference-card__topic.topic.topic--hostYear= i18n[ LANG.id ].topic.hostYear
+    p.conference-card__value.value.value--hostYear= data.hostYear
     img.conference-card__patch(
       alt = 'patch',
       id = `conference-card__patch--${ data.conferenceId }`,

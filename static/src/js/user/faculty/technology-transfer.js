@@ -86,7 +86,7 @@ try {
         cardsDOM:         document.getElementById( 'technology-transfer__cards' ),
         patchButtonsDOM:  document.getElementsByClassName( 'technology-transfer-patent-card__patch' ),
         deleteButtonsDOM: document.getElementsByClassName( 'technology-transfer-patent-card__delete' ),
-        postButtonsDOM:   document.getElementsByClassName( 'technology-transfer-patent__post-button' ),
+        postButtonsDOM:   document.getElementsByClassName( 'technology-transfer-card__patent-post' ),
         languageId:       WebLanguageUtils.currentLanguageId,
         columnUnits:      technologyTransferPatentColumnsUnits,
         table:            'technology-transfer-patent',

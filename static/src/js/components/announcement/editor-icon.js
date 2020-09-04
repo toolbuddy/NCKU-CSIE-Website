@@ -3,6 +3,7 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import roleUtils from 'models/auth/utils/role.js';
 import editorHTML from 'static/src/pug/components/announcement/editor.pug';
 import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
+
 export default class EditorIcon {
     constructor ( opt ) {
         opt = opt || {};
@@ -39,10 +40,6 @@ export default class EditorIcon {
         };
     }
 
-    /***
-     * Insert `edit` and `delete` icon on the top of announcement
-     */
-
     async insertEditorDOM () {
         this.DOM.editor.innerHTML += editorHTML( {
             host,
@@ -50,10 +47,6 @@ export default class EditorIcon {
             languageId:     this.config.languageId,
         } );
     }
-
-    /***
-     * Add eventlistener of deletePreview `cancel button`, `check button`, `delete button`
-     */
 
     subscribeDeletePreview () {
         const deleteButton = this.DOM.editor.querySelector( '.editor__delete' );

@@ -1,9 +1,18 @@
 include /components/common/image.pug
 
 mixin specialty-card( data )
+  - 
+    const i18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        specialty: 'specialty',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        specialty: '領域'
+      },
+    })
   section.specialty-card.cards__specialty-card
-    section.specialty-card__value
-      p.value__text.value__text--specialty= data.specialty
+    h4.specialty-card__topic.topic= i18n[ LANG.id ].specialty
+    p.specialty-card__value.value= data.specialty
     img.specialty-card__patch(
       alt = 'patch',
       id = `specialty-card__patch--${ data.specialtyId }`,

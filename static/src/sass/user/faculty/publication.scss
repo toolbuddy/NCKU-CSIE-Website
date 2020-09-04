@@ -11,7 +11,7 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
-@import 'components/user/card/faculty/publication-card';
+@import 'components/user/faculty/card';
 @import 'components/user/form/form';
 
 .body {
@@ -127,7 +127,84 @@
         height: auto;
 
         // [ element ]
-        @include publication-card();
+        @include card( 'publication' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-title      patch            delete '
+              'value-title      value-title      value-title '
+              'topic-authors    topic-authors    topic-authors '
+              'value-authors    value-authors    value-authors '
+              'topic-issueYear  topic-issueYear  topic-issueYear '
+              'value-issueYear  value-issueYear  value-issueYear '
+              'topic-issueMonth topic-issueMonth topic-issueMonth '
+              'value-issueMonth value-issueMonth value-issueMonth ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $small ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-title      patch delete '
+                'value-title      patch delete '
+                'topic-authors    patch delete '
+                'value-authors    patch delete '
+                'topic-issueYear  patch delete '
+                'value-issueYear  patch delete '
+                'topic-issueMonth patch delete '
+                'value-issueMonth patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-title     value-title     value-title      value-title     patch delete '
+                'topic-authors   value-authors   value-authors    value-authors    patch delete '
+                'topic-issueYear value-issueYear topic-issueMonth value-issueMonth patch delete ';
+              columns: max-content 1fr max-content 2fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .publication-card__topic.topic {
+            &--title {
+              grid-area: topic-title;
+            }
+
+            &--authors {
+              grid-area: topic-authors;
+            }
+
+            &--issueYear {
+              grid-area: topic-issueYear;
+            }
+
+            &--issueMonth {
+              grid-area: topic-issueMonth;
+            }
+          }
+
+          > .publication-card__value.value {
+            &--title {
+              grid-area: value-title;
+            }
+
+            &--authors {
+              grid-area: value-authors;
+            }
+
+            &--issueYear {
+              grid-area: value-issueYear;
+            }
+
+            &--issueMonth {
+              grid-area: value-issueMonth;
+            }
+          }
+        }
         @include classfication-title();
       }
 

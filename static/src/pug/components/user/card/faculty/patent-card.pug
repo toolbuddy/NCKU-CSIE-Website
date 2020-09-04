@@ -31,31 +31,22 @@ mixin patent-card( data, head )
           languageId: LANG.id
         })
   section.patent-card.cards__patent-card
-    section.patent-card__content
-      article.content__element.content__element--certificationNumber
-        h4.element__topic.topic= i18n[ LANG.id ].topic.certificationNumber
-        p.element__value.value= data.certificationNumber
-      article.content__element.content__element--patent
-        h4.element__topic.topic= i18n[ LANG.id ].topic.patent
-        p.element__value.value= data.patent
-      article.content__element.content__element--nation
-        h4.element__topic.topic= i18n[ LANG.id ].topic.nation
-        p.element__value.value= nation
-      article.content__element.content__element--inventor
-        h4.element__topic.topic= i18n[ LANG.id ].topic.inventor
-        p.element__value.value= data.inventor
-      article.content__element.content__element--patentOwner
-        h4.element__topic.topic= i18n[ LANG.id ].topic.patentOwner
-        p.element__value.value= data.patentOwner
-      article.content__element.content__element--applicationDate
-        h4.element__topic.topic= i18n[ LANG.id ].topic.applicationDate
-        p.element__value.value= data.applicationDate
-      article.content__element.content__element--issueDate
-        h4.element__topic.topic= i18n[ LANG.id ].topic.issueDate
-        p.element__value.value= data.issueDate
-      article.content__element.content__element--expireDate
-        h4.element__topic.topic= i18n[ LANG.id ].topic.expireDate
-        p.element__value.value= data.expireDate
+    h4.patent-card__topic.topic.topic--certificationNumber= i18n[ LANG.id ].topic.certificationNumber
+    p.patent-card__value.value.value--certificationNumber= data.certificationNumber
+    h4.patent-card__topic.topic.topic--patent= i18n[ LANG.id ].topic.patent
+    p.patent-card__value.value.value--patent= data.patent
+    h4.patent-card__topic.topic.topic--nation= i18n[ LANG.id ].topic.nation
+    p.patent-card__value.value.value--nation= nation
+    h4.patent-card__topic.topic.topic--inventor= i18n[ LANG.id ].topic.inventor
+    p.patent-card__value.value.value--inventor= data.inventor
+    h4.patent-card__topic.topic.topic--patentOwner= i18n[ LANG.id ].topic.patentOwner
+    p.patent-card__value.value.value--patentOwner= data.patentOwner
+    h4.patent-card__topic.topic.topic--applicationDate= i18n[ LANG.id ].topic.applicationDate
+    p.patent-card__value.value.value--applicationDate= data.applicationDate
+    h4.patent-card__topic.topic.topic--issueDate= i18n[ LANG.id ].topic.issueDate
+    p.patent-card__value.value.value--issueDate= data.issueDate
+    h4.patent-card__topic.topic.topic--expireDate= i18n[ LANG.id ].topic.expireDate
+    p.patent-card__value.value.value--expireDate= data.expireDate
     img.patent-card__patch(
       alt = 'patch',
       id = `patent-card__patch--${ data.patentId }`,

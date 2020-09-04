@@ -11,7 +11,7 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
-@import 'components/user/card/faculty/conference-card';
+@import 'components/user/faculty/card';
 @import 'components/user/form/form';
 
 .body {
@@ -127,7 +127,71 @@
         height: auto;
 
         // [ element ]
-        @include conference-card();
+        @include card( 'conference' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-conference patch            delete '
+              'value-conference value-conference value-conference '
+              'topic-hostYear   topic-hostYear   topic-hostYear '
+              'value-hostYear   value-hostYear   value-hostYear '
+              'topic-title      topic-title      topic-title '
+              'value-title      value-title      value-title ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-conference patch delete '
+                'value-conference patch delete '
+                'topic-hostYear   patch delete '
+                'value-hostYear   patch delete '
+                'topic-title      patch delete '
+                'value-title      patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-conference value-conference  value-conference  value-conference patch delete '
+                'topic-hostYear   value-hostYear    topic-title       value-title      patch delete ';
+              columns: max-content 1fr max-content 2fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .conference-card__topic.topic {
+            &--conference {
+              grid-area: topic-conference;
+            }
+
+            &--hostYear {
+              grid-area: topic-hostYear;
+            }
+
+            &--title {
+              grid-area: topic-title;
+            }
+          }
+
+          > .conference-card__value.value {
+            &--conference {
+              grid-area: value-conference;
+            }
+
+            &--hostYear {
+              grid-area: value-hostYear;
+            }
+
+            &--title {
+              grid-area: value-title;
+            }
+          }
+        }
         @include classfication-title();
       }
 
