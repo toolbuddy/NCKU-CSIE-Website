@@ -42,7 +42,7 @@
         '.           hot-announcement .'
         'high-school high-school      high-school'
         'master      master           master';
-      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) 50vh 80vh;
+      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) auto auto;
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
     }
 
@@ -57,7 +57,7 @@
           '.           announcement .           hot-announcement .'
           'high-school high-school  high-school high-school      high-school'
           'master      master       master      master           master';
-        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) font__px-to-rem( 352 ) font__px-to-rem( 448 );
+        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) auto auto;
         columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
       }
       align-items: start;
@@ -201,6 +201,7 @@
       grid-area: high-school;
 
       // [ layout ]
+      display: block;
       width: 100%;
       height: $area-height;
       overflow: hidden;

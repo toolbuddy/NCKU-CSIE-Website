@@ -196,7 +196,7 @@ export default class DefaultDataManagement {
                     body:   JSON.stringify( {
                         profileId:     this.config.profileId,
                         dbTable:       this.config.dbTable,
-                        dbTableItemId: this.status.itemId,
+                        dbTableItemId: Number( this.status.itemId ),
                         item:          data.item,
                         i18n:          data.i18n,
                     } ),

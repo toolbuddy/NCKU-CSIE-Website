@@ -1369,7 +1369,7 @@
       // [ layout ]
       display: block;
       margin-top: font__px-to-rem( 40 );
-      overflow-x: scroll;
+      overflow-x: auto;
 
       // [ skin ]
       min-width: $table-min-width;
@@ -1414,7 +1414,7 @@
       // [ layout ]
       display: block;
       margin-top: font__px-to-rem( 40 );
-      overflow-x: scroll;
+      overflow-x: auto;
 
       // [ skin ]
       min-width: $table-min-width;
@@ -1459,7 +1459,7 @@
       // [ layout ]
       display: block;
       margin-top: font__px-to-rem( 40 );
-      overflow-x: scroll;
+      overflow-x: auto;
 
       // [ skin ]
       min-width: $table-min-width;
