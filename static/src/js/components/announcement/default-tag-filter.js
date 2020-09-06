@@ -1073,6 +1073,7 @@ export default class DefaultTagFilter {
 
     async sendPinRequest () {
         const formData = new FormData();
+        this.DOM.preview.button.check.disabled = true;
 
         formData.append( 'image', null );
         formData.append( 'author', this.config.userId );
@@ -1086,15 +1087,17 @@ export default class DefaultTagFilter {
             method: 'PUT',
             body:   formData,
         } )
-        .then( async ( res ) => {
-            if ( res.ok ) {
-                classRemove( this.DOM.preview.block, 'delete-preview--show' );
-                this.getPinnedAnnouncement();
-            }
+        .then( async () => {
+            await delay( 100 );
+
+            classRemove( this.DOM.preview.block, 'delete-preview--show' );
+            await this.getPinnedAnnouncement();
+            this.DOM.preview.button.check.disabled = false;
         } );
     }
 
     async sendDeleteRequest () {
+        this.DOM.preview.button.check.disabled = true;
         fetch( `${ host }/user/announcement`, {
             method: 'DELETE',
             body:   JSON.stringify( {
@@ -1106,6 +1109,7 @@ export default class DefaultTagFilter {
         } )
         .then( async () => {
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
+            this.DOM.preview.button.check.disabled = false;
             this.getAll();
         } );
     }
