@@ -7,14 +7,16 @@
  * @property {string} domainName - Database server domain name/IP.
  * @property {number} port       - Database server port.
  * @property {string} dialce     - Database server protocol.
+ * @property {string} timezone   - Timezone for any date/time format in database.
  */
 
 const config = {
     'username':   '',
     'password':   '',
-    'domainName': 'localhost',
+    'domainName': '',
     'port':       3306,
     'dialect':    'mysql',
+    'timezone':   '+08:00',
 };
 
 Object.freeze( config );

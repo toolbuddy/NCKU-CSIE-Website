@@ -5,7 +5,6 @@ import {
     File,
     Tag,
 } from 'models/announcement/operations/associations.js';
-import { announcement, } from 'models/common/utils/connect.js';
 
 import AnnouncementValidationConstraints from 'models/announcement/constraints/post/announcement.js';
 import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/post/announcement-i18n.js';
@@ -35,8 +34,8 @@ function equalArray ( a, b ) {
 export default ( opt ) => {
     try {
         opt = opt || {};
+        const author = Number.parseInt( opt.author, 10 );
         const {
-            author = null,
             image = null,
             announcementI18n = null,
             tags = null,
