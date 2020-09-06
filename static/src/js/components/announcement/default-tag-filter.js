@@ -1086,9 +1086,11 @@ export default class DefaultTagFilter {
             method: 'PUT',
             body:   formData,
         } )
-        .then( async () => {
-            classRemove( this.DOM.preview.block, 'delete-preview--show' );
-            this.getPinnedAnnouncement();
+        .then( async ( res ) => {
+            if ( res.ok ) {
+                classRemove( this.DOM.preview.block, 'delete-preview--show' );
+                this.getPinnedAnnouncement();
+            }
         } );
     }
 
