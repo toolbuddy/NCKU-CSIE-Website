@@ -161,22 +161,10 @@ export default class DefaultDataManagement {
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.itemId = element.target.getAttribute( 'data-id' );
-            this.status.patchButton = element.target;
+            this.status.itemId = Number( element.target.getAttribute( 'data-id' ) );
 
-            const tableData = data.map( ( i18nData ) => {
-                const dict = {};
-                i18nData[ this.config.dbTable ].forEach( ( row ) => {
-                    dict[ row[ this.config.idColumn ] ] = row;
-                } );
-                return dict;
-            } );
-
-            return tableData;
-        } )
-        .then( ( data ) => {
-            const itemId = element.target.getAttribute( 'data-id' );
-            this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ itemId ] ) );
+            const itemData = data.map( dbData => dbData[ this.config.dbTable ].filter( item => item[ this.config.idColumn ] === this.status.itemId )[ 0 ] );
+            this.showPatchForm( itemData );
         } );
     }
 
