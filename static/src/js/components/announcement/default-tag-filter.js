@@ -1088,8 +1088,6 @@ export default class DefaultTagFilter {
             body:   formData,
         } )
         .then( async () => {
-            await delay( 100 );
-
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
             await this.getPinnedAnnouncement();
             this.DOM.preview.button.check.disabled = false;

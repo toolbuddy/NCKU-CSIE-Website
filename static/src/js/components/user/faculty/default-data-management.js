@@ -132,6 +132,7 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
+
                 e.target.disabled = true;
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
@@ -139,10 +140,8 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId: this.config.profileId,
                         dbTable:   this.config.dbTable,
-                        item:      data.item,
-                        i18n:      data.i18n,
+                        data,
                     } ),
                 } )
                 .then( () => {
@@ -182,11 +181,8 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
                         dbTable:       this.config.dbTable,
-                        dbTableItemId: Number( this.status.itemId ),
-                        item:          data.item,
-                        i18n:          data.i18n,
+                        data,
                     } ),
                 } )
                 .then( () => {
@@ -363,28 +359,27 @@ export default class DefaultDataManagement {
 
     async formatFormData ( method ) {
         const data = {
-            item: {},
-            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+            profileId:                          Number( this.config.profileId ),
+            [ `${ this.config.dbTable }I18n` ]: LanguageUtils.supportedLanguageId.map( function ( id ) {
                 return { language: id, };
             } ),
         };
 
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                data[ `${ this.config.dbTable }I18n` ][ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                data.item[ element.name ] = element.checked;
+                data[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
-                data.item[ element.name ] = Number( element.value );
+                data[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                data.item[ element.name ] = element.value;
+                data[ element.name ] = element.value;
         } );
 
-        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
-            data.i18n = null;
-        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
-            data.item = null;
-
+        if ( Object.keys( data[ `${ this.config.dbTable }I18n` ][ 0 ] ).length === 1 && data[ `${ this.config.dbTable }I18n` ][ 0 ].constructor === Object )
+            data[ `${ this.config.dbTable }I18n` ] = null;
+        if ( method === 'patch' )
+            data.dbTableItemId = Number( this.status.itemId );
         return data;
     }
 

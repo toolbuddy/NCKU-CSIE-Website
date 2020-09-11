@@ -139,10 +139,8 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId: this.config.profileId,
                         dbTable:   this.config.table,
-                        item:      data.item,
-                        i18n:      data.i18n,
+                        data,
                     } ),
                 } )
                 .then( () => {
@@ -194,11 +192,8 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
-                        dbTable:       this.config.table,
-                        dbTableItemId: Number( this.status.itemId ),
-                        item:          data.item,
-                        i18n:          data.i18n,
+                        dbTable:   this.config.dbTable,
+                        data,
                     } ),
                 } )
                 .then( () => {
@@ -350,22 +345,22 @@ export default class DefaultDataManagement {
 
     async formatFormData ( method ) {
         const data = {
-            item: {},
-            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+            profileId:                          this.config.profileId,
+            [ this.config.table ]: LanguageUtils.supportedLanguageId.map( function ( id ) {
                 return { language: id, };
             } ),
         };
 
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                data[ this.config.table ][ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else
-                data.item[ element.name ] = element.value;
+                data[ element.name ] = element.value;
         } );
-        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
-            data.i18n = null;
-        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
-            data.item = null;
+        if ( Object.keys( data[ this.config.table ][ 0 ] ).length === 1 && data[ this.config.table ][ 0 ].constructor === Object )
+            data[ `${ this.config.dbTable }I18n` ] = null;
+        if ( method === 'patch' )
+            data.dbTableItemId = Number( this.status.itemId );
 
         return data;
     }

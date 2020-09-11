@@ -97,13 +97,13 @@ export default class ProfileDataManagement {
                             'content-type': 'application/json',
                         },
                         body:   JSON.stringify( {
-                            profileId:     this.config.profileId,
                             dbTable:       tag.table,
-                            dbTableItemId: Number( tag.id ),
-                            item:          {
-                                type: Number( tag.id ),
+                            data:    {
+                                profileId:                this.config.profileId,
+                                dbTableItemId:            Number( tag.id ),
+                                type:                     Number( tag.id ),
+                                [ `${ tag.table }I18n` ]:      null,
                             },
-                            i18n:      null,
                         } ),
                     } )
                     .then( () => {
@@ -215,11 +215,8 @@ export default class ProfileDataManagement {
                             'content-type': 'application/json',
                         },
                         body:   JSON.stringify( {
-                            profileId:     this.config.profileId,
                             dbTable:       'profile',
-                            dbTableItemId: this.config.profileId,
-                            item:          data.item,
-                            i18n:          data.i18n,
+                            data,
                         } ),
                     } )
                     .then( () => {
@@ -331,27 +328,26 @@ export default class ProfileDataManagement {
 
     async formatFormData ( method ) {
         const data = {
-            item: {},
-            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
+            profileId:     this.config.profileId,
+            dbTableItemId: this.config.profileId,
+            profileI18n:   LanguageUtils.supportedLanguageId.map( function ( id ) {
                 return { language: id, };
             } ),
         };
 
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                data.profileI18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                data.item[ element.name ] = element.checked;
+                data[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
-                data.item[ element.name ] = Number( element.value );
+                data[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                data.item[ element.name ] = element.value;
+                data[ element.name ] = element.value;
         } );
 
-        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
-            data.i18n = null;
-        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
-            data.item = null;
+        if ( Object.keys( data.profileI18n[ 0 ] ).length === 1 && data.profileI18n[ 0 ].constructor === Object )
+            data.profileI18n = null;
 
         return data;
     }
