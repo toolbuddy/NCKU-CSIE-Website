@@ -20,6 +20,7 @@ import ProjectI18nValidationConstraints from 'models/faculty/constraints/add/pro
 import PublicationValidationConstraints from 'models/faculty/constraints/add/publication.js';
 import PublicationI18nValidationConstraints from 'models/faculty/constraints/add/publication-i18n.js';
 import ResearchGroupValidationConstraints from 'models/faculty/constraints/add/research-group.js';
+import SpecialtyValidationConstraints from 'models/faculty/constraints/add/specialty.js';
 import SpecialtyI18nValidationConstraints from 'models/faculty/constraints/add/specialty-i18n.js';
 import StudentValidationConstraints from 'models/faculty/constraints/add/student.js';
 import StudentI18nValidationConstraints from 'models/faculty/constraints/add/student-i18n.js';
@@ -49,6 +50,7 @@ const validationConstraints = {
     Publication:                  PublicationValidationConstraints,
     PublicationI18n:              PublicationI18nValidationConstraints,
     ResearchGroup:                ResearchGroupValidationConstraints,
+    Specialty:                    SpecialtyValidationConstraints,
     SpecialtyI18n:                SpecialtyI18nValidationConstraints,
     Student:                      StudentValidationConstraints,
     StudentI18n:                  StudentI18nValidationConstraints,
@@ -97,29 +99,22 @@ export default async ( opt ) => {
         }
 
         // Check if profileId is valid
-        if ( !validateUtils.isValidId( opt.profileId ) ) {
+        if ( !validateUtils.isValidId( opt.data.profileId ) ) {
             const error = new Error( 'Invalid profile id' );
             error.status = 400;
             throw error;
         }
 
-        // Check if non-i18n part follow the validation constraint
-        if ( opt.item !== null ) {
-            const item = Object.assign( {}, opt.item );
-            if ( opt.i18n !== null )
-                item.i18n = opt.i18n;
-
-            if ( typeof ( validate( item, validationConstraints[ dbTable ] ) ) !== 'undefined' ) {
-                const error = new Error( `Invalid ${ dbTable } object` );
-                error.status = 400;
-                throw error;
-            }
+        // Check if data follow the validation constraint
+        if ( typeof ( validate( opt.data, validationConstraints[ dbTable ] ) ) !== 'undefined' ) {
+            const error = new Error( `Invalid ${ dbTable } object` );
+            error.status = 400;
+            throw error;
         }
 
-        // Check if i18n part follow validation constraint
-        if ( opt.i18n !== null ) {
+        if ( opt.data[ `${ opt.dbTable }I18n` ] ) {
             const langArr = [];
-            for ( const i18nData of opt.i18n ) {
+            for ( const i18nData of opt.data[ `${ opt.dbTable }I18n` ] ) {
                 if ( typeof ( validate( i18nData, validationConstraints[ `${ dbTable }I18n` ] ) ) !== 'undefined' ) {
                     const error = new Error( `Invalid ${ dbTable }I18n object` );
                     error.status = 400;
@@ -134,58 +129,22 @@ export default async ( opt ) => {
             }
         }
 
-        // Insert data with both non-i18n and i18n part
-        if ( opt.item !== null && opt.i18n !== null ) {
-            await tables[ dbTable ].create(
-                Object.assign(
-                    {
-                        profileId:                  opt.profileId,
-                        [ `${ opt.dbTable }I18n` ]:      opt.i18n,
-                    },
-                    opt.item
-                ),
+        // Insert data
+        return tables[ dbTable ].create(
+            opt.data,
+            opt.data[ `${ opt.dbTable }I18n` ] ?
                 {
                     include: [ {
                         model: tables[ `${ dbTable }I18n` ],
                         as:    `${ opt.dbTable }I18n`,
                     }, ],
-                }
-            )
-            .catch( ( err ) => {
-                throw err;
-            } );
-        }
-
-        // Insert data with only i18n part
-        else if ( opt.i18n !== null ) {
-            await tables[ `${ dbTable }I18n` ].bulkCreate(
-                opt.i18n.map( obj => Object.assign(
-                    {
-                        profileId: opt.profileId,
-                    },
-                    obj
-                ) )
-            )
-            .catch( ( err ) => {
-                throw err;
-            } );
-        }
-
-        // Insert data with only non-i18n part
-        else if ( opt.item !== null ) {
-            await tables[ dbTable ].create(
-                Object.assign(
-                    {
-                        profileId: opt.profileId,
-                    },
-                    opt.item
-                ),
-            )
-            .catch( ( err ) => {
-                throw err;
-            } );
-        }
-        return;
+                } :
+                null
+        )
+        .then( () => ( { 'message': 'success', } ) )
+        .catch( ( err ) => {
+            throw err;
+        } );
     }
     catch ( err ) {
         console.error( err );

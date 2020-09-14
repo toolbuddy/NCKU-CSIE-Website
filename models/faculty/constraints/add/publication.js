@@ -36,7 +36,7 @@ const PublicationValidationConstraints = {
             type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
-    i18n: {
+    publicationI18n: {
         presence: {
             allowEmpty: false,
         },

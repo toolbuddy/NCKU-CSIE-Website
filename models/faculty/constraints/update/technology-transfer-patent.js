@@ -7,12 +7,6 @@ const TechnologyTransferPatentValidationConstraints = {
             type: value => ValidateUtils.isValidId( value ),
         },
     },
-    i18n: {
-        presence: {
-            allowEmpty: false,
-        },
-        type:     'array',
-    },
 };
 
 export default TechnologyTransferPatentValidationConstraints;

@@ -4,12 +4,6 @@ import LanguageUtils from 'models/common/utils/language.js';
 
 const SpecialtyI18n = faculty.define( 'specialtyI18n', {
     specialtyId: {
-        type:          Sequelize.INTEGER.UNSIGNED,
-        allowNull:     false,
-        primaryKey:    true,
-        autoIncrement: true,
-    },
-    profileId: {
         type:       Sequelize.INTEGER.UNSIGNED,
         allowNull:  false,
         primaryKey: true,

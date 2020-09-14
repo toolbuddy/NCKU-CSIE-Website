@@ -22,7 +22,7 @@ const ProjectValidationConstraints = {
             type: value => projectCategoryUtils.isSupportedId( value ),
         },
     },
-    i18n: {
+    projectI18n: {
         presence: {
             allowEmpty: false,
         },

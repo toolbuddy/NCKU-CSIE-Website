@@ -8,7 +8,7 @@ const TechnologyTransferPatentValidationConstraints = {
             type: value => ValidateUtils.isValidId( value ),
         },
     },
-    i18n: {
+    technologyTransferPatentI18n: {
         presence: {
             allowEmpty: false,
         },

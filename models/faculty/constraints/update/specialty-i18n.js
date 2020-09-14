@@ -1,15 +1,6 @@
-import ValidateUtils from 'models/common/utils/validate.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
 const SpecialtyI18nValidationConstraints = {
-    specialtyId: {
-        presence: {
-            allowEmpty: false,
-        },
-        type: {
-            type: ValidateUtils.isValidId,
-        },
-    },
     language: {
         presence: {
             allowEmpty: false,

@@ -15,7 +15,7 @@ const TechnologyTransferValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    technologyTransferI18n: {
         presence: {
             allowEmpty: false,
         },

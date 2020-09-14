@@ -2,12 +2,6 @@ import nationUtils from 'models/faculty/utils/nation.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
 const PatentValidationConstraints = {
-    patentId: {
-        presence: true,
-        type:     {
-            type: ValidateUtils.isValidId,
-        },
-    },
     nation: {
         presence: false,
         type:     {
@@ -38,10 +32,6 @@ const PatentValidationConstraints = {
         type:     {
             type: value => ValidateUtils.isValidDate( value ),
         },
-    },
-    i18n: {
-        presence: false,
-        type:     'array',
     },
 };
 

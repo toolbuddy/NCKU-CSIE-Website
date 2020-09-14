@@ -34,7 +34,7 @@ const PatentValidationConstraints = {
             type: value => ValidateUtils.isValidDate( value ),
         },
     },
-    i18n: {
+    patentI18n: {
         presence: {
             allowEmpty: false,
         },

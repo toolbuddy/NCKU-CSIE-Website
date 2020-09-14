@@ -23,6 +23,7 @@ import {
     PublicationI18n,
     Publication,
     ResearchGroup,
+    Specialty,
     SpecialtyI18n,
     StudentAwardI18n,
     StudentAward,
@@ -67,7 +68,7 @@ export default async ( opt ) => {
             project,
             publication,
             researchGroup,
-            specialtyI18n,
+            specialty,
             studentAward,
             technologyTransfer,
             title,
@@ -277,14 +278,23 @@ export default async ( opt ) => {
                     profileId,
                 },
             } ),
-            SpecialtyI18n.findAll( {
-                attributes: [
-                    'specialty',
-                ],
-                where: {
+            Specialty.findAll( {
+                attributes: [],
+                where:      {
                     profileId,
-                    language: languageId,
                 },
+                include: [
+                    {
+                        model:      SpecialtyI18n,
+                        as:         'specialtyI18n',
+                        attributes: [
+                            'specialty',
+                        ],
+                        where: {
+                            language: languageId,
+                        },
+                    },
+                ],
             } ),
             StudentAward.findAll( {
                 attributes: [
@@ -478,7 +488,7 @@ export default async ( opt ) => {
                 id: researchGroup.type,
                 languageId,
             } ) ),
-            specialty:     specialtyI18n.map( specialty => specialty.specialty ),
+            specialty:     specialty.map( specialty => specialty.specialtyI18n[ 0 ].specialty ),
             studentAward:  studentAward.map( studentAward => ( {
                 award:        studentAward.studentAwardI18n[ 0 ].award,
                 receivedYear: studentAward.receivedYear,

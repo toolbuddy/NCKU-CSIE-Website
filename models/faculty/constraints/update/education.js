@@ -1,16 +1,7 @@
-import ValidateUtils from 'models/common/utils/validate.js';
 import nationUtils from 'models/faculty/utils/nation.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 
 const EducationValidationConstraints = {
-    educationId: {
-        presence: {
-            allowEmpty: false,
-        },
-        type: {
-            type: ValidateUtils.isValidId,
-        },
-    },
     nation: {
         presence: false,
         type:     {
@@ -36,10 +27,6 @@ const EducationValidationConstraints = {
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
-    },
-    i18n: {
-        presence: false,
-        type:     'array',
     },
 };
 

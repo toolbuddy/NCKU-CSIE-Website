@@ -8,7 +8,7 @@ const ConferenceValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    conferenceI18n: {
         presence: {
             allowEmpty: false,
         },

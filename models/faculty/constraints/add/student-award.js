@@ -8,7 +8,7 @@ const StudentAwardValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    studentAwardI18n: {
         presence: {
             allowEmpty: false,
         },

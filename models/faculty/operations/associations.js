@@ -16,6 +16,7 @@ import Project from 'models/faculty/schemas/project.js';
 import PublicationI18n from 'models/faculty/schemas/publication-i18n.js';
 import Publication from 'models/faculty/schemas/publication.js';
 import ResearchGroup from 'models/faculty/schemas/research-group.js';
+import Specialty from 'models/faculty/schemas/specialty.js';
 import SpecialtyI18n from 'models/faculty/schemas/specialty-i18n.js';
 import StudentAwardI18n from 'models/faculty/schemas/student-award-i18n.js';
 import StudentAward from 'models/faculty/schemas/student-award.js';
@@ -130,8 +131,14 @@ Profile.hasMany( ResearchGroup, {
     sourceKey:  'profileId',
 } );
 
-Profile.hasMany( SpecialtyI18n, {
+Specialty.hasMany( SpecialtyI18n, {
     as:         'specialtyI18n',
+    foreignKey: 'specialtyId',
+    sourceKey:  'specialtyId',
+} );
+
+Profile.hasMany( Specialty, {
+    as:         'specialty',
     foreignKey: 'profileId',
     sourceKey:  'profileId',
 } );
@@ -215,6 +222,7 @@ export {
     PublicationI18n,
     Publication,
     ResearchGroup,
+    Specialty,
     SpecialtyI18n,
     StudentAwardI18n,
     StudentAward,
@@ -247,6 +255,7 @@ export default {
     PublicationI18n,
     Publication,
     ResearchGroup,
+    Specialty,
     SpecialtyI18n,
     StudentAwardI18n,
     StudentAward,

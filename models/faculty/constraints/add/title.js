@@ -15,7 +15,7 @@ const TitleValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    titleI18n: {
         presence: {
             allowEmpty: false,
         },

@@ -29,7 +29,7 @@ const EducationValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    educationI18n: {
         presence: {
             allowEmpty: false,
         },

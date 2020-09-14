@@ -15,7 +15,7 @@ const StudentValidationConstraints = {
             type: value => ValidateUtils.isValidId( value ),
         },
     },
-    i18n: {
+    studentI18n: {
         presence: {
             allowEmpty: false,
         },

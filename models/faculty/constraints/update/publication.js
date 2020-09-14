@@ -2,12 +2,6 @@ import ValidateUtils from 'models/common/utils/validate.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 
 const PublicationValidationConstraints = {
-    publicationId: {
-        presence: true,
-        type:     {
-            type: ValidateUtils.isValidId,
-        },
-    },
     issueYear: {
         presence:     false,
         type:         'integer',
@@ -40,10 +34,6 @@ const PublicationValidationConstraints = {
         type:     {
             type: value => ValidateUtils.isValidBoolean( value ),
         },
-    },
-    i18n: {
-        presence: false,
-        type:     'array',
     },
 };
 

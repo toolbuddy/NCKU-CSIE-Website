@@ -15,7 +15,7 @@ const ExperienceValidationConstraints = {
             greaterThanOrEqualTo: 1970,
         },
     },
-    i18n: {
+    experienceI18n: {
         presence: {
             allowEmpty: false,
         },
