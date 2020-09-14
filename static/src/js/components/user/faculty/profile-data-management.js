@@ -91,20 +91,30 @@ export default class ProfileDataManagement {
             this.researchGroup, ].forEach( ( obj ) => {
             obj.forEach( ( tag ) => {
                 tag.node.addEventListener( 'click', () => {
+                    let body = {};
+                    if ( tag.selected ) {
+                        body = {
+                            dbTable:   tag.table,
+                            profileId: this.config.profileId,
+                            type:      Number( tag.id ),
+                        };
+                    }
+                    else {
+                        body = {
+                            dbTable: tag.table,
+                            data:    {
+                                type:                     Number( tag.id ),
+                                profileId:                this.config.profileId,
+                                [ `${ tag.table }I18n` ]: null,
+                            },
+                        };
+                    }
                     fetch( `${ host }/user/faculty/profile`, {
                         method:  ( tag.selected ) ? 'DELETE' : 'POST',
                         headers: {
                             'content-type': 'application/json',
                         },
-                        body:   JSON.stringify( {
-                            dbTable:       tag.table,
-                            profileId:     this.config.profileId,
-                            dbTableItemId: Number( tag.id ),
-                            item:          {
-                                type: Number( tag.id ),
-                            },
-                            i18n: [],
-                        } ),
+                        body:   JSON.stringify( body ),
                     } )
                     .then( () => {
                         if ( tag.selected ) {

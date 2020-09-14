@@ -132,10 +132,6 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-                console.log( {
-                    dbTable:   this.config.table,
-                    data,
-                } );
                 e.target.disabled = true;
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'POST',
@@ -154,8 +150,7 @@ export default class DefaultDataManagement {
                 .then( () => {
                     this.renderSuccess();
                     e.target.disabled = false;
-
-                    // Window.location.reload();
+                    window.location.reload();
                 } );
             }
         } );
@@ -190,13 +185,6 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const { item, i18n, } = await this.formatFormData( 'patch' );
-                console.log( {
-                    dbTable:       this.config.table,
-                    profileId:     this.config.profileId,
-                    dbTableItemId: this.status.itemId,
-                    item,
-                    i18n,
-                } );
                 e.target.disabled = true;
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
