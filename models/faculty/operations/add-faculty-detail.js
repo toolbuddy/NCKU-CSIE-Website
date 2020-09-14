@@ -90,6 +90,7 @@ export default async ( opt ) => {
 
         // Turn first letter of table name to uppercase
         // TODO: check if a valid table name?
+        // TODO: check if going to create profile?
         if ( typeof opt.dbTable === typeof '' )
             dbTable = opt.dbTable[ 0 ].toUpperCase() + opt.dbTable.substr( 1 );
         else {

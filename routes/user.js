@@ -275,38 +275,8 @@ router
     }
 } )
 .delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
-    const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-    let uploadData = '';
-
     try {
-        const dbTable = ( data.dbTable === 'specialty' ) ? 'specialtyI18n' : data.dbTable;
-        uploadData = {
-            profileId:            data.profileId,
-            [ data.method ]: {
-                [ dbTable ]: [
-                    Number( data.dbTableItemId ),
-                ],
-            },
-        };
-        await deleteFacultyDetail( {
-            profileId:                uploadData.profileId,
-            department:               uploadData.delete.department,
-            education:                uploadData.delete.education,
-            experience:               uploadData.delete.experience,
-            researchGroup:            uploadData.delete.researchGroup,
-            specialtyI18n:            uploadData.delete.specialtyI18n,
-            title:                    uploadData.delete.title,
-            award:                    uploadData.delete.award,
-            conference:               uploadData.delete.conference,
-            publication:              uploadData.delete.publication,
-            patent:                   uploadData.delete.patent,
-            project:                  uploadData.delete.project,
-            studentAward:             uploadData.delete.studentAward,
-            technologyTransfer:       uploadData.delete.technologyTransfer,
-            student:                  uploadData.delete.student,
-            technologyTransferPatent: uploadData.delete.technologyTransferPatent,
-        } );
-        res.send( { message: 'success', } );
+        res.send( await deleteFacultyDetail( req.body ) );
     }
     catch ( err ) {
         console.error( err );
