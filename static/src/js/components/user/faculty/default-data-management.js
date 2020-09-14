@@ -132,7 +132,6 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
-
                 e.target.disabled = true;
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
@@ -173,7 +172,8 @@ export default class DefaultDataManagement {
             const isValid = await this.dataValidation( 'patch' );
 
             if ( isValid ) {
-                const data = await this.formatFormData( 'patch' );
+                const { item, i18n, } = await this.formatFormData( 'patch' );
+
                 e.target.disabled = true;
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
@@ -182,7 +182,10 @@ export default class DefaultDataManagement {
                     },
                     body:   JSON.stringify( {
                         dbTable:       this.config.dbTable,
-                        data,
+                        profileId:     this.config.profileId,
+                        dbTableItemId: this.status.itemId,
+                        item,
+                        i18n,
                     } ),
                 } )
                 .then( () => {
@@ -201,7 +204,7 @@ export default class DefaultDataManagement {
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.itemId = e.target.getAttribute( 'data-id' );
+            this.status.itemId = Number( e.target.getAttribute( 'data-id' ) );
             const rowData = data[ this.config.dbTable ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
@@ -225,7 +228,7 @@ export default class DefaultDataManagement {
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.dbTable,
-                    dbTableItemId:  Number( this.status.itemId ),
+                    dbTableItemId:  this.status.itemId,
                 } ),
             } )
             .then( () => {
@@ -358,29 +361,35 @@ export default class DefaultDataManagement {
     }
 
     async formatFormData ( method ) {
-        const data = {
-            profileId:                          Number( this.config.profileId ),
-            [ `${ this.config.dbTable }I18n` ]: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { language: id, };
-            } ),
-        };
+        const item = {};
+        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+            return { language: id, };
+        } );
 
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data[ `${ this.config.dbTable }I18n` ][ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                data[ element.name ] = element.checked;
+                item[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
-                data[ element.name ] = Number( element.value );
+                item[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                data[ element.name ] = element.value;
+                item[ element.name ] = element.value;
         } );
 
-        if ( Object.keys( data[ `${ this.config.dbTable }I18n` ][ 0 ] ).length === 1 && data[ `${ this.config.dbTable }I18n` ][ 0 ].constructor === Object )
-            data[ `${ this.config.dbTable }I18n` ] = null;
+        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+            i18n = [];
+
+        if ( method === 'post' ) {
+            const data = item;
+            data[ `${ this.config.dbTable }I18n` ] = ( Object.keys( i18n ).length === 0 ) ? null : i18n;
+            data.profileId = Number( this.config.profileId );
+
+            return data;
+        }
+
         if ( method === 'patch' )
-            data.dbTableItemId = Number( this.status.itemId );
-        return data;
+            return ( { item, i18n, } );
     }
 
     async exec () {

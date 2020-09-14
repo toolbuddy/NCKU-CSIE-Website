@@ -98,12 +98,12 @@ export default class ProfileDataManagement {
                         },
                         body:   JSON.stringify( {
                             dbTable:       tag.table,
-                            data:    {
-                                profileId:                this.config.profileId,
-                                dbTableItemId:            Number( tag.id ),
-                                type:                     Number( tag.id ),
-                                [ `${ tag.table }I18n` ]:      null,
+                            profileId:     this.config.profileId,
+                            dbTableItemId: Number( tag.id ),
+                            item:          {
+                                type: Number( tag.id ),
                             },
+                            i18n: [],
                         } ),
                     } )
                     .then( () => {
@@ -207,7 +207,7 @@ export default class ProfileDataManagement {
                 const isValid = await this.dataValidation( columnName );
 
                 if ( isValid ) {
-                    const data = await this.formatFormData( columnName );
+                    const { item, i18n, } = await this.formatFormData( columnName );
                     e.target.disabled = true;
                     fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
@@ -216,7 +216,10 @@ export default class ProfileDataManagement {
                         },
                         body:   JSON.stringify( {
                             dbTable:       'profile',
-                            data,
+                            profileId:     this.config.profileId,
+                            dbTableItemId: this.config.profileId,
+                            item,
+                            i18n,
                         } ),
                     } )
                     .then( () => {
@@ -327,29 +330,26 @@ export default class ProfileDataManagement {
     }
 
     async formatFormData ( method ) {
-        const data = {
-            profileId:     this.config.profileId,
-            dbTableItemId: this.config.profileId,
-            profileI18n:   LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { language: id, };
-            } ),
-        };
+        const item = {};
+        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+            return { language: id, };
+        } );
 
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.profileI18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                data[ element.name ] = element.checked;
+                item[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
-                data[ element.name ] = Number( element.value );
+                item[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                data[ element.name ] = element.value;
+                item[ element.name ] = element.value;
         } );
 
-        if ( Object.keys( data.profileI18n[ 0 ] ).length === 1 && data.profileI18n[ 0 ].constructor === Object )
-            data.profileI18n = null;
+        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+            i18n = [];
 
-        return data;
+        return { item, i18n, };
     }
 
     async exec () {

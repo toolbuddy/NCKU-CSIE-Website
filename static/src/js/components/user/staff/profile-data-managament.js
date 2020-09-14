@@ -145,27 +145,24 @@ export default class ProfileDataManagement {
 
                 if ( isValid ) {
                     new Promise( ( res ) => {
-                        const data = {
-                            profileId:     this.config.profileId,
-                            dbTableItemId: this.config.profileId,
-                            profileI18n:   LanguageUtils.supportedLanguageId.map( function ( id ) {
-                                return { language: id, };
-                            } ),
-                        };
+                        const item = {};
+                        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+                            return { language: id, };
+                        } );
 
                         Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
                             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                                data.profileI18n[ element.getAttribute( 'languageid' ) ][ columnName ] = element.value;
+                                i18n[ element.getAttribute( 'languageid' ) ][ columnName ] = element.value;
                             else
-                                data[ columnName ] = element.value;
+                                item[ columnName ] = element.value;
                         } );
 
-                        if ( Object.keys( data.profileI18n[ 0 ] ).length === 1 && data.profileI18n[ 0 ].constructor === Object )
-                            data.profileI18n = null;
+                        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+                            i18n = [];
 
-                        res( data );
+                        res( { item, i18n, } );
                     } )
-                    .then( ( opt ) => {
+                    .then( ( { item, i18n, } ) => {
                         fetch( `${ host }/user/staff/profile`, {
                             method:   'PATCH',
                             headers: {
@@ -173,7 +170,10 @@ export default class ProfileDataManagement {
                             },
                             body:   JSON.stringify( {
                                 dbTable:       'profile',
-                                data:    opt,
+                                profileId:     this.config.profileId,
+                                dbTableItemId: this.config.profileId,
+                                item,
+                                i18n,
                             } ),
                         } )
                         .then( () => {
