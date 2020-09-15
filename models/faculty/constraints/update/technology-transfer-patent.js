@@ -1,12 +1,3 @@
-import ValidateUtils from 'models/common/utils/validate.js';
-
-const TechnologyTransferPatentValidationConstraints = {
-    technologyTransferPatentId: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidId( value ),
-        },
-    },
-};
+const TechnologyTransferPatentValidationConstraints = {};
 
 export default TechnologyTransferPatentValidationConstraints;

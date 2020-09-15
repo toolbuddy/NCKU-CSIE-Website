@@ -1,6 +1,6 @@
-@mixin businessI18n-card ( ) {
+@mixin business-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .businessI18n-card.cards__businessI18n-card {
+  > .business-card.cards__business-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;
@@ -22,7 +22,7 @@
       radius: font__px-to-rem( 3 );
     }
 
-    > .businessI18n-card__value {
+    > .business-card__value {
       // [ layout ]
       display: flex;
       grid-area: value;
@@ -73,7 +73,7 @@
       }
     }
 
-    > .businessI18n-card__patch {
+    > .business-card__patch {
       // [ layout ]
       display: inline-flex;
       grid-area: patch;
@@ -94,7 +94,7 @@
       }
     }
 
-    > .businessI18n-card__delete {
+    > .business-card__delete {
       // [ layout ]
       display: inline-flex;
       grid-area: delete;

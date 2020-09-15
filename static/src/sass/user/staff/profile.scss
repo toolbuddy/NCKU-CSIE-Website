@@ -11,8 +11,8 @@
 @import 'components/user/faculty/local-topic';
 @import 'components/user/form/form';
 @import 'components/user/card/faculty/profile-card';
-@import 'components/user/card/staff/titleI18n-card';
-@import 'components/user/card/staff/businessI18n-card';
+@import 'components/user/card/staff/title-card';
+@import 'components/user/card/staff/business-card';
 
 .body {
   // [ variable ]
@@ -43,8 +43,8 @@
         ' breadcrumb '
         ' topic      '
         ' profile    '
-        ' titleI18n      '
-        ' businessI18n   ';
+        ' title      '
+        ' business   ';
       columns: 100%;
       rows: 2.5rem 2.5rem auto;
     }
@@ -147,10 +147,10 @@
       }
     }
 
-    > .content__titleI18n.titleI18n {
+    > .content__title.title {
       // [ layout ]
       display: block;
-      grid-area: titleI18n;
+      grid-area: title;
 
       // [ position ]
       margin: {
@@ -160,9 +160,9 @@
       }
       width: 94%;
       height: auto;
-      @include local-topic('titleI18n');
+      @include local-topic('title');
 
-      > .titleI18n__cards.cards {
+      > .title__cards.cards {
         // [ layout ]
         display: block;
 
@@ -171,16 +171,16 @@
         height: auto;
 
         // [ element ]
-        @include titleI18n-card();
+        @include title-card();
       }
-      @include refresh( $block: 'titleI18n' ) {
+      @include refresh( $block: 'title' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );
           bottom: font__px-to-rem( 64 );
         }
       }
-      @include loading( $block: 'titleI18n' ) {
+      @include loading( $block: 'title' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );
@@ -189,10 +189,10 @@
       }
     }
 
-    > .content__businessI18n.businessI18n {
+    > .content__business.business {
       // [ layout ]
       display: block;
-      grid-area: businessI18n;
+      grid-area: business;
 
       // [ position ]
       margin: {
@@ -202,9 +202,9 @@
       }
       width: 94%;
       height: auto;
-      @include local-topic('businessI18n');
+      @include local-topic('business');
 
-      > .businessI18n__cards.cards {
+      > .business__cards.cards {
         // [ layout ]
         display: block;
 
@@ -213,16 +213,16 @@
         height: auto;
 
         // [ element ]
-        @include businessI18n-card();
+        @include business-card();
       }
-      @include refresh( $block: 'businessI18n' ) {
+      @include refresh( $block: 'business' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );
           bottom: font__px-to-rem( 64 );
         }
       }
-      @include loading( $block: 'businessI18n' ) {
+      @include loading( $block: 'business' ) {
         // [ layout ]
         margin: {
           top: font__px-to-rem( 64 );

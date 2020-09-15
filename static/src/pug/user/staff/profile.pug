@@ -3,8 +3,8 @@ include /components/common/topic.pug
 include /components/user/faculty/navigation-bar.pug
 include /components/user/faculty/local-topic.pug
 include /components/user/card/staff/profile-card.pug
-include /components/user/card/staff/titleI18n-card.pug
-include /components/user/card/staff/businessI18n-card.pug
+include /components/user/card/staff/title-card.pug
+include /components/user/card/staff/business-card.pug
 include /components/user/form/form-input.pug
 
 append data
@@ -29,10 +29,10 @@ append data
             officeTel:    'Office Tel',
             email:        'Email',
           },
-          titleI18n: {
+          title: {
             topic: 'title',
           },
-          businessI18n: {
+          business: {
             topic: 'business',
           },
         },
@@ -56,10 +56,10 @@ append data
             officeTel:    '辦公室電話',
             email:        'Email',
           },
-          titleI18n: {
+          title: {
             topic: '職稱',
           },
-          businessI18n: {
+          business: {
             topic: '業務項目',
           },
         },
@@ -148,7 +148,7 @@ append data
           },
         },
       },
-      businessI18n: {
+      business: {
         [ LANG.getLanguageId( 'en-US' ) ]: {
           post: 'Add Your Business',
           patch: 'Modify Your Business',
@@ -172,7 +172,7 @@ append data
           }
         },
       },
-      titleI18n: {
+      title: {
         [ LANG.getLanguageId( 'en-US' ) ]: {
           post: 'Add Your Title',
           patch: 'Modify Your Title',
@@ -245,7 +245,7 @@ append data
           }
         ],
       },
-      businessI18n:  [
+      business:  [
         {
           inputPattern: 'i18n-text',
           columnName: 'business',
@@ -256,7 +256,7 @@ append data
           },
         },
       ],
-      titleI18n: [
+      title: [
         {
           inputPattern: 'i18n-text',
           columnName: 'title',
@@ -303,31 +303,31 @@ append content
     +profile-card( 'email', i18n[ LANG.id ].content.profile.email, data.profile.email )
     +profile-card( 'office-address', i18n[ LANG.id ].content.profile.officeAddress, data.profile.officeAddress )
     +profile-card( 'office-tel', i18n[ LANG.id ].content.profile.officeTel, data.profile.officeTel )
-  section.content__titleI18n.titleI18n
-    +local-topic( 'titleI18n', i18n[ LANG.id ].content.titleI18n.topic )
-    +refreshWithImage( 'titleI18n' )
-    +loading( 'titleI18n' )
-    section#titleI18n__cards.titleI18n__cards.cards
-      if Array.isArray( data.titleI18n ) && data.titleI18n.length
-        each titleI18nObj in data.titleI18n
-          +titleI18n-card( titleI18nObj )
+  section.content__title.title
+    +local-topic( 'title', i18n[ LANG.id ].content.title.topic )
+    +refreshWithImage( 'title' )
+    +loading( 'title' )
+    section#title__cards.title__cards.cards
+      if Array.isArray( data.title ) && data.title.length
+        each titleObj in data.title
+          +title-card( titleObj )
 
-  section.content__businessI18n.businessI18n
-    +local-topic( 'businessI18n', i18n[ LANG.id ].content.businessI18n.topic )
-    +refreshWithImage( 'businessI18n' )
-    +loading( 'businessI18n' )
-    section#businessI18n__cards.businessI18n__cards.cards
-      if Array.isArray( data.businessI18n ) && data.businessI18n.length
-        each businessObj in data.businessI18n
-          +businessI18n-card( businessObj )
+  section.content__business.business
+    +local-topic( 'business', i18n[ LANG.id ].content.business.topic )
+    +refreshWithImage( 'business' )
+    +loading( 'business' )
+    section#business__cards.business__cards.cards
+      if Array.isArray( data.business ) && data.business.length
+        each businessObj in data.business
+          +business-card( businessObj )
 
 append form
-  +form-input( 'businessI18n', 'post', formI18n.businessI18n, inputConfig.businessI18n )
-  +form-input( 'businessI18n', 'patch', formI18n.businessI18n, inputConfig.businessI18n )
-  +form-input( 'businessI18n', 'delete', formI18n.businessI18n, inputConfig.businessI18n )
-  +form-input( 'titleI18n', 'post', formI18n.titleI18n, inputConfig.titleI18n )
-  +form-input( 'titleI18n', 'patch', formI18n.titleI18n, inputConfig.titleI18n )
-  +form-input( 'titleI18n', 'delete', formI18n.titleI18n, inputConfig.titleI18n )
+  +form-input( 'business', 'post', formI18n.business, inputConfig.business )
+  +form-input( 'business', 'patch', formI18n.business, inputConfig.business )
+  +form-input( 'business', 'delete', formI18n.business, inputConfig.business )
+  +form-input( 'title', 'post', formI18n.title, inputConfig.title )
+  +form-input( 'title', 'patch', formI18n.title, inputConfig.title )
+  +form-input( 'title', 'delete', formI18n.title, inputConfig.title )
   each val, key in formI18n.profile
     +form-input( key, 'patch', formI18n.profile[ key ], inputConfig.profile[ key ] )
 

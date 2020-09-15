@@ -1072,6 +1072,7 @@ export default class DefaultTagFilter {
     }
 
     async sendPinRequest () {
+        this.DOM.preview.button.check.disabled = true;
         fetch( `${ host }/user/announcement`, {
             method: 'PATCH',
             body:   JSON.stringify( {
@@ -1084,11 +1085,13 @@ export default class DefaultTagFilter {
         } )
         .then( async () => {
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
-            this.getPinnedAnnouncement();
+            await this.getPinnedAnnouncement();
+            this.DOM.preview.button.check.disabled = false;
         } );
     }
 
     async sendDeleteRequest () {
+        this.DOM.preview.button.check.disabled = true;
         fetch( `${ host }/user/announcement`, {
             method: 'DELETE',
             body:   JSON.stringify( {
@@ -1100,6 +1103,7 @@ export default class DefaultTagFilter {
         } )
         .then( async () => {
             classRemove( this.DOM.preview.block, 'delete-preview--show' );
+            this.DOM.preview.button.check.disabled = false;
             this.getAll();
         } );
     }

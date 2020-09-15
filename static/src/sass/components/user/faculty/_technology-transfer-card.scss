@@ -10,10 +10,16 @@
     display: grid;
     grid-template: {
       areas:
-        'topic-award        patch               delete '
-        'value-award        value-award         value-award '
-        'student      student student'
-        'student-post student-post student-post';
+        'topic-technology       patch                  delete '
+        'value-technology       value-technology       value-technology '
+        'topic-authorizingParty topic-authorizingParty topic-authorizingParty'
+        'value-authorizingParty value-authorizingParty value-authorizingParty'
+        'topic-authorizedParty  topic-authorizedParty  topic-authorizedParty'
+        'value-authorizedParty  value-authorizedParty  value-authorizedParty'
+        'topic-duration         topic-duration         topic-duration'
+        'value-duration         value-duration         value-duration'
+        'patent                 patent                 patent'
+        'patent-post            patent-post            patent-post';
       columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
     };
     column-gap: font__px-to-rem( 10 );
@@ -38,10 +44,16 @@
     @media screen and ( min-width: $medium ) {
       grid-template: {
         areas:
-          'topic-award  patch delete '
-          'value-award  patch delete '
-          'student      patch delete '
-          'student-post patch delete ';
+          'topic-technology       patch delete '
+          'value-technology       patch delete '
+          'topic-authorizingParty patch delete '
+          'value-authorizingParty patch delete '
+          'topic-authorizedParty patch delete '
+          'value-authorizedParty patch delete '
+          'topic-duration        patch delete '
+          'value-duration        patch delete '
+          'patent                patch delete '
+          'patent-post           patch delete ';
         columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
       };
       column-gap: font__px-to-rem( 16 );
@@ -76,12 +88,24 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
 
-      &--award {
-        grid-area: topic-award;
+      &--technology {
+        grid-area: topic-technology;
+      }
+
+      &--authorizingParty {
+        grid-area: topic-authorizingParty;
+      }
+
+      &--authorizedParty {
+        grid-area: topic-authorizedParty;
+      }
+
+      &--duration {
+        grid-area: topic-duration;
       }
     }
 
-    > .technology-transfer-card__value {
+    > .technology-transfer-card__value.value {
       // [ layout ]
       display: flex;
       justify-self: flex-start;
@@ -93,8 +117,20 @@
       letter-spacing: normal;
       color: rgba( 0, 0, 0, .87 );
 
-      &--award {
-        grid-area: value-award;
+      &--technology {
+        grid-area: value-technology;
+      }
+
+      &--authorizingParty {
+        grid-area: value-authorizingParty;
+      }
+
+      &--authorizedParty {
+        grid-area: value-authorizedParty;
+      }
+
+      &--duration {
+        grid-area: value-duration;
       }
     }
 

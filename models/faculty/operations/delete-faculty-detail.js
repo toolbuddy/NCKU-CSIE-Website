@@ -25,8 +25,12 @@ export default async ( opt ) => {
             throw error;
         }
 
-        // Check if dbTableItemId is valid
-        if ( !validateUtils.isPositiveInteger( opt.dbTableItemId ) ) {
+        // Check if dbTableItemId or type is valid
+        if ( !validateUtils.isPositiveInteger(
+            dbTable === 'Department' || dbTable === 'ResearchGroup' ?
+                opt.type :
+                opt.dbTableItemId
+        ) ) {
             const error = new Error( `Invalid ${ dbTable } id` );
             error.status = 400;
             throw error;
@@ -35,14 +39,15 @@ export default async ( opt ) => {
         // StudentAward need different delete procedure
         if ( dbTable === 'StudentAward' ) {
             return faculty.transaction( t => tables.Student.findAll( {
-                where: {
+                attributes: [ 'studentId', ],
+                where:      {
                     studentAwardId: opt.dbTableItemId,
                 },
                 transaction: t,
             } )
-            .then( studentId => tables.StudentI18n.destroy( {
+            .then( ids => tables.StudentI18n.destroy( {
                 where: {
-                    studentId,
+                    studentId: ids.map( id => id.studentId ),
                 },
                 transaction: t,
             } ) )
@@ -73,14 +78,15 @@ export default async ( opt ) => {
         // TechnologyTransfer need different delete procedure
         if ( dbTable === 'TechnologyTransfer' ) {
             return faculty.transaction( t => tables.TechnologyTransferPatent.findAll( {
-                where: {
+                attributes: [ 'technologyTransferPatentId', ],
+                where:      {
                     technologyTransferId: opt.dbTableItemId,
                 },
                 transaction: t,
             } )
-            .then( technologyTransferPatentId => tables.TechnologyTransferPatentI18n.destroy( {
+            .then( ids => tables.TechnologyTransferPatentI18n.destroy( {
                 where: {
-                    technologyTransferPatentId,
+                    technologyTransferPatentId: ids.map( id => id.technologyTransferPatentId ),
                 },
                 transaction: t,
             } ) )
@@ -96,7 +102,7 @@ export default async ( opt ) => {
                 },
                 transaction: t,
             } ) )
-            .then( () => tables.technologyTransfer.destroy( {
+            .then( () => tables.TechnologyTransfer.destroy( {
                 where: {
                     technologyTransferId: opt.dbTableItemId,
                 },

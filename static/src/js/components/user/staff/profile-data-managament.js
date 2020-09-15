@@ -145,11 +145,11 @@ export default class ProfileDataManagement {
 
                 if ( isValid ) {
                     new Promise( ( res ) => {
-                        let item = {};
-
+                        const item = {};
                         let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
                             return { language: id, };
                         } );
+
                         Array.from( this.DOM[ columnName ].input ).forEach( ( element ) => {
                             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
                                 i18n[ element.getAttribute( 'languageid' ) ][ columnName ] = element.value;
@@ -158,24 +158,22 @@ export default class ProfileDataManagement {
                         } );
 
                         if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
-                            i18n = null;
-                        if ( Object.keys( item ).length === 0 && item.constructor === Object )
-                            item = null;
+                            i18n = [];
 
                         res( { item, i18n, } );
                     } )
-                    .then( ( opt ) => {
+                    .then( ( { item, i18n, } ) => {
                         fetch( `${ host }/user/staff/profile`, {
                             method:   'PATCH',
                             headers: {
                                 'content-type': 'application/json',
                             },
                             body:   JSON.stringify( {
-                                profileId:     this.config.profileId,
                                 dbTable:       'profile',
+                                profileId:     this.config.profileId,
                                 dbTableItemId: this.config.profileId,
-                                item:          opt.item,
-                                i18n:          opt.i18n,
+                                item,
+                                i18n,
                             } ),
                         } )
                         .then( () => {

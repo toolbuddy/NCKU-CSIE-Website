@@ -91,20 +91,30 @@ export default class ProfileDataManagement {
             this.researchGroup, ].forEach( ( obj ) => {
             obj.forEach( ( tag ) => {
                 tag.node.addEventListener( 'click', () => {
+                    let body = {};
+                    if ( tag.selected ) {
+                        body = {
+                            dbTable:   tag.table,
+                            profileId: this.config.profileId,
+                            type:      Number( tag.id ),
+                        };
+                    }
+                    else {
+                        body = {
+                            dbTable: tag.table,
+                            data:    {
+                                type:                     Number( tag.id ),
+                                profileId:                this.config.profileId,
+                                [ `${ tag.table }I18n` ]: null,
+                            },
+                        };
+                    }
                     fetch( `${ host }/user/faculty/profile`, {
                         method:  ( tag.selected ) ? 'DELETE' : 'POST',
                         headers: {
                             'content-type': 'application/json',
                         },
-                        body:   JSON.stringify( {
-                            profileId:     this.config.profileId,
-                            dbTable:       tag.table,
-                            dbTableItemId: Number( tag.id ),
-                            item:          {
-                                type: Number( tag.id ),
-                            },
-                            i18n:      null,
-                        } ),
+                        body:   JSON.stringify( body ),
                     } )
                     .then( () => {
                         if ( tag.selected ) {
@@ -207,7 +217,7 @@ export default class ProfileDataManagement {
                 const isValid = await this.dataValidation( columnName );
 
                 if ( isValid ) {
-                    const data = await this.formatFormData( columnName );
+                    const { item, i18n, } = await this.formatFormData( columnName );
                     e.target.disabled = true;
                     fetch( `${ host }/user/faculty/profile`, {
                         method:   'PATCH',
@@ -215,11 +225,11 @@ export default class ProfileDataManagement {
                             'content-type': 'application/json',
                         },
                         body:   JSON.stringify( {
-                            profileId:     this.config.profileId,
                             dbTable:       'profile',
+                            profileId:     this.config.profileId,
                             dbTableItemId: this.config.profileId,
-                            item:          data.item,
-                            i18n:          data.i18n,
+                            item,
+                            i18n,
                         } ),
                     } )
                     .then( () => {
@@ -330,30 +340,26 @@ export default class ProfileDataManagement {
     }
 
     async formatFormData ( method ) {
-        const data = {
-            item: {},
-            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { language: id, };
-            } ),
-        };
+        const item = {};
+        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+            return { language: id, };
+        } );
 
         Array.from( this.DOM[ method ].form.elements ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else if ( element.getAttribute( 'input-pattern' ) === 'checkbox' )
-                data.item[ element.name ] = element.checked;
+                item[ element.name ] = element.checked;
             else if ( element.getAttribute( 'datatype' ) === 'int' )
-                data.item[ element.name ] = Number( element.value );
+                item[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                data.item[ element.name ] = element.value;
+                item[ element.name ] = element.value;
         } );
 
-        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
-            data.i18n = null;
-        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
-            data.item = null;
+        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+            i18n = [];
 
-        return data;
+        return { item, i18n, };
     }
 
     async exec () {

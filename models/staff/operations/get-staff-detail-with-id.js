@@ -88,10 +88,6 @@ export default async ( opt ) => {
         }
 
         return {
-            businessI18n: businessI18n.map( business => ( {
-                businessId:       business.businessId,
-                business:         business.business,
-            } ) ),
             profile: {
                 email:         profile.email,
                 name:          profileI18n.name,
@@ -100,7 +96,11 @@ export default async ( opt ) => {
                 photo:         profile.photo,
                 profileId,
             },
-            titleI18n: titleI18n.map( title => ( {
+            business: businessI18n.map( business => ( {
+                businessId:       business.businessId,
+                business:         business.business,
+            } ) ),
+            title: titleI18n.map( title => ( {
                 titleId:       title.titleId,
                 title:         title.title,
             } ) ),

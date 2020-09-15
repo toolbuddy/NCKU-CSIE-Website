@@ -1,6 +1,6 @@
-@mixin titleI18n-card ( ) {
+@mixin title-card ( ) {
   // `> .#{ $block } > .#{ $block }__input-block`
-  > .titleI18n-card.cards__titleI18n-card {
+  > .title-card.cards__title-card {
     // [ variable ]
     $large: 750px;
     $small: 500px;
@@ -22,7 +22,7 @@
       radius: font__px-to-rem( 3 );
     }
 
-    > .titleI18n-card__value {
+    > .title-card__value {
       // [ layout ]
       display: flex;
       grid-area: value;
@@ -73,7 +73,7 @@
       }
     }
 
-    > .titleI18n-card__patch {
+    > .title-card__patch {
       // [ layout ]
       display: inline-flex;
       grid-area: patch;
@@ -94,7 +94,7 @@
       }
     }
 
-    > .titleI18n-card__delete {
+    > .title-card__delete {
       // [ layout ]
       display: inline-flex;
       grid-area: delete;
