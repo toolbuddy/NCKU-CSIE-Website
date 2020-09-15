@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/technology-transfer-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -47,10 +48,10 @@ append data
           technology:       '',
         },
         title: {
-          authorizingParty: 'authorizing party',
-          authorizedParty:  'authorized party',
-          technology:       'technology',
-          duration:         'duration',
+          authorizingParty: 'Authorizing Party',
+          authorizedParty:  'Authorized Party',
+          technology:       'Technology',
+          duration:         'Duration',
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]:{
@@ -146,6 +147,9 @@ append data
         {
           inputPattern: 'hidden',
           columnName: 'technologyTransferId',
+          validation: {
+            datatype: 'int',
+          }
         }
       ],
     }
@@ -189,7 +193,8 @@ append content
           })
         each obj in data.technologyTransfer
           +technology-transfer-card( obj )
-
+      else
+        +no-record()
 append form
   +form-input( 'technology-transfer', 'post', formI18n, inputConfig.technologyTransfer )
   +form-input( 'technology-transfer', 'patch', formI18n, inputConfig.technologyTransfer )

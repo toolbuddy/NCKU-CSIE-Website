@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/project-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -47,10 +48,10 @@ append data
           category: '',
         },
         title: {
-          name:     'name',
-          support:  'support',
-          category: 'category',
-          duration: 'duration',
+          name:     'Name',
+          support:  'Support',
+          category: 'Category',
+          duration: 'Duration',
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]:{
@@ -148,7 +149,8 @@ append content
           each obj in data.project
             if obj.category == i
               +project-card(obj)
-
+      else
+        +no-record()
 append form
   +form-input( 'project', 'post', formI18n, inputConfig )
   +form-input( 'project', 'patch', formI18n, inputConfig )

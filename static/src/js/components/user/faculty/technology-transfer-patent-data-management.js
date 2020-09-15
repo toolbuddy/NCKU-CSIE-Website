@@ -5,7 +5,7 @@ export default class TechnologyTransferPatentDataManagement extends DefaultDataM
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.itemId = element.target.getAttribute( 'data-id' );
+            this.status.itemId = Number( element.target.getAttribute( 'data-id' ) );
             this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
@@ -21,7 +21,7 @@ export default class TechnologyTransferPatentDataManagement extends DefaultDataM
             return tableData;
         } )
         .then( ( data ) => {
-            const itemId = element.target.getAttribute( 'data-id' );
+            const itemId = Number( element.target.getAttribute( 'data-id' ) );
             this.showPatchForm( LanguageUtils.supportedLanguageId.map( languageId => data[ languageId ][ itemId ] ) );
         } );
     }
@@ -29,7 +29,7 @@ export default class TechnologyTransferPatentDataManagement extends DefaultDataM
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.itemId = e.target.getAttribute( 'data-id' );
+            this.status.itemId = Number( e.target.getAttribute( 'data-id' ) );
             data.technologyTransfer.forEach( ( row ) => {
                 row.technologyTransferPatent.forEach( ( patentRow ) => {
                     if ( patentRow.technologyTransferPatentId === Number( e.target.getAttribute( 'data-id' ) ) )

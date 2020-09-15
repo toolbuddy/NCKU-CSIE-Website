@@ -1,0 +1,11 @@
+mixin no-record()
+  -
+    const i18n = Object.freeze({
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+            empyt: 'Record Not Found'
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]: {
+            empty: '查無資料'
+        }
+    })
+  h4.cards__empty= i18n[ LANG.id ].empty

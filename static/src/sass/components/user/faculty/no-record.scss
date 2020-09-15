@@ -1,0 +1,18 @@
+@mixin no-record () {
+  > .cards__empty {
+    // [ layout ]
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // [ position ]
+    height: font__px-to-rem( 300 );
+
+    // [ skin ]
+    font: {
+      weight: bold;
+      size: font__px-to-rem( 24 );
+    }
+    color: rgba( 0, 0, 0, .87 );
+  }
+}

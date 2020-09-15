@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/award-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -131,6 +132,8 @@ append content
             -
               receivedYear = awardObj.receivedYear
           +award-card( awardObj )
+      else
+        +no-record()
 
 append form
   +form-input( 'award', 'post', formI18n, inputConfig )

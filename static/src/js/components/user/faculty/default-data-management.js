@@ -133,6 +133,10 @@ export default class DefaultDataManagement {
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
                 e.target.disabled = true;
+                console.log( {
+                    dbTable:   this.config.dbTable,
+                    data,
+                } );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
                     headers: {
@@ -143,14 +147,16 @@ export default class DefaultDataManagement {
                         data,
                     } ),
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.hideForm();
                     this.renderLoading();
+                    return res;
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.renderSuccess();
                     e.target.disabled = false;
-                    window.location.reload();
+                    if ( res.ok )
+                        window.location.reload();
                 } );
             }
         } );
@@ -173,8 +179,15 @@ export default class DefaultDataManagement {
 
             if ( isValid ) {
                 const { item, i18n, } = await this.formatFormData( 'patch' );
-
                 e.target.disabled = true;
+
+                console.log( {
+                    dbTable:       this.config.dbTable,
+                    profileId:     this.config.profileId,
+                    dbTableItemId: this.status.itemId,
+                    item,
+                    i18n,
+                } );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
                     headers: {
@@ -188,14 +201,17 @@ export default class DefaultDataManagement {
                         i18n,
                     } ),
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.hideForm();
                     this.renderLoading();
+
+                    return res;
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.renderSuccess();
                     e.target.disabled = false;
-                    window.location.reload();
+                    if ( res.ok )
+                        window.location.reload();
                 } );
             }
         } );
@@ -374,7 +390,7 @@ export default class DefaultDataManagement {
             else if ( element.getAttribute( 'datatype' ) === 'int' )
                 item[ element.name ] = Number( element.value );
             else if ( element.tagName === 'INPUT' )
-                item[ element.name ] = element.value;
+                item[ element.name ] = ( element.value.length > 0 ) ? element.value : null;
         } );
 
         if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )

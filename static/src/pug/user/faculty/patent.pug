@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/patent-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -184,8 +185,10 @@ append content
               return 1
             return new Date(a.applicationDate) - new Date(b.applicationDate)
           })
-      each obj in data.patent
-        +patent-card( obj )
+        each obj in data.patent
+          +patent-card( obj )
+      else
+        +no-record()
 
 append form
   +form-input( 'patent', 'post', formI18n, inputConfig )
