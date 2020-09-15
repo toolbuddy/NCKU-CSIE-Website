@@ -19,7 +19,7 @@
         'briefing__tags   briefing__tags   briefing__tags'
         'briefing__time   briefing__time   .'
         'briefing__button briefing__button briefing__button';
-      rows: min-content font__px-to-rem( 48 ) 1fr;
+      rows: min-content auto 1fr;
       columns: 5fr 1fr 13fr auto;
     }
     margin-bottom: font__px-to-rem( 14 );

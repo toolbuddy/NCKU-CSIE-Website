@@ -138,7 +138,7 @@
         // [ layout ]
         display: grid;
         grid: {
-          template-columns: none;
+          template-columns: 1fr;
           column-gap: 0;
           row-gap: font__px-to-rem( 5 );
         }

@@ -121,19 +121,21 @@ export default async ( opt ) => {
         }
 
         // Check if i18n part fit constraints (If nothing to change, it should be empty array)
-        const langArr = [];
-        for ( const i18nData of opt.i18n ) {
-            if ( typeof ( validate( i18nData, validationConstraints[ `${ dbTable }I18n` ] ) ) !== 'undefined' ) {
-                const error = new Error( `Invalid ${ dbTable }I18n object` );
+        if ( opt.i18n.length > 0 ) {
+            const langArr = [];
+            for ( const i18nData of opt.i18n ) {
+                if ( typeof ( validate( i18nData, validationConstraints[ `${ dbTable }I18n` ] ) ) !== 'undefined' ) {
+                    const error = new Error( `Invalid ${ dbTable }I18n object` );
+                    error.status = 400;
+                    throw error;
+                }
+                langArr.push( i18nData.language );
+            }
+            if ( !equalArray( langArr.sort( sortByValue ), languageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
+                const error = new Error( `Invalid length of ${ dbTable }I18n object` );
                 error.status = 400;
                 throw error;
             }
-            langArr.push( i18nData.language );
-        }
-        if ( !equalArray( langArr.sort( sortByValue ), languageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
-            const error = new Error( `Invalid length of ${ dbTable }I18n object` );
-            error.status = 400;
-            throw error;
         }
 
         // Update both part in one transaction.
@@ -147,18 +149,18 @@ export default async ( opt ) => {
                 },
                 transaction: t,
             } ) )
-            .then( () => {
-                if ( Object.keys( opt.item ).length === 0 && opt.item.constructor === Object ) {
-                    return tables[ dbTable ].update( opt.item, {
-                        where: {
-                            [ `${ opt.dbTable }Id` ]: opt.dbTableItemId,
-                            profileId:                opt.profileId,
-                        },
-                        transaction: t,
-                    } );
-                }
-            } )
-        ) )
+        )
+        .then( () => {
+            if ( Object.keys( opt.item ).length > 0 ) {
+                return tables[ dbTable ].update( opt.item, {
+                    where: {
+                        [ `${ opt.dbTable }Id` ]: opt.dbTableItemId,
+                        profileId:                opt.profileId,
+                    },
+                    transaction: t,
+                } );
+            }
+        } ) )
         .then( () => ( { 'message': 'success', } ) )
         .catch( ( err ) => {
             throw err;

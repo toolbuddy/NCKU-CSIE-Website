@@ -3,8 +3,8 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import ProfileDataManagement from 'static/src/js/components/user/staff/profile-data-managament.js';
 import DefaultDataManagement from 'static/src/js/components/user/staff/default-data-management.js';
-import businessI18nUtils from 'models/staff/utils/businessI18n.js';
-import titleI18nUtils from 'models/staff/utils/titleI18n.js';
+import businessUtils from 'models/staff/utils/business.js';
+import titleUtils from 'models/staff/utils/title.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
@@ -44,46 +44,46 @@ catch ( err ) {
 }
 
 try {
-    const titleI18nDataManagement = new DefaultDataManagement( {
+    const titleDataManagement = new DefaultDataManagement( {
         bodyFormDOM:      document.getElementById( 'form' ),
-        refreshDOM:       document.querySelector( '.content__titleI18n > .titleI18n__refresh' ),
-        loadingDOM:       document.querySelector( '.content__titleI18n > .titleI18n__loading' ),
-        cardsDOM:         document.getElementById( 'titleI18n__cards' ),
-        patchButtonsDOM:  document.getElementsByClassName( 'titleI18n-card__patch' ),
-        deleteButtonsDOM: document.getElementsByClassName( 'titleI18n-card__delete' ),
-        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--titleI18n' ),
+        refreshDOM:       document.querySelector( '.content__title > .title__refresh' ),
+        loadingDOM:       document.querySelector( '.content__title > .title__loading' ),
+        cardsDOM:         document.getElementById( 'title__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'title-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'title-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--title' ),
         languageId:       WebLanguageUtils.currentLanguageId,
-        table:            'titleI18n',
+        table:            'title',
         idColumn:         'titleId',
-        columnUnits:      titleI18nUtils,
+        columnUnits:      titleUtils,
         deletePreview:    data => `${ data.title }`,
     } );
-    if ( !( titleI18nDataManagement instanceof DefaultDataManagement ) )
-        throw new Error( 'award data management error' );
-    titleI18nDataManagement.exec();
+    if ( !( titleDataManagement instanceof DefaultDataManagement ) )
+        throw new Error( 'title data management error' );
+    titleDataManagement.exec();
 }
 catch ( err ) {
     console.error( err );
 }
 
 try {
-    const businessI18nDataManagement = new DefaultDataManagement( {
+    const businessDataManagement = new DefaultDataManagement( {
         bodyFormDOM:      document.getElementById( 'form' ),
-        refreshDOM:       document.querySelector( '.content__businessI18n > .businessI18n__refresh' ),
-        loadingDOM:       document.querySelector( '.content__businessI18n > .businessI18n__loading' ),
-        cardsDOM:         document.getElementById( 'businessI18n__cards' ),
-        patchButtonsDOM:  document.getElementsByClassName( 'businessI18n-card__patch' ),
-        deleteButtonsDOM: document.getElementsByClassName( 'businessI18n-card__delete' ),
-        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--businessI18n' ),
+        refreshDOM:       document.querySelector( '.content__business > .business__refresh' ),
+        loadingDOM:       document.querySelector( '.content__business > .business__loading' ),
+        cardsDOM:         document.getElementById( 'business__cards' ),
+        patchButtonsDOM:  document.getElementsByClassName( 'business-card__patch' ),
+        deleteButtonsDOM: document.getElementsByClassName( 'business-card__delete' ),
+        postButtonsDOM:   document.getElementsByClassName( 'local-topic__post-button--business' ),
         languageId:       WebLanguageUtils.currentLanguageId,
-        table:            'businessI18n',
+        table:            'business',
         idColumn:         'businessId',
-        columnUnits:      businessI18nUtils,
+        columnUnits:      businessUtils,
         deletePreview:    data => `${ data.business }`,
     } );
-    if ( !( businessI18nDataManagement instanceof DefaultDataManagement ) )
+    if ( !( businessDataManagement instanceof DefaultDataManagement ) )
         throw new Error( 'award data management error' );
-    businessI18nDataManagement.exec();
+    businessDataManagement.exec();
 }
 catch ( err ) {
     console.error( err );

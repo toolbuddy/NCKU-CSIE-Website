@@ -139,10 +139,8 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId: this.config.profileId,
                         dbTable:   this.config.table,
-                        item:      data.item,
-                        i18n:      data.i18n,
+                        data,
                     } ),
                 } )
                 .then( () => {
@@ -161,7 +159,7 @@ export default class DefaultDataManagement {
     subscribePatchButton ( element ) {
         Promise.all( LanguageUtils.supportedLanguageId.map( languageId => this.fetchData( languageId ) ) )
         .then( ( data ) => {
-            this.status.itemId = element.target.getAttribute( 'data-id' );
+            this.status.itemId = Number( element.target.getAttribute( 'data-id' ) );
             this.status.patchButton = element.target;
 
             const tableData = data.map( ( i18nData ) => {
@@ -186,7 +184,7 @@ export default class DefaultDataManagement {
             const isValid = await this.dataValidation( 'patch' );
 
             if ( isValid ) {
-                const data = await this.formatFormData( 'patch' );
+                const { item, i18n, } = await this.formatFormData( 'patch' );
                 e.target.disabled = true;
                 fetch( `${ host }/user/staff/profile`, {
                     method:   'PATCH',
@@ -194,11 +192,11 @@ export default class DefaultDataManagement {
                         'content-type': 'application/json',
                     },
                     body:   JSON.stringify( {
-                        profileId:     this.config.profileId,
                         dbTable:       this.config.table,
-                        dbTableItemId: Number( this.status.itemId ),
-                        item:          data.item,
-                        i18n:          data.i18n,
+                        profileId:     this.config.profileId,
+                        dbTableItemId: this.status.itemId,
+                        item,
+                        i18n,
                     } ),
                 } )
                 .then( () => {
@@ -217,7 +215,7 @@ export default class DefaultDataManagement {
     subscribeDeleteButton ( e ) {
         this.fetchData( this.config.languageId )
         .then( ( data ) => {
-            this.status.itemId = e.target.getAttribute( 'data-id' );
+            this.status.itemId = Number( e.target.getAttribute( 'data-id' ) );
             const rowData = data[ this.config.table ].find(
                 item => item[ this.config.idColumn ] === Number( e.target.getAttribute( 'data-id' ) )
             );
@@ -240,7 +238,7 @@ export default class DefaultDataManagement {
                 body:   JSON.stringify( {
                     profileId:      this.config.profileId,
                     dbTable:        this.config.table,
-                    dbTableItemId:  Number( this.status.itemId ),
+                    dbTableItemId:  this.status.itemId,
                 } ),
             } )
             .then( () => {
@@ -349,25 +347,29 @@ export default class DefaultDataManagement {
     }
 
     async formatFormData ( method ) {
-        const data = {
-            item: {},
-            i18n: LanguageUtils.supportedLanguageId.map( function ( id ) {
-                return { language: id, };
-            } ),
-        };
+        const item = {};
+        let i18n = LanguageUtils.supportedLanguageId.map( function ( id ) {
+            return { language: id, };
+        } );
 
         Array.from( this.DOM[ method ].input ).forEach( ( element ) => {
             if ( element.getAttribute( 'input-pattern' ) === 'i18n' )
-                data.i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
+                i18n[ element.getAttribute( 'languageid' ) ][ element.getAttribute( 'column' ) ] = element.value;
             else
-                data.item[ element.name ] = element.value;
+                item[ element.name ] = element.value;
         } );
-        if ( Object.keys( data.i18n[ 0 ] ).length === 1 && data.i18n[ 0 ].constructor === Object )
-            data.i18n = null;
-        if ( Object.keys( data.item ).length === 0 && data.item.constructor === Object )
-            data.item = null;
+        if ( Object.keys( i18n[ 0 ] ).length === 1 && i18n[ 0 ].constructor === Object )
+            i18n = [];
 
-        return data;
+        if ( method === 'post' ) {
+            const data = item;
+            data[ `${ this.config.table }I18n` ] = ( Object.keys( i18n ).length === 0 ) ? null : i18n;
+            data.profileId = Number( this.config.profileId );
+
+            return data;
+        }
+        if ( method === 'patch' )
+            return ( { item, i18n, } );
     }
 
     async exec () {
