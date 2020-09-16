@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/conference-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -144,6 +145,8 @@ append content
             -
               hostYear = obj.hostYear
           +conference-card( obj )
+      else
+        +no-record()
 
 append form
   +form-input( 'conference', 'post', formI18n, inputConfig )

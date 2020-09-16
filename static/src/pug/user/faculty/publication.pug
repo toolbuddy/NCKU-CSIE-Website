@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/publication-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -217,7 +218,8 @@ append content
                   +publication-card(obj)
               
               - issueYear = null
-
+      else
+        +no-record()
 append form
   +form-input( 'publication', 'post', formI18n, inputConfig )
   +form-input( 'publication', 'patch', formI18n, inputConfig )

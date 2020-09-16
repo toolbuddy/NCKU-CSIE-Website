@@ -12,6 +12,7 @@
 @import 'components/user/faculty/navigation-bar';
 @import 'components/user/faculty/classfication-title';
 @import 'components/user/faculty/card';
+@import 'components/user/faculty/no-record';
 @import 'components/user/form/form';
 
 .body {
@@ -205,6 +206,7 @@
           }
         }
         @include classfication-title();
+        @include no-record();
       }
 
       > .cards--hidden {

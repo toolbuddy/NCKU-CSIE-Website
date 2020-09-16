@@ -14,6 +14,7 @@
 @import 'components/user/card/faculty/profile-card';
 @import 'components/user/faculty/card';
 @import 'components/user/faculty/option';
+@import 'components/user/faculty/no-record';
 @import 'components/announcement/tags';
 
 .body {
@@ -307,6 +308,7 @@
             }
           }
         }
+        @include no-record();
       }
       @include refresh( $block: 'title' ) {
         // [ layout ]
@@ -388,6 +390,7 @@
             }
           }
         }
+        @include no-record();
       }
       @include refresh( $block: 'specialty' ) {
         // [ layout ]
@@ -517,6 +520,7 @@
             }
           }
         }
+        @include no-record();
       }
       @include local-topic('education');
       @include refresh( $block: 'education' ) {
@@ -635,6 +639,7 @@
             }
           }
         }
+        @include no-record();
       }
       @include local-topic('experience');
       @include refresh( $block: 'experience' ) {
