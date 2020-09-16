@@ -5,6 +5,7 @@ include /components/user/faculty/local-topic.pug
 include /components/user/faculty/classfication-title.pug
 include /components/user/form/form-input.pug
 include /components/user/card/faculty/student-award-card.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -132,6 +133,9 @@ append data
         {
           inputPattern: 'hidden',
           columnName: 'studentAwardId',
+          validation: {
+            datatype: 'int'
+          }
         }
       ],
     }
@@ -180,6 +184,8 @@ append content
             -
               receivedYear = obj.receivedYear
             +student-award-card( obj )
+      else
+        +no-record()
 
 append form
   +form-input( 'student-award', 'post', awardFormI18n, inputConfig.studentAward )

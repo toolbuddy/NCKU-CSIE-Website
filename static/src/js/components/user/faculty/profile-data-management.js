@@ -4,6 +4,7 @@ import LanguageUtils from 'models/common/utils/language.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import errorMessageUtils from 'models/user/utils/error-message.js';
 import profileColumnsUtils from 'models/faculty/utils/profile-columns.js';
+import nationUtils from 'models/faculty/utils/nation.js';
 import { host, } from 'settings/server/config.js';
 
 export default class ProfileDataManagement {
@@ -257,7 +258,10 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile[ columnName ] )
         .then( ( data ) => {
-            this.DOM[ columnName ].cardValue.innerText = data;
+            if ( columnName !== 'nation' )
+                this.DOM[ columnName ].cardValue.innerText = data;
+            else
+                this.DOM[ columnName ].cardValue.innerText = nationUtils.supportedValues( this.config.languageId )[ data ];
         } );
     }
 

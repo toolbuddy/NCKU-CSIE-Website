@@ -8,6 +8,7 @@ include /components/user/card/faculty/specialty-card.pug
 include /components/user/card/faculty/education-card.pug
 include /components/user/card/faculty/experience-card.pug
 include /components/user/form/form-input.pug
+include /components/user/card/no-record.pug
 
 append data
   -
@@ -108,7 +109,7 @@ append data
               name: 'name',
             },
             title: {
-              name: 'name',
+              name: 'Name',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -128,7 +129,7 @@ append data
               nation: '',
             },
             title: {
-              nation: 'nation',
+              nation: 'Nation',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -148,7 +149,7 @@ append data
               email: 'email',
             },
             title: {
-              email: 'email',
+              email: 'Email',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -157,7 +158,7 @@ append data
               email: 'email',
             },
             title: {
-              email: 'email',
+              email: 'Email',
             }
           },
         },
@@ -188,16 +189,16 @@ append data
               personalWeb: 'personal web',
             },
             title: {
-              personalWeb: 'personal web',
+              personalWeb: 'Personal Web',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
             patch: '變更您的個人網站',
             default: {
-              personalWeb: 'personal web',
+              personalWeb: '網址',
             },
             title: {
-              personalWeb: 'personal web',
+              personalWeb: '個人網站',
             }
           },
         },
@@ -208,7 +209,7 @@ append data
               officeAddress: 'office address',
             },
             title: {
-              officeAddress: 'office address',
+              officeAddress: 'Office Address',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -228,7 +229,7 @@ append data
               officeTel: 'office tel',
             },
             title: {
-              officeTel: 'office tel',
+              officeTel: 'Office Tel',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -248,7 +249,7 @@ append data
               labAddress: '',
             },
             title: {
-              labAddress: 'lab address',
+              labAddress: 'Lab Address',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -265,10 +266,10 @@ append data
           [ LANG.getLanguageId( 'en-US' ) ]: {
             patch: 'Modify Your Lab Tel',
             default: {
-              labTel: 'office tel',
+              labTel: 'Office Tel',
             },
             title: {
-              labTel: 'office tel',
+              labTel: 'Office Tel',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -288,7 +289,7 @@ append data
               labName: 'office name',
             },
             title: {
-              labName: 'office name',
+              labName: 'Office Name',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -308,7 +309,7 @@ append data
               labWeb: '',
             },
             title: {
-              labWeb: 'office web',
+              labWeb: 'Office Web',
             }
           },
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -366,7 +367,7 @@ append data
             organization: 'Organization',
             department:  'Department',
             duration: 'Duration',
-            title:   'title',
+            title:   'Title',
           }
         },
         [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -393,8 +394,8 @@ append data
             title: 'title',
           },
           title: {
-            duration: 'duration',
-            title: 'title',
+            duration: 'Duration',
+            title: 'Title',
           }
         },
         [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -419,7 +420,7 @@ append data
             specialty: '',
           },
           title: {
-            specialty: 'specialty',
+            specialty: 'Specialty',
           }
         },
         [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -745,6 +746,8 @@ append content
       if Array.isArray( data.title ) && data.title.length
         each titleObj in data.title
           +title-card( titleObj )
+      else
+        +no-record()
   section.content__specialty.specialty
     +local-topic( 'specialty', i18n[ LANG.id ].content.specialty.topic )
     +refreshWithImage( 'specialty' )
@@ -753,6 +756,8 @@ append content
       if Array.isArray( data.specialty ) && data.specialty.length
         each specialtyObj in data.specialty
           +specialty-card( specialtyObj )
+      else
+        +no-record()
   section.content__education.education
     +local-topic( 'education', i18n[ LANG.id ].content.education.topic )
     +refreshWithImage( 'education' )
@@ -769,6 +774,8 @@ append content
           })
         each educationObj in data.education
           +education-card( educationObj )
+      else
+        +no-record()
   section.content__experience.experience
     +local-topic( 'experience', i18n[ LANG.id ].content.experience.topic )
     +refreshWithImage( 'experience' )
@@ -785,7 +792,8 @@ append content
           })
         each experienceObj in data.experience
           +experience-card( experienceObj )
-
+      else
+        +no-record()
 
 append form
   +form-input( 'title', 'post', formI18n.title, inputConfig.title )
