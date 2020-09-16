@@ -19,18 +19,18 @@ export default async ( opt ) => {
         }
 
         // Check if profileId is valid
-        if ( !validateUtils.isValidId( opt.profileId ) ) {
+        if ( !validateUtils.isPositiveInteger( opt.profileId ) ) {
             const error = new Error( 'Invalid profile id' );
             error.status = 400;
             throw error;
         }
 
         // Check if dbTableItemId or type is valid
-        if ( !validateUtils.isPositiveInteger(
-            dbTable === 'Department' || dbTable === 'ResearchGroup' ?
-                opt.type :
-                opt.dbTableItemId
-        ) ) {
+        if (
+            ( dbTable === 'Department' || dbTable === 'ResearchGroup' ) ?
+                !validateUtils.isValidId( opt.type ) :
+                !validateUtils.isPositiveInteger( opt.dbTableItemId )
+        ) {
             const error = new Error( `Invalid ${ dbTable } id` );
             error.status = 400;
             throw error;

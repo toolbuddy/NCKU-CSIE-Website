@@ -100,7 +100,7 @@ export default async ( opt ) => {
         }
 
         // Check if profileId is valid
-        if ( !validateUtils.isValidId( opt.data.profileId ) ) {
+        if ( !validateUtils.isPositiveInteger( opt.data.profileId ) ) {
             const error = new Error( 'Invalid profile id' );
             error.status = 400;
             throw error;
