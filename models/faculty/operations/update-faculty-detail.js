@@ -155,7 +155,6 @@ export default async ( opt ) => {
                 return tables[ dbTable ].update( opt.item, {
                     where: {
                         [ `${ opt.dbTable }Id` ]: opt.dbTableItemId,
-                        profileId:                opt.profileId,
                     },
                     transaction: t,
                 } );
