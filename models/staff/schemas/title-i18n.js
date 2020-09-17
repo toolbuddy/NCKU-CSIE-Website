@@ -3,11 +3,6 @@ import { staff, } from 'models/common/utils/connect.js';
 import LanguageUtils from 'models/common/utils/language.js';
 
 const TitleI18n = staff.define( 'titleI18n', {
-    profileId: {
-        type:          Sequelize.INTEGER.UNSIGNED,
-        allowNull:     false,
-        primaryKey:    true,
-    },
     titleId: {
         type:       Sequelize.INTEGER.UNSIGNED,
         allowNull:  false,

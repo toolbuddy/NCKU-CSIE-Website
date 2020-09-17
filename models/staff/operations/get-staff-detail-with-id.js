@@ -1,9 +1,11 @@
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import {
+    Business,
     BusinessI18n,
     Profile,
     ProfileI18n,
+    Title,
     TitleI18n,
 } from 'models/staff/operations/associations.js';
 
@@ -27,20 +29,23 @@ export default async ( opt ) => {
         }
 
         const [
-            businessI18n,
+            business,
             profile,
-            profileI18n,
-            titleI18n,
+            title,
         ] = await Promise.all( [
-            BusinessI18n.findAll( {
-                attributes: [
-                    'businessId',
-                    'business',
-                ],
-                where: {
+            Business.findAll( {
+                attributes: [ 'businessId', ],
+                where:      {
                     profileId,
-                    language: languageId,
                 },
+                include: [ {
+                    model:      BusinessI18n,
+                    as:         'businessI18n',
+                    attributes: [ 'business', ],
+                    where:      {
+                        language: languageId,
+                    },
+                }, ],
             } ),
             Profile.findOne( {
                 attributes: [
@@ -52,26 +57,31 @@ export default async ( opt ) => {
                 where: {
                     profileId,
                 },
+                include: [ {
+                    model:      ProfileI18n,
+                    as:         'profileI18n',
+                    attributes: [
+                        'name',
+                        'officeAddress',
+                    ],
+                    where: {
+                        language: languageId,
+                    },
+                }, ],
             } ),
-            ProfileI18n.findOne( {
-                attributes: [
-                    'name',
-                    'officeAddress',
-                ],
-                where: {
-                    language: languageId,
+            Title.findAll( {
+                attributes: [ 'titleId', ],
+                where:      {
                     profileId,
                 },
-            } ),
-            TitleI18n.findAll( {
-                attributes: [
-                    'titleId',
-                    'title',
-                ],
-                where: {
-                    profileId,
-                    language: languageId,
-                },
+                include: [ {
+                    model:      TitleI18n,
+                    as:         'titleI18n',
+                    attributes: [ 'title', ],
+                    where:      {
+                        language: languageId,
+                    },
+                }, ],
             } ),
         ] );
 
@@ -90,19 +100,19 @@ export default async ( opt ) => {
         return {
             profile: {
                 email:         profile.email,
-                name:          profileI18n.name,
+                name:          profile.profileI18n[ 0 ].name,
                 officeTel:     profile.officeTel,
-                officeAddress: profileI18n.officeAddress,
+                officeAddress: profile.profileI18n[ 0 ].officeAddress,
                 photo:         profile.photo,
                 profileId,
             },
-            business: businessI18n.map( business => ( {
-                businessId:       business.businessId,
-                business:         business.business,
+            business: business.map( businessInfo => ( {
+                businessId: businessInfo.businessId,
+                business:   businessInfo.businessI18n[ 0 ].business,
             } ) ),
-            title: titleI18n.map( title => ( {
-                titleId:       title.titleId,
-                title:         title.title,
+            title: title.map( titleInfo => ( {
+                titleId: titleInfo.titleId,
+                title:   titleInfo.titleI18n[ 0 ].title,
             } ) ),
         };
     }

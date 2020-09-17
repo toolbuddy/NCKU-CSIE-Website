@@ -1,9 +1,11 @@
 import LanguageUtils from 'models/common/utils/language.js';
 import Sequelize from 'sequelize';
 import {
+    Business,
     BusinessI18n,
     Profile,
     ProfileI18n,
+    Title,
     TitleI18n,
 } from 'models/staff/operations/associations.js';
 
@@ -32,14 +34,21 @@ export default async ( languageId = null ) => {
             },
             include: [
                 {
-                    model:      BusinessI18n,
-                    as:         'businessI18n',
+                    model:      Business,
+                    as:         'business',
                     attributes: [
-                        'business',
+                        'businessId',
                     ],
-                    where: {
-                        language: languageId,
-                    },
+                    include:    [ {
+                        model:      BusinessI18n,
+                        as:         'businessI18n',
+                        attributes: [
+                            'business',
+                        ],
+                        where: {
+                            language: languageId,
+                        },
+                    }, ],
                 },
                 {
                     model:      ProfileI18n,
@@ -53,31 +62,39 @@ export default async ( languageId = null ) => {
                     },
                 },
                 {
-                    model:      TitleI18n,
-                    as:         'titleI18n',
+                    model:      Title,
+                    as:         'title',
                     attributes: [
-                        'title',
+                        'titleId',
                     ],
-                    where: {
-                        language: languageId,
-                    },
+                    include:    [ {
+                        model:      TitleI18n,
+                        as:         'titleI18n',
+                        attributes: [
+                            'title',
+                        ],
+                        where: {
+                            language: languageId,
+                        },
+                    }, ],
                 },
             ],
         } );
 
         return data.map( profile => ( {
-            business:      profile.businessI18n.map( business => business.business ),
+            business:      profile.business.map( businessInfo => businessInfo.businessI18n[ 0 ].business ),
             email:         profile.email,
             officeTel:     profile.officeTel,
             photo:         profile.photo,
             profileId:     profile.profileId,
             name:          profile.profileI18n[ 0 ].name,
             officeAddress: profile.profileI18n[ 0 ].officeAddress,
-            title:         profile.titleI18n.map( title => title.title ),
+            title:         profile.title.map( titleInfo => titleInfo.titleI18n[ 0 ].title ),
             order:         profile.order,
         } ) );
     }
     catch ( err ) {
+        console.error( err );
         if ( err.status )
             throw err;
         const error = new Error();

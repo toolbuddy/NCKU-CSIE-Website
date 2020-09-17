@@ -133,10 +133,6 @@ export default class DefaultDataManagement {
             if ( isValid ) {
                 const data = await this.formatFormData( 'post' );
                 e.target.disabled = true;
-                console.log( {
-                    dbTable:   this.config.dbTable,
-                    data,
-                } );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'POST',
                     headers: {
@@ -181,13 +177,6 @@ export default class DefaultDataManagement {
                 const { item, i18n, } = await this.formatFormData( 'patch' );
                 e.target.disabled = true;
 
-                console.log( {
-                    dbTable:       this.config.dbTable,
-                    profileId:     this.config.profileId,
-                    dbTableItemId: this.status.itemId,
-                    item,
-                    i18n,
-                } );
                 fetch( `${ host }/user/faculty/profile`, {
                     method:   'PATCH',
                     headers: {

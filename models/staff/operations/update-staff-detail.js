@@ -1,169 +1,128 @@
-import ValidateUtils from 'models/common/utils/validate.js';
-import {
-    BusinessI18n,
-    Profile,
-    ProfileI18n,
-    TitleI18n,
-} from 'models/staff/operations/associations.js';
+import tables from 'models/faculty/operations/associations.js';
 import { staff, } from 'models/common/utils/connect.js';
 
-import ProfileValidationConstraints from 'models/staff/constraints/update/profile.js';
-import ProfileI18nValidationConstraints from 'models/staff/constraints/update/profile-i18n.js';
-import BusinessI18nValidationConstraints from 'models/staff/constraints/update/business-i18n.js';
-import TitleI18nValidationConstraints from 'models/staff/constraints/update/title-i18n.js';
 import validate from 'validate.js';
+import validateUtils from 'models/common/utils/validate.js';
+import languageUtils from 'models/common/utils/language.js';
 
-// {
-//     profileId: 0,
-//     profile:   {
-//         email:     '',
-//         officeTel: '',
-//         photo:     '',
-//         i18n:      [
-//             {
-//                 language:      0,
-//                 name:          '',
-//                 officeAddress: '',
-//             },
-//         ],
-//     },
-//     titleI18n: [
-//         {
-//             language: 0,
-//             titleId: 0,
-//             title: '',
-//         },
-//     ],
-//     businessI18n: [
-//         {
-//             language: 0,
-//             businessId: 0,
-//             business: '',
-//         },
-//     ]
-// };
+import BusinessValidationConstraints from 'models/staff/constraints/add/business.js';
+import BusinessI18nValidationConstraints from 'models/staff/constraints/add/business-i18n.js';
+import ProfileValidationConstraints from 'models/faculty/constraints/update/profile.js';
+import ProfileI18nValidationConstraints from 'models/faculty/constraints/update/profile-i18n.js';
+import TitleValidationConstraints from 'models/faculty/constraints/update/title.js';
+import TitleI18nValidationConstraints from 'models/faculty/constraints/update/title-i18n.js';
+
+const validationConstraints = {
+    Business:     BusinessValidationConstraints,
+    BusinessI18n: BusinessI18nValidationConstraints,
+    Profile:      ProfileValidationConstraints,
+    ProfileI18n:  ProfileI18nValidationConstraints,
+    Title:        TitleValidationConstraints,
+    TitleI18n:    TitleI18nValidationConstraints,
+};
+
+function sortByValue ( a, b ) {
+    return a - b;
+}
+
+function equalArray ( a, b ) {
+    if ( a === b )
+        return true;
+    if ( a == null || b == null )
+        return false;
+    if ( a.length !== b.length )
+        return false;
+    for ( let i = 0; i < a.length; ++i ) {
+        if ( a[ i ] !== b[ i ] )
+            return false;
+    }
+
+    return true;
+}
 
 export default async ( opt ) => {
     try {
         opt = opt || {};
-        const {
-            profileId = null,
-            profile = null,
-            titleI18n = null,
-            businessI18n = null,
-        } = opt;
+        let dbTable = null;
 
-        if ( !ValidateUtils.isValidId( profileId ) ) {
+        // Turn first letter of table name to uppercase
+        // TODO: check if a valid table name?
+        if ( typeof opt.dbTable === typeof '' )
+            dbTable = opt.dbTable[ 0 ].toUpperCase() + opt.dbTable.substr( 1 );
+        else {
+            const error = new Error( 'Invalid table name' );
+            error.status = 400;
+            throw error;
+        }
+
+        // Check if profileId is valid
+        if ( !validateUtils.isPositiveInteger( opt.profileId ) ) {
             const error = new Error( 'Invalid profile id' );
             error.status = 400;
             throw error;
         }
-        if ( profile !== null ) {
-            if ( typeof ( validate( profile, ProfileValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid profile object' );
-                error.status = 400;
-                throw error;
-            }
-            if ( profile.i18n ) {
-                for ( const i18nData of profile.i18n ) {
-                    if ( typeof ( validate( i18nData, ProfileI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid profile object' );
-                        error.status = 400;
-                        throw error;
-                    }
-                }
-            }
+
+        // Check if dbTableItemId is valid
+        if ( !validateUtils.isPositiveInteger( opt.dbTableItemId ) ) {
+            const error = new Error( `Invalid ${ dbTable } id` );
+            error.status = 400;
+            throw error;
         }
-        if ( titleI18n !== null ) {
-            if ( ValidateUtils.isValidArray( titleI18n ) ) {
-                for ( const data of titleI18n ) {
-                    if ( typeof ( validate( data, TitleI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid title object' );
-                        error.status = 400;
-                        throw error;
-                    }
-                }
-            }
-            else {
-                const error = new Error( 'Invalid title object' );
-                error.status = 400;
-                throw error;
-            }
+
+        // Check if non-i18n part fit constraints (If nothing to change, it should be empty object)
+        if ( typeof ( validate( opt.item, validationConstraints[ dbTable ] ) ) !== 'undefined' ) {
+            const error = new Error( `Invalid ${ dbTable } object` );
+            error.status = 400;
+            throw error;
         }
-        if ( businessI18n !== null ) {
-            if ( ValidateUtils.isValidArray( businessI18n ) ) {
-                for ( const data of businessI18n ) {
-                    if ( typeof ( validate( data, BusinessI18nValidationConstraints ) ) !== 'undefined' ) {
-                        const error = new Error( 'Invalid business object' );
-                        error.status = 400;
-                        throw error;
-                    }
+
+        // Check if i18n part fit constraints (If nothing to change, it should be empty array)
+        if ( opt.i18n.length > 0 ) {
+            const langArr = [];
+            for ( const i18nData of opt.i18n ) {
+                if ( typeof ( validate( i18nData, validationConstraints[ `${ dbTable }I18n` ] ) ) !== 'undefined' ) {
+                    const error = new Error( `Invalid ${ dbTable }I18n object` );
+                    error.status = 400;
+                    throw error;
                 }
+                langArr.push( i18nData.language );
             }
-            else {
-                const error = new Error( 'Invalid business object' );
+            if ( !equalArray( langArr.sort( sortByValue ), languageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
+                const error = new Error( `Invalid length of ${ dbTable }I18n object` );
                 error.status = 400;
                 throw error;
             }
         }
 
-        if ( profile ) {
-            await staff.transaction( t => Profile.update( {
-                email:       profile.email,
-                photo:       profile.photo,
-                officeTel:   profile.officeTel,
-                order:       profile.order,
-            }, {
+        // Update both part in one transaction.
+        // Promise all will always resolve empty array, so it's no need to check if array is empty before update.
+        // But update with empty object will cause sequelize empty query error, so it should be check.
+        return staff.transaction( t => Promise.all(
+            opt.i18n.map( i18nInfo => tables[ `${ dbTable }I18n` ].update( i18nInfo, {
                 where: {
-                    profileId,
+                    [ `${ opt.dbTable }Id` ]: opt.dbTableItemId,
+                    language:                 i18nInfo.language,
                 },
                 transaction: t,
-            } ).then( () => {
-                if ( profile.i18n ) {
-                    return Promise.all( profile.i18n.map( profileI18nInfo => ProfileI18n.update( {
-                        name:          profileI18nInfo.name,
-                        officeAddress: profileI18nInfo.officeAddress,
-                    }, {
-                        where: {
-                            language: profileI18nInfo.language,
-                            profileId,
-                        },
-                        transaction: t,
-                    } ) ) );
-                }
-            } ) );
-        }
-        if ( titleI18n ) {
-            for ( const titleInfo of titleI18n ) {
-                await staff.transaction( t => TitleI18n.update( {
-                    title:   titleInfo.title,
-                }, {
+            } ) )
+        )
+        .then( () => {
+            if ( Object.keys( opt.item ).length > 0 ) {
+                return tables[ dbTable ].update( opt.item, {
                     where: {
-                        titleId:   titleInfo.titleId,
-                        profileId,
-                        language:  titleInfo.language,
+                        [ `${ opt.dbTable }Id` ]: opt.dbTableItemId,
                     },
                     transaction: t,
-                } ) );
+                } );
             }
-        }
-        if ( businessI18n ) {
-            for ( const businessInfo of businessI18n ) {
-                await staff.transaction( t => BusinessI18n.update( {
-                    business:   businessInfo.business,
-                }, {
-                    where: {
-                        businessId:   businessInfo.businessId,
-                        profileId,
-                        language:   businessInfo.language,
-                    },
-                    transaction: t,
-                } ) );
-            }
-        }
-        return;
+        } ) )
+        .then( () => ( { 'message': 'success', } ) )
+        .catch( ( err ) => {
+            throw err;
+        } );
     }
     catch ( err ) {
+        console.error( err );
         throw err;
     }
 };
