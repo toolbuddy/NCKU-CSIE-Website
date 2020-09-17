@@ -19,11 +19,11 @@ each profile in data
     section.cards__card.card
       //- staff's photo.
       if profile.photo !== null
-        +image( {
-            alt: profile.name,
-            className: 'card__photo',
-            src: `staff/${ profile.photo }`,
-        } )
+        img(
+          alt       = profile.name,
+          className = 'card__photo',
+          src       = `data:image/jpeg;base64,${ profile.photo }`,  
+        )
       else
         +image( {
             alt: profile.name,

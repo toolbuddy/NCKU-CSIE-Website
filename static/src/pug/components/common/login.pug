@@ -63,11 +63,11 @@
       },
     } );
 include /components/common/image.pug
-+image( {
-    alt:       `${ name }`,
-    className: `${ belongBlock }__image ${ belongBlock }__image--personal`,
-    src:       `${ photo }`,
-} )
+img(
+    alt       = `${ name }`,
+    className = `${ belongBlock }__image ${ belongBlock }__image--personal`,
+    src       = `${ photo }`,
+)
 a.login( class = `${ belongBlock }__button` )= name
   ul.login__dropdown.dropdown
     if role === 'staff'

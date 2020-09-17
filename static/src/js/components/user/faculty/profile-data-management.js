@@ -178,10 +178,11 @@ export default class ProfileDataManagement {
             e.preventDefault();
             const formData = new FormData();
             formData.append( 'file', this.imageFile );
+            formData.append( 'profileId', this.profileId );
 
-            await fetch( `${ host }/user/uploadPhoto`, {
+            await fetch( `${ host }/user/faculty/profile`, {
                 credentials: 'include',
-                method:      'post',
+                method:      'PUT',
                 body:        formData,
             } );
 
@@ -248,8 +249,11 @@ export default class ProfileDataManagement {
         .then( data => data.profile )
         .then( ( data ) => {
             if ( data.photo !== null ) {
-                const photoUrl = `${ host }/static/image/faculty/${ data.photo }`;
-                this.DOM.image.preview.style.backgroundImage = `url('${ photoUrl }')`;
+                const img = new Image();
+                img.src = `data:image/jpeg;base64,${ data.photo }`;
+
+                // Const photoUrl =  `data:image/jpeg;base64,${ data.photo }`;
+                this.DOM.image.preview.style.backgroundImage = `url('${ img.src }')`;
             }
         } );
     }
