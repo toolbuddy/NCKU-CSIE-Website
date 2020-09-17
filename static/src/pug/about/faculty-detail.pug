@@ -173,7 +173,7 @@ append content
           +image( {
             alt: data.profile.name,
             className: 'photo-container__photo',
-            src: `faculty/${ data.profile.photo }`,
+            src: `data:image/jpeg;base64,${ data.profile.photo }`,
           } )
         else
           +image( {

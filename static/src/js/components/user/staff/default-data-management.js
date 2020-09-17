@@ -199,14 +199,17 @@ export default class DefaultDataManagement {
                         i18n,
                     } ),
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.hideForm();
                     this.renderLoading();
+
+                    return res;
                 } )
-                .then( () => {
+                .then( ( res ) => {
                     this.renderSuccess();
                     e.target.disabled = false;
-                    window.location.reload();
+                    if ( res.ok )
+                        window.location.reload();
                 } );
             }
         } );
