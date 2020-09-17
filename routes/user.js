@@ -26,6 +26,7 @@ import deleteAnnouncements from 'models/announcement/operations/delete-announcem
 import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
 import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
 import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
+import addStaffDetail from 'models/staff/operations/add-staff-detail.js';
 import updateStaffDetail from 'models/staff/operations/update-staff-detail.js';
 import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 
@@ -309,103 +310,27 @@ router
         } );
     } );
 } )
-.patch( urlEncoded, jsonParser, allowUserOnly, cors(), async ( req, res ) => {
-    const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-    let uploadData = '';
-
+.post( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
     try {
-        if ( data.dbTable === 'title' ) {
-            const i18nData = [];
-            Object.keys( data.i18n ).forEach( ( languageId ) => {
-                if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                    const newData = Object.assign( {}, data.i18n[ languageId ] );
-                    newData.language = Number( languageId );
-                    newData.titleId = Number( data.dbTableItemId );
-                    i18nData.push( newData );
-                }
-            } );
-            uploadData = {
-                profileId:    data.profileId,
-                update:       {
-                    titleI18n: i18nData,
-                },
-            };
-        }
-        if ( data.dbTable === 'business' ) {
-            const i18nData = [];
-            Object.keys( data.i18n ).forEach( ( languageId ) => {
-                if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                    const newData = Object.assign( {}, data.i18n[ languageId ] );
-                    newData.language = Number( languageId );
-                    newData.businessId = Number( data.dbTableItemId );
-                    i18nData.push( newData );
-                }
-            } );
-            uploadData = {
-                profileId:    data.profileId,
-                update:       {
-                    businessI18n: i18nData,
-                },
-            };
-        }
-        else if ( data.dbTable === 'profile' ) {
-            const item = {
-                email:       data.item.email,
-                photo:       data.item.photo,
-                officeTel:   data.item.officeTel,
-            };
-            Object.keys( item ).forEach( ( key ) => {
-                if ( typeof ( item[ key ] ) === 'undefined' || Number.isNaN( item[ key ] ) || item[ key ] === null )
-                    delete item[ key ];
-            } );
-            const i18nData = [];
-            Object.keys( data.i18n ).forEach( ( languageId ) => {
-                if ( !isEmpty( data.i18n[ languageId ] ) ) {
-                    const newData = Object.assign( {}, data.i18n[ languageId ] );
-                    newData.language = Number( languageId );
-                    i18nData.push( newData );
-                }
-            } );
-            item.i18n = i18nData;
-            uploadData = {
-                profileId:       data.profileId,
-                [ data.method ]: {
-                    [ data.dbTable ]: Object.assign( {}, item ),
-                },
-            };
-        }
-        await updateStaffDetail( {
-            profileId:    uploadData.profileId,
-            profile:      uploadData.update.profile,
-            titleI18n:    uploadData.update.title,
-            businessI18n: uploadData.update.business,
-        } );
-        res.send( { message: 'success', } );
+        res.send( await addStaffDetail( req.body ) );
     }
     catch ( err ) {
         console.error( err );
         res.status( 500 ).send( { err, } );
     }
 } )
-.delete( urlEncoded, jsonParser, allowUserOnly, cors(), async ( req, res ) => {
-    const data = JSON.parse( Object.keys( req.body )[ 0 ] );
-    let uploadData = '';
-
+.patch( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
     try {
-        uploadData = {
-            profileId:       data.profileId,
-            [ data.method ]: {
-                [ data.dbTable ]: [
-                    Number( data.dbTableItemId ),
-                ],
-            },
-        };
-        await deleteStaffDetail( {
-            profileId:    uploadData.profileId,
-            businessI18n: uploadData.delete.business,
-            titleI18n:    uploadData.delete.title,
-        } );
-        res.send( { message: 'success', } );
+        res.send( await updateStaffDetail( req.body ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        res.send( await deleteStaffDetail( req.body ) );
     }
     catch ( err ) {
         console.error( err );
