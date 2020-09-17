@@ -5,8 +5,8 @@ import validate from 'validate.js';
 import validateUtils from 'models/common/utils/validate.js';
 import languageUtils from 'models/common/utils/language.js';
 
-import BusinessValidationConstraints from 'models/staff/constraints/add/business.js';
-import BusinessI18nValidationConstraints from 'models/staff/constraints/add/business-i18n.js';
+import BusinessValidationConstraints from 'models/staff/constraints/update/business.js';
+import BusinessI18nValidationConstraints from 'models/staff/constraints/update/business-i18n.js';
 import ProfileValidationConstraints from 'models/faculty/constraints/update/profile.js';
 import ProfileI18nValidationConstraints from 'models/faculty/constraints/update/profile-i18n.js';
 import TitleValidationConstraints from 'models/faculty/constraints/update/title.js';

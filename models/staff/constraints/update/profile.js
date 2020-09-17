@@ -9,10 +9,8 @@ const ProfileValidationConstraints = {
     },
     photo: {
         presence: false,
-        type:       'string',
-        length:   {
-            maximum: 2083,
-        },
+
+        // TODO: type should be blob
     },
     officeTel: {
         presence: false,

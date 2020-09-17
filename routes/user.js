@@ -14,8 +14,6 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import * as fs from 'fs';
-import path from 'path';
 
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
@@ -34,7 +32,7 @@ import cookieParser from 'cookie-parser';
 import getSession from 'models/auth/operations/get-session.js';
 import saveSession from 'models/auth/operations/save-session.js';
 import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, projectRoot, } from 'settings/server/config.js';
+import { secret, host, } from 'settings/server/config.js';
 import staticHtml from 'routes/utils/static-html.js';
 import noCache from 'routes/utils/no-cache.js';
 import allowUserOnly from 'routes/utils/allow-user-only.js';
@@ -55,26 +53,6 @@ import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail
 const upload = multer( {
     storage: multer.memoryStorage(),
 } );
-
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-function isEmpty ( obj ) {
-    if ( obj == null )
-        return true;
-    if ( obj.length ) {
-        if ( obj.length > 0 )
-            return false;
-        if ( obj.length === 0 )
-            return true;
-    }
-    if ( typeof obj !== 'object' )
-        return true;
-    for ( const key in obj ) {
-        if ( hasOwnProperty.call( obj, key ) )
-            return false;
-    }
-
-    return true;
-}
 
 const router = express.Router( {
     caseSensitive: true,
@@ -275,7 +253,24 @@ router
         res.status( 500 ).send( { err, } );
     }
 } )
-.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+.put( cors(), upload.single( 'file' ), async ( req, res ) => {
+    try {
+        res.send( await updateFacultyDetail( {
+            dbTable:       'profile',
+            profileId:     Number.parseInt( req.body.profileId, 10 ),
+            dbTableItemId: Number.parseInt( req.body.profileId, 10 ),
+            item:          {
+                photo: req.file.buffer,
+            },
+            i18n: [],
+        } ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.delete( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
     try {
         res.send( await deleteFacultyDetail( req.body ) );
     }
@@ -322,6 +317,23 @@ router
 .patch( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
     try {
         res.send( await updateStaffDetail( req.body ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.put( cors(), upload.single( 'file' ), async ( req, res ) => {
+    try {
+        res.send( await updateStaffDetail( {
+            dbTable:       'profile',
+            profileId:     Number.parseInt( req.body.profileId, 10 ),
+            dbTableItemId: Number.parseInt( req.body.profileId, 10 ),
+            item:          {
+                photo: req.file.buffer,
+            },
+            i18n: [],
+        } ) );
     }
     catch ( err ) {
         console.error( err );
@@ -552,93 +564,6 @@ router
             next();
         else
             next( err );
-    }
-} );
-
-/**
- * Resolve URL `/user/uploadPhoto`.
- */
-
-router
-.route( '/uploadPhoto' )
-.post( cors(), multer( {
-    dest:     `${ projectRoot }/static/src/image/`,
-    storage: multer.diskStorage( {
-        destination: `${ projectRoot }/static/src/image/`,
-    } ),
-} ).single( 'file' ), async ( req, res ) => {
-    try {
-        // Get id
-        const cookie = req.cookies.sessionId;
-        res.locals.unparsedId = cookie;
-
-        // Got a cookie from the user.
-        const sid = cookieParser.signedCookies( req.cookies, secret ).sessionId;
-
-        // Get session data in the database.
-        try {
-            const data = await getSession( {
-                sid,
-            } );
-
-            // Check `expires`
-
-            const result = await getAdminByUserId( {
-                userId: Number( data.userId ),
-            } );
-
-            if ( result.sid !== data.sid ) {
-                res.send( {
-                    redirect: '/index',
-                } );
-            }
-
-            // Save file & rename
-            if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
-                fs.rename( req.file.path, `${ req.file.destination }faculty/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
-                    if ( err )
-                        throw err;
-                } );
-            }
-            else if ( result.role === roleUtils.getIdByOption( 'staff' ) ) {
-                fs.rename( req.file.path, `${ req.file.destination }staff/${ result.roleId }${ path.extname( req.file.originalname ) }`, ( err ) => {
-                    if ( err )
-                        throw err;
-                } );
-            }
-        }
-        catch ( error ) {
-            if ( error.status === 404 ) {
-                // No corresponding session id in the database
-                req.session.regenerate( async () => {
-                    const newSid = req.session.id;
-                    req.session.ctrl = newSid;
-
-                    // Store new session in database
-                    await saveSession( {
-                        sid:     newSid,
-                        expires: req.session.cookie.maxAge + Date.now(),
-                    } );
-
-                    req.session.save();
-                    res.locals.unparsedSid = req.session.id;
-
-                    // Send new session & user id
-                    res.send( {
-                        redirect: '/index',
-                    } );
-                } );
-            }
-            else {
-                console.error( error );
-                res.status( error.status ).send( error.message );
-            }
-        }
-        return res.end();
-    }
-    catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
     }
 } );
 
