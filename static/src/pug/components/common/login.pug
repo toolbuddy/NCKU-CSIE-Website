@@ -62,11 +62,10 @@
             }
       },
     } );
-include /components/common/image.pug
 img(
-    alt       = `${ name }`,
-    className = `${ belongBlock }__image ${ belongBlock }__image--personal`,
-    src       = `${ photo }`,
+    alt   = `${ name }`,
+    class = `${ belongBlock }__image ${ belongBlock }__image--personal`,
+    src   = `data:image/jpeg;base64,${ photo }`,
 )
 a.login( class = `${ belongBlock }__button` )= name
   ul.login__dropdown.dropdown

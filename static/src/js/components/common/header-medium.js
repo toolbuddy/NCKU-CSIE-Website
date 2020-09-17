@@ -232,7 +232,7 @@ export default class GetHeaderMedium {
                         name:        data.name,
                         role:        'faculty',
                         belongBlock: 'login',
-                        photo:       `faculty/${ data.photo }`,
+                        photo:       data.photo,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
                             getLanguageId: LanguageUtils.getLanguageId,
@@ -249,7 +249,7 @@ export default class GetHeaderMedium {
                         name:        data.name,
                         belongBlock: 'login',
                         role:        'staff',
-                        photo:       `staff/${ data.photo }`,
+                        photo:       data.photo,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
                             getLanguageId: LanguageUtils.getLanguageId,

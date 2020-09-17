@@ -62,12 +62,11 @@
             }
       },
     } );
-include /components/common/image.pug
-+image( {
-    alt:       `${ name }`,
-    className: `${ belongBlock }__image ${ belongBlock }__image--personal`,
-    src:       `${ photo }`,
-} )
+img(
+    alt   = `${ name }`,
+    class = `${ belongBlock }__image ${ belongBlock }__image--personal`,
+    src   = `data:image/jpeg;base64,${ photo }`,
+)
 span.login__text= name
 button.login__switch
 ul.login__dropdown.dropdown

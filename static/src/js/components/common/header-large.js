@@ -127,7 +127,7 @@ export default class GetHeaderLarge {
                         name:        data.name,
                         role:        'faculty',
                         belongBlock: 'login',
-                        photo:       `data:image/jpeg;base64,${ data.photo }`,
+                        photo:       data.photo,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
                             getLanguageId: LanguageUtils.getLanguageId,
@@ -144,7 +144,7 @@ export default class GetHeaderLarge {
                         name:        data.name,
                         role:        'staff',
                         belongBlock: 'login',
-                        photo:       `data:image/jpeg;base64,${ data.photo }`,
+                        photo:       data.photo,
                         LANG:        {
                             id:            WebLanguageUtils.currentLanguageId,
                             getLanguageId: LanguageUtils.getLanguageId,

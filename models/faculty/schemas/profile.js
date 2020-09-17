@@ -28,8 +28,14 @@ const Profile = faculty.define( 'profile', {
         defaultValue: nationUtils.defaultId,
     },
     photo: {
-        type:      Sequelize.STRING( 2083 ),
+        type:      'MEDIUMBLOB',
         allowNull: true,
+        get () {
+            if ( !this.getDataValue( 'photo' ) )
+                return '';
+
+            return Buffer.from( this.getDataValue( 'photo' ) ).toString( 'base64' );
+        },
     },
     officeTel: {
         type:         Sequelize.STRING( 30 ),

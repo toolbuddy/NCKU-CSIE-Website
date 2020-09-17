@@ -194,8 +194,6 @@ export default class ProfileDataManagement {
             if ( data.photo !== null ) {
                 const img = new Image();
                 img.src = `data:image/jpeg;base64,${ data.photo }`;
-
-                // Const photoUrl = `data:image/jpeg;base64,${ data.photo }`;
                 this.DOM.image.preview.style.backgroundImage = `url('${ img.src }')`;
             }
         } );
