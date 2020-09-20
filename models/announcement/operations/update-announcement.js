@@ -36,7 +36,7 @@ function equalArray ( a, b ) {
 export default ( opt ) => {
     try {
         opt = opt || {};
-        const announcementId = Number.parseInt( opt.announcementId, 10 );
+        const announcementId = Number( opt.announcementId );
         const {
             image = null,
             announcementI18n = null,
@@ -60,13 +60,13 @@ export default ( opt ) => {
 
         const langArr = [];
         announcementI18n.forEach( ( i18nData ) => {
-            i18nData.languageId = Number.parseInt( i18nData.languageId, 10 );
+            i18nData.language = Number( i18nData.language );
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
                 throw error;
             }
-            langArr.push( i18nData.languageId );
+            langArr.push( i18nData.language );
         } );
         if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
             const error = new Error( 'Invalid announcementI18n object' );
@@ -83,7 +83,7 @@ export default ( opt ) => {
         } );
 
         deletedFiles.forEach( ( file ) => {
-            file.fileId = Number.parseInt( file.fileId, 10 );
+            file.fileId = Number( file.fileId );
             if ( typeof ( validate( file, DeletedFileValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid deleted file object' );
                 error.status = 400;
@@ -92,7 +92,7 @@ export default ( opt ) => {
         } );
 
         tags.forEach( ( tag ) => {
-            tag.tagId = Number.parseInt( tag.tagId, 10 );
+            tag.tagId = Number( tag.tagId );
             if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;
@@ -112,7 +112,7 @@ export default ( opt ) => {
             {
                 where: {
                     announcementId,
-                    languageId: i18nObj.languageId,
+                    language: i18nObj.language,
                 },
                 transaction: t,
             }

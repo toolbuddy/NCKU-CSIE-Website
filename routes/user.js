@@ -3,42 +3,52 @@
  *
  * Including following sub-routes:
  * - `/user`
- * - `/user/profile`
- * - `/user/award`
- * - `/user/publication`
+ * - `/user/id`
+ * - `/user/faculty/profile`
+ * - `/user/faculty/award`
+ * - `/user/faculty/project`
+ * - `/user/faculty/patent`
+ * - `/user/faculty/conference`
+ * - `/user/faculty/student-award`
+ * - `/user/faculty/publication`
+ * - `/user/faculty/technology-transfer`
+ * - `/user/staff/profile`
  * - `/user/announcement`
  * - `/user/announcement/add`
  * - `/user/announcement/edit/[id]`
+ * - `/user/resetPassword`
  */
 
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
+import cookieParser from 'cookie-parser';
+
+import { secret, host, } from 'settings/server/config.js';
 
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
+import allowUserOnly from 'routes/utils/allow-user-only.js';
+import noCache from 'routes/utils/no-cache.js';
+import staticHtml from 'routes/utils/static-html.js';
 
+import getSession from 'models/auth/operations/get-session.js';
+import saveSession from 'models/auth/operations/save-session.js';
+import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
+
+import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
+import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
+import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
+import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
+import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
+import addStaffDetail from 'models/staff/operations/add-staff-detail.js';
+import updateStaffDetail from 'models/staff/operations/update-staff-detail.js';
+import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
+import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import postAnnouncement from 'models/announcement/operations/post-announcement.js';
 import updateAnnouncement from 'models/announcement/operations/update-announcement.js';
 import pinAnnouncement from 'models/announcement/operations/pin-announcement.js';
 import deleteAnnouncements from 'models/announcement/operations/delete-announcements.js';
-import addFacultyDetail from 'models/faculty/operations/add-faculty-detail.js';
-import updateFacultyDetail from 'models/faculty/operations/update-faculty-detail.js';
-import deleteFacultyDetail from 'models/faculty/operations/delete-faculty-detail.js';
-import addStaffDetail from 'models/staff/operations/add-staff-detail.js';
-import updateStaffDetail from 'models/staff/operations/update-staff-detail.js';
-import deleteStaffDetail from 'models/staff/operations/delete-staff-detail.js';
 
-import cookieParser from 'cookie-parser';
-import getSession from 'models/auth/operations/get-session.js';
-import saveSession from 'models/auth/operations/save-session.js';
-import getAdminByUserId from 'models/auth/operations/get-admin-by-userId.js';
-import { secret, host, } from 'settings/server/config.js';
-import staticHtml from 'routes/utils/static-html.js';
-import noCache from 'routes/utils/no-cache.js';
-import allowUserOnly from 'routes/utils/allow-user-only.js';
-import getAnnouncement from 'models/announcement/operations/get-announcement.js';
-
-import tagUtils from 'models/announcement/utils/tag.js';
 import roleUtils from 'models/auth/utils/role.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import nationUtils from 'models/faculty/utils/nation.js';
@@ -46,18 +56,16 @@ import projectCategoryUtils from 'models/faculty/utils/project-category.js';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import departmentUtils from 'models/faculty/utils/department.js';
 import researchGroupUtils from 'models/faculty/utils/research-group.js';
-
-import getStaffDetailWithId from 'models/staff/operations/get-staff-detail-with-id.js';
-import getFacultyDetailWithId from 'models/faculty/operations/get-faculty-detail-with-id.js';
-
-const upload = multer( {
-    storage: multer.memoryStorage(),
-} );
+import tagUtils from 'models/announcement/utils/tag.js';
 
 const router = express.Router( {
     caseSensitive: true,
     mergeParams:   false,
     strict:        false,
+} );
+
+const upload = multer( {
+    storage: multer.memoryStorage(),
 } );
 
 /**
@@ -203,6 +211,10 @@ router
         res.redirect( '/index' );
 } );
 
+/**
+ * Resolve URL `/user/faculty/profile`
+ */
+
 router
 .route( '/faculty/profile' )
 .get( allowUserOnly, cors(), noCache, async ( req, res ) => {
@@ -212,7 +224,7 @@ router
 
     const data = await getFacultyDetailWithId( {
         profileId:  result.roleId,
-        languageId: req.query.languageId,
+        language:  req.query.languageId,
     } );
 
     res.locals.UTILS.faculty = {
@@ -253,12 +265,12 @@ router
         res.status( 500 ).send( { err, } );
     }
 } )
-.put( cors(), upload.single( 'file' ), async ( req, res ) => {
+.put( allowUserOnly, cors(), upload.single( 'file' ), async ( req, res ) => {
     try {
         res.send( await updateFacultyDetail( {
             dbTable:       'profile',
-            profileId:     Number.parseInt( req.body.profileId, 10 ),
-            dbTableItemId: Number.parseInt( req.body.profileId, 10 ),
+            profileId:     Number( req.body.profileId ),
+            dbTableItemId: Number( req.body.profileId ),
             item:          {
                 photo: req.file.buffer,
             },
@@ -280,76 +292,6 @@ router
     }
 } );
 
-router
-.route( '/staff/profile' )
-.get( allowUserOnly, cors(), noCache, async ( req, res ) => {
-    const result = await getAdminByUserId( {
-        userId: Number( res.locals.userId ),
-    } );
-
-    const data = await getStaffDetailWithId( {
-        profileId:  result.roleId,
-        languageId: req.query.languageId,
-    } );
-
-    await new Promise( ( resolve, reject ) => {
-        res.render( 'user/staff/profile.pug', {
-            data,
-        }, ( err, html ) => {
-            if ( err )
-                reject( err );
-            else {
-                res.send( html );
-                resolve();
-            }
-        } );
-    } );
-} )
-.post( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
-    try {
-        res.send( await addStaffDetail( req.body ) );
-    }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
-    }
-} )
-.patch( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
-    try {
-        res.send( await updateStaffDetail( req.body ) );
-    }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
-    }
-} )
-.put( cors(), upload.single( 'file' ), async ( req, res ) => {
-    try {
-        res.send( await updateStaffDetail( {
-            dbTable:       'profile',
-            profileId:     Number.parseInt( req.body.profileId, 10 ),
-            dbTableItemId: Number.parseInt( req.body.profileId, 10 ),
-            item:          {
-                photo: req.file.buffer,
-            },
-            i18n: [],
-        } ) );
-    }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
-    }
-} )
-.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
-    try {
-        res.send( await deleteStaffDetail( req.body ) );
-    }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
-    }
-} );
-
 /**
  * Resolve URL `/user/faculty/award`.
  */
@@ -358,16 +300,12 @@ router
 .route( '/faculty/award' )
 .get( allowUserOnly, cors(), noCache, async ( req, res, next ) => {
     try {
-        // Get id
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId: result.roleId,
+            language:  req.query.languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
@@ -403,12 +341,9 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -448,12 +383,10 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
 
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -493,12 +426,9 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
@@ -534,12 +464,9 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -579,12 +506,9 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -624,12 +548,9 @@ router
         const result = await getAdminByUserId( {
             userId: Number( res.locals.userId ),
         } );
-        const profileId = result.roleId;
-        const languageId = req.query.languageId;
-
         const data = await getFacultyDetailWithId( {
-            profileId,
-            languageId,
+            profileId:  result.roleId,
+            languageId: req.query.languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
@@ -654,12 +575,78 @@ router
 } );
 
 /**
- * Resolve URL `/user/resetPassword`.
+ * Resolve URL `/user/staff/profile`
  */
 
 router
-.route( '/resetPassword' )
-.get( allowUserOnly, staticHtml( 'user/resetPassword' ) );
+.route( '/staff/profile' )
+.get( allowUserOnly, cors(), noCache, async ( req, res ) => {
+    const result = await getAdminByUserId( {
+        userId: Number( res.locals.userId ),
+    } );
+
+    const data = await getStaffDetailWithId( {
+        profileId:  result.roleId,
+        language:  req.query.languageId,
+    } );
+
+    await new Promise( ( resolve, reject ) => {
+        res.render( 'user/staff/profile.pug', {
+            data,
+        }, ( err, html ) => {
+            if ( err )
+                reject( err );
+            else {
+                res.send( html );
+                resolve();
+            }
+        } );
+    } );
+} )
+.post( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
+    try {
+        res.send( await addStaffDetail( req.body ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.patch( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
+    try {
+        res.send( await updateStaffDetail( req.body ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.put( allowUserOnly, cors(), upload.single( 'file' ), async ( req, res ) => {
+    try {
+        res.send( await updateStaffDetail( {
+            dbTable:       'profile',
+            profileId:     Number( req.body.profileId ),
+            dbTableItemId: Number( req.body.profileId ),
+            item:          {
+                photo: req.file.buffer,
+            },
+            i18n: [],
+        } ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} )
+.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+    try {
+        res.send( await deleteStaffDetail( req.body ) );
+    }
+    catch ( err ) {
+        console.error( err );
+        res.status( 500 ).send( { err, } );
+    }
+} );
 
 /**
  * Resolve URL `/user/announcement`.
@@ -703,7 +690,7 @@ router
         res.status( error.status ).send( error.message );
     }
 } )
-.delete( urlEncoded, jsonParser, allowUserOnly, async ( req, res ) => {
+.delete( allowUserOnly, urlEncoded, jsonParser, async ( req, res ) => {
     try {
         res.send( await deleteAnnouncements( req.body ) );
     }
@@ -712,7 +699,6 @@ router
         res.status( error.status ).send( error.message );
     }
 } );
-
 
 /**
  * Resolve URL `/user/announcement/add`.
@@ -734,6 +720,7 @@ router
             announcementId: Number( req.params.announcementId ),
             languageId:     req.query.languageId,
         } );
+
         res.locals.UTILS.announcement = {
             tagUtils,
         };
@@ -758,5 +745,13 @@ router
             next( err );
     }
 } );
+
+/**
+ * Resolve URL `/user/resetPassword`.
+ */
+
+router
+.route( '/resetPassword' )
+.get( allowUserOnly, staticHtml( 'user/resetPassword' ) );
 
 export default router;

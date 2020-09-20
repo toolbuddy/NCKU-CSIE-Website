@@ -6,7 +6,7 @@ import validate from 'validate.js';
 export default ( opt ) => {
     try {
         opt = opt || {};
-        const announcementId = Number.parseInt( opt.announcementId, 10 );
+        const announcementId = Number( opt.announcementId );
         const isPinned = opt.isPinned;
 
         if ( typeof ( validate( {

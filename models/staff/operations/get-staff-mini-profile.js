@@ -8,7 +8,7 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            languageId = null,
+            language = null,
             profileId = null,
         } = opt;
 
@@ -17,7 +17,7 @@ export default async ( opt ) => {
          * Handle with 400 bad request.
          */
 
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -44,7 +44,7 @@ export default async ( opt ) => {
                         'name',
                     ],
                     where: {
-                        language: languageId,
+                        language,
                     },
                 },
             ],

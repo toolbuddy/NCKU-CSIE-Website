@@ -34,7 +34,7 @@ function equalArray ( a, b ) {
 export default ( opt ) => {
     try {
         opt = opt || {};
-        const author = Number.parseInt( opt.author, 10 );
+        const author = Number( opt.author );
         const {
             image = null,
             announcementI18n = null,
@@ -56,13 +56,13 @@ export default ( opt ) => {
 
         const langArr = [];
         announcementI18n.forEach( ( i18nData ) => {
-            i18nData.languageId = Number.parseInt( i18nData.languageId, 10 );
+            i18nData.language = Number( i18nData.language );
             if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid announcementI18n object' );
                 error.status = 400;
                 throw error;
             }
-            langArr.push( i18nData.languageId );
+            langArr.push( i18nData.language );
         } );
         if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
             const error = new Error( 'Invalid announcementI18n object' );
@@ -79,7 +79,7 @@ export default ( opt ) => {
         } );
 
         tags.forEach( ( tag ) => {
-            tag.tagId = Number.parseInt( tag.tagId, 10 );
+            tag.tagId = Number( tag.tagId );
             if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
                 const error = new Error( 'Invalid tag object' );
                 error.status = 400;

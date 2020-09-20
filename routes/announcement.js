@@ -93,7 +93,7 @@ router
     try {
         const data = await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),
-            languageId:     req.query.languageId,
+            language:       req.query.languageId,
         } );
 
         res.locals.UTILS.announcement = {
@@ -128,7 +128,7 @@ router
 .route( '/:announcementId/file/:fileId' )
 .get( async ( req, res, next ) => {
     try {
-        const file = await getFile( Number.parseInt( req.params.fileId, 10 ) );
+        const file = await getFile( Number( req.params.fileId ) );
         res.set( 'Content-Type', 'application/octet-stream' );
         res.set( 'Content-Disposition', `attachment;filename*=UTF-8''${ encodeURIComponent( file.name ) }` );
         res.send( Buffer.from( file.content, 'binary' ) );

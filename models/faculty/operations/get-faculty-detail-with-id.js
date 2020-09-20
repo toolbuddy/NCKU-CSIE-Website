@@ -38,10 +38,10 @@ export default async ( opt ) => {
         opt = opt || {};
         const {
             profileId = null,
-            languageId = null,
+            language = null,
         } = opt;
 
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -85,7 +85,7 @@ export default async ( opt ) => {
                             'award',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -107,7 +107,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -140,7 +140,7 @@ export default async ( opt ) => {
                             'school',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -164,7 +164,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -191,7 +191,7 @@ export default async ( opt ) => {
                             'patentOwner',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -220,7 +220,7 @@ export default async ( opt ) => {
                     'officeAddress',
                 ],
                 where: {
-                    language: languageId,
+                    language,
                     profileId,
                 },
             } ),
@@ -243,7 +243,7 @@ export default async ( opt ) => {
                             'support',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -269,7 +269,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -297,7 +297,7 @@ export default async ( opt ) => {
                             'specialty',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -326,7 +326,7 @@ export default async ( opt ) => {
                                     'name',
                                 ],
                                 where: {
-                                    language: languageId,
+                                    language,
                                 },
                             },
                         ],
@@ -338,7 +338,7 @@ export default async ( opt ) => {
                             'award',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -367,7 +367,7 @@ export default async ( opt ) => {
                                     'patent',
                                 ],
                                 where: {
-                                    language: languageId,
+                                    language,
                                 },
                             },
                         ],
@@ -382,7 +382,7 @@ export default async ( opt ) => {
                             'technology',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -405,7 +405,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],

@@ -19,7 +19,7 @@ const op = Sequelize.Op;
  *                                                                announcements were post.
  * @param {string}   [endTime = defaultValue.endTime]           - A string of the js Date object, specifying the latest time of filter interval
  *                                                                when announcements were post.
- * @param {number}   [languageId = defaultValue.languageId]     - Language option of the announcements.
+ * @param {number}   [language = defaultValue.language]     - Language option of the announcements.
  * @returns {object[]}                                            Requested announcements, including:
  * - id
  * - title
@@ -36,7 +36,7 @@ export default async ( opt ) => {
             tags = [],
             from = null,
             to = null,
-            languageId = null,
+            language = null,
         } = opt || {};
 
         if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
@@ -54,7 +54,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -113,7 +113,7 @@ export default async ( opt ) => {
                         'content',
                     ],
                     where: {
-                        languageId,
+                        language,
                     },
                 },
                 {

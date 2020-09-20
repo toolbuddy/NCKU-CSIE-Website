@@ -88,10 +88,10 @@ router
 .get( async ( req, res, next ) => {
     try {
         const profileId = Number( req.params.profileId );
-        const languageId = req.query.languageId;
+        const language = req.query.languageId;
         const data = await getFacultyDetail( {
             profileId,
-            languageId,
+            language,
         } );
 
         res.locals.UTILS.faculty = {

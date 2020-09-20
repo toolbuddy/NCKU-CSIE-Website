@@ -9,14 +9,14 @@ import {
     TitleI18n,
 } from 'models/faculty/operations/associations.js';
 
-export default async ( languageId = null ) => {
+export default async ( language = null ) => {
     try {
         /**
          * Invalid query parameter.
          * Handle with 400 bad request.
          */
 
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -51,7 +51,7 @@ export default async ( languageId = null ) => {
                         'officeAddress',
                     ],
                     where: {
-                        language: languageId,
+                        language,
                     },
                 },
                 {
@@ -74,7 +74,7 @@ export default async ( languageId = null ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     }, ],
                 },

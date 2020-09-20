@@ -15,7 +15,7 @@ export default async ( opt ) => {
         const {
             tags = [],
             amount = null,
-            languageId = null,
+            language = null,
         } = opt || {};
 
         if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
@@ -28,7 +28,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -94,7 +94,7 @@ export default async ( opt ) => {
                         'content',
                     ],
                     where: {
-                        languageId,
+                        language,
                     },
                 },
             ],

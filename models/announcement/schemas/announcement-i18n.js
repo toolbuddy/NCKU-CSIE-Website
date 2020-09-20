@@ -8,7 +8,7 @@ const AnnouncementI18n = announcement.define( 'announcementI18n', {
         allowNull:  false,
         primaryKey: true,
     },
-    languageId: {
+    language: {
         type:         Sequelize.TINYINT.UNSIGNED,
         allowNull:    false,
         defaultValue: LanguageUtils.defaultLanguageId,

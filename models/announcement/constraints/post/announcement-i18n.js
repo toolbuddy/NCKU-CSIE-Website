@@ -1,7 +1,7 @@
 import LanguageUtils from 'models/common/utils/language.js';
 
 const AnnouncementI18nValidationConstraints = {
-    languageId: {
+    language: {
         presence: true,
         type:     {
             type: LanguageUtils.isSupportedLanguageId,

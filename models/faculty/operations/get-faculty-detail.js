@@ -41,11 +41,11 @@ export default async ( opt ) => {
     try {
         opt = opt || {};
         const {
-            languageId = null,
+            language = null,
             profileId = null,
         } = opt;
 
-        if ( !LanguageUtils.isSupportedLanguageId( languageId ) ) {
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
             const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
@@ -88,7 +88,7 @@ export default async ( opt ) => {
                             'award',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -109,7 +109,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -141,7 +141,7 @@ export default async ( opt ) => {
                             'school',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -164,7 +164,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -190,7 +190,7 @@ export default async ( opt ) => {
                             'patentOwner',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -218,7 +218,7 @@ export default async ( opt ) => {
                     'officeAddress',
                 ],
                 where: {
-                    language: languageId,
+                    language,
                     profileId,
                 },
             } ),
@@ -240,7 +240,7 @@ export default async ( opt ) => {
                             'support',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -265,7 +265,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -291,7 +291,7 @@ export default async ( opt ) => {
                             'specialty',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -318,7 +318,7 @@ export default async ( opt ) => {
                                     'name',
                                 ],
                                 where: {
-                                    language: languageId,
+                                    language,
                                 },
                             },
                         ],
@@ -330,7 +330,7 @@ export default async ( opt ) => {
                             'award',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -355,7 +355,7 @@ export default async ( opt ) => {
                                     'patent',
                                 ],
                                 where: {
-                                    language: languageId,
+                                    language,
                                 },
                             },
                         ],
@@ -369,7 +369,7 @@ export default async ( opt ) => {
                             'technology',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -390,7 +390,7 @@ export default async ( opt ) => {
                             'title',
                         ],
                         where: {
-                            language: languageId,
+                            language,
                         },
                     },
                 ],
@@ -420,12 +420,12 @@ export default async ( opt ) => {
             } ) ),
             department: department.map( department => departmentUtils.getValueById( {
                 id: department.type,
-                languageId,
+                language,
             } ) ),
             education:  education.map( education => ( {
                 degree: degreeUtils.getValueById( {
                     id: education.degree,
-                    languageId,
+                    language,
                 } ),
                 from:   education.from,
                 major:  education.educationI18n[ 0 ].major,
@@ -460,7 +460,7 @@ export default async ( opt ) => {
                 name:          profileI18n.name,
                 nation:        nationUtils.getValueById( {
                     id: profile.nation,
-                    languageId,
+                    language,
                 } ),
                 officeAddress: profileI18n.officeAddress,
                 officeTel:     profile.officeTel,
@@ -486,7 +486,7 @@ export default async ( opt ) => {
             } ) ),
             researchGroup: researchGroup.map( researchGroup => researchGroupUtils.getValueById( {
                 id: researchGroup.type,
-                languageId,
+                language,
             } ) ),
             specialty:     specialty.map( specialty => specialty.specialtyI18n[ 0 ].specialty ),
             studentAward:  studentAward.map( studentAward => ( {
@@ -495,7 +495,7 @@ export default async ( opt ) => {
                 student:      studentAward.student.map( student => ( {
                     degree: degreeUtils.getValueById( {
                         id: student.degree,
-                        languageId,
+                        language,
                     } ),
                     name:   student.studentI18n[ 0 ].name,
                 } ) ),
