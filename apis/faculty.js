@@ -54,7 +54,7 @@ apis.get( '/lab', cors(), async ( req, res, next ) => {
 apis.get( '/publication', cors(), async ( req, res, next ) => {
     try {
         const data = await getPublications( {
-            languageId: Number( req.query.languageId ),
+            language: Number( req.query.languageId ),
             from:       Number( req.query.from ),
             to:         Number( req.query.to ),
         } );
@@ -73,7 +73,7 @@ apis.get( '/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getFacultyDetail( {
             profileId:  Number( req.params.profileId ),
-            languageId: Number( req.query.languageId ),
+            language:  Number( req.query.languageId ),
         } );
         res.json( data );
     }
@@ -90,7 +90,7 @@ apis.get( '/facultyWithId/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId:  Number( req.params.profileId ),
-            languageId: Number( req.query.languageId ),
+            language:  Number( req.query.languageId ),
         } );
         res.json( data );
     }
@@ -106,7 +106,7 @@ apis.get( '/facultyWithId/:profileId', cors(), async ( req, res, next ) => {
 apis.get( '/miniProfile/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getFacultyMiniProfile( {
-            languageId: Number( req.query.languageId ),
+            language:  Number( req.query.languageId ),
             profileId:  Number( req.params.profileId ),
         } );
         res.json( data );

@@ -343,7 +343,7 @@ router
         } );
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -386,7 +386,7 @@ router
 
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -428,7 +428,7 @@ router
         } );
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
@@ -466,7 +466,7 @@ router
         } );
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -508,7 +508,7 @@ router
         } );
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         res.locals.UTILS.faculty = {
@@ -550,7 +550,7 @@ router
         } );
         const data = await getFacultyDetailWithId( {
             profileId:  result.roleId,
-            languageId: req.query.languageId,
+            language:  req.query.languageId,
         } );
 
         await new Promise( ( resolve, reject ) => {
@@ -718,7 +718,7 @@ router
     try {
         const data = await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),
-            languageId:     req.query.languageId,
+            language:       req.query.languageId,
         } );
 
         res.locals.UTILS.announcement = {

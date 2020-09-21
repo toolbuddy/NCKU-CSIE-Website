@@ -1,4 +1,4 @@
-import tables from 'models/faculty/operations/associations.js';
+import tables from 'models/staff/operations/associations.js';
 import { staff, } from 'models/common/utils/connect.js';
 
 import validate from 'validate.js';

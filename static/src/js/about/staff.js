@@ -40,7 +40,7 @@ catch ( err ) {
 try {
     const getStaff = new GetStaff( {
         staffDOM:   document.getElementById( 'staff' ),
-        languageId: WebLanguageUtils.currentLanguageId,
+        language: WebLanguageUtils.currentLanguageId,
     } );
 
     getStaff.exec();

@@ -35,8 +35,8 @@ apis.get( '/', cors(), async ( req, res, next ) => {
 apis.get( '/miniProfile/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getStaffMiniProfile( {
-            languageId: Number( req.query.languageId ),
-            profileId:  Number( req.params.profileId ),
+            language:  Number( req.query.languageId ),
+            profileId: Number( req.params.profileId ),
         } );
         res.json( data );
     }
@@ -53,7 +53,7 @@ apis.get( '/staffWithId/:profileId', cors(), async ( req, res, next ) => {
     try {
         const data = await getStaffDetailWithId( {
             profileId:  Number( req.params.profileId ),
-            languageId: Number( req.query.languageId ),
+            language:  Number( req.query.languageId ),
         } );
         res.json( data );
     }

@@ -49,7 +49,6 @@ export default async ( opt ) => {
             error.status = 404;
             throw error;
         }
-
         return {
             userId:     data.userId,
             account:    data.account,

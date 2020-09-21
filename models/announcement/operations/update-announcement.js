@@ -40,8 +40,8 @@ export default ( opt ) => {
         const {
             image = null,
             announcementI18n = null,
-            addedFiles = null,
-            deletedFiles = null,
+            addedFiles = [],
+            deletedFiles = [],
             tags = null,
         } = opt;
 

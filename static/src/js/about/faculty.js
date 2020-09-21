@@ -40,7 +40,7 @@ catch ( err ) {
 try {
     const getFaculty = new GetFactuly( {
         facultyDOM: document.getElementById( 'faculty' ),
-        languageId: WebLanguageUtils.currentLanguageId,
+        language:   WebLanguageUtils.currentLanguageId,
     } );
 
     getFaculty.exec();

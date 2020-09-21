@@ -27,14 +27,14 @@ apis.get( '/miniProfile/:userId', cors(), async ( req, res ) => {
 
         if ( userData.role === roleUtils.getIdByOption( 'faculty' ) ) {
             const data = await getFacultyMiniProfile( {
-                languageId: Number( req.query.languageId ),
+                language:  Number( req.query.languageId ),
                 profileId:  userData.roleId,
             } );
             res.json( data );
         }
         else if ( userData.role === roleUtils.getIdByOption( 'staff' ) ) {
             const data = await getStaffMiniProfile( {
-                languageId: Number( req.query.languageId ),
+                language:  Number( req.query.languageId ),
                 profileId:  userData.roleId,
             } );
             res.json( data );
