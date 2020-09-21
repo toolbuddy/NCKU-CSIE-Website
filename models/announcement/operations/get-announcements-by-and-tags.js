@@ -146,21 +146,18 @@ export default async ( opt ) => {
                     ],
                 },
             ],
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
         } ) ) );
 
-        data = data.map( announcement => ( {
+        return data.map( announcement => ( {
             announcementId: announcement.announcementId,
             updateTime:     announcement.updateTime,
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tags.map( tag => tag.tagId ),
         } ) );
-
-        data.sort( ( announcementA, announcementB ) => new Date( announcementA.updateTime ) < new Date( announcementB.updateTime ) );
-
-        return data;
     }
-
     catch ( err ) {
         if ( err.status )
             throw err;

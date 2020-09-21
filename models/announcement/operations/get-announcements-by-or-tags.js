@@ -72,9 +72,10 @@ export default async ( opt ) => {
             throw error;
         }
 
-        let data = await Announcement.findAll( {
+        const data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
+                'updateTime',
             ],
             where: {
                 updateTime: {
@@ -84,45 +85,6 @@ export default async ( opt ) => {
                     ],
                 },
                 isPublished: true,
-            },
-            include: [
-                {
-                    model:      Tag,
-                    as:         'tags',
-                    attributes: [],
-                    where:      {
-                        tagId: {
-                            [ Op.in ]: tags,
-                        },
-                    },
-                },
-            ],
-            group:    '`announcement`.`announcementId`',
-            order:    [ [ 'updateTime',
-                'DESC', ], ],
-            offset:   amount * ( page - 1 ),
-            limit:    amount,
-
-            /**
-             * Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
-             */
-
-            subQuery: false,
-        } );
-
-        if ( !data.length ) {
-            const error = new Error( 'no result' );
-            error.status = 404;
-            throw error;
-        }
-
-        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-            ],
-            where: {
-                announcementId,
             },
             include: [
                 {
@@ -140,21 +102,32 @@ export default async ( opt ) => {
                     model:      Tag,
                     as:         'tags',
                     attributes: [ 'tagId', ],
+                    where:      {
+                        tagId: {
+                            [ Op.in ]: tags,
+                        },
+                    },
                 },
             ],
-        } ) ) );
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
+            offset:   amount * ( page - 1 ),
+            limit:    amount,
+        } );
 
-        data = data.map( announcement => ( {
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        return data.map( announcement => ( {
             announcementId: announcement.announcementId,
             updateTime:     announcement.updateTime,
             title:          announcement.announcementI18n[ 0 ].title,
             content:        announcement.announcementI18n[ 0 ].content,
             tags:           announcement.tags.map( tag => tag.tagId ),
         } ) );
-
-        data.sort( ( announcementA, announcementB ) => new Date( announcementA.updateTime ) < new Date( announcementB.updateTime ) );
-
-        return data;
     }
     catch ( err ) {
         if ( err.status )
