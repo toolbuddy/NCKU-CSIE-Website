@@ -1,0 +1,81 @@
+include /components/common/image.pug
+
+//- Sort faculty based on their showing order.
+- data.sort( ( facultyA, facultyB ) => facultyA.order - facultyB.order )
+each profile in data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        more: 'Read more',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' ext. ' ) : '',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        more: '更多資訊',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split( ',' ).join( ' 分機 ' ) : '',
+      },
+    } );
+
+  if profile.name !== null
+    //- Faculty's department id and research-group id.
+    section.cards__card.card(
+      data-department-ids = `${ Array.isArray( profile.department ) ? profile.department.join() : '' }`,
+      data-research-group-ids = `${ Array.isArray( profile.researchGroup ) ? profile.researchGroup.join() : '' }`
+    )
+      //- Faculty's photo.
+      if profile.photo !== null
+        img(
+          alt       = profile.name,
+          className = 'card__photo',
+          src       = `data:image/jpeg;base64,${ profile.photo }`,
+        )
+      else
+        +image( {
+            alt: profile.name,
+            className: 'card__photo',
+            src: 'faculty/no-photo.jpg',
+        } )
+
+      //- Faculty's intro.
+      article.card__intro.intro
+
+        //- Faculty belongs to some departments.
+        if Array.isArray( profile.department ) && profile.department.length
+          aside.intro__departments.departments
+            each departmentId in profile.department
+              span.departments__department(
+                data = `${ departmentId }`
+              )= UTILS.faculty.departmentUtils.getValueById( { id: departmentId, languageId: LANG.id } )
+
+        //- Faculty's name.
+        header.intro__name= profile.name
+
+        //- Faculty has some titles.
+        if Array.isArray( profile.title ) && profile.title.length
+          aside.intro__titles.titles
+            each title in profile.title
+              span.titles__title= title
+
+        //- Faculty's email.
+        if profile.email !== null
+          a.intro__email( href = `mailto:${ profile.email }` )= profile.email
+
+        //- Faculty owns some offices, including address and phone.
+        if profile.officeAddress !== null
+          address.intro__office-address= profile.officeAddress
+        if profile.officeTel !== null
+          a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
+
+        //- Faculty run some labs, including name, web and address.
+        if profile.labName !== null && profile.labWeb !== null
+          a.intro__lab-name.lab-name( href = profile.labWeb )= profile.labName
+        if profile.labAddress !== null
+          address.intro__lab-address= profile.labAddress
+
+      //- Faculty's detail information link.
+      if profile.profileId !== null
+        a.card__more( href = UTILS.url( {
+          href: `about/faculty/${ profile.profileId }`,
+          query: {
+            languageId: LANG.id
+          },
+        } ) )= i18n[ LANG.id ].more

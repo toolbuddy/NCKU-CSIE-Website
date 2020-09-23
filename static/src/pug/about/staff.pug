@@ -1,0 +1,62 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title': 'Staff',
+        'topic': 'Staff',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title': '行政人員',
+        'topic': '行政人員',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
+      },
+    } );
+    const currentRoute = 'about/staff';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'about/staff' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#staff.content__staff.staff
+    +noResultWithImage( 'staff' )
+    +loading( 'staff' )
+    section.staff__cards.cards
+
+append footer
+
+append scripts
+  +js( 'about/staff' )

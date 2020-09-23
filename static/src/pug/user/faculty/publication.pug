@@ -1,0 +1,231 @@
+extends /layouts/faculty/base.pug
+include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/publication-card.pug
+include /components/user/card/no-record.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'User Publication',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User Publication',
+        },
+        content: {
+          topic: 'Teacher profile settings',
+          publication: {
+            topic:         'Publication',
+            refereed:      'Refereed ',
+            international: 'International ',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '使用者資料管理',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者資料',
+        },
+        content: {
+          topic: '教師資料維護',
+          publication: {
+            topic: '著作',
+            refereed:      '被引用',
+            international: '國際',
+          },
+        },
+      },
+    } );
+    const formI18n = Object.freeze({
+        [ LANG.getLanguageId( 'en-US' ) ]: {
+          post: 'Add Your Publication',
+          patch: 'Modify Your Publication',
+          delete: 'Remove Your Publication',
+          default: {
+            authors: '',
+            title: '',
+            category: '',
+            issueYear: 'yyyy',
+            issueMonth: 'mm'
+          },
+          title: {
+            authors:       'Authors',
+            title:         'Title',
+            category:      'Category',
+            issueYear:     'Issue Year',
+            issueMonth:    'Issue Month',
+            international: 'International',
+            refereed:      'Refereed',
+          }
+        },
+        [ LANG.getLanguageId( 'zh-TW' ) ]:{
+          post: '新增您的著作',
+          patch: '編輯您的著作',
+          delete: '刪除您的著作',
+          default: {
+            authors: '',
+            title: '',
+            category: '',
+            issueYear: 'yyyy',
+            issueMonth:'mm',
+          },
+          title: {
+            authors:       '作者',
+            title:         '著作名稱',
+            category:      '投稿對象',
+            issueYear:     '發行年份',
+            issueMonth:    '發行月份',
+            international: '國際級別',
+            refereed:      '經過審查委員審核',
+          },
+       }
+    })
+    const inputConfig = [
+      {
+        inputPattern: 'single',
+        columnName: 'issueYear',
+        validation: {
+          type: 'number',
+          min:  1970,
+          datatype: 'int'
+        }
+      },
+      {
+        inputPattern: 'single',
+        columnName: 'issueMonth',
+        validation: {
+          type: 'number',
+          min:  1,
+          max:  12,
+          datatype: 'int'
+        }
+      },
+      {
+        inputPattern: 'dropdown',
+        columnName: 'category',
+        utils: UTILS.faculty.publicationCategoryUtils,
+      },
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'title',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+      {
+        inputPattern: 'i18n-text',
+        columnName: 'authors',
+        validation: {
+          type: 'text',
+          required: true,
+          maxlength: 300,
+        }
+      },
+      {
+        inputPattern: 'checkbox',
+        columnName: 'international',
+      },
+      {
+        inputPattern: 'checkbox',
+        columnName: 'refereed',
+      },
+    ]
+    const currentRoute = 'user/faculty/publication';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/faculty/publication' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/publication' },
+    ]
+  )
+
+append content
+  include /components/common/loading.pug
+  include /components/common/refresh.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  +navigation-bar( 'content' )
+  section.content__publication.publication
+    +local-topic( 'publication', i18n[ LANG.id ].content.publication.topic )
+    +refreshWithImage( 'publication' )
+    +loading( 'publication' )
+    section#publication__cards.publication__cards.cards
+      if Array.isArray( data.publication ) && data.publication.length
+        -
+          let issueYear = null
+          data.publication.sort( (a, b)=>{
+            if(a.issueYear === null )
+              return -1
+            else if(b.issueYear === null)
+              return 1
+            return b.issueYear - a.issueYear
+          })
+
+        each category, index in UTILS.faculty.publicationCategoryUtils.supportedValues( LANG.id )
+          - 
+            const publications = data.publication.filter( obj => obj.category == index )
+            const ri = {
+              objs: publications.filter( obj => obj.international == true && obj.refereed == true ),
+              international: true,
+              refereed: true,
+            }
+            const r  = {
+              objs: publications.filter( obj => obj.international == false && obj.refereed == true ),
+              international: false,
+              refereed: true,
+            }
+            const i  ={
+              objs: publications.filter( obj => obj.international == true && obj.refereed == false ),
+              international: true,
+              refereed: false,
+            }
+            const no = {
+              objs: publications.filter( obj => obj.international == false && obj.refereed == false ),
+              international: false,
+              refereed: false,
+            }
+          each publicationObj in [ ri, r, i, no ]
+            if publicationObj.objs.length > 0
+              - 
+                let title = ''
+                title += (publicationObj.refereed)? i18n[ LANG.id ].content.publication.refereed : ''
+                title += (publicationObj.international)? i18n[ LANG.id ].content.publication.international: ''
+                title += category
+              +classfication-title( title )
+
+              each obj in publicationObj.objs
+                if issueYear === null || issueYear !== obj.issueYear
+                  +classfication-title( obj.issueYear )
+                  - 
+                    issueYear = obj.issueYear
+                  +publication-card(obj)
+              
+              - issueYear = null
+      else
+        +no-record()
+append form
+  +form-input( 'publication', 'post', formI18n, inputConfig )
+  +form-input( 'publication', 'patch', formI18n, inputConfig )
+  +form-input( 'publication', 'delete', formI18n, inputConfig )
+
+append footer
+
+append scripts
+  +js( 'user/faculty/publication' )

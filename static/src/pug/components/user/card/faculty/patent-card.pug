@@ -1,0 +1,61 @@
+mixin patent-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          'applicationDate':     'application date',
+          'certificationNumber': 'certification number',
+          'expireDate':          'expire date',
+          'issueDate':           'issue date',
+          'nation':              'nation',
+          'inventor':            'inventor',
+          'patent':              'patent',
+          'patentOwner':         'patent owner',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          'applicationDate':     '申請日期',
+          'certificationNumber': '證書號',
+          'expireDate':          '到期日期',
+          'issueDate':           '核准日期',
+          'nation':              '專利國籍',
+          'inventor':            '發明人',
+          'patent':              '專利名稱',
+          'patentOwner':         '專利權人',
+        },
+      },
+    })
+    const nation = UTILS.faculty.nationUtils.getValueById({
+          id: data.nation,
+          languageId: LANG.id
+        })
+  section.patent-card.cards__patent-card
+    h4.patent-card__topic.topic.topic--certificationNumber= i18n[ LANG.id ].topic.certificationNumber
+    p.patent-card__value.value.value--certificationNumber= data.certificationNumber
+    h4.patent-card__topic.topic.topic--patent= i18n[ LANG.id ].topic.patent
+    p.patent-card__value.value.value--patent= data.patent
+    h4.patent-card__topic.topic.topic--nation= i18n[ LANG.id ].topic.nation
+    p.patent-card__value.value.value--nation= nation
+    h4.patent-card__topic.topic.topic--inventor= i18n[ LANG.id ].topic.inventor
+    p.patent-card__value.value.value--inventor= data.inventor
+    h4.patent-card__topic.topic.topic--patentOwner= i18n[ LANG.id ].topic.patentOwner
+    p.patent-card__value.value.value--patentOwner= data.patentOwner
+    h4.patent-card__topic.topic.topic--applicationDate= i18n[ LANG.id ].topic.applicationDate
+    p.patent-card__value.value.value--applicationDate= data.applicationDate
+    h4.patent-card__topic.topic.topic--issueDate= i18n[ LANG.id ].topic.issueDate
+    p.patent-card__value.value.value--issueDate= data.issueDate
+    h4.patent-card__topic.topic.topic--expireDate= i18n[ LANG.id ].topic.expireDate
+    p.patent-card__value.value.value--expireDate= data.expireDate
+    img.patent-card__patch(
+      alt = 'patch',
+      id = `patent-card__patch--${ data.patentId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.patentId
+    )
+    img.patent-card__delete(
+      alt = 'delete',
+      id = `patent-card__delete--${ data.patentId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.patentId
+    )

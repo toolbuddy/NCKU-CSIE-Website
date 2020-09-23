@@ -1,0 +1,218 @@
+@mixin student-award-card ( ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .student-award-card.cards__student-award-card {
+    // [ variable ]
+    $large: 1180px;
+    $medium: 710px;
+    $small: 535px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        'topic-award        patch               delete '
+        'value-award        value-award         value-award '
+        'student      student student'
+        'student-post student-post student-post';
+      columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+    };
+    column-gap: font__px-to-rem( 10 );
+    row-gap: font__px-to-rem( 10 );
+
+    // [ position ]
+    width: 100%;
+    height: fit-content;
+
+    // [ skin ]
+    border: {
+      bottom: solid font__px-to-rem( 2 ) #adacad;
+      radius: font__px-to-rem( 3 );
+    }
+    margin-top: font__px-to-rem( 20 );
+    padding: {
+      bottom: font__px-to-rem( 20 );
+      left:   font__px-to-rem( 20 );
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      grid-template: {
+        areas:
+          'topic-award  patch delete '
+          'value-award  patch delete '
+          'student      patch delete '
+          'student-post patch delete ';
+        columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+      };
+      column-gap: font__px-to-rem( 16 );
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          'topic-award value-award   patch delete '
+          'student     student       patch delete '
+          'student-post student-post patch delete';
+        columns: max-content 1fr 1.2rem 1.2rem;
+      };
+    }
+
+    > .student-award-card__topic.topic {
+      // [ layout ]
+      display: flex;
+      justify-self: flex-start;
+      align-items: center;
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+
+      &--award {
+        grid-area: topic-award;
+      }
+    }
+
+    > .student-award-card__value {
+      // [ layout ]
+      display: flex;
+      justify-self: flex-start;
+      align-items: center;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 18 );
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+
+      &--award {
+        grid-area: value-award;
+      }
+    }
+
+    > .student-award-card__student {
+      // [ layout ]
+      display: flex;
+      flex-wrap: wrap;
+      grid-area: student;
+
+      > .student-card {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:    'patch delete content';
+          columns: font__px-to-rem( 25 ) font__px-to-rem( 25 ) auto;
+        }
+        column-gap: font__px-to-rem( 10 );
+        align-items: center;
+
+        // [ position ]
+        width: 100%;
+        margin-left: font__px-to-rem( 20 );
+
+        > .student-card__content {
+          // [ layout ]
+          grid-area: content;
+
+          // [ skin ]
+          font-size: font__px-to-rem( 18 );
+          line-height: normal;
+          letter-spacing: normal;
+          color: rgba( 0, 0, 0, .87 );
+        }
+
+        > .student-card__patch {
+          // [ position ]
+          width: font__px-to-rem( 20 );
+          height: auto;
+
+          &:hover {
+            // [ skin ]
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+            cursor: pointer;
+          }
+        }
+
+        > .student-card__delete {
+          // [ position ]
+          width: font__px-to-rem( 15 );
+          height: auto;
+
+          &:hover {
+            // [ skin ]
+            filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    > .student-award-card__student-post {
+      // [ layout ]
+      display: flex;
+      grid-area: student-post;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 16 );
+      line-height: normal;
+      color: rgba( 144, 172, 218, .87 );
+      background-color: rgba( 255, 255, 255, 1 );
+
+      &:hover {
+        // [ skin ]
+        color: rgba( 144, 172, 218, 1 );
+        cursor: pointer;
+      }
+    }
+
+    > .student-award-card__patch {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: patch;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    > .student-award-card__delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: delete;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

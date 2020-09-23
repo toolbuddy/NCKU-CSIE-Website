@@ -1,0 +1,85 @@
+//- Base template for all html.
+//- All pug file must extend from this file.
+
+//- Data block.
+//-
+//- This block is aim to collect data specific to each page.
+//- e.g. `i18n`
+block data
+
+doctype html
+html
+  head
+    meta( charset = 'utf8' )
+    meta( name = 'viewport', content = 'width=device-width, initial-scale=1.0' )
+    link( rel = 'icon', type = 'image/png', href = UTILS.staticUrl( { href: 'image/logo/favicon.png' } ) )
+
+    //- Title block.
+    //-
+    //- Each page has there own title (`<title>` tag).
+    //- Use title template `+title( 'page title' )` to generate `<title>` tag.
+    //- Title template module can be found at `static/src/pug/components/common/title.pug`.
+    block title
+      include /components/common/title.pug
+
+    //- Stylesheets block.
+    //-
+    //- Each page has there own stylesheets (CSS files; `<link>` tags).
+    //- Use stylesheet template `+css( 'route to stylesheet' )` to generate stylesheet `<link>` tag.
+    //- Stylesheet template module can be found at `static/src/pug/components/common/css.pug`.
+    block stylesheets
+      include /components/common/css.pug
+
+  body.body
+    //- Image template module.
+    //-
+    //- Each page has there own image (`<img>` tags).
+    //- Use image template `+image( {image detail} )` to generate `<img>` tag.
+    //- Image template module can be found at `static/src/pug/components/common/image.pug`.
+    include /components/common/image.pug
+    include /components/common/banner.pug
+    include /components/common/breadcrumb.pug
+
+    //- Header block.
+    //-
+    //- Each page has there own header (`<header>` tags).
+    //- Use header template `+header()` to generate `<header>` tag.
+    //- Header template module can be found at `static/src/pug/components/common/header-.pug`.
+    block header
+      include /components/common/header-base.pug
+      include /components/common/header-medium.pug
+      include /components/common/header-large.pug
+      +header--base( 'body' )
+      +header--medium( 'body' )
+      +header--large( 'body' )
+
+    //- Content block.
+    //-
+    //- Each page has there own content.
+    //- All specific content go to this block.
+    main#content.body__content.content
+      block content
+        block breadcrumb
+
+    //- Form block
+    //-
+    //- Each user modify page has there own form
+    form#form.body__form
+      block form
+
+    //- Footer block.
+    //-
+    //- Each page has there own footer (`<footer>` tags).
+    //- Use footer template `+footer()` to generate `<footer>` tag.
+    //- Footer template module can be found at `static/src/pug/components/common/footer.pug`.
+    block footer
+      include /components/common/footer.pug
+      +footer( 'body' )
+
+    //- Scripts block.
+    //-
+    //- Each page has there own scripts (JS files; `<script>` tags).
+    //- Use script template `+js( 'route to script' )` to generate `<script>` tag.
+    //- Scripts template module can be found at `static/src/pug/components/common/js.pug`.
+    block scripts
+      include /components/common/js.pug

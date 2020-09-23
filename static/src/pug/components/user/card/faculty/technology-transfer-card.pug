@@ -1,0 +1,52 @@
+include /components/user/card/faculty/technology-transfer-patent-card.pug
+
+mixin technology-transfer-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          duration:         'duration',
+          authorizingParty: 'authorizing party',
+          authorizedParty:  'authorized party',
+          technology:       'technology',
+        },
+        patent: 'add patent',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          duration:         '合約期間',
+          authorizingParty: '授權方名稱',
+          authorizedParty:  '接受方名稱',
+          technology:       '技術名稱',
+        },
+        patent: '新增專利名稱',
+      },
+    })
+  section.technology-transfer-card.cards__technology-transfer-card( id=`cards__technology-transfer-card--${ data.technologyTransferId }` )
+    h4.technology-transfer-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.technology-transfer-card__value.value.value--duration= `${data.from} - ${data.to}`
+    h4.technology-transfer-card__topic.topic.topic--technology= i18n[ LANG.id ].topic.technology
+    p.technology-transfer-card__value.value.value--technology= data.technology
+    h4.technology-transfer-card__topic.topic.topic--authorizingParty= i18n[ LANG.id ].topic.authorizingParty
+    p.technology-transfer-card__value.value.value--authorizingParty= data.authorizingParty
+    h4.technology-transfer-card__topic.topic.topic--authorizedParty= i18n[ LANG.id ].topic.authorizedParty
+    p.technology-transfer-card__value.value.value--authorizedParty= data.authorizedParty
+    section.technology-transfer-card__technology-transfer-patent
+      if Array.isArray( data.technologyTransferPatent ) && data.technologyTransferPatent.length
+        each obj in data.technologyTransferPatent
+          +technology-transfer-patent-card( obj )
+    button.technology-transfer-card__patent-post(
+      data-id= data.technologyTransferId
+    )= i18n[ LANG.id ].patent
+    img.technology-transfer-card__patch(
+      alt = 'patch',
+      id = `technology-transfer-card__patch--${ data.technologyTransferId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.technologyTransferId
+    )
+    img.technology-transfer-card__delete(
+      alt = 'delete',
+      id = `technology-transfer-card__delete--${ data.technologyTransferId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.technologyTransferId
+    )

@@ -1,0 +1,16 @@
+mixin technology-transfer-patent-card( data )
+  section.technology-transfer-patent-card
+    p.technology-transfer-patent-card__content= data.patent
+
+    img.technology-transfer-patent-card__patch(
+      alt = 'patch',
+      id = `technology-transfer-card__patch--${ data.technologyTransferPatentId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/settings.png' } ),
+      data-id = data.technologyTransferPatentId
+    )
+    img.technology-transfer-patent-card__delete(
+      alt = 'delete',
+      id = `technology-transfer-card__delete--${ data.technologyTransferPatentId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/cross.png' } )
+      data-id = data.technologyTransferPatentId
+    )

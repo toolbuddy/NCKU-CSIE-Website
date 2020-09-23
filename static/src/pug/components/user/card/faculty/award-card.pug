@@ -1,0 +1,33 @@
+mixin award-card( data )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          award:         'award',
+          receivedYear:  'received year',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          award:         '獎項',
+          receivedYear:  '獲獎年份',
+        },
+      },
+    })
+  section.award-card.cards__award-card
+    h4.award-card__topic.topic.topic--award= i18n[ LANG.id ].topic.award
+    p.award-card__value.value.value--award= data.award
+    h4.award-card__topic.topic.topic--receivedYear= i18n[ LANG.id ].topic.receivedYear
+    p.award-card__value.value.value--receivedYear= data.receivedYear
+    img.award-card__patch(
+      alt = 'patch',
+      id = `award-card__patch--${ data.awardId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.awardId
+    )
+    img.award-card__delete(
+      alt = 'delete',
+      id = `award-card__delete--${ data.awardId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.awardId
+    )

@@ -1,0 +1,90 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title': 'Home',
+        'topic': 'Latest News',
+        'more':  'more...',
+        'hot':   'Hot News',
+        'highSchool': 'For High School Students',
+        'imi': '',
+        'imis': '',
+        'msic': '',
+        'ai': '',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title': '首頁',
+        'topic': '最新消息',
+        'more':  '更多資訊...',
+        'hot':   '最近熱門',
+        'highSchool': '高中生專區',
+        'imi': '醫資所',
+        'imis': '製造所',
+        'msic': '多媒體學程',
+        'ai': '人工智慧學程',
+      },
+    } );
+    const currentRoute = '';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'home/index' )
+
+append header
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+
+  section#tv.content__tv.tv
+    +noResult( 'tv' )
+    +loading( 'tv' )
+    nav.tv__series.series
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+
+  section#announcement.content__announcement.announcement
+    +noResult( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
+    aside.announcement__more.more
+      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
+  section#hot-announcement.content__hot-announcement.hot-announcement
+    header.hot-announcement__title.title= i18n[ LANG.id ].hot
+    +noResult( 'hot-announcement' )
+    +loading( 'hot-announcement' )
+    nav.hot-announcement__briefings.briefings
+
+  section#high-school.content__high-school.high-school
+    figure.high-school__banner
+    h1.high-school__text.text
+      a.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
+
+  section#master.content__master.master
+    span.master__imi.imi
+      figure.imi__banner
+      h1.imi__text.text
+        a.text__link( href = 'http://www.imi.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].imi
+    span.master__imis.imis
+      figure.imis__banner
+      h1.imis__text.text
+        a.text__link( href = 'http://www.imis.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].imis
+    span.master__msic.msic
+      figure.msic__banner
+      h1.msic__text.text
+        a.text__link( href = 'http://www.csie.ncku.edu.tw/msic/msic.php', target = 'blank' )= i18n[ LANG.id ].msic
+    span.master__ai.ai
+      figure.ai__banner
+      h1.ai__text.text
+        a.text__link( href = 'http://aim.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].ai
+
+append footer
+
+append scripts
+  +js( 'home/index' )

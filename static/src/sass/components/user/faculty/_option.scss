@@ -1,0 +1,60 @@
+@import 'components/announcement/tags';
+@mixin option ( $block, $modifier ) {
+  > .option.#{ $block }__option.#{ $block }__option--#{ $modifier } {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas: 'title tags';
+      columns: 4rem auto;
+    }
+
+    // [ position ]
+    width: 100%;
+    min-height: font__px-to-rem( 80 );
+    margin-top: .5rem;
+
+    // [ skin ]
+    border: {
+      bottom: solid font__px-to-rem( 2 ) #adacad;
+      radius: font__px-to-rem( 3 );
+    }
+
+    > .option__title {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: title;
+      align-self: center;
+      padding-left: font__px-to-rem( 15 );
+
+      // [ position ]
+      width: 100%;
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+    @include tags( 'option' ) {
+      // [ layout ]
+      display: flex;
+      grid-area: tags;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+
+      > .tags__tag {
+        // [ skin ]
+        word-break: keep-all;
+        min-height: font__px-to-rem( 30 );
+        height: auto;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

@@ -1,32 +1,98 @@
-// router for resource pages
+/**
+ * Router module for route `/resource`.
+ *
+ * Including following sub-routes:
+ * - `/resource`
+ * - `/resource/rule`
+ * - `/resource/rent`
+ * - `/resource/fix`
+ * - `/resource/ieet`
+ * - `/resource/sitemap`
+ * - `/resource/alumni`
+ */
 
-const express = require( 'express' );
-const router = express.Router();
 
-// route to resource/law
-router.get( '/law', function( req, res ) {
-    res.render( 'resource/law' );
+import express from 'express';
+
+import staticHtml from 'routes/utils/static-html.js';
+
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
 } );
 
-// route to resource/rent
-router.get( '/rent', function( req, res ) {
-    res.render( 'resource/rent' );
+/**
+ * Resolve URL `/resource`.
+ */
+
+router
+.route( [
+    '/',
+    '/index',
+] )
+.get( staticHtml( 'resource/index' ) );
+
+/**
+ * Resolve URL `/resource/rule`.
+ */
+
+router
+.route( '/rule' )
+.get( staticHtml( 'resource/rule' ) );
+
+/**
+ * Resolve URL `/resource/rent`.
+ */
+
+router
+.route( '/rent' )
+.get( ( req, res ) => {
+    res.redirect( 'http://www.csie.ncku.edu.tw/Class2014/' );
 } );
 
-// route to resource/fix
-router.get( '/fix', function( req, res ) {
-    res.render( 'resource/fix' );
+/**
+ * Resolve URL `/resource/fix`.
+ */
+
+router
+.route( '/fix' )
+.get( ( req, res ) => {
+    res.redirect( 'https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform' );
 } );
 
-// route to resource/ieet
-router.get( '/ieet', function( req, res ) {
-    res.render( 'resource/ieet' );
+/**
+ * Resolve URL `/resource/ieet`.
+ */
+
+router
+.route( '/ieet' )
+.get( staticHtml( 'resource/ieet' ) );
+
+/**
+ * Resolve URL `/resource/sitemap`.
+ */
+
+router
+.route( '/sitemap' )
+.get( staticHtml( 'resource/sitemap' ) );
+
+/**
+ * Resolve URL `/resource/alumni`.
+ */
+
+router
+.route( '/alumni' )
+.get( ( req, res ) => {
+    res.redirect( 'http://www.csie.ncku.edu.tw/classmate/index.php' );
 } );
 
-// route to resource/law
-router.get( '/resources', function( req, res ) {
-    res.render( 'resource/resources' );
-} );
+/**
+ * Resolve URL `/resource/link`.
+ */
 
+router
+.route( '/link' )
+.get( staticHtml( 'resource/link' ) );
 
-module.exports = router;
+export default router;

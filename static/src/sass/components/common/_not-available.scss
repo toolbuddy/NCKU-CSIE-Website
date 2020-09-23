@@ -1,0 +1,102 @@
+@import 'components/common/font';
+
+// component
+// `.#{ $block } > .#{ $block }__not-available.not-available`
+@mixin not-available ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__not-available`
+  // block
+  // `.#{ $block } > .not-available`
+  > .#{ $block }__not-available.not-available {
+    // [ variable ]
+    $small: 550px;
+    $large: 768px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      columns: 1fr 8fr 1fr;
+      rows: 40fr 52fr 13fr 12fr 9fr 12fr 20fr;
+      areas:
+        '. .                  .'
+        '. not-available__icon .'
+        '. .                  .'
+        '. not-available__text .'
+        '. .                  .'
+        '. not-available__link .'
+        '. .                  .';
+    }
+
+    // [ skin ]
+    width: 100%;
+    height: 100%;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        columns: 1fr 8fr 1fr;
+        rows: 40fr 92fr 13fr 7fr 9fr 7fr 82fr;
+        areas:
+          '. .                   .'
+          '. not-available__icon .'
+          '. .                   .'
+          '. not-available__text .'
+          '. .                   .'
+          '. not-available__link .'
+          '. .                   .';
+      }
+    }
+
+    // element
+    // `body > .not-available > .not-available__image`
+    > .not-available__image {
+      // [ position ]
+      grid-area: not-available__icon;
+
+      // [ skin ]
+      width: 100%;
+    }
+
+    // element
+    // `body > .not-available > .not-available__caption`
+    > .not-available__caption {
+      // [ position ]
+      grid-area: not-available__text;
+
+      // [ layout ]
+      display: block;
+      text-align: center;
+      line-height: font__px-to-rem( 36 ) * 1.2;
+      word-spacing: 100vw;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 36 );
+      color: #757575;
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        word-spacing: font__px-to-rem( 10 );
+      }
+    }
+
+    // element
+    // `body > .not-available > not-availabke__link`
+    > .not-availabke__link {
+      // [ position ]
+      grid-area: not-available__link;
+
+      // [ layout ]
+      display: block;
+      text-align: center;
+      line-height: font__px-to-rem( 36 ) * 1.2;
+
+      // [ skin ]
+      color: #399dff;
+      font-size: font__px-to-rem( 36 );
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

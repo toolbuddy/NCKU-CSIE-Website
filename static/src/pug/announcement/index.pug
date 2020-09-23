@@ -1,0 +1,89 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':    'Announcement',
+        'breadcrumb': {
+          'home':   'Home',
+        },
+        'entries': [
+          {
+            title: 'All Announcement',
+            detail: 'Announcements of department and university',
+            modifier: 'red',
+            route: 'announcement/all',
+          },
+          {
+            title: 'Activities',
+            detail: 'Conference, speech, competitions and exhibition held by department',
+            modifier: 'green',
+            route: 'announcement/activity',
+          },
+          {
+            title: 'Recruitment',
+            detail: 'Recruitment information',
+            modifier: 'yellow',
+            route: 'announcement/recruitment',
+          },
+        ],
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '系所公告',
+        'breadcrumb': {
+          'home':   '首頁',
+        },
+        'entries': [
+          {
+            title: '全部公告',
+            detail: '系所及學校重要資訊公告，不分類別',
+            modifier: 'red',
+            route: 'announcement/all',
+          },
+          {
+            title: '活動訊息',
+            detail: '系所舉辦的研討會、演講、競賽及展覽',
+            modifier: 'green',
+            route: 'announcement/activity',
+          },
+          {
+            title: '徵人資訊',
+            detail: '系所招聘人才資訊',
+            modifier: 'yellow',
+            route: 'announcement/recruitment',
+          },
+        ],
+      },
+    } );
+    const currentRoute = 'announcement';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'announcement/index' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/entries.pug
+  +entries( 'content', i18n[ LANG.id ].entries )
+
+append footer
+
+append scripts
+  +js( 'announcement/index' )

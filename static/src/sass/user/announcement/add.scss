@@ -1,0 +1,124 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/announcement/edit-block';
+
+.body {
+  // [ variable ]
+  $small: 450px;
+  $medium: 675px;
+  $large: 976px;
+
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  > .content {
+    // [ layout ]
+    display: grid;
+    grid-template-areas:
+      ' breadcrumb '
+      ' main       ';
+
+    // [ skin ]
+    height: auto;
+    width: 100%;
+    background-color: #ffffff;
+
+    // element
+    // `.body > .content > .content__main
+    > .content__main.main {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      max-width: font__px-to-rem( 1740 );
+      width: 94%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // element
+      // `.body > .content > .content__main > .main__topic`
+      @include topic( 'main' ) {
+        // [ layout ]
+        display: block;
+
+        // [ skin ]
+        max-width: font__px-to-rem( 1010 );
+        width: 100%;
+        height: auto;
+
+        // position
+        margin: {
+          left: auto;
+          right: auto;
+          bottom: font__px-to-rem( 40 );
+        }
+      }
+
+      // element
+      // `.body > .content > .content__main > .main__edit-block`
+      @include edit-block( 'main' );
+    }
+
+    // template
+    // `.body > .content > .content__?.?`
+    %content__element {
+      // [ layout ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      max-width: font__px-to-rem( 1740 );
+      width: 94%;
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ template ]
+      @extend %content__element;
+
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ position ]
+      margin-bottom: font__px-to-rem( 40 );
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

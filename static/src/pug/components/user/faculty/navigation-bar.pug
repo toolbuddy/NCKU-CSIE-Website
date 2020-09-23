@@ -1,0 +1,40 @@
+mixin navigation-bar( belongBlock )
+  -
+    let n = 1
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'ITEMS',
+        nav: {
+          profile:     'profile',
+          award:       'award',
+          publication: 'publication',
+          conference:  'conference',
+          patent:      'patent',
+          project:     'project',
+          student_award: 'student-award',
+          technology_transfer: 'technology-transfer',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '維護項目',
+        nav: {
+          profile:             '個人資料',
+          award:               '榮譽及獲獎',
+          publication:         '著作',
+          conference:          '參與會議',
+          patent:              '專利',
+          project:             '專案',
+          student_award:       '指導學生獲獎',
+          technology_transfer: '技術轉移',
+        },
+      },
+    } );
+
+  nav.navigation( class=`${belongBlock}__navigation` )#navigation
+    section.navigation__title
+      h.title__word= i18n[LANG.id].title
+    section.navigation__content
+      each val, index in i18n[LANG.id].nav
+        section.content__block.block( id=`navigation__${index}` class=`content-${ index }` )
+          p.block__number= `${ n++ }`
+          p.block__content= `${ val }`

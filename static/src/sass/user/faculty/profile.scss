@@ -1,0 +1,694 @@
+@import 'components/common/reset';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/loading';
+@import 'components/common/refresh';
+@import 'components/common/footer';
+@import 'components/common/topic';
+@import 'components/user/image';
+@import 'components/user/form/form';
+@import 'components/user/faculty/local-topic';
+@import 'components/user/faculty/navigation-bar';
+@import 'components/user/card/faculty/profile-card';
+@import 'components/user/faculty/card';
+@import 'components/user/faculty/option';
+@import 'components/user/faculty/no-record';
+@import 'components/announcement/tags';
+
+.body {
+  // [ variable ]
+  $large: 1180px;
+  $medium: 710px;
+  $small: 535px;
+
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        ' breadcrumb '
+        ' topic      '
+        ' navigation '
+        ' profile    '
+        ' title      '
+        ' specialty   '
+        ' education  '
+        ' experience ';
+      columns: 100%;
+      rows: 2.5rem 2.5rem 2rem auto;
+    }
+
+    // [ position ]
+    height: auto;
+    width: 100%;
+    max-width: font__px-to-rem( 1600 );
+    margin: {
+      bottom: 1rem;
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      grid-template: {
+        areas:
+          ' breadcrumb breadcrumb '
+          ' navigation topic      '
+          ' navigation profile    '
+          ' navigation title      '
+          ' navigation specialty   '
+          ' navigation education  '
+          ' navigation experience ';
+        columns: minmax( font__px-to-rem( 200 ), 1fr ) 4fr;
+        rows: 2.5rem 2rem auto;
+      }
+    }
+
+    // element
+    // `.body > .content > .content__topic`
+    @include topic( 'content' ) {
+      // [ layout ]
+      display: block;
+      grid-area: topic;
+
+      // [ skin ]
+      width: 94%;
+      height: 1rem;
+      box-sizing: content-box;
+
+      // position
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // element
+      // `.body > .content > .content__topic` > .topic__text
+      > .topic__text {
+        height: 100%;
+      }
+    }
+
+    // block
+    // `.body > .content > .navigation-bar`
+    @include navigation-bar() {
+      // [ layout ]
+      grid-area: navigation;
+    }
+
+    // `.body` > .content > .content__profile
+    > .content__profile.profile {
+      // [ layout ]
+      display: grid;
+      grid-area: profile;
+      grid-template: {
+        areas:
+          'image          '
+          'name           '
+          'nation         '
+          'email          '
+          'fax            '
+          'personal-web   '
+          'department     '
+          'research-group '
+          'office-address '
+          'office-tel     '
+          'lab-name       '
+          'lab-address    '
+          'lab-tel        '
+          'lab-web        ';
+        columns: 100%;
+      }
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        grid-template: {
+          areas:
+            'name            image          '
+            'nation          image          '
+            'email           image          '
+            'fax             image          '
+            'personal-web    image          '
+            'department      department     '
+            'research-group  research-group '
+            'office-address  office-address '
+            'office-tel      office-tel     '
+            'lab-name        lab-name       '
+            'lab-address     lab-address    '
+            'lab-tel         lab-tel        '
+            'lab-web         lab-web        ';
+          columns: auto font__px-to-rem( 400 );
+        }
+      }
+      @include image('profile') {
+        // [ layout ]
+        grid-area: image;
+
+        // [ position ]
+        margin-top: 1.5rem;
+      }
+      @include profile-card( 'name' ) {
+        // [ layout ]
+        grid-area: name;
+      }
+      @include profile-card( 'fax' ) {
+        // [ layout ]
+        grid-area: fax;
+      }
+      @include profile-card( 'nation' ) {
+        // [ layout ]
+        grid-area: nation;
+      }
+      @include profile-card( 'personal-web' ) {
+        // [ layout ]
+        grid-area: personal-web;
+      }
+      @include profile-card( 'email' ) {
+        // [ layout ]
+        grid-area: email;
+      }
+      @include profile-card( 'office-address' ) {
+        // [ layout ]
+        grid-area: office-address;
+      }
+      @include profile-card( 'office-tel' ) {
+        // [ layout ]
+        grid-area: office-tel;
+      }
+      @include profile-card( 'lab-name' ) {
+        // [ layout ]
+        grid-area: lab-name;
+      }
+      @include profile-card( 'lab-address' ) {
+        // [ layout ]
+        grid-area: lab-address;
+      }
+      @include profile-card( 'lab-tel' ) {
+        // [ layout ]
+        grid-area: lab-tel;
+      }
+      @include profile-card( 'lab-web' ) {
+        // [ layout ]
+        grid-area: lab-web;
+      }
+      @include option( $block: 'profile', $modifier: 'department' ) {
+        // [ layout ]
+        grid-area: department;
+      }
+      @include option( $block: 'profile', $modifier: 'research-group' ) {
+        // [ layout ]
+        grid-area: research-group;
+      }
+    }
+
+    > .content__title.title {
+      // [ layout ]
+      display: block;
+      grid-area: title;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('title');
+
+      > .title__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include card( 'title' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-title    patch          delete '
+              'value-title    value-title    value-title '
+              'topic-duration topic-duration topic-duration '
+              'value-duration value-duration value-duration ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-title    patch delete '
+                'value-title    patch delete '
+                'topic-duration patch delete '
+                'value-duration patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-title    value-title    patch delete '
+                'topic-duration value-duration patch delete ';
+              columns: max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .title-card__topic.topic {
+            &--title {
+              grid-area: topic-title;
+            }
+
+            &--duration {
+              grid-area: topic-duration;
+            }
+          }
+
+          > .title-card__value.value {
+            &--title {
+              grid-area: value-title;
+            }
+
+            &--duration {
+              grid-area: value-duration;
+            }
+          }
+        }
+        @include no-record();
+      }
+      @include refresh( $block: 'title' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'title' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+    }
+
+    > .content__specialty.specialty {
+      // [ layout ]
+      display: block;
+      grid-area: specialty;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+      @include local-topic('specialty');
+
+      > .specialty__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include card( 'specialty' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-specialty  patch            delete '
+              'value-specialty  value-specialty  value-specialty ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-specialty        patch delete '
+                'value-specialty        patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-specialty value-specialty patch delete ';
+              columns: max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .specialty-card__topic.topic {
+            &--specialty {
+              grid-area: topic-specialty;
+            }
+          }
+
+          > .specialty-card__value.value {
+            &--specialty {
+              grid-area: value-specialty;
+            }
+          }
+        }
+        @include no-record();
+      }
+      @include refresh( $block: 'specialty' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'specialty' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+    }
+
+    > .content__education.education {
+      // [ layout ]
+      display: block;
+      grid-area: education;
+
+      // [ position ]
+      margin: {
+        bottom: font__px-to-rem( 30 );
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      > .education__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include card( 'education' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-school patch              delete '
+              'value-school value-school value-school '
+              'topic-major   topic-major   topic-major '
+              'value-major   value-major   value-major '
+              'topic-degree        topic-degree        topic-degree '
+              'value-degree        value-degree        value-degree '
+              'topic-duration     topic-duration     topic-duration '
+              'value-duration     value-duration     value-duration '
+              'topic-nation     topic-nation     topic-nation '
+              'value-nation     value-nation     value-nation ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-school patch delete '
+                'value-school patch delete '
+                'topic-major patch delete '
+                'value-major patch delete '
+                'topic-degree patch delete '
+                'value-degree patch delete '
+                'topic-duration patch delete '
+                'value-duration patch delete '
+                'topic-nation patch delete '
+                'value-nation patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-school value-school topic-major    value-major    value-major  value-major  patch delete '
+                'topic-degree value-degree topic-duration value-duration topic-nation value-nation  patch delete ';
+              columns: max-content 1fr max-content 1fr max-content 1fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .education-card__topic.topic {
+            &--school {
+              grid-area: topic-school;
+            }
+
+            &--major {
+              grid-area: topic-major;
+            }
+
+            &--degree {
+              grid-area: topic-degree;
+            }
+
+            &--duration {
+              grid-area: topic-duration;
+            }
+
+            &--nation {
+              grid-area: topic-nation;
+            }
+          }
+
+          > .education-card__value.value {
+            &--school {
+              grid-area: value-school;
+            }
+
+            &--major {
+              grid-area: value-major;
+            }
+
+            &--degree {
+              grid-area: value-degree;
+            }
+
+            &--duration {
+              grid-area: value-duration;
+            }
+
+            &--nation {
+              grid-area: value-nation;
+            }
+          }
+        }
+        @include no-record();
+      }
+      @include local-topic('education');
+      @include refresh( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'education' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+    }
+
+    > .content__experience.experience {
+      // [ layout ]
+      display: block;
+      grid-area: experience;
+
+      // [ position ]
+      margin: {
+        left: auto;
+        right: auto;
+      }
+      width: 94%;
+      height: auto;
+
+      > .experience__cards.cards {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 100%;
+        height: auto;
+
+        // [ element ]
+        @include card( 'experience' ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'topic-organization patch              delete '
+              'value-organization value-organization value-organization '
+              'topic-department   topic-department   topic-department '
+              'value-department   value-department   value-department '
+              'topic-title        topic-title        topic-title '
+              'value-title        value-title        value-title '
+              'topic-duration     topic-duration     topic-duration '
+              'value-duration     value-duration     value-duration ';
+            columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+          };
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            grid-template: {
+              areas:
+                'topic-organization patch delete '
+                'value-organization patch delete '
+                'topic-department patch delete '
+                'value-department patch delete '
+                'topic-title patch delete '
+                'value-title patch delete '
+                'topic-duration patch delete '
+                'value-duration patch delete ';
+              columns: 1fr font__px-to-rem( 30 ) font__px-to-rem( 30 );
+            };
+          }
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            grid-template: {
+              areas:
+                'topic-organization value-organization value-organization value-organization patch delete '
+                'topic-department   value-department   value-department   value-department   patch delete '
+                'topic-duration     value-duration     topic-title        value-title        patch delete ';
+              columns: max-content 1fr max-content 2fr 1.2rem 1.2rem;
+            };
+          }
+
+          > .experience-card__topic.topic {
+            &--organization {
+              grid-area: topic-organization;
+            }
+
+            &--department {
+              grid-area: topic-department;
+            }
+
+            &--title {
+              grid-area: topic-title;
+            }
+
+            &--duration {
+              grid-area: topic-duration;
+            }
+          }
+
+          > .experience-card__value.value {
+            &--organization {
+              grid-area: value-organization;
+            }
+
+            &--department {
+              grid-area: value-department;
+            }
+
+            &--title {
+              grid-area: value-title;
+            }
+
+            &--duration {
+              grid-area: value-duration;
+            }
+          }
+        }
+        @include no-record();
+      }
+      @include local-topic('experience');
+      @include refresh( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+      @include loading( $block: 'experience' ) {
+        // [ layout ]
+        margin: {
+          top: font__px-to-rem( 64 );
+          bottom: font__px-to-rem( 64 );
+        }
+      }
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ position ]
+      width: 100%;
+      margin-bottom: 1rem;
+
+      // [ skin ]
+      border: {
+        top-width: font__px-to-rem( 32 );
+        left-width: font__px-to-rem( 16 );
+        color: transparent;
+        style: solid;
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__form`
+  // block
+  // `.body > .form`
+  @include form();
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}

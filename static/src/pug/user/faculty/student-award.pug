@@ -1,0 +1,201 @@
+extends /layouts/faculty/base.pug
+include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/student-award-card.pug
+include /components/user/card/no-record.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'User Student Award',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User Student Award',
+        },
+        content: {
+          topic: 'Faculty profile settings',
+          studentAward: {
+            topic:   'Student Award',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '使用者資料管理',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者資料',
+        },
+        content: {
+          topic: '教師資料維護',
+          studentAward: {
+            topic:   '指導學生獲獎',
+          },
+        },
+      },
+    } );
+    const awardFormI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Student Award',
+        patch: 'Modify Your Student Award',
+        delete: 'Remove Your Student Award',
+        default: {
+          receivedYear: 'yyyy',
+          award:  '',
+        },
+        title: {
+          receivedYear: 'received year',
+          award:        'award',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的指導學生獲獎',
+        patch: '編輯您的指導學生獲獎',
+        delete: '刪除您的指導學生獲獎',
+        default: {
+          receivedYear: 'yyyy',
+          award:  '',
+        },
+        title: {
+          receivedYear: '獲獎年份',
+          award:        '獎項名稱',
+        },
+      }
+    })
+    const studentFormI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Student',
+        patch: 'Modify Your Student',
+        delete: 'Remove Your Student',
+        default: {
+          name: '',
+          degree: '',
+        },
+        title: {
+          name: 'name',
+          degree: 'degree',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的獲獎學生',
+        patch: '編輯您的獲獎學生',
+        delete: '刪除您的獲獎學生',
+        default: {
+          name: '',
+          degree: '',
+        },
+        title: {
+          name: '學生姓名',
+          degree: '學位',
+        }
+      }
+    })
+    const inputConfig = {
+      studentAward: [
+        {
+          inputPattern: 'single',
+          columnName: 'receivedYear',
+          validation: {
+            datatype: 'int',
+            type: 'number',
+            required: true,
+            min: 1970,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'award',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 300,
+          },
+        },
+      ],
+      student: [
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'name',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'dropdown',
+          columnName: 'degree',
+          utils: UTILS.faculty.degreeUtils,
+        },
+        {
+          inputPattern: 'hidden',
+          columnName: 'studentAwardId',
+          validation: {
+            datatype: 'int'
+          }
+        }
+      ],
+    }
+    const currentRoute = 'user/faculty/student-award';
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/faculty/student-award' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/student-award' },
+    ]
+  )
+
+append content
+  include /components/common/loading.pug
+  include /components/common/refresh.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  +navigation-bar( 'content' )
+  section.content__student-award.student-award
+    +local-topic( 'student-award', i18n[ LANG.id ].content.studentAward.topic )
+    +refreshWithImage( 'student-award' )
+    +loading( 'student-award' )
+    section#student-award__cards.student-award__cards.cards
+      if Array.isArray( data.studentAward ) && data.studentAward.length
+        -
+          let receivedYear = null
+          data.studentAward.sort( (a, b)=>{
+            if(a.receivedYear === null )
+              return 1
+            else if(b.receivedYear === null)
+              return -1
+            return b.receivedYear - a.receivedYear
+          })
+        each obj in data.studentAward
+          if receivedYear === null || receivedYear !== obj.receivedYear
+            +classfication-title( obj.receivedYear )
+            -
+              receivedYear = obj.receivedYear
+            +student-award-card( obj )
+      else
+        +no-record()
+
+append form
+  +form-input( 'student-award', 'post', awardFormI18n, inputConfig.studentAward )
+  +form-input( 'student-award', 'patch', awardFormI18n, inputConfig.studentAward )
+  +form-input( 'student-award', 'delete', awardFormI18n, inputConfig.studentAward )
+  +form-input( 'student', 'post', studentFormI18n, inputConfig.student )
+  +form-input( 'student', 'patch', studentFormI18n, inputConfig.student )
+  +form-input( 'student', 'delete', studentFormI18n, inputConfig.student )
+
+append footer
+
+append scripts
+  +js( 'user/faculty/student-award' )

@@ -1,0 +1,23 @@
+@mixin classfication-title ( ) {
+  > .cards__classfication-title.classfication-title {
+    // [ layout ]
+    display: flex;
+    align-items: flex-end;
+
+    // [ position ]
+    height: fit-content;
+    margin-top: font__px-to-rem( 20 );
+
+    // [ skin ]
+    font: {
+      size: font__px-to-rem( 18 );
+      weight: bold;
+    }
+    text-align: center;
+    line-height: normal;
+    color: rgba( 0, 0, 0, .87 );
+
+    // [ customization ]
+    @content;
+  }
+}

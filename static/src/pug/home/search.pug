@@ -1,0 +1,30 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title': 'Search',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title': '搜尋',
+      },
+    } );
+    const currentRoute = 'home/search';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'home/search' )
+
+append header
+
+append content
+  include /components/common/not-available.pug
+  +notAvailable( 'content' )
+
+append footer
+
+append scripts
+  +js( 'home/search' )

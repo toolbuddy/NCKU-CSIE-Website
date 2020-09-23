@@ -1,0 +1,178 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:    'Introduction',
+        breadcrumb: {
+          home:  'Home',
+          about: 'About',
+        },
+        index: {
+          title: 'Introduction',
+          link: {
+            history:   'History',
+            develop: 'Developing Directions',
+            education: 'Education & Research',
+            ieet:      'IEET',
+          },
+        },
+        history: {
+          dean:  'History of the Deans',
+          event: 'Major Events',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '系所介紹',
+        breadcrumb: {
+          home:  '首頁',
+          about: '關於本系',
+        },
+        index: {
+          title: '系所介紹',
+          link: {
+            history:   '本系歷史',
+            develop:   '發展方向',
+            education: '教育目標',
+            ieet:      '工程認證',
+          },
+        },
+        history: {
+          dean:  '歷屆所長/系主任',
+          event: '系所歷史與沿革',
+        },
+      },
+    } );
+    const currentRoute = 'about/intro';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'about/intro' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/about/intro/legend.pug
+  include /components/about/intro/history-i18n.pug
+  include /components/about/intro/develop-i18n.pug
+  include /components/about/intro/education-i18n.pug
+  include /components/about/intro/ieet-i18n.pug
+
+  section.content__index.index
+    +topic( 'index', i18n[ LANG.id ].index.title )
+    each value, key in i18n[ LANG.id ].index.link
+      a.index__link( href = `#${ key }` )= value
+
+  section#history.content__history.history
+    +topic( 'history', i18n[ LANG.id ].index.link.history )
+    nav.history__navigation.navigation
+      aside.navigation__legend.legend
+        +legend__icon( { color: 'blue' } )
+        span.legend__text= i18n[ LANG.id ].history.dean
+      aside.navigation__legend.legend
+        +legend__icon( { color: 'red' } )
+        span.legend__text= i18n[ LANG.id ].history.event
+    ul.history__list.list
+      each historyObj in historyI18n()[ LANG.id ]
+        if historyObj.type === 'dean'
+          li.list__dean.dean
+            time.dean__duration= [ historyObj.duration.from, historyObj.duration.to ].join( ' - ' )
+            span.dean__legend.legend
+              +legend__icon( { color: 'blue' } )
+              span.legend__name= historyObj.name
+        else if historyObj.type === 'event'
+          li.list__event.event
+            time.event__time= historyObj.time
+            span.event__legend.legend
+              +legend__icon( { color: 'red' } )
+              span.legend__context= historyObj.context
+
+  section#develop.content__develop.develop
+    +topic( 'develop', i18n[ LANG.id ].index.link.develop )
+    aside.develop__intro= developI18n()[ LANG.id ][ 'intro' ]
+    each context, index in developI18n()[ LANG.id ][ 'context' ]
+      article.develop__context.context
+        article.context__paragraph.paragraph
+          header.paragraph__title= context.title
+          each paragraph in context.paragraph
+            if paragraph.type === 'text'
+              p.paragraph__text= paragraph.text
+            else
+              ul.paragraph__list.list
+                each list in paragraph.list
+                  li.list__text= list
+        figure.context__concept.concept
+          +image( {
+            alt: context.image.alt,
+            className: 'concept__image',
+            src: context.image.src,
+          } )
+
+  section#education.content__education.education
+    +topic( 'education', i18n[ LANG.id ].index.link.education )
+    each context in educationI18n()[ LANG.id ]
+      article.education__context.context
+        article.context__paragraph.paragraph
+          header.paragraph__title= context.title
+          ul.paragraph__list.list
+            each list in context.list
+              li.list__text= list
+        figure.context__concept.concept
+          +image( {
+            alt: context.image.alt,
+            className: 'concept__image',
+            src: context.image.src,
+          } )
+
+  section#ieet.content__ieet.ieet
+    +topic( 'ieet', i18n[ LANG.id ].index.link.ieet )
+    each goal in ieetI18n()[ LANG.id ]
+      section.ieet__goal.goal
+        header.goal__aspect= goal.aspect
+        article.goal__context.context
+          article.context__paragraph.paragraph
+            if Array.isArray( goal.context )
+              each context in goal.context
+                header.paragraph__title= context.title
+                if typeof context.image !== 'undefined'
+                  figure.paragraph__concept.concept
+                    +image( {
+                      alt: context.image.alt,
+                      className: context.image.className,
+                      src: context.image.src,
+                    } )
+                else
+                  each paragraph in context.paragraph
+                    if paragraph.type === 'text'
+                      p.paragraph__text= paragraph.text
+                    else if paragraph.type === 'list'
+                      ul.paragraph__list.list
+                        each list in paragraph.list
+                          li.list__text= list
+                    else
+                      p.paragraph__list-description= paragraph.listDescription
+            else
+              a.paragraph__link( href = goal.link )= goal.context
+
+append footer
+
+append scripts
+  +js( 'about/intro' )

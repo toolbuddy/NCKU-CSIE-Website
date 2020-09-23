@@ -1,35 +1,66 @@
-// router for /student
-const express = require( 'express' );
-const router = express.Router();
+/**
+ * Router module for route `/student`.
+ *
+ * Including following sub-routes:
+ * - `/student`
+ * - `/studetn/high-school`
+ * - `/student/college`
+ * - `/student/master`
+ * - `/student/phd`
+ */
 
-// route to /student/course
-router.get( '/course', function( req, res ){
-    res.render( 'student/course' );
+import express from 'express';
+
+import staticHtml from 'routes/utils/static-html.js';
+
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
 } );
 
-// route to /student/college
-router.get( '/college', function( req, res ){
-    res.render( 'student/college' );
-} );
+/**
+ * Resolve URL `/student`.
+ */
 
-// route to /student/master
-router.get( '/master', function( req, res ){
-    res.render( 'student/master' );
-} );
+router
+.route( [
+    '/',
+    '/index',
+] )
+.get( staticHtml( 'student/index' ) );
 
-// route to /student/phd
-router.get( '/phd', function( req, res ){
-    res.render( 'student/phd' );
-} );
+/**
+ * Resolve URL `/student/high-school`.
+ */
 
-// route to /student/scholarship
-router.get( '/scholarship', function( req, res ){
-    res.render( 'student/scholarship' );
-} );
+router
+.route( '/high-school' )
+.get( staticHtml( 'student/high-school' ) );
 
-// route to /student/international
-router.get( '/international', function( req, res ){
-    res.render( 'student/international' );
-} );
 
-module.exports = router;
+/**
+ * Resolve URL `/student/college`.
+ */
+
+router
+.route( '/college' )
+.get( staticHtml( 'student/college' ) );
+
+/**
+ * Resolve URL `/student/master`.
+ */
+
+router
+.route( '/master' )
+.get( staticHtml( 'student/master' ) );
+
+/**
+ * Resolve URL `/student/phd`.
+ */
+
+router
+.route( '/phd' )
+.get( staticHtml( 'student/phd' ) );
+
+export default router;

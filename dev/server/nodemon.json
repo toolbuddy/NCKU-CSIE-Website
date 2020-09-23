@@ -1,0 +1,9 @@
+{
+    "signal": "SIGTERM",
+    "watch": [ "**/*.js", "package.json" ],
+    "ignore": [ ".git/", "node_modules/", "static/" ],
+    "ext": "js,json",
+    "events": {
+        "restart": "npm run lint:server"
+    }
+}

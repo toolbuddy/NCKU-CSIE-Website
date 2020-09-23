@@ -1,0 +1,71 @@
+extends /layouts/announcement/briefing.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':    'Activities',
+        'topic':    'Activities',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
+        },
+        'pinned':   'Pinned Announcement',
+        'normal':   'Announcement',
+        'breadcrumb': {
+          'home':         'Home',
+          'announcement': 'Announcement',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '活動公告',
+        'topic':    '活動公告',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
+        },
+        'pinned':   '置頂貼文',
+        'normal':   '一般公告',
+        'breadcrumb': {
+          'home':         '首頁',
+          'announcement': '系所公告',
+        },
+      },
+    } );
+    const tags = [
+        'all',
+        'competition',
+        'conference',
+        'exhibition',
+        'speech'
+    ].map( tag => allTags[ tag ] );
+    const currentRoute = 'announcement/activity';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'announcement/activity' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.announcement, route: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'announcement/activity' )

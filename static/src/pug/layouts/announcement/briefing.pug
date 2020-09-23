@@ -1,0 +1,69 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const allTags = {
+        'all':
+        {
+            color:   'yellow',
+            id:      UTILS.announcement.tagUtils.tagAllId,
+            tag:     UTILS.announcement.tagUtils.getTagAllValue( LANG.id ),
+            tagName: 'all',
+        },
+    };
+    UTILS.announcement.tagUtils.supportedOptions.forEach( tag => {
+        const tagId = UTILS.announcement.tagUtils.getIdByOption( tag );
+        allTags[ tag ] = {
+            color: UTILS.announcement.tagUtils.getTagColorById( tagId ),
+            id:    tagId,
+            tag:   UTILS.announcement.tagUtils.getValueById( {
+                id: tagId,
+                languageId: LANG.id,
+            } ),
+            tagName: tag,
+        };
+    } );
+
+append content
+  include /components/common/topic.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+  include /components/announcement/delete-preview.pug
+
+  +topic( 'content', i18n[ LANG.id ].topic )
+  section#filter.content__filter.filter
+    article.filter__time.time
+      aside.time__from.from
+        label.from__text= i18n[ LANG.id ].time.from
+        span.from__input.input
+          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '1999' )
+          input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
+          input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
+      aside.time__to.to
+        label.to__text= i18n[ LANG.id ].time.to
+        span.to__input.input
+          input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
+          input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
+          input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
+    article.filter__tags.tags
+      each tagObj, tagName in tags
+        button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
+
+  section#announcement--pinned.content__announcement.announcement.announcement--pinned
+    header.announcement__title= i18n[ LANG.id ].pinned
+    +noResult( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
+
+  section#announcement--normal.content__announcement.announcement.announcement--normal
+    header.announcement__title= i18n[ LANG.id ].normal
+    +noResultWithImage( 'announcement' )
+    +loading( 'announcement' )
+    nav.announcement__briefings.briefings
+
+  section#pages.content__pages.pages
+
+  section#announcement--add.content__add.add
+
+  section#announcement--delete.content__delete.delete
+    +deletPreview( 'delete' )

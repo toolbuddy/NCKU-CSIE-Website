@@ -1,0 +1,48 @@
+include /components/common/image.pug
+
+mixin experience-card( data )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          duration:      'duration',
+          organization:  'organization',
+          department:    'department',
+          title:         'title'
+        },
+        now: 'now'
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          duration:      '期間',
+          organization:  '任職單位',
+          department:    '任職部門',
+          title:         '職稱',
+        },
+        now: '現在'
+      },
+    })
+    const from = (data.from === null)? '----' : data.from
+    const to = (data.to === null)? i18n[ LANG.id ].now : data.to
+  section.experience-card.cards__experience-card
+    h4.experience-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.experience-card__value.value.value--duration= `${ from } - ${ to }`
+    h4.experience-card__topic.topic.topic--organization= i18n[ LANG.id ].topic.organization
+    p.experience-card__value.value.value--organization= data.organization
+    h4.experience-card__topic.topic.topic--department= i18n[ LANG.id ].topic.department
+    p.experience-card__value.value.value--department= data.department
+    h4.experience-card__topic.topic.topic--title= i18n[ LANG.id ].topic.title
+    p.experience-card__value.value.value--title= data.title
+    img.experience-card__patch(
+      alt = 'patch',
+      id = `experience-card__patch--${ data.experienceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.experienceId
+    )
+    img.experience-card__delete(
+      alt = 'delete',
+      id = `experience-card__delete--${ data.experienceId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.experienceId
+    )
+

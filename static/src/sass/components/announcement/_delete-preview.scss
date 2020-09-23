@@ -1,0 +1,222 @@
+@import 'components/announcement/briefing';
+@mixin delete-preview () {
+  > .delete-preview {
+    // [ variable ]
+    $large: 992px;
+    $small: 512px;
+
+    // [ layout ]
+    display: none;
+    position: fixed;
+
+    // [ position ]
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // [ skin ]
+    background-color: rgba( 140, 170, 170, .6 );
+
+    > .delete-preview__topic {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: 95%;
+      margin: {
+        top: 20vh;
+        left: auto;
+        right: auto;
+      }
+      padding: {
+        top: font__px-to-rem( 12 );
+        bottom: font__px-to-rem( 12 );
+      }
+
+      // [ skin ]
+      font-size: font__px-to-rem( 20 );
+      line-height: 1.29;
+      letter-spacing: normal;
+      color: rgb( 89, 89, 89 );
+      text-align: center;
+      background-color: rgba( 250, 250, 255, 1 );
+      border-top: {
+        left-radius: font__px-to-rem( 6 );
+        right-radius: font__px-to-rem( 6 );
+      }
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: font__px-to-rem( 450 );
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        width: 40vw;
+      }
+    }
+
+    > .delete-preview__briefing {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: 95%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      background-color: rgba( 255, 255, 255, 1 );
+      border-radius: font__px-to-rem( 4 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: font__px-to-rem( 450 );
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        width: 40vw;
+      }
+
+      > .briefing__title {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        width: 80%;
+        margin: {
+          left: auto;
+          right: auto;
+          top: font__px-to-rem( 6 );
+          bottom: font__px-to-rem( 24 );
+        }
+        padding: {
+          top: font__px-to-rem( 24 );
+          bottom: font__px-to-rem( 4 );
+        }
+        border-bottom: rgba( 0, 0, 0, .6 ) solid font__px-to-rem( 2 );
+
+        // [ skin ]
+        line-height: 1.2;
+        color: #000000;
+        font-size: font__px-to-rem( 24 );
+        letter-spacing: normal;
+        text-align: center;
+      }
+
+      > .briefing__time {
+        // [ layout ]
+        display: block;
+
+        // [ position ]
+        padding-bottom: font__px-to-rem( 8 );
+
+        // [ skin ]
+        line-height: 1.2;
+        color: #b5babf;
+        font-size: font__px-to-rem( 18 );
+        letter-spacing: normal;
+        text-align: center;
+      }
+    }
+
+    > .delete-preview__button {
+      // [ layout ]
+      display: flex;
+      justify-content: space-between;
+
+      // [ position ]
+      width: 95%;
+      margin: {
+        top: font__px-to-rem( 6 );
+        left: auto;
+        right: auto;
+      }
+
+      // [ skin ]
+      background-color: rgba( 255, 255, 255, 0 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ position ]
+        width: font__px-to-rem( 450 );
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        width: 40vw;
+      }
+
+      > .button__cancel {
+        // [ layout ]
+        display: inline-block;
+
+        // [ position ]
+        width: 49%;
+        padding: {
+          top: font__px-to-rem( 8 );
+          bottom: font__px-to-rem( 8 );
+        }
+
+        // [ skin ]
+        line-height: 1.2;
+        color: #b5babf;
+        font-size: font__px-to-rem( 18 );
+        letter-spacing: normal;
+        text-align: center;
+
+        &:hover {
+          // [ skin ]
+          cursor: pointer;
+          background-color: rgba( 252, 252, 255, 1 );
+        }
+      }
+
+      > .button__check {
+        // [ layout ]
+        display: inline-block;
+
+        // [ position ]
+        width: 49%;
+        padding: {
+          top: font__px-to-rem( 8 );
+          bottom: font__px-to-rem( 8 );
+        }
+
+        // [ skin ]
+        background-color: rgba( 179, 179, 255, 1 );
+        line-height: 1.2;
+        color: #ffffff;
+        font-size: font__px-to-rem( 18 );
+        letter-spacing: normal;
+        text-align: center;
+
+        &:hover {
+          // [ skin ]
+          cursor: pointer;
+          background-color: rgba( 175, 175, 255, 1 );
+        }
+      }
+    }
+  }
+
+  > .delete-preview--show {
+    // [ layout ]
+    display: block;
+  }
+
+  // [ costumize ]
+  @content;
+}

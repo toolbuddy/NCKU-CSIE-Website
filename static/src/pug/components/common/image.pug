@@ -1,0 +1,11 @@
+//- Image template module.
+//-
+//- Template for image `<img>` tags.
+//- No need to rewrite all attributes each time.
+//-
+//- @param {string} option.alt       - Text to show when failed to load images.
+//- @param {string} option.className - CSS class name for `<img>` tag.
+//- @param {string} option.src       - Link to the image file.
+
+mixin image( { alt = '', className = '', src = '' } = {} )
+  img( alt = alt, class = className, src = UTILS.staticUrl( { href: `image/${ src }` } ) )

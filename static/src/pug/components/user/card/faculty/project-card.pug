@@ -1,0 +1,45 @@
+mixin project-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+            name:     'name',
+            support:  'support',
+            category: 'category',
+            duration: 'duration',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+            name:     '專案名稱',
+            support:  '補助單位',
+            category: '投稿對象',
+            duration: '合約期間',
+        },
+      },
+    })
+    const category = UTILS.faculty.projectCategoryUtils.getValueById({
+          id: data.category,
+          languageId: LANG.id
+        })
+  section.project-card.cards__project-card
+    h4.project-card__topic.topic.topic--name= i18n[ LANG.id ].topic.name
+    p.project-card__value.value.value--name= data.name
+    h4.project-card__topic.topic.topic--support= i18n[ LANG.id ].topic.support
+    p.project-card__value.value.value--support= data.support
+    h4.project-card__topic.topic.topic--category= i18n[ LANG.id ].topic.category
+    p.project-card__value.value.value--category= category
+    h4.project-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.project-card__value.value.value--duration= `${data.from} - ${data.to}`
+    img.project-card__patch(
+      alt = 'patch',
+      id = `project-card__patch--${ data.projectId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.projectId
+    )
+    img.project-card__delete(
+      alt = 'delete',
+      id = `project-card__delete--${ data.projectId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.projectId
+    )

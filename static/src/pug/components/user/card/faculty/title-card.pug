@@ -1,0 +1,36 @@
+include /components/common/image.pug
+
+mixin title-card( data )
+  -
+    const i18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        now: 'NOW',
+        duration: 'duration',
+        title: 'title'
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        now: '現在',
+        duration: '期間',
+        title: '職稱'
+      },
+    })
+    const to = (data.to === null)? i18n[ LANG.id ].now : data.to
+    const from = (data.from === null)? '----' : data.from
+  section.title-card.cards__title-card
+    h4.title-card__topic.topic.topic--title= i18n[ LANG.id ].title
+    p.title-card__value.value.value--title= data.title
+    h4.title-card__topic.topic.topic--duration= i18n[ LANG.id ].duration
+    p.title-card__value.value.value--duration= `${ from }  -  ${ to }`
+    img.title-card__patch(
+      alt = 'patch',
+      id = `title-card__patch--${ data.titleId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.titleId
+    )
+    img.title-card__delete(
+      alt = 'delete',
+      id = `title-card__delete--${ data.titleId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.titleId
+    )
+

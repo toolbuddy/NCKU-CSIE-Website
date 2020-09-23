@@ -1,0 +1,11 @@
+include /components/common/image.pug
+
+aside.file__file-preview.file-preview( name= name )
+  p.file-preview__name.name= name
+  section.file-preview__loader.loader( class = `file-preview__loader--${ id }` )
+  img.file-preview__delete.delete(
+    alt = 'delete',
+    class = `file-preview__delete--${ id }`
+    src = `${ host }/static/image/icon/cross.png`,
+    file-id = id,
+  )

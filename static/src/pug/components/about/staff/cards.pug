@@ -1,0 +1,60 @@
+include /components/common/image.pug
+
+//- Sort staff based on their showing order.
+- data.sort( ( staffA, staffB ) => staffA.order - staffB.order )
+each profile in data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        more: 'Read more',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split(',').join( ' ext. ' ) : '',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        more: '更多資訊',
+        officeTel: profile.officeTel !== null ? profile.officeTel.split(',').join( ' 分機 ' ) : '',
+      },
+    } );
+
+  if profile.name !== null
+    section.cards__card.card
+      //- staff's photo.
+      if profile.photo !== null
+        img(
+          alt       = profile.name,
+          className = 'card__photo',
+          src       = `data:image/jpeg;base64,${ profile.photo }`,  
+        )
+      else
+        +image( {
+            alt: profile.name,
+            className: 'card__photo',
+            src: 'staff/no-photo.jpg',
+        } )
+
+      //- staff's intro.
+      article.card__intro.intro
+
+        //- staff manage some business.
+        if Array.isArray( profile.business )
+          aside.intro__businesses.businesses
+            each business in profile.business
+              span.businesses__business= business
+
+        //- staff's name.
+        header.intro__name= profile.name
+
+        //- staff has some titles.
+        if Array.isArray( profile.title )
+          aside.intro__titles.titles
+            each title in profile.title
+              span.titles__title= title
+
+        //- staff's email.
+        if profile.email !== null
+          a.intro__email( href = `mailto:${ profile.email }` )= profile.email
+
+        //- staff owns some offices, including address and phone.
+        if profile.officeAddress !== null
+          address.intro__office-address= profile.officeAddress
+        if profile.officeTel !== null
+          a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel

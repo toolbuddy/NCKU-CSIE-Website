@@ -1,0 +1,151 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        'title':    'Contact Us',
+        'topic':    'Contact',
+        'breadcrumb': {
+          'home':   'Home',
+          'about':  'About',
+        },
+        'drive': {
+          'title': 'Driving',
+          'south': {
+            'title': 'South',
+            'content': [
+              '1. Take National Freeway No.1 (Sun Yat-Sen Freeway) southbound.',
+              '2. Get off at Exit 319 (Yongkang Interchange) and turn right to southbound Chungcheng N. Road.',
+              '3. Travel down on Chungcheng N. Road and Chungcheng S. Road, and make a left turn at Chunghwa Road.',
+              '4. Drive down Chunghwa Road and Chunghwa East Road.',
+              '5. Turn right at Shiaodong Road and travel along it. ',
+              'Or',
+              '1. If you drive on National Freeway No.3 Southbound, exit at Exit 346 (Shinhua System).',
+              '2. Take National Freeway No.8 Westbound (Exit 6, Tainan System Interchange) to get on National Freeway No.1 Southbound to Exit 319.',
+            ],
+          },
+          'north': {
+            'title': 'North',
+            'content': [
+              '1. Take National Freeway No.1 (Sun Yat-Sen Freeway) northbound.',
+              '2. Get off at Exit 327 (Tainan Interchange) and turn left to westbound Chungshang Road.',
+              '3. Travel on Chungshang Road and continue on Dongmen Road.',
+              '4. Make a right turn at either Chang Rung Road or Sheng-Li Road, and travel along it.',
+              'Or',
+              '1. If you take National Freeway No.3 Northbound, exit at Exit 357 (Guanmiao Interchange).',
+              '2. Take No.86 Expressway westbound (Exit 8, Rende System Interchange) to get on National Freeway No.1 northbound to Exit 327. ',
+            ],
+          },
+        },
+        'train': {
+          'title': 'For Train',
+          'content': [
+            '1. Take TRA Train to Tainan Station.',
+            '2. NCKU is located on Ta-Shueh (University) Road about 100m from the rear entrance of Tainan Station.',
+          ],
+        },
+        'thsr':  {
+          'title': 'For THSR',
+          'content': [
+            '1-1. Those who arrived at Tainan Station by THSR can proceed to the interchange corridor on the 2nd floor',
+            '1-2  Or the No.1 exit on the 1st floor lobby to take the shuttle train at Sharon Station to Tainan Train Station.',
+            '2. The shuttle train appears every 30 minutes and arrives at Tainan Train Station in about 20 minutes.',
+            '3. You can walk from Tainan Train Station to National Cheng Kung University.',
+          ],
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        'title':    '聯絡我們',
+        'breadcrumb': {
+          'home':   '首頁',
+          'about':  '關於本系',
+        },
+        'drive': {
+          'title': '自行開車（國道路線）',
+          'south': {
+            'title': '南下',
+            'content': [
+              '沿國道一號南下，下永康交流道右轉；沿中正北路、中正南路（南向）往台南市區直行；中華路左轉，沿中華東路前進，於小東路口右轉，直走即可抵達本校。',
+              '自國道三號北上者，轉86號快速道路（西向），可接國道一號（北向）。',
+            ],
+          },
+          'north': {
+            'title': '北上',
+            'content': [
+              '沿國道一號北上，下仁德交流道左轉；沿東門路(西向)往台南市區直走，遇林森路或長榮路右轉(北向)，即可抵達本校。',
+              '自國道三號北上者，轉86號快速道路（西向），可接國道一號（北向）。',
+            ],
+          },
+        },
+        'train': {
+          'title': '搭乘火車',
+          'content': [
+            '於台南站下車後，自後站出口（大學路），大學路左側即為本校光復校區；繼續往前步行，經過勝利路之後，左手邊即為成功校區。',
+          ],
+        },
+        'thsr':  {
+          'title': '搭乘高鐵',
+          'content': [
+            '搭乘台灣高鐵抵台南站者，可至高鐵台南站二樓轉乘通廊或一樓大廳1號出口前往台鐵沙崙站搭乘區間車前往台南火車站。',
+            '區間車約30分鐘一班車，20分鐘可到達台南火車站，自台南火車站後站步行即可到達成功大學。',
+          ],
+        },
+      },
+    } );
+    const currentRoute = 'about/contact';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'about/contact' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+
+  section#map.content__map.map
+
+  section.content__traffic.traffic.traffic--drive
+    +topic( 'traffic', i18n[ LANG.id ].drive.title )
+
+    //- Information of driving from north to south.
+    aside.traffic__direction= i18n[ LANG.id ].drive.south.title
+    each info in i18n[ LANG.id ].drive.south.content
+      article.traffic__text= info
+
+    //- Information of driving from south to north.
+    aside.traffic__direction= i18n[ LANG.id ].drive.north.title
+    each info in i18n[ LANG.id ].drive.north.content
+      article.traffic__text= info
+
+  section.content__traffic.traffic.traffic--train
+    +topic( 'traffic', i18n[ LANG.id ].train.title )
+    each info in i18n[ LANG.id ].train.content
+      article.traffic__text= info
+
+  section.content__traffic.traffic.traffic--thsr
+    +topic( 'traffic', i18n[ LANG.id ].thsr.title )
+    each info in i18n[ LANG.id ].thsr.content
+      article.traffic__text= info
+
+append footer
+
+append scripts
+  +js( 'about/contact' )

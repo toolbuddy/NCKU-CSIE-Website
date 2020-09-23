@@ -1,0 +1,11 @@
+
+-
+article.publication__context.context
+  if data.title !== null
+    main.context__main= data.title
+  if data.authors !== null
+    main.context__main= data.authors
+  if data.issueYear !== null
+    time.context__time= data.issueYear
+  if data.issueDate !== null
+    time.context__time= data.issueDate

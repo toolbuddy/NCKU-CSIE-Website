@@ -1,0 +1,26 @@
+include /components/common/image.pug
+
+a.briefings__briefing.briefing( href = UTILS.url( { href : `announcement/${ briefing.announcementId }` } ) )
+  h1.briefing__title= briefing.title
+  p.briefing__article= briefing.content
+  time.briefing__time= briefing.updateTime
+  aside.briefing__tags.tags
+    each tagObj in briefing.tags
+      button.tags__tag( class=`tags__tag--${ tagObj.color }` )= tagObj.tag
+  if userId >= 0
+    aside.briefing__button.button
+      +image( {
+        alt: 'pin',
+        className: `button__pin pin button__pin--${ briefing.announcementId }`,
+        src: `icon/pin.png`,
+      } )
+      +image( {
+        alt: 'update',
+        className: `button__update button__update--${ briefing.announcementId }`,
+        src: `icon/edit.png`,
+      } )
+      +image( {
+        alt: 'delete',
+        className: `button__delete button__delete--${ briefing.announcementId }`,
+        src: `icon/delete.png`,
+      } )

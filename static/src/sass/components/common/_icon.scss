@@ -1,0 +1,102 @@
+$icon-path: '~image/icon';
+
+// [ icon ]
+// Download
+@mixin icon__download () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/download.png' );
+}
+
+// [ icon ]
+// Location
+@mixin icon__location () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/location.png' );
+}
+
+// [ icon ]
+// Envelope
+@mixin icon__envelope () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/envelope.png' );
+}
+
+// [ icon ]
+// Phone
+@mixin icon__phone () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/phone.png' );
+}
+
+// [ icon ]
+// Laboratory
+@mixin icon__laboratory () {
+  // [ skin ]
+  background-image: url( '#{ $icon-path }/laboratory.png' );
+}
+
+// [ icon ]
+// Printer
+@mixin icon__printer () {
+  background-image: url( '#{ $icon-path }/printer.png' );
+}
+
+// [ icon ]
+// Search
+@mixin icon__search () {
+  background-image: url( '#{ $icon-path }/search.png' );
+}
+
+// [ icon ]
+// User
+@mixin icon__user () {
+  background-image: url( '#{ $icon-path }/user.png' );
+}
+
+// [ icon ]
+// World Wide Web
+@mixin icon__www () {
+  background-image: url( '#{ $icon-path }/www.png' );
+}
+
+// [ icon ]
+// Taiwan flag
+@mixin icon__flag-zh-TW () {
+  background-image: url( '#{ $icon-path }/flag-0.png' );
+}
+
+// [ icon ]
+// America flag
+@mixin icon__flag-en-US () {
+  background-image: url( '#{ $icon-path }/flag-1.png' );
+}
+
+// [ icon ]
+// Arrow point to right
+@mixin icon__arrowRight () {
+  background-image: url( '#{ $icon-path }/arrow-right.png' );
+}
+
+// [ icon ]
+// Trophys
+@mixin icon__trophy () {
+  background-image: url( '#{ $icon-path }/trophy.png' );
+}
+
+// [ icon ]
+// Conference
+@mixin icon__speech () {
+  background-image: url( '#{ $icon-path }/speech.png' );
+}
+
+// [ icon ]
+// Paper
+@mixin icon__book () {
+  background-image: url( '#{ $icon-path }/book.png' );
+}
+
+// [ icon ]
+// Paper
+@mixin icon__check-mark () {
+  background-image: url( '#{ $icon-path }/check-mark.png' );
+}

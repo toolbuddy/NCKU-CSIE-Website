@@ -1,0 +1,52 @@
+extends /layouts/base.pug
+include /components/user/announcement/time-selector.pug
+include /components/common/topic.pug
+include /components/user/announcement/edit-block.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'Create Announcement',
+        breadcrumb: {
+          home:     'home',
+          announcement:     'announcement',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '新增公告',
+        breadcrumb: {
+          home:     '首頁',
+          announcement:     '公告',
+        },
+      },
+    } );
+    const currentRoute = 'user/announcement/add';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/announcement/add' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.announcement, route: 'announcement' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  main.content__main.main
+    +topic( 'main', i18n[ LANG.id ].title )
+    +edit-block( 'main', 'add', null )
+
+append footer
+
+append scripts
+  +js( 'user/announcement/add' )

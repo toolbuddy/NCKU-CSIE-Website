@@ -1,0 +1,17 @@
+mixin business-card( data )
+  section.business-card.cards__business-card( id=`cards__business-card--${ data.businessId }` )
+    section.business-card__value
+      p.value__text.value__text--business= data.business
+    img.business-card__patch(
+      alt = 'patch',
+      id = `business-card__patch--${ data.businessId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.businessId
+    )
+    img.business-card__delete(
+      alt = 'delete',
+      id = `business-card__delete--${ data.businessId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } ),
+      data-id = data.businessId
+    )
+

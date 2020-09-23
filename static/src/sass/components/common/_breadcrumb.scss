@@ -1,0 +1,85 @@
+@import 'components/common/font';
+
+// component
+// `> .#{ $block } > .#{ $block }__breadcrumb.breadcrumb`
+@mixin breadcrumb ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__breadcrumb`
+  // block
+  // `> .#{ $block } > .breadcrumb`
+  > .#{ $block }__breadcrumb.breadcrumb {
+    // [ variable ]
+    $large: 800px;
+    $font-size: font__px-to-rem( 20 );
+
+    // [ dispaly ]
+    display: block;
+    line-height: $font-size * 1.2;
+
+    // [ skin ]
+    background-color: transparent;
+
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__link`
+    > .breadcrumb__link {
+      // [ layout ]
+      display: inline-block;
+      line-height: $font-size;
+
+      // [ skin ]
+      color: #213262;
+      background-color: transparent;
+      font-size: $font-size;
+      text-decoration: underline;
+    }
+
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__arrow`
+    > .breadcrumb__arrow {
+      // [ variable ]
+      $image-width: font__px-to-rem( 6 );
+      $image-height: $image-width * 1.6;
+      $vertical-align: $font-size - $image-height;
+
+      // [ layout ]
+      display: inline-block;
+      margin: {
+        top: $vertical-align / 2;
+        bottom: $vertical-align / 2;
+        left: font__px-to-rem( 18 );
+        right: font__px-to-rem( 18 );
+      }
+      vertical-align: middle;
+
+      // [ skin ]
+      width: $image-width;
+      height: $image-height;
+      background-color: transparent;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin: {
+          left: font__px-to-rem( 40 );
+          right: font__px-to-rem( 40 );
+        }
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .breadcrumb > .breadcrumb__text`
+    > .breadcrumb__text {
+      // [ layout ]
+      display: inline-block;
+      line-height: $font-size;
+
+      // [ skin ]
+      color: #757575;
+      background-color: transparent;
+      font-size: $font-size;
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

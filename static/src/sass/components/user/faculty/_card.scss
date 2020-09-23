@@ -1,0 +1,107 @@
+@mixin card ( $modifier ) {
+  // `> .#{ $block } > .#{ $block }__input-block`
+  > .#{ $modifier }-card.cards__#{ $modifier }-card {
+    // [ variable ]
+    $medium: 710px;
+    $small: 535px;
+
+    // [ layout ]
+    display: grid;
+    column-gap: font__px-to-rem( 10 );
+    row-gap: font__px-to-rem( 10 );
+
+    // [ position ]
+    width: 100%;
+    height: fit-content;
+
+    // [ skin ]
+    border: {
+      bottom: solid font__px-to-rem( 2 ) #adacad;
+      radius: font__px-to-rem( 3 );
+    }
+    margin-top: font__px-to-rem( 20 );
+    padding: {
+      bottom: font__px-to-rem( 20 );
+      left:   font__px-to-rem( 20 );
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      column-gap: font__px-to-rem( 16 );
+    }
+
+    > .#{ $modifier }-card__topic.topic {
+      // [ layout ]
+      display: flex;
+      justify-self: flex-start;
+      align-items: center;
+
+      // [ skin ]
+      font: {
+        size: font__px-to-rem( 18 );
+        weight: bold;
+      }
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    > .#{ $modifier }-card__value {
+      // [ layout ]
+      display: flex;
+      justify-self: flex-start;
+      align-items: center;
+
+      // [ skin ]
+      font-size: font__px-to-rem( 18 );
+      line-height: normal;
+      letter-spacing: normal;
+      color: rgba( 0, 0, 0, .87 );
+    }
+
+    > .#{ $modifier }-card__patch {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: patch;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    > .#{ $modifier }-card__delete {
+      // [ layout ]
+      display: inline-flex;
+      grid-area: delete;
+
+      // [ position ]
+      width: font__px-to-rem( 30 );
+      height: auto;
+      padding-right: font__px-to-rem( 10 );
+      align-self: center;
+
+      // [ skin ]
+      filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+      &:hover {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 50% ) hue-rotate( 183deg ) contrast( 200% );
+        cursor: pointer;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

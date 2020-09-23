@@ -1,0 +1,28 @@
+include /components/common/image.pug
+
+mixin specialty-card( data )
+  - 
+    const i18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        specialty: 'specialty',
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        specialty: '領域'
+      },
+    })
+  section.specialty-card.cards__specialty-card
+    h4.specialty-card__topic.topic= i18n[ LANG.id ].specialty
+    p.specialty-card__value.value= data.specialty
+    img.specialty-card__patch(
+      alt = 'patch',
+      id = `specialty-card__patch--${ data.specialtyId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.specialtyId
+    )
+    img.specialty-card__delete(
+      alt = 'delete',
+      id = `specialty-card__delete--${ data.specialtyId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.specialtyId
+    )
+

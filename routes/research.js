@@ -1,30 +1,47 @@
-// router for /research
-const express = require( 'express' );
-const router = express.Router();
+/**
+ * Router module for route `/research`.
+ *
+ * Including following sub-routes:
+ * - `/research`
+ * - `/research/lab`
+ * - `/research/publication`
+ */
 
-// route to /research/labs
-router.get( '/labs', function( req, res ) {
-    res.render( 'research/labs' );
+import express from 'express';
+
+import staticHtml from 'routes/utils/static-html.js';
+
+const router = express.Router( {
+    caseSensitive: true,
+    mergeParams:   false,
+    strict:        false,
 } );
 
-// route to /research/groups
-router.get( '/groups', function( req, res ) {
-    res.render( 'research/groups' );
-} );
+/**
+ * Resolve URL `/research`.
+ */
 
-// route to /research/publications
-router.get( '/publications', function( req, res ) {
-    res.render( 'research/publications' );
-} );
+router
+.route( [
+    '/',
+    '/index',
+] )
+.get( staticHtml( 'research/index' ) );
 
-// route to /research/awards
-router.get( '/awards', function( req, res ) {
-    res.render( 'research/awards' );
-} );
+/**
+ * Resolve URL `/research/lab`.
+ */
 
-// route to /research/conferences
-router.get( '/conferences', function( req, res ) {
-    res.render( 'research/conferences' );
-} );
+router
+.route( '/lab' )
+.get( staticHtml( 'research/lab' ) );
 
-module.exports = router;
+/**
+ * Resolve URL `/research/publication`.
+ */
+
+router
+.route( '/publication' )
+.get( staticHtml( 'research/publication' ) );
+
+export default router;

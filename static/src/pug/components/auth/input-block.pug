@@ -1,0 +1,8 @@
+mixin input_block( inputType, modifier, placeholder, variableName)
+  section.form__block
+    input(
+        id=`form__block--${ modifier }`
+        class="form__block--input"
+        type=`${ inputType }`
+        placeholder=`${ placeholder }`
+        name=`${ variableName }` )

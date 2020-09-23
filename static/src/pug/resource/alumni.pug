@@ -1,0 +1,52 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title: 'Alumni',
+        breadcrumb: {
+          home:     'Home',
+          resource: 'Resource',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '系友專區',
+        breadcrumb: {
+          home:     '首頁',
+          resource: '資源連結',
+        },
+      },
+    } );
+    const currentRoute = 'resource/alumni';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'resource/alumni' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/not-available.pug
+  +notAvailable( 'content' )
+
+append footer
+
+append scripts
+  +js( 'resource/alumni' )

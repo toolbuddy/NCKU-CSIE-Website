@@ -1,0 +1,209 @@
+extends /layouts/faculty/base.pug
+include /components/common/topic.pug
+include /components/user/faculty/navigation-bar.pug
+include /components/user/faculty/local-topic.pug
+include /components/user/faculty/classfication-title.pug
+include /components/user/form/form-input.pug
+include /components/user/card/faculty/technology-transfer-card.pug
+include /components/user/card/no-record.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'User Technology Transfer',
+        breadcrumb: {
+          home:     'Home',
+          user:     'User Technology Transfer',
+        },
+        content: {
+          topic: 'Faculty profile settings',
+          technologyTransfer: {
+            topic:   'Technology Transfer',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '使用者資料管理',
+        breadcrumb: {
+          home:     '首頁',
+          user:     '使用者資料',
+        },
+        content: {
+          topic: '教師資料維護',
+          technologyTransfer: {
+            topic:   '技術轉移',
+          },
+        },
+      },
+    } );
+    const formI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Technology Transfer',
+        patch: 'Modify Your Technology Transfer',
+        delete: 'Remove Your Technology Transfer',
+        default: {
+          authorizingParty: '',
+          authorizedParty:  '',
+          technology:       '',
+        },
+        title: {
+          authorizingParty: 'Authorizing Party',
+          authorizedParty:  'Authorized Party',
+          technology:       'Technology',
+          duration:         'Duration',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的技術轉移',
+        patch: '編輯您的技術轉移',
+        delete: '刪除您的技術轉移',
+        default: {
+          authorizingParty: '',
+          authorizedParty:  '',
+          technology:       '',
+        },
+        title: {
+          authorizingParty: '授權方名稱',
+          authorizedParty:  '接受方名稱',
+          technology:       '技術名稱',
+          duration:         '合約期間',
+        },
+      }
+    })
+    const patentFormI18n = Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        post: 'Add Your Technology Transfer Patent',
+        patch: 'Modify Your Technology Transfer Patent',
+        delete: 'Remove Your Technology Transfer Patent',
+        default: {
+          patent: '',
+        },
+        title: {
+          patent: 'patent',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]:{
+        post: '新增您的專利名稱',
+        patch: '編輯您的專利名稱',
+        delete: '刪除您的專利名稱',
+        default: {
+          patent:　'',
+        },
+        title: {
+          patent: '專利名稱'
+        },
+      }
+    })
+    const inputConfig = {
+      technologyTransfer: [
+        {
+          inputPattern: 'duration',
+          columnName: 'duration',
+          validation: {
+            type: 'number',
+            required: true,
+            min: 1970,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'technology',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 300,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'authorizingParty',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'authorizedParty',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+      ],
+      technologyTransferPatent: [
+        {
+          inputPattern: 'i18n-text',
+          columnName: 'patent',
+          validation: {
+            type: 'text',
+            required: true,
+            maxlength: 100,
+          },
+        },
+        {
+          inputPattern: 'hidden',
+          columnName: 'technologyTransferId',
+          validation: {
+            datatype: 'int',
+          }
+        }
+      ],
+    }
+    const currentRoute = 'user/faculty/technology-transfer';
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/faculty/technology-transfer' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/technology-transfer' },
+    ]
+  )
+
+append content
+  include /components/common/loading.pug
+  include /components/common/refresh.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  +navigation-bar( 'content' )
+  section.content__technology-transfer.technology-transfer
+    +local-topic( 'technology-transfer', i18n[ LANG.id ].content.technologyTransfer.topic )
+    +refreshWithImage( 'technology-transfer' )
+    +loading( 'technology-transfer' )
+    section#technology-transfer__cards.technology-transfer__cards.cards
+      if Array.isArray( data.technologyTransfer ) && data.technologyTransfer.length
+        -
+          data.technologyTransfer.sort( (a, b)=>{
+            if(a.from === null )
+              return -1
+            else if(b.from === null)
+              return 1
+            return a.from - b.from
+          })
+        each obj in data.technologyTransfer
+          +technology-transfer-card( obj )
+      else
+        +no-record()
+append form
+  +form-input( 'technology-transfer', 'post', formI18n, inputConfig.technologyTransfer )
+  +form-input( 'technology-transfer', 'patch', formI18n, inputConfig.technologyTransfer )
+  +form-input( 'technology-transfer', 'delete', formI18n, inputConfig.technologyTransfer )
+  +form-input( 'technology-transfer-patent', 'post', patentFormI18n, inputConfig.technologyTransferPatent )
+  +form-input( 'technology-transfer-patent', 'patch', patentFormI18n, inputConfig.technologyTransferPatent )
+  +form-input( 'technology-transfer-patent', 'delete', patentFormI18n, inputConfig.technologyTransferPatent )
+
+append footer
+
+append scripts
+  +js( 'user/faculty/technology-transfer' )

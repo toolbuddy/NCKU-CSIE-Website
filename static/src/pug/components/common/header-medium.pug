@@ -1,0 +1,102 @@
+mixin header--medium( belongBlock )
+  include /components/common/header-i18n.pug
+  include /components/common/header-router.pug
+  include /components/common/image.pug
+  - const i18n = headerI18n();
+
+  section.headerSpace.headerSpace--medium
+  header.header.header--medium( class = `${ belongBlock }__header` )
+    //- Logo
+    a.header__logo.logo( href = i18n[ LANG.id ].home.index.route )
+      +image( {
+        alt:       'csie',
+        className: 'logo__image',
+        src:       'logo/csie-small.png',
+      } )
+    //- Caption
+    section.header__caption.caption
+      article.caption__title.title
+        span.title__text 成功大學
+        span.title__text 資訊工程學系
+        span.title__text 暨
+        span.title__text 研究所
+      article.caption__subtitle.subtitle
+        span.subtitle__text Department
+        span.subtitle__text of
+        span.subtitle__text Computer Science
+        span.subtitle__text and
+        span.subtitle__text Information Engineering
+
+    //- Menu Icon
+    button.header__menu
+
+    //- Navigation Bar
+    nav.header__navigation.navigation
+      //- Search Column, currently not available
+      //- Small screen version
+      form.navigation__search.search( action = i18n[ LANG.id ].home.search.route, method = 'GET' )
+        input.search__input(
+          type = 'text',
+          placeholder = i18n[ LANG.id ].home.search.text,
+          name = 'searchText',
+          value = ''
+        )
+        button.search__submit.submit( type = 'submit' )
+          +image( {
+            alt:       i18n[ LANG.id ].home.search.text,
+            className: 'submit__image',
+            src:       'icon/search.png',
+          } )
+
+      //- Cancel Icon
+      button.navigation__cancel
+
+      //- All routes
+      +navigation__list
+
+      //- Login
+      a.navigation__login.login( href = i18n[ LANG.id ].components.login.route )
+        +image( {
+          alt:       i18n[ LANG.id ].components.login.text,
+          className: 'login__image login__image--icon',
+          src:       'icon/user.png',
+        } )
+        span.login__text= i18n[ LANG.id ].components.login.text
+
+      //- Language Choice
+      section.navigation__language.language
+        +image( {
+          alt:       i18n[ LANG.id ].language,
+          className: 'language__image',
+          src:       `icon/flag-${ LANG.id }.png`,
+        } )
+        span.language__text= i18n[ LANG.id ].language
+        button.language__switch
+        ul.language__dropdown.dropdown
+          li.dropdown__item.item
+            a.item__link.link(
+              href = UTILS.url( {
+                href: currentRoute,
+                query: { languageId: LANG.getLanguageId( 'zh-TW' ) }
+              } )
+            )
+              +image( {
+                alt:       '臺灣',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'zh-TW' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'zh-TW' )
+                span.link__text.link__text--active 臺灣
+              else
+                span.link__text 臺灣
+          li.dropdown__item.item
+            a.item__link.link( href = UTILS.url( { href: currentRoute, query: { languageId: LANG.getLanguageId( 'en-US' ) } } ) )
+              +image( {
+                alt:       'USA',
+                className: 'link__image',
+                src:       `icon/flag-${ LANG.getLanguageId( 'en-US' ) }.png`,
+              } )
+              if LANG.id === LANG.getLanguageId( 'en-US' )
+                span.link__text.link__text--active USA
+              else
+                span.link__text USA

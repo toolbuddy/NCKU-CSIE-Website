@@ -1,0 +1,50 @@
+include /components/common/image.pug
+
+mixin education-card( data )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          duration:   'duration',
+          school:     'school',
+          nation:     'nation',
+          major:      'major',
+          degree:     'degree'
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          duration:   '就學期間',
+          school:     '學校',
+          nation:     '國家',
+          major:      '主修科目',
+          degree:     '學位'
+        },
+      },
+    })
+    const to = (data.to === null)? '----' : data.to
+    const from = (data.from === null)? '----': data.from
+  section.education-card.cards__education-card
+    h4.education-card__topic.topic.topic--school= i18n[ LANG.id ].topic.school
+    p.education-card__value.value.value--school= data.school
+    h4.education-card__topic.topic.topic--duration= i18n[ LANG.id ].topic.duration
+    p.education-card__value.value.value--duration= `${from} - ${to}`
+    h4.education-card__topic.topic.topic--major= i18n[ LANG.id ].topic.major
+    p.education-card__value.value.value--major= data.major
+    h4.education-card__topic.topic.topic--nation= i18n[ LANG.id ].topic.nation
+    p.education-card__value.value.value--nation= UTILS.faculty.nationUtils.getValueById( { id: data.nation, languageId: LANG.id} )
+    h4.education-card__topic.topic.topic--degree= i18n[ LANG.id ].topic.degree
+    p.education-card__value.value.value--degree= UTILS.faculty.degreeUtils.getValueById( { id: data.degree, languageId: LANG.id} )
+    img.education-card__patch(
+      alt = 'patch',
+      id = `education-card__patch--${ data.educationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.educationId
+    )
+    img.education-card__delete(
+      alt = 'delete',
+      id = `education-card__delete--${ data.educationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.educationId
+    )
+

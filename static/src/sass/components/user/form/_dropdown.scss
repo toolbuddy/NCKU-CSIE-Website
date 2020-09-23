@@ -1,0 +1,49 @@
+@import 'components/user/form/input-title';
+@mixin dropdown () {
+  > .dropdown.content__dropdown {
+    // [ layout ]
+    display: flex;
+    flex-wrap: wrap;
+
+    // [ position ]
+    width: 100%;
+
+    > .dropdown__input.input {
+      // [ layout ]
+      display: block;
+
+      // [ position ]
+      width: 50%;
+      height: font__px-to-rem( 40 );
+      margin: {
+        top: font__px-to-rem( 10 );
+        bottom: font__px-to-rem( 10 );
+        left: auto;
+        right: auto;
+      }
+      border-radius: font__px-to-rem( 15 );
+      border: solid 2px rgba( 214, 214, 214, .7 );
+
+      // [ skin ]
+      padding: {
+        left: font__px-to-rem( 16 );
+        right: font__px-to-rem( 16 );
+      }
+      font-size: font__px-to-rem( 16 );
+      text-align: center;
+      line-height: normal;
+      color: rgba( 24, 24, 24, .87 );
+
+      &:focus {
+        // [ skin ]
+        border: solid 3px rgba( 98, 148, 160, .5 );
+      }
+    }
+
+    // [ element ]
+    @include input-title( 'dropdown' );
+
+    // [ customization ]
+    @content;
+  }
+}

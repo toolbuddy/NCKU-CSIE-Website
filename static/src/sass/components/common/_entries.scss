@@ -1,0 +1,195 @@
+@import 'components/common/font';
+
+// component
+// `> .#{ $block } > .#{ $block }__entries.entries`
+@mixin entries ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__entries`
+  // block
+  // `> .#{ $block } > .entries`
+  > .#{ $block }__entries.entries {
+    // [ variables ]
+    $large: 475px;
+
+    // [ layout ]
+    display: block;
+
+    // [ skin ]
+    background-color: transparent;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    // element
+    // `> .#{ $block } > .entries > .entries__entry`
+    // block
+    // `> .#{ $block } > .entries > .entry`
+    > .entries__entry.entry {
+      // [ layout ]
+      display: block;
+      margin: {
+        left: auto;
+        right: auto;
+        bottom: font__px-to-rem( 9 );
+      }
+      text-align: center;
+
+      // [ skin ]
+      width: 95%;
+      min-height: font__px-to-rem( 168 );
+      border: {
+        top: {
+          width: font__px-to-rem( 6 );
+          color: #e6e6e6;
+        }
+        bottom: {
+          width: font__px-to-rem( 1 );
+          color: #e6e6e6;
+        }
+        left: {
+          width: font__px-to-rem( 1 );
+          color: #e6e6e6;
+        }
+        right: {
+          width: font__px-to-rem( 1 );
+          color: #e6e6e6;
+        }
+        style: solid;
+        radius: font__px-to-rem( 6 );
+      }
+      background-color: #ffffff;
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        background-color: #f9f9f9;
+        cursor: pointer;
+      }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin: {
+          left: font__px-to-rem( 12 );
+          right: font__px-to-rem( 12 );
+          bottom: font__px-to-rem( 26 );
+        }
+
+        // [ skin ]
+        min-height: font__px-to-rem( 190 );
+        width: font__px-to-rem( 430 );
+      }
+
+      // template
+      // `> .#{ $block } > .entries > .entries__entry.entries__entry--?`
+      &.entries__entry-- {
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--red`
+        &red {
+          // [ skin ]
+          border-top-color: #f94970;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--green`
+        &green {
+          // [ skin ]
+          border-top-color: #0dc589;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--yellow`
+        &yellow {
+          // [ skin ]
+          border-top-color: #faad06;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--blue`
+        &blue {
+          // [ skin ]
+          border-top-color: #399dff;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--purple`
+        &purple {
+          // [ skin ]
+          border-top-color: #9053ff;
+        }
+
+        // modifier
+        // `> .#{ $block } > .entries > .entries__entry.entries__entry--gray`
+        &gray {
+          // [ skin ]
+          border-top-color: #999999;
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .entries > .entry > .entry__title`
+      > .entry__title {
+        // [ layout ]
+        display: block;
+        text-align: center;
+        margin-top: font__px-to-rem( 60 );
+        line-height: font__px-to-rem( 26 );
+        white-space: normal;
+        word: {
+          break: normal;
+          wrap: normal;
+        };
+
+        // [ skin ]
+        color: black;
+        background-color: transparent;
+        font: {
+          size: font__px-to-rem( 26 );
+          weight: bold;
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .entries > .entry > .entry__detail`
+      > .entry__detail {
+        // [ layout ]
+        display: block;
+        text-align: center;
+        margin: {
+          top: font__px-to-rem( 20 );
+          left: font__px-to-rem( 32 );
+          right: font__px-to-rem( 32 );
+          bottom: font__px-to-rem( 40 );
+        }
+        line-height: font__px-to-rem( 16 ) * 1.2;
+        white-space: normal;
+        word: {
+          break: normal;
+          wrap: normal;
+        };
+
+        // [ skin ]
+        color: #757575;
+        background-color: transparent;
+        font-size: font__px-to-rem( 16 );
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          margin: {
+            left: font__px-to-rem( 70 );
+            right: font__px-to-rem( 70 );
+          }
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

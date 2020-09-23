@@ -1,0 +1,225 @@
+@import 'components/announcement/tags';
+
+// component
+// `> .#{ $block } > .#{ $block }__briefing.briefing`
+@mixin briefing ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__briefing`
+  // block
+  // `> .#{ $block } > .briefing`
+  > .#{ $block }__briefing.briefing {
+    // [ variable ]
+    $large: 992px;
+
+    // [ layout ]
+    display: grid;
+    grid-template: {
+      areas:
+        'briefing__title  briefing__title  briefing__title'
+        'briefing__tags   briefing__tags   briefing__tags'
+        'briefing__time   briefing__time   .'
+        'briefing__button briefing__button briefing__button';
+      rows: min-content auto 1fr;
+      columns: 5fr 1fr 13fr auto;
+    }
+    margin-bottom: font__px-to-rem( 14 );
+
+    // [ skin ]
+    width: 100%;
+    border-radius: font__px-to-rem( 6 );
+    padding: {
+      top: font__px-to-rem( 16 );
+      bottom: font__px-to-rem( 16 );
+      left: font__px-to-rem( 12 );
+      right: font__px-to-rem( 12 );
+    }
+    background-color: #ffffff;
+    box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 24 ) 0 #dbdbdb, 0 font__px-to-rem( 8 ) font__px-to-rem( 10 ) 0 #cccccc;
+
+    // [ interaction ]
+    &:hover {
+      // [ layout ]
+      margin: {
+        top: font__px-to-rem( -4 );
+        bottom: font__px-to-rem( 14 + 4 );
+      }
+
+      // [ skin ]
+      cursor: pointer;
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          'briefing__title   briefing__title   briefing__title'
+          'briefing__article briefing__article briefing__article'
+          'briefing__tags    briefing__tags    briefing__time'
+          '.                 .                 briefing__button';
+        rows: min-content font__px-to-rem( 48 ) 1fr auto;
+        columns: 5fr 1fr 13fr;
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 424 );
+      padding: {
+        top: font__px-to-rem( 26 );
+        bottom: font__px-to-rem( 15 );
+        left: font__px-to-rem( 32 );
+        right: font__px-to-rem( 32 );
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__tags`
+    // block
+    // `> .#{ $block } > .briefing > .tags`
+    @include tags( 'briefing' ) {
+      // [ position ]
+      grid-area: briefing__tags;
+
+      // [ layout ]
+      display: block;
+      align-self: end;
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__title`
+    > .briefing__title {
+      // [ position ]
+      grid-area: briefing__title;
+
+      // [ layout ]
+      display: block;
+      margin-bottom: font__px-to-rem( 15 );
+      line-height: font__px-to-rem( 16 ) * 1.2;
+      word-wrap: break-word;
+
+      // [ skin ]
+      height: min-content;
+      color: #000000;
+      font: {
+        size: font__px-to-rem( 16 );
+        weight: bold;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__article`
+    > .briefing__article {
+      // [ layout ]
+      display: none;
+      margin-bottom: font__px-to-rem( 15 );
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        grid-area: briefing__article;
+
+        // [ layout ]
+        display: block;
+        white-space: nowrap;
+        line-height: font__px-to-rem( 14 ) * 1.2;
+
+        // [ skin ]
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: font__px-to-rem( 14 );
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__time`
+    > .briefing__time {
+      // [ position ]
+      grid-area: briefing__time;
+
+      // [ layout ]
+      display: block;
+      line-height: font__px-to-rem( 14 );
+
+      // [ skin ]
+      color: #b5babf;
+      font-size: font__px-to-rem( 14 );
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ position ]
+        justify-self: end;
+        align-self: end;
+      }
+    }
+
+    // element
+    // `> .#{ $block } > .briefing > .briefing__button`
+    > .briefing__button {
+      // [ position ]
+      grid-area: briefing__button;
+
+      // [ layout ]
+      display: flex;
+      justify-content: flex-end;
+
+      // [ element ]
+      %button {
+        // [ position ]
+        height: font__px-to-rem( 20 );
+        width: auto;
+        margin: {
+          top: font__px-to-rem( 10 );
+          bottom: font__px-to-rem( 5 );
+        }
+
+        // [ skin ]
+        filter: opacity( .7 );
+
+        // [ action ]
+        &:hover {
+          // [ skin ]
+          filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__pin`
+      > .button__pin {
+        @extend %button;
+
+        // [ position ]
+        margin-right: font__px-to-rem( 4 );
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__pin`
+      > .button__pin--pinned {
+        // [ skin ]
+        filter: invert( 80% ) sepia( 77% ) saturate( 2862% ) brightness( 89% ) hue-rotate( 183deg ) contrast( 98% );
+
+        // [ action ]
+        &:hover {
+          // [ skin ]
+          filter: opacity( .7 );
+        }
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__update`
+      > .button__update {
+        @extend %button;
+
+        // [ position ]
+        margin-right: font__px-to-rem( 4 );
+      }
+
+      // element
+      // `> .#{ $block } > .briefing > .briefing__button > .button__delete`
+      > .button__delete {
+        @extend %button;
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

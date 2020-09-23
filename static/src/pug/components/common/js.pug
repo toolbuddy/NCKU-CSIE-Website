@@ -1,0 +1,8 @@
+//- Script template module.
+//-
+//- Template for ECMAScript `<script>` tags.
+//- No need to rewrite all attributes each time.
+//- @param {string} src - Link to the JS file.
+
+mixin js( src )
+  script( src = UTILS.staticUrl( { href: `js/${ src }.min.js` } ) )

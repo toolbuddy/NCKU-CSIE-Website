@@ -1,0 +1,41 @@
+mixin publication-card( data, head )
+  -
+    const i18n =  Object.freeze({
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        topic: {
+          title:     'publication',
+          authors:   'authors',
+          issueYear:  'issue year',
+          issueMonth: 'issue month',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        topic: {
+          title:     '著作名稱',
+          authors:   '作者',
+          issueYear:  '發行年份',
+          issueMonth: '發行月份',
+        },
+      },
+    })
+  section.publication-card.cards__publication-card
+    h4.publication-card__topic.topic.topic--title= i18n[ LANG.id ].topic.title
+    p.publication-card__value.value.value--title= data.title
+    h4.publication-card__topic.topic.topic--authors= i18n[ LANG.id ].topic.authors
+    p.publication-card__value.value.value--authors= data.authors
+    h4.publication-card__topic.topic.topic--issueYear= i18n[ LANG.id ].topic.issueYear
+    p.publication-card__value.value.value--issueYear= data.issueYear
+    h4.publication-card__topic.topic.topic--issueMonth= i18n[ LANG.id ].topic.issueMonth
+    p.publication-card__value.value.value--issueMonth= data.issueMonth
+    img.publication-card__patch(
+      alt = 'patch',
+      id = `publication-card__patch--${ data.publicationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/edit.png' } ),
+      data-id = data.publicationId
+    )
+    img.publication-card__delete(
+      alt = 'delete',
+      id = `publication-card__delete--${ data.publicationId }`,
+      src = UTILS.staticUrl( { href: 'image/icon/delete.png' } )
+      data-id = data.publicationId
+    )

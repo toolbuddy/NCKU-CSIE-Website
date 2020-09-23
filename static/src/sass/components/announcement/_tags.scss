@@ -1,0 +1,107 @@
+@import 'components/common/font';
+
+// template
+// `.tags > .tags__tag.tags__tag--?`
+// This mixin should not be used outside this file.
+@mixin tags__tag ( $color, $bgcolor ) {
+  // [ skin ]
+  color: $color;
+  background-color: $bgcolor;
+
+  // modifier
+  // `.tags > .tags__tag.tags__tag--?.tags__tag--active`
+  &.tags__tag--active {
+    // [ skin ]
+    color: #ffffff;
+    background-color: $color;
+  }
+}
+
+// component
+// `> .#{ $block } > .#{ $block }__tags.tags`
+@mixin tags ( $block ) {
+  // element
+  // `> .#{ $block } > .#{ $block }__tags`
+  // block
+  // `> .#{ $block } > .tags`
+  > .#{ $block }__tags.tags {
+    // [ skin ]
+    color: #ffffff;
+
+    // element
+    // `> .#{ $block } > .tags > .tags__tag`
+    > .tags__tag {
+      // [ layout ]
+      display: inline-block;
+      text-align: center;
+      vertical-align: top;
+      line-height: font__px-to-rem( 14 );
+
+      // [ skin ]
+      min-width: font__px-to-rem( 105 );
+      height: font__px-to-rem( 30 );
+      margin: {
+        right: font__px-to-rem( 16 );
+        bottom: font__px-to-rem( 10 );
+      }
+      border-radius: font__px-to-rem( 15 );
+      padding: {
+        top: font__px-to-rem( 9 );
+        bottom: font__px-to-rem( 9 );
+        left: font__px-to-rem( 14 );
+        right: font__px-to-rem( 14 );
+      }
+      font-size: font__px-to-rem( 14 );
+
+      // [ interaction ]
+      &:hover {
+        // [ skin ]
+        cursor: pointer;
+      }
+
+      &.tags__tag-- {
+        // modifier
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--yellow`
+        &yellow {
+          // [ template ]
+          @include tags__tag( $color: #faad06, $bgcolor: #fff8e6 );
+        }
+
+        // modifier
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--red`
+
+        &red {
+          // [ template ]
+          @include tags__tag( $color: #f67057, $bgcolor: #ffe3df );
+        }
+
+        // modifier
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--blue`
+
+        &blue {
+          // [ template ]
+          @include tags__tag( $color: #399dff, $bgcolor: #dfeffe );
+        }
+
+        // modifier
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--purple`
+
+        &purple {
+          // [ template ]
+          @include tags__tag( $color: #9053ff, $bgcolor: #e8dafe );
+        }
+
+        // modifier
+        // `> .#{ $block } > .tags > .tags__tag.tags__tag--green`
+
+        &green {
+          // [ template ]
+          @include tags__tag( $color: #0dc589, $bgcolor: #c6ffec );
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}
