@@ -58,7 +58,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Announcement.findAll( {
+        let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
                 'updateTime',
@@ -72,6 +72,36 @@ export default async ( opt ) => {
                 },
                 isPublished: true,
                 isPinned:    true,
+            },
+            include: [
+                {
+                    model:      Tag,
+                    as:         'tags',
+                    attributes: [],
+                    where:      {
+                        tagId: {
+                            [ Op.in ]: tags,
+                        },
+                    },
+                },
+            ],
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
+        } );
+
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
+            error.status = 404;
+            throw error;
+        }
+
+        data = await Announcement.findAll( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+            ],
+            where: {
+                announcementId: data.map( id => id.announcementId ),
             },
             include: [
                 {
@@ -89,22 +119,11 @@ export default async ( opt ) => {
                     model:      Tag,
                     as:         'tags',
                     attributes: [ 'tagId', ],
-                    where:      {
-                        tagId: {
-                            [ Op.in ]: tags,
-                        },
-                    },
                 },
             ],
             order:    [ [ 'updateTime',
                 'DESC', ], ],
         } );
-
-        if ( !data.length ) {
-            const error = new Error( 'no result' );
-            error.status = 404;
-            throw error;
-        }
 
         return data.map( announcement => ( {
             announcementId: announcement.announcementId,

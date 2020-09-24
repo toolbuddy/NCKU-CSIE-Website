@@ -72,7 +72,7 @@ export default async ( opt ) => {
             throw error;
         }
 
-        const data = await Announcement.findAll( {
+        let data = await Announcement.findAll( {
             attributes: [
                 'announcementId',
                 'updateTime',
@@ -88,20 +88,9 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        language,
-                    },
-                },
-                {
                     model:      Tag,
                     as:         'tags',
-                    attributes: [ 'tagId', ],
+                    attributes: [],
                     where:      {
                         tagId: {
                             [ Op.in ]: tags,
@@ -120,6 +109,36 @@ export default async ( opt ) => {
             error.status = 404;
             throw error;
         }
+
+        data = await Announcement.findAll( {
+            attributes: [
+                'announcementId',
+                'updateTime',
+            ],
+            where: {
+                announcementId: data.map( id => id.announcementId ),
+            },
+            include: [
+                {
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        language,
+                    },
+                },
+                {
+                    model:      Tag,
+                    as:         'tags',
+                    attributes: [ 'tagId', ],
+                },
+            ],
+            order:    [ [ 'updateTime',
+                'DESC', ], ],
+        } );
 
         return data.map( announcement => ( {
             announcementId: announcement.announcementId,
