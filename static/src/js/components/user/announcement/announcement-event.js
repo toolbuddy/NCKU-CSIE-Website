@@ -92,17 +92,17 @@ export default class AnnouncementEvent {
 
     subscribeEditor () {
         tinymce.init( {
-            selector:  '#content__textarea',
-            width:     '100%',
-            statusbar: false,
-            plugins:   'table lists',
-            menubar:   'table',
-            toolbar:   `formatselect |
-                        bold italic strikethrough forecolor backcolor |
-                        link |
+            selector:           '#content__textarea',
+            width:              '100%',
+            statusbar:          false,
+            relative_urls:      0,         // eslint-disable-line
+            remove_script_host: 0,         // eslint-disable-line
+            plugins:            'table lists link',
+            menubar:            'table',
+            toolbar:            `formatselect | undo redo |
+                        bold italic strikethrough forecolor backcolor link|
                         alignleft aligncenter alignright alignjustify  |
-                        numlist bullist outdent indent  |
-                        removeformat`,
+                        numlist bullist outdent indent`,
         } );
         Object.keys( this.DOM.languageButton ).forEach( ( languageId ) => {
             this.DOM.languageButton[ languageId ].addEventListener( 'click', ( e ) => {

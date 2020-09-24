@@ -148,8 +148,15 @@
     // element
     // `> .#{ $block } > .announcement > .announcement__image`
     > .announcement__image {
+      // [ layout ]
+      display: block;
+
       // [ position ]
       grid-area: announcement__image;
+      margin: {
+        left: auto;
+        right: auto;
+      }
 
       // [ skin ]
       padding: {
