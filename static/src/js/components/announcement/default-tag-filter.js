@@ -757,7 +757,7 @@ export default class DefaultTagFilter {
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
-                `to=${ Number( this.state.to ) }`,
+                `to=${ Number( Date.now() ) }`,
                 ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
@@ -798,6 +798,7 @@ export default class DefaultTagFilter {
             const data = await res.json();
 
             const extractTextObj = data;
+
             extractTextObj.sort( ( announcement1, announcement2 ) => announcement2.updateTime - announcement1.updateTime );
             extractTextObj.forEach( ( ann ) => {
                 try {
@@ -972,7 +973,6 @@ export default class DefaultTagFilter {
                     console.error( err );
                 }
             } );
-
             extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
                     color: tagUtils.getTagColorById( tagId ),

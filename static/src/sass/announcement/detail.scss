@@ -4,7 +4,6 @@
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
 @import 'components/common/banner';
-@import 'components/common/breadcrumb';
 @import 'components/common/footer';
 @import 'components/announcement/tags';
 @import 'components/announcement/announcement-detail';
@@ -48,7 +47,6 @@
       template: {
         areas:
           '. .            .'
-          '. breadcrumb   .'
           '. announcement .'
           '. .            .';
         columns: 5% 90% 5%;
@@ -74,15 +72,6 @@
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid-template-columns: 1fr font__px-to-rem( 950 ) 1fr;
-    }
-
-    // element
-    // `.body > .content > .content__breadcrumb`
-    // block
-    // `.body > .content > .breadcrumb`
-    @include breadcrumb( $block: 'content' ) {
-      // [ position ]
-      grid-area: breadcrumb;
     }
 
     // block

@@ -170,11 +170,11 @@ append content
     section.content__profile.profile
       figure.profile__photo-container.photo-container
         if data.profile.photo !== null
-          +image( {
-            alt: data.profile.name,
-            className: 'photo-container__photo',
-            src: `data:image/jpeg;base64,${ data.profile.photo }`,
-          } )
+          img(
+            alt   = data.profile.name,
+            class = 'photo-container__photo',
+            src   = `data:image/jpeg;base64,${ data.profile.photo }`,
+          )
         else
           +image( {
             alt: data.profile.name,

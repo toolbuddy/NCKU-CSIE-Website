@@ -24,9 +24,9 @@ each profile in data
       //- Faculty's photo.
       if profile.photo !== null
         img(
-          alt       = profile.name,
-          className = 'card__photo',
-          src       = `data:image/jpeg;base64,${ profile.photo }`,
+          alt   = profile.name,
+          class = 'card__photo',
+          src   = `data:image/jpeg;base64,${ profile.photo }`,
         )
       else
         +image( {
