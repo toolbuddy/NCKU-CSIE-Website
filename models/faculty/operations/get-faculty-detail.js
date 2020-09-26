@@ -419,8 +419,8 @@ export default async ( opt ) => {
                 title:      conference.conferenceI18n[ 0 ].title,
             } ) ),
             department: department.map( department => departmentUtils.getValueById( {
-                id: department.type,
-                language,
+                id:         department.type,
+                languageId: language,
             } ) ),
             education:  education.map( education => ( {
                 degree: degreeUtils.getValueById( {
@@ -485,8 +485,8 @@ export default async ( opt ) => {
                 title:         publication.publicationI18n[ 0 ].title,
             } ) ),
             researchGroup: researchGroup.map( researchGroup => researchGroupUtils.getValueById( {
-                id: researchGroup.type,
-                language,
+                type:       researchGroup.type,
+                languageId: language,
             } ) ),
             specialty:     specialty.map( specialty => specialty.specialtyI18n[ 0 ].specialty ),
             studentAward:  studentAward.map( studentAward => ( {

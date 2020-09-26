@@ -87,11 +87,9 @@ router
 .route( '/faculty/:profileId' )
 .get( async ( req, res, next ) => {
     try {
-        const profileId = Number( req.params.profileId );
-        const language = req.query.languageId;
         const data = await getFacultyDetail( {
-            profileId,
-            language,
+            profileId: Number( req.params.profileId ),
+            language:  Number( req.query.languageId ),
         } );
 
         res.locals.UTILS.faculty = {

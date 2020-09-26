@@ -44,6 +44,7 @@ export default async ( opt ) => {
             error.status = 400;
             throw error;
         }
+
         const data = await Announcement.findOne( {
             attributes: [
                 'announcementId',
@@ -86,6 +87,14 @@ export default async ( opt ) => {
             error.status = 404;
             throw error;
         }
+
+        await Announcement.update( {
+            views: data.views + 1,
+        }, {
+            where: {
+                announcementId,
+            },
+        } );
 
         const files = await File.findAll( {
             attributes: [
