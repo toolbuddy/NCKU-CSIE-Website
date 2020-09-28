@@ -71,7 +71,7 @@ export default class ProfileDataManagement {
     }
 
     queryApi ( languageId ) {
-        return `${ host }/api/staff/staffWithId/${ this.config.profileId }?languageId=${ languageId }`;
+        return `${ host }/user/staff/staffWithId/${ this.config.profileId }?languageId=${ languageId }`;
     }
 
     async fetchData ( languageId ) {

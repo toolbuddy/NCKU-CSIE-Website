@@ -40,7 +40,7 @@ catch ( err ) {
 }
 try {
     const newPwdDOM = document.getElementById( 'form__passwordNew' );
-    const checkPwdDOM = document.getElementById( 'form__passwordCheck' );
+    const checkPwdDOM = document.getElementById( 'form__passwordConfirm' );
     const errorDOM    = document.getElementById( 'error' );
     document.getElementById( 'form__submit' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();
