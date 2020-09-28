@@ -16,7 +16,7 @@ export default {
      * In production, this option should be `devtool: false`.
      */
 
-    devtool: isDevMode ? 'inline-sourcemap' : false,
+    devtool: isDevMode ? 'eval-cheap-module-source-map' : false,
 
     /**
      * Bundle mode.

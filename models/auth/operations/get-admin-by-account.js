@@ -16,12 +16,8 @@ import ValidateUtils from 'models/common/utils/validate.js';
  *
  */
 
-export default async ( opt ) => {
+export default async ( account ) => {
     try {
-        const {
-            account = null,
-        } = opt || {};
-
         if ( !ValidateUtils.isValidString( account ) ) {
             const error = new Error( 'invalid account' );
             error.status = 400;
@@ -34,9 +30,6 @@ export default async ( opt ) => {
                 'account',
                 'password',
                 'role',
-                'sid',
-                'isValid',
-                'name',
                 'roleId',
             ],
             where: {
@@ -54,9 +47,6 @@ export default async ( opt ) => {
             account:    data.account,
             password:   data.password,
             role:       data.role,
-            sid:        data.sid,
-            isValid:    data.isValid,
-            name:       data.name,
             roleId:     data.roleId,
         };
     }

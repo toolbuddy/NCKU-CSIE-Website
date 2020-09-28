@@ -15,10 +15,6 @@ const Session = user.define( 'session', {
         type:       Sequelize.TEXT,
         allowNull:  true,
     },
-    userId: {
-        type:      Sequelize.INTEGER.UNSIGNED,
-        allowNull:  true,
-    },
 } );
 
 export default Session;

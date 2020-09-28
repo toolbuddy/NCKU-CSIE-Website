@@ -22,20 +22,6 @@ const Admin = user.define( 'admin', {
         allowNull:    false,
         defaultValue: '0',
     },
-    sid: {
-        type:       Sequelize.STRING( 45 ),
-        allowNull:  true,
-        unique:    true,
-    },
-    isValid: {
-        type:         Sequelize.TINYINT.UNSIGNED,
-        allowNull:    false,
-        defaultValue: '1',
-    },
-    name: {
-        type:       Sequelize.STRING( 20 ),
-        allowNull:    false,
-    },
     roleId: {
         type:         Sequelize.INTEGER.UNSIGNED,
         allowNull:    false,

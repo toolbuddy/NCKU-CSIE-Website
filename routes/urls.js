@@ -14,8 +14,8 @@
 import path from 'path';
 
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
+import SequelizeStore from 'connect-session-sequelize';
 
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
@@ -32,18 +32,23 @@ import user from 'routes/user.js';
 
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
-import { host, staticHost, projectRoot, secret, } from 'settings/server/config.js';
+import { host, staticHost, projectRoot, secret, maxAge, } from 'settings/server/config.js';
 import LanguageUtils from 'models/common/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
-const app = express();
+import databases from 'models/common/utils/connect.js';
 
-app.use( cookieParser() );
+const app = express();
+const SessionStore = SequelizeStore( expressSession.Store );
 
 app.use( expressSession( {
+    store: new SessionStore( {
+        db:    databases.user,
+        table: 'session',
+    } ),
     cookie: {
-        maxAge:   7 * 24 * 60 * 60 * 1000,
+        maxAge,
         path:     '/',
         httpOnly: true,
         sameSite: 'lax',
@@ -94,9 +99,6 @@ app.use( ( req, res, next ) => {
     };
     next();
 } );
-
-
-// App.use( checkSession );
 
 /**
  * Resolve URL `/`.
