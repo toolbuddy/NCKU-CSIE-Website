@@ -169,7 +169,7 @@ append content
   if data.profile.name !== null
     section.content__profile.profile
       figure.profile__photo-container.photo-container
-        if data.profile.photo !== null
+        if data.profile.photo.length !== 0
           img(
             alt   = data.profile.name,
             class = 'photo-container__photo',
@@ -179,7 +179,7 @@ append content
           +image( {
             alt: data.profile.name,
             className: 'photo-container__photo',
-            src: `faculty/no-photo.png`,
+            src: `icon/user.png`,
           } )
 
       //- Faculty's information.

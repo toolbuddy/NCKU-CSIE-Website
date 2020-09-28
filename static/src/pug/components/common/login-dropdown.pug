@@ -1,72 +1,80 @@
 //- Header Login Dropdown template module.
 -
-    const i18n = Object.freeze( {
-      [ LANG.getLanguageId( 'en-US' ) ]: {
-        profile: {
-                text: 'Edit Profile',
-                route: UTILS.url({
-                    href: 'user/profile',
-                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
-                }),
-            },
-            logout: {
-                text: 'Log Out',
-                route: UTILS.url({
-                    href: 'auth/logout',
-                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
-                }),
-            },
-            password: {
-                text: 'Update Password',
-                route: UTILS.url({
-                    href: '/',
-                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
-                }),
-            },
-            addAnnouncement: {
-                text: 'Add Announcement',
-                route: UTILS.url({
-                    href: 'user/announcement/add',
-                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
-                }),
-            }
+  const i18n = Object.freeze( {
+    [ LANG.getLanguageId( 'en-US' ) ]: {
+      profile: {
+        text: 'Edit Profile',
+        route: UTILS.url({
+          href: 'user/profile',
+          query: { languageId: LANG.getLanguageId( 'en-US' ) },
+        }),
       },
-      [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        profile: {
-                text: '個人資料維護',
-                route: UTILS.url({
-                    href: 'user/profile',
-                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-                }),
-            },
-            logout: {
-                text: '登出',
-                route: UTILS.url({
-                    href: 'auth/logout',
-                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-                }),
-            },
-            password: {
-                text: '密碼管理',
-                route: UTILS.url({
-                    href: '',
-                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-                }),
-            },
-            addAnnouncement: {
-                text: '新增公告',
-                route: UTILS.url({
-                    href: 'user/announcement/add',
-                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-                }),
-            }
+      logout: {
+        text: 'Log Out',
+        route: UTILS.url({
+          href: 'auth/logout',
+            query: { languageId: LANG.getLanguageId( 'en-US' ) },
+          }),
+        },
+        password: {
+          text: 'Update Password',
+          route: UTILS.url({
+          href: '/',
+          query: { languageId: LANG.getLanguageId( 'en-US' ) },
+        }),
       },
-    } );
-img(
+      addAnnouncement: {
+        text: 'Add Announcement',
+        route: UTILS.url({
+          href: 'user/announcement/add',
+          query: { languageId: LANG.getLanguageId( 'en-US' ) },
+        }),
+      }
+    },
+    [ LANG.getLanguageId( 'zh-TW' ) ]: {
+      profile: {
+        text: '個人資料維護',
+        route: UTILS.url({
+          href: 'user/profile',
+          query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+        }),
+      },
+      logout: {
+        text: '登出',
+        route: UTILS.url({
+          href: 'auth/logout',
+          query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+        }),
+      },
+      password: {
+        text: '密碼管理',
+        route: UTILS.url({
+          href: '',
+          query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+        }),
+      },
+      addAnnouncement: {
+        text: '新增公告',
+        route: UTILS.url({
+          href: 'user/announcement/add',
+          query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+        }),
+      }
+    },
+  } );
+include /components/common/image.pug
+if photo.length > 0
+  img(
     alt   = `${ name }`,
     class = `${ belongBlock }__image ${ belongBlock }__image--personal`,
     src   = `data:image/jpeg;base64,${ photo }`,
-)
+  )
+else
+  +image( {
+    alt:       `${ name }`,
+    className: `${ belongBlock }__image ${ belongBlock }__image--personal`,
+    src: `icon/user.png`,
+  } )
 span.login__text= name
 button.login__switch
 ul.login__dropdown.dropdown
