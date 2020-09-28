@@ -336,7 +336,7 @@ export default class AnnouncementEvent {
         .then( async ( data ) => {
             fetch( `${ host }/user/id`, {
                 credentials: 'include',
-                method:      'post',
+                method:      'get',
             } )
             .then( async res => res.json() )
             .then( async ( res ) => {

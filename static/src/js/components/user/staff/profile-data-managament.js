@@ -264,7 +264,7 @@ export default class ProfileDataManagement {
     async exec () {
         fetch( `${ host }/user/id`, {
             credentials: 'include',
-            method:      'post',
+            method:      'get',
         } )
         .then( res => res.json() )
         .then( ( res ) => {
