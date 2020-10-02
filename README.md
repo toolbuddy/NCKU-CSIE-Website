@@ -1,4 +1,4 @@
-# NCKU CSIE Website
+# NCKU CSIE An Amazing Website
 Build a better website for NCKU CSIE.
 
 ## Installation & Setup
