@@ -116,12 +116,13 @@ export default class GetHeaderLarge {
 
     async renderLogin () {
         try {
-            const result = await this.fetchData( 'user/id', {
+            fetch( `${ host }/user/id`, {
                 credentials: 'include',
-                method:      'post',
-            } );
-            if ( result.userId > -1 ) {
-                const data = await this.fetchMiniProfileData( result.userId );
+                method:      'get',
+            } )
+            .then( res => res.json() )
+            .then( async ( result ) => {
+                const data = await this.fetchMiniProfileData();
                 if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
                     this.DOM.login.innerHTML = loginButtonHTML( {
                         name:        data.name,
@@ -156,7 +157,10 @@ export default class GetHeaderLarge {
                     },
                     'login' );
                 }
-            }
+            } )
+            .catch( ( err ) => {
+                console.error( err );
+            } );
         }
         catch ( err ) {
             console.error( err );
@@ -177,9 +181,9 @@ export default class GetHeaderLarge {
         }
     }
 
-    async fetchMiniProfileData ( id ) {
+    async fetchMiniProfileData () {
         try {
-            const res = await fetch( `${ this.host }/api/user/miniProfile/${ id }?languageId=${ this.languageId }`, {
+            const res = await fetch( `${ this.host }/user/miniProfile?languageId=${ this.languageId }`, {
                 credentials: 'include',
             } );
 
