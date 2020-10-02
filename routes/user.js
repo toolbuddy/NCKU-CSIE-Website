@@ -1,5 +1,6 @@
 /**
  * Router module for route `/user`.
+ * This route could only be accessed by authenticated users.
  *
  * Including following sub-routes:
  * - `/user`
@@ -20,7 +21,6 @@
  */
 
 import express from 'express';
-import cors from 'cors';
 import bcrypt from 'bcrypt';
 import multer from 'multer';
 
@@ -78,11 +78,12 @@ router
 
 /**
  * Resolve URL `/user/id`.
+ * For frontend to get user's session data.
  */
 
 router
 .route( '/id' )
-.get( cors(), ( req, res ) => {
+.post( ( req, res ) => {
     res.json( {
         role:   req.session.user.role,
         roleId: req.session.user.roleId,
@@ -91,22 +92,22 @@ router
 
 /**
  * Resolve URL `/user/miniProfile`.
- * Used for toolbar content.
+ * For frontend to render toolbar.
  */
 
 router
 .route( '/miniProfile' )
-.get( cors(), async ( req, res ) => {
+.get( async ( req, res, next ) => {
     try {
         if ( req.session.user.role === roleUtils.getIdByOption( 'faculty' ) ) {
             res.json( await getFacultyMiniProfile( {
-                profileId:  req.session.user.roleId,
+                profileId: req.session.user.roleId,
                 language:  Number( req.query.languageId ),
             } ) );
         }
         else if ( req.session.user.role === roleUtils.getIdByOption( 'staff' ) ) {
             res.json( await getStaffMiniProfile( {
-                profileId:  req.session.user.roleId,
+                profileId: req.session.user.roleId,
                 language:  Number( req.query.languageId ),
             } ) );
         }
@@ -116,9 +117,8 @@ router
             throw error;
         }
     }
-    catch ( err ) {
-        console.error( err );
-        res.send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } );
 
@@ -129,7 +129,7 @@ router
 
 router
 .route( '/profile' )
-.get( cors(), noCache, async ( req, res ) => {
+.get( noCache, ( req, res ) => {
     if ( req.session.user.role === roleUtils.getIdByOption( 'faculty' ) )
         res.redirect( '/user/faculty/profile' );
     else if ( req.session.user.role === roleUtils.getIdByOption( 'staff' ) )
@@ -140,37 +140,46 @@ router
 
 /**
  * Resolve URL `/user/faculty/profile`
+ * For teacher to manage his / her profile detail.
  */
 
 router
 .route( '/faculty/profile' )
-.get( cors(), noCache, async ( req, res ) => {
-    const data = await getFacultyDetailWithId( {
-        profileId:  req.session.user.roleId,
-        language:  req.query.languageId,
-    } );
-
-    res.locals.UTILS.faculty = {
-        departmentUtils,
-        researchGroupUtils,
-        degreeUtils,
-        nationUtils,
-    };
-
-    await new Promise( ( resolve, reject ) => {
-        res.render( 'user/faculty/profile.pug', {
-            data,
-        }, ( err, html ) => {
-            if ( err )
-                reject( err );
-            else {
-                res.send( html );
-                resolve();
-            }
+.get( noCache, async ( req, res, next ) => {
+    try {
+        const data = await getFacultyDetailWithId( {
+            profileId: req.session.user.roleId,
+            language:  req.query.languageId,
         } );
-    } );
+
+        res.locals.UTILS.faculty = {
+            departmentUtils,
+            researchGroupUtils,
+            degreeUtils,
+            nationUtils,
+        };
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/faculty/profile.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( error ) {
+        if ( error.status === 404 )
+            next();
+        else
+            next( error );
+    }
 } )
-.post( urlEncoded, jsonParser, async ( req, res ) => {
+.post( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
@@ -183,12 +192,11 @@ router
 
         res.send( await addFacultyDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.patch( urlEncoded, jsonParser, async ( req, res ) => {
+.patch( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
@@ -200,12 +208,11 @@ router
         }
         res.send( await updateFacultyDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.put( cors(), upload.single( 'file' ), async ( req, res ) => {
+.put( upload.single( 'file' ), async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
@@ -226,12 +233,11 @@ router
             i18n: [],
         } ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.delete( urlEncoded, jsonParser, async ( req, res ) => {
+.delete( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
@@ -244,9 +250,8 @@ router
 
         res.send( await deleteFacultyDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } );
 
@@ -256,7 +261,7 @@ router
 
 router
 .route( '/faculty/award' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -276,11 +281,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -290,7 +295,7 @@ router
 
 router
 .route( '/faculty/project' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -314,11 +319,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -328,7 +333,7 @@ router
 
 router
 .route( '/faculty/patent' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -352,11 +357,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -366,7 +371,7 @@ router
 
 router
 .route( '/faculty/conference' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -386,11 +391,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -400,7 +405,7 @@ router
 
 router
 .route( '/faculty/student-award' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -424,11 +429,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -438,7 +443,7 @@ router
 
 router
 .route( '/faculty/publication' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -462,11 +467,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -476,7 +481,7 @@ router
 
 router
 .route( '/faculty/technology-transfer' )
-.get( cors(), noCache, async ( req, res, next ) => {
+.get( noCache, async ( req, res, next ) => {
     try {
         const data = await getFacultyDetailWithId( {
             profileId: req.session.user.roleId,
@@ -496,11 +501,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -510,26 +515,34 @@ router
 
 router
 .route( '/staff/profile' )
-.get( cors(), noCache, async ( req, res ) => {
-    const data = await getStaffDetailWithId( {
-        profileId: req.session.user.roleId,
-        language:  req.query.languageId,
-    } );
-
-    await new Promise( ( resolve, reject ) => {
-        res.render( 'user/staff/profile.pug', {
-            data,
-        }, ( err, html ) => {
-            if ( err )
-                reject( err );
-            else {
-                res.send( html );
-                resolve();
-            }
+.get( noCache, async ( req, res, next ) => {
+    try {
+        const data = await getStaffDetailWithId( {
+            profileId: req.session.user.roleId,
+            language:  req.query.languageId,
         } );
-    } );
+
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/staff/profile.pug', {
+                data,
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( error ) {
+        if ( error.status === 404 )
+            next();
+        else
+            next( error );
+    }
 } )
-.post( urlEncoded, jsonParser, async ( req, res ) => {
+.post( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
@@ -542,12 +555,11 @@ router
 
         res.send( await addStaffDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.patch( urlEncoded, jsonParser, async ( req, res ) => {
+.patch( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
@@ -560,12 +572,11 @@ router
 
         res.send( await updateStaffDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.put( cors(), upload.single( 'file' ), async ( req, res ) => {
+.put( upload.single( 'file' ), async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
@@ -586,12 +597,11 @@ router
             i18n: [],
         } ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } )
-.delete( urlEncoded, jsonParser, async ( req, res ) => {
+.delete( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
@@ -604,20 +614,20 @@ router
 
         res.send( await deleteStaffDetail( req.body ) );
     }
-    catch ( err ) {
-        console.error( err );
-        res.status( 500 ).send( { err, } );
+    catch ( error ) {
+        next( error );
     }
 } );
 
 /**
  * Resolve URL `/user/announcement`.
+ * For user to manage announcements.
  */
 
 router
 .route( '/announcement' )
 .get( staticHtml( 'user/announcement/index' ) )
-.post( cors(), upload.array( 'files' ), async ( req, res ) => {
+.post( upload.array( 'files' ), async ( req, res, next ) => {
     try {
         req.body.files = req.files.map( file => ( {
             name:    file.originalname,
@@ -626,11 +636,10 @@ router
         res.send( await postAnnouncement( req.body ) );
     }
     catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
+        next( error );
     }
 } )
-.put( cors(), upload.array( 'addedFiles' ), async ( req, res ) => {
+.put( upload.array( 'addedFiles' ), async ( req, res, next ) => {
     try {
         req.body.addedFiles = req.files.map( file => ( {
             name:    file.originalname,
@@ -639,26 +648,23 @@ router
         res.send( await updateAnnouncement( req.body ) );
     }
     catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
+        next( error );
     }
 } )
-.patch( urlEncoded, jsonParser, async ( req, res ) => {
+.patch( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         res.send( await pinAnnouncement( req.body ) );
     }
     catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
+        next( error );
     }
 } )
-.delete( urlEncoded, jsonParser, async ( req, res ) => {
+.delete( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         res.send( await deleteAnnouncements( req.body ) );
     }
     catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
+        next( error );
     }
 } );
 
@@ -700,11 +706,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
@@ -715,7 +721,7 @@ router
 router
 .route( '/resetPassword' )
 .get( staticHtml( 'user/resetPassword' ) )
-.post( urlEncoded, jsonParser, async ( req, res ) => {
+.post( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const user = await getAdminByAccount( req.session.user.account );
         if ( !await bcrypt.compare( req.body.oldPassword, user.password ) ) {
@@ -736,8 +742,7 @@ router
         } ) );
     }
     catch ( error ) {
-        console.error( error );
-        res.status( error.status ).send( error.message );
+        next( error );
     }
 } );
 

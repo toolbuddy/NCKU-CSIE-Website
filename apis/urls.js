@@ -1,12 +1,14 @@
 /**
- * API router middleware module for `express`.
+ * API router middleware module for `/api`.
  *
  * Including following sub-routing modules:
  * - announcement: `/api/announcement`
  * - faculty:      `/api/faculty`
+ * - staff:        `/api/staff`
  */
 
 import express from 'express';
+import cors from 'cors';
 
 import announcement from 'apis/announcement.js';
 import faculty from 'apis/faculty.js';
@@ -21,13 +23,15 @@ const apis = express();
 
 apis.use( ( req, {}, next ) => {
     if ( !req.accepts( 'json' ) ) {
-        const error = new Error();
+        const error = new Error( 'Response will be in json format only.' );
         error.status = 406;
         next( error );
         return;
     }
     next();
 } );
+
+apis.use( cors() );
 
 /**
  * Resolve URL `/api/announcement`.
@@ -49,16 +53,15 @@ apis.use( '/staff', staff );
 
 apis.use( ( {}, res, {} ) => {
     res.status( 404 ).json( {
-        error: 'request api not found',
+        error: 'Request api not found.',
     } );
 } );
 
-apis.use( ( err, {}, res, {} ) => {
-    const status = err.status || 500;
-    if ( err.message !== '' )
-        res.status( status ).json( { error: err.message, } );
-    else
-        res.sendStatus( status );
+apis.use( ( error, {}, res, {} ) => {
+    console.error( error );
+    res.status( error.status || 500 ).json( {
+        error: error.message,
+    } );
 } );
 
 export default apis;

@@ -7,9 +7,8 @@
  * - `/static/image`
  */
 
-import path from 'path';
-
 import express from 'express';
+import path from 'path';
 
 import { projectRoot, maxAge, } from 'settings/server/config.js';
 

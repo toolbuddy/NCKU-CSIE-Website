@@ -1,5 +1,19 @@
+/**
+ * API router middleware module for `/api/announcement`.
+ *
+ * Including following sub-routing modules:
+ * - `/api/announcement/get-announcements-by-and-tags`
+ * - `/api/announcement/get-announcements-by-or-tags`
+ * - `/api/announcement/get-pinned-announcements-by-and-tags`
+ * - `/api/announcement/get-pinned-announcements-by-or-tags`
+ * - `/api/announcement/get-pages-by-and-tags`
+ * - `/api/announcement/get-pages-by-or-tags`
+ * - `/api/announcement/get-hot-announcements`
+ * - `/api/announcement/get-tv-announcements`
+ * - `/api/announcement/[id]`
+ */
+
 import express from 'express';
-import cors from 'cors';
 
 import getAnnouncementsByAndTags from 'models/announcement/operations/get-announcements-by-and-tags.js';
 import getAnnouncementsByOrTags from 'models/announcement/operations/get-announcements-by-or-tags.js';
@@ -13,7 +27,11 @@ import getAnnouncement from 'models/announcement/operations/get-announcement.js'
 
 const apis = express.Router();
 
-apis.get( '/get-announcements-by-and-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-announcements-by-and-tags`.
+ */
+
+apis.get( '/get-announcements-by-and-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -34,7 +52,11 @@ apis.get( '/get-announcements-by-and-tags', cors(), async ( req, res, next ) => 
     }
 } );
 
-apis.get( '/get-announcements-by-or-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-announcements-by-or-tags`.
+ */
+
+apis.get( '/get-announcements-by-or-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -55,7 +77,11 @@ apis.get( '/get-announcements-by-or-tags', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pinned-announcements-by-and-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-pinned-announcements-by-and-tags`.
+ */
+
+apis.get( '/get-pinned-announcements-by-and-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -74,7 +100,11 @@ apis.get( '/get-pinned-announcements-by-and-tags', cors(), async ( req, res, nex
     }
 } );
 
-apis.get( '/get-pinned-announcements-by-or-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-pinned-announcements-by-or-tags`.
+ */
+
+apis.get( '/get-pinned-announcements-by-or-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -93,7 +123,11 @@ apis.get( '/get-pinned-announcements-by-or-tags', cors(), async ( req, res, next
     }
 } );
 
-apis.get( '/get-pages-by-and-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-pages-by-and-tags`.
+ */
+
+apis.get( '/get-pages-by-and-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -112,7 +146,11 @@ apis.get( '/get-pages-by-and-tags', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-pages-by-or-tags', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-pages-by-or-tags`.
+ */
+
+apis.get( '/get-pages-by-or-tags', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -131,7 +169,11 @@ apis.get( '/get-pages-by-or-tags', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-hot-announcements', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-hot-announcements`.
+ */
+
+apis.get( '/get-hot-announcements', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -152,7 +194,11 @@ apis.get( '/get-hot-announcements', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/get-tv-announcements', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/get-tv-announcements`.
+ */
+
+apis.get( '/get-tv-announcements', async ( req, res, next ) => {
     try {
         let tags = req.query.tags || [];
         if ( !Array.isArray( tags ) )
@@ -170,7 +216,11 @@ apis.get( '/get-tv-announcements', cors(), async ( req, res, next ) => {
     }
 } );
 
-apis.get( '/:announcementId', cors(), async ( req, res, next ) => {
+/**
+ * Resolve URL `/api/announcement/[id]`.
+ */
+
+apis.get( '/:announcementId', async ( req, res, next ) => {
     try {
         res.json( await getAnnouncement( {
             announcementId: Number( req.params.announcementId ),

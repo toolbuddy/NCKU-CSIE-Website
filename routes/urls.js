@@ -1,10 +1,12 @@
 /**
- * Router middleware module for `express`.
+ * Router middleware module for `/`.
  *
  * Including following sub-routing modules:
  * - home:         `/`
  * - about:        `/about`
  * - announcement: `/announcement`
+ * - auth:         `/auth`
+ * - developer:    `/developer`
  * - research:     `/research`
  * - resource:     `/resource`
  * - student:      `/student`
@@ -12,36 +14,77 @@
  */
 
 import path from 'path';
-
 import express from 'express';
 import expressSession from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 
+import { host, maxAge, projectRoot, secret, staticHost, } from 'settings/server/config.js';
+import language from 'routes/utils/language.js';
+import staticHtml from 'routes/utils/static-html.js';
+import staticFile from 'routes/static.js';
+import UrlUtils from 'static/src/js/utils/url.js';
+import LanguageUtils from 'models/common/utils/language.js';
+import ValidateUtils from 'models/common/utils/validate.js';
+import databases from 'models/common/utils/connect.js';
+
+import home from 'routes/home.js';
 import about from 'routes/about.js';
 import announcement from 'routes/announcement.js';
 import auth from 'routes/auth.js';
-import home from 'routes/home.js';
-import language from 'routes/utils/language.js';
+import developer from 'routes/developer.js';
 import research from 'routes/research.js';
 import resource from 'routes/resource.js';
-import staticFile from 'routes/static.js';
-import staticHtml from 'routes/utils/static-html.js';
 import student from 'routes/student.js';
-import developer from 'routes/developer.js';
 import user from 'routes/user.js';
 
-import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
-
-import { host, staticHost, projectRoot, secret, maxAge, } from 'settings/server/config.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import UrlUtils from 'static/src/js/utils/url.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-
-import databases from 'models/common/utils/connect.js';
-
 const app = express();
-const SessionStore = SequelizeStore( expressSession.Store );
 
+/**
+ * Setup language option.
+ */
+
+app.use( language );
+
+/**
+ * Set HTML template engine.
+ */
+
+app.locals.basedir = path.join( projectRoot, '/static/src/pug' );
+app.set( 'view engine', 'pug' );
+app.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
+
+/**
+ * Setup static files routes.
+ */
+
+app.use( '/static', staticFile );
+
+/**
+ * Set variables for frontend to render page.
+ */
+
+app.use( ( req, res, next ) => {
+    res.locals.SERVER = {
+        host,
+        staticHost,
+    };
+    res.locals.LANG = {
+        id:            req.query.languageId,
+        getLanguageId: LanguageUtils.getLanguageId,
+    };
+    res.locals.UTILS = {
+        url:       UrlUtils.serverUrl( new UrlUtils( host, req.query.languageId ) ),
+        staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, req.query.languageId ) ),
+        ValidateUtils,
+    };
+    next();
+} );
+
+/**
+ * Setup session store
+ */
+
+const SessionStore = SequelizeStore( expressSession.Store );
 app.use( expressSession( {
     store: new SessionStore( {
         db:    databases.user,
@@ -64,43 +107,6 @@ app.use( expressSession( {
 } ) );
 
 /**
- * Set HTML template engine.
- */
-
-app.locals.basedir = path.join( projectRoot, '/static/src/pug' );
-app.set( 'view engine', 'pug' );
-app.set( 'views', path.join( projectRoot, '/static/src/pug' ) );
-
-/**
- * Setup language option.
- */
-
-app.use( language );
-
-/**
- * Setup static files routes.
- */
-
-app.use( '/static', urlEncoded, jsonParser, staticFile );
-
-app.use( ( req, res, next ) => {
-    res.locals.SERVER = {
-        host,
-        staticHost,
-    };
-    res.locals.LANG = {
-        id:            req.query.languageId,
-        getLanguageId: LanguageUtils.getLanguageId,
-    };
-    res.locals.UTILS = {
-        url:       UrlUtils.serverUrl( new UrlUtils( host, req.query.languageId ) ),
-        staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, req.query.languageId ) ),
-        ValidateUtils,
-    };
-    next();
-} );
-
-/**
  * Resolve URL `/`.
  */
 
@@ -110,7 +116,7 @@ app.use( '/', home );
  * Resolve URL `/about`.
  */
 
-app.use( '/about', urlEncoded, jsonParser, about );
+app.use( '/about', about );
 
 /**
  * Resolve URL `/announcement`.
@@ -122,31 +128,31 @@ app.use( '/announcement', announcement );
  * Resolve URL `/auth`.
  */
 
-app.use( '/auth', urlEncoded, jsonParser, auth );
-
-/**
- * Resolve URL `/research`.
- */
-
-app.use( '/research', urlEncoded, jsonParser, research );
-
-/**
- * Resolve URL `/resource`.
- */
-
-app.use( '/resource', urlEncoded, jsonParser, resource );
-
-/**
- * Resolve URL `/student`.
- */
-
-app.use( '/student', urlEncoded, jsonParser, student );
+app.use( '/auth', auth );
 
 /**
  * Resolve URL `/developer`.
  */
 
-app.use( '/developer', urlEncoded, jsonParser, developer );
+app.use( '/developer', developer );
+
+/**
+ * Resolve URL `/research`.
+ */
+
+app.use( '/research', research );
+
+/**
+ * Resolve URL `/resource`.
+ */
+
+app.use( '/resource', resource );
+
+/**
+ * Resolve URL `/student`.
+ */
+
+app.use( '/student', student );
 
 /**
  * Resolve URL `/user`.
@@ -161,9 +167,5 @@ app.use(
     },
     staticHtml( 'error/404' )
 );
-
-app.use( ( err, {}, res, {} ) => {
-    res.sendStatus( 500 );
-} );
 
 export default app;

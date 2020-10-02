@@ -6,9 +6,9 @@ import compression from 'compression';
 
 import { port, } from 'settings/server/config.js';
 import contentSecurityPolicy from 'settings/server/content-security-policy.js';
+
 import csie from 'routes/urls.js';
 import apis from 'apis/urls.js';
-import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 /**
  * Create HTTP server instance.
@@ -63,7 +63,7 @@ server.use( compression() );
  * Setup web api routes.
  */
 
-server.use( '/api', urlEncoded, jsonParser, apis );
+server.use( '/api', apis );
 
 /**
  * Setup web page routes.
@@ -76,9 +76,8 @@ server.use( '/', csie );
  */
 
 server.use(
-    ( err, {}, res, {} ) => {
-        const status = err.status || 500;
-        res.sendStatus( status );
-        console.error( 'still get fuck' );
+    ( error, {}, res, {} ) => {
+        console.error( error );
+        res.status( error.status || 500 ).send( error.message );
     }
 );

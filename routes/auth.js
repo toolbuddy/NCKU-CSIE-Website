@@ -5,16 +5,15 @@
  * - `/auth/login`
  * - `/auth/logout`
  * - `/auth/report`
- * - `/auth/reset-password`
  */
 
 import express from 'express';
 import bcrypt from 'bcrypt';
-import cors from 'cors';
 
-import staticHtml from 'routes/utils/static-html.js';
-import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
 import { projectRoot, maxAge, } from 'settings/server/config.js';
+import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
+
+import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -51,12 +50,11 @@ router
         else
             res.redirect( '/index' );
     }
-    catch ( err ) {
-        console.error( err );
-        throw err;
+    catch ( error ) {
+        next( error );
     }
 } )
-.post( cors(), async ( req, res ) => {
+.post( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const user = await getAdminByAccount( req.body.account );
         if ( !await bcrypt.compare( req.body.password, user.password ) ) {
@@ -68,13 +66,11 @@ router
         delete req.session.user.password;
         res.redirect( '/index' );
     }
-    catch ( err ) {
-        console.error( err );
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
-        throw error;
+    catch ( error ) {
+        if ( error.status === 404 )
+            next();
+        else
+            next( error );
     }
 } );
 
@@ -84,7 +80,7 @@ router
 
 router
 .route( '/logout' )
-.get( cors(), async ( req, res ) => {
+.get( ( req, res, next ) => {
     try {
         req.session.destroy( ( err ) => {
             if ( err ) {
@@ -95,12 +91,8 @@ router
             res.redirect( '/index' );
         } );
     }
-    catch ( err ) {
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
-        throw error;
+    catch ( error ) {
+        next( error );
     }
 } );
 
@@ -111,7 +103,7 @@ router
 router
 .route( '/report' )
 .all( ( { }, { }, next ) => {
-    console.error( 'here' );
+    console.error( 'Halmet caught error' );
     next();
 } )
 .post( ( req, res ) => {
@@ -120,11 +112,3 @@ router
 } );
 
 export default router;
-
-/**
- * Resolve URL `/auth/reset-password`.
- */
-
-router
-.route( '/reset-password' )
-.get( staticHtml( 'auth/reset-password' ) );

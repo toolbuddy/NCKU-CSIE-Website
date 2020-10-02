@@ -9,7 +9,6 @@
 import express from 'express';
 
 import staticHtml from 'routes/utils/static-html.js';
-import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -26,7 +25,7 @@ router
     '/',
     '/index',
 ] )
-.get( urlEncoded, jsonParser, staticHtml( 'home/index' ) );
+.get( staticHtml( 'home/index' ) );
 
 /**
  * Resolve URL `/search`.
@@ -34,7 +33,9 @@ router
 
 router
 .route( '/search' )
-.get( urlEncoded, jsonParser, staticHtml( 'home/search' ) )
-.post( urlEncoded, jsonParser, staticHtml( 'home/search' ) );
+.get( staticHtml( 'home/search' ) );
+
+// TODO: implement this route
+// .post( urlEncoded, jsonParser, (req, res, next) => {} );
 
 export default router;

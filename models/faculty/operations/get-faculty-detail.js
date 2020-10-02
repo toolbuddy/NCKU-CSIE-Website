@@ -1,3 +1,26 @@
+/**
+ * A function for getting a specific teacher's profile in detail in specific languages by the profile id.
+ *
+ * @async
+ * @param {number} [language = defaultValue.language] - Language option of the profile.
+ * @param {number} [profileId]                        - Id of the requested profile.
+ * @returns {object}                                  - Related information of the requested profile, including:
+ * - award
+ * - conference
+ * - department
+ * - education
+ * - experience
+ * - patent
+ * - personal information
+ * - project
+ * - publication
+ * - researchGroup
+ * - specialty
+ * - studentAward
+ * - technologyTransfer
+ * - title.
+ */
+
 import LanguageUtils from 'models/common/utils/language.js';
 import degreeUtils from 'models/faculty/utils/degree.js';
 import departmentUtils from 'models/faculty/utils/department.js';
@@ -46,12 +69,12 @@ export default async ( opt ) => {
         } = opt;
 
         if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+            const error = new Error( 'Invalid language id' );
             error.status = 400;
             throw error;
         }
         if ( !ValidateUtils.isValidId( profileId ) ) {
-            const error = new Error( 'invalid profile id' );
+            const error = new Error( 'Invalid profile id' );
             error.status = 400;
             throw error;
         }
@@ -403,7 +426,7 @@ export default async ( opt ) => {
          */
 
         if ( !profile ) {
-            const error = new Error( 'profile not found' );
+            const error = new Error( 'Profile not found' );
             error.status = 404;
             throw error;
         }
@@ -515,11 +538,9 @@ export default async ( opt ) => {
             } ) ),
         };
     }
-    catch ( err ) {
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
+    catch ( error ) {
+        if ( !error.status )
+            error.status = 500;
         throw error;
     }
 };

@@ -1,30 +1,27 @@
-import {
-    Admin,
-} from 'models/auth/operations/associations.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function for getting a specific user's data by his / her account.
  *
- * @async
- * @param {string} [account]                   - account of the user.
- * @returns {object}                           Related information of the requested announcement, including:
- * - sid
- * - expires
- * - data
+ * @param {string} [account] - Account of the user.
+ * @returns {object}         - Related information of the user, including:
  * - userId
- *
+ * - account
+ * - password
+ * - role
+ * - roleId.
  */
 
-export default async ( account ) => {
+import ValidateUtils from 'models/common/utils/validate.js';
+import { Admin, } from 'models/auth/operations/associations.js';
+
+export default ( account ) => {
     try {
         if ( !ValidateUtils.isValidString( account ) ) {
-            const error = new Error( 'invalid account' );
+            const error = new Error( 'Invalid account' );
             error.status = 400;
             throw error;
         }
 
-        const data = await Admin.findOne( {
+        return Admin.findOne( {
             attributes: [
                 'userId',
                 'account',
@@ -35,26 +32,27 @@ export default async ( account ) => {
             where: {
                 account,
             },
+        } )
+        .then( ( data ) => {
+            if ( !data ) {
+                const error = new Error( 'User not found' );
+                error.status = 404;
+                throw error;
+            }
+            else {
+                return {
+                    userId:   data.userId,
+                    account:  data.account,
+                    password: data.password,
+                    role:     data.role,
+                    roleId:   data.roleId,
+                };
+            }
         } );
-
-        if ( !data ) {
-            const error = new Error( 'no result' );
-            error.status = 404;
-            throw error;
-        }
-        return {
-            userId:     data.userId,
-            account:    data.account,
-            password:   data.password,
-            role:       data.role,
-            roleId:     data.roleId,
-        };
     }
-    catch ( err ) {
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
+    catch ( error ) {
+        if ( !error.status )
+            error.status = 500;
         throw error;
     }
 };

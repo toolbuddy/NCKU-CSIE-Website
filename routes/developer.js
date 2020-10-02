@@ -16,14 +16,11 @@ const router = express.Router( {
 } );
 
 /**
- * Resolve URL `/`.
+ * Resolve URL `/developer`.
  */
 
 router
-.route( [
-    '/',
-] )
+.route( '/' )
 .get( staticHtml( 'developer/index' ) );
-
 
 export default router;

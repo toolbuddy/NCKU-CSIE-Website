@@ -9,8 +9,8 @@
  * - `/resource/ieet`
  * - `/resource/sitemap`
  * - `/resource/alumni`
+ * - `/resource/link`
  */
-
 
 import express from 'express';
 
@@ -47,7 +47,7 @@ router
 
 router
 .route( '/rent' )
-.get( ( req, res ) => {
+.get( ( {}, res ) => {
     res.redirect( 'http://www.csie.ncku.edu.tw/Class2014/' );
 } );
 
@@ -57,7 +57,7 @@ router
 
 router
 .route( '/fix' )
-.get( ( req, res ) => {
+.get( ( {}, res ) => {
     res.redirect( 'https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform' );
 } );
 
@@ -83,7 +83,7 @@ router
 
 router
 .route( '/alumni' )
-.get( ( req, res ) => {
+.get( ( {}, res ) => {
     res.redirect( 'http://www.csie.ncku.edu.tw/classmate/index.php' );
 } );
 

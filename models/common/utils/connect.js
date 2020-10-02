@@ -3,7 +3,7 @@
  */
 
 import Sequelize from 'sequelize';
-import config from 'settings/database/config.js';
+import { username, password, domainName, port, dialect, timezone, } from 'settings/database/config.js';
 
 /**
  * Connect web server to database `databaseName`.
@@ -17,15 +17,13 @@ import config from 'settings/database/config.js';
 
 const connect = databaseName => new Sequelize(
     databaseName,
-    config.username,
-    config.password,
+    username,
+    password,
     {
-        host:             config.domainName,
-        port:             config.port,
-        dialect:          config.dialect,
-
-        // For writing to database
-        timezone:         config.timezone,
+        host:             domainName,
+        port,
+        dialect,
+        timezone,
         operatorsAliases: false,
         logging:          false,
         define:           {
@@ -36,7 +34,6 @@ const connect = databaseName => new Sequelize(
             connectTimeout: 1000000,
             dateStrings:    true,
             typeCast ( field, next ) {
-                // For reading from database
                 if ( field.type === 'DATETIME' )
                     return field.string();
 
