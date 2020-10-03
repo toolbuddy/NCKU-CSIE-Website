@@ -226,6 +226,15 @@ export default class GetHeaderBase {
                 credentials: 'include',
                 method:      'get',
             } )
+            .then( ( res ) => {
+                if ( res.status !== 200 )
+                    throw new Error( res.status );
+                return res;
+            } )
+            .catch( ( err ) => {
+                if ( err !== 401 )
+                    console.error( err );
+            } )
             .then( res => res.json() )
             .then( async ( result ) => {
                 const data = await this.fetchMiniProfileData();

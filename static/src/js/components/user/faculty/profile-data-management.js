@@ -144,13 +144,10 @@ export default class ProfileDataManagement {
         } );
     }
 
-    queryApi ( languageId ) {
-        return `${ host }/user/faculty/facultyWithId/${ this.config.profileId }?languageId=${ languageId }`;
-    }
-
+    // eslint-disable-next-line
     async fetchData ( languageId ) {
         try {
-            const res = await fetch( this.queryApi( languageId ) );
+            const res = await fetch( `${ host }/user/profileWithId?languageId=${ languageId }` );
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
 
