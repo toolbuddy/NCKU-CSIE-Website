@@ -170,6 +170,20 @@ router
     }
 } );
 
+router
+.route( '/staff/staffWithId/:id' )
+.get( async ( req, res, next ) => {
+    try {
+        res.json( await getStaffDetailWithId( {
+            profileId: req.session.user.roleId,
+            language:  req.query.languageId,
+        } ) );
+    }
+    catch ( error ) {
+        next( error );
+    }
+} );
+
 /**
  * Resolve URL `/user/faculty/profile`
  * For teacher to manage his / her profile detail.
@@ -232,7 +246,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -248,7 +262,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -273,7 +287,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -595,13 +609,12 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
             throw error;
         }
-
         res.send( await updateStaffDetail( req.body ) );
     }
     catch ( error ) {
@@ -612,7 +625,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -637,7 +650,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
-            req.session.user.roleId !== req.body.data.profileId
+            req.session.user.roleId !== req.body.profileId
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
