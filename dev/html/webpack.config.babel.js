@@ -60,25 +60,25 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
 
     entry:   {
         // Route `about`
-        'about/award':          path.join( pugRoot, 'about/award.pug' ),
-        'about/contact':        path.join( pugRoot, 'about/contact.pug' ),
-        'about/faculty':        path.join( pugRoot, 'about/faculty.pug' ),
-        'about/index':          path.join( pugRoot, 'about/index.pug' ),
-        'about/intro':          path.join( pugRoot, 'about/intro.pug' ),
-        'about/staff':          path.join( pugRoot, 'about/staff.pug' ),
+        'about/award':   path.join( pugRoot, 'about/award.pug' ),
+        'about/contact': path.join( pugRoot, 'about/contact.pug' ),
+        'about/faculty': path.join( pugRoot, 'about/faculty.pug' ),
+        'about/index':   path.join( pugRoot, 'about/index.pug' ),
+        'about/intro':   path.join( pugRoot, 'about/intro.pug' ),
+        'about/staff':   path.join( pugRoot, 'about/staff.pug' ),
 
         // Route `announcement`
-        'announcement/activity':     path.join( pugRoot, 'announcement/activity.pug' ),
-        'announcement/all':          path.join( pugRoot, 'announcement/all.pug' ),
-        'announcement/index':        path.join( pugRoot, 'announcement/index.pug' ),
-        'announcement/recruitment':  path.join( pugRoot, 'announcement/recruitment.pug' ),
+        'announcement/activity':    path.join( pugRoot, 'announcement/activity.pug' ),
+        'announcement/all':         path.join( pugRoot, 'announcement/all.pug' ),
+        'announcement/index':       path.join( pugRoot, 'announcement/index.pug' ),
+        'announcement/recruitment': path.join( pugRoot, 'announcement/recruitment.pug' ),
 
         // Route `error`
         'error/404': path.join( pugRoot, 'error/404.pug' ),
 
         // Route `home`
-        'home/index':    path.join( pugRoot, 'home/index.pug' ),
-        'home/search':   path.join( pugRoot, 'home/search.pug' ),
+        'home/index':  path.join( pugRoot, 'home/index.pug' ),
+        'home/search': path.join( pugRoot, 'home/search.pug' ),
 
         // Route `research`
         'research/index':       path.join( pugRoot, 'research/index.pug' ),
@@ -96,25 +96,24 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
         'resource/link':    path.join( pugRoot, 'resource/link.pug' ),
 
         // Route `student`
-        'student/high-school':   path.join( pugRoot, 'student/high-school.pug' ),
-        'student/college':       path.join( pugRoot, 'student/college.pug' ),
-        'student/index':         path.join( pugRoot, 'student/index.pug' ),
-        'student/master':        path.join( pugRoot, 'student/master.pug' ),
-        'student/phd':           path.join( pugRoot, 'student/phd.pug' ),
+        'student/high-school': path.join( pugRoot, 'student/high-school.pug' ),
+        'student/college':     path.join( pugRoot, 'student/college.pug' ),
+        'student/index':       path.join( pugRoot, 'student/index.pug' ),
+        'student/master':      path.join( pugRoot, 'student/master.pug' ),
+        'student/phd':         path.join( pugRoot, 'student/phd.pug' ),
 
         // Route `user`
-        'user/index':                       path.join( pugRoot, 'user/index.pug' ),
-        'user/resetPassword':               path.join( pugRoot, 'user/resetPassword.pug' ),
-        'user/announcement/index':          path.join( pugRoot, 'user/announcement/index.pug' ),
-        'user/announcement/add':            path.join( pugRoot, 'user/announcement/add.pug' ),
-        'user/announcement/edit':           path.join( pugRoot, 'user/announcement/edit.pug' ),
+        'user/index':              path.join( pugRoot, 'user/index.pug' ),
+        'user/resetPassword':      path.join( pugRoot, 'user/resetPassword.pug' ),
+        'user/announcement/index': path.join( pugRoot, 'user/announcement/index.pug' ),
+        'user/announcement/add':   path.join( pugRoot, 'user/announcement/add.pug' ),
+        'user/announcement/edit':  path.join( pugRoot, 'user/announcement/edit.pug' ),
 
         // Route `auth`
-        'auth/login':              path.join( pugRoot, 'auth/login.pug' ),
-        'auth/reset-password':              path.join( pugRoot, 'auth/reset-password.pug' ),
+        'auth/login': path.join( pugRoot, 'auth/login.pug' ),
 
         // Route `developer`
-        'developer/index':              path.join( pugRoot, 'developer/index.pug' ),
+        'developer/index': path.join( pugRoot, 'developer/index.pug' ),
     },
 
     /**

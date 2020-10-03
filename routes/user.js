@@ -83,7 +83,7 @@ router
 
 router
 .route( '/id' )
-.post( ( req, res ) => {
+.get( ( req, res ) => {
     res.json( {
         role:   req.session.user.role,
         roleId: req.session.user.roleId,
@@ -136,6 +136,38 @@ router
         res.redirect( '/user/staff/profile' );
     else
         res.redirect( '/index' );
+} );
+
+/**
+ * Resolve URL `/faculty/facultyWithId`.
+ * Return teacher's profile detail records with its id.
+ */
+
+router
+.route( '/profileWithId' )
+.get( async ( req, res, next ) => {
+    try {
+        if ( req.session.user.role === roleUtils.getIdByOption( 'faculty' ) ) {
+            res.json( await getFacultyDetailWithId( {
+                profileId: req.session.user.roleId,
+                language:  req.query.languageId,
+            } ) );
+        }
+        else if ( req.session.user.role === roleUtils.getIdByOption( 'staff' ) ) {
+            res.json( await getStaffDetailWithId( {
+                profileId: req.session.user.roleId,
+                language:  req.query.languageId,
+            } ) );
+        }
+        else {
+            const error = new Error( 'Invalid role.' );
+            error.status = 403;
+            throw error;
+        }
+    }
+    catch ( error ) {
+        next( error );
+    }
 } );
 
 /**

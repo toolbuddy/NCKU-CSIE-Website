@@ -10,7 +10,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 
-import { projectRoot, maxAge, } from 'settings/server/config.js';
 import { urlEncoded, jsonParser, } from 'routes/utils/body-parser.js';
 
 import getAdminByAccount from 'models/auth/operations/get-admin-by-account.js';
@@ -27,23 +26,21 @@ const router = express.Router( {
 
 router
 .route( '/login' )
-.get( ( req, res, next ) => {
+.get( async ( req, res, next ) => {
     try {
         // If user is not login, go to login page
         if ( !req.session.user ) {
-            res.sendFile(
-                `static/dist/html/auth/login.${ req.query.languageId }.html`,
-                {
-                    root:         projectRoot,
-                    maxAge,
-                    dotfiles:     'deny',
-                    cacheControl: true,
-                },
-                ( err ) => {
-                    if ( err )
-                        next( err );
-                }
-            );
+            await new Promise( ( resolve, reject ) => {
+                res.render( 'auth/login.pug',
+                    ( err, html ) => {
+                        if ( err )
+                            reject( err );
+                        else {
+                            res.send( html );
+                            resolve();
+                        }
+                    } );
+            } );
         }
 
         // Else, redirect user to index page
@@ -67,10 +64,22 @@ router
         res.redirect( '/index' );
     }
     catch ( error ) {
-        if ( error.status === 404 )
-            next();
-        else
+        if ( error.status === 500 )
             next( error );
+        else {
+            await new Promise( ( resolve, reject ) => {
+                res.render( 'auth/login.pug', {
+                    error: '帳號或密碼不正確，請重新輸入',
+                }, ( err, html ) => {
+                    if ( err )
+                        reject( err );
+                    else {
+                        res.send( html );
+                        resolve();
+                    }
+                } );
+            } );
+        }
     }
 } );
 

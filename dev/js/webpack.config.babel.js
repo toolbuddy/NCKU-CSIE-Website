@@ -56,8 +56,8 @@ export default {
         'error/404': path.join( jsSrcRoot, 'error/404.js' ),
 
         // Route `home`
-        'home/index':    path.join( jsSrcRoot, 'home/index.js' ),
-        'home/search':   path.join( jsSrcRoot, 'home/search.js' ),
+        'home/index':  path.join( jsSrcRoot, 'home/index.js' ),
+        'home/search': path.join( jsSrcRoot, 'home/search.js' ),
 
         // Route `research`
         'research/index':       path.join( jsSrcRoot, 'research/index.js' ),
@@ -75,11 +75,11 @@ export default {
         'resource/link':    path.join( jsSrcRoot, 'resource/link.js' ),
 
         // Route `student`
-        'student/high-school':   path.join( jsSrcRoot, 'student/high-school.js' ),
-        'student/college':       path.join( jsSrcRoot, 'student/college.js' ),
-        'student/index':         path.join( jsSrcRoot, 'student/index.js' ),
-        'student/master':        path.join( jsSrcRoot, 'student/master.js' ),
-        'student/phd':           path.join( jsSrcRoot, 'student/phd.js' ),
+        'student/high-school': path.join( jsSrcRoot, 'student/high-school.js' ),
+        'student/college':     path.join( jsSrcRoot, 'student/college.js' ),
+        'student/index':       path.join( jsSrcRoot, 'student/index.js' ),
+        'student/master':      path.join( jsSrcRoot, 'student/master.js' ),
+        'student/phd':         path.join( jsSrcRoot, 'student/phd.js' ),
 
         // Route `user`
         'user/index':                       path.join( jsSrcRoot, 'user/index.js' ),
@@ -98,11 +98,11 @@ export default {
         'user/announcement/edit':           path.join( jsSrcRoot, 'user/announcement/edit.js' ),
 
         // Route `auth`
-        'auth/login':              path.join( jsSrcRoot, 'auth/login.js' ),
-        'auth/reset-password':              path.join( jsSrcRoot, 'auth/reset-password.js' ),
+        'auth/login':          path.join( jsSrcRoot, 'auth/login.js' ),
+        'auth/reset-password': path.join( jsSrcRoot, 'auth/reset-password.js' ),
 
         // Route `developer`
-        'developer/index':              path.join( jsSrcRoot, 'developer/index.js' ),
+        'developer/index': path.join( jsSrcRoot, 'developer/index.js' ),
     },
 
     /**

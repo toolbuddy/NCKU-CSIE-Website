@@ -28,7 +28,7 @@ const AdminValidationConstraints = {
         },
     },
     roleId: {
-        presence: true,
+        presence: false,
         type:     {
             type: ValidateUtils.isValidId,
         },
