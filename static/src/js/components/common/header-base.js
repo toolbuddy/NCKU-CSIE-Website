@@ -228,12 +228,8 @@ export default class GetHeaderBase {
             } )
             .then( ( res ) => {
                 if ( res.status !== 200 )
-                    throw new Error( res.status );
+                    throw res.status;
                 return res;
-            } )
-            .catch( ( err ) => {
-                if ( err !== 401 )
-                    console.error( err );
             } )
             .then( res => res.json() )
             .then( async ( result ) => {
@@ -275,7 +271,8 @@ export default class GetHeaderBase {
                 this.subscribeLoginEvent();
             } )
             .catch( ( err ) => {
-                console.error( err );
+                if ( err !== 401 )
+                    console.error( err );
             } );
         }
         catch ( err ) {

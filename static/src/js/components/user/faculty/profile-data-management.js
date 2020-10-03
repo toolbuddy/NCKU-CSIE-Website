@@ -175,7 +175,7 @@ export default class ProfileDataManagement {
             e.preventDefault();
             const formData = new FormData();
             formData.append( 'file', this.imageFile );
-            formData.append( 'profileId', this.profileId );
+            formData.append( 'profileId', this.config.profileId );
 
             await fetch( `${ host }/user/faculty/profile`, {
                 credentials: 'include',
@@ -245,7 +245,7 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile )
         .then( ( data ) => {
-            if ( data.photo !== null ) {
+            if ( data.photo.length !== 0 ) {
                 const img = new Image();
                 img.src = `data:image/jpeg;base64,${ data.photo }`;
                 this.DOM.image.preview.style.backgroundImage = `url('${ img.src }')`;

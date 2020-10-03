@@ -99,7 +99,6 @@ export default {
 
         // Route `auth`
         'auth/login':          path.join( jsSrcRoot, 'auth/login.js' ),
-        'auth/reset-password': path.join( jsSrcRoot, 'auth/reset-password.js' ),
 
         // Route `developer`
         'developer/index': path.join( jsSrcRoot, 'developer/index.js' ),
