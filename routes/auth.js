@@ -79,7 +79,8 @@ router
                         resolve();
                     }
                 } );
-            } );
+            } )
+            .catch( next );
         }
     }
 } );

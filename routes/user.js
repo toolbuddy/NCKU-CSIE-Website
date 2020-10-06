@@ -808,7 +808,27 @@ router
         } ) );
     }
     catch ( error ) {
-        next( error );
+        if ( error.status === 500 )
+            next( error );
+        else {
+            const errorMessage = {
+                401: '舊密碼不正確，請重新輸入',
+                400: '新密碼確認失敗，請確認第二次密碼與第一次輸入的內容相同',
+            };
+            await new Promise( ( resolve, reject ) => {
+                res.render( 'auth/login.pug', {
+                    error: errorMessage[ error.status ],
+                }, ( err, html ) => {
+                    if ( err )
+                        reject( err );
+                    else {
+                        res.send( html );
+                        resolve();
+                    }
+                } );
+            } )
+            .catch( next );
+        }
     }
 } );
 
