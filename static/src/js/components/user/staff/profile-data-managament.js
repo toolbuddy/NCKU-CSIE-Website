@@ -70,13 +70,9 @@ export default class ProfileDataManagement {
         } );
     }
 
-    queryApi ( languageId ) {
-        return `${ host }/user/staff/staffWithId/${ this.config.profileId }?languageId=${ languageId }`;
-    }
-
-    async fetchData ( languageId ) {
+    async fetchData ( languageId ) {   // eslint-disable-line
         try {
-            const res = await fetch( this.queryApi( languageId ) );
+            const res = await fetch( `${ host }/user/profileWithId?languageId=${ languageId }` );
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
 
@@ -191,7 +187,7 @@ export default class ProfileDataManagement {
         this.fetchData( this.config.languageId )
         .then( data => data.profile )
         .then( ( data ) => {
-            if ( data.photo !== null ) {
+            if ( data.photo.length !== 0 ) {
                 const img = new Image();
                 img.src = `data:image/jpeg;base64,${ data.photo }`;
                 this.DOM.image.preview.style.backgroundImage = `url('${ img.src }')`;

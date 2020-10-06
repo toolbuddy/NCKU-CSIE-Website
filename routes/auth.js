@@ -31,15 +31,16 @@ router
         // If user is not login, go to login page
         if ( !req.session.user ) {
             await new Promise( ( resolve, reject ) => {
-                res.render( 'auth/login.pug',
-                    ( err, html ) => {
-                        if ( err )
-                            reject( err );
-                        else {
-                            res.send( html );
-                            resolve();
-                        }
-                    } );
+                res.render( 'auth/login.pug', {
+                    error: '',
+                }, ( err, html ) => {
+                    if ( err )
+                        reject( err );
+                    else {
+                        res.send( html );
+                        resolve();
+                    }
+                } );
             } );
         }
 

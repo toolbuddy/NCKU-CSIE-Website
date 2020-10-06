@@ -262,7 +262,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'faculty' ) ||
-            req.session.user.roleId !== req.body.profileId
+            req.session.user.roleId !== Number( req.body.profileId )
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -625,7 +625,7 @@ router
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption( 'staff' ) ||
-            req.session.user.roleId !== req.body.profileId
+            req.session.user.roleId !== Number( req.body.profileId )
         ) {
             const error = new Error( "Try to modify profile that doesn't belong to this user." );
             error.status = 401;
@@ -765,7 +765,28 @@ router
 
 router
 .route( '/resetPassword' )
-.get( staticHtml( 'user/resetPassword' ) )
+.get( noCache, async ( req, res, next ) => {
+    try {
+        await new Promise( ( resolve, reject ) => {
+            res.render( 'user/resetPassword.pug', {
+                error: '',
+            }, ( err, html ) => {
+                if ( err )
+                    reject( err );
+                else {
+                    res.send( html );
+                    resolve();
+                }
+            } );
+        } );
+    }
+    catch ( error ) {
+        if ( error.status === 404 )
+            next();
+        else
+            next( error );
+    }
+} )
 .post( urlEncoded, jsonParser, async ( req, res, next ) => {
     try {
         const user = await getAdminByAccount( req.session.user.account );

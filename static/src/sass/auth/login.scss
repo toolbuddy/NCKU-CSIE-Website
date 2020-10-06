@@ -144,23 +144,29 @@
           }
         }
 
-        > .form__message {
+        > .form__error {
           // [ layout ]
-          display: block;
+          display: none;
+          align-self: center;
 
           // [ position ]
-          width: 85%;
+          width: 75%;
           margin: {
             left: auto;
             right: auto;
             bottom: font__px-to-rem( 21.4 );
           }
-          @media screen and ( min-width: $small ) {
-            // [ position ]
-            width: auto;
-            margin-left: font__px-to-rem( 54 );
+
+          // [ skin ]
+          font-size: font__px-to-rem( 16 );
+          text-align: center;
+          line-height: normal;
+          color: rgb( 255, 102, 102 );
+
+          &--show {
+            // [ layout ]
+            display: flex;
           }
-          @include message();
         }
 
         // `.body > .content > .content__login > .login__form > .login__button`

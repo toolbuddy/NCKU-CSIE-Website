@@ -56,10 +56,10 @@ append content
       h1.form__headline= i18n[ LANG.id ].content.headline
       +input_block( 'text', 'account', i18n[LANG.id].content.account, 'account' )
       +input_block( 'password', 'password', i18n[LANG.id].content.password, 'password' )
-      session.form__message
-        +message( 'forget', i18n[LANG.id].content.forget )
-        +message( 'error',  i18n[LANG.id].content.error )
-      br
+      if error.length != 0
+        p.form__error.form__error--show= error
+      else
+        p.form__error
       button#form__button.form__button(type='submit')= i18n[LANG.id].content.login
 
 append footer

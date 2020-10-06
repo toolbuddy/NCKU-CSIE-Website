@@ -225,6 +225,11 @@ export default class GetHeaderMedium {
                 credentials: 'include',
                 method:      'get',
             } )
+            .then( ( res ) => {
+                if ( res.status !== 200 )
+                    throw res.status;
+                return res;
+            } )
             .then( res => res.json() )
             .then( async ( result ) => {
                 const data = await this.fetchMiniProfileData();
@@ -265,7 +270,8 @@ export default class GetHeaderMedium {
                 this.subscribeLoginEvent();
             } )
             .catch( ( err ) => {
-                console.error( err );
+                if ( err !== 401 )
+                    console.error( err );
             } );
         }
         catch ( err ) {

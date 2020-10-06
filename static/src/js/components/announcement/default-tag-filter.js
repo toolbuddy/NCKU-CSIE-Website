@@ -1111,7 +1111,7 @@ export default class DefaultTagFilter {
         try {
             fetch( `${ host }/user/id`, {
                 credentials: 'include',
-                method:      'post',
+                method:      'get',
             } )
             .then( res => res.json() )
             .then( ( res ) => {
