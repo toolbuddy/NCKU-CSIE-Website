@@ -1,7 +1,6 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import ControlMessageText from 'static/src/js/components/auth/message-text.js';
 import ControlButton from 'static/src/js/components/auth/button-control.js';
 
 /*
@@ -37,35 +36,6 @@ try {
     if ( !( headerLarge instanceof GetHeaderLarge ) )
         throw new Error( '.header.header--medium not found.' );
     headerLarge.renderLogin();
-}
-catch ( err ) {
-    console.error( err );
-}
-
-/*
-Login messages
-*/
-
-try {
-    const messageForget = new ControlMessageText(
-        document.querySelector( '#message--forget' )
-    );
-    if ( !( messageForget instanceof ControlMessageText ) )
-        throw new Error( '#message--forget not found.' );
-    messageForget.setForgetMessage();
-    messageForget.hideMessage();
-}
-catch ( err ) {
-    console.error( err );
-}
-
-try {
-    const messageError = new ControlMessageText(
-        document.querySelector( '#message--error' )
-    );
-    if ( !( messageError instanceof ControlMessageText ) )
-        throw new Error( '#message--error not found.' );
-    messageError.setErrorMessage();
 }
 catch ( err ) {
     console.error( err );
