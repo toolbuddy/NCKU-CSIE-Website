@@ -802,10 +802,12 @@ router
             throw error;
         }
 
-        res.send( await updateAdmin( {
+        await updateAdmin( {
             userId:   req.session.user.userId,
             password: bcrypt.hashSync( req.body.newPassword, 10 ),
-        } ) );
+        } );
+
+        res.send( '密碼修改成功，請重新登入！<br>本頁面即將跳轉...<script>setTimeout(()=>{ window.location = window.location.origin + "/auth/logout"; }, 3000)</script>' );
     }
     catch ( error ) {
         if ( error.status === 500 )
@@ -813,7 +815,7 @@ router
         else {
             const errorMessage = {
                 401: '舊密碼不正確，請重新輸入',
-                400: '新密碼確認失敗，請確認第二次密碼與第一次輸入的內容相同',
+                400: '新密碼以及確認密碼不一致',
             };
             await new Promise( ( resolve, reject ) => {
                 res.render( 'user/resetPassword.pug', {
