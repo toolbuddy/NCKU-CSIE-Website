@@ -1,6 +1,7 @@
 import tagUtils from 'models/announcement/utils/tag.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import UrlUtils from 'static/src/js/utils/url.js';
+import roleUtils from 'models/auth/utils/role.js';
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import addButtonHTML from 'static/src/pug/components/announcement/add-button.pug';
 import pagesHTML from 'static/src/pug/components/announcement/pages.pug';
@@ -37,8 +38,7 @@ export default class DefaultTagFilter {
             !ValidateUtils.isPositiveInteger( opt.page ) ||
             typeof ( opt.visiblePageNum ) === 'undefined' ||
             !ValidateUtils.isPositiveInteger( opt.visiblePageNum ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId ) ||
-            typeof ( opt.userId ) === 'undefined'
+            !WebLanguageUtils.isSupportedLanguageId( opt.currentLanguageId )
         )
             throw new TypeError( 'invalid arguments' );
 
@@ -63,7 +63,6 @@ export default class DefaultTagFilter {
             visiblePageNum:     opt.visiblePageNum,
             animationDelayTime: 500,
             scrollPx:           5,
-            userId:             opt.userId,
         };
 
         this.tagId = {
@@ -757,7 +756,7 @@ export default class DefaultTagFilter {
             const queryString = [
                 `languageId=${ this.state.languageId }`,
                 `from=${ Number( this.state.from ) }`,
-                `to=${ Number( this.state.to ) }`,
+                `to=${ Number( Date.now() ) }`,
                 ...tags.map( tagId => `tags=${ tagId }` ),
             ].join( '&' );
 
@@ -798,6 +797,7 @@ export default class DefaultTagFilter {
             const data = await res.json();
 
             const extractTextObj = data;
+
             extractTextObj.sort( ( announcement1, announcement2 ) => announcement2.updateTime - announcement1.updateTime );
             extractTextObj.forEach( ( ann ) => {
                 try {
@@ -972,7 +972,6 @@ export default class DefaultTagFilter {
                     console.error( err );
                 }
             } );
-
             extractTextObj.map( ( briefing ) => {
                 briefing.tags = briefing.tags.map( tagId => ( {
                     color: tagUtils.getTagColorById( tagId ),
@@ -1110,14 +1109,25 @@ export default class DefaultTagFilter {
 
     async getAll () {
         try {
-            await this.getPage();
-            await this.getNormalAnnouncement();
-            await this.getPinnedAnnouncement();
-
-            if ( this.config.userId !== -1 ) {
-                this.subscribeAddButton();
-                this.setPreview();
-            }
+            fetch( `${ host }/user/id`, {
+                credentials: 'include',
+                method:      'get',
+            } )
+            .then( res => res.json() )
+            .then( ( res ) => {
+                if ( res.role === roleUtils.getIdByOption( 'staff' ) ) {
+                    this.config.userId = res.roleId;
+                    this.subscribeAddButton();
+                    this.setPreview();
+                }
+                else
+                    this.config.userId = -1;
+            } )
+            .then( async () => {
+                await this.getPage();
+                await this.getNormalAnnouncement();
+                await this.getPinnedAnnouncement();
+            } );
         }
         catch ( err ) {
             console.error( err );

@@ -1,3 +1,4 @@
+$icon-path: '~image/icon';
 @mixin image ( $belongBlock ) {
   > .image.#{ $belongBlock }__image {
     // > .profile__image {
@@ -90,6 +91,7 @@
         size: 100%;
         repeat: no-repeat;
         position: center;
+        image: url( '~image/icon/user.png' );
       };
       overflow: hidden;
 

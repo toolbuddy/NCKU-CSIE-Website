@@ -53,7 +53,6 @@ export default {
         'about/faculty-detail': path.join( sassRoot, 'about/faculty-detail.scss' ),
         'about/faculty':        path.join( sassRoot, 'about/faculty.scss' ),
         'about/index':          path.join( sassRoot, 'about/index.scss' ),
-
         'about/intro':          path.join( sassRoot, 'about/intro.scss' ),
         'about/staff':          path.join( sassRoot, 'about/staff.scss' ),
 
@@ -65,11 +64,11 @@ export default {
         'announcement/recruitment': path.join( sassRoot, 'announcement/recruitment.scss' ),
 
         // Route `error`
-        'error/404':  path.join( sassRoot, 'error/404.scss' ),
+        'error/404': path.join( sassRoot, 'error/404.scss' ),
 
         // Route `home`
-        'home/index':    path.join( sassRoot, 'home/index.scss' ),
-        'home/search':   path.join( sassRoot, 'home/search.scss' ),
+        'home/index':  path.join( sassRoot, 'home/index.scss' ),
+        'home/search': path.join( sassRoot, 'home/search.scss' ),
 
         // Route `research`
         'research/index':       path.join( sassRoot, 'research/index.scss' ),
@@ -87,11 +86,11 @@ export default {
         'resource/link':    path.join( sassRoot, 'resource/link.scss' ),
 
         // Route `student`
-        'student/high-school':   path.join( sassRoot, 'student/high-school.scss' ),
-        'student/college':       path.join( sassRoot, 'student/college.scss' ),
-        'student/index':         path.join( sassRoot, 'student/index.scss' ),
-        'student/master':        path.join( sassRoot, 'student/master.scss' ),
-        'student/phd':           path.join( sassRoot, 'student/phd.scss' ),
+        'student/high-school': path.join( sassRoot, 'student/high-school.scss' ),
+        'student/college':     path.join( sassRoot, 'student/college.scss' ),
+        'student/index':       path.join( sassRoot, 'student/index.scss' ),
+        'student/master':      path.join( sassRoot, 'student/master.scss' ),
+        'student/phd':         path.join( sassRoot, 'student/phd.scss' ),
 
         // Route `user`
         'user/index':                       path.join( sassRoot, 'user/index.scss' ),
@@ -103,17 +102,16 @@ export default {
         'user/faculty/project':             path.join( sassRoot, 'user/faculty/project.scss' ),
         'user/faculty/patent':              path.join( sassRoot, 'user/faculty/patent.scss' ),
         'user/faculty/technology-transfer': path.join( sassRoot, 'user/faculty/technology-transfer.scss' ),
-        'user/staff/profile':                path.join( sassRoot, 'user/staff/profile.scss' ),
+        'user/staff/profile':               path.join( sassRoot, 'user/staff/profile.scss' ),
         'user/resetPassword':               path.join( sassRoot, 'user/resetPassword.scss' ),
         'user/announcement/edit':           path.join( sassRoot, 'user/announcement/edit.scss' ),
         'user/announcement/add':            path.join( sassRoot, 'user/announcement/add.scss' ),
 
         // Route `auth`
-        'auth/login':             path.join( sassRoot, 'auth/login.scss' ),
-        'auth/reset-password':    path.join( sassRoot, 'auth/reset-password.scss' ),
+        'auth/login':          path.join( sassRoot, 'auth/login.scss' ),
 
         // Route `developer`
-        'developer/index':             path.join( sassRoot, 'developer/index.scss' ),
+        'developer/index': path.join( sassRoot, 'developer/index.scss' ),
     },
 
     /**

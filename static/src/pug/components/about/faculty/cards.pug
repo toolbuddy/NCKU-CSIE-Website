@@ -22,17 +22,17 @@ each profile in data
       data-research-group-ids = `${ Array.isArray( profile.researchGroup ) ? profile.researchGroup.join() : '' }`
     )
       //- Faculty's photo.
-      if profile.photo !== null
+      if profile.photo.length !== 0
         img(
-          alt       = profile.name,
-          className = 'card__photo',
-          src       = `data:image/jpeg;base64,${ profile.photo }`,
+          alt   = profile.name,
+          class = 'card__photo',
+          src   = `data:image/jpeg;base64,${ profile.photo }`,
         )
       else
         +image( {
             alt: profile.name,
             className: 'card__photo',
-            src: 'faculty/no-photo.jpg',
+            src: 'icon/user.png',
         } )
 
       //- Faculty's intro.

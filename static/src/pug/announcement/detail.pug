@@ -33,14 +33,6 @@ append header
   )
 
 append breadcrumb
-  +breadcrumb(
-    'content',
-    [
-      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.normal, route: 'announcement' },
-      { text: i18n[ LANG.id ].title },
-    ]
-  )
 
 append content
   include /components/announcement/delete-preview.pug
@@ -55,7 +47,13 @@ append content
           )= UTILS.announcement.tagUtils.getValueById( { id: tagId, languageId: LANG.id, } )
       h1.headline__title= data.title
       // a.headline__announcer= `公告人員 : ${ data.author }`
-      time.headline__time= new Date( data.updateTime )
+      time.headline__time= data.updateTime.split(" ").join(" | ")
+    if data.image !== null
+      img(
+        alt   = 'image',
+        class = 'announcement__image',
+        src   = `data:image/jpeg;base64,${ data.image }`,
+      )
     article.announcement__article.article.markdown-body !{ data.content }
     nav.announcement__attachments.attachments
       - data.files.sort( ( fileA, fileB ) => fileA.name.length - fileB.name.length )

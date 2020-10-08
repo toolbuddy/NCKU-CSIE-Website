@@ -131,7 +131,7 @@ append data
           [ LANG.getLanguageId( 'en-US' ) ]: {
             patch: 'Modify Your Office Tel',
             default: {
-              officeTel: 'office tel',
+              officeTel: '06-number,ext.,ext.',
             },
             title: {
               officeTel: 'office tel',
@@ -140,7 +140,7 @@ append data
           [ LANG.getLanguageId( 'zh-TW' ) ]: {
             patch: '變更您的辦公室電話',
             default: {
-              officeTel: '辦公室電話',
+              officeTel: '06-電話號碼,分機,分機',
             },
             title: {
               officeTel: '辦公室電話',
@@ -240,7 +240,7 @@ append data
               type: 'tel',
               required: true,
               max: 30,
-              pattern: '(([0-9]+))*([0-9]+-)*[0-9]+(,[0-9]+)?'
+              pattern: '(0[0-9]+-)?[0-9]+(,[0-9]+)*'
             },
           }
         ],
@@ -268,7 +268,7 @@ append data
         },
       ]
     }
-    const currentRoute = 'user/faculty/profile';
+    const currentRoute = 'user/profile';
 
 append title
   +title( i18n[ LANG.id ].title )

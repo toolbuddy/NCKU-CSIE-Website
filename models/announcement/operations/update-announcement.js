@@ -1,6 +1,7 @@
 import LanguageUtils from 'models/common/utils/language.js';
 import {
-    Announcement,
+
+    // Announcement,
     AnnouncementI18n,
     File,
     Tag,
@@ -100,14 +101,7 @@ export default ( opt ) => {
             }
         } );
 
-        return announcement.transaction( t => Announcement.update( {
-            image,
-        }, {
-            where: {
-                announcementId,
-            },
-            transaction: t,
-        } ).then( () => Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update(
+        return announcement.transaction( t => Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update(
             i18nObj,
             {
                 where: {
@@ -116,7 +110,7 @@ export default ( opt ) => {
                 },
                 transaction: t,
             }
-        ) ) ) ).then( () => Tag.destroy( {
+        ) ) ).then( () => Tag.destroy( {
             where: {
                 announcementId,
             },
@@ -137,7 +131,8 @@ export default ( opt ) => {
             announcementId,
         } ) ), {
             transaction: t,
-        } ) ) ).then( () => ( { 'message': 'success', } ) )
+        } ) ) )
+        .then( () => ( { 'message': 'success', } ) )
         .catch( ( err ) => {
             err.status = 500;
             throw err;

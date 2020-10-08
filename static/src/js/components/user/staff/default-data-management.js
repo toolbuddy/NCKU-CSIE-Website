@@ -255,13 +255,9 @@ export default class DefaultDataManagement {
         } );
     }
 
-    queryApi ( languageId ) {
-        return `${ host }/api/staff/staffWithId/${ this.config.profileId }?languageId=${ languageId }`;
-    }
-
-    async fetchData ( languageId ) {
+    async fetchData ( languageId ) { // eslint-disable-line
         try {
-            const res = await fetch( this.queryApi( languageId ) );
+            const res = await fetch( `${ host }/user/profileWithId?languageId=${ languageId }` );
             if ( !res.ok )
                 throw new Error( 'No faculty found' );
 
@@ -380,7 +376,7 @@ export default class DefaultDataManagement {
 
         fetch( `${ host }/user/id`, {
             credentials: 'include',
-            method:      'post',
+            method:      'get',
         } )
         .then( res => res.json() )
         .then( ( res ) => {

@@ -14,10 +14,11 @@
 import express from 'express';
 import helmet from 'helmet';
 
-import contentSecurityPolicy from 'settings/server/content-security-policy';
 import staticHtml from 'routes/utils/static-html.js';
+import contentSecurityPolicy from 'settings/server/content-security-policy';
 import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
 import projectCategoryUtils from 'models/faculty/utils/project-category.js';
+
 import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
 
 const router = express.Router( {
@@ -87,11 +88,9 @@ router
 .route( '/faculty/:profileId' )
 .get( async ( req, res, next ) => {
     try {
-        const profileId = Number( req.params.profileId );
-        const language = req.query.languageId;
         const data = await getFacultyDetail( {
-            profileId,
-            language,
+            profileId: Number( req.params.profileId ),
+            language:  Number( req.query.languageId ),
         } );
 
         res.locals.UTILS.faculty = {
@@ -112,11 +111,11 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 

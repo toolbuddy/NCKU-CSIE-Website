@@ -18,17 +18,17 @@ each profile in data
   if profile.name !== null
     section.cards__card.card
       //- staff's photo.
-      if profile.photo !== null
+      if profile.photo.length !== 0
         img(
-          alt       = profile.name,
-          className = 'card__photo',
-          src       = `data:image/jpeg;base64,${ profile.photo }`,  
+          alt   = profile.name,
+          class = 'card__photo',
+          src   = `data:image/jpeg;base64,${ profile.photo }`,
         )
       else
         +image( {
             alt: profile.name,
             className: 'card__photo',
-            src: 'staff/no-photo.jpg',
+            src: 'icon/user.png',
         } )
 
       //- staff's intro.

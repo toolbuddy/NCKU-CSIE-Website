@@ -1,3 +1,24 @@
+/**
+ * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * Everytime someone successfully get an announcement, its views will increased by 1.
+ *
+ * @async
+ * @param {number} [language = defaultValue.language] - Language option of the announcements.
+ * @param {number} [announcementId]                   - Id of the requested announcement.
+ * @returns {object}                                  - Related information of the requested announcement, including:
+ * - id
+ * - title
+ * - content
+ * - image
+ * - author
+ * - publishTime
+ * - updateTime
+ * - views
+ * - ispinned
+ * - files
+ * - tags.
+ */
+
 import {
     Announcement,
     AnnouncementI18n,
@@ -7,26 +28,6 @@ import {
 import LanguageUtils from 'models/common/utils/language.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
-/**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
- *
- * @async
- * @param {number} [language = defaultValue.language]   - Language option of the announcements.
- * @param {number} [announcementId = 1]                     - Id of the requested announcement.
- * @returns {object}                                        - Related information of the requested announcement, including:
- * - id
- * - title
- * - content
- * - author
- * - publishTime
- * - updateTime
- * - views
- * - ispinned
- * - files
- * - tags.
- *
- */
-
 export default async ( opt ) => {
     try {
         const {
@@ -35,15 +36,16 @@ export default async ( opt ) => {
         } = opt || {};
 
         if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+            const error = new Error( 'Invalid language id' );
             error.status = 400;
             throw error;
         }
         if ( !ValidateUtils.isPositiveInteger( announcementId ) ) {
-            const error = new Error( 'invalid announcement id' );
+            const error = new Error( 'Invalid announcement id' );
             error.status = 400;
             throw error;
         }
+
         const data = await Announcement.findOne( {
             attributes: [
                 'announcementId',
@@ -75,18 +77,27 @@ export default async ( opt ) => {
                     attributes: [
                         'tagId',
                     ],
-                    where: {
-                        announcementId,
-                    },
                 },
             ],
         } );
+
         if ( !data ) {
-            const error = new Error( 'no result' );
+            const error = new Error( 'Announcement not found' );
             error.status = 404;
             throw error;
         }
 
+        await Announcement.update( {
+            views: data.views + 1,
+        }, {
+            where: {
+                announcementId,
+            },
+        } );
+
+        // Must find files after got announcement, instead of put it in include.
+        // Because an announcement may not contain any file, if put this in include,
+        // the result will be null.
         const files = await File.findAll( {
             attributes: [
                 'fileId',
@@ -111,12 +122,9 @@ export default async ( opt ) => {
             files,
         };
     }
-    catch ( err ) {
-        console.error( err );
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
+    catch ( error ) {
+        if ( !error.status )
+            error.status = 500;
         throw error;
     }
 };

@@ -222,12 +222,18 @@ export default class GetHeaderBase {
 
     async renderLogin () {
         try {
-            const result = await this.fetchData( 'user/id', {
+            fetch( `${ host }/user/id`, {
                 credentials: 'include',
-                method:      'post',
-            } );
-            if ( result.userId > -1 ) {
-                const data = await this.fetchMiniProfileData( result.userId );
+                method:      'get',
+            } )
+            .then( ( res ) => {
+                if ( res.status !== 200 )
+                    throw res.status;
+                return res;
+            } )
+            .then( res => res.json() )
+            .then( async ( result ) => {
+                const data = await this.fetchMiniProfileData();
                 if ( result.role === roleUtils.getIdByOption( 'faculty' ) ) {
                     this.DOM.login.container.innerHTML = loginDropdownHTML( {
                         name:        data.name,
@@ -263,7 +269,11 @@ export default class GetHeaderBase {
                     'login' );
                 }
                 this.subscribeLoginEvent();
-            }
+            } )
+            .catch( ( err ) => {
+                if ( err !== 401 )
+                    console.error( err );
+            } );
         }
         catch ( err ) {
             console.error( err );
@@ -284,9 +294,9 @@ export default class GetHeaderBase {
         }
     }
 
-    async fetchMiniProfileData ( id ) {
+    async fetchMiniProfileData () {
         try {
-            const res = await fetch( `${ this.host }/api/user/miniProfile/${ id }?languageId=${ this.languageId }`, {
+            const res = await fetch( `${ this.host }/user/miniProfile?languageId=${ this.languageId }`, {
                 credentials: 'include',
             } );
 

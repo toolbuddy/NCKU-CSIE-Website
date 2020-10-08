@@ -13,11 +13,11 @@
 import express from 'express';
 import MarkdownIt from 'markdown-it';
 
+import staticHtml from 'routes/utils/static-html.js';
+import tagUtils from 'models/announcement/utils/tag.js';
+
 import getAnnouncement from 'models/announcement/operations/get-announcement.js';
 import getFile from 'models/announcement/operations/get-file.js';
-
-import tagUtils from 'models/announcement/utils/tag.js';
-import staticHtml from 'routes/utils/static-html.js';
 
 const router = express.Router( {
     caseSensitive: true,
@@ -50,7 +50,7 @@ router
 
 router
 .route( '/all' )
-.get( async ( req, res, next ) => {
+.get( async ( {}, res, next ) => {
     try {
         res.locals.UTILS.announcement = {
             tagUtils,
@@ -67,11 +67,8 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
-            next();
-        else
-            next( err );
+    catch ( error ) {
+        next( error );
     }
 } );
 
@@ -103,6 +100,7 @@ router
             breaks:  true,
             linkify: true,
         } );
+
         await new Promise( ( resolve, reject ) => {
             res.render( 'announcement/detail.pug', {
                 data,
@@ -116,13 +114,17 @@ router
             } );
         } );
     }
-    catch ( err ) {
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
+
+/**
+ * Resolve URL `/announcement/[id]/file/[fileId]`.
+ */
 
 router
 .route( '/:announcementId/file/:fileId' )
@@ -133,12 +135,11 @@ router
         res.set( 'Content-Disposition', `attachment;filename*=UTF-8''${ encodeURIComponent( file.name ) }` );
         res.send( Buffer.from( file.content, 'binary' ) );
     }
-    catch ( err ) {
-        console.error( err );
-        if ( err.status === 404 )
+    catch ( error ) {
+        if ( error.status === 404 )
             next();
         else
-            next( err );
+            next( error );
     }
 } );
 
