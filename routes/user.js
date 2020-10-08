@@ -816,7 +816,7 @@ router
                 400: '新密碼確認失敗，請確認第二次密碼與第一次輸入的內容相同',
             };
             await new Promise( ( resolve, reject ) => {
-                res.render( 'auth/login.pug', {
+                res.render( 'user/resetPassword.pug', {
                     error: errorMessage[ error.status ],
                 }, ( err, html ) => {
                     if ( err )
