@@ -80,6 +80,10 @@
       @include tags( 'headline' ) {
         // [ position ]
         grid-area: headline__tags;
+
+        > .tags__tag:hover {
+          cursor: default;
+        }
       }
 
       // element

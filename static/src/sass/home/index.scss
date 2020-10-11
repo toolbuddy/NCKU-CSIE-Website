@@ -201,8 +201,13 @@
       // [ layout ]
       display: block;
       width: 100%;
-      height: $area-height;
+      height: font__px-to-rem( 224 );
       overflow: hidden;
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        height: $area-height;
+      }
 
       > .high-school__banner {
         width: 100%;
@@ -224,7 +229,12 @@
         transform: translateY( -50% );
         text-align: center;
         position: relative;
-        top: $text-top-space;
+        top: font__px-to-rem( -224 );
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          top: $text-top-space;
+        }
 
         > .text__link {
           font: {
@@ -254,7 +264,7 @@
       grid-area: master;
 
       // [ layout ]
-      margin-top: font__px-to-rem( 267 );
+      margin-top: font__px-to-rem( 170 );
       width: 100%;
       display: block;
       overflow: hidden;
@@ -267,10 +277,15 @@
 
       > .master__imi {
         // [ layout ]
-        width: 50%;
+        width: 100%;
         height: $area-height;
         overflow: hidden;
         display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
 
         > .imi__banner {
           width: 100%;
@@ -316,10 +331,15 @@
 
       > .master__imis {
         // [ layout ]
-        width: 50%;
+        width: 100%;
         height: $area-height;
         overflow: hidden;
         display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
 
         > .imis__banner {
           width: 100%;
@@ -365,10 +385,15 @@
 
       > .master__msic {
         // [ layout ]
-        width: 50%;
+        width: 100%;
         height: $area-height;
         overflow: hidden;
         display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
 
         > .msic__banner {
           width: 100%;
@@ -414,10 +439,15 @@
 
       > .master__ai {
         // [ layout ]
-        width: 50%;
+        width: 100%;
         height: $area-height;
         overflow: hidden;
         display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
 
         > .ai__banner {
           width: 100%;

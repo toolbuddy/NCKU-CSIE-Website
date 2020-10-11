@@ -21,7 +21,7 @@ append data
     const currentRoute = `announcement/${ data.announcementId }`;
 
 append title
-  +title( i18n[ LANG.id ].title )
+  +title( data.title )
 
 append stylesheets
   +css( 'announcement/detail' )

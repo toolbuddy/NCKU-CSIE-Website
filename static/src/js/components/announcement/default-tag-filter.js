@@ -61,8 +61,8 @@ export default class DefaultTagFilter {
             to:                 opt.to,
             page:               opt.page,
             visiblePageNum:     opt.visiblePageNum,
-            animationDelayTime: 500,
-            scrollPx:           5,
+            animationDelayTime: 50,
+            scrollPx:           8,
         };
 
         this.tagId = {
