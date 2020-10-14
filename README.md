@@ -92,20 +92,6 @@ Here are a few standard:
     ```
     echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
     ```
-- We use `browser-sync` to run a dedicated develop server which automatically refresh browser each time files change. `browser-sync` take up port `3001` (always be server port + 1 by default, may change based on server port setting), and it will trigger `no-cors` for specific page (e.g. `/about/faculty/[id]`). Fixing this issue by changing the following code in file `settings/server/config.js`:
-    ```
-    ...
-    'host': {
-        get () {
-            return `${ config.protocol }://${ config.domainName }${
-                config.port === '80' || config.port === '443' ?
-                    '' :
-                    `:${ config.port + 1 }` // -> originally `:${ config.port }`
-            }`;
-        },
-    },
-    ...
-    ```
 
 ## Long Term Goal
 We are going to build a website which have following feature:
