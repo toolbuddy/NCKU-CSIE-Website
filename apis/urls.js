@@ -31,6 +31,11 @@ apis.use( ( req, {}, next ) => {
     next();
 } );
 
+/**
+ * Our API routes can be accessed from any website,
+ * so access-control-allow-origin should be wildcard.
+ */
+
 apis.use( cors() );
 
 /**
@@ -51,11 +56,19 @@ apis.use( '/faculty', faculty );
 
 apis.use( '/staff', staff );
 
-apis.use( ( {}, res, {} ) => {
+/**
+ * Error handling using 404 response.
+ */
+
+ apis.use( ( {}, res, {} ) => {
     res.status( 404 ).json( {
         error: 'Request api not found.',
     } );
 } );
+
+/**
+ * Error handling using other response.
+ */
 
 apis.use( ( error, {}, res, {} ) => {
     console.error( error );

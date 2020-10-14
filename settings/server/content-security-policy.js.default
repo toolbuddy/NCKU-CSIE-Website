@@ -4,8 +4,6 @@ import {
     whiteList,
 } from 'settings/server/config.js';
 
-const isDevMode = process.env.NODE_ENV === 'development';
-
 export default ( opt ) => {
     const config = {
         baseUri:                 [],
@@ -87,14 +85,8 @@ export default ( opt ) => {
         config[ key ].push( ...opt[ key ] );
     } );
 
-    /**
-     * Relax policy for browser sync when in development mode.
-     */
-
-    if ( isDevMode ) {
-        config.scriptSrc.push( "'unsafe-inline'" );
-        config.styleSrc.push( "'unsafe-inline'" );
-    }
+    config.scriptSrc.push( "'unsafe-inline'" );
+    config.styleSrc.push( "'unsafe-inline'" );
 
     deepFreeze( config );
 
