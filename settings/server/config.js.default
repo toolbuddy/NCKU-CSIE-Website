@@ -15,37 +15,19 @@
 
 const config = {
     domainName:  'localhost',
-    get host () {
-        return `${ config.protocol }://${ config.domainName }${
-            config.port === '80' || config.port === '443' ?
-                '' :
-                `:${ config.port }`
-        }`;
-    },
     maxAge:      1000 * 60 * 60 * 24 * 7,
     port:        3000,
-    projectRoot: '',
+    projectRoot: '/Users/profatxuanall/Desktop/NCKU-CSIE-Website',
     protocol:    'http',
-    secret:      'deepest darkest secret of ncku csie',
-    get staticHost () {
-        return `${ config.host }/static`;
-    },
-    whiteList: [
-        'localhost:3000',
-        'localhost:3001',
-        'www.csie.ncku.edu.tw',
-    ],
+    secret:      'The deepest and darkest secret of NCKU CSIE',
 };
 
-Object.freeze( config );
+config.host = `${config.protocol}://${config.domainName}${
+    [80, 443].includes(config.port) ? '' : `:${config.port}`
+}`;
+config.staticHost = `${config.host}/static`;
+config.whiteList = [
+    `${config.domainName}:${config.port}`,
+];
 
-export const domainName = config.domainName;
-export const host = config.host;
-export const maxAge = config.maxAge;
-export const port = config.port;
-export const projectRoot = config.projectRoot;
-export const protocol = config.protocol;
-export const secret = config.secret;
-export const staticHost = config.staticHost;
-export const whiteList = config.whiteList;
-export default config;
+module.exports = config;
