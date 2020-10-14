@@ -1,4 +1,3 @@
-const ecmaVersion = 8;
 const indent = {
     size:  4,
     level: {
@@ -48,32 +47,31 @@ const max = {
 module.exports = {
 
     // Setting ECMAScript running environment.
-    'env': {
-        'commonjs': true,
-        'es6':      true,
-        'node':     true,
+    env: {
+        es2021: true,
+        node:   true,
     },
 
     // ECMAScript parser option.
-    'parserOptions': {
+    parserOptions: {
 
         // ECMAScript syntax version.
-        ecmaVersion,
+        ecmaVersion: 12,
 
         // Code will run as ECMAScript module.
-        'sourceType': 'module',
+        sourceType: 'script',
 
         // Additional language feature.
-        'ecmaFeatures': {
+        ecmaFeatures: {
 
             // Enable global strict mode.
-            'impliedStrict': true,
+            impliedStrict: true,
         },
     },
 
-    // Stop looking another .eslintrc.
-    'root':    true,
-    'rules': {
+    // Stop looking another `.eslintrc` file.
+    root:    true,
+    rules: {
 
         /** Possible Errors */
         // Enforce `for` loop update clause moving the counter in the right direction.
@@ -89,9 +87,14 @@ module.exports = {
             },
         ],
 
+        // Disallow using an `async` function as a Promise executor.
+        'no-async-promise-executor': 'error',
+
+        // Disallow `await` inside of loops.
+        'no-await-in-loop': 'error',
+
         // Disallow comparing against `-0`.
         'no-compare-neg-zero': 'error',
-
 
         // Disallow assignment operators in conditional statements.
         'no-cond-assign': [
@@ -137,6 +140,9 @@ module.exports = {
         // Disallow duplicate arguments in function definitions.
         'no-dupe-args': 'error',
 
+        // Disallow duplicate conditions in `if-else-if` chains.
+        'no-dupe-else-if': 'error',
+
         // Disallow duplicate keys in object literals.
         'no-dupe-keys': 'error',
 
@@ -168,6 +174,9 @@ module.exports = {
         // Disallow reassigning function declarations.
         'no-func-assign': 'error',
 
+        // Disallow assigning to imported bindings.
+        'no-import-assign': 'error',
+
         // Disallow variable or function declarations in nested blocks.
         'no-inner-declarations': [
             'error',
@@ -182,15 +191,27 @@ module.exports = {
         // Disallow irregular whitespace.
         'no-irregular-whitespace': 'error',
 
+        // Disallow number literals that lose precision.
+        'no-loss-of-precision': 'error',
+
+        // Disallow characters which are made with multiple code points in character class syntax.
+        'no-misleading-character-class': 'error',
+
         // Disallow calling global object properties as functions.
         // This rule disallows calling the `Math`, `JSON` and `Reflect` objects as functions.
         'no-obj-calls': 'error',
+
+        // Disallow returning values from Promise executor functions.
+        'no-promise-executor-return': 'error',
 
         // Disallow use of `Object.prototypes` builtins directly.
         'no-prototype-builtins': 'error',
 
         // Disallow multiple spaces in regular expression literals.
         'no-regex-spaces': 'error',
+
+        // Disallow returning values from setters.
+        'no-setter-return': 'error',
 
         // Disallow sparse arrays.
         'no-sparse-arrays': 'error',
@@ -210,11 +231,14 @@ module.exports = {
         // Disallow negating the left operand of relational operators.
         'no-unsafe-negation': 'error',
 
+        // Disallow useless backreferences in regular expressions.
+        'no-useless-backreference': 'error',
+
+        // Disallow assignments that can lead to race conditions due to usage of await or yield.
+        'require-atomic-updates': 'error',
+
         // Require calls to `isNaN()` when checking for `NaN`.
         'use-isnan': 'error',
-
-        // Enforce valid JSDoc comments.
-        // 'valid-jsdoc': 'error',
 
         // Enforce comparing `typeof` expressions against valid strings.
         'valid-typeof': 'error',
