@@ -1,4 +1,4 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../common/utils/language.js');
 const Sequelize = require('sequelize');
 const {
     Business,
@@ -7,7 +7,7 @@ const {
     ProfileI18n,
     Title,
     TitleI18n,
-} = require('models/staff/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (language = null) => {
     try {

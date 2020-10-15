@@ -21,12 +21,12 @@
  * - title.
  */
 
-const LanguageUtils = require('models/common/utils/language.js');
-const degreeUtils = require('models/faculty/utils/degree.js');
-const departmentUtils = require('models/faculty/utils/department.js');
-const nationUtils = require('models/faculty/utils/nation.js');
-const researchGroupUtils = require('models/faculty/utils/research-group.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const degreeUtils = require('../utils/degree.js');
+const departmentUtils = require('../utils/department.js');
+const nationUtils = require('../utils/nation.js');
+const researchGroupUtils = require('../utils/research-group.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 const {
     AwardI18n,
     Award,
@@ -58,7 +58,7 @@ const {
     TechnologyTransfer,
     Title,
     TitleI18n,
-} = require('models/faculty/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

@@ -1,6 +1,6 @@
-const tables = require('models/faculty/operations/associations.js');
-const validateUtils = require('models/common/utils/validate.js');
-const {faculty} = require('models/common/utils/connect.js');
+const tables = require('./associations.js');
+const validateUtils = require('../../common/utils/validate.js');
+const {faculty} = require('../../common/utils/connect.js');
 
 module.exports = async (opt) => {
     try {

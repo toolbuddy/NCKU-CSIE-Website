@@ -1,5 +1,5 @@
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const LanguageUtils = require('../../../common/utils/language.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
 
 const AnnouncementValidationConstraints = {
     author: {

@@ -1,4 +1,4 @@
-const departmentUtils = require('models/faculty/utils/department.js');
+const departmentUtils = require('../../utils/department.js');
 
 const DepartmentValidationConstraints = {
     type: {

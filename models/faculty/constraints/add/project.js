@@ -1,5 +1,5 @@
-const LanguageUtils = require('models/common/utils/language.js');
-const projectCategoryUtils = require('models/faculty/utils/project-category.js');
+const LanguageUtils = require('../../../common/utils/language.js');
+const projectCategoryUtils = require('../../utils/project-category.js');
 
 const ProjectValidationConstraints = {
     from: {

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const {announcement} = require('models/common/utils/connect.js');
-const LanguageUtils = require('models/common/utils/language.js');
+const {announcement} = require('../../common/utils/connect.js');
+const LanguageUtils = require('../../common/utils/language.js');
 
 const AnnouncementI18n = announcement.define('announcementI18n', {
     announcementId: {

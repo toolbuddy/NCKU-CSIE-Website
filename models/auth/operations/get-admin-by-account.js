@@ -10,8 +10,8 @@
  * - roleId.
  */
 
-const ValidateUtils = require('models/common/utils/validate.js');
-const {Admin} = require('models/auth/operations/associations.js');
+const ValidateUtils = require('../../common/utils/validate.js');
+const {Admin} = require('./associations.js');
 
 module.exports = (account) => {
     try {

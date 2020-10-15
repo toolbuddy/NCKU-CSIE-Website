@@ -1,5 +1,5 @@
-const nationUtils = require('models/faculty/utils/nation.js');
-const degreeUtils = require('models/faculty/utils/degree.js');
+const nationUtils = require('../../utils/nation.js');
+const degreeUtils = require('../../utils/degree.js');
 
 const EducationValidationConstraints = {
     nation: {

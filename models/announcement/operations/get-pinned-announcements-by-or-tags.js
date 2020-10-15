@@ -3,10 +3,10 @@ const {
     Announcement,
     AnnouncementI18n,
     Tag,
-} = require('models/announcement/operations/associations.js');
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
-const tagUtils = require('models/announcement/utils/tag.js');
+} = require('./associations.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
+const tagUtils = require('../utils/tag.js');
 
 /**
  * A function for getting all pinned announcements.

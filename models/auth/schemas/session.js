@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {user} = require('models/common/utils/connect.js');
+const {user} = require('../../common/utils/connect.js');
 
 const Session = user.define('session', {
     sid: {

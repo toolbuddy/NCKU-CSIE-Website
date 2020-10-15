@@ -4,7 +4,7 @@
  * it should only be used after middleware `routes/utils/language.js`.
  */
 
-const {projectRoot, maxAge} = require('settings/server/config.js');
+const {projectRoot, maxAge} = require('../../settings/server/config.js');
 
 module.exports = file => (req, res, next) => {
     res.sendFile(

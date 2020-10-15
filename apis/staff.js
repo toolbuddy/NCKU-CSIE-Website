@@ -7,7 +7,7 @@
 
 const express = require('express');
 
-const getStaff = require('models/staff/operations/get-staff.js');
+const getStaff = require('../models/staff/operations/get-staff.js');
 
 const apis = express.Router();
 

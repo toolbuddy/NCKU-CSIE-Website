@@ -1,6 +1,6 @@
-const {Announcement} = require('models/announcement/operations/associations.js');
+const {Announcement} = require('./associations.js');
 
-const AnnouncementValidationConstraints = require('models/announcement/constraints/patch/announcement.js');
+const AnnouncementValidationConstraints = require('../constraints/patch/announcement.js');
 const validate = require('validate.js');
 
 module.exports = (opt) => {

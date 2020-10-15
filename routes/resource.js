@@ -14,7 +14,7 @@
 
 const express = require('express');
 
-const staticHtml = require('routes/utils/static-html.js');
+const staticHtml = require('./utils/static-html.js');
 
 const router = express.Router({
     caseSensitive: true,

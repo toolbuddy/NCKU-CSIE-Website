@@ -1,5 +1,5 @@
-const LanguageUtils = require('../../common/utils/language.js');
 const deepFreeze = require('deep-freeze');
+const LanguageUtils = require('../../common/utils/language.js');
 
 const map = [
     'faculty',

@@ -7,8 +7,8 @@
  * - file name.
  */
 
-const ValidateUtils = require('models/common/utils/validate.js');
-const {File} = require('models/announcement/operations/associations.js');
+const ValidateUtils = require('../../common/utils/validate.js');
+const {File} = require('./associations.js');
 
 module.exports = (fileId) => {
     try {

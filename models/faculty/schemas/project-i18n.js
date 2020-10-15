@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const {faculty} = require('models/common/utils/connect.js');
-const LanguageUtils = require('models/common/utils/language.js');
+const {faculty} = require('../../common/utils/connect.js');
+const LanguageUtils = require('../../common/utils/language.js');
 
 const ProjectI18n = faculty.define('projectI18n', {
     projectId: {

@@ -1,9 +1,9 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../common/utils/language.js');
 const Sequelize = require('sequelize');
 const {
     Publication,
     PublicationI18n,
-} = require('models/faculty/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

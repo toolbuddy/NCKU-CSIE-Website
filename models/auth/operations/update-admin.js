@@ -1,7 +1,7 @@
-const {Admin} = require('models/auth/operations/associations.js');
+const {Admin} = require('./associations.js');
 
 const validate = require('validate.js');
-const AdminValidationConstraints = require('models/auth/constraints/update/admin.js');
+const AdminValidationConstraints = require('../constraints/update/admin.js');
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.

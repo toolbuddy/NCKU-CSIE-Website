@@ -1,5 +1,5 @@
-const Session = require('models/auth/schemas/session.js');
-const Admin = require('models/auth/schemas/admin.js');
+const Session = require('../schemas/session.js');
+const Admin = require('../schemas/admin.js');
 
 module.exports = {
     Session,

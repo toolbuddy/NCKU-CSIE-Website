@@ -1,4 +1,4 @@
-const projectCategoryUtils = require('models/faculty/utils/project-category.js');
+const projectCategoryUtils = require('../../utils/project-category.js');
 
 const ProjectValidationConstraints = {
     from: {

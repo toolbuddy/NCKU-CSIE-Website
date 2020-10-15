@@ -1,8 +1,5 @@
 const deepFreeze = require('deep-freeze');
-const {
-    host,
-    whiteList,
-} = require('settings/server/config.js');
+const {host, whiteList} = require('./config.js');
 
 const isDevMode = process.env.NODE_ENV === 'development';
 

@@ -3,7 +3,7 @@
  */
 
 const Sequelize = require('sequelize');
-const {username, password, domainName, port, dialect, timezone} = require('settings/database/config.js');
+const {username, password, domainName, port, dialect, timezone} = require('../../../settings/database/config.js');
 
 /**
  * Connect web server to database `databaseName`.

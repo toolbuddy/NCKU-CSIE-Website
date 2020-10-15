@@ -1,16 +1,16 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../common/utils/language.js');
 const {
     AnnouncementI18n,
     File,
     Tag,
-} = require('models/announcement/operations/associations.js');
-const {announcement} = require('models/common/utils/connect.js');
+} = require('./associations.js');
+const {announcement} = require('../../common/utils/connect.js');
 
-const AnnouncementValidationConstraints = require('models/announcement/constraints/put/announcement.js');
-const AnnouncementI18nValidationConstraints = require('models/announcement/constraints/put/announcement-i18n.js');
-const AddedFileValidationConstraints = require('models/announcement/constraints/put/addedFile.js');
-const DeletedFileValidationConstraints = require('models/announcement/constraints/put/deletedFile.js');
-const TagValidationConstraints = require('models/announcement/constraints/put/tag.js');
+const AnnouncementValidationConstraints = require('../constraints/put/announcement.js');
+const AnnouncementI18nValidationConstraints = require('../constraints/put/announcement-i18n.js');
+const AddedFileValidationConstraints = require('../constraints/put/addedFile.js');
+const DeletedFileValidationConstraints = require('../constraints/put/deletedFile.js');
+const TagValidationConstraints = require('../constraints/put/tag.js');
 const validate = require('validate.js');
 
 function sortByValue (a, b) {

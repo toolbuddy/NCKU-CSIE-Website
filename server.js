@@ -1,14 +1,12 @@
 const http = require('http');
-
 const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
+const {port} = require('./settings/server/config.js');
+const contentSecurityPolicy = require('./settings/server/content-security-policy.js');
 
-const {port} = require('settings/server/config.js');
-const contentSecurityPolicy = require('settings/server/content-security-policy.js');
-
-const csie = require('routes/urls.js');
-const apis = require('apis/urls.js');
+const csie = require('./routes/urls.js');
+const apis = require('./apis/urls.js');
 
 /**
  * Create HTTP server instance.

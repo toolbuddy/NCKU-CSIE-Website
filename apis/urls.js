@@ -10,9 +10,9 @@
 const express = require('express');
 const cors = require('cors');
 
-const announcement = require('apis/announcement.js');
-const faculty = require('apis/faculty.js');
-const staff = require('apis/staff.js');
+const announcement = require('./announcement.js');
+const faculty = require('./faculty.js');
+const staff = require('./staff.js');
 
 const apis = express();
 

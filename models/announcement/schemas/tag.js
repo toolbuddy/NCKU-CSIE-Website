@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const {announcement} = require('models/common/utils/connect.js');
-const tagUtils = require('models/announcement/utils/tag.js');
+const {announcement} = require('../../common/utils/connect.js');
+const tagUtils = require('../utils/tag.js');
 
 const Tag = announcement.define('tag', {
     announcementId: {

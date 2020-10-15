@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const {faculty} = require('models/common/utils/connect.js');
-const researchGroupUtils = require('models/faculty/utils/research-group.js');
+const {faculty} = require('../../common/utils/connect.js');
+const researchGroupUtils = require('../utils/research-group.js');
 
 const ResearchGroup = faculty.define('researchGroup', {
     profileId: {

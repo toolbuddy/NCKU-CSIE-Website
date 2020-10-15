@@ -10,9 +10,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 
-const {urlEncoded, jsonParser} = require('routes/utils/body-parser.js');
-
-const getAdminByAccount = require('models/auth/operations/get-admin-by-account.js');
+const {urlEncoded, jsonParser} = require('./utils/body-parser.js');
+const getAdminByAccount = require('../models/auth/operations/get-admin-by-account.js');
 
 const router = express.Router({
     caseSensitive: true,

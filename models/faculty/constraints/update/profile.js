@@ -1,4 +1,4 @@
-const nationUtils = require('models/faculty/utils/nation.js');
+const nationUtils = require('../../utils/nation.js');
 
 const ProfileValidationConstraints = {
     fax: {

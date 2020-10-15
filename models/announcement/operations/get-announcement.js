@@ -19,14 +19,9 @@
  * - tags.
  */
 
-const {
-    Announcement,
-    AnnouncementI18n,
-    File,
-    Tag,
-} = require('models/announcement/operations/associations.js');
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const {Announcement, AnnouncementI18n, File, Tag} = require('./associations.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 
 module.exports = async (opt) => {
     try {

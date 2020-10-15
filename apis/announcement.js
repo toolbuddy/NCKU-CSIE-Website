@@ -15,15 +15,15 @@
 
 const express = require('express');
 
-const getAnnouncementsByAndTags = require('models/announcement/operations/get-announcements-by-and-tags.js');
-const getAnnouncementsByOrTags = require('models/announcement/operations/get-announcements-by-or-tags.js');
-const getPinnedAnnouncementsByAndTags = require('models/announcement/operations/get-pinned-announcements-by-and-tags.js');
-const getPinnedAnnouncementsByOrTags = require('models/announcement/operations/get-pinned-announcements-by-or-tags.js');
+const getAnnouncementsByAndTags = require('../models/announcement/operations/get-announcements-by-and-tags.js');
+const getAnnouncementsByOrTags = require('../models/announcement/operations/get-announcements-by-or-tags.js');
+const getPinnedAnnouncementsByAndTags = require('../models/announcement/operations/get-pinned-announcements-by-and-tags.js');
+const getPinnedAnnouncementsByOrTags = require('../models/announcement/operations/get-pinned-announcements-by-or-tags.js');
 const getPagesByAndTags = require('../models/announcement/operations/get-pages-by-and-tags');
-const getPagesByOrTags = require('models/announcement/operations/get-pages-by-or-tags.js');
-const getHotAnnouncements = require('models/announcement/operations/get-hot-announcements.js');
-const getTvAnnouncements = require('models/announcement/operations/get-tv-announcements.js');
-const getAnnouncement = require('models/announcement/operations/get-announcement.js');
+const getPagesByOrTags = require('../models/announcement/operations/get-pages-by-or-tags.js');
+const getHotAnnouncements = require('../models/announcement/operations/get-hot-announcements.js');
+const getTvAnnouncements = require('../models/announcement/operations/get-tv-announcements.js');
+const getAnnouncement = require('../models/announcement/operations/get-announcement.js');
 
 const apis = express.Router();
 

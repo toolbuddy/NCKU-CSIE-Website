@@ -1,15 +1,15 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../common/utils/language.js');
 const {
     Announcement,
     AnnouncementI18n,
     File,
     Tag,
-} = require('models/announcement/operations/associations.js');
+} = require('./associations.js');
 
-const AnnouncementValidationConstraints = require('models/announcement/constraints/post/announcement.js');
-const AnnouncementI18nValidationConstraints = require('models/announcement/constraints/post/announcement-i18n.js');
-const FileValidationConstraints = require('models/announcement/constraints/post/file.js');
-const TagValidationConstraints = require('models/announcement/constraints/post/tag.js');
+const AnnouncementValidationConstraints = require('../constraints/post/announcement.js');
+const AnnouncementI18nValidationConstraints = require('../constraints/post/announcement-i18n.js');
+const FileValidationConstraints = require('../constraints/post/file.js');
+const TagValidationConstraints = require('../constraints/post/tag.js');
 const validate = require('validate.js');
 
 function sortByValue (a, b) {

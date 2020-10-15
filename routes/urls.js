@@ -18,24 +18,24 @@ const express = require('express');
 const expressSession = require('express-session');
 const SequelizeStore = require('connect-session-sequelize');
 
-const {host, maxAge, projectRoot, secret, staticHost} = require('settings/server/config.js');
-const language = require('routes/utils/language.js');
-const staticHtml = require('routes/utils/static-html.js');
-const staticFile = require('routes/static.js');
-const UrlUtils = require('static/src/js/utils/url.js');
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
-const databases = require('models/common/utils/connect.js');
+const {host, maxAge, projectRoot, secret, staticHost} = require('../settings/server/config.js');
+const language = require('./utils/language.js');
+const staticHtml = require('./utils/static-html.js');
+const staticFile = require('./static.js');
+const UrlUtils = require('../static/src/js/utils/url.js');
+const LanguageUtils = require('../models/common/utils/language.js');
+const ValidateUtils = require('../models/common/utils/validate.js');
+const databases = require('../models/common/utils/connect.js');
 
-const home = require('routes/home.js');
-const about = require('routes/about.js');
-const announcement = require('routes/announcement.js');
-const auth = require('routes/auth.js');
-const developer = require('routes/developer.js');
-const research = require('routes/research.js');
-const resource = require('routes/resource.js');
-const student = require('routes/student.js');
-const user = require('routes/user.js');
+const home = require('./home.js');
+const about = require('./about.js');
+const announcement = require('./announcement.js');
+const auth = require('./auth.js');
+const developer = require('./developer.js');
+const research = require('./research.js');
+const resource = require('./resource.js');
+const student = require('./student.js');
+const user = require('./user.js');
 
 const app = express();
 

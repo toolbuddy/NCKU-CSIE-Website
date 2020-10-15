@@ -1,16 +1,16 @@
-const tables = require('models/staff/operations/associations.js');
-const {staff} = require('models/common/utils/connect.js');
+const tables = require('./associations.js');
+const {staff} = require('../../common/utils/connect.js');
 
 const validate = require('validate.js');
-const validateUtils = require('models/common/utils/validate.js');
-const languageUtils = require('models/common/utils/language.js');
+const validateUtils = require('../../common/utils/validate.js');
+const languageUtils = require('../../common/utils/language.js');
 
-const BusinessValidationConstraints = require('models/staff/constraints/update/business.js');
-const BusinessI18nValidationConstraints = require('models/staff/constraints/update/business-i18n.js');
-const ProfileValidationConstraints = require('models/faculty/constraints/update/profile.js');
-const ProfileI18nValidationConstraints = require('models/faculty/constraints/update/profile-i18n.js');
-const TitleValidationConstraints = require('models/faculty/constraints/update/title.js');
-const TitleI18nValidationConstraints = require('models/faculty/constraints/update/title-i18n.js');
+const BusinessValidationConstraints = require('../constraints/update/business.js');
+const BusinessI18nValidationConstraints = require('../constraints/update/business-i18n.js');
+const ProfileValidationConstraints = require('../../faculty/constraints/update/profile.js');
+const ProfileI18nValidationConstraints = require('../../faculty/constraints/update/profile-i18n.js');
+const TitleValidationConstraints = require('../../faculty/constraints/update/title.js');
+const TitleI18nValidationConstraints = require('../../faculty/constraints/update/title-i18n.js');
 
 const validationConstraints = {
     Business: BusinessValidationConstraints,

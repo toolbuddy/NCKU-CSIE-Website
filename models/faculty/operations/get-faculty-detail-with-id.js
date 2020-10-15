@@ -1,5 +1,5 @@
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 const {
     AwardI18n,
     Award,
@@ -31,7 +31,7 @@ const {
     TechnologyTransfer,
     Title,
     TitleI18n,
-} = require('models/faculty/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

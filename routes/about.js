@@ -14,12 +14,11 @@
 const express = require('express');
 const helmet = require('helmet');
 
-const staticHtml = require('routes/utils/static-html.js');
-const contentSecurityPolicy = require('settings/server/content-security-policy');
-const publicationCategoryUtils = require('models/faculty/utils/publication-category.js');
-const projectCategoryUtils = require('models/faculty/utils/project-category.js');
-
-const getFacultyDetail = require('models/faculty/operations/get-faculty-detail.js');
+const staticHtml = require('./utils/static-html.js');
+const contentSecurityPolicy = require('../settings/server/content-security-policy');
+const publicationCategoryUtils = require('../models/faculty/utils/publication-category.js');
+const projectCategoryUtils = require('../models/faculty/utils/project-category.js');
+const getFacultyDetail = require('../models/faculty/operations/get-faculty-detail.js');
 
 const router = express.Router({
     caseSensitive: true,

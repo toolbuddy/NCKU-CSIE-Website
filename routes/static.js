@@ -10,7 +10,7 @@
 const express = require('express');
 const path = require('path');
 
-const {projectRoot, maxAge} = require('settings/server/config.js');
+const {projectRoot, maxAge} = require('../settings/server/config.js');
 
 const router = express.Router({
     caseSensitive: true,

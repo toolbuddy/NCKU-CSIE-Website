@@ -1,4 +1,4 @@
-const degreeUtils = require('models/faculty/utils/degree.js');
+const degreeUtils = require('../../utils/degree.js');
 
 const StudentValidationConstraints = {
     degree: {

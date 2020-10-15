@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {announcement} = require('models/common/utils/connect.js');
+const {announcement} = require('../../common/utils/connect.js');
 
 const File = announcement.define('file', {
     fileId: {

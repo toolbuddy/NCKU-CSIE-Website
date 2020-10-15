@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const {faculty} = require('models/common/utils/connect.js');
-const nationUtils = require('models/faculty/utils/nation.js');
-const degreeUtils = require('models/faculty/utils/degree.js');
+const {faculty} = require('../../common/utils/connect.js');
+const nationUtils = require('../utils/nation.js');
+const degreeUtils = require('../utils/degree.js');
 
 const Education = faculty.define('education', {
     educationId: {

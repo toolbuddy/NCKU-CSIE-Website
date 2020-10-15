@@ -1,13 +1,13 @@
-const tables = require('models/staff/operations/associations.js');
+const tables = require('./associations.js');
 
 const validate = require('validate.js');
-const validateUtils = require('models/common/utils/validate.js');
-const languageUtils = require('models/common/utils/language.js');
+const validateUtils = require('../../common/utils/validate.js');
+const languageUtils = require('../../common/utils/language.js');
 
-const BusinessValidationConstraints = require('models/staff/constraints/add/business.js');
-const BusinessI18nValidationConstraints = require('models/staff/constraints/add/business-i18n.js');
-const TitleValidationConstraints = require('models/faculty/constraints/add/title.js');
-const TitleI18nValidationConstraints = require('models/faculty/constraints/add/title-i18n.js');
+const BusinessValidationConstraints = require('../constraints/add/business.js');
+const BusinessI18nValidationConstraints = require('../constraints/add/business-i18n.js');
+const TitleValidationConstraints = require('../../faculty/constraints/add/title.js');
+const TitleI18nValidationConstraints = require('../../faculty/constraints/add/title-i18n.js');
 
 const validationConstraints = {
     Business: BusinessValidationConstraints,

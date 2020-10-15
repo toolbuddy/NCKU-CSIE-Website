@@ -13,11 +13,10 @@
 const express = require('express');
 const MarkdownIt = require('markdown-it');
 
-const staticHtml = require('routes/utils/static-html.js');
-const tagUtils = require('models/announcement/utils/tag.js');
-
-const getAnnouncement = require('models/announcement/operations/get-announcement.js');
-const getFile = require('models/announcement/operations/get-file.js');
+const staticHtml = require('./utils/static-html.js');
+const tagUtils = require('../models/announcement/utils/tag.js');
+const getAnnouncement = require('../models/announcement/operations/get-announcement.js');
+const getFile = require('../models/announcement/operations/get-file.js');
 
 const router = express.Router({
     caseSensitive: true,

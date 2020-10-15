@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const {faculty} = require('models/common/utils/connect.js');
-const nationUtils = require('models/faculty/utils/nation.js');
+const {faculty} = require('../../common/utils/connect.js');
+const nationUtils = require('../utils/nation.js');
 
 const Patent = faculty.define('patent', {
     patentId: {

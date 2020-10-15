@@ -1,6 +1,6 @@
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
-const degreeUtils = require('models/faculty/utils/degree.js');
+const LanguageUtils = require('../../../common/utils/language.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
+const degreeUtils = require('../../utils/degree.js');
 
 const StudentValidationConstraints = {
     degree: {

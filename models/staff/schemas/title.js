@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {staff} = require('models/common/utils/connect.js');
+const {staff} = require('../../common/utils/connect.js');
 
 const Title = staff.define('title', {
     titleId: {

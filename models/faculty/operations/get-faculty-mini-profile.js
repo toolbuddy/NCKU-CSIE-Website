@@ -1,8 +1,8 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../common/utils/language.js');
 const {
     Profile,
     ProfileI18n,
-} = require('models/faculty/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

@@ -1,4 +1,4 @@
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const TitleI18nValidationConstraints = {
     language: {

@@ -10,10 +10,10 @@
 
 const express = require('express');
 
-const getFaculty = require('models/faculty/operations/get-faculty.js');
-const getLabs = require('models/faculty/operations/get-labs.js');
-const getPublications = require('models/faculty/operations/get-publication.js');
-const getFacultyDetail = require('models/faculty/operations/get-faculty-detail.js');
+const getFaculty = require('../models/faculty/operations/get-faculty.js');
+const getLabs = require('../models/faculty/operations/get-labs.js');
+const getPublications = require('../models/faculty/operations/get-publication.js');
+const getFacultyDetail = require('../models/faculty/operations/get-faculty-detail.js');
 
 const apis = express.Router();
 

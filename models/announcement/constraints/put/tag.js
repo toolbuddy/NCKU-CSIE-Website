@@ -1,4 +1,4 @@
-const TagUtils = require('models/announcement/utils/tag.js');
+const TagUtils = require('../../utils/tag.js');
 
 const TagValidationConstraints = {
     tagId: {

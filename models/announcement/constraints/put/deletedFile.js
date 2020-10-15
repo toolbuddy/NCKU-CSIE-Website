@@ -1,4 +1,4 @@
-const ValidateUtils = require('models/common/utils/validate.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
 
 const DeletedFileValidationConstraints = {
     fileId: {

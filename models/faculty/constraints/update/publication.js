@@ -1,5 +1,5 @@
-const ValidateUtils = require('models/common/utils/validate.js');
-const publicationCategoryUtils = require('models/faculty/utils/publication-category.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
+const publicationCategoryUtils = require('../../utils/publication-category.js');
 
 const PublicationValidationConstraints = {
     issueYear: {

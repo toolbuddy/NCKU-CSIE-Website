@@ -1,5 +1,5 @@
-const nationUtils = require('models/faculty/utils/nation.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const nationUtils = require('../../utils/nation.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
 
 const PatentValidationConstraints = {
     nation: {

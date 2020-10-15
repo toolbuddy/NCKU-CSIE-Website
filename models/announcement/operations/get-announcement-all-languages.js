@@ -3,7 +3,7 @@ const {
     AnnouncementI18n,
     File,
     Tag,
-} = require('models/announcement/operations/associations.js');
+} = require('./associations.js');
 
 /**
  * A function for getting a specific announcement in all languages

@@ -2,9 +2,9 @@ const Sequelize = require('sequelize');
 const {
     Announcement,
     Tag,
-} = require('models/announcement/operations/associations.js');
-const tagUtils = require('models/announcement/utils/tag.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+} = require('./associations.js');
+const tagUtils = require('../utils/tag.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 
 const op = Sequelize.Op;
 

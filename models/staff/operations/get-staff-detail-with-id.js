@@ -1,5 +1,5 @@
-const LanguageUtils = require('models/common/utils/language.js');
-const ValidateUtils = require('models/common/utils/validate.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 const {
     Business,
     BusinessI18n,
@@ -7,7 +7,7 @@ const {
     ProfileI18n,
     Title,
     TitleI18n,
-} = require('models/staff/operations/associations.js');
+} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

@@ -8,7 +8,7 @@
  * @param {Middleware} next - Next middleware to handle request `req`.
  */
 
-const LanguageUtils = require('models/common/utils/language.js');
+const LanguageUtils = require('../../models/common/utils/language.js');
 
 module.exports = function (req, {}, next) {
     if (typeof (req.query.languageId) === 'undefined')

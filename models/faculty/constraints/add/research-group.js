@@ -1,4 +1,4 @@
-const researchGroupUtils = require('models/faculty/utils/research-group.js');
+const researchGroupUtils = require('../../utils/research-group.js');
 
 const ResearchGroupValidationConstraints = {
     type: {

@@ -1,5 +1,5 @@
-const ValidateUtils = require('models/common/utils/validate.js');
-const {Announcement} = require('models/announcement/operations/associations.js');
+const ValidateUtils = require('../../common/utils/validate.js');
+const {Announcement} = require('./associations.js');
 
 module.exports = async (opt) => {
     try {

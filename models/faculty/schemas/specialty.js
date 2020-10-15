@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {faculty} = require('models/common/utils/connect.js');
+const {faculty} = require('../../common/utils/connect.js');
 
 const Specialty = faculty.define('specialty', {
     specialtyId: {
