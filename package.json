@@ -1,67 +1,58 @@
 {
-  "name": "NCKU-CSIE-Website",
-  "version": "1.0.0",
-  "description": "NCKU CSIE Website",
-  "private": true,
-  "scripts": {
-    "start": "cross-env NODE_ENV=production node server.js",
-    "develop": "cross-env NODE_ENV=development npm-run-all --parallel watch nodemon",
-    "nodemon": "nodemon --config dev/server/nodemon.json server.js",
-    "pre-build": "npm-run-all pre-build:*",
-    "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
-    "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js && shx cp settings/server/content-security-policy.js.default settings/server/content-security-policy.js",
-    "pre-build:tinymce": "npm run copy:tinymce",
-    "build": "cross-env NODE_ENV=production npm-run-all build:css build:html build:js",
-    "build:css": "cross-env NODE_ENV=production webpack --config dev/css/webpack.config.babel.js",
-    "build:html": "cross-env NODE_ENV=production webpack --config dev/html/webpack.config.babel.js",
-    "build:js": "cross-env NODE_ENV=production webpack --config dev/js/webpack.config.babel.js",
-    "clean": "npm-run-all --parallel clean:*",
-    "clean:css": "shx rm -rf static/dist/css",
-    "clean:html": "shx rm -rf static/dist/html",
-    "clean:js": "shx rm -rf static/dist/js",
-    "copy": "npm-run-all --parallel copy:*",
-    "copy:tinymce": "mkdir -p static/dist/js/user/announcement ; cp -r  node_modules/tinymce/icons node_modules/tinymce/plugins node_modules/tinymce/skins node_modules/tinymce/themes static/dist/js/user/announcement",
-    "lint": "npm-run-all --parallel lint:*",
-    "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
-    "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
-    "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-js --fix \"static/src/js/**/*.js\"",
-    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" server.js",
-    "watch": "npm-run-all --parallel watch:*",
-    "watch:css": "webpack --watch --config dev/css/webpack.config.babel.js",
-    "watch:html": "webpack --watch --config dev/html/webpack.config.babel.js",
-    "watch:js": "webpack --watch --config dev/js/webpack.config.babel.js",
-    "d": "npm run develop",
-    "p": "npm run pre-build",
-    "pd": "npm run pre-build:database",
-    "ps": "npm run pre-build:server",
-    "b": "npm run build",
-    "bc": "npm run build:css",
-    "bh": "npm run build:html",
-    "bj": "npm run build:js",
-    "c": "npm run clean",
-    "cc": "npm run clean:css",
-    "ch": "npm run clean:html",
-    "cj": "npm run clean:js",
-    "l": "npm run lint",
-    "lc": "npm run lint:css",
-    "lh": "npm run lint:html",
-    "lj": "npm run lint:js",
-    "ls": "npm run lint:server",
-    "w": "npm run watch",
-    "wc": "npm run watch:css",
-    "wh": "npm run watch:html",
-    "wj": "npm run watch:js"
+  "author": {
+    "name": "ProFatXuanAll",
+    "url": "https://github.com/ProFatXuanAll/"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/toolbuddy/NCKU-CSIE-Website.git"
+  "browserslist": {
+    "production": [
+      "> 0.2%",
+      "not dead",
+      "not OperaMini all",
+      "not OperaMobile <= 46",
+      "not Explorer <= 11",
+      "not ExplorerMobile <= 11",
+      "not QQAndroid <= 1.2",
+      "not Baidu <= 7.12"
+    ],
+    "development": [
+      "last 1 Chrome version",
+      "last 1 Firefox version",
+      "last 1 Safari version"
+    ]
   },
-  "author": "ProFatXuanAll",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/toolbuddy/NCKU-CSIE-Website/issues"
   },
-  "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
+  "contributors": [
+    {
+      "name": "kaeteyaruyo",
+      "url": "https://github.com/kaeteyaruyo"
+    },
+    {
+      "name": "AmyLin0210",
+      "url": "https://github.com/AmyLin0210"
+    },
+    {
+      "name": "Rispolyv0n",
+      "url": "https://github.com/Rispolyv0n"
+    },
+    {
+      "name": "lanhsincheng",
+      "url": "https://github.com/lanhsincheng"
+    },
+    {
+      "name": "ya-sin",
+      "url": "https://github.com/ya-sin"
+    },
+    {
+      "name": "eecheng87",
+      "url": "https://github.com/eecheng87"
+    },
+    {
+      "name": "aqwefghnm",
+      "url": "https://github.com/aqwefghnm"
+    }
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
     "bcrypt": "^4.0.1",
@@ -88,6 +79,7 @@
     "tinymce": "^5.4.2",
     "validate.js": "^0.13.1"
   },
+  "description": "NCKU CSIE Website",
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
@@ -115,9 +107,71 @@
     "webpack": "^5.1.0",
     "webpack-cli": "^4.0.0"
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  }
+  "directories": {},
+  "engines": {
+    "node": "^12.19.0",
+    "npm": "^6.14.8"
+  },
+  "homepage": "https://github.com/toolbuddy/NCKU-CSIE-Website#readme",
+  "license": "ISC",
+  "name": "NCKU-CSIE-Website",
+  "os": [
+    "linux",
+    "darwin"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toolbuddy/NCKU-CSIE-Website.git"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server.js",
+    "develop": "cross-env NODE_ENV=development npm-run-all --parallel watch nodemon",
+    "nodemon": "nodemon --config dev/server/nodemon.json server.js",
+    "pre-build": "npm-run-all pre-build:*",
+    "pre-build:database": "shx cp settings/database/config.js.default settings/database/config.js",
+    "pre-build:server": "shx cp settings/server/config.js.default settings/server/config.js && shx cp settings/server/content-security-policy.js.default settings/server/content-security-policy.js",
+    "pre-build:tinymce": "npm run copy:tinymce",
+    "build": "cross-env NODE_ENV=production npm-run-all build:css build:html build:js",
+    "build:css": "cross-env NODE_ENV=production webpack --config dev/css/webpack.config.js --mode production",
+    "build:html": "cross-env NODE_ENV=production webpack --config dev/html/webpack.config.js --mode production",
+    "build:js": "cross-env NODE_ENV=production webpack --config dev/js/webpack.config.js --mode production",
+    "clean": "npm-run-all --parallel clean:*",
+    "clean:css": "shx rm -rf static/dist/css",
+    "clean:html": "shx rm -rf static/dist/html",
+    "clean:js": "shx rm -rf static/dist/js",
+    "copy": "npm-run-all --parallel copy:*",
+    "copy:tinymce": "mkdir -p static/dist/js/user/announcement ; cp -r  node_modules/tinymce/icons node_modules/tinymce/plugins node_modules/tinymce/skins node_modules/tinymce/themes static/dist/js/user/announcement",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:css": "stylelint --config dev/css/.stylelintrc.js --cache --cache-location node_modules/.cache/.stylelintcache --syntax scss --fix \"static/src/sass/**/*.scss\"",
+    "lint:html": "pug-lint --config dev/html/.pug-lintrc.js static/src/pug",
+    "lint:js": "eslint --config dev/js/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-js --fix \"static/src/js/**/*.js\"",
+    "lint:server": "eslint --config dev/server/.eslintrc.js --cache --cache-location node_modules/.cache/.eslintcache-server --ignore-path dev/server/.eslintignore --fix \"apis/**/*.js\" \"dev/**/*.js\" \"models/**/*.js\" \"routes/**/*.js\" \"settings/**/*.js\" server.js",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:css": "webpack --watch --config dev/css/webpack.config.js --mode development",
+    "watch:html": "webpack --watch --config dev/html/webpack.config.js --mode development",
+    "watch:js": "webpack --watch --config dev/js/webpack.config.js --mode development",
+    "d": "npm run develop",
+    "p": "npm run pre-build",
+    "pd": "npm run pre-build:database",
+    "ps": "npm run pre-build:server",
+    "b": "npm run build",
+    "bc": "npm run build:css",
+    "bh": "npm run build:html",
+    "bj": "npm run build:js",
+    "c": "npm run clean",
+    "cc": "npm run clean:css",
+    "ch": "npm run clean:html",
+    "cj": "npm run clean:js",
+    "l": "npm run lint",
+    "lc": "npm run lint:css",
+    "lh": "npm run lint:html",
+    "lj": "npm run lint:js",
+    "ls": "npm run lint:server",
+    "w": "npm run watch",
+    "wc": "npm run watch:css",
+    "wh": "npm run watch:html",
+    "wj": "npm run watch:js"
+  },
+  "version": "1.0.0"
 }

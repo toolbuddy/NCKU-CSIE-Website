@@ -5,8 +5,9 @@ const announcementTagUtils = require('../../models/announcement/utils/tag.js');
 const facultyResearchGroupUtils = require('../../models/faculty/utils/research-group');
 const facultyDepartmentUtils = require('../../models/faculty/utils/department.js');
 const UrlUtils = require('../../static/src/js/utils/url.js');
-const {projectRoot, host, staticHost} = require('../../settings/server/config.js');
+const {host, staticHost} = require('../../settings/server/config.js');
 
+const projectRoot = path.resolve(__dirname, '../..');
 const pugRoot = path.join(projectRoot, 'static/src/pug');
 const htmlRoot = path.join(projectRoot, 'static/dist/html');
 

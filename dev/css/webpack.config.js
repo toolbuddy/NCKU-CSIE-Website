@@ -5,8 +5,9 @@ const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
 const browserSupportConditions = require('./browserlist.js');
-const {staticHost, projectRoot} = require('../../settings/server/config.js');
+const {staticHost} = require('../../settings/server/config.js');
 
+const projectRoot = path.resolve(__dirname, '../../');
 const sassRoot = path.join(projectRoot, 'static/src/sass');
 const imageRoot = path.join(projectRoot, 'static/src/image');
 const cssRoot = path.join(projectRoot, 'static/dist/css');

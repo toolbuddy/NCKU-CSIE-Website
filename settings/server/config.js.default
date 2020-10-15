@@ -6,7 +6,6 @@
  * @property {string} host        - Web server host.
  * @property {number} maxAge      - Client maximum time to cache result.
  * @property {number} port        - Web server binding port.
- * @property {string} projectRoot - This very project's root path.
  * @property {string} protocol    - Web server protocol, can be either 'http' or 'https'.
  * @property {string} secret      - secret key used to sign cookie.
  * @property {string} staticHost  - Static file server host.
@@ -17,7 +16,6 @@ const config = {
     domainName:  'localhost',
     maxAge:      1000 * 60 * 60 * 24 * 7,
     port:        3000,
-    projectRoot: '/Users/profatxuanall/Desktop/NCKU-CSIE-Website',
     protocol:    'http',
     secret:      'The deepest and darkest secret of NCKU CSIE',
 };

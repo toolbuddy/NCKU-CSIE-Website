@@ -10,7 +10,7 @@
 
 const LanguageUtils = require('../../models/common/utils/language.js');
 
-module.exports = function (req, {}, next) {
+module.exports = (req, {}, next) => {
     if (typeof (req.query.languageId) === 'undefined')
         req.query.languageId = LanguageUtils.defaultLanguageId;
 

@@ -22,7 +22,6 @@ Build a better website for NCKU CSIE.
             - Fill in `domainName` for **server domain name** information (**not required** in **develop** mode).
             - Fill in `protocol`, either `'http'` or `'https'` (**not required** in **develop** mode).
             - Fill in `port` for **server port** information (**not required** in **develop** mode).
-            - Fill in `projectRoot` which is the **path** of your project root directory.
             - Fill in `host` and `staticHost` information (**not required** in **develop** mode).
     - Setup **database** config files
         - **Create** database configuration files by running:

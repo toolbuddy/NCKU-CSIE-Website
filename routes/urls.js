@@ -18,7 +18,7 @@ const express = require('express');
 const expressSession = require('express-session');
 const SequelizeStore = require('connect-session-sequelize');
 
-const {host, maxAge, projectRoot, secret, staticHost} = require('../settings/server/config.js');
+const {host, maxAge, secret, staticHost} = require('../settings/server/config.js');
 const language = require('./utils/language.js');
 const staticHtml = require('./utils/static-html.js');
 const staticFile = require('./static.js');
@@ -37,6 +37,7 @@ const resource = require('./resource.js');
 const student = require('./student.js');
 const user = require('./user.js');
 
+const projectRoot = path.resolve(__dirname, '..');
 const app = express();
 
 /**
