@@ -1,46 +1,46 @@
 const indent = {
-    size:  4,
+    size: 4,
     level: {
-        switchCase:         1,
+        switchCase: 1,
         variableDeclarator: {
-            var:   1,
-            let:   1,
+            var: 1,
+            let: 1,
             const: 1,
         },
-        outerIIFEBody:       1,
-        memberExpression:    0,
+        outerIIFEBody: 1,
+        memberExpression: 0,
         functionDeclaration: {
-            body:       1,
+            body: 1,
             parameters: 2,
         },
         functionExpression: {
-            body:       1,
+            body: 1,
             parameters: 2,
         },
         callExpression: {
             arguments: 1,
         },
-        arrayExpression:   1,
-        objectExpression:  1,
+        arrayExpression: 1,
+        objectExpression: 1,
         importDeclaration: 1,
     },
 };
 const max = {
     character: {
-        code:     160,
-        tab:      4,
+        code: 160,
+        tab: 4,
         comments: 160,
     },
     line: {
-        empty:     1,
-        eof:       1,
-        bof:       0,
-        file:      2000,
+        empty: 1,
+        eof: 1,
+        bof: 0,
+        file: 2000,
         func: 1000,
         statement: 1,
     },
     depth: {
-        callback:    5,
+        callback: 5,
         chainMethod: 2,
     },
 };
@@ -51,7 +51,7 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
-        worker:  true,
+        worker: true,
     },
 
     // ECMAScript parser option.
@@ -72,7 +72,7 @@ module.exports = {
     },
 
     // Stop looking another `.eslintrc` file.
-    root:  true,
+    root: true,
     rules: {
 
         /** Possible Errors */
@@ -112,7 +112,7 @@ module.exports = {
             {
 
                 // Allowed methods of the `console` object.
-                'allow': [
+                allow: [
 
                     // Allowed method `console.warn`.
                     'warn',
@@ -288,6 +288,7 @@ module.exports = {
         // Enforce newline before and after dot.
         'dot-location': [
             'error',
+
             // The dot in a member expression should be on the same line as the object portion.
             'object',
         ],
@@ -446,7 +447,7 @@ module.exports = {
             {
                 // Ignore reassign parameters' property.
                 props: false,
-            }
+            },
         ],
 
         // Disallow use of `__proto__`.
@@ -503,13 +504,13 @@ module.exports = {
             'error',
             {
                 // Disallow short circuit evaluations in expressions.
-                'allowShortCircuit':    false,
+                allowShortCircuit: false,
 
                 // Disallow ternary operators in expressions.
-                'allowTernary':         false,
+                allowTernary: false,
 
                 // Disallow tagged template literals in expressions.
-                'allowTaggedTemplates': false,
+                allowTaggedTemplates: false,
             },
         ],
 
@@ -555,7 +556,7 @@ module.exports = {
             'error',
             {
                 // Additionally checks for unnecessarily wrapped regex literals.
-                'disallowRedundantWrapping': true,
+                disallowRedundantWrapping: true,
             },
         ],
 
@@ -614,25 +615,25 @@ module.exports = {
             {
 
                 // Disallow `isNaN`, use `Number.isNaN`.
-                name:    'isNaN',
+                name: 'isNaN',
                 message: 'Use Number.isNaN instead.',
             },
             {
 
                 // Disallow `isFinite`, use `Number.isFinite`.
-                name:    'isFinite',
+                name: 'isFinite',
                 message: 'Use Number.isFinite instead.',
             },
             {
 
                 // Disallow `parseFloat`, use `Number.parseFloat`.
-                name:    'parseFloat',
+                name: 'parseFloat',
                 message: 'Use Number.parseFloat instead.',
             },
             {
 
                 // Disallow `parseInt`, use `Number.parseInt`.
-                name:    'parseInt',
+                name: 'parseInt',
                 message: 'Use Number.parseInt instead.',
             },
         ],
@@ -648,13 +649,7 @@ module.exports = {
                 hoist: 'functions',
 
                 // An array of identifier names for which shadowing is allowed.
-                allow: [
-                    'cb',
-                    'rej',
-                    'reject',
-                    'res',
-                    'resolve',
-                ],
+                allow: ['cb', 'rej', 'reject', 'res', 'resolve'],
             },
         ],
 
@@ -763,22 +758,11 @@ module.exports = {
         // Require trailing commas.
         'comma-dangle': [
             'error',
-            {
-                // Require trailing commas on array literals and array patterns of destructuring.
-                'array': 'always-multiline',
 
-                // Require trailing commas `export` declarations of ES modules.
-                'exports': 'always-multiline',
-
-                // Require trailing commas `function` declarations and function calls.
-                'functions': 'always-multiline',
-
-                // Require trailing commas `import` declarations of ES modules.
-                'imports': 'always-multiline',
-
-                // Require trailing commas on object literals and object patterns of destructuring.
-                'object': 'always-multiline',
-            },
+            // Requires trailing commas when the last element or property is in a different line
+            // than the closing `]` or `}` and disallows trailing commas when the last element or
+            // property is on the same line as the closing `]` or `}`.
+            'always-multiline',
         ],
 
         // Enforces spacing around commas.
@@ -804,10 +788,7 @@ module.exports = {
         ],
 
         // Enforce spaces inside of computed properties
-        'computed-property-spacing': [
-            'error',
-            'never',
-        ],
+        'computed-property-spacing': ['error', 'never'],
 
         // Require consistent `this`.
         'consistent-this': [
@@ -818,16 +799,10 @@ module.exports = {
         ],
 
         // Require newline at the end of files.
-        'eol-last': [
-            'error',
-            'always',
-        ],
+        'eol-last': ['error', 'always'],
 
         // Disallow spacing between function identifiers and their invocations.
-        'func-call-spacing': [
-            'error',
-            'never',
-        ],
+        'func-call-spacing': ['error', 'never'],
 
         // Require function names to match the name of the variable or property
         // to which they are assigned.
@@ -844,10 +819,7 @@ module.exports = {
         ],
 
         // Require named `function` expressions.
-        'func-names': [
-            'error',
-            'always',
-        ],
+        'func-names': ['error', 'always'],
 
         // Enforce the consistent use of either function declarations or expressions.
         'func-style': [
@@ -880,12 +852,7 @@ module.exports = {
         ],
 
         // Disallow specified identifiers
-        'id-denylist': [
-            'error',
-            'fuck',
-            'shit',
-            'ass',
-        ],
+        'id-denylist': ['error', 'fuck', 'shit', 'ass'],
 
         // Enforce the location of arrow function bodies with implicit returns.
         'implicit-arrow-linebreak': [
@@ -906,8 +873,8 @@ module.exports = {
 
                 // Enforces indentation level for `var`, `let` and `const` declarators.
                 VariableDeclarator: {
-                    var:   indent.level.variableDeclarator.var,
-                    let:   indent.level.variableDeclarator.let,
+                    var: indent.level.variableDeclarator.var,
+                    let: indent.level.variableDeclarator.let,
                     const: indent.level.variableDeclarator.const,
                 },
 
@@ -919,13 +886,13 @@ module.exports = {
 
                 // Enforces indentation level for parameters in and body of a function declaration.
                 FunctionDeclaration: {
-                    body:       indent.level.functionDeclaration.body,
+                    body: indent.level.functionDeclaration.body,
                     parameters: indent.level.functionDeclaration.parameters,
                 },
 
                 // Enforces indentation level for parameters in and body of a function expression.
                 FunctionExpression: {
-                    body:       indent.level.functionExpression.body,
+                    body: indent.level.functionExpression.body,
                     parameters: indent.level.functionExpression.parameters,
                 },
 
@@ -960,10 +927,10 @@ module.exports = {
                 beforeColon: false,
 
                 // Require at least one space between the colon and the value in object literals.
-                afterColon:  true,
+                afterColon: true,
 
                 // Enforces exactly one space after colons in object literals.
-                mode:        'strict',
+                mode: 'strict',
             },
         ],
 
@@ -1003,46 +970,47 @@ module.exports = {
             'error',
             {
             // Require an empty line before block comments.
-                'beforeBlockComment': true,
+                beforeBlockComment: true,
 
                 // Require an empty line after block comments.
-                'afterBlockComment':  true,
+                afterBlockComment: true,
 
                 // Require an empty line before line comments.
-                'beforeLineComment':  true,
+                beforeLineComment: true,
 
                 // Require an empty line after line comments.
-                'afterLineComment':   false,
+                afterLineComment: false,
 
                 // Allows comments to appear at the start of block statements.
-                'allowBlockStart':    true,
+                allowBlockStart: true,
 
                 // Disallow comments to appear at the end of block statements.
-                'allowBlockEnd':      false,
+                allowBlockEnd: false,
 
                 // Allows comments to appear at the start of object literals.
-                'allowObjectStart':   true,
+                allowObjectStart: true,
 
                 // Disallow comments to appear at the end of object literals.
-                'allowObjectEnd':     false,
+                allowObjectEnd: false,
 
                 // Allows comments to appear at the start of array literals.
-                'allowArrayStart':    true,
+                allowArrayStart: true,
 
                 // Disallow comments to appear at the end of array literals.
-                'allowArrayEnd':      false,
+                allowArrayEnd: false,
 
                 // Allows comments to appear at the start of classes.
-                'allowClassStart':    true,
+                allowClassStart: true,
 
                 // Disallow comments to appear at the end of classes.
-                'allowClassEnd':      false,
+                allowClassEnd: false,
             },
         ],
 
         // Require an empty line between class members.
         'lines-between-class-members': [
             'error',
+
             // Require an empty line after class members.
             'always',
         ],
@@ -1052,31 +1020,31 @@ module.exports = {
             'error',
             {
             // Enforces a maximum line length.
-                'code':                   max.character.code,
+                code: max.character.code,
 
                 // Specifies the character width for tab characters.
-                'tabWidth':               max.character.tab,
+                tabWidth: max.character.tab,
 
                 // Enforces a maximum line length for comments.
-                'comments':               max.character.comments,
+                comments: max.character.comments,
 
                 // Do not ignores all trailing comments and comments on their own line.
-                'ignoreComments':         false,
+                ignoreComments: false,
 
                 // Do not ignores only trailing comments.
-                'ignoreTrailingComments': false,
+                ignoreTrailingComments: false,
 
                 // Ignores lines that contain a URL.
-                'ignoreUrls':             true,
+                ignoreUrls: true,
 
                 // Do not ignores lines that contain a double-quoted or single-quoted string.
-                'ignoreStrings':          false,
+                ignoreStrings: false,
 
                 // Do not ignores lines that contain a template literal.
-                'ignoreTemplateLiterals': false,
+                ignoreTemplateLiterals: false,
 
                 // Ignores lines that contain a RegExp literal.
-                'ignoreRegExpLiterals':   true,
+                ignoreRegExpLiterals: true,
             },
         ],
 
@@ -1085,13 +1053,13 @@ module.exports = {
             'error',
             {
             // Enforces a maximum number of lines in a file.
-                'max':            max.line.file,
+                max: max.line.file,
 
                 // Ignore lines made up purely of whitespace.
-                'skipBlankLines': true,
+                skipBlankLines: true,
 
                 // Ignore lines containing just comments.
-                'skipComments':   true,
+                skipComments: true,
             },
         ],
 
@@ -1101,20 +1069,23 @@ module.exports = {
             {
                 // Enforces a maximum number of lines in a function.
                 max: max.line.func,
+
                 // Ignore lines made up purely of whitespace.
                 skipBlankLines: true,
+
                 // Ignore lines containing just comments.
                 skipComments: true,
+
                 // Include any code included in IIFEs.
                 IIFEs: true,
-            }
+            },
         ],
 
         // Enforce a maximum depth that callbacks can be nested.
         'max-nested-callbacks': [
             'error',
             {
-                'max': max.depth.callback,
+                max: max.depth.callback,
             },
         ],
 
@@ -1131,35 +1102,33 @@ module.exports = {
         'max-statements-per-line': [
             'error',
             {
-                'max': max.line.statement,
+                max: max.line.statement,
             },
         ],
 
         // Enforces newlines between the operands of a ternary expression
         // if the expression spans multiple lines.
-        'multiline-ternary': [
-            'error',
-            'always-multiline',
-        ],
+        'multiline-ternary': ['error', 'always-multiline'],
 
         // Require constructor names to begin with a capital letter
         'new-cap': [
             'error',
             {
             // Require all `new` operators to be called with uppercase-started functions.
-                'newIsCap':   true,
+                newIsCap: true,
 
                 // Allows uppercase-started functions to be called without new operators.
-                'capIsNew':   false,
+                capIsNew: false,
 
                 // Enables checks on object properties.
-                'properties': true,
+                properties: true,
             },
         ],
 
         // Require parentheses when invoking a constructor with no arguments.
         'new-parens': [
             'error',
+
             // Enforces parenthesis after a new constructor with no arguments.
             'always',
         ],
@@ -1169,7 +1138,7 @@ module.exports = {
             'error',
             {
             // Allows chains up to a specified depth.
-                'ignoreChainWithDepth': max.depth.chainMethod,
+                ignoreChainWithDepth: max.depth.chainMethod,
             },
         ],
 
@@ -1192,9 +1161,9 @@ module.exports = {
         'no-multiple-empty-lines': [
             'error',
             {
-                'max':    max.line.empty,
-                'maxEOF': max.line.eof,
-                'maxBOF': max.line.bof,
+                max: max.line.empty,
+                maxEOF: max.line.eof,
+                maxBOF: max.line.bof,
             },
         ],
 
@@ -1209,7 +1178,7 @@ module.exports = {
             'error',
             {
             // Allows unary operators `++` and `--` in the afterthought (final expression) of a for loop.
-                'allowForLoopAfterthoughts': true,
+                allowForLoopAfterthoughts: true,
             },
         ],
 
@@ -1221,10 +1190,10 @@ module.exports = {
             'error',
             {
             // Disallow trailing whitespace on empty lines.
-                'skipBlankLines': false,
+                skipBlankLines: false,
 
                 // Disallow trailing whitespace in comment blocks.
-                'ignoreComments': false,
+                ignoreComments: false,
             },
         ],
 
@@ -1233,16 +1202,16 @@ module.exports = {
             'error',
             {
                 // Disallow dangling underscores in members of the `this` object.
-                'allowAfterThis':       false,
+                allowAfterThis: false,
 
                 // Disallow dangling underscores in members of the `super` object.
-                'allowAfterSuper':      false,
+                allowAfterSuper: false,
 
                 // Disallow dangling underscores in members of the `this.constructor` object.
                 allowAfterThisConstructor: false,
 
                 // Disallow dangling underscores in method names.
-                'enforceInMethodNames': false,
+                enforceInMethodNames: false,
 
                 // Disallow dangling underscores in function parameter names.
                 allowFunctionParams: false,
@@ -1268,10 +1237,10 @@ module.exports = {
             'error',
             {
             // Require line breaks if there are line breaks inside properties or between properties.
-                'multiline':  true,
+                multiline: true,
 
                 // Require that either both curly braces, or neither, directly enclose newlines.
-                'consistent': true,
+                consistent: true,
             },
         ],
 
@@ -1283,10 +1252,10 @@ module.exports = {
             'never',
             {
             // Require spacing inside of braces of objects beginning and/or ending with an array element.
-                'arraysInObjects':  false,
+                arraysInObjects: false,
 
                 // Require spacing inside of braces of objects beginning and/or ending with an object element.
-                'objectsInObjects': false,
+                objectsInObjects: false,
             },
         ],
 
@@ -1295,13 +1264,14 @@ module.exports = {
             'error',
             {
             // Permit all property specifications on the same line.
-                'allowAllPropertiesOnSameLine': true,
+                allowAllPropertiesOnSameLine: true,
             },
         ],
 
         // Enforce variables to be declared separately in functions.
         'one-var': [
             'error',
+
             // Requires multiple variable declarations per scope.
             'never',
         ],
@@ -1309,6 +1279,7 @@ module.exports = {
         // Require newlines around variable declarations.
         'one-var-declaration-per-line': [
             'error',
+
             // Enforces a newline around variable declarations.
             'always',
         ],
@@ -1316,6 +1287,7 @@ module.exports = {
         // Require or disallow assignment operator shorthand where possible.
         'operator-assignment': [
             'error',
+
             // Requires assignment operator shorthand where possible.
             'always',
         ],
@@ -1331,6 +1303,7 @@ module.exports = {
         // Disallow padding within blocks.
         'padded-blocks': [
             'error',
+
             // Disallow empty lines at the beginning and ending of block statements and classes.
             'never',
         ],
@@ -1359,16 +1332,17 @@ module.exports = {
             {
             // Allows strings to use single-quotes or double-quotes
             // so long as the string contains a quote that would have to be escaped otherwise.
-                'avoidEscape':           true,
+                avoidEscape: true,
 
                 // Allows strings to use backticks.
-                'allowTemplateLiterals': true,
+                allowTemplateLiterals: true,
             },
         ],
 
         // Require semicolons instead of ASI.
         'semi': [
             'error',
+
             // Requires semicolons at the end of statements.
             'always',
         ],
@@ -1378,11 +1352,11 @@ module.exports = {
             'error',
             {
             // Space is disallowed before semicolons.
-                'before': false,
+                before: false,
 
                 // Space is enforced after semicolons,
                 // only applied if a semicolon is not at the end of line.
-                'after':  true,
+                after: true,
             },
         ],
 
@@ -1397,6 +1371,7 @@ module.exports = {
         // Require space before blocks.
         'space-before-blocks': [
             'error',
+
             // Blocks must always have at least one preceding space.
             'always',
         ],
@@ -1404,6 +1379,7 @@ module.exports = {
         // Require a space before function parenthesis.
         'space-before-function-paren': [
             'error',
+
             // Requires a space followed by the `(` of arguments.
             'always',
         ],
@@ -1411,6 +1387,7 @@ module.exports = {
         // Enforce spaces inside of parentheses.
         'space-in-parens': [
             'error',
+
             // Disallow spaces in empty parentheses.
             'never',
         ],
@@ -1423,10 +1400,10 @@ module.exports = {
             'error',
             {
             // Applies to unary word operators such as: `new`, `delete`, `typeof`, `void`, `yield`.
-                'words':    true,
+                words: true,
 
                 // Do not applies to unary operators such as: `-`, `+`, `--`, `++`, `!`.
-                'nonwords': false,
+                nonwords: false,
             },
         ],
 
@@ -1436,7 +1413,7 @@ module.exports = {
             'always',
             {
             // Considered exceptions to the rule.
-                'exceptions': [ '*', ],
+                exceptions: ['*'],
             },
         ],
 
@@ -1445,16 +1422,17 @@ module.exports = {
             'error',
             {
             // Require one or more spaces after colons.
-                'after':  true,
+                after: true,
 
                 // Disallow spaces before colons.
-                'before': false,
+                before: false,
             },
         ],
 
         // Disallow spacing between template tags and their literals.
         'template-tag-spacing': [
             'error',
+
             // Disallow spaces between a tag function and its template literal.
             'never',
         ],
@@ -1462,6 +1440,7 @@ module.exports = {
         // Disallow the Unicode Byte Order Mark.
         'unicode-bom': [
             'error',
+
             // Files must not begin with the Unicode BOM.
             'never',
         ],
@@ -1475,19 +1454,20 @@ module.exports = {
             'as-needed',
             {
             // Allow no braces for object literals.
-                'requireReturnForObjectLiteral': false,
+                requireReturnForObjectLiteral: false,
             },
         ],
 
         // Allows omitting parens when there is only one argument.
         'arrow-parens': [
             'error',
+
             // Enforces no braces where they can be omitted.
             'as-needed',
             {
             // Modifies the as-needed rule in order to require parens
             // if the function body is in an instructions block.
-                'requireForBlockBody': true,
+                requireForBlockBody: true,
             },
         ],
 
@@ -1496,10 +1476,10 @@ module.exports = {
             'error',
             {
             //  There should be one or more spaces before arrow.
-                'before': true,
+                before: true,
 
                 //  There should be one or more spaces after arrow.
-                'after':  true,
+                after: true,
             },
         ],
 
@@ -1511,10 +1491,10 @@ module.exports = {
             'error',
             {
             // Spaces are disallowed before `*`.
-                'before': false,
+                before: false,
 
                 // A space is required after `*`.
-                'after':  true,
+                after: true,
             },
         ],
 
@@ -1536,7 +1516,7 @@ module.exports = {
             {
             // If re-exporting from an imported module,
             // you should add the imports to the import-statement, and export that directly.
-                'includeExports': true,
+                includeExports: true,
             },
         ],
 
@@ -1561,6 +1541,7 @@ module.exports = {
         // Require object literal shorthand syntax.
         'object-shorthand': [
             'error',
+
             // Expects that the shorthand will be used whenever possible.
             'always',
         ],
@@ -1574,11 +1555,11 @@ module.exports = {
             {
                 // If any variables in destructuring should be `const`,
                 // this rule warns for those variables.
-                'destructuring':          'any',
+                destructuring: 'any',
 
                 // Do not ignore variables that are read
                 // between the declaration and the first assignment.
-                'ignoreReadBeforeAssign': false,
+                ignoreReadBeforeAssign: false,
             },
         ],
 
@@ -1601,6 +1582,7 @@ module.exports = {
         // Disallow spacing between rest and spread operators and their expressions.
         'rest-spread-spacing': [
             'error',
+
             // Whitespace is not allowed between spread operators and their expressions.
             'never',
         ],
@@ -1621,10 +1603,10 @@ module.exports = {
             'error',
             {
             // Spaces are disallowed before `*`.
-                'before': false,
+                before: false,
 
                 // Spaces are required after `*`.
-                'after':  true,
+                after: true,
             },
         ],
     },
