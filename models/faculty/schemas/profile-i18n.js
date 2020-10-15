@@ -1,35 +1,35 @@
-import Sequelize from 'sequelize';
-import { faculty, } from 'models/common/utils/connect.js';
-import LanguageUtils from 'models/common/utils/language.js';
+const Sequelize = require('sequelize');
+const {faculty} = require('models/common/utils/connect.js');
+const LanguageUtils = require('models/common/utils/language.js');
 
-const ProfileI18n = faculty.define( 'profileI18n', {
+const ProfileI18n = faculty.define('profileI18n', {
     profileId: {
-        type:       Sequelize.INTEGER.UNSIGNED,
-        allowNull:  false,
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
         primaryKey: true,
     },
     language: {
-        type:         Sequelize.TINYINT.UNSIGNED,
-        allowNull:    false,
-        primaryKey:   true,
+        type: Sequelize.TINYINT.UNSIGNED,
+        allowNull: false,
+        primaryKey: true,
         defaultValue: LanguageUtils.defaultLanguageId,
     },
     name: {
-        type:      Sequelize.STRING( 100 ),
+        type: Sequelize.STRING(100),
         allowNull: true,
     },
     officeAddress: {
-        type:      Sequelize.STRING( 100 ),
+        type: Sequelize.STRING(100),
         allowNull: true,
     },
     labName: {
-        type:      Sequelize.STRING( 100 ),
+        type: Sequelize.STRING(100),
         allowNull: true,
     },
     labAddress: {
-        type:      Sequelize.STRING( 100 ),
+        type: Sequelize.STRING(100),
         allowNull: true,
     },
-} );
+});
 
-export default ProfileI18n;
+module.exports = ProfileI18n;

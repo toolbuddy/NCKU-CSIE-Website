@@ -5,9 +5,9 @@
  * - `/api/staff`
  */
 
-import express from 'express';
+const express = require('express');
 
-import getStaff from 'models/staff/operations/get-staff.js';
+const getStaff = require('models/staff/operations/get-staff.js');
 
 const apis = express.Router();
 
@@ -15,13 +15,13 @@ const apis = express.Router();
  * Resolve URL `/api/staff`.
  */
 
-apis.get( '/', async ( req, res, next ) => {
+apis.get('/', async (req, res, next) => {
     try {
-        res.json( await getStaff( Number( req.query.languageId ) ) );
+        res.json(await getStaff(Number(req.query.languageId)));
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
-export default apis;
+module.exports = apis;

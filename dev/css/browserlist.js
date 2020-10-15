@@ -1,4 +1,4 @@
-export const browserSupportConditions = [
+const browserSupportConditions = [
     // The last 2 versions for each browser
     'last 2 versions',
 
@@ -10,7 +10,6 @@ export const browserSupportConditions = [
 
     // All minor/patch releases of last 2 major versions
     'last 2 major versions',
-    'last 2 iOS major versions',
 
     // All versions released since year 2015
     'since 2015',
@@ -22,4 +21,4 @@ export const browserSupportConditions = [
     'not ie <= 11',
 ];
 
-export default browserSupportConditions;
+module.exports = browserSupportConditions;

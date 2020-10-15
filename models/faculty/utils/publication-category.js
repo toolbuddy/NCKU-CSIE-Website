@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/publication-category.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/publication-category.js');
 
-export const publicationCategoryUtils = new I18nUtils( {
+const publicationCategoryUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default publicationCategoryUtils;
+module.exports = publicationCategoryUtils;

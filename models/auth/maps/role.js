@@ -5,42 +5,31 @@
  * @property {string[]} support - Supporting language list.
  */
 
-import LanguageUtils from '../../common/utils/language.js';
-import deepFreeze from 'deep-freeze';
+const LanguageUtils = require('../../common/utils/language.js');
+const deepFreeze = require('deep-freeze');
 
-const map = [
-    'admin',
-    'faculty',
-    'staff',
-];
+const map = ['admin', 'faculty', 'staff'];
 
 const defaultOption = 'admin';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        admin:   'admin',
+    [LanguageUtils.getLanguageId('en-US')]: {
+        admin: 'admin',
         faculty: 'faculty',
-        staff:   'staff',
+        staff: 'staff',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        admin:   '管理員',
+    [LanguageUtils.getLanguageId('zh-TW')]: {
+        admin: '管理員',
         faculty: '教職員',
-        staff:   '系辦成員',
+        staff: '系辦成員',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
-export default {
+module.exports = {
     defaultOption,
     i18n,
     map,
 };
-
-export {
-    defaultOption,
-    i18n,
-    map,
-};
-

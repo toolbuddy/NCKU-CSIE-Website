@@ -1,9 +1,9 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('models/common/utils/language.js');
 
 const ConferenceValidationConstraints = {
     hostYear: {
-        presence:     true,
-        type:         'integer',
+        presence: true,
+        type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
@@ -12,11 +12,11 @@ const ConferenceValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
 };
 
-export default ConferenceValidationConstraints;
+module.exports = ConferenceValidationConstraints;

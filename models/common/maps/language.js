@@ -6,16 +6,13 @@
  * @property {string}   default - Default language.
  */
 
-import deepFreeze from 'deep-freeze';
+const deepFreeze = require('deep-freeze');
 
 const languageMap = {
-    'support': [
-        'zh-TW',
-        'en-US',
-    ],
-    'default': 'zh-TW',
+    support: ['zh-TW', 'en-US'],
+    default: 'zh-TW',
 };
 
-deepFreeze( languageMap );
+deepFreeze(languageMap);
 
-export default languageMap;
+module.exports = languageMap;

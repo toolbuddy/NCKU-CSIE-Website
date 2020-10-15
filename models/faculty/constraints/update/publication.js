@@ -1,40 +1,40 @@
-import ValidateUtils from 'models/common/utils/validate.js';
-import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
+const ValidateUtils = require('models/common/utils/validate.js');
+const publicationCategoryUtils = require('models/faculty/utils/publication-category.js');
 
 const PublicationValidationConstraints = {
     issueYear: {
-        presence:     false,
-        type:         'integer',
+        presence: false,
+        type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     issueMonth: {
-        presence:     false,
-        type:         'integer',
+        presence: false,
+        type: 'integer',
         numericality: {
-            greaterThan:       0,
+            greaterThan: 0,
             lessThanOrEqualTo: 12,
         },
     },
     category: {
         presence: false,
-        type:     {
-            type: value => publicationCategoryUtils.isSupportedId( value ),
+        type: {
+            type: value => publicationCategoryUtils.isSupportedId(value),
         },
     },
     international: {
         presence: false,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
+        type: {
+            type: value => ValidateUtils.isValidBoolean(value),
         },
     },
     refereed: {
         presence: false,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
+        type: {
+            type: value => ValidateUtils.isValidBoolean(value),
         },
     },
 };
 
-export default PublicationValidationConstraints;
+module.exports = PublicationValidationConstraints;

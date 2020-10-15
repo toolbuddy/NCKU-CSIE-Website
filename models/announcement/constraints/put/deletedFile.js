@@ -1,12 +1,12 @@
-import ValidateUtils from 'models/common/utils/validate.js';
+const ValidateUtils = require('models/common/utils/validate.js');
 
 const DeletedFileValidationConstraints = {
     fileId: {
         presence: true,
-        type:     {
+        type: {
             type: ValidateUtils.isValidId,
         },
     },
 };
 
-export default DeletedFileValidationConstraints;
+module.exports = DeletedFileValidationConstraints;

@@ -1,3 +1,3 @@
 const TitleValidationConstraints = {};
 
-export default TitleValidationConstraints;
+module.exports = TitleValidationConstraints;

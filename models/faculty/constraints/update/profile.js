@@ -1,10 +1,10 @@
-import nationUtils from 'models/faculty/utils/nation.js';
+const nationUtils = require('models/faculty/utils/nation.js');
 
 const ProfileValidationConstraints = {
     fax: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 20,
         },
         format: {
@@ -13,24 +13,24 @@ const ProfileValidationConstraints = {
     },
     email: {
         presence: false,
-        type:     'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 2083,
         },
-        email:    true,
+        email: true,
     },
     personalWeb: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 2083,
         },
-        url:      true,
+        url: true,
     },
     nation: {
         presence: false,
-        type:     {
-            type: value => nationUtils.isSupportedId( value ),
+        type: {
+            type: value => nationUtils.isSupportedId(value),
         },
     },
     photo: {
@@ -40,8 +40,8 @@ const ProfileValidationConstraints = {
     },
     officeTel: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 30,
         },
         format: {
@@ -50,8 +50,8 @@ const ProfileValidationConstraints = {
     },
     labTel: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 30,
         },
         format: {
@@ -60,16 +60,16 @@ const ProfileValidationConstraints = {
     },
     labWeb: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 2083,
         },
-        url:      true,
+        url: true,
     },
     order: {
         presence: false,
-        type:     'integer',
+        type: 'integer',
     },
 };
 
-export default ProfileValidationConstraints;
+module.exports = ProfileValidationConstraints;

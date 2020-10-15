@@ -1,3 +1,3 @@
 const BusinessValidationConstraints = {};
 
-export default BusinessValidationConstraints;
+module.exports = BusinessValidationConstraints;

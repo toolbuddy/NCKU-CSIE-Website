@@ -1,4 +1,4 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('models/common/utils/language.js');
 
 const StudentAwardI18nValidationConstraints = {
     language: {
@@ -11,11 +11,11 @@ const StudentAwardI18nValidationConstraints = {
     },
     award: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
 };
 
-export default StudentAwardI18nValidationConstraints;
+module.exports = StudentAwardI18nValidationConstraints;

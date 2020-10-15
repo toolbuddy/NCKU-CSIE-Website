@@ -5,37 +5,28 @@
  * @property {string[]} support - Supporting language list.
  */
 
-import LanguageUtils from '../../common/utils/language.js';
-import deepFreeze from 'deep-freeze';
+const LanguageUtils = require('../../common/utils/language.js');
+const deepFreeze = require('deep-freeze');
 
-const map = [
-    'receivedYear',
-    'award',
-];
+const map = ['receivedYear', 'award'];
 
 const defaultOption = 'receivedYear';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        receivedYear:      'received year',
-        award:           'award',
+    [LanguageUtils.getLanguageId('en-US')]: {
+        receivedYear: 'received year',
+        award: 'award',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        receivedYear:  '獲獎日期',
-        award:         '獎項',
+    [LanguageUtils.getLanguageId('zh-TW')]: {
+        receivedYear: '獲獎日期',
+        award: '獎項',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
-export default {
-    defaultOption,
-    i18n,
-    map,
-};
-
-export {
+module.exports = {
     defaultOption,
     i18n,
     map,

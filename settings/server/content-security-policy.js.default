@@ -1,37 +1,37 @@
-import deepFreeze from 'deep-freeze';
-import {
+const deepFreeze = require('deep-freeze');
+const {
     host,
     whiteList,
-} from 'settings/server/config.js';
+} = require('settings/server/config.js');
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
-export default ( opt ) => {
+module.exports = (opt) => {
     const config = {
-        baseUri:                 [],
-        connectSrc:              [],
-        defaultSrc:              [],
-        fontSrc:                 [],
-        formAction:              [],
-        frameAncestors:          [],
-        frameSrc:                [],
-        imgSrc:                  [],
-        mediaSrc:                [],
-        reportTo:                `${ host }/auth/report`,
-        reportUri:               `${ host }/auth/report`,
-        scriptSrc:               [],
-        styleSrc:                [],
-        objectSrc:               [],
-        workerSrc:               [],
+        baseUri: [],
+        connectSrc: [],
+        defaultSrc: [],
+        fontSrc: [],
+        formAction: [],
+        frameAncestors: [],
+        frameSrc: [],
+        imgSrc: [],
+        mediaSrc: [],
+        reportTo: `${host}/auth/report`,
+        reportUri: `${host}/auth/report`,
+        scriptSrc: [],
+        styleSrc: [],
+        objectSrc: [],
+        workerSrc: [],
         upgradeInsecureRequests: false,
     };
 
-    config.baseUri.push( "'self'" );
+    config.baseUri.push("'self'");
     config.connectSrc.push(
         "'self'",
-        ...whiteList
+        ...whiteList,
     );
-    config.defaultSrc.push( "'self'" );
+    config.defaultSrc.push("'self'");
     config.fontSrc.push(
         "'self'",
         ...whiteList,
@@ -43,12 +43,8 @@ export default ( opt ) => {
         "'self'",
         ...whiteList,
     );
-    config.frameAncestors.push(
-        "'none'"
-    );
-    config.frameSrc.push(
-        "'none'"
-    );
+    config.frameAncestors.push("'none'");
+    config.frameSrc.push("'none'");
     config.imgSrc.push(
         "'self'",
         ...whiteList,
@@ -73,30 +69,30 @@ export default ( opt ) => {
         'https://maps.gstatic.com',
     );
 
-    config.objectSrc.push( "'none'" );
-    config.workerSrc.push( "'self'" );
+    config.objectSrc.push("'none'");
+    config.workerSrc.push("'self'");
 
     opt = opt || {};
 
-    if ( !( opt instanceof Object ) )
-        throw new TypeError( 'invalid configuration for content security policy: opt should be a object' );
+    if (!(opt instanceof Object))
+        throw new TypeError('invalid configuration for content security policy: opt should be a object');
 
-    Reflect.ownKeys( opt ).forEach( ( key ) => {
-        if ( !( opt[ key ] instanceof Array ) )
-            throw new TypeError( 'invalid configuration for content security policy: opt[key] should be an array' );
-        config[ key ].push( ...opt[ key ] );
-    } );
+    Reflect.ownKeys(opt).forEach((key) => {
+        if (!(opt[key] instanceof Array))
+            throw new TypeError('invalid configuration for content security policy: opt[key] should be an array');
+        config[key].push(...opt[key]);
+    });
 
     /**
      * Relax policy for browser sync when in development mode.
      */
 
-    if ( isDevMode ) {
-        config.scriptSrc.push( "'unsafe-inline'" );
-        config.styleSrc.push( "'unsafe-inline'" );
+    if (isDevMode) {
+        config.scriptSrc.push("'unsafe-inline'");
+        config.styleSrc.push("'unsafe-inline'");
     }
 
-    deepFreeze( config );
+    deepFreeze(config);
 
     return config;
 };

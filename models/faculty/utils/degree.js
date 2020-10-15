@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/degree.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/degree.js');
 
-export const degreeUtils = new I18nUtils( {
+const degreeUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default degreeUtils;
+module.exports = degreeUtils;

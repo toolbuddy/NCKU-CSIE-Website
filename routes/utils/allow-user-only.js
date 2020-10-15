@@ -17,14 +17,14 @@
  * @param {Middleware} next - Next middleware to handle request `req`.
  */
 
-export default async function ( req, res, next ) {
-    if ( !req.session.user ) {
-        if ( req.path === '/id' || req.method !== 'GET' )
-            res.status( 401 ).send( { message: 'Unauthorized.', } );
+module.exports = async function (req, res, next) {
+    if (!req.session.user) {
+        if (req.path === '/id' || req.method !== 'GET')
+            res.status(401).send({message: 'Unauthorized.'});
 
         else
-            res.redirect( '/login' );
+            res.redirect('/login');
     }
     else
         next();
-}
+};

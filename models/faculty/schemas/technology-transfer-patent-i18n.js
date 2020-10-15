@@ -1,23 +1,23 @@
-import Sequelize from 'sequelize';
-import { faculty, } from 'models/common/utils/connect.js';
-import LanguageUtils from 'models/common/utils/language.js';
+const Sequelize = require('sequelize');
+const {faculty} = require('models/common/utils/connect.js');
+const LanguageUtils = require('models/common/utils/language.js');
 
-const TechnologyTransferPatentI18n = faculty.define( 'technologyTransferPatentI18n', {
+const TechnologyTransferPatentI18n = faculty.define('technologyTransferPatentI18n', {
     technologyTransferPatentId: {
-        type:       Sequelize.INTEGER.UNSIGNED,
-        allowNull:  false,
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
         primaryKey: true,
     },
     language: {
-        type:         Sequelize.TINYINT.UNSIGNED,
-        allowNull:    false,
-        primaryKey:   true,
+        type: Sequelize.TINYINT.UNSIGNED,
+        allowNull: false,
+        primaryKey: true,
         defaultValue: LanguageUtils.defaultLanguageId,
     },
     patent: {
-        type:      Sequelize.STRING( 300 ),
+        type: Sequelize.STRING(300),
         allowNull: false,
     },
-} );
+});
 
-export default TechnologyTransferPatentI18n;
+module.exports = TechnologyTransferPatentI18n;

@@ -10,48 +10,42 @@
  * - roleId.
  */
 
-import ValidateUtils from 'models/common/utils/validate.js';
-import { Admin, } from 'models/auth/operations/associations.js';
+const ValidateUtils = require('models/common/utils/validate.js');
+const {Admin} = require('models/auth/operations/associations.js');
 
-export default ( account ) => {
+module.exports = (account) => {
     try {
-        if ( !ValidateUtils.isValidString( account ) ) {
-            const error = new Error( 'Invalid account' );
+        if (!ValidateUtils.isValidString(account)) {
+            const error = new Error('Invalid account');
             error.status = 400;
             throw error;
         }
 
-        return Admin.findOne( {
-            attributes: [
-                'userId',
-                'account',
-                'password',
-                'role',
-                'roleId',
-            ],
+        return Admin.findOne({
+            attributes: ['userId', 'account', 'password', 'role', 'roleId'],
             where: {
                 account,
             },
-        } )
-        .then( ( data ) => {
-            if ( !data ) {
-                const error = new Error( 'User not found' );
+        }).
+        then((data) => {
+            if (!data) {
+                const error = new Error('User not found');
                 error.status = 404;
                 throw error;
             }
             else {
                 return {
-                    userId:   data.userId,
-                    account:  data.account,
+                    userId: data.userId,
+                    account: data.account,
                     password: data.password,
-                    role:     data.role,
-                    roleId:   data.roleId,
+                    role: data.role,
+                    roleId: data.roleId,
                 };
             }
-        } );
+        });
     }
-    catch ( error ) {
-        if ( !error.status )
+    catch (error) {
+        if (!error.status)
             error.status = 500;
         throw error;
     }

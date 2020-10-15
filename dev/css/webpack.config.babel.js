@@ -1,16 +1,16 @@
-import path from 'path';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import StyleLintPlugin from 'stylelint-webpack-plugin';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
-import browserSupportConditions from './browserlist.js';
-import { staticHost, projectRoot, } from '../../settings/server/config.js';
+const browserSupportConditions = require('./browserlist.js');
+const {staticHost, projectRoot} = require('../../settings/server/config.js');
 
-const sassRoot = path.join( projectRoot, 'static/src/sass' );
-const imageRoot = path.join( projectRoot, 'static/src/image' );
-const cssRoot = path.join( projectRoot, 'static/dist/css' );
-const nodeModulesRoot = path.join( projectRoot, 'node_modules' );
+const sassRoot = path.join(projectRoot, 'static/src/sass');
+const imageRoot = path.join(projectRoot, 'static/src/image');
+const cssRoot = path.join(projectRoot, 'static/dist/css');
+const nodeModulesRoot = path.join(projectRoot, 'node_modules');
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
@@ -21,7 +21,7 @@ const isDevMode = process.env.NODE_ENV === 'development';
  * Using single CSS to fit all is not a good idea, should be designed carefully later on.
  */
 
-export default {
+module.exports = {
     /**
      * Webpack built-in develop tools.
      *
@@ -40,78 +40,78 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    isDevMode ? 'development' : 'production',
+    mode: isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
      */
 
-    entry:   {
+    entry: {
         // Route `about`
-        'about/award':          path.join( sassRoot, 'about/award.scss' ),
-        'about/contact':        path.join( sassRoot, 'about/contact.scss' ),
-        'about/faculty-detail': path.join( sassRoot, 'about/faculty-detail.scss' ),
-        'about/faculty':        path.join( sassRoot, 'about/faculty.scss' ),
-        'about/index':          path.join( sassRoot, 'about/index.scss' ),
-        'about/intro':          path.join( sassRoot, 'about/intro.scss' ),
-        'about/staff':          path.join( sassRoot, 'about/staff.scss' ),
+        'about/award': path.join(sassRoot, 'about/award.scss'),
+        'about/contact': path.join(sassRoot, 'about/contact.scss'),
+        'about/faculty-detail': path.join(sassRoot, 'about/faculty-detail.scss'),
+        'about/faculty': path.join(sassRoot, 'about/faculty.scss'),
+        'about/index': path.join(sassRoot, 'about/index.scss'),
+        'about/intro': path.join(sassRoot, 'about/intro.scss'),
+        'about/staff': path.join(sassRoot, 'about/staff.scss'),
 
         // Route `announcement`
-        'announcement/activity':    path.join( sassRoot, 'announcement/activity.scss' ),
-        'announcement/all':         path.join( sassRoot, 'announcement/all.scss' ),
-        'announcement/index':       path.join( sassRoot, 'announcement/index.scss' ),
-        'announcement/detail':      path.join( sassRoot, 'announcement/detail.scss' ),
-        'announcement/recruitment': path.join( sassRoot, 'announcement/recruitment.scss' ),
+        'announcement/activity': path.join(sassRoot, 'announcement/activity.scss'),
+        'announcement/all': path.join(sassRoot, 'announcement/all.scss'),
+        'announcement/index': path.join(sassRoot, 'announcement/index.scss'),
+        'announcement/detail': path.join(sassRoot, 'announcement/detail.scss'),
+        'announcement/recruitment': path.join(sassRoot, 'announcement/recruitment.scss'),
 
         // Route `error`
-        'error/404': path.join( sassRoot, 'error/404.scss' ),
+        'error/404': path.join(sassRoot, 'error/404.scss'),
 
         // Route `home`
-        'home/index':  path.join( sassRoot, 'home/index.scss' ),
-        'home/search': path.join( sassRoot, 'home/search.scss' ),
+        'home/index': path.join(sassRoot, 'home/index.scss'),
+        'home/search': path.join(sassRoot, 'home/search.scss'),
 
         // Route `research`
-        'research/index':       path.join( sassRoot, 'research/index.scss' ),
-        'research/lab':         path.join( sassRoot, 'research/lab.scss' ),
-        'research/publication': path.join( sassRoot, 'research/publication.scss' ),
+        'research/index': path.join(sassRoot, 'research/index.scss'),
+        'research/lab': path.join(sassRoot, 'research/lab.scss'),
+        'research/publication': path.join(sassRoot, 'research/publication.scss'),
 
         // Route `resource`
-        'resource/alumni':  path.join( sassRoot, 'resource/alumni.scss' ),
-        'resource/fix':     path.join( sassRoot, 'resource/fix.scss' ),
-        'resource/ieet':    path.join( sassRoot, 'resource/ieet.scss' ),
-        'resource/index':   path.join( sassRoot, 'resource/index.scss' ),
-        'resource/rent':    path.join( sassRoot, 'resource/rent.scss' ),
-        'resource/rule':    path.join( sassRoot, 'resource/rule.scss' ),
-        'resource/sitemap': path.join( sassRoot, 'resource/sitemap.scss' ),
-        'resource/link':    path.join( sassRoot, 'resource/link.scss' ),
+        'resource/alumni': path.join(sassRoot, 'resource/alumni.scss'),
+        'resource/fix': path.join(sassRoot, 'resource/fix.scss'),
+        'resource/ieet': path.join(sassRoot, 'resource/ieet.scss'),
+        'resource/index': path.join(sassRoot, 'resource/index.scss'),
+        'resource/rent': path.join(sassRoot, 'resource/rent.scss'),
+        'resource/rule': path.join(sassRoot, 'resource/rule.scss'),
+        'resource/sitemap': path.join(sassRoot, 'resource/sitemap.scss'),
+        'resource/link': path.join(sassRoot, 'resource/link.scss'),
 
         // Route `student`
-        'student/high-school': path.join( sassRoot, 'student/high-school.scss' ),
-        'student/college':     path.join( sassRoot, 'student/college.scss' ),
-        'student/index':       path.join( sassRoot, 'student/index.scss' ),
-        'student/master':      path.join( sassRoot, 'student/master.scss' ),
-        'student/phd':         path.join( sassRoot, 'student/phd.scss' ),
+        'student/high-school': path.join(sassRoot, 'student/high-school.scss'),
+        'student/college': path.join(sassRoot, 'student/college.scss'),
+        'student/index': path.join(sassRoot, 'student/index.scss'),
+        'student/master': path.join(sassRoot, 'student/master.scss'),
+        'student/phd': path.join(sassRoot, 'student/phd.scss'),
 
         // Route `user`
-        'user/index':                       path.join( sassRoot, 'user/index.scss' ),
-        'user/faculty/profile':             path.join( sassRoot, 'user/faculty/profile.scss' ),
-        'user/faculty/student-award':       path.join( sassRoot, 'user/faculty/student-award.scss' ),
-        'user/faculty/award':               path.join( sassRoot, 'user/faculty/award.scss' ),
-        'user/faculty/publication':         path.join( sassRoot, 'user/faculty/publication.scss' ),
-        'user/faculty/conference':          path.join( sassRoot, 'user/faculty/conference.scss' ),
-        'user/faculty/project':             path.join( sassRoot, 'user/faculty/project.scss' ),
-        'user/faculty/patent':              path.join( sassRoot, 'user/faculty/patent.scss' ),
-        'user/faculty/technology-transfer': path.join( sassRoot, 'user/faculty/technology-transfer.scss' ),
-        'user/staff/profile':               path.join( sassRoot, 'user/staff/profile.scss' ),
-        'user/resetPassword':               path.join( sassRoot, 'user/resetPassword.scss' ),
-        'user/announcement/edit':           path.join( sassRoot, 'user/announcement/edit.scss' ),
-        'user/announcement/add':            path.join( sassRoot, 'user/announcement/add.scss' ),
+        'user/index': path.join(sassRoot, 'user/index.scss'),
+        'user/faculty/profile': path.join(sassRoot, 'user/faculty/profile.scss'),
+        'user/faculty/student-award': path.join(sassRoot, 'user/faculty/student-award.scss'),
+        'user/faculty/award': path.join(sassRoot, 'user/faculty/award.scss'),
+        'user/faculty/publication': path.join(sassRoot, 'user/faculty/publication.scss'),
+        'user/faculty/conference': path.join(sassRoot, 'user/faculty/conference.scss'),
+        'user/faculty/project': path.join(sassRoot, 'user/faculty/project.scss'),
+        'user/faculty/patent': path.join(sassRoot, 'user/faculty/patent.scss'),
+        'user/faculty/technology-transfer': path.join(sassRoot, 'user/faculty/technology-transfer.scss'),
+        'user/staff/profile': path.join(sassRoot, 'user/staff/profile.scss'),
+        'user/resetPassword': path.join(sassRoot, 'user/resetPassword.scss'),
+        'user/announcement/edit': path.join(sassRoot, 'user/announcement/edit.scss'),
+        'user/announcement/add': path.join(sassRoot, 'user/announcement/add.scss'),
 
         // Route `auth`
-        'auth/login':          path.join( sassRoot, 'auth/login.scss' ),
+        'auth/login': path.join(sassRoot, 'auth/login.scss'),
 
         // Route `developer`
-        'developer/index': path.join( sassRoot, 'developer/index.scss' ),
+        'developer/index': path.join(sassRoot, 'developer/index.scss'),
     },
 
     /**
@@ -122,7 +122,7 @@ export default {
      */
 
     output: {
-        path:     cssRoot,
+        path: cssRoot,
         filename: '[name]-do-not-use-me.js',
     },
 
@@ -133,7 +133,7 @@ export default {
      * so this option must always be `target: 'web'`.
      */
 
-    target:  'web',
+    target: 'web',
 
     /**
      * Relative url alias.
@@ -147,7 +147,7 @@ export default {
 
     resolve: {
         alias: {
-            image:         imageRoot,
+            image: imageRoot,
             thirdPartyLib: nodeModulesRoot,
         },
     },
@@ -159,7 +159,7 @@ export default {
      * it can be use with `.scss` and image related loaders.
      */
 
-    module:  {
+    module: {
         rules: [
 
             /**
@@ -178,37 +178,32 @@ export default {
 
             {
                 // Rules for SCSS files.
-                test: /\.scss$/,
-                use:  [
+                test: /\.scss$/u,
+                use: [
                     {
-                        loader:  MiniCssExtractPlugin.loader,
+                        loader: MiniCssExtractPlugin.loader,
                         options: {
                             filename: '[name].min.css',
                         },
                     },
                     {
-                        loader:  'css-loader',
+                        loader: 'css-loader',
                         options: {
                             sourceMap: isDevMode,
                         },
                     },
                     {
-                        loader:  'postcss-loader',
+                        loader: 'postcss-loader',
                         options: {
                             sourceMap: isDevMode,
-                            plugins:   [
-                                autoprefixer( { browserSupportConditions, } ),
-                                cssnano(),
-                            ],
+                            plugins: [autoprefixer({browserSupportConditions}), cssnano()],
                         },
                     },
                     {
-                        loader:  'sass-loader',
+                        loader: 'sass-loader',
                         options: {
-                            includePaths: [
-                                sassRoot,
-                            ],
-                            sourceMap:    isDevMode,
+                            includePaths: [sassRoot],
+                            sourceMap: isDevMode,
                         },
                     },
                 ],
@@ -228,13 +223,13 @@ export default {
 
             {
                 // Convert image binary file into data url.
-                test: /\.(gif|png|jpe?g|svg)$/,
-                use:  [
+                test: /\.(?<image>gif|png|jpe?g|svg)$/u,
+                use: [
                     {
-                        loader:  'file-loader',
+                        loader: 'file-loader',
                         options: {
-                            name ( file ) {
-                                return `${ staticHost }/image${ file.split( imageRoot )[ 1 ] }`;
+                            name (file) {
+                                return `${staticHost}/image${file.split(imageRoot)[1]}`;
                             },
                             emitFile: false,
                         },
@@ -245,28 +240,28 @@ export default {
     },
     plugins: [
         // Extract CSS file.
-        new MiniCssExtractPlugin( {
+        new MiniCssExtractPlugin({
             // Extract and save as `[name].min.css`,
             // where `[name]` will be replaced with origin SCSS file name.
             filename: '[name].min.css',
-        } ),
+        }),
 
         // SCSS linter.
-        new StyleLintPlugin( {
+        new StyleLintPlugin({
             // File path for `stylelint` configuration.
-            configFile:    path.join( projectRoot, 'dev/css/.stylelintrc.js' ),
+            configFile: path.join(projectRoot, 'dev/css/.stylelintrc.js'),
 
             // Store the info about processed files in order to
             // only operate on the changed ones the next time you run `stylelint`.
             // By default, the cache is stored in `.stylelintcache` in `process.cwd()`.
-            cache:         true,
+            cache: true,
 
             // A path to a file or directory to be used for cache.
-            cacheLocation: path.join( projectRoot, 'node_modules/.cache/.stylelintcache' ),
+            cacheLocation: path.join(projectRoot, 'node_modules/.cache/.stylelintcache'),
 
             // Specify a non-standard syntax that should be used to parse source stylesheets.
-            syntax:         'scss',
-            fix:           true,
-        } ),
+            syntax: 'scss',
+            fix: true,
+        }),
     ],
 };

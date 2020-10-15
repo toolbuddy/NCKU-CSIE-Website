@@ -1,4 +1,4 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('models/common/utils/language.js');
 
 const TechnologyTransferPatentI18nValidationConstraints = {
     language: {
@@ -11,11 +11,11 @@ const TechnologyTransferPatentI18nValidationConstraints = {
     },
     patent: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
 };
 
-export default TechnologyTransferPatentI18nValidationConstraints;
+module.exports = TechnologyTransferPatentI18nValidationConstraints;

@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/profile.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/profile.js');
 
-export const profileUtils = new I18nUtils( {
+const profileUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default profileUtils;
+module.exports = profileUtils;

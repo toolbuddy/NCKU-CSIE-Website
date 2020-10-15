@@ -1,12 +1,12 @@
-import Sequelize from 'sequelize';
-import {
+const Sequelize = require('sequelize');
+const {
     Announcement,
     AnnouncementI18n,
     Tag,
-} from 'models/announcement/operations/associations.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-import tagUtils from 'models/announcement/utils/tag.js';
+} = require('models/announcement/operations/associations.js');
+const LanguageUtils = require('models/common/utils/language.js');
+const ValidateUtils = require('models/common/utils/validate.js');
+const tagUtils = require('models/announcement/utils/tag.js');
 
 /**
  * A function for getting all announcements.
@@ -31,7 +31,7 @@ import tagUtils from 'models/announcement/utils/tag.js';
 
 const op = Sequelize.Op;
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         const {
             tags = [],
@@ -42,44 +42,42 @@ export default async ( opt ) => {
             language = null,
         } = opt || {};
 
-        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
-            const error = new Error( 'invalid tag id' );
+        if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
+            const error = new Error('invalid tag id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( page ) ) {
-            const error = new Error( 'invalid page' );
+        if (!ValidateUtils.isPositiveInteger(page)) {
+            const error = new Error('invalid page');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
-            const error = new Error( 'invalid amount' );
+        if (!ValidateUtils.isPositiveInteger(amount)) {
+            const error = new Error('invalid amount');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( from ) ) {
-            const error = new Error( 'invalid time - from' );
+        if (!ValidateUtils.isValidDate(from)) {
+            const error = new Error('invalid time - from');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( to ) ) {
-            const error = new Error( 'invalid time - to' );
+        if (!ValidateUtils.isValidDate(to)) {
+            const error = new Error('invalid time - to');
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
 
-        let data = await Announcement.findAll( {
-            attributes: [
-                'announcementId',
-            ],
+        let data = await Announcement.findAll({
+            attributes: ['announcementId'],
             where: {
                 updateTime: {
-                    [ op.between ]: [
+                    [op.between]: [
                         from,
                         to,
                     ],
@@ -88,39 +86,39 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      Tag,
-                    as:         'tags',
+                    model: Tag,
+                    as: 'tags',
                     attributes: [],
-                    where:      {
+                    where: {
                         tagId: {
-                            [ op.in ]: tags,
+                            [op.in]: tags,
                         },
                     },
                 },
             ],
-            offset:   amount * ( page - 1 ),
-            order:  [
+            offset: amount * (page - 1),
+            order: [
                 [
                     'views',
                     'DESC',
                 ],
             ],
-            limit:    amount,
+            limit: amount,
 
             /**
              * Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
              */
 
             subQuery: false,
-        } );
+        });
 
-        if ( !data.length ) {
-            const error = new Error( 'no result' );
+        if (!data.length) {
+            const error = new Error('no result');
             error.status = 404;
             throw error;
         }
 
-        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
+        data = await Promise.all(data.map(({announcementId}) => Announcement.findOne({
             attributes: [
                 'announcementId',
                 'updateTime',
@@ -131,8 +129,8 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
                     attributes: [
                         'title',
                         'content',
@@ -142,21 +140,21 @@ export default async ( opt ) => {
                     },
                 },
             ],
-        } ) ) );
+        })));
 
-        data = data.map( announcement => ( {
+        data = data.map(announcement => ({
             announcementId: announcement.announcementId,
-            content:        announcement.announcementI18n[ 0 ].content,
-            title:          announcement.announcementI18n[ 0 ].title,
-            updateTime:     announcement.updateTime,
-            views:          announcement.views,
-        } ) );
+            content: announcement.announcementI18n[0].content,
+            title: announcement.announcementI18n[0].title,
+            updateTime: announcement.updateTime,
+            views: announcement.views,
+        }));
 
         return data;
     }
 
-    catch ( err ) {
-        if ( err.status )
+    catch (err) {
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;

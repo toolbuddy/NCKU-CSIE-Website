@@ -1,14 +1,14 @@
-import path from 'path';
+const path = require('path');
 
-import { projectRoot, } from '../../settings/server/config.js';
+const {projectRoot} = require('../../settings/server/config.js');
 
-const jsSrcRoot = path.join( projectRoot, 'static/src/js' );
-const jsDistRoot = path.join( projectRoot, 'static/dist/js' );
-const staticRoot = path.join( projectRoot, 'static' );
+const jsSrcRoot = path.join(projectRoot, 'static/src/js');
+const jsDistRoot = path.join(projectRoot, 'static/dist/js');
+const staticRoot = path.join(projectRoot, 'static');
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
-export default {
+module.exports = {
     /**
      * Webpack built-in develop tools.
      *
@@ -27,7 +27,7 @@ export default {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    isDevMode ? 'development' : 'production',
+    mode: isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
@@ -35,73 +35,73 @@ export default {
      * @todo convert ES6+ syntax into ES5 with ES6 polyfill.
      */
 
-    entry:   {
+    entry: {
         // Route `about`
-        'about/award':          path.join( jsSrcRoot, 'about/award.js' ),
-        'about/contact':        path.join( jsSrcRoot, 'about/contact.js' ),
-        'about/faculty-detail': path.join( jsSrcRoot, 'about/faculty-detail.js' ),
-        'about/faculty':        path.join( jsSrcRoot, 'about/faculty.js' ),
-        'about/index':          path.join( jsSrcRoot, 'about/index.js' ),
-        'about/intro':          path.join( jsSrcRoot, 'about/intro.js' ),
-        'about/staff':          path.join( jsSrcRoot, 'about/staff.js' ),
+        'about/award': path.join(jsSrcRoot, 'about/award.js'),
+        'about/contact': path.join(jsSrcRoot, 'about/contact.js'),
+        'about/faculty-detail': path.join(jsSrcRoot, 'about/faculty-detail.js'),
+        'about/faculty': path.join(jsSrcRoot, 'about/faculty.js'),
+        'about/index': path.join(jsSrcRoot, 'about/index.js'),
+        'about/intro': path.join(jsSrcRoot, 'about/intro.js'),
+        'about/staff': path.join(jsSrcRoot, 'about/staff.js'),
 
         // Route `announcement`
-        'announcement/activity':    path.join( jsSrcRoot, 'announcement/activity.js' ),
-        'announcement/all':         path.join( jsSrcRoot, 'announcement/all.js' ),
-        'announcement/index':       path.join( jsSrcRoot, 'announcement/index.js' ),
-        'announcement/detail':      path.join( jsSrcRoot, 'announcement/detail.js' ),
-        'announcement/recruitment': path.join( jsSrcRoot, 'announcement/recruitment.js' ),
+        'announcement/activity': path.join(jsSrcRoot, 'announcement/activity.js'),
+        'announcement/all': path.join(jsSrcRoot, 'announcement/all.js'),
+        'announcement/index': path.join(jsSrcRoot, 'announcement/index.js'),
+        'announcement/detail': path.join(jsSrcRoot, 'announcement/detail.js'),
+        'announcement/recruitment': path.join(jsSrcRoot, 'announcement/recruitment.js'),
 
         // Route `error`
-        'error/404': path.join( jsSrcRoot, 'error/404.js' ),
+        'error/404': path.join(jsSrcRoot, 'error/404.js'),
 
         // Route `home`
-        'home/index':  path.join( jsSrcRoot, 'home/index.js' ),
-        'home/search': path.join( jsSrcRoot, 'home/search.js' ),
+        'home/index': path.join(jsSrcRoot, 'home/index.js'),
+        'home/search': path.join(jsSrcRoot, 'home/search.js'),
 
         // Route `research`
-        'research/index':       path.join( jsSrcRoot, 'research/index.js' ),
-        'research/lab':         path.join( jsSrcRoot, 'research/lab.js' ),
-        'research/publication': path.join( jsSrcRoot, 'research/publication.js' ),
+        'research/index': path.join(jsSrcRoot, 'research/index.js'),
+        'research/lab': path.join(jsSrcRoot, 'research/lab.js'),
+        'research/publication': path.join(jsSrcRoot, 'research/publication.js'),
 
         // Route `resource`
-        'resource/alumni':  path.join( jsSrcRoot, 'resource/alumni.js' ),
-        'resource/fix':     path.join( jsSrcRoot, 'resource/fix.js' ),
-        'resource/ieet':    path.join( jsSrcRoot, 'resource/ieet.js' ),
-        'resource/index':   path.join( jsSrcRoot, 'resource/index.js' ),
-        'resource/rent':    path.join( jsSrcRoot, 'resource/rent.js' ),
-        'resource/rule':    path.join( jsSrcRoot, 'resource/rule.js' ),
-        'resource/sitemap': path.join( jsSrcRoot, 'resource/sitemap.js' ),
-        'resource/link':    path.join( jsSrcRoot, 'resource/link.js' ),
+        'resource/alumni': path.join(jsSrcRoot, 'resource/alumni.js'),
+        'resource/fix': path.join(jsSrcRoot, 'resource/fix.js'),
+        'resource/ieet': path.join(jsSrcRoot, 'resource/ieet.js'),
+        'resource/index': path.join(jsSrcRoot, 'resource/index.js'),
+        'resource/rent': path.join(jsSrcRoot, 'resource/rent.js'),
+        'resource/rule': path.join(jsSrcRoot, 'resource/rule.js'),
+        'resource/sitemap': path.join(jsSrcRoot, 'resource/sitemap.js'),
+        'resource/link': path.join(jsSrcRoot, 'resource/link.js'),
 
         // Route `student`
-        'student/high-school': path.join( jsSrcRoot, 'student/high-school.js' ),
-        'student/college':     path.join( jsSrcRoot, 'student/college.js' ),
-        'student/index':       path.join( jsSrcRoot, 'student/index.js' ),
-        'student/master':      path.join( jsSrcRoot, 'student/master.js' ),
-        'student/phd':         path.join( jsSrcRoot, 'student/phd.js' ),
+        'student/high-school': path.join(jsSrcRoot, 'student/high-school.js'),
+        'student/college': path.join(jsSrcRoot, 'student/college.js'),
+        'student/index': path.join(jsSrcRoot, 'student/index.js'),
+        'student/master': path.join(jsSrcRoot, 'student/master.js'),
+        'student/phd': path.join(jsSrcRoot, 'student/phd.js'),
 
         // Route `user`
-        'user/index':                       path.join( jsSrcRoot, 'user/index.js' ),
-        'user/faculty/profile':             path.join( jsSrcRoot, 'user/faculty/profile.js' ),
-        'user/faculty/award':               path.join( jsSrcRoot, 'user/faculty/award.js' ),
-        'user/faculty/publication':         path.join( jsSrcRoot, 'user/faculty/publication.js' ),
-        'user/faculty/conference':          path.join( jsSrcRoot, 'user/faculty/conference.js' ),
-        'user/faculty/project':             path.join( jsSrcRoot, 'user/faculty/project.js' ),
-        'user/faculty/patent':              path.join( jsSrcRoot, 'user/faculty/patent.js' ),
-        'user/faculty/student-award':       path.join( jsSrcRoot, 'user/faculty/student-award.js' ),
-        'user/faculty/technology-transfer': path.join( jsSrcRoot, 'user/faculty/technology-transfer.js' ),
-        'user/staff/profile':               path.join( jsSrcRoot, 'user/staff/profile.js' ),
-        'user/resetPassword':               path.join( jsSrcRoot, 'user/resetPassword.js' ),
-        'user/announcement/index':          path.join( jsSrcRoot, 'user/announcement/index.js' ),
-        'user/announcement/add':            path.join( jsSrcRoot, 'user/announcement/add.js' ),
-        'user/announcement/edit':           path.join( jsSrcRoot, 'user/announcement/edit.js' ),
+        'user/index': path.join(jsSrcRoot, 'user/index.js'),
+        'user/faculty/profile': path.join(jsSrcRoot, 'user/faculty/profile.js'),
+        'user/faculty/award': path.join(jsSrcRoot, 'user/faculty/award.js'),
+        'user/faculty/publication': path.join(jsSrcRoot, 'user/faculty/publication.js'),
+        'user/faculty/conference': path.join(jsSrcRoot, 'user/faculty/conference.js'),
+        'user/faculty/project': path.join(jsSrcRoot, 'user/faculty/project.js'),
+        'user/faculty/patent': path.join(jsSrcRoot, 'user/faculty/patent.js'),
+        'user/faculty/student-award': path.join(jsSrcRoot, 'user/faculty/student-award.js'),
+        'user/faculty/technology-transfer': path.join(jsSrcRoot, 'user/faculty/technology-transfer.js'),
+        'user/staff/profile': path.join(jsSrcRoot, 'user/staff/profile.js'),
+        'user/resetPassword': path.join(jsSrcRoot, 'user/resetPassword.js'),
+        'user/announcement/index': path.join(jsSrcRoot, 'user/announcement/index.js'),
+        'user/announcement/add': path.join(jsSrcRoot, 'user/announcement/add.js'),
+        'user/announcement/edit': path.join(jsSrcRoot, 'user/announcement/edit.js'),
 
         // Route `auth`
-        'auth/login':          path.join( jsSrcRoot, 'auth/login.js' ),
+        'auth/login': path.join(jsSrcRoot, 'auth/login.js'),
 
         // Route `developer`
-        'developer/index': path.join( jsSrcRoot, 'developer/index.js' ),
+        'developer/index': path.join(jsSrcRoot, 'developer/index.js'),
     },
 
     /**
@@ -112,7 +112,7 @@ export default {
      */
 
     output: {
-        path:     jsDistRoot,
+        path: jsDistRoot,
         filename: '[name].min.js',
     },
 
@@ -123,7 +123,7 @@ export default {
      * so this option must always be `target: 'web'`.
      */
 
-    target:  'web',
+    target: 'web',
 
     /**
      * Relative import alias.
@@ -138,9 +138,9 @@ export default {
 
     resolve: {
         alias: {
-            models:   path.join( projectRoot, 'models' ),
-            static:   staticRoot,
-            settings: path.join( projectRoot, 'settings' ),
+            models: path.join(projectRoot, 'models'),
+            static: staticRoot,
+            settings: path.join(projectRoot, 'settings'),
         },
     },
 
@@ -151,7 +151,7 @@ export default {
      * therefore it can be use with `.css`, `.js`, `.pug` and image related loaders.
      */
 
-    module:  {
+    module: {
         rules: [
 
             /**
@@ -166,16 +166,16 @@ export default {
              */
 
             {
-                test: /\.css$/,
-                use:  [
+                test: /\.css$/u,
+                use: [
                     {
-                        loader:    'style-loader',
+                        loader: 'style-loader',
                         options: {
                             sourceMap: isDevMode,
                         },
                     },
                     {
-                        loader:  'css-loader',
+                        loader: 'css-loader',
                         options: {
                             sourceMap: isDevMode,
                         },
@@ -190,12 +190,12 @@ export default {
              */
 
             {
-                test:    /\.js$/,
-                use:     {
-                    loader:  'eslint-loader',
+                test: /\.js$/u,
+                use: {
+                    loader: 'eslint-loader',
                     options: {
-                        fix:           true,
-                        configFile:    path.join( projectRoot, 'dev/js/.eslintrc.js' ),
+                        fix: true,
+                        configFile: path.join(projectRoot, 'dev/js/.eslintrc.js'),
                     },
                 },
             },
@@ -208,12 +208,12 @@ export default {
              */
 
             {
-                test: /\.pug$/,
-                use:  [
+                test: /\.pug$/u,
+                use: [
                     {
-                        loader:  'pug-loader',
+                        loader: 'pug-loader',
                         options: {
-                            root: path.join( staticRoot, 'src/pug' ),
+                            root: path.join(staticRoot, 'src/pug'),
                         },
                     },
                 ],
@@ -232,10 +232,8 @@ export default {
              */
 
             {
-                test: /\.(gif|png|jpe?g|svg)$/,
-                use:  [
-                    'url-loader',
-                ],
+                test: /\.(?<image>gif|png|jpe?g|svg)$/u,
+                use: ['url-loader'],
             },
         ],
     },

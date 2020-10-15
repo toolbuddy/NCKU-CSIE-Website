@@ -342,7 +342,7 @@ module.exports = {
 
         // Allow empty destructuring patterns.
         // Should only be used when built-in function arguments are not needed.
-        'no-empty-pattern': 'error',
+        'no-empty-pattern': 'off',
 
         // Disallow `null` comparisons.
         'no-eq-null': 'error',
@@ -708,11 +708,8 @@ module.exports = {
         'array-element-newline': [
             'error',
 
-            // Require line breaks if there are line breaks inside elements.
-            {
-                multiline: true,
-                minItems: 10,
-            },
+            // Requires consistent usage of linebreaks between array elements.
+            'consistent',
         ],
 
         // Disallow spaces inside of blocks after opening block and before closing block.

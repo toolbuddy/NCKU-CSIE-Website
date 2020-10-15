@@ -1,15 +1,15 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('models/common/utils/language.js');
 
 const BusinessValidationConstraints = {
     businessI18n: {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
 };
 
-export default BusinessValidationConstraints;
+module.exports = BusinessValidationConstraints;

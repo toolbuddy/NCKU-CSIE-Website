@@ -1,14 +1,14 @@
-import path from 'path';
+const path = require('path');
 
-import LanguageUtils from '../../models/common/utils/language.js';
-import announcementTagUtils from '../../models/announcement/utils/tag.js';
-import facultyResearchGroupUtils from '../../models/faculty/utils/research-group';
-import facultyDepartmentUtils from '../../models/faculty/utils/department.js';
-import UrlUtils from '../../static/src/js/utils/url.js';
-import { projectRoot, host, staticHost, } from '../../settings/server/config.js';
+const LanguageUtils = require('../../models/common/utils/language.js');
+const announcementTagUtils = require('../../models/announcement/utils/tag.js');
+const facultyResearchGroupUtils = require('../../models/faculty/utils/research-group');
+const facultyDepartmentUtils = require('../../models/faculty/utils/department.js');
+const UrlUtils = require('../../static/src/js/utils/url.js');
+const {projectRoot, host, staticHost} = require('../../settings/server/config.js');
 
-const pugRoot = path.join( projectRoot, 'static/src/pug' );
-const htmlRoot = path.join( projectRoot, 'static/dist/html' );
+const pugRoot = path.join(projectRoot, 'static/src/pug');
+const htmlRoot = path.join(projectRoot, 'static/dist/html');
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
@@ -33,7 +33,7 @@ const isDevMode = process.env.NODE_ENV === 'development';
  *      - Lowest completely loading page time (client will need to wait twice to see all page content) among three.
  */
 
-export default LanguageUtils.supportedLanguageId.map( languageId => ( {
+module.exports = LanguageUtils.supportedLanguageId.map(languageId => ({
     /**
      * Webpack built-in develop tools.
      *
@@ -52,64 +52,64 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      * In production, this option should be `mode: 'production'`.
      */
 
-    mode:    isDevMode ? 'development' : 'production',
+    mode: isDevMode ? 'development' : 'production',
 
     /**
      * Entry files for bundling.
      */
 
-    entry:   {
+    entry: {
         // Route `about`
-        'about/award':   path.join( pugRoot, 'about/award.pug' ),
-        'about/contact': path.join( pugRoot, 'about/contact.pug' ),
-        'about/faculty': path.join( pugRoot, 'about/faculty.pug' ),
-        'about/index':   path.join( pugRoot, 'about/index.pug' ),
-        'about/intro':   path.join( pugRoot, 'about/intro.pug' ),
-        'about/staff':   path.join( pugRoot, 'about/staff.pug' ),
+        'about/award': path.join(pugRoot, 'about/award.pug'),
+        'about/contact': path.join(pugRoot, 'about/contact.pug'),
+        'about/faculty': path.join(pugRoot, 'about/faculty.pug'),
+        'about/index': path.join(pugRoot, 'about/index.pug'),
+        'about/intro': path.join(pugRoot, 'about/intro.pug'),
+        'about/staff': path.join(pugRoot, 'about/staff.pug'),
 
         // Route `announcement`
-        'announcement/activity':    path.join( pugRoot, 'announcement/activity.pug' ),
-        'announcement/all':         path.join( pugRoot, 'announcement/all.pug' ),
-        'announcement/index':       path.join( pugRoot, 'announcement/index.pug' ),
-        'announcement/recruitment': path.join( pugRoot, 'announcement/recruitment.pug' ),
+        'announcement/activity': path.join(pugRoot, 'announcement/activity.pug'),
+        'announcement/all': path.join(pugRoot, 'announcement/all.pug'),
+        'announcement/index': path.join(pugRoot, 'announcement/index.pug'),
+        'announcement/recruitment': path.join(pugRoot, 'announcement/recruitment.pug'),
 
         // Route `error`
-        'error/404': path.join( pugRoot, 'error/404.pug' ),
+        'error/404': path.join(pugRoot, 'error/404.pug'),
 
         // Route `home`
-        'home/index':  path.join( pugRoot, 'home/index.pug' ),
-        'home/search': path.join( pugRoot, 'home/search.pug' ),
+        'home/index': path.join(pugRoot, 'home/index.pug'),
+        'home/search': path.join(pugRoot, 'home/search.pug'),
 
         // Route `research`
-        'research/index':       path.join( pugRoot, 'research/index.pug' ),
-        'research/lab':         path.join( pugRoot, 'research/lab.pug' ),
-        'research/publication': path.join( pugRoot, 'research/publication.pug' ),
+        'research/index': path.join(pugRoot, 'research/index.pug'),
+        'research/lab': path.join(pugRoot, 'research/lab.pug'),
+        'research/publication': path.join(pugRoot, 'research/publication.pug'),
 
         // Route `resource`
-        'resource/alumni':  path.join( pugRoot, 'resource/alumni.pug' ),
-        'resource/fix':     path.join( pugRoot, 'resource/fix.pug' ),
-        'resource/ieet':    path.join( pugRoot, 'resource/ieet.pug' ),
-        'resource/index':   path.join( pugRoot, 'resource/index.pug' ),
-        'resource/rent':    path.join( pugRoot, 'resource/rent.pug' ),
-        'resource/rule':    path.join( pugRoot, 'resource/rule.pug' ),
-        'resource/sitemap': path.join( pugRoot, 'resource/sitemap.pug' ),
-        'resource/link':    path.join( pugRoot, 'resource/link.pug' ),
+        'resource/alumni': path.join(pugRoot, 'resource/alumni.pug'),
+        'resource/fix': path.join(pugRoot, 'resource/fix.pug'),
+        'resource/ieet': path.join(pugRoot, 'resource/ieet.pug'),
+        'resource/index': path.join(pugRoot, 'resource/index.pug'),
+        'resource/rent': path.join(pugRoot, 'resource/rent.pug'),
+        'resource/rule': path.join(pugRoot, 'resource/rule.pug'),
+        'resource/sitemap': path.join(pugRoot, 'resource/sitemap.pug'),
+        'resource/link': path.join(pugRoot, 'resource/link.pug'),
 
         // Route `student`
-        'student/high-school': path.join( pugRoot, 'student/high-school.pug' ),
-        'student/college':     path.join( pugRoot, 'student/college.pug' ),
-        'student/index':       path.join( pugRoot, 'student/index.pug' ),
-        'student/master':      path.join( pugRoot, 'student/master.pug' ),
-        'student/phd':         path.join( pugRoot, 'student/phd.pug' ),
+        'student/high-school': path.join(pugRoot, 'student/high-school.pug'),
+        'student/college': path.join(pugRoot, 'student/college.pug'),
+        'student/index': path.join(pugRoot, 'student/index.pug'),
+        'student/master': path.join(pugRoot, 'student/master.pug'),
+        'student/phd': path.join(pugRoot, 'student/phd.pug'),
 
         // Route `user`
-        'user/index':              path.join( pugRoot, 'user/index.pug' ),
-        'user/announcement/index': path.join( pugRoot, 'user/announcement/index.pug' ),
-        'user/announcement/add':   path.join( pugRoot, 'user/announcement/add.pug' ),
-        'user/announcement/edit':  path.join( pugRoot, 'user/announcement/edit.pug' ),
+        'user/index': path.join(pugRoot, 'user/index.pug'),
+        'user/announcement/index': path.join(pugRoot, 'user/announcement/index.pug'),
+        'user/announcement/add': path.join(pugRoot, 'user/announcement/add.pug'),
+        'user/announcement/edit': path.join(pugRoot, 'user/announcement/edit.pug'),
 
         // Route `developer`
-        'developer/index': path.join( pugRoot, 'developer/index.pug' ),
+        'developer/index': path.join(pugRoot, 'developer/index.pug'),
     },
 
     /**
@@ -120,7 +120,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      */
 
     output: {
-        path:     htmlRoot,
+        path: htmlRoot,
         filename: '[name]-do-not-use-me.js',
     },
 
@@ -131,7 +131,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      * so this option must always be `target: 'web'`.
      */
 
-    target:  'web',
+    target: 'web',
 
     /**
      * Webpack loader modules.
@@ -140,7 +140,7 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
      * it can be use with `.pug` and image related loaders.
      */
 
-    module:  {
+    module: {
         rules: [
 
             /**
@@ -157,42 +157,42 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
              */
 
             {
-                test: /\.pug$/,
-                use:  [
+                test: /\.pug$/u,
+                use: [
                     {
-                        loader:  'file-loader',
+                        loader: 'file-loader',
                         options: {
-                            name ( file ) {
-                                return `${ file.split( pugRoot )[ 1 ].split( '.pug' )[ 0 ] }.${ languageId }.html`;
+                            name (file) {
+                                return `${file.split(pugRoot)[1].split('.pug')[0]}.${languageId}.html`;
                             },
                         },
                     },
                     'extract-loader',
                     {
-                        loader:  'html-loader',
+                        loader: 'html-loader',
                     },
                     {
-                        loader:  'pug-html-loader',
+                        loader: 'pug-html-loader',
                         options: {
                             basedir: pugRoot,
-                            data:    {
+                            data: {
                                 SERVER: {
                                     host,
                                     staticHost,
                                 },
                                 LANG: {
-                                    id:            languageId,
+                                    id: languageId,
                                     getLanguageId: LanguageUtils.getLanguageId,
                                 },
                                 UTILS: {
-                                    url:          UrlUtils.serverUrl( new UrlUtils( host, languageId ) ),
-                                    staticUrl:    UrlUtils.serverUrl( new UrlUtils( staticHost, languageId ) ),
+                                    url: UrlUtils.serverUrl(new UrlUtils(host, languageId)),
+                                    staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, languageId)),
                                     announcement: {
                                         tagUtils: announcementTagUtils,
                                     },
-                                    faculty:   {
+                                    faculty: {
                                         researchGroupUtils: facultyResearchGroupUtils,
-                                        departmentUtils:    facultyDepartmentUtils,
+                                        departmentUtils: facultyDepartmentUtils,
                                     },
                                 },
                             },
@@ -202,4 +202,4 @@ export default LanguageUtils.supportedLanguageId.map( languageId => ( {
             },
         ],
     },
-} ) );
+}));

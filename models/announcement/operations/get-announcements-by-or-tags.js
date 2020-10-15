@@ -1,12 +1,12 @@
-import { Op, } from 'sequelize';
-import {
+const {Op} = require('sequelize');
+const {
     Announcement,
     AnnouncementI18n,
     Tag,
-} from 'models/announcement/operations/associations.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-import tagUtils from 'models/announcement/utils/tag.js';
+} = require('models/announcement/operations/associations.js');
+const LanguageUtils = require('models/common/utils/language.js');
+const ValidateUtils = require('models/common/utils/validate.js');
+const tagUtils = require('models/announcement/utils/tag.js');
 
 /**
  * A function for getting all announcements.
@@ -29,8 +29,7 @@ import tagUtils from 'models/announcement/utils/tag.js';
  * All announcements which contain at least one of the specified tags will be taken into account.
  */
 
-
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         const {
             tags = [],
@@ -41,45 +40,45 @@ export default async ( opt ) => {
             language = null,
         } = opt || {};
 
-        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
-            const error = new Error( 'invalid tag id' );
+        if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
+            const error = new Error('invalid tag id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( page ) ) {
-            const error = new Error( 'invalid page' );
+        if (!ValidateUtils.isPositiveInteger(page)) {
+            const error = new Error('invalid page');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
-            const error = new Error( 'invalid amount' );
+        if (!ValidateUtils.isPositiveInteger(amount)) {
+            const error = new Error('invalid amount');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( new Date( from ) ) ) {
-            const error = new Error( 'invalid time - from' );
+        if (!ValidateUtils.isValidDate(new Date(from))) {
+            const error = new Error('invalid time - from');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( new Date( to ) ) ) {
-            const error = new Error( 'invalid time - to' );
+        if (!ValidateUtils.isValidDate(new Date(to))) {
+            const error = new Error('invalid time - to');
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
 
-        let data = await Announcement.findAll( {
+        let data = await Announcement.findAll({
             attributes: [
                 'announcementId',
                 'updateTime',
             ],
             where: {
                 updateTime: {
-                    [ Op.between ]: [
+                    [Op.between]: [
                         from,
                         to,
                     ],
@@ -88,40 +87,44 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      Tag,
-                    as:         'tags',
+                    model: Tag,
+                    as: 'tags',
                     attributes: [],
-                    where:      {
+                    where: {
                         tagId: {
-                            [ Op.in ]: tags,
+                            [Op.in]: tags,
                         },
                     },
                 },
             ],
-            order:    [ [ 'updateTime',
-                'DESC', ], ],
-            offset:   amount * ( page - 1 ),
-            limit:    amount,
-        } );
+            order: [
+                [
+                    'updateTime',
+                    'DESC',
+                ],
+            ],
+            offset: amount * (page - 1),
+            limit: amount,
+        });
 
-        if ( !data.length ) {
-            const error = new Error( 'no result' );
+        if (!data.length) {
+            const error = new Error('no result');
             error.status = 404;
             throw error;
         }
 
-        data = await Announcement.findAll( {
+        data = await Announcement.findAll({
             attributes: [
                 'announcementId',
                 'updateTime',
             ],
             where: {
-                announcementId: data.map( id => id.announcementId ),
+                announcementId: data.map(id => id.announcementId),
             },
             include: [
                 {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
                     attributes: [
                         'title',
                         'content',
@@ -131,25 +134,29 @@ export default async ( opt ) => {
                     },
                 },
                 {
-                    model:      Tag,
-                    as:         'tags',
-                    attributes: [ 'tagId', ],
+                    model: Tag,
+                    as: 'tags',
+                    attributes: ['tagId'],
                 },
             ],
-            order:    [ [ 'updateTime',
-                'DESC', ], ],
-        } );
+            order: [
+                [
+                    'updateTime',
+                    'DESC',
+                ],
+            ],
+        });
 
-        return data.map( announcement => ( {
+        return data.map(announcement => ({
             announcementId: announcement.announcementId,
-            updateTime:     announcement.updateTime,
-            title:          announcement.announcementI18n[ 0 ].title,
-            content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tags.map( tag => tag.tagId ),
-        } ) );
+            updateTime: announcement.updateTime,
+            title: announcement.announcementI18n[0].title,
+            content: announcement.announcementI18n[0].content,
+            tags: announcement.tags.map(tag => tag.tagId),
+        }));
     }
-    catch ( err ) {
-        if ( err.status )
+    catch (err) {
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;

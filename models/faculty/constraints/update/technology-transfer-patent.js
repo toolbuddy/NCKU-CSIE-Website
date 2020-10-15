@@ -1,3 +1,3 @@
 const TechnologyTransferPatentValidationConstraints = {};
 
-export default TechnologyTransferPatentValidationConstraints;
+module.exports = TechnologyTransferPatentValidationConstraints;

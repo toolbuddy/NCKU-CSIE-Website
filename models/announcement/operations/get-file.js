@@ -7,38 +7,35 @@
  * - file name.
  */
 
-import ValidateUtils from 'models/common/utils/validate.js';
-import { File, } from 'models/announcement/operations/associations.js';
+const ValidateUtils = require('models/common/utils/validate.js');
+const {File} = require('models/announcement/operations/associations.js');
 
-export default ( fileId ) => {
+module.exports = (fileId) => {
     try {
-        if ( !ValidateUtils.isPositiveInteger( fileId ) ) {
-            const error = new Error( 'Invalid file id' );
+        if (!ValidateUtils.isPositiveInteger(fileId)) {
+            const error = new Error('Invalid file id');
             error.status = 400;
             throw error;
         }
 
-        return File.findOne( {
-            attributes: [
-                'name',
-                'content',
-            ],
+        return File.findOne({
+            attributes: ['name', 'content'],
             where: {
                 fileId,
             },
-        } )
-        .then( ( data ) => {
-            if ( !data ) {
-                const error = new Error( 'File not found' );
+        }).
+        then((data) => {
+            if (!data) {
+                const error = new Error('File not found');
                 error.status = 404;
                 throw error;
             }
             else
                 return data;
-        } );
+        });
     }
-    catch ( error ) {
-        if ( !error.status )
+    catch (error) {
+        if (!error.status)
             error.status = 500;
         throw error;
     }

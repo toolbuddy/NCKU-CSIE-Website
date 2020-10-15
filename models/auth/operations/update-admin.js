@@ -1,9 +1,7 @@
-import {
-    Admin,
-} from 'models/auth/operations/associations.js';
+const {Admin} = require('models/auth/operations/associations.js');
 
-import validate from 'validate.js';
-import AdminValidationConstraints from 'models/auth/constraints/update/admin.js';
+const validate = require('validate.js');
+const AdminValidationConstraints = require('models/auth/constraints/update/admin.js');
 
 /**
  * A function for getting a specific announcement in specific languages by the id of the announcement.
@@ -13,28 +11,28 @@ import AdminValidationConstraints from 'models/auth/constraints/update/admin.js'
  * @returns {object}          If the update successed.
  */
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
 
-        if ( typeof ( validate( opt, AdminValidationConstraints ) ) !== 'undefined' ) {
-            const error = new Error( 'Invalid admin object' );
+        if (typeof (validate(opt, AdminValidationConstraints)) !== 'undefined') {
+            const error = new Error('Invalid admin object');
             error.status = 400;
             throw error;
         }
 
-        return Admin.update( opt, {
+        return Admin.update(opt, {
             where: {
                 userId: opt.userId,
             },
-        } )
-        .then( () => ( { 'message': 'success', } ) )
-        .catch( ( err ) => {
+        }).
+        then(() => ({message: 'success'})).
+        catch((err) => {
             err.status = 500;
             throw err;
-        } );
+        });
     }
-    catch ( err ) {
+    catch (err) {
         throw err;
     }
 };

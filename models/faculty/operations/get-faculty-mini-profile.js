@@ -1,10 +1,10 @@
-import LanguageUtils from 'models/common/utils/language.js';
-import {
+const LanguageUtils = require('models/common/utils/language.js');
+const {
     Profile,
     ProfileI18n,
-} from 'models/faculty/operations/associations.js';
+} = require('models/faculty/operations/associations.js');
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
@@ -17,18 +17,18 @@ export default async ( opt ) => {
          * Handle with 400 bad request.
          */
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
-        if ( typeof ( profileId ) !== 'number' || !Number.isInteger( profileId ) ) {
-            const error = new Error( 'invalid profile id' );
+        if (typeof (profileId) !== 'number' || !Number.isInteger(profileId)) {
+            const error = new Error('invalid profile id');
             error.status = 400;
             throw error;
         }
 
-        const data = await Profile.findOne( {
+        const data = await Profile.findOne({
             attributes: [
                 'profileId',
                 'photo',
@@ -38,26 +38,24 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      ProfileI18n,
-                    as:         'profileI18n',
-                    attributes: [
-                        'name',
-                    ],
+                    model: ProfileI18n,
+                    as: 'profileI18n',
+                    attributes: ['name'],
                     where: {
                         language,
                     },
                 },
             ],
-        } );
+        });
 
         return {
-            photo:     data.photo,
+            photo: data.photo,
             profileId: data.profileId,
-            name:      data.profileI18n[ 0 ].name,
+            name: data.profileI18n[0].name,
         };
     }
-    catch ( err ) {
-        if ( err.status )
+    catch (err) {
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;
