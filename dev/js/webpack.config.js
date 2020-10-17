@@ -1,11 +1,10 @@
 /**
- * Webpack configuration for transpiling and bundling ECMAScripts.
+ * Webpack configuration for transpiling and bundling ECMAScript files.
  * Run webpack using this configuration by the script: `npm run build:js`.
  *
  * This file only process ECMAScripts entries (`.js` files), for `.scss` and `.pug`
  * see `dev/css/webpack.config.js` and `dev/html/webpack.config.js`.
  *
- * When adding another page, go to `entry` and add new entry file.
  * See webpack's official website https://webpack.js.org/ for more information.
  */
 
@@ -41,13 +40,13 @@ module.exports = (env, argv) => {
         /**
          * Webpack built-in develop tools.
          *
-         * Use sourcemap to recover codes from bundle file.
-         * `inline-sourcemap` make sourcemap inline, which is smaller.
-         * In develop, this option should be `devtool: 'inline-sourcemap'`.
-         * In production, this option should be `devtool: false`.
+         * In development mode set to `devtool: 'eval-source-map'` for fast
+         * rebuild speed and yields real files Line numbers are correctly mapped.
+         * In production mode set to `devtool: 'source-map'` which separate
+         * source maps that are accurate and supporting minimizing.
          */
 
-        devtool: isDevMode ? 'inline-sourcemap' : false,
+        devtool: isDevMode ? 'eval-source-map' : 'source-map',
 
         /**
          * Bundled files' source.
@@ -63,71 +62,208 @@ module.exports = (env, argv) => {
                 import: './about/award.js',
                 filename: 'about/award.js',
             },
+            'about/contact': {
+                import: './about/contact.js',
+                filename: 'about/contact.js',
+            },
+            'about/faculty-detail': {
+                import: './about/faculty-detail.js',
+                filename: 'about/faculty-detail.js',
+            },
+            'about/faculty': {
+                import: './about/faculty.js',
+                filename: 'about/faculty.js',
+            },
+            'about/index': {
+                import: './about/index.js',
+                filename: 'about/index.js',
+            },
+            'about/intro': {
+                import: './about/intro.js',
+                filename: 'about/intro.js',
+            },
+            'about/staff': {
+                import: './about/staff.js',
+                filename: 'about/staff.js',
+            },
 
-            // 'about/contact': path.join(jsSrcRoot, 'about/contact.js'),
-            // 'about/faculty-detail': path.join(jsSrcRoot, 'about/faculty-detail.js'),
-            // 'about/faculty': path.join(jsSrcRoot, 'about/faculty.js'),
-            // 'about/index': path.join(jsSrcRoot, 'about/index.js'),
-            // 'about/intro': path.join(jsSrcRoot, 'about/intro.js'),
-            // 'about/staff': path.join(jsSrcRoot, 'about/staff.js'),
+            // Route `announcement`.
+            'announcement/activity': {
+                import: './announcement/activity.js',
+                filename: 'announcement/activity.js',
+            },
+            'announcement/all': {
+                import: './announcement/all.js',
+                filename: 'announcement/all.js',
+            },
+            'announcement/index': {
+                import: './announcement/index.js',
+                filename: 'announcement/index.js',
+            },
+            'announcement/detail': {
+                import: './announcement/detail.js',
+                filename: 'announcement/detail.js',
+            },
+            'announcement/recruitment': {
+                import: './announcement/recruitment.js',
+                filename: 'announcement/recruitment.js',
+            },
 
-            // // Route `announcement`.
-            // 'announcement/activity': path.join(jsSrcRoot, 'announcement/activity.js'),
-            // 'announcement/all': path.join(jsSrcRoot, 'announcement/all.js'),
-            // 'announcement/index': path.join(jsSrcRoot, 'announcement/index.js'),
-            // 'announcement/detail': path.join(jsSrcRoot, 'announcement/detail.js'),
-            // 'announcement/recruitment': path.join(jsSrcRoot, 'announcement/recruitment.js'),
+            // Route `error`.
+            'error/404': {
+                import: './error/404.js',
+                filename: 'error/404.js',
+            },
 
-            // // Route `error`.
-            // 'error/404': path.join(jsSrcRoot, 'error/404.js'),
+            // Route `home`.
+            'home/index': {
+                import: './home/index.js',
+                filename: 'home/index.js',
+            },
+            'home/search': {
+                import: './home/search.js',
+                filename: 'home/search.js',
+            },
 
-            // // Route `home`.
-            // 'home/index': path.join(jsSrcRoot, 'home/index.js'),
-            // 'home/search': path.join(jsSrcRoot, 'home/search.js'),
+            // Route `research`.
+            'research/index': {
+                import: './research/index.js',
+                filename: 'research/index.js',
+            },
+            'research/lab': {
+                import: './research/lab.js',
+                filename: 'research/lab.js',
+            },
+            'research/publication': {
+                import: './research/publication.js',
+                filename: 'research/publication.js',
+            },
 
-            // // Route `research`.
-            // 'research/index': path.join(jsSrcRoot, 'research/index.js'),
-            // 'research/lab': path.join(jsSrcRoot, 'research/lab.js'),
-            // 'research/publication': path.join(jsSrcRoot, 'research/publication.js'),
+            // Route `resource`.
+            'resource/alumni': {
+                import: './resource/alumni.js',
+                filename: 'resource/alumni.js',
+            },
+            'resource/fix': {
+                import: './resource/fix.js',
+                filename: 'resource/fix.js',
+            },
+            'resource/ieet': {
+                import: './resource/ieet.js',
+                filename: 'resource/ieet.js',
+            },
+            'resource/index': {
+                import: './resource/index.js',
+                filename: 'resource/index.js',
+            },
+            'resource/rent': {
+                import: './resource/rent.js',
+                filename: 'resource/rent.js',
+            },
+            'resource/rule': {
+                import: './resource/rule.js',
+                filename: 'resource/rule.js',
+            },
+            'resource/sitemap': {
+                import: './resource/sitemap.js',
+                filename: 'resource/sitemap.js',
+            },
+            'resource/link': {
+                import: './resource/link.js',
+                filename: 'resource/link.js',
+            },
 
-            // // Route `resource`.
-            // 'resource/alumni': path.join(jsSrcRoot, 'resource/alumni.js'),
-            // 'resource/fix': path.join(jsSrcRoot, 'resource/fix.js'),
-            // 'resource/ieet': path.join(jsSrcRoot, 'resource/ieet.js'),
-            // 'resource/index': path.join(jsSrcRoot, 'resource/index.js'),
-            // 'resource/rent': path.join(jsSrcRoot, 'resource/rent.js'),
-            // 'resource/rule': path.join(jsSrcRoot, 'resource/rule.js'),
-            // 'resource/sitemap': path.join(jsSrcRoot, 'resource/sitemap.js'),
-            // 'resource/link': path.join(jsSrcRoot, 'resource/link.js'),
+            // Route `student`.
+            'student/high-school': {
+                import: './student/high-school.js',
+                filename: 'student/high-school.js',
+            },
+            'student/college': {
+                import: './student/college.js',
+                filename: 'student/college.js',
+            },
+            'student/index': {
+                import: './student/index.js',
+                filename: 'student/index.js',
+            },
+            'student/master': {
+                import: './student/master.js',
+                filename: 'student/master.js',
+            },
+            'student/phd': {
+                import: './student/phd.js',
+                filename: 'student/phd.js',
+            },
 
-            // // Route `student`.
-            // 'student/high-school': path.join(jsSrcRoot, 'student/high-school.js'),
-            // 'student/college': path.join(jsSrcRoot, 'student/college.js'),
-            // 'student/index': path.join(jsSrcRoot, 'student/index.js'),
-            // 'student/master': path.join(jsSrcRoot, 'student/master.js'),
-            // 'student/phd': path.join(jsSrcRoot, 'student/phd.js'),
+            // Route `user`.
+            'user/index': {
+                import: './user/index.js',
+                filename: 'user/index.js',
+            },
+            'user/faculty/profile': {
+                import: './user/faculty/profile.js',
+                filename: 'user/faculty/profile.js',
+            },
+            'user/faculty/award': {
+                import: './user/faculty/award.js',
+                filename: 'user/faculty/award.js',
+            },
+            'user/faculty/publication': {
+                import: './user/faculty/publication.js',
+                filename: 'user/faculty/publication.js',
+            },
+            'user/faculty/conference': {
+                import: './user/faculty/conference.js',
+                filename: 'user/faculty/conference.js',
+            },
+            'user/faculty/project': {
+                import: './user/faculty/project.js',
+                filename: 'user/faculty/project.js',
+            },
+            'user/faculty/patent': {
+                import: './user/faculty/patent.js',
+                filename: 'user/faculty/patent.js',
+            },
+            'user/faculty/student-award': {
+                import: './user/faculty/student-award.js',
+                filename: 'user/faculty/student-award.js',
+            },
+            'user/faculty/technology-transfer': {
+                import: './user/faculty/technology-transfer.js',
+                filename: 'user/faculty/technology-transfer.js',
+            },
+            'user/staff/profile': {
+                import: './user/staff/profile.js',
+                filename: 'user/staff/profile.js',
+            },
+            'user/resetPassword': {
+                import: './user/resetPassword.js',
+                filename: 'user/resetPassword.js',
+            },
+            'user/announcement/index': {
+                import: './user/announcement/index.js',
+                filename: 'user/announcement/index.js',
+            },
+            'user/announcement/add': {
+                import: './user/announcement/add.js',
+                filename: 'user/announcement/add.js',
+            },
+            'user/announcement/edit': {
+                import: './user/announcement/edit.js',
+                filename: 'user/announcement/edit.js',
+            },
 
-            // // Route `user`.
-            // 'user/index': path.join(jsSrcRoot, 'user/index.js'),
-            // 'user/faculty/profile': path.join(jsSrcRoot, 'user/faculty/profile.js'),
-            // 'user/faculty/award': path.join(jsSrcRoot, 'user/faculty/award.js'),
-            // 'user/faculty/publication': path.join(jsSrcRoot, 'user/faculty/publication.js'),
-            // 'user/faculty/conference': path.join(jsSrcRoot, 'user/faculty/conference.js'),
-            // 'user/faculty/project': path.join(jsSrcRoot, 'user/faculty/project.js'),
-            // 'user/faculty/patent': path.join(jsSrcRoot, 'user/faculty/patent.js'),
-            // 'user/faculty/student-award': path.join(jsSrcRoot, 'user/faculty/student-award.js'),
-            // 'user/faculty/technology-transfer': path.join(jsSrcRoot, 'user/faculty/technology-transfer.js'),
-            // 'user/staff/profile': path.join(jsSrcRoot, 'user/staff/profile.js'),
-            // 'user/resetPassword': path.join(jsSrcRoot, 'user/resetPassword.js'),
-            // 'user/announcement/index': path.join(jsSrcRoot, 'user/announcement/index.js'),
-            // 'user/announcement/add': path.join(jsSrcRoot, 'user/announcement/add.js'),
-            // 'user/announcement/edit': path.join(jsSrcRoot, 'user/announcement/edit.js'),
+            // Route `auth`.
+            'auth/login': {
+                import: './auth/login.js',
+                filename: 'auth/login.js',
+            },
 
-            // // Route `auth`.
-            // 'auth/login': path.join(jsSrcRoot, 'auth/login.js'),
-
-            // // Route `developer`.
-            // 'developer/index': path.join(jsSrcRoot, 'developer/index.js'),
+            // Route `developer`.
+            'developer/index': {
+                import: './developer/index.js',
+                filename: 'developer/index.js',
+            },
         },
 
         /**
@@ -223,6 +359,12 @@ module.exports = (env, argv) => {
             publicPath: `${staticHost}/`,
             sourceMapFilename: '[name].js.map',
         },
+
+        /**
+         * Lint `.js` files before bundling.
+         *
+         * Use `eslint-webpack-plugin` since `eslint-loader` is deprecated.
+         */
 
         plugins: [
             new ESLintPlugin({
