@@ -11,22 +11,22 @@ const TechnologyTransferI18nValidationConstraints = {
     },
     technology: {
         presence: true,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 300,
         },
     },
     authorizingParty: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },
     authorizedParty: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },

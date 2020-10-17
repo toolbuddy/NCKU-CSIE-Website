@@ -10,7 +10,7 @@ const tagUtils = require('../utils/tag.js');
 
 const op = Sequelize.Op;
 
-module.exports = async (opt) => {
+module.exports = async ( opt ) => {
     try {
         const {
             tags = [],
@@ -18,64 +18,66 @@ module.exports = async (opt) => {
             language = null,
         } = opt || {};
 
-        if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
-            const error = new Error('invalid tag id');
+        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
+            const error = new Error( 'invalid tag id' );
             error.status = 400;
             throw error;
         }
-        if (!ValidateUtils.isPositiveInteger(amount)) {
-            const error = new Error('invalid amount');
+        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
+            const error = new Error( 'invalid amount' );
             error.status = 400;
             throw error;
         }
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
-            const error = new Error('invalid language id');
+        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
+            const error = new Error( 'invalid language id' );
             error.status = 400;
             throw error;
         }
 
-        let data = await Announcement.findAll({
-            attributes: ['announcementId'],
+        let data = await Announcement.findAll( {
+            attributes: [
+                'announcementId',
+            ],
             where: {
                 isPublished: true,
-                image: {
-                    [op.not]: null,
+                image:       {
+                    [ op.not ]: null,
                 },
             },
             include: [
                 {
-                    model: Tag,
-                    as: 'tags',
+                    model:      Tag,
+                    as:         'tags',
                     attributes: [],
-                    where: {
+                    where:      {
                         tagId: {
-                            [op.in]: tags,
+                            [ op.in ]: tags,
                         },
                     },
                 },
             ],
-            order: [
+            order:  [
                 [
                     'updateTime',
                     'DESC',
                 ],
             ],
-            limit: amount,
+            limit:    amount,
 
             /**
              * Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
              */
 
             subQuery: false,
-        });
+        } );
 
-        if (!data.length) {
-            const error = new Error('no result');
+        if ( !data.length ) {
+            const error = new Error( 'no result' );
             error.status = 404;
             throw error;
         }
 
-        data = await Promise.all(data.map(({announcementId}) => Announcement.findOne({
+        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
             attributes: [
                 'announcementId',
                 'image',
@@ -85,8 +87,8 @@ module.exports = async (opt) => {
             },
             include: [
                 {
-                    model: AnnouncementI18n,
-                    as: 'announcementI18n',
+                    model:      AnnouncementI18n,
+                    as:         'announcementI18n',
                     attributes: [
                         'title',
                         'content',
@@ -96,21 +98,21 @@ module.exports = async (opt) => {
                     },
                 },
             ],
-        })));
+        } ) ) );
 
-        data = data.map(announcement => ({
+        data = data.map( announcement => ( {
             announcementId: announcement.announcementId,
-            content: announcement.announcementI18n[0].content,
-            title: announcement.announcementI18n[0].title,
-            image: announcement.image,
-        }));
+            content:        announcement.announcementI18n[ 0 ].content,
+            title:          announcement.announcementI18n[ 0 ].title,
+            image:          announcement.image,
+        } ) );
 
         return data;
     }
 
-    catch (err) {
-        console.error(err);
-        if (err.status)
+    catch ( err ) {
+        console.error( err );
+        if ( err.status )
             throw err;
         const error = new Error();
         error.status = 500;

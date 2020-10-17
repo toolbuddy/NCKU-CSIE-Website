@@ -1,23 +1,23 @@
 const Sequelize = require('sequelize');
-const {staff} = require('../../common/utils/connect.js');
+const { staff, } = require('../../common/utils/connect.js');
 const LanguageUtils = require('../../common/utils/language.js');
 
-const BusinessI18n = staff.define('businessI18n', {
+const BusinessI18n = staff.define( 'businessI18n', {
     businessId: {
-        type: Sequelize.INTEGER.UNSIGNED,
-        allowNull: false,
+        type:       Sequelize.INTEGER.UNSIGNED,
+        allowNull:  false,
         primaryKey: true,
     },
     language: {
-        type: Sequelize.TINYINT.UNSIGNED,
-        allowNull: false,
-        primaryKey: true,
+        type:         Sequelize.TINYINT.UNSIGNED,
+        allowNull:    false,
+        primaryKey:   true,
         defaultValue: LanguageUtils.defaultLanguageId,
     },
     business: {
-        type: Sequelize.STRING(100),
+        type:      Sequelize.STRING( 100 ),
         allowNull: false,
     },
-});
+} );
 
 module.exports = BusinessI18n;

@@ -2,8 +2,8 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const StudentAwardValidationConstraints = {
     receivedYear: {
-        presence: true,
-        type: 'integer',
+        presence:     true,
+        type:         'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
@@ -12,7 +12,7 @@ const StudentAwardValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type: 'array',
+        type:     'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },

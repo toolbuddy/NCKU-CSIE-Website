@@ -11,8 +11,8 @@ const TechnologyTransferPatentI18nValidationConstraints = {
     },
     patent: {
         presence: true,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 300,
         },
     },

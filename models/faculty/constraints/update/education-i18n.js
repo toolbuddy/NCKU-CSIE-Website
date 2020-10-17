@@ -11,15 +11,15 @@ const EducationI18nValidationConstraints = {
     },
     school: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },
     major: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },

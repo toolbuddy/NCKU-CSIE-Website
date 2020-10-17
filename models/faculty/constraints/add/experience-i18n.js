@@ -11,22 +11,22 @@ const ExperienceI18nValidationConstraints = {
     },
     organization: {
         presence: true,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },
     department: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },
     title: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 100,
         },
     },

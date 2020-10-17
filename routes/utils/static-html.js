@@ -5,22 +5,23 @@
  */
 
 const path = require('path');
-const {maxAge} = require('../../settings/server/config.js');
 
-const projectRoot = path.resolve(__dirname, '../..');
+const { maxAge, } = require('../../settings/server/config.js');
 
-module.exports = file => (req, res, next) => {
+const projectRoot = path.resolve(__dirname, '../..')
+
+module.exports = file => ( req, res, next ) => {
     res.sendFile(
-        `static/dist/html/${file}.${req.query.languageId}.html`,
+        `static/dist/html/${ file }.${ req.query.languageId }.html`,
         {
-            root: projectRoot,
+            root:         projectRoot,
             maxAge,
-            dotfiles: 'deny',
+            dotfiles:     'deny',
             cacheControl: true,
         },
-        (err) => {
-            if (err)
-                next(err);
-        },
+        ( err ) => {
+            if ( err )
+                next( err );
+        }
     );
 };

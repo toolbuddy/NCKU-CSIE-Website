@@ -11,8 +11,8 @@ const StudentAwardI18nValidationConstraints = {
     },
     award: {
         presence: false,
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 300,
         },
     },

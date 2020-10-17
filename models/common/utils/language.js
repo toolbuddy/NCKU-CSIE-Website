@@ -23,37 +23,37 @@ class LanguageUtils {
     }
 
     static get defaultLanguageId () {
-        return languageMap.support.indexOf(languageMap.default);
+        return languageMap.support.indexOf( languageMap.default );
     }
 
     static get supportedLanguage () {
-        return Array.from(languageMap.support);
+        return Array.from( languageMap.support );
     }
 
     static get supportedLanguageId () {
-        return languageMap.support.map(({}, index) => index);
+        return languageMap.support.map( ( {}, index ) => index );
     }
 
-    static isSupportedLanguage (language = null) {
-        if (typeof (language) === 'string')
-            return languageMap.support.includes(language);
+    static isSupportedLanguage ( language = null ) {
+        if ( typeof ( language ) === 'string' )
+            return languageMap.support.includes( language );
         return false;
     }
 
-    static isSupportedLanguageId (languageId = null) {
-        if (typeof (languageId) === 'number')
-            return LanguageUtils.supportedLanguageId.includes(languageId);
+    static isSupportedLanguageId ( languageId = null ) {
+        if ( typeof ( languageId ) === 'number' )
+            return LanguageUtils.supportedLanguageId.includes( languageId );
         return false;
     }
 
-    static getLanguageId (language = null) {
-        if (LanguageUtils.isSupportedLanguage(language))
-            return languageMap.support.indexOf(language);
+    static getLanguageId ( language = null ) {
+        if ( LanguageUtils.isSupportedLanguage( language ) )
+            return languageMap.support.indexOf( language );
     }
 
-    static getLanguageById (languageId = null) {
-        if (LanguageUtils.isSupportedLanguageId(languageId))
-            return languageMap.support[languageId];
+    static getLanguageById ( languageId = null ) {
+        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
+            return languageMap.support[ languageId ];
     }
 }
 

@@ -9,18 +9,18 @@ const express = require('express');
 
 const staticHtml = require('./utils/static-html.js');
 
-const router = express.Router({
+const router = express.Router( {
     caseSensitive: true,
-    mergeParams: false,
-    strict: false,
-});
+    mergeParams:   false,
+    strict:        false,
+} );
 
 /**
  * Resolve URL `/developer`.
  */
 
-router.
-route('/').
-get(staticHtml('developer/index'));
+router
+.route( '/' )
+.get( staticHtml( 'developer/index' ) );
 
 module.exports = router;

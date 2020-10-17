@@ -5,7 +5,7 @@ const BusinessValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type: 'array',
+        type:     'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },

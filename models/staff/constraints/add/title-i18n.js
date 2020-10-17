@@ -13,7 +13,7 @@ const TitleI18nValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type: 'string',
+        type:       'string',
         length: {
             maximum: 100,
         },

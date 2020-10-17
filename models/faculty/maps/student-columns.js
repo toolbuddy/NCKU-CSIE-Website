@@ -8,26 +8,31 @@
 const LanguageUtils = require('../../common/utils/language.js');
 const deepFreeze = require('deep-freeze');
 
-const map = ['degree', 'name'];
+const map = [
+    'degree',
+    'name',
+];
 
 const defaultOption = 'technology';
 
 const i18n = {
-    [LanguageUtils.getLanguageId('en-US')]: {
-        degree: 'degree',
-        name: 'name',
+    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+        degree:  'degree',
+        name:    'name',
     },
-    [LanguageUtils.getLanguageId('zh-TW')]: {
-        degree: '學位',
-        name: '學生姓名',
+    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+        degree:  '學位',
+        name:    '學生姓名',
     },
 };
 
-deepFreeze(i18n);
-deepFreeze(map);
+deepFreeze( i18n );
+deepFreeze( map );
 
 module.exports = {
     defaultOption,
     i18n,
     map,
 };
+
+

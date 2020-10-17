@@ -3,17 +3,17 @@ const ValidateUtils = require('../../../common/utils/validate.js');
 
 const AnnouncementValidationConstraints = {
     author: {
-        presence: true,
-        type: {
+        presence:     true,
+        type:     {
             type: ValidateUtils.isValidId,
         },
     },
     image: {
-        presence: false,
+        presence:     false,
 
         // TODO: type should be blob
-        type: 'string',
-        length: {
+        type:       'string',
+        length:   {
             maximum: 2083,
         },
     },
@@ -21,20 +21,20 @@ const AnnouncementValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type: 'array',
+        type:     'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
     files: {
         presence: true,
-        type: 'array',
+        type:     'array',
     },
     tags: {
         presence: {
             allowEmpty: false,
         },
-        type: 'array',
+        type:     'array',
     },
 };
 

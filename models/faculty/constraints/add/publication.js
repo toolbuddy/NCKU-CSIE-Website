@@ -4,43 +4,43 @@ const publicationCategoryUtils = require('../../utils/publication-category.js');
 
 const PublicationValidationConstraints = {
     issueYear: {
-        presence: false,
-        type: 'integer',
+        presence:     false,
+        type:         'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     issueMonth: {
-        presence: false,
-        type: 'integer',
+        presence:     false,
+        type:         'integer',
         numericality: {
-            greaterThan: 0,
+            greaterThan:       0,
             lessThanOrEqualTo: 12,
         },
     },
     category: {
         presence: true,
-        type: {
-            type: value => publicationCategoryUtils.isSupportedId(value),
+        type:     {
+            type: value => publicationCategoryUtils.isSupportedId( value ),
         },
     },
     international: {
         presence: true,
-        type: {
-            type: value => ValidateUtils.isValidBoolean(value),
+        type:     {
+            type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
     refereed: {
         presence: true,
-        type: {
-            type: value => ValidateUtils.isValidBoolean(value),
+        type:     {
+            type: value => ValidateUtils.isValidBoolean( value ),
         },
     },
     publicationI18n: {
         presence: {
             allowEmpty: false,
         },
-        type: 'array',
+        type:     'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
