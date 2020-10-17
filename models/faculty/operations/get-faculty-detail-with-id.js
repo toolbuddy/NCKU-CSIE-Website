@@ -33,7 +33,7 @@ const {
     TitleI18n,
 } = require('./associations.js');
 
-module.exports = async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
@@ -41,13 +41,13 @@ module.exports = async ( opt ) => {
             language = null,
         } = opt;
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidId( profileId ) ) {
-            const error = new Error( 'invalid profile id' );
+        if (!ValidateUtils.isValidId(profileId)) {
+            const error = new Error('invalid profile id');
             error.status = 400;
             throw error;
         }
@@ -68,8 +68,8 @@ module.exports = async ( opt ) => {
             studentAward,
             technologyTransfer,
             title,
-        ] = await Promise.all( [
-            Award.findAll( {
+        ] = await Promise.all([
+            Award.findAll({
                 attributes: [
                     'receivedYear',
                     'awardId',
@@ -79,18 +79,16 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      AwardI18n,
-                        as:         'awardI18n',
-                        attributes: [
-                            'award',
-                        ],
+                        model: AwardI18n,
+                        as: 'awardI18n',
+                        attributes: ['award'],
                         where: {
                             language,
                         },
                     },
                 ],
-            } ),
-            Conference.findAll( {
+            }),
+            Conference.findAll({
                 attributes: [
                     'hostYear',
                     'conferenceId',
@@ -100,8 +98,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      ConferenceI18n,
-                        as:         'conferenceI18n',
+                        model: ConferenceI18n,
+                        as: 'conferenceI18n',
                         attributes: [
                             'conference',
                             'title',
@@ -111,16 +109,14 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Department.findAll( {
-                attributes: [
-                    'type',
-                ],
+            }),
+            Department.findAll({
+                attributes: ['type'],
                 where: {
                     profileId,
                 },
-            } ),
-            Education.findAll( {
+            }),
+            Education.findAll({
                 attributes: [
                     'educationId',
                     'degree',
@@ -133,8 +129,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      EducationI18n,
-                        as:         'educationI18n',
+                        model: EducationI18n,
+                        as: 'educationI18n',
                         attributes: [
                             'major',
                             'school',
@@ -144,8 +140,8 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Experience.findAll( {
+            }),
+            Experience.findAll({
                 attributes: [
                     'experienceId',
                     'from',
@@ -156,8 +152,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      ExperienceI18n,
-                        as:         'experienceI18n',
+                        model: ExperienceI18n,
+                        as: 'experienceI18n',
                         attributes: [
                             'department',
                             'organization',
@@ -168,8 +164,8 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Patent.findAll( {
+            }),
+            Patent.findAll({
                 attributes: [
                     'patentId',
                     'applicationDate',
@@ -183,8 +179,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      PatentI18n,
-                        as:         'patentI18n',
+                        model: PatentI18n,
+                        as: 'patentI18n',
                         attributes: [
                             'inventor',
                             'patent',
@@ -195,8 +191,8 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Profile.findOne( {
+            }),
+            Profile.findOne({
                 attributes: [
                     'profileId',
                     'email',
@@ -211,8 +207,8 @@ module.exports = async ( opt ) => {
                 where: {
                     profileId,
                 },
-            } ),
-            ProfileI18n.findOne( {
+            }),
+            ProfileI18n.findOne({
                 attributes: [
                     'labAddress',
                     'labName',
@@ -223,8 +219,8 @@ module.exports = async ( opt ) => {
                     language,
                     profileId,
                 },
-            } ),
-            Project.findAll( {
+            }),
+            Project.findAll({
                 attributes: [
                     'projectId',
                     'category',
@@ -236,8 +232,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      ProjectI18n,
-                        as:         'projectI18n',
+                        model: ProjectI18n,
+                        as: 'projectI18n',
                         attributes: [
                             'name',
                             'support',
@@ -247,8 +243,8 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Publication.findAll( {
+            }),
+            Publication.findAll({
                 attributes: [
                     'publicationId',
                     'category',
@@ -262,8 +258,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      PublicationI18n,
-                        as:         'publicationI18n',
+                        model: PublicationI18n,
+                        as: 'publicationI18n',
                         attributes: [
                             'authors',
                             'title',
@@ -273,36 +269,30 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            ResearchGroup.findAll( {
-                attributes: [
-                    'type',
-                ],
+            }),
+            ResearchGroup.findAll({
+                attributes: ['type'],
                 where: {
                     profileId,
                 },
-            } ),
-            Specialty.findAll( {
-                attributes: [
-                    'specialtyId',
-                ],
+            }),
+            Specialty.findAll({
+                attributes: ['specialtyId'],
                 where: {
                     profileId,
                 },
                 include: [
                     {
-                        model:      SpecialtyI18n,
-                        as:         'specialtyI18n',
-                        attributes: [
-                            'specialty',
-                        ],
+                        model: SpecialtyI18n,
+                        as: 'specialtyI18n',
+                        attributes: ['specialty'],
                         where: {
                             language,
                         },
                     },
                 ],
-            } ),
-            StudentAward.findAll( {
+            }),
+            StudentAward.findAll({
                 attributes: [
                     'studentAwardId',
                     'receivedYear',
@@ -312,19 +302,17 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      Student,
-                        as:         'student',
+                        model: Student,
+                        as: 'student',
                         attributes: [
                             'studentId',
                             'degree',
                         ],
                         include: [
                             {
-                                model:      StudentI18n,
-                                as:         'studentI18n',
-                                attributes: [
-                                    'name',
-                                ],
+                                model: StudentI18n,
+                                as: 'studentI18n',
+                                attributes: ['name'],
                                 where: {
                                     language,
                                 },
@@ -332,18 +320,16 @@ module.exports = async ( opt ) => {
                         ],
                     },
                     {
-                        model:      StudentAwardI18n,
-                        as:         'studentAwardI18n',
-                        attributes: [
-                            'award',
-                        ],
+                        model: StudentAwardI18n,
+                        as: 'studentAwardI18n',
+                        attributes: ['award'],
                         where: {
                             language,
                         },
                     },
                 ],
-            } ),
-            TechnologyTransfer.findAll( {
+            }),
+            TechnologyTransfer.findAll({
                 attributes: [
                     'technologyTransferId',
                     'from',
@@ -354,18 +340,14 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      TechnologyTransferPatent,
-                        as:         'technologyTransferPatent',
-                        attributes: [
-                            'technologyTransferPatentId',
-                        ],
-                        include:    [
+                        model: TechnologyTransferPatent,
+                        as: 'technologyTransferPatent',
+                        attributes: ['technologyTransferPatentId'],
+                        include: [
                             {
-                                model:      TechnologyTransferPatentI18n,
-                                as:         'technologyTransferPatentI18n',
-                                attributes: [
-                                    'patent',
-                                ],
+                                model: TechnologyTransferPatentI18n,
+                                as: 'technologyTransferPatentI18n',
+                                attributes: ['patent'],
                                 where: {
                                     language,
                                 },
@@ -373,8 +355,8 @@ module.exports = async ( opt ) => {
                         ],
                     },
                     {
-                        model:      TechnologyTransferI18n,
-                        as:         'technologyTransferI18n',
+                        model: TechnologyTransferI18n,
+                        as: 'technologyTransferI18n',
                         attributes: [
                             'technologyTransferId',
                             'authorizedParty',
@@ -386,8 +368,8 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-            Title.findAll( {
+            }),
+            Title.findAll({
                 attributes: [
                     'titleId',
                     'from',
@@ -398,8 +380,8 @@ module.exports = async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      TitleI18n,
-                        as:         'titleI18n',
+                        model: TitleI18n,
+                        as: 'titleI18n',
                         attributes: [
                             'titleId',
                             'title',
@@ -409,137 +391,136 @@ module.exports = async ( opt ) => {
                         },
                     },
                 ],
-            } ),
-        ] );
-
+            }),
+        ]);
 
         /**
          * Profile not found.
          * Handle with 404 not found.
          */
 
-        if ( !profile ) {
-            const error = new Error( 'profile not found' );
+        if (!profile) {
+            const error = new Error('profile not found');
             error.status = 404;
             throw error;
         }
 
         return {
-            award: award.map( award => ( {
-                awardId:       award.awardId,
-                award:         award.awardI18n[ 0 ].award,
-                receivedYear:  award.receivedYear,
-            } ) ),
-            conference: conference.map( conference => ( {
+            award: award.map(award => ({
+                awardId: award.awardId,
+                award: award.awardI18n[0].award,
+                receivedYear: award.receivedYear,
+            })),
+            conference: conference.map(conference => ({
                 conferenceId: conference.conferenceId,
-                conference:   conference.conferenceI18n[ 0 ].conference,
-                hostYear:     conference.hostYear,
-                title:        conference.conferenceI18n[ 0 ].title,
-            } ) ),
-            department: department.map( department => ( {
+                conference: conference.conferenceI18n[0].conference,
+                hostYear: conference.hostYear,
+                title: conference.conferenceI18n[0].title,
+            })),
+            department: department.map(department => ({
                 type: department.type,
-            } ) ),
-            education:  education.map( education => ( {
+            })),
+            education: education.map(education => ({
                 educationId: education.educationId,
-                degree:      education.degree,
-                from:        education.from,
-                major:       education.educationI18n[ 0 ].major,
-                nation:      education.nation,
-                school:      education.educationI18n[ 0 ].school,
-                to:          education.to,
-            } ) ),
-            experience: experience.map( experience => ( {
+                degree: education.degree,
+                from: education.from,
+                major: education.educationI18n[0].major,
+                nation: education.nation,
+                school: education.educationI18n[0].school,
+                to: education.to,
+            })),
+            experience: experience.map(experience => ({
                 experienceId: experience.experienceId,
-                department:   experience.experienceI18n[ 0 ].department,
-                from:         experience.from,
-                organization: experience.experienceI18n[ 0 ].organization,
-                title:        experience.experienceI18n[ 0 ].title,
-                to:           experience.to,
-            } ) ),
-            patent: patent.map( patent => ( {
-                patentId:            patent.patentId,
-                applicationDate:     patent.applicationDate,
+                department: experience.experienceI18n[0].department,
+                from: experience.from,
+                organization: experience.experienceI18n[0].organization,
+                title: experience.experienceI18n[0].title,
+                to: experience.to,
+            })),
+            patent: patent.map(patent => ({
+                patentId: patent.patentId,
+                applicationDate: patent.applicationDate,
                 certificationNumber: patent.certificationNumber,
-                expireDate:          patent.expireDate,
-                inventor:            patent.patentI18n[ 0 ].inventor,
-                issueDate:           patent.issueDate,
-                nation:              patent.nation,
-                patent:              patent.patentI18n[ 0 ].patent,
-                patentOwner:         patent.patentI18n[ 0 ].patentOwner,
-            } ) ),
+                expireDate: patent.expireDate,
+                inventor: patent.patentI18n[0].inventor,
+                issueDate: patent.issueDate,
+                nation: patent.nation,
+                patent: patent.patentI18n[0].patent,
+                patentOwner: patent.patentI18n[0].patentOwner,
+            })),
             profile: {
-                email:         profile.email,
-                fax:           profile.fax,
-                labAddress:    profileI18n.labAddress,
-                labName:       profileI18n.labName,
-                labTel:        profile.labTel,
-                labWeb:        profile.labWeb,
-                name:          profileI18n.name,
-                nation:        profile.nation,
+                email: profile.email,
+                fax: profile.fax,
+                labAddress: profileI18n.labAddress,
+                labName: profileI18n.labName,
+                labTel: profile.labTel,
+                labWeb: profile.labWeb,
+                name: profileI18n.name,
+                nation: profile.nation,
                 officeAddress: profileI18n.officeAddress,
-                officeTel:     profile.officeTel,
-                personalWeb:   profile.personalWeb,
-                photo:         profile.photo,
+                officeTel: profile.officeTel,
+                personalWeb: profile.personalWeb,
+                photo: profile.photo,
                 profileId,
             },
-            project: project.map( project => ( {
+            project: project.map(project => ({
                 projectId: project.projectId,
-                category:  project.category,
-                from:      project.from,
-                name:      project.projectI18n[ 0 ].name,
-                support:   project.projectI18n[ 0 ].support,
-                to:        project.to,
-            } ) ),
-            publication: publication.map( publication => ( {
+                category: project.category,
+                from: project.from,
+                name: project.projectI18n[0].name,
+                support: project.projectI18n[0].support,
+                to: project.to,
+            })),
+            publication: publication.map(publication => ({
                 publicationId: publication.publicationId,
-                authors:       publication.publicationI18n[ 0 ].authors,
-                category:      publication.category,
+                authors: publication.publicationI18n[0].authors,
+                category: publication.category,
                 international: publication.international,
-                issueMonth:     publication.issueMonth,
-                issueYear:     publication.issueYear,
-                refereed:      publication.refereed,
-                title:         publication.publicationI18n[ 0 ].title,
-            } ) ),
-            researchGroup: researchGroup.map( researchGroup => ( {
+                issueMonth: publication.issueMonth,
+                issueYear: publication.issueYear,
+                refereed: publication.refereed,
+                title: publication.publicationI18n[0].title,
+            })),
+            researchGroup: researchGroup.map(researchGroup => ({
                 type: researchGroup.type,
-            } ) ),
-            specialty:     specialty.map( specialty => ( {
+            })),
+            specialty: specialty.map(specialty => ({
                 specialtyId: specialty.specialtyId,
-                specialty:   specialty.specialtyI18n[ 0 ].specialty,
-            } ) ),
-            studentAward:  studentAward.map( studentAward => ( {
-                awardId:      studentAward.studentAwardId,
-                award:        studentAward.studentAwardI18n[ 0 ].award,
+                specialty: specialty.specialtyI18n[0].specialty,
+            })),
+            studentAward: studentAward.map(studentAward => ({
+                awardId: studentAward.studentAwardId,
+                award: studentAward.studentAwardI18n[0].award,
                 receivedYear: studentAward.receivedYear,
-                student:      studentAward.student.map( student => ( {
+                student: studentAward.student.map(student => ({
                     studentId: student.studentId,
-                    degree:    student.degree,
-                    name:      student.studentI18n[ 0 ].name,
-                } ) ),
-            } ) ),
-            technologyTransfer: technologyTransfer.map( technologyTransfer => ( {
-                technologyTransferId:     technologyTransfer.technologyTransferId,
-                authorizingParty:         technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
-                authorizedParty:          technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
-                from:                     technologyTransfer.from,
-                technologyTransferPatent:               technologyTransfer.technologyTransferPatent.map( technologyTransferPatent => ( {
-                    patent:                     technologyTransferPatent.technologyTransferPatentI18n[ 0 ].patent,
+                    degree: student.degree,
+                    name: student.studentI18n[0].name,
+                })),
+            })),
+            technologyTransfer: technologyTransfer.map(technologyTransfer => ({
+                technologyTransferId: technologyTransfer.technologyTransferId,
+                authorizingParty: technologyTransfer.technologyTransferI18n[0].authorizingParty,
+                authorizedParty: technologyTransfer.technologyTransferI18n[0].authorizedParty,
+                from: technologyTransfer.from,
+                technologyTransferPatent: technologyTransfer.technologyTransferPatent.map(technologyTransferPatent => ({
+                    patent: technologyTransferPatent.technologyTransferPatentI18n[0].patent,
                     technologyTransferPatentId: technologyTransferPatent.technologyTransferPatentId,
-                } ) ),
-                to:                   technologyTransfer.to,
-                technology:           technologyTransfer.technologyTransferI18n[ 0 ].technology,
-            } ) ),
-            title: title.map( title => ( {
+                })),
+                to: technologyTransfer.to,
+                technology: technologyTransfer.technologyTransferI18n[0].technology,
+            })),
+            title: title.map(title => ({
                 titleId: title.titleId,
-                from:    title.from,
-                title:   title.titleI18n[ 0 ].title,
-                to:      title.to,
-            } ) ),
+                from: title.from,
+                title: title.titleI18n[0].title,
+                to: title.to,
+            })),
         };
     }
-    catch ( err ) {
-        console.error( err );
-        if ( err.status )
+    catch (err) {
+        console.error(err);
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;

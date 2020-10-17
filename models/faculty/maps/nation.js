@@ -18,7 +18,7 @@ const map = [
 const defaultOption = 'tw';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+    [LanguageUtils.getLanguageId('en-US')]: {
         tw: 'Taiwan',
         us: 'USA',
         cn: 'China',
@@ -27,7 +27,7 @@ const i18n = {
         de: 'Germany',
         au: 'Australia',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+    [LanguageUtils.getLanguageId('zh-TW')]: {
         tw: '臺灣',
         us: '美國',
         cn: '中國',
@@ -38,8 +38,8 @@ const i18n = {
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
 module.exports = {
     defaultOption,

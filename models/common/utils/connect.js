@@ -3,7 +3,7 @@
  */
 
 const Sequelize = require('sequelize');
-const { username, password, domainName, port, dialect, timezone, } = require('../../../settings/database/config.js');
+const {username, password, domainName, port, dialect, timezone} = require('../../../settings/database/config.js');
 
 /**
  * Connect web server to database `databaseName`.
@@ -20,39 +20,39 @@ const connect = databaseName => new Sequelize(
     username,
     password,
     {
-        host:             domainName,
+        host: domainName,
         port,
         dialect,
         timezone,
         operatorsAliases: false,
-        logging:          false,
-        define:           {
-            freezeTableName:  true,
-            timestamps:       false,
+        logging: false,
+        define: {
+            freezeTableName: true,
+            timestamps: false,
         },
         dialectOptions: {
             connectTimeout: 1000000,
-            dateStrings:    true,
-            typeCast ( field, next ) {
-                if ( field.type === 'DATETIME' )
+            dateStrings: true,
+            typeCast (field, next) {
+                if (field.type === 'DATETIME')
                     return field.string();
 
                 return next();
             },
         },
         pool: {
-            max:     5,
-            min:     0,
-            idle:    20000,
+            max: 5,
+            min: 0,
+            idle: 20000,
             acquire: 20000,
         },
-    }
+    },
 );
 
-const faculty = connect( 'faculty' );
-const announcement = connect( 'announcement' );
-const staff = connect( 'staff' );
-const user = connect( 'user' );
+const faculty = connect('faculty');
+const announcement = connect('announcement');
+const staff = connect('staff');
+const user = connect('user');
 
 module.exports = {
     faculty,

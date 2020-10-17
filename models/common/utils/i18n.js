@@ -19,24 +19,24 @@
 const LanguageUtils = require('./language.js');
 
 module.exports = class I18nUtils {
-    constructor ( opt ) {
+    constructor (opt) {
         const {
             defaultOption = null,
             i18n = null,
             map = null,
         } = opt || {};
 
-        if ( defaultOption === null || i18n === null || map === null )
-            throw new Error( 'Invalid arguments' );
+        if (defaultOption === null || i18n === null || map === null)
+            throw new Error('Invalid arguments');
 
         this.default = defaultOption;
         this.i18n = i18n;
         this.map = map;
     }
 
-    defaultValue ( languageId = LanguageUtils.defaultLanguageId ) {
-        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
-            return this.i18n[ languageId ][ this.default ];
+    defaultValue (languageId = LanguageUtils.defaultLanguageId) {
+        if (LanguageUtils.isSupportedLanguageId(languageId))
+            return this.i18n[languageId][this.default];
     }
 
     get defaultOption () {
@@ -44,88 +44,88 @@ module.exports = class I18nUtils {
     }
 
     get defaultId () {
-        return this.map.indexOf( this.default );
+        return this.map.indexOf(this.default);
     }
 
-    supportedValues ( languageId = LanguageUtils.defaultLanguageId ) {
-        if ( LanguageUtils.isSupportedLanguageId( languageId ) )
-            return Array.from( this.map.map( option => this.i18n[ languageId ][ option ] ) );
+    supportedValues (languageId = LanguageUtils.defaultLanguageId) {
+        if (LanguageUtils.isSupportedLanguageId(languageId))
+            return Array.from(this.map.map(option => this.i18n[languageId][option]));
         return [];
     }
 
     get supportedOptions () {
-        return Array.from( this.map );
+        return Array.from(this.map);
     }
 
     get supportedId () {
-        return this.map.map( ( {}, index ) => index );
+        return this.map.map(({}, index) => index);
     }
 
-    isSupportedValue ( opt ) {
+    isSupportedValue (opt) {
         const {
             value = null,
             languageId = null,
         } = opt || {};
 
-        if ( typeof ( value ) === 'string' )
-            return this.supportedValues( languageId ).includes( value );
+        if (typeof (value) === 'string')
+            return this.supportedValues(languageId).includes(value);
         return false;
     }
 
-    isSupportedOption ( option = null ) {
-        if ( typeof ( option ) === 'string' )
-            return this.supportedOptions.includes( option );
+    isSupportedOption (option = null) {
+        if (typeof (option) === 'string')
+            return this.supportedOptions.includes(option);
         return false;
     }
 
-    isSupportedId ( id = null ) {
-        if ( typeof ( id ) === 'number' )
-            return this.supportedId.includes( id );
+    isSupportedId (id = null) {
+        if (typeof (id) === 'number')
+            return this.supportedId.includes(id);
         return false;
     }
 
-    getValueByOption ( opt ) {
+    getValueByOption (opt) {
         const {
             option = null,
             languageId = null,
         } = opt || {};
 
-        if ( this.isSupportedOption( option ) && LanguageUtils.isSupportedLanguageId( languageId ) )
-            return this.i18n[ languageId ][ option ];
+        if (this.isSupportedOption(option) && LanguageUtils.isSupportedLanguageId(languageId))
+            return this.i18n[languageId][option];
     }
 
-    getValueById ( opt ) {
+    getValueById (opt) {
         const {
             id = null,
             languageId = null,
         } = opt || {};
 
-        if ( this.isSupportedId( id ) && LanguageUtils.isSupportedLanguageId( languageId ) )
-            return this.i18n[ languageId ][ this.map[ id ] ];
+        if (this.isSupportedId(id) && LanguageUtils.isSupportedLanguageId(languageId))
+            return this.i18n[languageId][this.map[id]];
     }
 
-    getOptionByValue ( opt ) {
+    getOptionByValue (opt) {
         const {
             value = null,
             languageId = null,
         } = opt || {};
 
-        if ( this.isSupportedValue( opt ) )
-            return this.map.find( option => this.map[ languageId ][ option ] === value, this );
+        if (this.isSupportedValue(opt))
+            return this.map.find(option => this.map[languageId][option] === value, this);
     }
 
-    getOptionById ( id = null ) {
-        if ( this.isSupportedId( id ) )
-            return this.map[ id ];
+    getOptionById (id = null) {
+        if (this.isSupportedId(id))
+            return this.map[id];
     }
 
-    getIdByValue ( opt ) {
-        if ( this.isSupportedValue( opt ) )
-            return this.map.indexOf( this.getOptionByValue( opt ) );
+    getIdByValue (opt) {
+        if (this.isSupportedValue(opt))
+            return this.map.indexOf(this.getOptionByValue(opt));
     }
 
-    getIdByOption ( option = null ) {
-        if ( this.isSupportedOption( option ) )
-            return this.map.indexOf( option );
+    getIdByOption (option = null) {
+        if (this.isSupportedOption(option))
+            return this.map.indexOf(option);
     }
-}
+};

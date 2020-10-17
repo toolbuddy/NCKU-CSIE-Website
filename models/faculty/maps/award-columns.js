@@ -16,23 +16,22 @@ const map = [
 const defaultOption = 'receivedYear';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        receivedYear:      'received year',
-        award:           'award',
+    [LanguageUtils.getLanguageId('en-US')]: {
+        receivedYear: 'received year',
+        award: 'award',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        receivedYear:  '獲獎日期',
-        award:         '獎項',
+    [LanguageUtils.getLanguageId('zh-TW')]: {
+        receivedYear: '獲獎日期',
+        award: '獎項',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
 module.exports = {
     defaultOption,
     i18n,
     map,
 };
-
 

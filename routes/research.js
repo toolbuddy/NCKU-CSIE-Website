@@ -11,37 +11,37 @@ const express = require('express');
 
 const staticHtml = require('./utils/static-html.js');
 
-const router = express.Router( {
+const router = express.Router({
     caseSensitive: true,
-    mergeParams:   false,
-    strict:        false,
-} );
+    mergeParams: false,
+    strict: false,
+});
 
 /**
  * Resolve URL `/research`.
  */
 
-router
-.route( [
+router.
+route([
     '/',
     '/index',
-] )
-.get( staticHtml( 'research/index' ) );
+]).
+get(staticHtml('research/index'));
 
 /**
  * Resolve URL `/research/lab`.
  */
 
-router
-.route( '/lab' )
-.get( staticHtml( 'research/lab' ) );
+router.
+route('/lab').
+get(staticHtml('research/lab'));
 
 /**
  * Resolve URL `/research/publication`.
  */
 
-router
-.route( '/publication' )
-.get( staticHtml( 'research/publication' ) );
+router.
+route('/publication').
+get(staticHtml('research/publication'));
 
 module.exports = router;

@@ -1,27 +1,27 @@
 const Sequelize = require('sequelize');
-const { announcement, } = require('../../common/utils/connect.js');
+const {announcement} = require('../../common/utils/connect.js');
 const LanguageUtils = require('../../common/utils/language.js');
 
-const AnnouncementI18n = announcement.define( 'announcementI18n', {
+const AnnouncementI18n = announcement.define('announcementI18n', {
     announcementId: {
-        type:       Sequelize.INTEGER.UNSIGNED,
-        allowNull:  false,
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
         primaryKey: true,
     },
     language: {
-        type:         Sequelize.TINYINT.UNSIGNED,
-        allowNull:    false,
+        type: Sequelize.TINYINT.UNSIGNED,
+        allowNull: false,
         defaultValue: LanguageUtils.defaultLanguageId,
-        primaryKey:   true,
+        primaryKey: true,
     },
     title: {
-        type:      Sequelize.STRING( 300 ),
+        type: Sequelize.STRING(300),
         allowNull: false,
     },
     content: {
-        type:      Sequelize.TEXT,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
-} );
+});
 
 module.exports = AnnouncementI18n;

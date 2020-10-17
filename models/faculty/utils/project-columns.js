@@ -1,10 +1,10 @@
 const I18nUtils = require('../../common/utils/i18n.js');
-const { defaultOption, i18n, map, } = require('../maps/project-columns.js');
+const {defaultOption, i18n, map} = require('../maps/project-columns.js');
 
-const projectColumnsUtils = new I18nUtils( {
+const projectColumnsUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
 module.exports = projectColumnsUtils;

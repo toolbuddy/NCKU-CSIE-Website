@@ -1,10 +1,10 @@
 const I18nUtils = require('../../common/utils/i18n.js');
-const { defaultOption, i18n, map, } = require('../maps/department.js');
+const {defaultOption, i18n, map} = require('../maps/department.js');
 
-const departmentUtils = new I18nUtils( {
+const departmentUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
 module.exports = departmentUtils;

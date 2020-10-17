@@ -10,20 +10,20 @@ const map = [
 const defaultOption = 'journal';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
-        journal:    'journal',
+    [LanguageUtils.getLanguageId('en-US')]: {
+        journal: 'journal',
         conference: 'conference',
-        workshop:   'workshop',
+        workshop: 'workshop',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
-        journal:    '期刊',
+    [LanguageUtils.getLanguageId('zh-TW')]: {
+        journal: '期刊',
         conference: '會議',
-        workshop:   '工作坊',
+        workshop: '工作坊',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
 module.exports = {
     defaultOption,

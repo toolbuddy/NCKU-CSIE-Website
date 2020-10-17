@@ -9,13 +9,13 @@
 const deepFreeze = require('deep-freeze');
 
 const languageMap = {
-    'support': [
+    support: [
         'zh-TW',
         'en-US',
     ],
-    'default': 'zh-TW',
+    default: 'zh-TW',
 };
 
-deepFreeze( languageMap );
+deepFreeze(languageMap);
 
 module.exports = languageMap;

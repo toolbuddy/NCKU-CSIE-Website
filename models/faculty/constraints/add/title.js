@@ -2,15 +2,15 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const TitleValidationConstraints = {
     from: {
-        presence:     false,
-        type:         'integer',
+        presence: false,
+        type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     to: {
-        presence:     false,
-        type:         'integer',
+        presence: false,
+        type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
@@ -19,7 +19,7 @@ const TitleValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },

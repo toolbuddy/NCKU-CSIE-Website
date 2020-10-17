@@ -1,11 +1,11 @@
 const ProfileValidationConstraints = {
     email: {
         presence: false,
-        type:     'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 2083,
         },
-        email:    true,
+        email: true,
     },
     photo: {
         presence: false,
@@ -14,8 +14,8 @@ const ProfileValidationConstraints = {
     },
     officeTel: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 30,
         },
         format: {
@@ -24,7 +24,7 @@ const ProfileValidationConstraints = {
     },
     order: {
         presence: false,
-        type:     'integer',
+        type: 'integer',
     },
 };
 

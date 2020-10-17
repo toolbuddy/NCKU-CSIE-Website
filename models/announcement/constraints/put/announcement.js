@@ -4,14 +4,14 @@ const ValidateUtils = require('../../../common/utils/validate.js');
 const AnnouncementValidationConstraints = {
     announcementId: {
         presence: true,
-        type:     {
+        type: {
             type: ValidateUtils.isValidId,
         },
     },
     image: {
-        presence:     false,
-        type:       'string',
-        length:   {
+        presence: false,
+        type: 'string',
+        length: {
             maximum: 2083,
         },
     },
@@ -19,24 +19,24 @@ const AnnouncementValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
     addedFiles: {
         presence: false,
-        type:     'array',
+        type: 'array',
     },
     deletedFiles: {
         presence: false,
-        type:     'array',
+        type: 'array',
     },
     tags: {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
     },
 };
 

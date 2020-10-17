@@ -5,35 +5,35 @@ const Profile = require('../schemas/profile.js');
 const Title = require('../schemas/title.js');
 const TitleI18n = require('../schemas/title-i18n.js');
 
-Profile.hasMany( ProfileI18n, {
-    as:         'profileI18n',
+Profile.hasMany(ProfileI18n, {
+    as: 'profileI18n',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Business.hasMany( BusinessI18n, {
-    as:         'businessI18n',
+Business.hasMany(BusinessI18n, {
+    as: 'businessI18n',
     foreignKey: 'businessId',
-    sourceKey:  'businessId',
-} );
+    sourceKey: 'businessId',
+});
 
-Profile.hasMany( Business, {
-    as:         'business',
+Profile.hasMany(Business, {
+    as: 'business',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Title.hasMany( TitleI18n, {
-    as:         'titleI18n',
+Title.hasMany(TitleI18n, {
+    as: 'titleI18n',
     foreignKey: 'titleId',
-    sourceKey:  'titleId',
-} );
+    sourceKey: 'titleId',
+});
 
-Profile.hasMany( Title, {
-    as:         'title',
+Profile.hasMany(Title, {
+    as: 'title',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
 module.exports = {
     Business,

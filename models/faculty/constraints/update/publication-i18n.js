@@ -11,15 +11,15 @@ const PublicationI18nValidationConstraints = {
     },
     title: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 500,
         },
     },
     authors: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 500,
         },
     },

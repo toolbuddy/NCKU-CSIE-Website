@@ -2,9 +2,9 @@ const researchGroupUtils = require('../../utils/research-group.js');
 
 const ResearchGroupValidationConstraints = {
     type: {
-        presence:     true,
-        type:     {
-            type: value => researchGroupUtils.isSupportedId( value ),
+        presence: true,
+        type: {
+            type: value => researchGroupUtils.isSupportedId(value),
         },
     },
 };

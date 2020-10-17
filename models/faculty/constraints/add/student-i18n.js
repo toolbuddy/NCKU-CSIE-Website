@@ -11,8 +11,8 @@ const StudentI18nValidationConstraints = {
     },
     name: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },

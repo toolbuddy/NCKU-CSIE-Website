@@ -29,179 +29,179 @@ const TechnologyTransferPatent = require('../schemas/technology-transfer-patent.
 const TitleI18n = require('../schemas/title-i18n.js');
 const Title = require('../schemas/title.js');
 
-Award.hasMany( AwardI18n, {
-    as:         'awardI18n',
+Award.hasMany(AwardI18n, {
+    as: 'awardI18n',
     foreignKey: 'awardId',
-    sourceKey:  'awardId',
-} );
+    sourceKey: 'awardId',
+});
 
-Profile.hasMany( Award, {
-    as:         'award',
+Profile.hasMany(Award, {
+    as: 'award',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Conference.hasMany( ConferenceI18n, {
-    as:         'conferenceI18n',
+Conference.hasMany(ConferenceI18n, {
+    as: 'conferenceI18n',
     foreignKey: 'conferenceId',
-    sourceKey:  'conferenceId',
-} );
+    sourceKey: 'conferenceId',
+});
 
-Profile.hasMany( Conference, {
-    as:         'conference',
+Profile.hasMany(Conference, {
+    as: 'conference',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Profile.hasMany( Department, {
-    as:         'department',
+Profile.hasMany(Department, {
+    as: 'department',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Education.hasMany( EducationI18n, {
-    as:         'educationI18n',
+Education.hasMany(EducationI18n, {
+    as: 'educationI18n',
     foreignKey: 'educationId',
-    sourceKey:  'educationId',
-} );
+    sourceKey: 'educationId',
+});
 
-Profile.hasMany( Education, {
-    as:         'education',
+Profile.hasMany(Education, {
+    as: 'education',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Experience.hasMany( ExperienceI18n, {
-    as:         'experienceI18n',
+Experience.hasMany(ExperienceI18n, {
+    as: 'experienceI18n',
     foreignKey: 'experienceId',
-    sourceKey:  'experienceId',
-} );
+    sourceKey: 'experienceId',
+});
 
-Profile.hasMany( Experience, {
-    as:         'experience',
+Profile.hasMany(Experience, {
+    as: 'experience',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Patent.hasMany( PatentI18n, {
-    as:         'patentI18n',
+Patent.hasMany(PatentI18n, {
+    as: 'patentI18n',
     foreignKey: 'patentId',
-    sourceKey:  'patentId',
-} );
+    sourceKey: 'patentId',
+});
 
-Profile.hasMany( Patent, {
-    as:         'patent',
+Profile.hasMany(Patent, {
+    as: 'patent',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Profile.hasMany( ProfileI18n, {
-    as:         'profileI18n',
+Profile.hasMany(ProfileI18n, {
+    as: 'profileI18n',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Project.hasMany( ProjectI18n, {
-    as:         'projectI18n',
+Project.hasMany(ProjectI18n, {
+    as: 'projectI18n',
     foreignKey: 'projectId',
-    sourceKey:  'projectId',
-} );
+    sourceKey: 'projectId',
+});
 
-Profile.hasMany( Project, {
-    as:         'project',
+Profile.hasMany(Project, {
+    as: 'project',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Publication.hasMany( PublicationI18n, {
-    as:         'publicationI18n',
+Publication.hasMany(PublicationI18n, {
+    as: 'publicationI18n',
     foreignKey: 'publicationId',
-    sourceKey:  'publicationId',
-} );
+    sourceKey: 'publicationId',
+});
 
-Profile.hasMany( Publication, {
-    as:         'publication',
+Profile.hasMany(Publication, {
+    as: 'publication',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Profile.hasMany( ResearchGroup, {
-    as:         'researchGroup',
+Profile.hasMany(ResearchGroup, {
+    as: 'researchGroup',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Specialty.hasMany( SpecialtyI18n, {
-    as:         'specialtyI18n',
+Specialty.hasMany(SpecialtyI18n, {
+    as: 'specialtyI18n',
     foreignKey: 'specialtyId',
-    sourceKey:  'specialtyId',
-} );
+    sourceKey: 'specialtyId',
+});
 
-Profile.hasMany( Specialty, {
-    as:         'specialty',
+Profile.hasMany(Specialty, {
+    as: 'specialty',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-StudentAward.hasMany( StudentAwardI18n, {
-    as:         'studentAwardI18n',
+StudentAward.hasMany(StudentAwardI18n, {
+    as: 'studentAwardI18n',
     foreignKey: 'studentAwardId',
-    sourceKey:  'studentAwardId',
-} );
+    sourceKey: 'studentAwardId',
+});
 
-Profile.hasMany( StudentAward, {
-    as:         'studentAward',
+Profile.hasMany(StudentAward, {
+    as: 'studentAward',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Student.hasMany( StudentI18n, {
-    as:         'studentI18n',
+Student.hasMany(StudentI18n, {
+    as: 'studentI18n',
     foreignKey: 'studentId',
-    sourceKey:  'studentId',
-} );
+    sourceKey: 'studentId',
+});
 
-StudentAward.hasMany( Student, {
-    as:         'student',
+StudentAward.hasMany(Student, {
+    as: 'student',
     foreignKey: 'studentAwardId',
-    sourceKey:  'studentAwardId',
-} );
+    sourceKey: 'studentAwardId',
+});
 
-TechnologyTransferPatent.hasMany( TechnologyTransferPatentI18n, {
-    as:         'technologyTransferPatentI18n',
+TechnologyTransferPatent.hasMany(TechnologyTransferPatentI18n, {
+    as: 'technologyTransferPatentI18n',
     foreignKey: 'technologyTransferPatentId',
-    sourceKey:  'technologyTransferPatentId',
-} );
+    sourceKey: 'technologyTransferPatentId',
+});
 
-TechnologyTransfer.hasMany( TechnologyTransferPatent, {
-    as:         'technologyTransferPatent',
+TechnologyTransfer.hasMany(TechnologyTransferPatent, {
+    as: 'technologyTransferPatent',
     foreignKey: 'technologyTransferId',
-    sourceKey:  'technologyTransferId',
-} );
+    sourceKey: 'technologyTransferId',
+});
 
-TechnologyTransfer.hasMany( TechnologyTransferI18n, {
-    as:         'technologyTransferI18n',
+TechnologyTransfer.hasMany(TechnologyTransferI18n, {
+    as: 'technologyTransferI18n',
     foreignKey: 'technologyTransferId',
-    sourceKey:  'technologyTransferId',
-} );
+    sourceKey: 'technologyTransferId',
+});
 
-Profile.hasMany( TechnologyTransfer, {
-    as:         'technologyTransfer',
+Profile.hasMany(TechnologyTransfer, {
+    as: 'technologyTransfer',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
-Title.hasMany( TitleI18n, {
-    as:         'titleI18n',
+Title.hasMany(TitleI18n, {
+    as: 'titleI18n',
     foreignKey: 'titleId',
-    sourceKey:  'titleId',
-} );
+    sourceKey: 'titleId',
+});
 
-Profile.hasMany( Title, {
-    as:         'title',
+Profile.hasMany(Title, {
+    as: 'title',
     foreignKey: 'profileId',
-    sourceKey:  'profileId',
-} );
+    sourceKey: 'profileId',
+});
 
 module.exports = {
     AwardI18n,

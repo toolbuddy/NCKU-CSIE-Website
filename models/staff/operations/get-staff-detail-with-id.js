@@ -9,7 +9,7 @@ const {
     TitleI18n,
 } = require('./associations.js');
 
-module.exports = async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
@@ -17,13 +17,13 @@ module.exports = async ( opt ) => {
             language = null,
         } = opt;
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidId( profileId ) ) {
-            const error = new Error( 'invalid profile id' );
+        if (!ValidateUtils.isValidId(profileId)) {
+            const error = new Error('invalid profile id');
             error.status = 400;
             throw error;
         }
@@ -32,22 +32,24 @@ module.exports = async ( opt ) => {
             business,
             profile,
             title,
-        ] = await Promise.all( [
-            Business.findAll( {
-                attributes: [ 'businessId', ],
-                where:      {
+        ] = await Promise.all([
+            Business.findAll({
+                attributes: ['businessId'],
+                where: {
                     profileId,
                 },
-                include: [ {
-                    model:      BusinessI18n,
-                    as:         'businessI18n',
-                    attributes: [ 'business', ],
-                    where:      {
-                        language,
+                include: [
+                    {
+                        model: BusinessI18n,
+                        as: 'businessI18n',
+                        attributes: ['business'],
+                        where: {
+                            language,
+                        },
                     },
-                }, ],
-            } ),
-            Profile.findOne( {
+                ],
+            }),
+            Profile.findOne({
                 attributes: [
                     'profileId',
                     'email',
@@ -57,68 +59,71 @@ module.exports = async ( opt ) => {
                 where: {
                     profileId,
                 },
-                include: [ {
-                    model:      ProfileI18n,
-                    as:         'profileI18n',
-                    attributes: [
-                        'name',
-                        'officeAddress',
-                    ],
-                    where: {
-                        language,
+                include: [
+                    {
+                        model: ProfileI18n,
+                        as: 'profileI18n',
+                        attributes: [
+                            'name',
+                            'officeAddress',
+                        ],
+                        where: {
+                            language,
+                        },
                     },
-                }, ],
-            } ),
-            Title.findAll( {
-                attributes: [ 'titleId', ],
-                where:      {
+                ],
+            }),
+            Title.findAll({
+                attributes: ['titleId'],
+                where: {
                     profileId,
                 },
-                include: [ {
-                    model:      TitleI18n,
-                    as:         'titleI18n',
-                    attributes: [ 'title', ],
-                    where:      {
-                        language,
+                include: [
+                    {
+                        model: TitleI18n,
+                        as: 'titleI18n',
+                        attributes: ['title'],
+                        where: {
+                            language,
+                        },
                     },
-                }, ],
-            } ),
-        ] );
-
+                ],
+            }),
+        ]);
 
         /**
          * Profile not found.
          * Handle with 404 not found.
          */
 
-        if ( !profile ) {
-            const error = new Error( 'profile not found' );
+        if (!profile) {
+            const error = new Error('profile not found');
             error.status = 404;
             throw error;
         }
 
         return {
             profile: {
-                email:         profile.email,
-                name:          profile.profileI18n[ 0 ].name,
-                officeTel:     profile.officeTel,
-                officeAddress: profile.profileI18n[ 0 ].officeAddress,
-                photo:         profile.photo,
+                email: profile.email,
+                name: profile.profileI18n[0].name,
+                officeTel: profile.officeTel,
+                officeAddress: profile.profileI18n[0].officeAddress,
+                photo: profile.photo,
                 profileId,
             },
-            business: business.map( businessInfo => ( {
+            business: business.map(businessInfo => ({
                 businessId: businessInfo.businessId,
-                business:   businessInfo.businessI18n[ 0 ].business,
-            } ) ),
-            title: title.map( titleInfo => ( {
+                business: businessInfo.businessI18n[0].business,
+            })),
+            title: title.map(titleInfo => ({
                 titleId: titleInfo.titleId,
-                title:   titleInfo.titleI18n[ 0 ].title,
-            } ) ),
+                title: titleInfo.titleI18n[0].title,
+            })),
         };
     }
-    catch ( err ) {
-        console.error( err );
-        if ( err.status )
+    catch (err) {
+        console.error(err);
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;

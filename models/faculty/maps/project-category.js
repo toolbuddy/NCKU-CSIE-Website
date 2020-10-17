@@ -9,18 +9,18 @@ const map = [
 const defaultOption = 'general';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+    [LanguageUtils.getLanguageId('en-US')]: {
         general: 'General Projects',
-        nsc:     'National Science Council Projects',
+        nsc: 'National Science Council Projects',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+    [LanguageUtils.getLanguageId('zh-TW')]: {
         general: '一般建教案',
-        nsc:     '國科會計劃',
+        nsc: '國科會計劃',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
 module.exports = {
     defaultOption,

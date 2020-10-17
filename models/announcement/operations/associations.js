@@ -3,23 +3,23 @@ const AnnouncementI18n = require('../schemas/announcement-i18n.js');
 const File = require('../schemas/file.js');
 const Tag = require('../schemas/tag.js');
 
-Announcement.hasMany( AnnouncementI18n, {
-    as:         'announcementI18n',
+Announcement.hasMany(AnnouncementI18n, {
+    as: 'announcementI18n',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
-Announcement.hasMany( Tag, {
-    as:         'tags',
+Announcement.hasMany(Tag, {
+    as: 'tags',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
-Announcement.hasMany( File, {
-    as:         'files',
+Announcement.hasMany(File, {
+    as: 'files',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
 module.exports = {
     Announcement,
