@@ -118,7 +118,7 @@ module.exports = {
     /**
      * Useless JS file destination.
      *
-     * Target of this very `webpack.config.babel.js` is to build CSS.
+     * Target of this very `webpack.config.js` is to build CSS.
      * It also generate unnecessary JS files, DO NOT USE THEM.
      */
 
@@ -156,7 +156,7 @@ module.exports = {
     /**
      * Webpack loader modules.
      *
-     * This `webpack.config.babel.js` is specific for client-side bundling,
+     * This `webpack.config.js` is specific for client-side bundling,
      * it can be use with `.scss` and image related loaders.
      */
 

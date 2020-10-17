@@ -13,19 +13,17 @@
  */
 
 const config = {
-    domainName:  'localhost',
-    maxAge:      1000 * 60 * 60 * 24 * 7,
-    port:        3000,
-    protocol:    'http',
-    secret:      'The deepest and darkest secret of NCKU CSIE',
+    domainName: 'localhost',
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    port: 3000,
+    protocol: 'http',
+    secret: 'The deepest and darkest secret of NCKU CSIE',
 };
 
 config.host = `${config.protocol}://${config.domainName}${
     [80, 443].includes(config.port) ? '' : `:${config.port}`
 }`;
 config.staticHost = `${config.host}/static`;
-config.whiteList = [
-    `${config.domainName}:${config.port}`,
-];
+config.whiteList = [`${config.domainName}:${config.port}`];
 
 module.exports = config;

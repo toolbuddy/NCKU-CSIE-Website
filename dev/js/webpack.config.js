@@ -6,12 +6,17 @@
  * see `dev/css/webpack.config.js` and `dev/html/webpack.config.js`.
  *
  * When adding another page, go to `entry` and add new entry file.
+ * See webpack's official website https://webpack.js.org/ for more information.
  */
 
 const path = require('path');
 
-const projectRoot = path.resolve(__dirname, '../..');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
+const eslintConfig = require('./.eslintrc.js');
+const {staticHost} = require('../../settings/server/config.js');
+
+const projectRoot = path.resolve(__dirname, '../..');
 const staticRoot = path.join(projectRoot, 'static');
 const jsSrcRoot = path.join(staticRoot, 'src/js');
 const jsDistRoot = path.join(staticRoot, 'dist/js');
@@ -21,6 +26,7 @@ module.exports = (env, argv) => {
      * Get mode from command line argument `--mode`.
      * See `package.json`'s script section.
      */
+
     const isDevMode = argv.mode === 'development';
     const isProdMode = argv.mode === 'production';
 
@@ -29,18 +35,35 @@ module.exports = (env, argv) => {
          * The base directory, an absolute path, for resolving entry points and
          * loaders from configuration.
          */
+
         context: jsSrcRoot,
 
         /**
-         * Entry files for bundling.
+         * Webpack built-in develop tools.
+         *
+         * Use sourcemap to recover codes from bundle file.
+         * `inline-sourcemap` make sourcemap inline, which is smaller.
+         * In develop, this option should be `devtool: 'inline-sourcemap'`.
+         * In production, this option should be `devtool: false`.
+         */
+
+        devtool: isDevMode ? 'inline-sourcemap' : false,
+
+        /**
+         * Bundled files' source.
          */
 
         entry: {
+            // Dependencies.
+            // 'pug': ['pug'],
+
             // Route `about`.
             'about/award': {
+                // DependOn: 'pug',
                 import: './about/award.js',
                 filename: 'about/award.js',
             },
+
             // 'about/contact': path.join(jsSrcRoot, 'about/contact.js'),
             // 'about/faculty-detail': path.join(jsSrcRoot, 'about/faculty-detail.js'),
             // 'about/faculty': path.join(jsSrcRoot, 'about/faculty.js'),
@@ -108,127 +131,42 @@ module.exports = (env, argv) => {
         },
 
         /**
-         * Webpack built-in develop tools.
-         *
-         * Use sourcemap to recover codes from bundle file.
-         * `inline-sourcemap` make sourcemap inline, which is smaller.
-         * In develop, this option should be `devtool: 'inline-sourcemap'`.
-         * In production, this option should be `devtool: false`.
-         */
-
-        devtool: isDevMode ? 'inline-sourcemap' : false,
-
-        /**
          * Bundle mode.
          *
-         * In develop, this option should be `mode: 'development'`.
-         * In production, this option should be `mode: 'production'`.
+         * In development mode set to `mode: 'development'`.
+         * In production mode set to `mode: 'production'`.
+         * In test mode set to `mode: 'none'`.
          */
 
-        mode: isDevMode ? 'development' : 'production',
+        mode: isDevMode ? 'development' : isProdMode ? 'production' : 'none',
 
         /**
-         * Bundled file destination.
+         * Webpack loader for each modules.
          *
-         * After bundling, put file to path `jsDistRoot`.
-         * Rename original file name `f.js` to `f.min.js`.
-         */
-
-        output: {
-            path: jsDistRoot,
-            filename: '[name].min.js',
-        },
-
-        /**
-         * Bundled environment.
-         *
-         * Because JS run in browsers,
-         * so this option must always be `target: 'web'`.
-         */
-
-        target: 'web',
-
-        /**
-         * Relative import alias.
-         *
-         * When writing `import` statement for relative import,
-         * no need to start with `'./'` or `'../'`.
-         * Only work for following path:
-         * - `import 'models/.......'`
-         * - `import 'settings/...'`
-         * - `import 'static/.....'`
-         */
-
-        resolve: {
-            alias: {
-                models: path.join(projectRoot, 'models'),
-                static: staticRoot,
-                settings: path.join(projectRoot, 'settings'),
-            },
-        },
-
-        /**
-         * Webpack loader modules.
-         *
-         * This `webpack.config.babel.js` is specific for client-side bundling,
-         * therefore it can be use with `.css`, `.js`, `.pug` and image related loaders.
+         * Modules (files) will be handle according to their extention
+         * (`.css`, `.js`, `.pug`, etc.).
          */
 
         module: {
             rules: [
 
                 /**
-                 * Loader for `.css` files.
+                 * Loaders for `.js` files.
                  *
-                 * Bundle `.css` file into `.js` by following steps:
-                 * 1. Use `css-loader` to resolve `@import` and `url()` in `.css` files.
-                 *      - `@import '...css'` will bundle local `.css` file.
-                 *      - `@import url('...css')` will fetch and bundle remote `.css` file.
-                 *      - `@import url(image)` will use `url-loader` to convert image into data url.
-                 * 2. Use `style-loader` to add CSS to DOM by injecting a `<style>` tag.
-                 */
-
-                {
-                    test: /\.css$/u,
-                    use: [
-                        {
-                            loader: 'style-loader',
-                            options: {
-                                sourceMap: isDevMode,
-                            },
-                        },
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: isDevMode,
-                            },
-                        },
-                    ],
-                },
-
-                /**
-                 * Loader for `.js` files.
-                 *
-                 * Use `eslint-loader` to lint.
+                 * Use `babel-loader` to convert ES6 module and ES6+ syntax.
                  */
 
                 {
                     test: /\.js$/u,
+                    include: [jsSrcRoot],
                     exclude: /node_modules/u,
                     use: [
-                        {
-                            loader: 'eslint-loader',
-                            options: {
-                                fix: true,
-                                configFile: path.join(projectRoot, 'dev/js/.eslintrc.js'),
-                            },
-                        },
                         {
                             loader: 'babel-loader',
                             options: {
                                 presets: ['@babel/preset-env'],
                             },
-                        },,
+                        },
                     ],
                 },
 
@@ -269,5 +207,59 @@ module.exports = (env, argv) => {
                 },
             ],
         },
+
+        /**
+         * Bundled files' destination.
+         *
+         * After bundling, put files to path `jsDistRoot` and
+         * rename original file name `file.js` into `file.min.js`.
+         */
+
+        output: {
+            filename: '[name].min.js',
+            iife: true,
+            module: false,
+            path: jsDistRoot,
+            publicPath: `${staticHost}/`,
+            sourceMapFilename: '[name].js.map',
+        },
+
+        plugins: [
+            new ESLintPlugin({
+                baseConfig: eslintConfig,
+                cache: true,
+                cacheLocation: path.join(projectRoot, 'node_modules/.cache/.eslintcache-js'),
+                context: jsSrcRoot,
+                fix: true,
+            }),
+        ],
+
+        /**
+         * Relative import alias.
+         *
+         * When writing `import` statement for relative import,
+         * no need to start with `'./'` or `'../'`.
+         * Only work for following path:
+         * - `import 'models/.......'`
+         * - `import 'settings/...'`
+         * - `import 'static/.....'`
+         */
+
+        resolve: {
+            alias: {
+                models: path.join(projectRoot, 'models'),
+                static: staticRoot,
+                settings: path.join(projectRoot, 'settings'),
+            },
+        },
+
+        /**
+         * Bundled environment.
+         *
+         * Because JS run in browsers,
+         * so this option must always be `target: 'web'`.
+         */
+
+        target: 'web',
     };
 };

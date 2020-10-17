@@ -18,4 +18,4 @@ class UrlUtils {
     }
 }
 
-module.exports = UrlUtils;
+export default UrlUtils;

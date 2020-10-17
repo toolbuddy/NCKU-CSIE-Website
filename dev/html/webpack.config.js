@@ -116,7 +116,7 @@ module.exports = LanguageUtils.supportedLanguageId.map(languageId => ({
     /**
      * Useless JS file destination.
      *
-     * Target of this very `webpack.config.babel.js` is to build HTML.
+     * Target of this very `webpack.config.js` is to build HTML.
      * It also generate unnecessary JS files, DO NOT USE THEM.
      */
 
@@ -137,7 +137,7 @@ module.exports = LanguageUtils.supportedLanguageId.map(languageId => ({
     /**
      * Webpack loader modules.
      *
-     * This `webpack.config.babel.js` is specific for client-side bundling,
+     * This `webpack.config.js` is specific for client-side bundling,
      * it can be use with `.pug` and image related loaders.
      */
 

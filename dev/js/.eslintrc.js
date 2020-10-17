@@ -1166,7 +1166,7 @@ module.exports = {
         ],
 
         // Disallow nested ternary expressions.
-        'no-nested-ternary': 'error',
+        'no-nested-ternary': 'off',
 
         // Disallow Object constructors
         'no-new-object': 'error',
