@@ -59,36 +59,33 @@ npm run develop
 
 ### Develop Guide
 
-This project use [Node.js](https://nodejs.org/en/) as backend infrastructure.
-We use a lot of tools to help develop (ex. Pug (HTML5), Sass (css)), and we have setup some basic rule to make our coding style unified.
-Make sure you follow our convention before you submit a pull request!
-Here are a few standard:
+This project is run on [Node.js](https://nodejs.org/en/).
+We use a lot of tools to help develop (ex. Pug (HTML5), Sass (css)), and we use linters to unify coding style.
+Please check the following before you submit a pull request.
+
 - ECMAScript ( JavaScript )
-    - Using pure ECMAScript to build everything on our server.
-    - ECMAScript6 syntax mainly used. (Including backend)
-    - Camel form naming style.
-    - Other rules can be check by running following commands:
+    - ES6+ syntax supported.
+    - camelCase naming style.
+    - Lint ECMAScript files with following commands:
         - Frontend: `npm run lint:js`
         - Backend: `npm run lint:server`
     - Build ECMAScript files: `npm run build:js`
-    - Build server: `npm run build:server`
 - HTML
     - Using Pug template engine.
-    - HTML5 tags only.
-    - Semantic tags only, don't use tags like `div`, `i`, `b`, etc.
-    - Other rules can be check by running `npm run lint:html`.
+    - HTML5 semantic tags only (don't use tags like `div`, `i`, `b`, etc).
+    - Lint Pug files by running `npm run lint:html`.
     - Build HTML files: `npm run build:html`
 - CSS
     - Using Sass.
-    - CSS3 syntax mainly used.
+    - CSS3+ syntax supported.
     - BEM naming convention:
         - Block: Control layout of its elements (structure).
         - Element: Control outfit of itself (skin).
         - Modifier: Modified style of specific element.
-    - Other rules can be check by running `npm run lint:css`.
+    - Lint SCSS files by running `npm run lint:css`.
     - Build CSS files: `npm run build:css`
 - Git
-    - Using Git flow as develop standard.
+    - Using Git flow as development standard.
     - Following branches are used:
         - `master`: Major stable version.
         - `release`: Ready to release version, need test to be proof stable.
@@ -97,26 +94,30 @@ Here are a few standard:
         - `hotfix-*`: Quick fix for major version.
 
 ### Known issue in develop mode
+
 - We use `webpack --watch` to monitor files change. Some Linux OS will complain about watching too many file, run the following command to fix this issue:
-    ```
-    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-    ```
+
+```sh
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
 
 ## Long Term Goal
+
 We are going to build a website which have following feature:
-- Frequently updated information about this very department, every student has rights knowing what happened.
-- Total information transparency, we are equally treated no matter which grade you are.
-- Fancy UI build with WebGL, make student like it and want to contribute to it.
-- Student forum with members of both undergraduate and graduate student, let fill this department with energy.
+
+- Frequently updated information about NCKU CSIE.
+- Fancy UI to attract students to contribute.
 
 ## Want to contribute?
-Anyone can help make this project better!
-We are currently a 16 members group, lead by [ProFatXuanAll](https://github.com/ProFatXuanAll).
+
+Anyone can help us to make this project better!
 Feel free to contact us if you have question.
 
 ## Team ProFatXuanAll
+
 Special thanks for
+
 - Designer: [lanhsincheng](https://github.com/lanhsincheng) and [Cindy](https://www.facebook.com/cindy461022).
-- Active Developer: [ProFatXuanAll](https://github.com/ProFatXuanAll), [Rispolyv0n](https://github.com/Rispolyv0n), [AmyLin0210](https://github.com/AmyLin0210).
-- Participant: [kaeteyaruyo](https://github.com/kaeteyaruyo), [danielian1121](https://github.com/danielian1121), [ya-sin](https://github.com/ya-sin), [yellow951321](https://github.com/yellow951321), [aqwefghnm](https://github.com/aqwefghnm), [eecheng87](https://github.com/eecheng87), [IsabelTseng](https://github.com/IsabelTseng), [Kazumachi124170](https://github.com/Kazumachi124170), [k32367mdbf](https://github.com/k32367mdbf), [wang0630](https://github.com/wang0630), [Darkborderman](https://github.com/Darkborderman), [d4n1elchen](https://github.com/d4n1elchen).
+- Active Developer: [ProFatXuanAll](https://github.com/ProFatXuanAll), [kaeteyaruyo](https://github.com/kaeteyaruyo), [AmyLin0210](https://github.com/AmyLin0210), [Rispolyv0n](https://github.com/Rispolyv0n).
+- Participant: [danielian1121](https://github.com/danielian1121), [ya-sin](https://github.com/ya-sin), [yellow951321](https://github.com/yellow951321), [aqwefghnm](https://github.com/aqwefghnm), [eecheng87](https://github.com/eecheng87), [Kazumachi124170](https://github.com/Kazumachi124170), [k32367mdbf](https://github.com/k32367mdbf), [wang0630](https://github.com/wang0630), [Darkborderman](https://github.com/Darkborderman).
 - Founder of [Toolbuddy](https://github.com/toolbuddy) Organization: [kevinbird61](https://github.com/kevinbird61)
