@@ -1,19 +1,27 @@
+/**
+ * Webpack configuration for transpiling and bundling `scss` files.
+ * Run webpack using this configuration by the script: `npm run build:css`.
+ *
+ * This file only process `scss` entries (`.scss` files) and convert them into
+ * CSS files (`.css`), for `.pug` and `.js` see
+ * `dev/html/webpack.config.js` and `dev/js/webpack.config.js`.
+ *
+ * See SCSS's official website https://sass-lang.com/ and webpack's official website
+ * https://webpack.js.org/ for more information.
+ */
+
 const path = require('path');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
 
-const browserSupportConditions = require('./browserlist.js');
 const {staticHost} = require('../../settings/server/config.js');
 
 const projectRoot = path.resolve(__dirname, '../../');
-const sassRoot = path.join(projectRoot, 'static/src/sass');
 const imageRoot = path.join(projectRoot, 'static/src/image');
-const cssRoot = path.join(projectRoot, 'static/dist/css');
+const sassSrcRoot = path.join(projectRoot, 'static/src/sass');
+const sassDistRoot = path.join(projectRoot, 'static/dist/css');
 const nodeModulesRoot = path.join(projectRoot, 'node_modules');
-
-const isDevMode = process.env.NODE_ENV === 'development';
 
 /**
  * Build CSS off all language version HTML for each `.scss` file.
@@ -22,247 +30,436 @@ const isDevMode = process.env.NODE_ENV === 'development';
  * Using single CSS to fit all is not a good idea, should be designed carefully later on.
  */
 
-module.exports = {
+module.exports = (env, argv) => {
     /**
-     * Webpack built-in develop tools.
-     *
-     * Use sourcemap to recover codes from bundle file.
-     * `inline-sourcemap` make sourcemap inline, which is smaller.
-     * In develop, this option should be `devtool: 'inline-sourcemap'`.
-     * In production, this option should be `devtool: false`.
+     * Get mode from command line argument `--mode`.
+     * See `package.json`'s script section.
      */
 
-    devtool: isDevMode ? 'inline-sourcemap' : false,
+    const isDevMode = argv.mode === 'development';
+    const isProdMode = argv.mode === 'production';
 
-    /**
-     * Bundle mode.
-     *
-     * In develop, this option should be `mode: 'development'`.
-     * In production, this option should be `mode: 'production'`.
-     */
+    return {
+        /**
+         * The base directory, an absolute path, for resolving entry points and
+         * loaders from configuration.
+         */
 
-    mode: isDevMode ? 'development' : 'production',
+        context: sassSrcRoot,
 
-    /**
-     * Entry files for bundling.
-     */
+        /**
+         * Webpack built-in develop tools.
+         *
+         * In development mode set to `devtool: 'eval-source-map'` for fast
+         * rebuild speed and yields real files Line numbers are correctly mapped.
+         * In production mode set to `devtool: 'source-map'` which separate
+         * source maps that are accurate and supporting minimizing.
+         */
 
-    entry: {
-        // Route `about`
-        'about/award': path.join(sassRoot, 'about/award.scss'),
-        'about/contact': path.join(sassRoot, 'about/contact.scss'),
-        'about/faculty-detail': path.join(sassRoot, 'about/faculty-detail.scss'),
-        'about/faculty': path.join(sassRoot, 'about/faculty.scss'),
-        'about/index': path.join(sassRoot, 'about/index.scss'),
-        'about/intro': path.join(sassRoot, 'about/intro.scss'),
-        'about/staff': path.join(sassRoot, 'about/staff.scss'),
+        devtool: isDevMode ? 'eval-source-map' : 'source-map',
 
-        // Route `announcement`
-        'announcement/activity': path.join(sassRoot, 'announcement/activity.scss'),
-        'announcement/all': path.join(sassRoot, 'announcement/all.scss'),
-        'announcement/index': path.join(sassRoot, 'announcement/index.scss'),
-        'announcement/detail': path.join(sassRoot, 'announcement/detail.scss'),
-        'announcement/recruitment': path.join(sassRoot, 'announcement/recruitment.scss'),
+        /**
+         * Bundled files' source.
+         */
 
-        // Route `error`
-        'error/404': path.join(sassRoot, 'error/404.scss'),
+        entry: {
+            // Route `about`
+            'about/award': {
+                import: './about/award.scss',
+                filename: 'about/award.scss',
+            },
+            'about/contact': {
+                import: './about/contact.scss',
+                filename: 'about/contact.scss',
+            },
+            'about/faculty-detail': {
+                import: './about/faculty-detail.scss',
+                filename: 'about/faculty-detail.scss',
+            },
+            'about/faculty': {
+                import: './about/faculty.scss',
+                filename: 'about/faculty.scss',
+            },
+            'about/index': {
+                import: './about/index.scss',
+                filename: 'about/index.scss',
+            },
+            'about/intro': {
+                import: './about/intro.scss',
+                filename: 'about/intro.scss',
+            },
+            'about/staff': {
+                import: './about/staff.scss',
+                filename: 'about/staff.scss',
+            },
 
-        // Route `home`
-        'home/index': path.join(sassRoot, 'home/index.scss'),
-        'home/search': path.join(sassRoot, 'home/search.scss'),
+            // Route `announcement`
+            'announcement/activity': {
+                import: './announcement/activity.scss',
+                filename: 'announcement/activity.scss',
+            },
+            'announcement/all': {
+                import: './announcement/all.scss',
+                filename: 'announcement/all.scss',
+            },
+            'announcement/index': {
+                import: './announcement/index.scss',
+                filename: 'announcement/index.scss',
+            },
+            'announcement/detail': {
+                import: './announcement/detail.scss',
+                filename: 'announcement/detail.scss',
+            },
+            'announcement/recruitment': {
+                import: './announcement/recruitment.scss',
+                filename: 'announcement/recruitment.scss',
+            },
 
-        // Route `research`
-        'research/index': path.join(sassRoot, 'research/index.scss'),
-        'research/lab': path.join(sassRoot, 'research/lab.scss'),
-        'research/publication': path.join(sassRoot, 'research/publication.scss'),
+            // Route `error`
+            'error/404': {
+                import: './error/404.scss',
+                filename: 'error/404.scss',
+            },
 
-        // Route `resource`
-        'resource/alumni': path.join(sassRoot, 'resource/alumni.scss'),
-        'resource/fix': path.join(sassRoot, 'resource/fix.scss'),
-        'resource/ieet': path.join(sassRoot, 'resource/ieet.scss'),
-        'resource/index': path.join(sassRoot, 'resource/index.scss'),
-        'resource/rent': path.join(sassRoot, 'resource/rent.scss'),
-        'resource/rule': path.join(sassRoot, 'resource/rule.scss'),
-        'resource/sitemap': path.join(sassRoot, 'resource/sitemap.scss'),
-        'resource/link': path.join(sassRoot, 'resource/link.scss'),
+            // Route `home`
+            'home/index': {
+                import: './home/index.scss',
+                filename: 'home/index.scss',
+            },
+            'home/search': {
+                import: './home/search.scss',
+                filename: 'home/search.scss',
+            },
 
-        // Route `student`
-        'student/high-school': path.join(sassRoot, 'student/high-school.scss'),
-        'student/college': path.join(sassRoot, 'student/college.scss'),
-        'student/index': path.join(sassRoot, 'student/index.scss'),
-        'student/master': path.join(sassRoot, 'student/master.scss'),
-        'student/phd': path.join(sassRoot, 'student/phd.scss'),
+            // Route `research`
+            'research/index': {
+                import: './research/index.scss',
+                filename: 'research/index.scss',
+            },
+            'research/lab': {
+                import: './research/lab.scss',
+                filename: 'research/lab.scss',
+            },
+            'research/publication': {
+                import: './research/publication.scss',
+                filename: 'research/publication.scss',
+            },
 
-        // Route `user`
-        'user/index': path.join(sassRoot, 'user/index.scss'),
-        'user/faculty/profile': path.join(sassRoot, 'user/faculty/profile.scss'),
-        'user/faculty/student-award': path.join(sassRoot, 'user/faculty/student-award.scss'),
-        'user/faculty/award': path.join(sassRoot, 'user/faculty/award.scss'),
-        'user/faculty/publication': path.join(sassRoot, 'user/faculty/publication.scss'),
-        'user/faculty/conference': path.join(sassRoot, 'user/faculty/conference.scss'),
-        'user/faculty/project': path.join(sassRoot, 'user/faculty/project.scss'),
-        'user/faculty/patent': path.join(sassRoot, 'user/faculty/patent.scss'),
-        'user/faculty/technology-transfer': path.join(sassRoot, 'user/faculty/technology-transfer.scss'),
-        'user/staff/profile': path.join(sassRoot, 'user/staff/profile.scss'),
-        'user/resetPassword': path.join(sassRoot, 'user/resetPassword.scss'),
-        'user/announcement/edit': path.join(sassRoot, 'user/announcement/edit.scss'),
-        'user/announcement/add': path.join(sassRoot, 'user/announcement/add.scss'),
+            // Route `resource`
+            'resource/alumni': {
+                import: './resource/alumni.scss',
+                filename: 'resource/alumni.scss',
+            },
+            'resource/fix': {
+                import: './resource/fix.scss',
+                filename: 'resource/fix.scss',
+            },
+            'resource/ieet': {
+                import: './resource/ieet.scss',
+                filename: 'resource/ieet.scss',
+            },
+            'resource/index': {
+                import: './resource/index.scss',
+                filename: 'resource/index.scss',
+            },
+            'resource/rent': {
+                import: './resource/rent.scss',
+                filename: 'resource/rent.scss',
+            },
+            'resource/rule': {
+                import: './resource/rule.scss',
+                filename: 'resource/rule.scss',
+            },
+            'resource/sitemap': {
+                import: './resource/sitemap.scss',
+                filename: 'resource/sitemap.scss',
+            },
+            'resource/link': {
+                import: './resource/link.scss',
+                filename: 'resource/link.scss',
+            },
 
-        // Route `auth`
-        'auth/login': path.join(sassRoot, 'auth/login.scss'),
+            // Route `student`
+            'student/high-school': {
+                import: './student/high-school.scss',
+                filename: 'student/high-school.scss',
+            },
+            'student/college': {
+                import: './student/college.scss',
+                filename: 'student/college.scss',
+            },
+            'student/index': {
+                import: './student/index.scss',
+                filename: 'student/index.scss',
+            },
+            'student/master': {
+                import: './student/master.scss',
+                filename: 'student/master.scss',
+            },
+            'student/phd': {
+                import: './student/phd.scss',
+                filename: 'student/phd.scss',
+            },
 
-        // Route `developer`
-        'developer/index': path.join(sassRoot, 'developer/index.scss'),
-    },
+            // Route `user`
+            'user/index': {
+                import: './user/index.scss',
+                filename: 'user/index.scss',
+            },
+            'user/faculty/profile': {
+                import: './user/faculty/profile.scss',
+                filename: 'user/faculty/profile.scss',
+            },
+            'user/faculty/student-award': {
+                import: './user/faculty/student-award.scss',
+                filename: 'user/faculty/student-award.scss',
+            },
+            'user/faculty/award': {
+                import: './user/faculty/award.scss',
+                filename: 'user/faculty/award.scss',
+            },
+            'user/faculty/publication': {
+                import: './user/faculty/publication.scss',
+                filename: 'user/faculty/publication.scss',
+            },
+            'user/faculty/conference': {
+                import: './user/faculty/conference.scss',
+                filename: 'user/faculty/conference.scss',
+            },
+            'user/faculty/project': {
+                import: './user/faculty/project.scss',
+                filename: 'user/faculty/project.scss',
+            },
+            'user/faculty/patent': {
+                import: './user/faculty/patent.scss',
+                filename: 'user/faculty/patent.scss',
+            },
+            'user/faculty/technology-transfer': {
+                import: './user/faculty/technology-transfer.scss',
+                filename: 'user/faculty/technology-transfer.scss',
+            },
+            'user/staff/profile': {
+                import: './user/staff/profile.scss',
+                filename: 'user/staff/profile.scss',
+            },
+            'user/resetPassword': {
+                import: './user/resetPassword.scss',
+                filename: 'user/resetPassword.scss',
+            },
+            'user/announcement/edit': {
+                import: './user/announcement/edit.scss',
+                filename: 'user/announcement/edit.scss',
+            },
+            'user/announcement/add': {
+                import: './user/announcement/add.scss',
+                filename: 'user/announcement/add.scss',
+            },
 
-    /**
-     * Useless JS file destination.
-     *
-     * Target of this very `webpack.config.js` is to build CSS.
-     * It also generate unnecessary JS files, DO NOT USE THEM.
-     */
+            // Route `auth`
+            'auth/login': {
+                import: './auth/login.scss',
+                filename: 'auth/login.scss',
+            },
 
-    output: {
-        path: cssRoot,
-        filename: '[name]-do-not-use-me.js',
-    },
-
-    /**
-     * Bundled environment.
-     *
-     * Because CSS run in browsers,
-     * so this option must always be `target: 'web'`.
-     */
-
-    target: 'web',
-
-    /**
-     * Relative url alias.
-     *
-     * When writing `@import` or `url()` statement to import module,
-     * no need to write relative path such as `'./'` or `'../'`.
-     * Only work for following path:
-     * - `@import '~thirdPartyLib/...'`
-     * - `url('~image/...')`
-     */
-
-    resolve: {
-        alias: {
-            image: imageRoot,
-            thirdPartyLib: nodeModulesRoot,
+            // Route `developer`
+            'developer/index': {
+                import: './developer/index.scss',
+                filename: 'developer/index.scss',
+            },
         },
-    },
 
-    /**
-     * Webpack loader modules.
-     *
-     * This `webpack.config.js` is specific for client-side bundling,
-     * it can be use with `.scss` and image related loaders.
-     */
+        /**
+         * Bundle mode.
+         *
+         * In development mode set to `mode: 'development'`.
+         * In production mode set to `mode: 'production'`.
+         * In test mode set to `mode: 'none'`.
+         */
 
-    module: {
-        rules: [
+        mode: isDevMode ? 'development' : 'production',
 
-            /**
-             * Loader for `.scss` files.
-             *
-             * Bundle `.scss` files into `.css` by following steps:
-             * 1. Use `sass-loader` to transpile `.scss` files into CSS string.
-             *      - Set `includePaths` for easier writing `@import` statements.
-             *      - Set `sourceMap: true` to debug original `.scss` files.
-             * 2. Use `postcss-loader` to post-processing CSS.
-             *      - Set `autoprefixer` to add vender prefix automatically.
-             *      - Set `cssnano` to remove redundant or duplicate CSS code.
-             * 3. Use `css-loader` to interpret `@import` and `url()` like `import/require()` and will resolve them.
-             * 4. Use `MiniCssExtractPlugin.loader` to extract CSS files and rename to `[name].min.css`.
-             */
+        /**
+         * Webpack loader modules.
+         *
+         * Modules (files) will be handle according to their extention
+         * (`.css`, `.svg`, `.png`, `.jpg`, etc.).
+         */
 
-            {
-                // Rules for SCSS files.
-                test: /\.scss$/u,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            filename: '[name].min.css',
+        module: {
+            rules: [
+
+                /**
+                 * Loader for `.scss` files.
+                 *
+                 * Bundle `.scss` files into `.css` by following steps:
+                 * 1. Use `sass-loader` to compile `.scss` files into CSS string.
+                 *      - Set `includePaths` for easier writing `@import` statements.
+                 * 2. Use `postcss-loader` to post-processing CSS.
+                 *      - CSS string is input from the output of `sass-loader`.
+                 *      - Use `postcss.config.js` to load `postcss` configuration.
+                 * 3. Use `css-loader` to resolve dependencies in CSS string.
+                 *      - CSS string is input from the output of `postcss-loader`.
+                 *      - Interpret `@import` and `url()` like `import/require()` and will resolve them.
+                 * 4. Use `MiniCssExtractPlugin.loader` to extract CSS files.
+                 *      - CSS string is input from the output of `css-loader`.
+                 *      - Rename each file with format: `[name].min.css`.
+                 */
+
+                {
+                    test: /\.scss$/u,
+                    use: [
+                        // Extracts CSS into seperate files.
+                        {
+                            loader: MiniCssExtractPlugin.loader,
                         },
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: isDevMode,
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: isDevMode,
-                            plugins: [autoprefixer({browserSupportConditions}), cssnano()],
-                        },
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            includePaths: [sassRoot],
-                            sourceMap: isDevMode,
-                        },
-                    },
-                ],
-            },
 
-            /**
-             * Loader for image files.
-             *
-             * Use `file-loader` to convert image file path into public static file url.
-             * Image should only appear in `.pug` or `.css` files.
-             * Work with following image format:
-             * - `.gif`
-             * - `.png`
-             * - `.jpg` or `.jpeg`
-             * - `.svg`
-             */
+                        // Interprets `@import` and `url()` like `import/require()`
+                        // and will resolve them.
+                        {
+                            loader: 'css-loader',
+                        },
 
-            {
-                // Convert image binary file into data url.
-                test: /\.(?<image>gif|png|jpe?g|svg)$/u,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name (file) {
-                                return `${staticHost}/image${file.split(imageRoot)[1]}`;
+                        // Post-process CSS.
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                // The following options will be passed to `postcss`'s API.
+                                postcssOptions: {
+                                    config: path.resolve(__dirname, 'postcss.config.js'),
+                                },
                             },
-                            emitFile: false,
                         },
-                    },
-                ],
-            },
+
+                        // Load `.scss` files and compile to CSS.
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                // The following options will be passed to `sass`'s API.
+                                sassOptions: {
+                                    // An array of paths that `sass` can look in to attempt to
+                                    // resolve `@import` declarations.
+                                    includePaths: [sassSrcRoot],
+                                },
+                            },
+                        },
+                    ],
+                },
+
+                /**
+                 * Loader for image files.
+                 *
+                 * Use `file-loader` to convert image file path into
+                 * public static file url `staticHost`.
+                 * Image must only appear in `.pug` or `.css` files.
+                 * Work with following image format:
+                 * - `.gif`
+                 * - `.png`
+                 * - `.jpg` or `.jpeg`
+                 * - `.svg`
+                 */
+
+                {
+                    test: /\.(?<image>gif|png|jpe?g|svg)$/u,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name (file) {
+                                    /**
+                                     * Change `url()` path to public path `staticHost`.
+                                     *
+                                     * For example, if url is `~image/icon/404.png`,
+                                     * then we have the following:
+                                     * - `file === 'projectRoot/static/src/image/icon/404.png'`
+                                     * - `file.split(imageRoot)[1] === '/icon/404.png'`
+                                     * Then `file-loader` prefix url with `${staticHost}/image`.
+                                     **/
+
+                                    return `${staticHost}/image${file.split(imageRoot)[1]}`;
+                                },
+
+                                // `file-loader` will return a public URL but will not emit the file.
+                                // See `name` function above to get return public URL format.
+                                emitFile: false,
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+
+        /**
+         * Useless JS file destination.
+         *
+         * Webpack consider entry files will only be `.js`,
+         * and thus generate `.js` as output even when we use `.scss` as entry.
+         * So here we set output useless `.js` files to `do-not-use-me` as a reminder.
+         */
+
+        output: {
+            path: sassDistRoot,
+            publicPath: staticHost,
+            filename: '[name]-do-not-use-me.js',
+        },
+
+        /**
+         * Lint `.js` files before bundling.
+         *
+         * Use `eslint-webpack-plugin` since `eslint-loader` is deprecated.
+         */
+
+        plugins: [
+            // Extracts CSS into seperate files.
+            new MiniCssExtractPlugin({
+                // The name of each output CSS file and save as `[name].min.css`,
+                // where `[name]` will be replaced with origin SCSS file name.
+                filename: '[name].min.css',
+            }),
+
+            // SCSS linter.
+            new StyleLintPlugin({
+                // File path for `stylelint` configuration.
+                configFile: path.join(projectRoot, 'dev/css/.stylelintrc.js'),
+
+                // Store the results of processed files so that
+                // `stylelint` only operates on the changed ones.
+                cache: true,
+
+                // Path to the cache file location.
+                cacheLocation: path.join(nodeModulesRoot, '.cache/.stylelintcache'),
+
+                // Specify a non-standard syntax that should be used to parse source stylesheets.
+                syntax: 'scss',
+
+                // Fix as many error as possible.
+                fix: true,
+            }),
         ],
-    },
-    plugins: [
-        // Extract CSS file.
-        new MiniCssExtractPlugin({
-            // Extract and save as `[name].min.css`,
-            // where `[name]` will be replaced with origin SCSS file name.
-            filename: '[name].min.css',
-        }),
 
-        // SCSS linter.
-        new StyleLintPlugin({
-            // File path for `stylelint` configuration.
-            configFile: path.join(projectRoot, 'dev/css/.stylelintrc.js'),
+        /**
+         * Relative url alias.
+         *
+         * When writing `@import` or `url()` statement to import module,
+         * no need to write relative path such as `'./'` or `'../'`.
+         * Only work for following path:
+         * - `@import '~thirdPartyLib/...'`
+         * - `url('~image/...')`
+         */
 
-            // Store the info about processed files in order to
-            // only operate on the changed ones the next time you run `stylelint`.
-            // By default, the cache is stored in `.stylelintcache` in `process.cwd()`.
-            cache: true,
+        resolve: {
+            alias: {
+                image: imageRoot,
+                thirdPartyLib: nodeModulesRoot,
+            },
+        },
 
-            // A path to a file or directory to be used for cache.
-            cacheLocation: path.join(projectRoot, 'node_modules/.cache/.stylelintcache'),
+        /**
+         * Bundled environment.
+         *
+         * Because CSS run in browsers,
+         * so this option must always be `target: 'web'`.
+         */
 
-            // Specify a non-standard syntax that should be used to parse source stylesheets.
-            syntax: 'scss',
-            fix: true,
-        }),
-    ],
+        target: 'web',
+    };
 };
