@@ -64,208 +64,70 @@ module.exports = (env, argv) => {
 
         entry: {
             // Route `about`
-            'about/award': {
-                import: './about/award.scss',
-                filename: 'about/award.scss',
-            },
-            'about/contact': {
-                import: './about/contact.scss',
-                filename: 'about/contact.scss',
-            },
-            'about/faculty-detail': {
-                import: './about/faculty-detail.scss',
-                filename: 'about/faculty-detail.scss',
-            },
-            'about/faculty': {
-                import: './about/faculty.scss',
-                filename: 'about/faculty.scss',
-            },
-            'about/index': {
-                import: './about/index.scss',
-                filename: 'about/index.scss',
-            },
-            'about/intro': {
-                import: './about/intro.scss',
-                filename: 'about/intro.scss',
-            },
-            'about/staff': {
-                import: './about/staff.scss',
-                filename: 'about/staff.scss',
-            },
+            'about/award': './about/award.scss',
+            'about/contact': './about/contact.scss',
+            'about/faculty-detail': './about/faculty-detail.scss',
+            'about/faculty': './about/faculty.scss',
+            'about/index': './about/index.scss',
+            'about/intro': './about/intro.scss',
+            'about/staff': './about/staff.scss',
 
             // Route `announcement`
-            'announcement/activity': {
-                import: './announcement/activity.scss',
-                filename: 'announcement/activity.scss',
-            },
-            'announcement/all': {
-                import: './announcement/all.scss',
-                filename: 'announcement/all.scss',
-            },
-            'announcement/index': {
-                import: './announcement/index.scss',
-                filename: 'announcement/index.scss',
-            },
-            'announcement/detail': {
-                import: './announcement/detail.scss',
-                filename: 'announcement/detail.scss',
-            },
-            'announcement/recruitment': {
-                import: './announcement/recruitment.scss',
-                filename: 'announcement/recruitment.scss',
-            },
+            'announcement/activity': './announcement/activity.scss',
+            'announcement/all': './announcement/all.scss',
+            'announcement/index': './announcement/index.scss',
+            'announcement/detail': './announcement/detail.scss',
+            'announcement/recruitment': './announcement/recruitment.scss',
 
             // Route `error`
-            'error/404': {
-                import: './error/404.scss',
-                filename: 'error/404.scss',
-            },
+            'error/404': './error/404.scss',
 
             // Route `home`
-            'home/index': {
-                import: './home/index.scss',
-                filename: 'home/index.scss',
-            },
-            'home/search': {
-                import: './home/search.scss',
-                filename: 'home/search.scss',
-            },
+            'home/index': './home/index.scss',
+            'home/search': './home/search.scss',
 
             // Route `research`
-            'research/index': {
-                import: './research/index.scss',
-                filename: 'research/index.scss',
-            },
-            'research/lab': {
-                import: './research/lab.scss',
-                filename: 'research/lab.scss',
-            },
-            'research/publication': {
-                import: './research/publication.scss',
-                filename: 'research/publication.scss',
-            },
+            'research/index': './research/index.scss',
+            'research/lab': './research/lab.scss',
+            'research/publication': './research/publication.scss',
 
             // Route `resource`
-            'resource/alumni': {
-                import: './resource/alumni.scss',
-                filename: 'resource/alumni.scss',
-            },
-            'resource/fix': {
-                import: './resource/fix.scss',
-                filename: 'resource/fix.scss',
-            },
-            'resource/ieet': {
-                import: './resource/ieet.scss',
-                filename: 'resource/ieet.scss',
-            },
-            'resource/index': {
-                import: './resource/index.scss',
-                filename: 'resource/index.scss',
-            },
-            'resource/rent': {
-                import: './resource/rent.scss',
-                filename: 'resource/rent.scss',
-            },
-            'resource/rule': {
-                import: './resource/rule.scss',
-                filename: 'resource/rule.scss',
-            },
-            'resource/sitemap': {
-                import: './resource/sitemap.scss',
-                filename: 'resource/sitemap.scss',
-            },
-            'resource/link': {
-                import: './resource/link.scss',
-                filename: 'resource/link.scss',
-            },
+            'resource/alumni': './resource/alumni.scss',
+            'resource/fix': './resource/fix.scss',
+            'resource/ieet': './resource/ieet.scss',
+            'resource/index': './resource/index.scss',
+            'resource/rent': './resource/rent.scss',
+            'resource/rule': './resource/rule.scss',
+            'resource/sitemap': './resource/sitemap.scss',
+            'resource/link': './resource/link.scss',
 
             // Route `student`
-            'student/high-school': {
-                import: './student/high-school.scss',
-                filename: 'student/high-school.scss',
-            },
-            'student/college': {
-                import: './student/college.scss',
-                filename: 'student/college.scss',
-            },
-            'student/index': {
-                import: './student/index.scss',
-                filename: 'student/index.scss',
-            },
-            'student/master': {
-                import: './student/master.scss',
-                filename: 'student/master.scss',
-            },
-            'student/phd': {
-                import: './student/phd.scss',
-                filename: 'student/phd.scss',
-            },
+            'student/high-school': './student/high-school.scss',
+            'student/college': './student/college.scss',
+            'student/index': './student/index.scss',
+            'student/master': './student/master.scss',
+            'student/phd': './student/phd.scss',
 
             // Route `user`
-            'user/index': {
-                import: './user/index.scss',
-                filename: 'user/index.scss',
-            },
-            'user/faculty/profile': {
-                import: './user/faculty/profile.scss',
-                filename: 'user/faculty/profile.scss',
-            },
-            'user/faculty/student-award': {
-                import: './user/faculty/student-award.scss',
-                filename: 'user/faculty/student-award.scss',
-            },
-            'user/faculty/award': {
-                import: './user/faculty/award.scss',
-                filename: 'user/faculty/award.scss',
-            },
-            'user/faculty/publication': {
-                import: './user/faculty/publication.scss',
-                filename: 'user/faculty/publication.scss',
-            },
-            'user/faculty/conference': {
-                import: './user/faculty/conference.scss',
-                filename: 'user/faculty/conference.scss',
-            },
-            'user/faculty/project': {
-                import: './user/faculty/project.scss',
-                filename: 'user/faculty/project.scss',
-            },
-            'user/faculty/patent': {
-                import: './user/faculty/patent.scss',
-                filename: 'user/faculty/patent.scss',
-            },
-            'user/faculty/technology-transfer': {
-                import: './user/faculty/technology-transfer.scss',
-                filename: 'user/faculty/technology-transfer.scss',
-            },
-            'user/staff/profile': {
-                import: './user/staff/profile.scss',
-                filename: 'user/staff/profile.scss',
-            },
-            'user/resetPassword': {
-                import: './user/resetPassword.scss',
-                filename: 'user/resetPassword.scss',
-            },
-            'user/announcement/edit': {
-                import: './user/announcement/edit.scss',
-                filename: 'user/announcement/edit.scss',
-            },
-            'user/announcement/add': {
-                import: './user/announcement/add.scss',
-                filename: 'user/announcement/add.scss',
-            },
+            'user/index': './user/index.scss',
+            'user/faculty/profile': './user/faculty/profile.scss',
+            'user/faculty/student-award': './user/faculty/student-award.scss',
+            'user/faculty/award': './user/faculty/award.scss',
+            'user/faculty/publication': './user/faculty/publication.scss',
+            'user/faculty/conference': './user/faculty/conference.scss',
+            'user/faculty/project': './user/faculty/project.scss',
+            'user/faculty/patent': './user/faculty/patent.scss',
+            'user/faculty/technology-transfer': './user/faculty/technology-transfer.scss',
+            'user/staff/profile': './user/staff/profile.scss',
+            'user/resetPassword': './user/resetPassword.scss',
+            'user/announcement/edit': './user/announcement/edit.scss',
+            'user/announcement/add': './user/announcement/add.scss',
 
             // Route `auth`
-            'auth/login': {
-                import: './auth/login.scss',
-                filename: 'auth/login.scss',
-            },
+            'auth/login': './auth/login.scss',
 
             // Route `developer`
-            'developer/index': {
-                import: './developer/index.scss',
-                filename: 'developer/index.scss',
-            },
+            'developer/index': './developer/index.scss',
         },
 
         /**
@@ -276,7 +138,7 @@ module.exports = (env, argv) => {
          * In test mode set to `mode: 'none'`.
          */
 
-        mode: isDevMode ? 'development' : 'production',
+        mode: isDevMode ? 'development' : isProdMode ? 'production' : 'none',
 
         /**
          * Webpack loader modules.
@@ -372,10 +234,10 @@ module.exports = (env, argv) => {
                                      * then we have the following:
                                      * - `file === 'projectRoot/static/src/image/icon/404.png'`
                                      * - `file.split(imageRoot)[1] === '/icon/404.png'`
-                                     * Then `file-loader` prefix url with `${staticHost}/image`.
+                                     * - prefix url with `image` and output 'image/icon/404.png'
                                      **/
 
-                                    return `${staticHost}/image${file.split(imageRoot)[1]}`;
+                                    return `image${file.split(imageRoot)[1]}`;
                                 },
 
                                 // `file-loader` will return a public URL but will not emit the file.
@@ -398,7 +260,7 @@ module.exports = (env, argv) => {
 
         output: {
             path: sassDistRoot,
-            publicPath: staticHost,
+            publicPath: `${staticHost}/`,
             filename: '[name]-do-not-use-me.js',
         },
 

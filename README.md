@@ -1,54 +1,64 @@
 # NCKU CSIE Website
+
 Build a better website for NCKU CSIE.
 
 ## Installation & Setup
+
 0. Use **Unix-like** OS.
 1. Get [Node.js](https://nodejs.org/en/) from [official website](https://nodejs.org/en/).
 2. Clone from GitHub
-    ```
+    ```sh
     git clone https://github.com/toolbuddy/NCKU-CSIE-Website.git
     ```
 3. Install dependencies
-    ```
+    ```sh
     npm install
     ```
 4. Build
-    - Setup **server** config files
+    - Setup **server** configuration files
         - **Create** server configuration files by running:
             ```
             npm run pre-build:server
             ```
         - **Filling-in** information required by `settings/server/config.js`.
-            - Fill in `domainName` for **server domain name** information (**not required** in **develop** mode).
-            - Fill in `protocol`, either `'http'` or `'https'` (**not required** in **develop** mode).
-            - Fill in `port` for **server port** information (**not required** in **develop** mode).
-            - Fill in `host` and `staticHost` information (**not required** in **develop** mode).
-    - Setup **database** config files
+            - Fill in `domainName` for **server domain name** information.
+            - Fill in `protocol`, either `'http'` or `'https'`.
+            - Fill in `port` for **server port** information.
+            - Fill in `host` and `staticHost` information.
+    - Setup **database** configuration files
         - **Create** database configuration files by running:
-            ```
+            ```sh
             npm run pre-build:database
             ```
         - **Filling-in** information required by `settings/database/config.js`.
-            - Fill in `username` and `password` for **database authentication** information (If you are a developer and need to connect to our database, please contact us).
-            - Fill in `domainName` for **database domain name** information (If you are a developer and need to connect to our database, please contact us).
+            - Fill in `username` and `password` for **database authentication** information
+            - Fill in `domainName` for **database domain name** information
             - Fill in `port` for **database server port** information (**not required** in **develop** mode).
             - Fill in `dialect` with database you use.
-    - Build Server, HTML, CSS and ECMAScript files by running:
+            - If you are a developer and need to connect to our database, please contact us.
+    - Copy `tinymce` resources
+        ```sh
+        npm run pre-build:tinymce
         ```
+    - Build Server, HTML, CSS and ECMAScript files by running:
+        ```sh
         npm run build
         ```
 
 ## Run
-```
+
+```sh
 npm start
 ```
 
 ## Run in develop mode
-```
+
+```sh
 npm run develop
 ```
 
 ### Develop Guide
+
 This project use [Node.js](https://nodejs.org/en/) as backend infrastructure.
 We use a lot of tools to help develop (ex. Pug (HTML5), Sass (css)), and we have setup some basic rule to make our coding style unified.
 Make sure you follow our convention before you submit a pull request!

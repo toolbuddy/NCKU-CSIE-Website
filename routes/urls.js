@@ -37,7 +37,7 @@ const resource = require('./resource.js');
 const student = require('./student.js');
 const user = require('./user.js');
 
-const projectRoot = path.resolve(__dirname, '../..');
+const projectRoot = path.resolve(__dirname, '..');
 const app = express();
 
 /**

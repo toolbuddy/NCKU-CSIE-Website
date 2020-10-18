@@ -11,7 +11,7 @@ const express = require('express');
 const path = require('path');
 
 const {maxAge} = require('../settings/server/config.js');
-const projectRoot = path.resolve(__dirname, '../..');
+const projectRoot = path.resolve(__dirname, '..');
 
 const router = express.Router({
     caseSensitive: true,

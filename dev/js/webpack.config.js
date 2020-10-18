@@ -53,217 +53,73 @@ module.exports = (env, argv) => {
          */
 
         entry: {
-            // Dependencies.
-            // 'pug': ['pug'],
 
             // Route `about`.
-            'about/award': {
-                // DependOn: 'pug',
-                import: './about/award.js',
-                filename: 'about/award.js',
-            },
-            'about/contact': {
-                import: './about/contact.js',
-                filename: 'about/contact.js',
-            },
-            'about/faculty-detail': {
-                import: './about/faculty-detail.js',
-                filename: 'about/faculty-detail.js',
-            },
-            'about/faculty': {
-                import: './about/faculty.js',
-                filename: 'about/faculty.js',
-            },
-            'about/index': {
-                import: './about/index.js',
-                filename: 'about/index.js',
-            },
-            'about/intro': {
-                import: './about/intro.js',
-                filename: 'about/intro.js',
-            },
-            'about/staff': {
-                import: './about/staff.js',
-                filename: 'about/staff.js',
-            },
+            'about/award': './about/award.js',
+            'about/contact': './about/contact.js',
+            'about/faculty-detail': './about/faculty-detail.js',
+            'about/faculty': './about/faculty.js',
+            'about/index': './about/index.js',
+            'about/intro': './about/intro.js',
+            'about/staff': './about/staff.js',
 
             // Route `announcement`.
-            'announcement/activity': {
-                import: './announcement/activity.js',
-                filename: 'announcement/activity.js',
-            },
-            'announcement/all': {
-                import: './announcement/all.js',
-                filename: 'announcement/all.js',
-            },
-            'announcement/index': {
-                import: './announcement/index.js',
-                filename: 'announcement/index.js',
-            },
-            'announcement/detail': {
-                import: './announcement/detail.js',
-                filename: 'announcement/detail.js',
-            },
-            'announcement/recruitment': {
-                import: './announcement/recruitment.js',
-                filename: 'announcement/recruitment.js',
-            },
+            'announcement/activity': './announcement/activity.js',
+            'announcement/all': './announcement/all.js',
+            'announcement/index': './announcement/index.js',
+            'announcement/detail': './announcement/detail.js',
+            'announcement/recruitment': './announcement/recruitment.js',
 
             // Route `error`.
-            'error/404': {
-                import: './error/404.js',
-                filename: 'error/404.js',
-            },
+            'error/404': './error/404.js',
 
             // Route `home`.
-            'home/index': {
-                import: './home/index.js',
-                filename: 'home/index.js',
-            },
-            'home/search': {
-                import: './home/search.js',
-                filename: 'home/search.js',
-            },
+            'home/index': './home/index.js',
+            'home/search': './home/search.js',
 
             // Route `research`.
-            'research/index': {
-                import: './research/index.js',
-                filename: 'research/index.js',
-            },
-            'research/lab': {
-                import: './research/lab.js',
-                filename: 'research/lab.js',
-            },
-            'research/publication': {
-                import: './research/publication.js',
-                filename: 'research/publication.js',
-            },
+            'research/index': './research/index.js',
+            'research/lab': './research/lab.js',
+            'research/publication': './research/publication.js',
 
             // Route `resource`.
-            'resource/alumni': {
-                import: './resource/alumni.js',
-                filename: 'resource/alumni.js',
-            },
-            'resource/fix': {
-                import: './resource/fix.js',
-                filename: 'resource/fix.js',
-            },
-            'resource/ieet': {
-                import: './resource/ieet.js',
-                filename: 'resource/ieet.js',
-            },
-            'resource/index': {
-                import: './resource/index.js',
-                filename: 'resource/index.js',
-            },
-            'resource/rent': {
-                import: './resource/rent.js',
-                filename: 'resource/rent.js',
-            },
-            'resource/rule': {
-                import: './resource/rule.js',
-                filename: 'resource/rule.js',
-            },
-            'resource/sitemap': {
-                import: './resource/sitemap.js',
-                filename: 'resource/sitemap.js',
-            },
-            'resource/link': {
-                import: './resource/link.js',
-                filename: 'resource/link.js',
-            },
+            'resource/alumni': './resource/alumni.js',
+            'resource/fix': './resource/fix.js',
+            'resource/ieet': './resource/ieet.js',
+            'resource/index': './resource/index.js',
+            'resource/rent': './resource/rent.js',
+            'resource/rule': './resource/rule.js',
+            'resource/sitemap': './resource/sitemap.js',
+            'resource/link': './resource/link.js',
 
             // Route `student`.
-            'student/high-school': {
-                import: './student/high-school.js',
-                filename: 'student/high-school.js',
-            },
-            'student/college': {
-                import: './student/college.js',
-                filename: 'student/college.js',
-            },
-            'student/index': {
-                import: './student/index.js',
-                filename: 'student/index.js',
-            },
-            'student/master': {
-                import: './student/master.js',
-                filename: 'student/master.js',
-            },
-            'student/phd': {
-                import: './student/phd.js',
-                filename: 'student/phd.js',
-            },
+            'student/high-school': './student/high-school.js',
+            'student/college': './student/college.js',
+            'student/index': './student/index.js',
+            'student/master': './student/master.js',
+            'student/phd': './student/phd.js',
 
             // Route `user`.
-            'user/index': {
-                import: './user/index.js',
-                filename: 'user/index.js',
-            },
-            'user/faculty/profile': {
-                import: './user/faculty/profile.js',
-                filename: 'user/faculty/profile.js',
-            },
-            'user/faculty/award': {
-                import: './user/faculty/award.js',
-                filename: 'user/faculty/award.js',
-            },
-            'user/faculty/publication': {
-                import: './user/faculty/publication.js',
-                filename: 'user/faculty/publication.js',
-            },
-            'user/faculty/conference': {
-                import: './user/faculty/conference.js',
-                filename: 'user/faculty/conference.js',
-            },
-            'user/faculty/project': {
-                import: './user/faculty/project.js',
-                filename: 'user/faculty/project.js',
-            },
-            'user/faculty/patent': {
-                import: './user/faculty/patent.js',
-                filename: 'user/faculty/patent.js',
-            },
-            'user/faculty/student-award': {
-                import: './user/faculty/student-award.js',
-                filename: 'user/faculty/student-award.js',
-            },
-            'user/faculty/technology-transfer': {
-                import: './user/faculty/technology-transfer.js',
-                filename: 'user/faculty/technology-transfer.js',
-            },
-            'user/staff/profile': {
-                import: './user/staff/profile.js',
-                filename: 'user/staff/profile.js',
-            },
-            'user/resetPassword': {
-                import: './user/resetPassword.js',
-                filename: 'user/resetPassword.js',
-            },
-            'user/announcement/index': {
-                import: './user/announcement/index.js',
-                filename: 'user/announcement/index.js',
-            },
-            'user/announcement/add': {
-                import: './user/announcement/add.js',
-                filename: 'user/announcement/add.js',
-            },
-            'user/announcement/edit': {
-                import: './user/announcement/edit.js',
-                filename: 'user/announcement/edit.js',
-            },
+            'user/index': './user/index.js',
+            'user/faculty/profile': './user/faculty/profile.js',
+            'user/faculty/award': './user/faculty/award.js',
+            'user/faculty/publication': './user/faculty/publication.js',
+            'user/faculty/conference': './user/faculty/conference.js',
+            'user/faculty/project': './user/faculty/project.js',
+            'user/faculty/patent': './user/faculty/patent.js',
+            'user/faculty/student-award': './user/faculty/student-award.js',
+            'user/faculty/technology-transfer': './user/faculty/technology-transfer.js',
+            'user/staff/profile': './user/staff/profile.js',
+            'user/resetPassword': './user/resetPassword.js',
+            'user/announcement/index': './user/announcement/index.js',
+            'user/announcement/add': './user/announcement/add.js',
+            'user/announcement/edit': './user/announcement/edit.js',
 
             // Route `auth`.
-            'auth/login': {
-                import: './auth/login.js',
-                filename: 'auth/login.js',
-            },
+            'auth/login': './auth/login.js',
 
             // Route `developer`.
-            'developer/index': {
-                import: './developer/index.js',
-                filename: 'developer/index.js',
-            },
+            'developer/index': './developer/index.js',
         },
 
         /**
@@ -301,6 +157,7 @@ module.exports = (env, argv) => {
                             loader: 'babel-loader',
                             options: {
                                 presets: ['@babel/preset-env'],
+                                plugins: ['@babel/transform-runtime'],
                             },
                         },
                     ],

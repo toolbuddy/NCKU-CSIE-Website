@@ -75,158 +75,56 @@ module.exports = (env, argv) => {
 
         entry: {
             // Route `about`
-            'about/award': {
-                import: './about/award.pug',
-                filename: 'about/award.pug',
-            },
-            'about/contact': {
-                import: './about/contact.pug',
-                filename: 'about/contact.pug',
-            },
-            'about/faculty': {
-                import: './about/faculty.pug',
-                filename: 'about/faculty.pug',
-            },
-            'about/index': {
-                import: './about/index.pug',
-                filename: 'about/index.pug',
-            },
-            'about/intro': {
-                import: './about/intro.pug',
-                filename: 'about/intro.pug',
-            },
-            'about/staff': {
-                import: './about/staff.pug',
-                filename: 'about/staff.pug',
-            },
+            'about/award': './about/award.pug',
+            'about/contact': './about/contact.pug',
+            'about/faculty': './about/faculty.pug',
+            'about/index': './about/index.pug',
+            'about/intro': './about/intro.pug',
+            'about/staff': './about/staff.pug',
 
             // Route `announcement`
-            'announcement/activity': {
-                import: './announcement/activity.pug',
-                filename: 'announcement/activity.pug',
-            },
-            'announcement/all': {
-                import: './announcement/all.pug',
-                filename: 'announcement/all.pug',
-            },
-            'announcement/index': {
-                import: './announcement/index.pug',
-                filename: 'announcement/index.pug',
-            },
-            'announcement/recruitment': {
-                import: './announcement/recruitment.pug',
-                filename: 'announcement/recruitment.pug',
-            },
+            'announcement/activity': './announcement/activity.pug',
+            'announcement/all': './announcement/all.pug',
+            'announcement/index': './announcement/index.pug',
+            'announcement/recruitment': './announcement/recruitment.pug',
 
             // Route `error`
-            'error/404': {
-                import: './error/404.pug',
-                filename: 'error/404.pug',
-            },
+            'error/404': './error/404.pug',
 
             // Route `home`
-            'home/index': {
-                import: './home/index.pug',
-                filename: 'home/index.pug',
-            },
-            'home/search': {
-                import: './home/search.pug',
-                filename: 'home/search.pug',
-            },
+            'home/index': './home/index.pug',
+            'home/search': './home/search.pug',
 
             // Route `research`
-            'research/index': {
-                import: './research/index.pug',
-                filename: 'research/index.pug',
-            },
-            'research/lab': {
-                import: './research/lab.pug',
-                filename: 'research/lab.pug',
-            },
-            'research/publication': {
-                import: './research/publication.pug',
-                filename: 'research/publication.pug',
-            },
+            'research/index': './research/index.pug',
+            'research/lab': './research/lab.pug',
+            'research/publication': './research/publication.pug',
 
             // Route `resource`
-            'resource/alumni': {
-                import: './resource/alumni.pug',
-                filename: 'resource/alumni.pug',
-            },
-            'resource/fix': {
-                import: './resource/fix.pug',
-                filename: 'resource/fix.pug',
-            },
-            'resource/ieet': {
-                import: './resource/ieet.pug',
-                filename: 'resource/ieet.pug',
-            },
-            'resource/index': {
-                import: './resource/index.pug',
-                filename: 'resource/index.pug',
-            },
-            'resource/rent': {
-                import: './resource/rent.pug',
-                filename: 'resource/rent.pug',
-            },
-            'resource/rule': {
-                import: './resource/rule.pug',
-                filename: 'resource/rule.pug',
-            },
-            'resource/sitemap': {
-                import: './resource/sitemap.pug',
-                filename: 'resource/sitemap.pug',
-            },
-            'resource/link': {
-                import: './resource/link.pug',
-                filename: 'resource/link.pug',
-            },
+            'resource/alumni': './resource/alumni.pug',
+            'resource/fix': './resource/fix.pug',
+            'resource/ieet': './resource/ieet.pug',
+            'resource/index': './resource/index.pug',
+            'resource/rent': './resource/rent.pug',
+            'resource/rule': './resource/rule.pug',
+            'resource/sitemap': './resource/sitemap.pug',
+            'resource/link': './resource/link.pug',
 
             // Route `student`
-            'student/high-school': {
-                import: './student/high-school.pug',
-                filename: 'student/high-school.pug',
-            },
-            'student/college': {
-                import: './student/college.pug',
-                filename: 'student/college.pug',
-            },
-            'student/index': {
-                import: './student/index.pug',
-                filename: 'student/index.pug',
-            },
-            'student/master': {
-                import: './student/master.pug',
-                filename: 'student/master.pug',
-            },
-            'student/phd': {
-                import: './student/phd.pug',
-                filename: 'student/phd.pug',
-            },
+            'student/high-school': './student/high-school.pug',
+            'student/college': './student/college.pug',
+            'student/index': './student/index.pug',
+            'student/master': './student/master.pug',
+            'student/phd': './student/phd.pug',
 
             // Route `user`
-            'user/index': {
-                import: './user/index.pug',
-                filename: 'user/index.pug',
-            },
-            'user/announcement/index': {
-                import: './user/announcement/index.pug',
-                filename: 'user/announcement/index.pug',
-            },
-            'user/announcement/add': {
-                import: './user/announcement/add.pug',
-                filename: 'user/announcement/add.pug',
-            },
-            'user/announcement/edit': {
-                import: './user/announcement/edit.pug',
-                filename: 'user/announcement/edit.pug',
-            },
+            'user/index': './user/index.pug',
+            'user/announcement/index': './user/announcement/index.pug',
+            'user/announcement/add': './user/announcement/add.pug',
+            'user/announcement/edit': './user/announcement/edit.pug',
 
             // Route `developer`
-            'developer/index': {
-                import: './developer/index.pug',
-                filename: 'developer/index.pug',
-            },
+            'developer/index': './developer/index.pug',
         },
 
         /**
