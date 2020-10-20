@@ -19,34 +19,34 @@
  * - tags.
  */
 
-import {
+const {
     Announcement,
     AnnouncementI18n,
     File,
     Tag,
-} from 'models/announcement/operations/associations.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
+} = require('./associations.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         const {
             language = null,
             announcementId = null,
         } = opt || {};
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'Invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(language)) {
+            const error = new Error('Invalid language id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( announcementId ) ) {
-            const error = new Error( 'Invalid announcement id' );
+        if (!ValidateUtils.isPositiveInteger(announcementId)) {
+            const error = new Error('Invalid announcement id');
             error.status = 400;
             throw error;
         }
 
-        const data = await Announcement.findOne( {
+        const data = await Announcement.findOne({
             attributes: [
                 'announcementId',
                 'author',
@@ -61,8 +61,8 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
                     attributes: [
                         'title',
                         'content',
@@ -72,33 +72,31 @@ export default async ( opt ) => {
                     },
                 },
                 {
-                    model:      Tag,
-                    as:         'tags',
-                    attributes: [
-                        'tagId',
-                    ],
+                    model: Tag,
+                    as: 'tags',
+                    attributes: ['tagId'],
                 },
             ],
-        } );
+        });
 
-        if ( !data ) {
-            const error = new Error( 'Announcement not found' );
+        if (!data) {
+            const error = new Error('Announcement not found');
             error.status = 404;
             throw error;
         }
 
-        await Announcement.update( {
+        await Announcement.update({
             views: data.views + 1,
         }, {
             where: {
                 announcementId,
             },
-        } );
+        });
 
         // Must find files after got announcement, instead of put it in include.
         // Because an announcement may not contain any file, if put this in include,
         // the result will be null.
-        const files = await File.findAll( {
+        const files = await File.findAll({
             attributes: [
                 'fileId',
                 'name',
@@ -106,24 +104,24 @@ export default async ( opt ) => {
             where: {
                 announcementId,
             },
-        } );
+        });
 
         return {
             announcementId: data.announcementId,
-            author:         data.author,
-            publishTime:    data.publishTime,
-            updateTime:     data.updateTime,
-            views:          data.views,
-            isPinned:       data.isPinned,
-            image:          data.image,
-            title:          data.announcementI18n[ 0 ].title,
-            content:        data.announcementI18n[ 0 ].content,
-            tags:           data.tags.map( tag => tag.tagId ),
+            author: data.author,
+            publishTime: data.publishTime,
+            updateTime: data.updateTime,
+            views: data.views,
+            isPinned: data.isPinned,
+            image: data.image,
+            title: data.announcementI18n[0].title,
+            content: data.announcementI18n[0].content,
+            tags: data.tags.map(tag => tag.tagId),
             files,
         };
     }
-    catch ( error ) {
-        if ( !error.status )
+    catch (error) {
+        if (!error.status)
             error.status = 500;
         throw error;
     }

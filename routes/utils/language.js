@@ -8,21 +8,21 @@
  * @param {Middleware} next - Next middleware to handle request `req`.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../models/common/utils/language.js');
 
-export default function ( req, {}, next ) {
-    if ( typeof ( req.query.languageId ) === 'undefined' )
+module.exports = (req, {}, next) => {
+    if (typeof (req.query.languageId) === 'undefined')
         req.query.languageId = LanguageUtils.defaultLanguageId;
 
     // If valid language id query is provided, call `next()` to handle request `req`.
-    req.query.languageId = Number( req.query.languageId );
-    if ( LanguageUtils.isSupportedLanguageId( req.query.languageId ) )
+    req.query.languageId = Number(req.query.languageId);
+    if (LanguageUtils.isSupportedLanguageId(req.query.languageId))
         next();
 
     // If invalid language id query is provided, response with 400.
     else {
-        const error = new Error( 'Invalid language option' );
+        const error = new Error('Invalid language option');
         error.status = 400;
-        next( error );
+        next(error);
     }
-}
+};

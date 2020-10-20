@@ -1,4 +1,4 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const ConferenceI18nValidationConstraints = {
     language: {
@@ -11,18 +11,18 @@ const ConferenceI18nValidationConstraints = {
     },
     conference: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     title: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
 };
 
-export default ConferenceI18nValidationConstraints;
+module.exports = ConferenceI18nValidationConstraints;

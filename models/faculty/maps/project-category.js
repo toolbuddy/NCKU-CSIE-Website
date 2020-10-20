@@ -1,5 +1,5 @@
-import LanguageUtils from '../../common/utils/language.js';
-import deepFreeze from 'deep-freeze';
+const LanguageUtils = require('../../common/utils/language.js');
+const deepFreeze = require('deep-freeze');
 
 const map = [
     'general',
@@ -9,27 +9,22 @@ const map = [
 const defaultOption = 'general';
 
 const i18n = {
-    [ LanguageUtils.getLanguageId( 'en-US' ) ]: {
+    [LanguageUtils.getLanguageId('en-US')]: {
         general: 'General Projects',
-        nsc:     'National Science Council Projects',
+        nsc: 'National Science Council Projects',
     },
-    [ LanguageUtils.getLanguageId( 'zh-TW' ) ]: {
+    [LanguageUtils.getLanguageId('zh-TW')]: {
         general: '一般建教案',
-        nsc:     '國科會計劃',
+        nsc: '國科會計劃',
     },
 };
 
-deepFreeze( i18n );
-deepFreeze( map );
+deepFreeze(i18n);
+deepFreeze(map);
 
-export default {
+module.exports = {
     defaultOption,
     i18n,
     map,
 };
 
-export {
-    defaultOption,
-    i18n,
-    map,
-};

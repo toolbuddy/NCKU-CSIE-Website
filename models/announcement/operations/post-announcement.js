@@ -1,120 +1,97 @@
-import LanguageUtils from 'models/common/utils/language.js';
-import {
+const LanguageUtils = require('../../common/utils/language.js');
+const equalArray = require('../../common/utils/equal-array.js');
+const {
     Announcement,
     AnnouncementI18n,
     File,
     Tag,
-} from 'models/announcement/operations/associations.js';
+} = require('./associations.js');
 
-import AnnouncementValidationConstraints from 'models/announcement/constraints/post/announcement.js';
-import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/post/announcement-i18n.js';
-import FileValidationConstraints from 'models/announcement/constraints/post/file.js';
-import TagValidationConstraints from 'models/announcement/constraints/post/tag.js';
-import validate from 'validate.js';
+const AnnouncementValidationConstraints = require('../constraints/post/announcement.js');
+const AnnouncementI18nValidationConstraints = require('../constraints/post/announcement-i18n.js');
+const FileValidationConstraints = require('../constraints/post/file.js');
+const TagValidationConstraints = require('../constraints/post/tag.js');
+const validate = require('validate.js');
 
-function sortByValue ( a, b ) {
-    return a - b;
-}
+module.exports = (opt) => {
+    opt = opt || {};
+    const author = Number(opt.author);
+    const {
+        image = null,
+        announcementI18n = null,
+        tags = null,
+        files = null,
+    } = opt;
 
-function equalArray ( a, b ) {
-    if ( a === b )
-        return true;
-    if ( a == null || b == null )
-        return false;
-    if ( a.length !== b.length )
-        return false;
-    for ( let i = 0; i < a.length; ++i ) {
-        if ( a[ i ] !== b[ i ] )
-            return false;
+    if (typeof (validate({
+        author,
+        image,
+        announcementI18n,
+        tags,
+        files,
+    }, AnnouncementValidationConstraints)) !== 'undefined') {
+        const error = new Error('Invalid announcement object');
+        error.status = 400;
+        throw error;
     }
 
-    return true;
-}
-
-export default ( opt ) => {
-    try {
-        opt = opt || {};
-        const author = Number( opt.author );
-        const {
-            image = null,
-            announcementI18n = null,
-            tags = null,
-            files = null,
-        } = opt;
-
-        if ( typeof ( validate( {
-            author,
-            image,
-            announcementI18n,
-            tags,
-            files,
-        }, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
-            const error = new Error( 'Invalid announcement object' );
+    const langArr = [];
+    announcementI18n.forEach((i18nData) => {
+        i18nData.language = Number(i18nData.language);
+        if (typeof (validate(i18nData, AnnouncementI18nValidationConstraints)) !== 'undefined') {
+            const error = new Error('Invalid announcementI18n object');
             error.status = 400;
             throw error;
         }
+        langArr.push(i18nData.language);
+    });
+    if (!equalArray(langArr.sort((a, b) => a - b), LanguageUtils.supportedLanguageId.sort((a, b) => a - b))) {
+        const error = new Error('Invalid announcementI18n object');
+        error.status = 400;
+        throw error;
+    }
 
-        const langArr = [];
-        announcementI18n.forEach( ( i18nData ) => {
-            i18nData.language = Number( i18nData.language );
-            if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid announcementI18n object' );
-                error.status = 400;
-                throw error;
-            }
-            langArr.push( i18nData.language );
-        } );
-        if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
-            const error = new Error( 'Invalid announcementI18n object' );
+    files.forEach((file) => {
+        if (typeof (validate(file, FileValidationConstraints)) !== 'undefined') {
+            const error = new Error('Invalid file object');
             error.status = 400;
             throw error;
         }
+    });
 
-        files.forEach( ( file ) => {
-            if ( typeof ( validate( file, FileValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid file object' );
-                error.status = 400;
-                throw error;
-            }
-        } );
+    tags.forEach((tag) => {
+        tag.tagId = Number(tag.tagId);
+        if (typeof (validate(tag, TagValidationConstraints)) !== 'undefined') {
+            const error = new Error('Invalid tag object');
+            error.status = 400;
+            throw error;
+        }
+    });
 
-        tags.forEach( ( tag ) => {
-            tag.tagId = Number( tag.tagId );
-            if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid tag object' );
-                error.status = 400;
-                throw error;
-            }
-        } );
-
-        return Announcement.create( {
-            author,
-            announcementI18n,
-            tags,
-            files,
-        }, {
-            include: [
-                {
-                    model: AnnouncementI18n,
-                    as:    'announcementI18n',
-                },
-                {
-                    model: File,
-                    as:    'files',
-                },
-                {
-                    model: Tag,
-                    as:    'tags',
-                },
-            ],
-        } )
-        .then( () => ( { 'message': 'success', } ) )
-        .catch( ( err ) => {
-            err.status = 500;
-            throw err;
-        } );
-    }
-    catch ( err ) {
+    return Announcement.create({
+        author,
+        announcementI18n,
+        tags,
+        files,
+    }, {
+        include: [
+            {
+                model: AnnouncementI18n,
+                as: 'announcementI18n',
+            },
+            {
+                model: File,
+                as: 'files',
+            },
+            {
+                model: Tag,
+                as: 'tags',
+            },
+        ],
+    }).
+    then(() => ({message: 'success'})).
+    catch((err) => {
+        err.status = 500;
         throw err;
-    }
+    });
 };

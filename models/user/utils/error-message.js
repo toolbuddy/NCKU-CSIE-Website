@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/error-message.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/error-message.js');
 
-export const errorMessageUtils = new I18nUtils( {
+const errorMessageUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default errorMessageUtils;
+module.exports = errorMessageUtils;

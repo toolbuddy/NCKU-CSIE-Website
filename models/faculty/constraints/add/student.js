@@ -1,29 +1,29 @@
-import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-import degreeUtils from 'models/faculty/utils/degree.js';
+const LanguageUtils = require('../../../common/utils/language.js');
+const ValidateUtils = require('../../../common/utils/validate.js');
+const degreeUtils = require('../../utils/degree.js');
 
 const StudentValidationConstraints = {
     degree: {
-        presence:     true,
-        type:     {
-            type: value => degreeUtils.isSupportedId( value ),
+        presence: true,
+        type: {
+            type: value => degreeUtils.isSupportedId(value),
         },
     },
     studentAwardId: {
-        presence:     true,
-        type:     {
-            type: value => ValidateUtils.isValidId( value ),
+        presence: true,
+        type: {
+            type: value => ValidateUtils.isValidId(value),
         },
     },
     studentI18n: {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
 };
 
-export default StudentValidationConstraints;
+module.exports = StudentValidationConstraints;

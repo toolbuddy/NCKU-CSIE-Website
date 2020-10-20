@@ -8,12 +8,12 @@
  * - `/api/faculty/[id]`
  */
 
-import express from 'express';
+const express = require('express');
 
-import getFaculty from 'models/faculty/operations/get-faculty.js';
-import getLabs from 'models/faculty/operations/get-labs.js';
-import getPublications from 'models/faculty/operations/get-publication.js';
-import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+const getFaculty = require('../models/faculty/operations/get-faculty.js');
+const getLabs = require('../models/faculty/operations/get-labs.js');
+const getPublications = require('../models/faculty/operations/get-publication.js');
+const getFacultyDetail = require('../models/faculty/operations/get-faculty-detail.js');
 
 const apis = express.Router();
 
@@ -21,59 +21,59 @@ const apis = express.Router();
  * Resolve URL `/api/faculty`.
  */
 
-apis.get( '/', async ( req, res, next ) => {
+apis.get('/', async (req, res, next) => {
     try {
-        res.json( await getFaculty( Number( req.query.languageId ) ) );
+        res.json(await getFaculty(Number(req.query.languageId)));
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
 /**
  * Resolve URL `/api/faculty/lab`.
  */
 
-apis.get( '/lab', async ( req, res, next ) => {
+apis.get('/lab', async (req, res, next) => {
     try {
-        res.json( await getLabs( Number( req.query.languageId ) ) );
+        res.json(await getLabs(Number(req.query.languageId)));
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
 /**
  * Resolve URL `/api/faculty/publication`.
  */
 
-apis.get( '/publication', async ( req, res, next ) => {
+apis.get('/publication', async (req, res, next) => {
     try {
-        res.json( await getPublications( {
-            language: Number( req.query.languageId ),
-            from:     Number( req.query.from ),
-            to:       Number( req.query.to ),
-        } ) );
+        res.json(await getPublications({
+            language: Number(req.query.languageId),
+            from: Number(req.query.from),
+            to: Number(req.query.to),
+        }));
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
 /**
  * Resolve URL `/api/faculty/[id]`.
  */
 
-apis.get( '/:profileId', async ( req, res, next ) => {
+apis.get('/:profileId', async (req, res, next) => {
     try {
-        res.json( await getFacultyDetail( {
-            profileId: Number( req.params.profileId ),
-            language:  Number( req.query.languageId ),
-        } ) );
+        res.json(await getFacultyDetail({
+            profileId: Number(req.params.profileId),
+            language: Number(req.query.languageId),
+        }));
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
-export default apis;
+module.exports = apis;

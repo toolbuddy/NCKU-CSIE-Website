@@ -1,3 +1,3 @@
 const SpecialtyValidationConstraints = {};
 
-export default SpecialtyValidationConstraints;
+module.exports = SpecialtyValidationConstraints;

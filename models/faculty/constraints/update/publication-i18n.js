@@ -1,4 +1,4 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const PublicationI18nValidationConstraints = {
     language: {
@@ -11,18 +11,18 @@ const PublicationI18nValidationConstraints = {
     },
     title: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 500,
         },
     },
     authors: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 500,
         },
     },
 };
 
-export default PublicationI18nValidationConstraints;
+module.exports = PublicationI18nValidationConstraints;

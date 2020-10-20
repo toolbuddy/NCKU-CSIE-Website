@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/role.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/role.js');
 
-export const roleUtils = new I18nUtils( {
+const roleUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default roleUtils;
+module.exports = roleUtils;

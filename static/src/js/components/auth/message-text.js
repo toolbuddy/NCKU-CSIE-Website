@@ -1,25 +1,25 @@
 export default class MessageText {
-    constructor ( DOM ) {
+    constructor (DOM) {
         this.DOM = DOM;
     }
 
     hideMessage () {
-        this.DOM.classList.add( 'message--hide' );
+        this.DOM.classList.add('message--hide');
     }
 
     showMessage () {
-        this.DOM.classList.remove( 'message--hide' );
+        this.DOM.classList.remove('message--hide');
     }
 
     setForgetMessage () {
-        window.addEventListener( 'DOMContentLoaded', () => {
-            this.DOM.classList.add( 'message--forget' );
-        } );
+        window.addEventListener('DOMContentLoaded', () => {
+            this.DOM.classList.add('message--forget');
+        });
     }
 
     setErrorMessage () {
-        window.addEventListener( 'DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             this.hideMessage();
-        } );
+        });
     }
 }

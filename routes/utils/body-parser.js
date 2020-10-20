@@ -1,4 +1,4 @@
-import bodyParser from 'body-parser';
+const bodyParser = require('body-parser');
 
 /**
  * Url-encoded parser for HTTP request body.
@@ -12,22 +12,17 @@ import bodyParser from 'body-parser';
  * Maximum supported JSON size is 5GB.
  */
 
-const urlEncoded = bodyParser.urlencoded( {
+const urlEncoded = bodyParser.urlencoded({
     extended: true,
-    limit:    '5GB',
-} );
-
-const jsonParser = bodyParser.json( {
     limit: '5GB',
-    type:  '*/json',
-} );
+});
 
-export {
-    jsonParser,
-    urlEncoded,
-};
+const jsonParser = bodyParser.json({
+    limit: '5GB',
+    type: '*/json',
+});
 
-export default {
+module.exports = {
     jsonParser,
     urlEncoded,
 };

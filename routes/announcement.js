@@ -10,137 +10,137 @@
  * - `/announcement/staff`
  */
 
-import express from 'express';
-import MarkdownIt from 'markdown-it';
+const express = require('express');
+const MarkdownIt = require('markdown-it');
 
-import staticHtml from 'routes/utils/static-html.js';
-import tagUtils from 'models/announcement/utils/tag.js';
+const staticHtml = require('./utils/static-html.js');
+const tagUtils = require('../models/announcement/utils/tag.js');
 
-import getAnnouncement from 'models/announcement/operations/get-announcement.js';
-import getFile from 'models/announcement/operations/get-file.js';
+const getAnnouncement = require('../models/announcement/operations/get-announcement.js');
+const getFile = require('../models/announcement/operations/get-file.js');
 
-const router = express.Router( {
+const router = express.Router({
     caseSensitive: true,
-    mergeParams:   false,
-    strict:        false,
-} );
+    mergeParams: false,
+    strict: false,
+});
 
 /**
  * Resolve URL `/announcement`.
  */
 
-router
-.route( [
+router.
+route([
     '/',
     '/index',
-] )
-.get( staticHtml( 'announcement/index' ) );
+]).
+get(staticHtml('announcement/index'));
 
 /**
  * Resolve URL `/announcement/activity`.
  */
 
-router
-.route( '/activity' )
-.get( staticHtml( 'announcement/activity' ) );
+router.
+route('/activity').
+get(staticHtml('announcement/activity'));
 
 /**
  * Resolve URL `/announcement/all`.
  */
 
-router
-.route( '/all' )
-.get( async ( {}, res, next ) => {
+router.
+route('/all').
+get(async ({}, res, next) => {
     try {
         res.locals.UTILS.announcement = {
             tagUtils,
         };
 
-        await new Promise( ( resolve, reject ) => {
-            res.render( 'announcement/all.pug', ( err, html ) => {
-                if ( err ) {
-                    reject( err );
+        await new Promise((resolve, reject) => {
+            res.render('announcement/all.pug', (err, html) => {
+                if (err) {
+                    reject(err);
                     return;
                 }
-                res.send( html );
+                res.send(html);
                 resolve();
-            } );
-        } );
+            });
+        });
     }
-    catch ( error ) {
-        next( error );
+    catch (error) {
+        next(error);
     }
-} );
+});
 
 /**
  * Resolve URL `/announcement/recruitment`.
  */
 
-router
-.route( '/recruitment' )
-.get( staticHtml( 'announcement/recruitment' ) );
+router.
+route('/recruitment').
+get(staticHtml('announcement/recruitment'));
 
 /**
  * Resolve URL `/announcement/[id]`.
  */
 
-router
-.route( '/:announcementId' )
-.get( async ( req, res, next ) => {
+router.
+route('/:announcementId').
+get(async (req, res, next) => {
     try {
-        const data = await getAnnouncement( {
-            announcementId: Number( req.params.announcementId ),
-            language:       req.query.languageId,
-        } );
+        const data = await getAnnouncement({
+            announcementId: Number(req.params.announcementId),
+            language: req.query.languageId,
+        });
 
         res.locals.UTILS.announcement = {
             tagUtils,
         };
-        res.locals.UTILS.md = new MarkdownIt( {
-            breaks:  true,
+        res.locals.UTILS.md = new MarkdownIt({
+            breaks: true,
             linkify: true,
-        } );
+        });
 
-        await new Promise( ( resolve, reject ) => {
-            res.render( 'announcement/detail.pug', {
+        await new Promise((resolve, reject) => {
+            res.render('announcement/detail.pug', {
                 data,
-            }, ( err, html ) => {
-                if ( err ) {
-                    reject( err );
+            }, (err, html) => {
+                if (err) {
+                    reject(err);
                     return;
                 }
-                res.send( html );
+                res.send(html);
                 resolve();
-            } );
-        } );
+            });
+        });
     }
-    catch ( error ) {
-        if ( error.status === 404 )
+    catch (error) {
+        if (error.status === 404)
             next();
         else
-            next( error );
+            next(error);
     }
-} );
+});
 
 /**
  * Resolve URL `/announcement/[id]/file/[fileId]`.
  */
 
-router
-.route( '/:announcementId/file/:fileId' )
-.get( async ( req, res, next ) => {
+router.
+route('/:announcementId/file/:fileId').
+get(async (req, res, next) => {
     try {
-        const file = await getFile( Number( req.params.fileId ) );
-        res.set( 'Content-Type', 'application/octet-stream' );
-        res.set( 'Content-Disposition', `attachment;filename*=UTF-8''${ encodeURIComponent( file.name ) }` );
-        res.send( Buffer.from( file.content, 'binary' ) );
+        const file = await getFile(Number(req.params.fileId));
+        res.set('Content-Type', 'application/octet-stream');
+        res.set('Content-Disposition', `attachment;filename*=UTF-8''${encodeURIComponent(file.name)}`);
+        res.send(Buffer.from(file.content, 'binary'));
     }
-    catch ( error ) {
-        if ( error.status === 404 )
+    catch (error) {
+        if (error.status === 404)
             next();
         else
-            next( error );
+            next(error);
     }
-} );
+});
 
-export default router;
+module.exports = router;

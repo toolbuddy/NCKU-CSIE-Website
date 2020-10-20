@@ -1,23 +1,23 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const AnnouncementI18nValidationConstraints = {
     language: {
         presence: true,
-        type:     {
+        type: {
             type: LanguageUtils.isSupportedLanguageId,
         },
     },
     title: {
         presence: true,
-        type:     'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     content: {
         presence: true,
-        type:     'string',
+        type: 'string',
     },
 };
 
-export default AnnouncementI18nValidationConstraints;
+module.exports = AnnouncementI18nValidationConstraints;

@@ -1,8 +1,8 @@
 const AddedFileValidationConstraints = {
     name: {
         presence: true,
-        type:     'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 2083,
         },
     },
@@ -13,4 +13,4 @@ const AddedFileValidationConstraints = {
     },
 };
 
-export default AddedFileValidationConstraints;
+module.exports = AddedFileValidationConstraints;

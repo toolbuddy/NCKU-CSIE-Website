@@ -1,34 +1,27 @@
-import Announcement from 'models/announcement/schemas/announcement.js';
-import AnnouncementI18n from 'models/announcement/schemas/announcement-i18n.js';
-import File from 'models/announcement/schemas/file.js';
-import Tag from 'models/announcement/schemas/tag.js';
+const Announcement = require('../schemas/announcement.js');
+const AnnouncementI18n = require('../schemas/announcement-i18n.js');
+const File = require('../schemas/file.js');
+const Tag = require('../schemas/tag.js');
 
-Announcement.hasMany( AnnouncementI18n, {
-    as:         'announcementI18n',
+Announcement.hasMany(AnnouncementI18n, {
+    as: 'announcementI18n',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
-Announcement.hasMany( Tag, {
-    as:         'tags',
+Announcement.hasMany(Tag, {
+    as: 'tags',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
-Announcement.hasMany( File, {
-    as:         'files',
+Announcement.hasMany(File, {
+    as: 'files',
     foreignKey: 'announcementId',
-    sourceKey:  'announcementId',
-} );
+    sourceKey: 'announcementId',
+});
 
-export {
-    Announcement,
-    AnnouncementI18n,
-    File,
-    Tag,
-};
-
-export default {
+module.exports = {
     Announcement,
     AnnouncementI18n,
     File,

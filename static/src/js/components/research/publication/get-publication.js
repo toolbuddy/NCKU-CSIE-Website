@@ -6,8 +6,8 @@
  */
 
 import WebLanguageUtils from 'static/src/js/utils/language.js';
-import { classAdd, classRemove, } from 'static/src/js/utils/style.js';
-import { host, staticHost, } from 'settings/server/config.js';
+import {classAdd, classRemove} from 'static/src/js/utils/style.js';
+import {host, staticHost} from 'settings/server/config.js';
 import cardHTML from 'static/src/pug/components/research/publication/card.pug';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
@@ -19,37 +19,37 @@ export default class GetPublications {
      * @param {number} opt.languageId
      */
 
-    constructor ( opt ) {
+    constructor (opt) {
         opt = opt || {};
 
         if (
             !opt.publicationDOM ||
-            !ValidateUtils.isDomElement( opt.publicationDOM ) ||
-            !WebLanguageUtils.isSupportedLanguageId( opt.languageId )
+            !ValidateUtils.isDomElement(opt.publicationDOM) ||
+            !WebLanguageUtils.isSupportedLanguageId(opt.languageId)
         )
-            throw new TypeError( 'invalid arguments' );
+            throw new TypeError('invalid arguments');
 
-        const publicationQuerySelector = block => `.publication__${ block }.${ block }`;
-        const timeQuerySelector = ( block, element ) => `.filter__time.time > .time__${ block }.${ block } > .${ block }__input.input > .input__${ element }`;
+        const publicationQuerySelector = block => `.publication__${block}.${block}`;
+        const timeQuerySelector = (block, element) => `.filter__time.time > .time__${block}.${block} > .${block}__input.input > .input__${element}`;
 
         this.DOM = {
-            noResult: opt.publicationDOM.querySelector( publicationQuerySelector( 'no-result' ) ),
-            loading:  opt.publicationDOM.querySelector( publicationQuerySelector( 'loading' ) ),
-            cards:    opt.publicationDOM.querySelector( publicationQuerySelector( 'cards' ) ),
-            filter:   {
-                from: document.querySelector( timeQuerySelector( 'from', 'year' ) ),
-                to:   document.querySelector( timeQuerySelector( 'to', 'year' ) ),
+            noResult: opt.publicationDOM.querySelector(publicationQuerySelector('no-result')),
+            loading: opt.publicationDOM.querySelector(publicationQuerySelector('loading')),
+            cards: opt.publicationDOM.querySelector(publicationQuerySelector('cards')),
+            filter: {
+                from: document.querySelector(timeQuerySelector('from', 'year')),
+                to: document.querySelector(timeQuerySelector('to', 'year')),
             },
         };
 
         if (
-            !ValidateUtils.isDomElement( this.DOM.noResult ) ||
-            !ValidateUtils.isDomElement( this.DOM.loading ) ||
-            !ValidateUtils.isDomElement( this.DOM.cards ) ||
-            !ValidateUtils.isDomElement( this.DOM.filter.from ) ||
-            !ValidateUtils.isDomElement( this.DOM.filter.to )
+            !ValidateUtils.isDomElement(this.DOM.noResult) ||
+            !ValidateUtils.isDomElement(this.DOM.loading) ||
+            !ValidateUtils.isDomElement(this.DOM.cards) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.from) ||
+            !ValidateUtils.isDomElement(this.DOM.filter.to)
         )
-            throw new Error( 'DOM not found.' );
+            throw new Error('DOM not found.');
 
         this.state = {
             languageId: opt.languageId,
@@ -59,80 +59,82 @@ export default class GetPublications {
     }
 
     get queryApi () {
-        return `${ host }/api/faculty/publication?languageId=${ this.state.languageId }&from=${ this.DOM.filter.from.value }&to=${ this.DOM.filter.to.value }`;
+        return `${host}/api/faculty/publication?languageId=${this.state.languageId}&from=${this.DOM.filter.from.value}&to=${this.DOM.filter.to.value}`;
     }
 
     async fetchData () {
         try {
-            const res = await fetch( this.queryApi );
+            const res = await fetch(this.queryApi);
 
-            if ( !res.ok )
-                throw new Error( 'No publication found' );
+            if (!res.ok)
+                throw new Error('No publication found');
 
             return res.json();
         }
-        catch ( err ) {
+        catch (err) {
             throw err;
         }
     }
 
     renderLoading () {
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
-        classRemove( this.DOM.loading, 'loading--hidden' );
+        classAdd(this.DOM.noResult, 'no-result--hidden');
+        classRemove(this.DOM.loading, 'loading--hidden');
     }
 
     renderLoadingSucceed () {
-        classAdd( this.DOM.loading, 'loading--hidden' );
-        classAdd( this.DOM.noResult, 'no-result--hidden' );
+        classAdd(this.DOM.loading, 'loading--hidden');
+        classAdd(this.DOM.noResult, 'no-result--hidden');
     }
 
     renderLoadingFailed () {
-        classAdd( this.DOM.loading, 'loading--hidden' );
-        classRemove( this.DOM.noResult, 'no-result--hidden' );
+        classAdd(this.DOM.loading, 'loading--hidden');
+        classRemove(this.DOM.noResult, 'no-result--hidden');
     }
 
     subscribeTime () {
-        [ 'from',
-            'to', ].forEach( ( ( timeFilter ) => {
-            this.DOM.filter[ timeFilter ].addEventListener( 'change', async () => {
+        [
+            'from',
+            'to',
+        ].forEach(((timeFilter) => {
+            this.DOM.filter[timeFilter].addEventListener('change', async () => {
                 try {
-                    this.renderCards( await this.fetchData() );
+                    this.renderCards(await this.fetchData());
                 }
-                catch ( err ) {
-                    console.error( err );
+                catch (err) {
+                    console.error(err);
                 }
-            } );
-        } ) );
+            });
+        }));
     }
 
     /**
      * @param {object[]} data
      */
 
-    renderCards ( data ) {
+    renderCards (data) {
         try {
             this.DOM.cards.innerHTML = '';
-            data.sort( ( publication1, publication2 ) => publication2.issueYear - publication1.issueYear );
-            data.forEach( ( data ) => {
+            data.sort((publication1, publication2) => publication2.issueYear - publication1.issueYear);
+            data.forEach((data) => {
                 try {
-                    this.DOM.cards.innerHTML += cardHTML( {
+                    this.DOM.cards.innerHTML += cardHTML({
                         data,
                         LANG: {
-                            id:            this.state.languageId,
+                            id: this.state.languageId,
                             getLanguageId: WebLanguageUtils.getLanguageId,
                         },
                         UTILS: {
-                            url:       UrlUtils.serverUrl( new UrlUtils( host, this.state.languageId ) ),
-                            staticUrl: UrlUtils.serverUrl( new UrlUtils( staticHost, this.state.languageId ) ),
+                            url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
+                            staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
                         },
-                    } );
+                    });
                 }
-                catch ( err ) {
-                    console.error( err );
+                catch (err) {
+                    console.error(err);
                 }
-            } );
+            });
         }
-        catch ( err ) {
+        catch (err) {
             throw err;
         }
     }
@@ -141,12 +143,12 @@ export default class GetPublications {
         try {
             this.renderLoading();
             this.subscribeTime();
-            this.renderCards( await this.fetchData() );
+            this.renderCards(await this.fetchData());
             this.renderLoadingSucceed();
         }
-        catch ( err ) {
+        catch (err) {
             this.renderLoadingFailed();
-            console.error( err );
+            console.error(err);
         }
     }
 }

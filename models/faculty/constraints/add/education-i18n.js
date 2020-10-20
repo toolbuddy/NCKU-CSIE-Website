@@ -1,4 +1,4 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const EducationI18nValidationConstraints = {
     language: {
@@ -11,18 +11,18 @@ const EducationI18nValidationConstraints = {
     },
     school: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
     major: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
 };
 
-export default EducationI18nValidationConstraints;
+module.exports = EducationI18nValidationConstraints;
