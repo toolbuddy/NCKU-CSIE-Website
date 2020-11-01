@@ -89,7 +89,6 @@ export default ( opt ) => {
 
         return Announcement.create( {
             author,
-            image,
             announcementI18n,
             tags,
             files,
