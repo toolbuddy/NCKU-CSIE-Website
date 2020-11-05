@@ -59,6 +59,10 @@ export default class AnnouncementEvent {
             submit:       opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__check' ),
             filePreview:  opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__file' ),
             errorMessage: opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__error-message' ),
+            options:      {
+                now:     opt.optionNowDOM,
+                private: opt.optionPrivateDOM,
+            },
         };
     }
 
@@ -298,6 +302,7 @@ export default class AnnouncementEvent {
         new Promise( ( res ) => {
             const formData = new FormData();
             this.DOM.submit.disabled = true;
+            formData.append( 'isPublish', this.DOM.options.now.checked );
             formData.append( 'announcementId', this.config.id );
             formData.append( 'image', null );
             Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {

@@ -246,9 +246,15 @@ export default class DefaultTagFilter {
          */
 
         this.DOM.filter.tags.forEach( ( tagObj ) => {
-            if ( tagObj.id === tagUtils.tagAllId ||
-                ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
-                this.state.tags.indexOf( tagObj.id ) >= 0
+            if ( tagObj.id === tagUtils.tagAllId ) {
+                if ( this.state.tags.length === 0 )
+                    classAdd( tagObj.node, 'tags__tag--active' );
+
+                else
+                    classRemove( tagObj.node, 'tags__tag--active' );
+            }
+            else if ( ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
+                    this.state.tags.indexOf( tagObj.id ) >= 0
             )
                 classAdd( tagObj.node, 'tags__tag--active' );
             else

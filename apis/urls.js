@@ -60,7 +60,7 @@ apis.use( '/staff', staff );
  * Error handling using 404 response.
  */
 
- apis.use( ( {}, res, {} ) => {
+apis.use( ( {}, res, {} ) => {
     res.status( 404 ).json( {
         error: 'Request api not found.',
     } );
