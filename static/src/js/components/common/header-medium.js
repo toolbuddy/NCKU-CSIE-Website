@@ -57,22 +57,22 @@ export default class GetHeaderMedium {
             cancel: opt.headerDOM.querySelector(navigationElementQuerySelector('cancel')),
             item: listItemModifiers.map(modifier => ({
                 switch: opt.headerDOM.querySelector(listItemElementQuerySelector('switch', modifier)),
-                switches: Array.from(opt.allHeaderDOMs).
-                map(header => header.querySelector(listItemElementQuerySelector('switch', modifier))).
-                filter(switchDOM => switchDOM !== null),
-                dropdowns: Array.from(opt.allHeaderDOMs).
-                map(header => header.querySelector(listItemBlockQuerySelector('dropdown', modifier))).
-                filter(dropdownDOM => dropdownDOM !== null),
-            })).
-            filter(itemObj => itemObj.switch !== null),
+                switches: Array.from(opt.allHeaderDOMs)
+                .map(header => header.querySelector(listItemElementQuerySelector('switch', modifier)))
+                .filter(switchDOM => switchDOM !== null),
+                dropdowns: Array.from(opt.allHeaderDOMs)
+                .map(header => header.querySelector(listItemBlockQuerySelector('dropdown', modifier)))
+                .filter(dropdownDOM => dropdownDOM !== null),
+            }))
+            .filter(itemObj => itemObj.switch !== null),
             language: {
                 switch: opt.headerDOM.querySelector(languageElementQuerySelector('switch')),
-                switches: Array.from(opt.allHeaderDOMs).
-                map(header => header.querySelector(languageElementQuerySelector('switch'))).
-                filter(switchDOM => switchDOM !== null),
-                dropdowns: Array.from(opt.allHeaderDOMs).
-                map(header => header.querySelector(languageBlockQuerySelector('dropdown'))).
-                filter(dropdownDOM => dropdownDOM !== null),
+                switches: Array.from(opt.allHeaderDOMs)
+                .map(header => header.querySelector(languageElementQuerySelector('switch')))
+                .filter(switchDOM => switchDOM !== null),
+                dropdowns: Array.from(opt.allHeaderDOMs)
+                .map(header => header.querySelector(languageBlockQuerySelector('dropdown')))
+                .filter(dropdownDOM => dropdownDOM !== null),
             },
             login: {
                 container: opt.headerDOM.querySelector(navigationBlockQuerySelector('login')),
@@ -174,12 +174,12 @@ export default class GetHeaderMedium {
         const loginBlockQuerySelector = block => `${loginElementQuerySelector(block)}.${block}`;
 
         this.DOM.login.switch = this.DOM.header.querySelector(loginElementQuerySelector('switch'));
-        this.DOM.login.switches = this.DOM.allHeaders.
-        map(header => header.querySelector(loginElementQuerySelector('switch'))).
-        filter(switchDOM => switchDOM !== null);
-        this.DOM.login.dropdowns = this.DOM.allHeaders.
-        map(header => header.querySelector(loginBlockQuerySelector('dropdown'))).
-        filter(dropdownDOM => dropdownDOM !== null);
+        this.DOM.login.switches = this.DOM.allHeaders
+        .map(header => header.querySelector(loginElementQuerySelector('switch')))
+        .filter(switchDOM => switchDOM !== null);
+        this.DOM.login.dropdowns = this.DOM.allHeaders
+        .map(header => header.querySelector(loginBlockQuerySelector('dropdown')))
+        .filter(dropdownDOM => dropdownDOM !== null);
 
         if (
             !ValidateUtils.isDomElement(this.DOM.login.switch) ||
@@ -224,14 +224,14 @@ export default class GetHeaderMedium {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
                 method: 'get',
-            }).
-            then((res) => {
+            })
+            .then((res) => {
                 if (res.status !== 200)
                     throw res.status;
                 return res;
-            }).
-            then(res => res.json()).
-            then(async (result) => {
+            })
+            .then(res => res.json())
+            .then(async (result) => {
                 const data = await this.fetchMiniProfileData();
                 if (result.role === roleUtils.getIdByOption('faculty')) {
                     this.DOM.login.container.innerHTML = loginDropdownHTML(
@@ -272,8 +272,8 @@ export default class GetHeaderMedium {
                     );
                 }
                 this.subscribeLoginEvent();
-            }).
-            catch((err) => {
+            })
+            .catch((err) => {
                 if (err !== 401)
                     console.error(err);
             });

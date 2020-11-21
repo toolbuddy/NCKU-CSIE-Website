@@ -56,13 +56,13 @@ export default class DefaultTagFilter {
         });
 
         this.config = {
-            amount:             opt.amount,
-            from:               opt.from,
-            to:                 opt.to,
-            page:               opt.page,
-            visiblePageNum:     opt.visiblePageNum,
+            amount: opt.amount,
+            from: opt.from,
+            to: opt.to,
+            page: opt.page,
+            visiblePageNum: opt.visiblePageNum,
             animationDelayTime: 50,
-            scrollPx:           8,
+            scrollPx: 8,
         };
 
         this.tagId = {
@@ -245,16 +245,16 @@ export default class DefaultTagFilter {
          * Render `.filter__tags.tags > .tags__tag`.
          */
 
-        this.DOM.filter.tags.forEach( ( tagObj ) => {
-            if ( tagObj.id === tagUtils.tagAllId ) {
-                if ( this.state.tags.length === 0 )
-                    classAdd( tagObj.node, 'tags__tag--active' );
+        this.DOM.filter.tags.forEach((tagObj) => {
+            if (tagObj.id === tagUtils.tagAllId) {
+                if (this.state.tags.length === 0)
+                    classAdd(tagObj.node, 'tags__tag--active');
 
                 else
-                    classRemove( tagObj.node, 'tags__tag--active' );
+                    classRemove(tagObj.node, 'tags__tag--active');
             }
-            else if ( ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
-                    this.state.tags.indexOf( tagObj.id ) >= 0
+            else if ((this.tagId.default.length === 1 && this.tagId.default[0] === tagObj.id) ||
+                    this.state.tags.indexOf(tagObj.id) >= 0
             )
                 classAdd(tagObj.node, 'tags__tag--active');
             else
@@ -390,9 +390,9 @@ export default class DefaultTagFilter {
          * Subscribe click event for `.pages__control.pages__control--forward`.
          */
 
-        this.DOM.pages.
-        querySelector('.pages > .pages__control.pages__control--forward').
-        addEventListener('click', () => {
+        this.DOM.pages
+        .querySelector('.pages > .pages__control.pages__control--forward')
+        .addEventListener('click', () => {
             try {
                 if (this.isLocked())
                     return;
@@ -434,9 +434,9 @@ export default class DefaultTagFilter {
          * Subscribe click event for `.pages__control.pages__control--backward`.
          */
 
-        this.DOM.pages.
-        querySelector('.pages > .pages__control--backward').
-        addEventListener('click', () => {
+        this.DOM.pages
+        .querySelector('.pages > .pages__control--backward')
+        .addEventListener('click', () => {
             try {
                 if (this.isLocked())
                     return;
@@ -513,9 +513,9 @@ export default class DefaultTagFilter {
          * then `.pages__extra.pages__extra--before` must show.
          */
 
-        if (this.DOM.pages.
-        querySelector(`.pages > .pages__page[ data-page = "${this.config.page + 1}" ]`).
-        classList.contains('pages__page--hidden')
+        if (this.DOM.pages
+        .querySelector(`.pages > .pages__page[ data-page = "${this.config.page + 1}" ]`)
+        .classList.contains('pages__page--hidden')
         ) {
             classRemove(
                 this.DOM.pages.querySelector('.pages > .pages__extra.pages__extra--before'),
@@ -534,9 +534,9 @@ export default class DefaultTagFilter {
          * then `.pages__extra.pages__extra--after` must show.
          */
 
-        if (this.DOM.pages.
-        querySelector(`.pages > .pages__page[ data-page = "${pages - 1}" ]`).
-        classList.contains('pages__page--hidden')
+        if (this.DOM.pages
+        .querySelector(`.pages > .pages__page[ data-page = "${pages - 1}" ]`)
+        .classList.contains('pages__page--hidden')
         ) {
             classRemove(
                 this.DOM.pages.querySelector('.pages > .pages__extra.pages__extra--after'),
@@ -823,8 +823,8 @@ export default class DefaultTagFilter {
                 }));
                 briefing.updateTime = this.constructor.formatUpdateTime(new Date(briefing.updateTime));
                 return briefing;
-            }).
-            forEach((briefing) => {
+            })
+            .forEach((briefing) => {
                 new Promise((res) => {
                     this.DOM.announcement.pinned.briefings.innerHTML += briefingHTML({
                         userId: this.config.userId,
@@ -835,8 +835,8 @@ export default class DefaultTagFilter {
                         },
                     });
                     res();
-                }).
-                then(() => {
+                })
+                .then(() => {
                     /***
                      * If it's staff login
                      * brefingDOM set `pinnButton`, `addButton` and `deleteButton` event
@@ -987,8 +987,8 @@ export default class DefaultTagFilter {
                 }));
                 briefing.updateTime = this.constructor.formatUpdateTime(new Date(briefing.updateTime));
                 return briefing;
-            }).
-            forEach((briefing) => {
+            })
+            .forEach((briefing) => {
                 new Promise((res) => {
                     this.DOM.announcement.normal.briefings.innerHTML += briefingHTML({
                         userId: this.config.userId,
@@ -999,8 +999,8 @@ export default class DefaultTagFilter {
                         },
                     });
                     res();
-                }).
-                then(() => {
+                })
+                .then(() => {
                     /***
                      * If it's staff login
                      * brefingDOM set `addButtou` and `deleteButton` event
@@ -1086,8 +1086,8 @@ export default class DefaultTagFilter {
             headers: {
                 'content-type': 'application/json',
             },
-        }).
-        then(async () => {
+        })
+        .then(async () => {
             classRemove(this.DOM.preview.block, 'delete-preview--show');
             await this.getPinnedAnnouncement();
             this.DOM.preview.button.check.disabled = false;
@@ -1104,8 +1104,8 @@ export default class DefaultTagFilter {
             headers: {
                 'content-type': 'application/json',
             },
-        }).
-        then(async () => {
+        })
+        .then(async () => {
             classRemove(this.DOM.preview.block, 'delete-preview--show');
             this.DOM.preview.button.check.disabled = false;
             this.getAll();
@@ -1117,9 +1117,9 @@ export default class DefaultTagFilter {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
                 method: 'get',
-            }).
-            then(res => res.json()).
-            then((res) => {
+            })
+            .then(res => res.json())
+            .then((res) => {
                 if (res.role === roleUtils.getIdByOption('staff')) {
                     this.config.userId = res.roleId;
                     this.subscribeAddButton();
@@ -1127,8 +1127,8 @@ export default class DefaultTagFilter {
                 }
                 else
                     this.config.userId = -1;
-            }).
-            then(async () => {
+            })
+            .then(async () => {
                 await this.getPage();
                 await this.getNormalAnnouncement();
                 await this.getPinnedAnnouncement();

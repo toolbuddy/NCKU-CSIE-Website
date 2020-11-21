@@ -15,7 +15,7 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                  */
 
                 // classAdd( tagObj.node, 'tags__tag--active' );
-                tagObj.node.addEventListener( 'click', () => {
+                tagObj.node.addEventListener('click', () => {
                     try {
                         if (this.isLocked())
                             return;
@@ -56,17 +56,17 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                             classAdd(tagObj.node, 'tags__tag--active');
                         }
 
-                        if ( this.state.tags.length === 0 ) {
-                            this.DOM.filter.tags.forEach( ( tmpTagObj ) => {
-                                if ( tmpTagObj.id === tagUtils.tagAllId )
-                                    classAdd( tmpTagObj.node, 'tags__tag--active' );
-                            } );
+                        if (this.state.tags.length === 0) {
+                            this.DOM.filter.tags.forEach((tmpTagObj) => {
+                                if (tmpTagObj.id === tagUtils.tagAllId)
+                                    classAdd(tmpTagObj.node, 'tags__tag--active');
+                            });
                         }
                         else {
-                            this.DOM.filter.tags.forEach( ( tmpTagObj ) => {
-                                if ( tmpTagObj.id === tagUtils.tagAllId )
-                                    classRemove( tmpTagObj.node, 'tags__tag--active' );
-                            } );
+                            this.DOM.filter.tags.forEach((tmpTagObj) => {
+                                if (tmpTagObj.id === tagUtils.tagAllId)
+                                    classRemove(tmpTagObj.node, 'tags__tag--active');
+                            });
                         }
 
                         this.state.page = this.config.page;

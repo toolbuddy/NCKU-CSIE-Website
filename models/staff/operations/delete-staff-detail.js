@@ -35,9 +35,9 @@ module.exports = (opt) => {
                 [`${opt.dbTable}Id`]: opt.dbTableItemId,
             },
             transaction: t,
-        }))).
-        then(() => ({message: 'success'})).
-        catch((err) => {
+        })))
+        .then(() => ({message: 'success'}))
+        .catch((err) => {
             throw err;
         });
     }

@@ -290,8 +290,8 @@ module.exports = {
         'dot-location': [
             'error',
 
-            // The dot in a member expression should be on the same line as the object portion.
-            'object',
+            // The "property" option requires the dot to be on the same line as the property.
+            'property',
         ],
 
         // Require dot notation.
@@ -442,14 +442,8 @@ module.exports = {
         // Disallow octal escape sequences in string literals.
         'no-octal-escape': 'error',
 
-        // Disallow reassignment of function parameters.
-        'no-param-reassign': [
-            'error',
-            {
-                // Ignore reassign parameters' property.
-                props: false,
-            },
-        ],
+        // Allow reassignment of function parameters.
+        'no-param-reassign': 'off',
 
         // Disallow use of `__proto__`.
         'no-proto': 'error',

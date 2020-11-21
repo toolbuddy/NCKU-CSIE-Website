@@ -141,10 +141,10 @@ module.exports = async (opt) => {
                     attributes: ['tagId'],
                 },
             ],
-        }).
+        })
 
         // After we get tag ids, we modify their data structure to let later access more convenient.
-        then((result) => {
+        .then((result) => {
             const map = {};
             result.forEach((item) => {
                 map[item.announcementId] = item.tags.map(tag => tag.tagId);

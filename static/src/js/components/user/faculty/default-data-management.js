@@ -144,13 +144,13 @@ export default class DefaultDataManagement {
                         dbTable: this.config.dbTable,
                         data,
                     }),
-                }).
-                then((res) => {
+                })
+                .then((res) => {
                     this.hideForm();
                     this.renderLoading();
                     return res;
-                }).
-                then((res) => {
+                })
+                .then((res) => {
                     this.renderSuccess();
                     e.target.disabled = false;
                     if (res.ok)
@@ -161,8 +161,8 @@ export default class DefaultDataManagement {
     }
 
     subscribePatchButton (element) {
-        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId))).
-        then((data) => {
+        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+        .then((data) => {
             this.status.itemId = Number(element.target.getAttribute('data-id'));
 
             const itemData = data.map(dbData => dbData[this.config.dbTable].filter(item => item[this.config.idColumn] === this.status.itemId)[0]);
@@ -191,14 +191,14 @@ export default class DefaultDataManagement {
                         item,
                         i18n,
                     }),
-                }).
-                then((res) => {
+                })
+                .then((res) => {
                     this.hideForm();
                     this.renderLoading();
 
                     return res;
-                }).
-                then((res) => {
+                })
+                .then((res) => {
                     this.renderSuccess();
                     e.target.disabled = false;
                     if (res.ok)
@@ -209,14 +209,14 @@ export default class DefaultDataManagement {
     }
 
     subscribeDeleteButton (e) {
-        this.fetchData(this.config.languageId).
-        then((data) => {
+        this.fetchData(this.config.languageId)
+        .then((data) => {
             this.status.itemId = Number(e.target.getAttribute('data-id'));
             const rowData = data[this.config.dbTable].find(item => item[this.config.idColumn] === Number(e.target.getAttribute('data-id')));
 
             this.DOM.delete.preview.innerHTML = this.deletePreview(rowData);
-        }).
-        then(() => {
+        })
+        .then(() => {
             this.showDeleteForm();
         });
     }
@@ -235,12 +235,12 @@ export default class DefaultDataManagement {
                     dbTable: this.config.dbTable,
                     dbTableItemId: this.status.itemId,
                 }),
-            }).
-            then(() => {
+            })
+            .then(() => {
                 this.hideForm();
                 this.renderLoading();
-            }).
-            then(() => {
+            })
+            .then(() => {
                 this.renderSuccess();
                 this.DOM.delete.checkButton.disabled = false;
                 window.location.reload();
@@ -350,8 +350,8 @@ export default class DefaultDataManagement {
                 }
             });
             res(errorMessage);
-        }).
-        then((errorMessage) => {
+        })
+        .then((errorMessage) => {
             if (errorMessage === '')
                 return true;
 
@@ -398,12 +398,12 @@ export default class DefaultDataManagement {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
-        }).
-        then(res => res.json()).
-        then((res) => {
+        })
+        .then(res => res.json())
+        .then((res) => {
             this.config.profileId = res.roleId;
-        }).
-        then(() => {
+        })
+        .then(() => {
             this.renderSuccess();
             this.subscribeCancelButton();
             this.subscribePostCheckButton();

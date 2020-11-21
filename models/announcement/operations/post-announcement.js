@@ -99,10 +99,10 @@ module.exports = async (opt) => {
                     as: 'tags',
                 },
             ],
-        })
+        });
 
         // Return success message.
-        return { message: 'Announcement created.' };
+        return {message: 'Announcement created.'};
     }
     catch (error) {
         if (!error.status)

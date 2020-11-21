@@ -20,20 +20,20 @@ const router = express.Router({
  * Resolve URL `/`.
  */
 
-router.
-route([
+router
+.route([
     '/',
     '/index',
-]).
-get(staticHtml('home/index'));
+])
+.get(staticHtml('home/index'));
 
 /**
  * Resolve URL `/search`.
  */
 
-router.
-route('/search').
-get(staticHtml('home/search'));
+router
+.route('/search')
+.get(staticHtml('home/search'));
 
 // TODO: implement this route
 // .post( urlEncoded, jsonParser, (req, res, next) => {} );

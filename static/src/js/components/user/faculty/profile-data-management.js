@@ -68,18 +68,18 @@ export default class ProfileDataManagement {
             };
         });
 
-        this.department = Array.
-        from(opt.departmentDOM).
-        map(node => ({
+        this.department = Array
+        .from(opt.departmentDOM)
+        .map(node => ({
             node,
             selected: (node.getAttribute('selected') === 'true'),
             id: node.getAttribute('data-department-id'),
             table: 'department',
         }));
 
-        this.researchGroup = Array.
-        from(opt.researchGroupDOM).
-        map(node => ({
+        this.researchGroup = Array
+        .from(opt.researchGroupDOM)
+        .map(node => ({
             node,
             selected: (node.getAttribute('selected') === 'true'),
             id: node.getAttribute('data-research-id'),
@@ -118,8 +118,8 @@ export default class ProfileDataManagement {
                             'content-type': 'application/json',
                         },
                         body: JSON.stringify(body),
-                    }).
-                    then(() => {
+                    })
+                    .then(() => {
                         if (tag.selected) {
                             classRemove(tag.node, 'tags__tag--active');
                             tag.selected = false;
@@ -128,8 +128,8 @@ export default class ProfileDataManagement {
                             classAdd(tag.node, 'tags__tag--active');
                             tag.selected = true;
                         }
-                    }).
-                    catch((err) => {
+                    })
+                    .catch((err) => {
                         console.error(err);
                     });
                 });
@@ -199,12 +199,12 @@ export default class ProfileDataManagement {
     subscribePatchButton () {
         Object.keys(this.modifier).forEach((columnName) => {
             this.DOM[columnName].patchButton.addEventListener('click', () => {
-                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId))).
-                then(data => ({
+                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+                .then(data => ({
                     [LanguageUtils.getLanguageId('en-US')]: data[LanguageUtils.getLanguageId('en-US')].profile[columnName],
                     [LanguageUtils.getLanguageId('zh-TW')]: data[LanguageUtils.getLanguageId('zh-TW')].profile[columnName],
-                })).
-                then((data) => {
+                }))
+                .then((data) => {
                     this.showPatchForm(data, columnName);
                 });
             });
@@ -232,8 +232,8 @@ export default class ProfileDataManagement {
                             item,
                             i18n,
                         }),
-                    }).
-                    then(() => {
+                    })
+                    .then(() => {
                         this.updateCard(columnName);
                         this.hideForm();
                         e.target.disabled = false;
@@ -244,9 +244,9 @@ export default class ProfileDataManagement {
     }
 
     setProfileImage () {
-        this.fetchData(this.config.languageId).
-        then(data => data.profile).
-        then((data) => {
+        this.fetchData(this.config.languageId)
+        .then(data => data.profile)
+        .then((data) => {
             if (data.photo.length !== 0) {
                 const img = new Image();
                 img.src = `data:image/jpeg;base64,${data.photo}`;
@@ -256,9 +256,9 @@ export default class ProfileDataManagement {
     }
 
     updateCard (columnName) {
-        this.fetchData(this.config.languageId).
-        then(data => data.profile[columnName]).
-        then((data) => {
+        this.fetchData(this.config.languageId)
+        .then(data => data.profile[columnName])
+        .then((data) => {
             if (columnName !== 'nation')
                 this.DOM[columnName].cardValue.innerText = data;
             else
@@ -331,8 +331,8 @@ export default class ProfileDataManagement {
                 }
             });
             res(errorMessage);
-        }).
-        then((errorMessage) => {
+        })
+        .then((errorMessage) => {
             if (errorMessage === '')
                 return true;
 
@@ -368,12 +368,12 @@ export default class ProfileDataManagement {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
-        }).
-        then(res => res.json()).
-        then((res) => {
+        })
+        .then(res => res.json())
+        .then((res) => {
             this.config.profileId = res.roleId;
-        }).
-        then(() => {
+        })
+        .then(() => {
             this.subscribeCancelButton();
             this.subscribePatchButton();
             this.subscribePatchCheckButton();

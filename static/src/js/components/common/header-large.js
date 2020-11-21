@@ -119,14 +119,14 @@ export default class GetHeaderLarge {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
                 method: 'get',
-            }).
-            then((res) => {
+            })
+            .then((res) => {
                 if (res.status !== 200)
                     throw res.status;
                 return res;
-            }).
-            then(res => res.json()).
-            then(async (result) => {
+            })
+            .then(res => res.json())
+            .then(async (result) => {
                 const data = await this.fetchMiniProfileData();
                 if (result.role === roleUtils.getIdByOption('faculty')) {
                     this.DOM.login.innerHTML = loginButtonHTML(
@@ -166,8 +166,8 @@ export default class GetHeaderLarge {
                         'login',
                     );
                 }
-            }).
-            catch((err) => {
+            })
+            .catch((err) => {
                 if (err !== 401)
                     console.error(err);
             });

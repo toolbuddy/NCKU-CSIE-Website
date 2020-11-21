@@ -80,7 +80,7 @@ module.exports = async (opt) => {
             ],
             group: '`announcement`.`announcementId`',
             having: Sequelize.where(Sequelize.fn('count', Sequelize.col('`announcement`.`announcementId`')), tags.length),
-        })
+        });
 
         // If no announcementId returned, throw 404 error.
         if (!announcements.length) {

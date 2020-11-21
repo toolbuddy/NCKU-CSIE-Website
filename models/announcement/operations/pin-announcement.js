@@ -10,7 +10,7 @@
  */
 
 const validate = require('validate.js');
-const { Announcement } = require('./associations.js');
+const {Announcement} = require('./associations.js');
 const AnnouncementValidationConstraints = require('../constraints/patch/announcement.js');
 
 module.exports = async (opt) => {
@@ -32,14 +32,14 @@ module.exports = async (opt) => {
         }
 
         // Update isPinned attribute of this announcement.
-        await Announcement.update({ isPinned }, {
+        await Announcement.update({isPinned}, {
             where: {
                 announcementId,
             },
         });
 
         // Return success message.
-        return{ message: `Announcement ${isPinned ? 'pinned' : 'unpinned'}.` };
+        return {message: `Announcement ${isPinned ? 'pinned' : 'unpinned'}.`};
     }
     catch (error) {
         if (!error.status)

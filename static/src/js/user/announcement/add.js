@@ -43,12 +43,12 @@ try {
 
     const announcementEvent = new AnnouncementEvent({
         id,
-        languageId:       WebLanguageUtils.currentLanguageId,
-        editBlockDOM:     document.getElementById( 'edit-block' ),
-        optionPrivateDOM: document.getElementById( 'private__input' ),
-        optionNowDOM:     document.getElementById( 'now__input' ),
-        method:           'add',
-    } );
+        languageId: WebLanguageUtils.currentLanguageId,
+        editBlockDOM: document.getElementById('edit-block'),
+        optionPrivateDOM: document.getElementById('private__input'),
+        optionNowDOM: document.getElementById('now__input'),
+        method: 'add',
+    });
     announcementEvent.exec();
 }
 catch (err) {

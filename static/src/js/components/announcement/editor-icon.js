@@ -76,8 +76,8 @@ export default class EditorIcon {
             headers: {
                 'content-type': 'application/json',
             },
-        }).
-        then(async () => {
+        })
+        .then(async () => {
             window.location.replace(`${host}/announcement/all?languageId=${this.config.languageId}`);
         });
     }
@@ -86,9 +86,9 @@ export default class EditorIcon {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
-        }).
-        then(async res => res.json()).
-        then(async (res) => {
+        })
+        .then(async res => res.json())
+        .then(async (res) => {
             const userData = res;
             const userRole = userData.role;
             const userId = (userRole === roleUtils.getIdByOption('staff')) ? userData.roleId : -1;

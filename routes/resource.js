@@ -26,28 +26,28 @@ const router = express.Router({
  * Resolve URL `/resource`.
  */
 
-router.
-route([
+router
+.route([
     '/',
     '/index',
-]).
-get(staticHtml('resource/index'));
+])
+.get(staticHtml('resource/index'));
 
 /**
  * Resolve URL `/resource/rule`.
  */
 
-router.
-route('/rule').
-get(staticHtml('resource/rule'));
+router
+.route('/rule')
+.get(staticHtml('resource/rule'));
 
 /**
  * Resolve URL `/resource/rent`.
  */
 
-router.
-route('/rent').
-get(({}, res) => {
+router
+.route('/rent')
+.get(({}, res) => {
     res.redirect('http://www.csie.ncku.edu.tw/Class2014/');
 });
 
@@ -55,9 +55,9 @@ get(({}, res) => {
  * Resolve URL `/resource/fix`.
  */
 
-router.
-route('/fix').
-get(({}, res) => {
+router
+.route('/fix')
+.get(({}, res) => {
     res.redirect('https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform');
 });
 
@@ -65,25 +65,25 @@ get(({}, res) => {
  * Resolve URL `/resource/ieet`.
  */
 
-router.
-route('/ieet').
-get(staticHtml('resource/ieet'));
+router
+.route('/ieet')
+.get(staticHtml('resource/ieet'));
 
 /**
  * Resolve URL `/resource/sitemap`.
  */
 
-router.
-route('/sitemap').
-get(staticHtml('resource/sitemap'));
+router
+.route('/sitemap')
+.get(staticHtml('resource/sitemap'));
 
 /**
  * Resolve URL `/resource/alumni`.
  */
 
-router.
-route('/alumni').
-get(({}, res) => {
+router
+.route('/alumni')
+.get(({}, res) => {
     res.redirect('http://www.csie.ncku.edu.tw/classmate/index.php');
 });
 
@@ -91,8 +91,8 @@ get(({}, res) => {
  * Resolve URL `/resource/link`.
  */
 
-router.
-route('/link').
-get(staticHtml('resource/link'));
+router
+.route('/link')
+.get(staticHtml('resource/link'));
 
 module.exports = router;

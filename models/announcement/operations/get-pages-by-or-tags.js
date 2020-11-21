@@ -76,7 +76,7 @@ module.exports = async (opt) => {
                     },
                 },
             ],
-        })
+        });
 
         // If no announcement returned, throw 404 error.
         if (!announcements.length) {

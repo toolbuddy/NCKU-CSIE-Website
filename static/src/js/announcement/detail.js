@@ -39,11 +39,11 @@ catch (err) {
 }
 
 try {
-    let announcementId = /announcement\/(\d+)/.exec(window.location.pathname);
+    let announcementId = /announcement\/(?<id>\d+)/u.exec(window.location.pathname);
     if (announcementId === null)
         announcementId = 0;
     else
-        announcementId = Number(announcementId[1]);
+        announcementId = Number(announcementId.groups.id);
 
     const editorIcon = new EditorIcon({
         editorDOM: document.getElementById('announcement__editor'),

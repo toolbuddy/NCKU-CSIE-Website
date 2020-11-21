@@ -44,33 +44,33 @@ module.exports = (opt) => {
                     studentAwardId: opt.dbTableItemId,
                 },
                 transaction: t,
-            }).
-            then(ids => tables.StudentI18n.destroy({
+            })
+            .then(ids => tables.StudentI18n.destroy({
                 where: {
                     studentId: ids.map(id => id.studentId),
                 },
                 transaction: t,
-            })).
-            then(() => tables.Student.destroy({
+            }))
+            .then(() => tables.Student.destroy({
                 where: {
                     studentAwardId: opt.dbTableItemId,
                 },
                 transaction: t,
-            })).
-            then(() => tables.StudentAwardI18n.destroy({
+            }))
+            .then(() => tables.StudentAwardI18n.destroy({
                 where: {
                     studentAwardId: opt.dbTableItemId,
                 },
                 transaction: t,
-            })).
-            then(() => tables.StudentAward.destroy({
+            }))
+            .then(() => tables.StudentAward.destroy({
                 where: {
                     studentAwardId: opt.dbTableItemId,
                 },
                 transaction: t,
-            }))).
-            then(() => ({message: 'success'})).
-            catch((err) => {
+            })))
+            .then(() => ({message: 'success'}))
+            .catch((err) => {
                 throw err;
             });
         }
@@ -83,33 +83,33 @@ module.exports = (opt) => {
                     technologyTransferId: opt.dbTableItemId,
                 },
                 transaction: t,
-            }).
-            then(ids => tables.TechnologyTransferPatentI18n.destroy({
+            })
+            .then(ids => tables.TechnologyTransferPatentI18n.destroy({
                 where: {
                     technologyTransferPatentId: ids.map(id => id.technologyTransferPatentId),
                 },
                 transaction: t,
-            })).
-            then(() => tables.TechnologyTransferPatent.destroy({
+            }))
+            .then(() => tables.TechnologyTransferPatent.destroy({
                 where: {
                     technologyTransferId: opt.dbTableItemId,
                 },
                 transaction: t,
-            })).
-            then(() => tables.TechnologyTransferI18n.destroy({
+            }))
+            .then(() => tables.TechnologyTransferI18n.destroy({
                 where: {
                     technologyTransferId: opt.dbTableItemId,
                 },
                 transaction: t,
-            })).
-            then(() => tables.TechnologyTransfer.destroy({
+            }))
+            .then(() => tables.TechnologyTransfer.destroy({
                 where: {
                     technologyTransferId: opt.dbTableItemId,
                 },
                 transaction: t,
-            }))).
-            then(() => ({message: 'success'})).
-            catch((err) => {
+            })))
+            .then(() => ({message: 'success'}))
+            .catch((err) => {
                 throw err;
             });
         }
@@ -121,9 +121,9 @@ module.exports = (opt) => {
                     profileId: opt.profileId,
                     type: opt.type,
                 },
-            }).
-            then(() => ({message: 'success'})).
-            catch((err) => {
+            })
+            .then(() => ({message: 'success'}))
+            .catch((err) => {
                 throw err;
             });
         }
@@ -138,9 +138,9 @@ module.exports = (opt) => {
                 [`${opt.dbTable}Id`]: opt.dbTableItemId,
             },
             transaction: t,
-        }))).
-        then(() => ({message: 'success'})).
-        catch((err) => {
+        })))
+        .then(() => ({message: 'success'}))
+        .catch((err) => {
             throw err;
         });
     }

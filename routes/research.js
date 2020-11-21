@@ -21,27 +21,27 @@ const router = express.Router({
  * Resolve URL `/research`.
  */
 
-router.
-route([
+router
+.route([
     '/',
     '/index',
-]).
-get(staticHtml('research/index'));
+])
+.get(staticHtml('research/index'));
 
 /**
  * Resolve URL `/research/lab`.
  */
 
-router.
-route('/lab').
-get(staticHtml('research/lab'));
+router
+.route('/lab')
+.get(staticHtml('research/lab'));
 
 /**
  * Resolve URL `/research/publication`.
  */
 
-router.
-route('/publication').
-get(staticHtml('research/publication'));
+router
+.route('/publication')
+.get(staticHtml('research/publication'));
 
 module.exports = router;

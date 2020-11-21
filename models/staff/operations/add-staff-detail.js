@@ -73,9 +73,9 @@ module.exports = (opt) => {
                     },
                 ],
             },
-        ).
-        then(() => ({message: 'success'})).
-        catch((err) => {
+        )
+        .then(() => ({message: 'success'}))
+        .catch((err) => {
             throw err;
         });
     }

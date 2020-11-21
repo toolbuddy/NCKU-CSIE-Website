@@ -23,8 +23,8 @@ const router = express.Router({
  * Resolve URL `/static/css`.
  */
 
-router.
-use('/css', express.static(
+router
+.use('/css', express.static(
     path.join(projectRoot, '/static/dist/css'),
     {
         extensions: ['css'],
@@ -39,8 +39,8 @@ use('/css', express.static(
  * Resolve URL `/static/js`.
  */
 
-router.
-use('/js', express.static(
+router
+.use('/js', express.static(
     path.join(projectRoot, '/static/dist/js'),
     {
         extensions: ['js'],
@@ -55,8 +55,8 @@ use('/js', express.static(
  * Resolve URL `/static/image`.
  */
 
-router.
-use('/image', express.static(
+router
+.use('/image', express.static(
     path.join(projectRoot, '/static/src/image'),
     {
         extensions: [

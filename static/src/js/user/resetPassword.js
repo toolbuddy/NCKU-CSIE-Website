@@ -80,12 +80,12 @@ try {
                 rej(errorMessage);
             else
                 res();
-        }).
-        then(() => {
+        })
+        .then(() => {
             classRemove(errorDOM, 'form__error--show');
             document.getElementById('form').submit();
-        }).
-        catch((message) => {
+        })
+        .catch((message) => {
             classAdd(errorDOM, 'form__error--show');
             errorDOM.innerText = message;
         });

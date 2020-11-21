@@ -32,8 +32,8 @@ module.exports = (account) => {
             where: {
                 account,
             },
-        }).
-        then((data) => {
+        })
+        .then((data) => {
             if (!data) {
                 const error = new Error('User not found');
                 error.status = 404;

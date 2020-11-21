@@ -29,28 +29,28 @@ const router = express.Router({
  * Resolve URL `/announcement`.
  */
 
-router.
-route([
+router
+.route([
     '/',
     '/index',
-]).
-get(staticHtml('announcement/index'));
+])
+.get(staticHtml('announcement/index'));
 
 /**
  * Resolve URL `/announcement/activity`.
  */
 
-router.
-route('/activity').
-get(staticHtml('announcement/activity'));
+router
+.route('/activity')
+.get(staticHtml('announcement/activity'));
 
 /**
  * Resolve URL `/announcement/all`.
  */
 
-router.
-route('/all').
-get(async ({}, res, next) => {
+router
+.route('/all')
+.get(async ({}, res, next) => {
     try {
         res.locals.UTILS.announcement = {
             tagUtils,
@@ -76,17 +76,17 @@ get(async ({}, res, next) => {
  * Resolve URL `/announcement/recruitment`.
  */
 
-router.
-route('/recruitment').
-get(staticHtml('announcement/recruitment'));
+router
+.route('/recruitment')
+.get(staticHtml('announcement/recruitment'));
 
 /**
  * Resolve URL `/announcement/[id]`.
  */
 
-router.
-route('/:announcementId').
-get(async (req, res, next) => {
+router
+.route('/:announcementId')
+.get(async (req, res, next) => {
     try {
         const data = await getAnnouncement({
             announcementId: Number(req.params.announcementId),
@@ -126,9 +126,9 @@ get(async (req, res, next) => {
  * Resolve URL `/announcement/[id]/file/[fileId]`.
  */
 
-router.
-route('/:announcementId/file/:fileId').
-get(async (req, res, next) => {
+router
+.route('/:announcementId/file/:fileId')
+.get(async (req, res, next) => {
     try {
         const file = await getFile(Number(req.params.fileId));
         res.set('Content-Type', 'application/octet-stream');

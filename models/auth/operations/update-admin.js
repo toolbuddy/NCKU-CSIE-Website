@@ -26,9 +26,9 @@ module.exports = (opt) => {
         where: {
             userId: opt.userId,
         },
-    }).
-    then(() => ({message: 'success'})).
-    catch((err) => {
+    })
+    .then(() => ({message: 'success'}))
+    .catch((err) => {
         err.status = 500;
         throw err;
     });

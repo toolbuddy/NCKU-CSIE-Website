@@ -72,18 +72,18 @@ router.use(allowUserOnly);
  * Resolve URL `/user`.
  */
 
-router.
-route('/').
-get(staticHtml('user/index'));
+router
+.route('/')
+.get(staticHtml('user/index'));
 
 /**
  * Resolve URL `/user/id`.
  * For frontend to get user's session data.
  */
 
-router.
-route('/id').
-get((req, res) => {
+router
+.route('/id')
+.get((req, res) => {
     res.json({
         role: req.session.user.role,
         roleId: req.session.user.roleId,
@@ -95,9 +95,9 @@ get((req, res) => {
  * For frontend to render toolbar.
  */
 
-router.
-route('/miniProfile').
-get(async (req, res, next) => {
+router
+.route('/miniProfile')
+.get(async (req, res, next) => {
     try {
         if (req.session.user.role === roleUtils.getIdByOption('faculty')) {
             res.json(await getFacultyMiniProfile({
@@ -127,9 +127,9 @@ get(async (req, res, next) => {
  * Redirect to correct profile page according to role.
  */
 
-router.
-route('/profile').
-get(noCache, (req, res) => {
+router
+.route('/profile')
+.get(noCache, (req, res) => {
     if (req.session.user.role === roleUtils.getIdByOption('faculty'))
         res.redirect('/user/faculty/profile');
     else if (req.session.user.role === roleUtils.getIdByOption('staff'))
@@ -143,9 +143,9 @@ get(noCache, (req, res) => {
  * Return teacher's profile detail records with its id.
  */
 
-router.
-route('/profileWithId').
-get(async (req, res, next) => {
+router
+.route('/profileWithId')
+.get(async (req, res, next) => {
     try {
         if (req.session.user.role === roleUtils.getIdByOption('faculty')) {
             res.json(await getFacultyDetailWithId({
@@ -170,9 +170,9 @@ get(async (req, res, next) => {
     }
 });
 
-router.
-route('/staff/staffWithId/:id').
-get(async (req, res, next) => {
+router
+.route('/staff/staffWithId/:id')
+.get(async (req, res, next) => {
     try {
         res.json(await getStaffDetailWithId({
             profileId: req.session.user.roleId,
@@ -189,9 +189,9 @@ get(async (req, res, next) => {
  * For teacher to manage his / her profile detail.
  */
 
-router.
-route('/faculty/profile').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/profile')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -224,8 +224,8 @@ get(noCache, async (req, res, next) => {
         else
             next(error);
     }
-}).
-post(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.post(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
@@ -241,8 +241,8 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-patch(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.patch(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
@@ -257,8 +257,8 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-put(upload.single('file'), async (req, res, next) => {
+})
+.put(upload.single('file'), async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
@@ -282,8 +282,8 @@ put(upload.single('file'), async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-delete(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.delete(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
@@ -305,9 +305,9 @@ delete(urlEncoded, jsonParser, async (req, res, next) => {
  * Resolve URL `/user/faculty/award`.
  */
 
-router.
-route('/faculty/award').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/award')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -339,9 +339,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/project`.
  */
 
-router.
-route('/faculty/project').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/project')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -377,9 +377,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/patent`.
  */
 
-router.
-route('/faculty/patent').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/patent')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -415,9 +415,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/conference`.
  */
 
-router.
-route('/faculty/conference').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/conference')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -449,9 +449,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/student-award`.
  */
 
-router.
-route('/faculty/student-award').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/student-award')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -487,9 +487,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/publication`.
  */
 
-router.
-route('/faculty/publication').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/publication')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -525,9 +525,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/faculty/technology-transfer`.
  */
 
-router.
-route('/faculty/technology-transfer').
-get(noCache, async (req, res, next) => {
+router
+.route('/faculty/technology-transfer')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
@@ -559,9 +559,9 @@ get(noCache, async (req, res, next) => {
  * Resolve URL `/user/staff/profile`
  */
 
-router.
-route('/staff/profile').
-get(noCache, async (req, res, next) => {
+router
+.route('/staff/profile')
+.get(noCache, async (req, res, next) => {
     try {
         const data = await getStaffDetailWithId({
             profileId: req.session.user.roleId,
@@ -587,8 +587,8 @@ get(noCache, async (req, res, next) => {
         else
             next(error);
     }
-}).
-post(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.post(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
@@ -604,8 +604,8 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-patch(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.patch(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
@@ -620,8 +620,8 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-put(upload.single('file'), async (req, res, next) => {
+})
+.put(upload.single('file'), async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
@@ -645,8 +645,8 @@ put(upload.single('file'), async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-delete(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.delete(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         if (
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
@@ -669,10 +669,10 @@ delete(urlEncoded, jsonParser, async (req, res, next) => {
  * For user to manage announcements.
  */
 
-router.
-route('/announcement').
-get(staticHtml('user/announcement/index')).
-post(upload.array('files'), async (req, res, next) => {
+router
+.route('/announcement')
+.get(staticHtml('user/announcement/index'))
+.post(upload.array('files'), async (req, res, next) => {
     try {
         req.body.announcementI18n.forEach((i18nData) => {
             i18nData.languageId = Number(i18nData.languageId);
@@ -694,8 +694,8 @@ post(upload.array('files'), async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-put(upload.array('addedFiles'), async (req, res, next) => {
+})
+.put(upload.array('addedFiles'), async (req, res, next) => {
     try {
         res.send(await updateAnnouncement({
             announcementId: Number(req.body.announcementId),
@@ -712,8 +712,8 @@ put(upload.array('addedFiles'), async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-patch(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.patch(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         res.send(await pinAnnouncement({
             announcementId: Number(req.body.announcementId),
@@ -723,14 +723,11 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-delete(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.delete(urlEncoded, jsonParser, async (req, res, next) => {
     try {
-        req.body.announcementIds.forEach((id) => {
-            id = Number(id);
-        });
         res.send(await deleteAnnouncements({
-            announcementIds: req.body.announcementIds,
+            announcementIds: req.body.announcementIds.map(id => Number(id)),
         }));
     }
     catch (error) {
@@ -742,17 +739,17 @@ delete(urlEncoded, jsonParser, async (req, res, next) => {
  * Resolve URL `/user/announcement/add`.
  */
 
-router.
-route('/announcement/add').
-get(staticHtml('user/announcement/add'));
+router
+.route('/announcement/add')
+.get(staticHtml('user/announcement/add'));
 
 /**
  * Resolve URL `/user/announcement/edit/[id]`.
  */
 
-router.
-route('/announcement/edit/:announcementId').
-get(async (req, res, next) => {
+router
+.route('/announcement/edit/:announcementId')
+.get(async (req, res, next) => {
     try {
         const data = await getAnnouncement({
             announcementId: Number(req.params.announcementId),
@@ -788,9 +785,9 @@ get(async (req, res, next) => {
  * Resolve URL `/user/resetPassword`.
  */
 
-router.
-route('/resetPassword').
-get(noCache, async (req, res, next) => {
+router
+.route('/resetPassword')
+.get(noCache, async (req, res, next) => {
     try {
         await new Promise((resolve, reject) => {
             res.render('user/resetPassword.pug', {
@@ -811,8 +808,8 @@ get(noCache, async (req, res, next) => {
         else
             next(error);
     }
-}).
-post(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.post(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         const user = await getAdminByAccount(req.session.user.account);
         if (!await bcrypt.compare(req.body.oldPassword, user.password)) {
@@ -853,8 +850,8 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
                         resolve();
                     }
                 });
-            }).
-            catch(next);
+            })
+            .catch(next);
         }
     }
 });

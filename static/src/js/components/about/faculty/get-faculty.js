@@ -36,15 +36,15 @@ export default class GetFaculty {
 
         this.DOM = {
             filter: {
-                department: Array.
-                from(opt.facultyDOM.querySelectorAll(filterQuerySelector('department'))).
-                map(node => ({
+                department: Array
+                .from(opt.facultyDOM.querySelectorAll(filterQuerySelector('department')))
+                .map(node => ({
                     node,
                     id: node.getAttribute('data-department-id'),
                 })),
-                researchGroup: Array.
-                from(opt.facultyDOM.querySelectorAll(filterQuerySelector('research-group'))).
-                map(node => ({
+                researchGroup: Array
+                .from(opt.facultyDOM.querySelectorAll(filterQuerySelector('research-group')))
+                .map(node => ({
                     node,
                     id: node.getAttribute('data-research-group-id'),
                 })),
@@ -175,21 +175,21 @@ export default class GetFaculty {
             if (!this.DOM.cards.hasChildNodes())
                 throw new Error('No data is rendered.');
 
-            this.state.DOM.show = Array.
-            from(this.DOM.cards.querySelectorAll('.cards > .cards__card')).
-            map((node) => {
+            this.state.DOM.show = Array
+            .from(this.DOM.cards.querySelectorAll('.cards > .cards__card'))
+            .map((node) => {
                 const department = [
-                    ...new Set(String(node.getAttribute('data-department-ids') || NaN).
-                    split(',').
-                    map(Number).
-                    filter(departmentUtils.isSupportedId, departmentUtils)),
+                    ...new Set(String(node.getAttribute('data-department-ids') || NaN)
+                    .split(',')
+                    .map(Number)
+                    .filter(departmentUtils.isSupportedId, departmentUtils)),
                 ];
 
                 const researchGroup = [
-                    ...new Set(String(node.getAttribute('data-research-group-ids') || NaN).
-                    split(',').
-                    map(Number).
-                    filter(researchGroupUtils.isSupportedId, researchGroupUtils)),
+                    ...new Set(String(node.getAttribute('data-research-group-ids') || NaN)
+                    .split(',')
+                    .map(Number)
+                    .filter(researchGroupUtils.isSupportedId, researchGroupUtils)),
                 ];
 
                 return {

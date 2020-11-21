@@ -31,28 +31,28 @@ const router = express.Router({
  * Resolve URL `/about`.
  */
 
-router.
-route([
+router
+.route([
     '/',
     '/index',
-]).
-get(staticHtml('about/index'));
+])
+.get(staticHtml('about/index'));
 
 /**
  * Resolve URL `/about/award`.
  */
 
-router.
-route('/award').
-get(staticHtml('about/award'));
+router
+.route('/award')
+.get(staticHtml('about/award'));
 
 /**
  * Resolve URL `/about/contact`.
  */
 
-router.
-route('/contact').
-get(
+router
+.route('/contact')
+.get(
     helmet.contentSecurityPolicy({
         directives: contentSecurityPolicy({
             styleSrc: ["'unsafe-inline'"],
@@ -68,25 +68,25 @@ get(
  * Resolve URL `/about/intro`.
  */
 
-router.
-route('/intro').
-get(staticHtml('about/intro'));
+router
+.route('/intro')
+.get(staticHtml('about/intro'));
 
 /**
  * Resolve URL `/about/faculty`.
  */
 
-router.
-route('/faculty').
-get(staticHtml('about/faculty'));
+router
+.route('/faculty')
+.get(staticHtml('about/faculty'));
 
 /**
  * Resolve URL `/about/faculty/[id]`.
  */
 
-router.
-route('/faculty/:profileId').
-get(async (req, res, next) => {
+router
+.route('/faculty/:profileId')
+.get(async (req, res, next) => {
     try {
         const data = await getFacultyDetail({
             profileId: Number(req.params.profileId),
@@ -123,8 +123,8 @@ get(async (req, res, next) => {
  * Resolve URL `/about/staff`.
  */
 
-router.
-route('/staff').
-get(staticHtml('about/staff'));
+router
+.route('/staff')
+.get(staticHtml('about/staff'));
 
 module.exports = router;

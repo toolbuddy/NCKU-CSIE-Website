@@ -8,7 +8,7 @@
  * - message
  */
 
-const { Announcement } = require('./associations.js');
+const {Announcement} = require('./associations.js');
 const ValidateUtils = require('../../common/utils/validate.js');
 
 module.exports = async (opt) => {
@@ -42,7 +42,7 @@ module.exports = async (opt) => {
         });
 
         // Return success message.
-        return { message: 'Announcement deleted.' };
+        return {message: 'Announcement deleted.'};
     }
     catch (error) {
         if (!error.status)

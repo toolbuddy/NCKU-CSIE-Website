@@ -24,9 +24,9 @@ const router = express.Router({
  * Resolve URL `/auth/login`.
  */
 
-router.
-route('/login').
-get(async (req, res, next) => {
+router
+.route('/login')
+.get(async (req, res, next) => {
     try {
         // If user is not login, go to login page
         if (!req.session.user) {
@@ -51,8 +51,8 @@ get(async (req, res, next) => {
     catch (error) {
         next(error);
     }
-}).
-post(urlEncoded, jsonParser, async (req, res, next) => {
+})
+.post(urlEncoded, jsonParser, async (req, res, next) => {
     try {
         req.session.user = await getAdminByAccount(req.body.account);
         if (!await bcrypt.compare(req.body.password, req.session.user.password)) {
@@ -78,8 +78,8 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
                         resolve();
                     }
                 });
-            }).
-            catch(next);
+            })
+            .catch(next);
         }
     }
 });
@@ -88,9 +88,9 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
  * Resolve URL `/auth/logout`.
  */
 
-router.
-route('/logout').
-get((req, res, next) => {
+router
+.route('/logout')
+.get((req, res, next) => {
     try {
         req.session.destroy((err) => {
             if (err) {
@@ -110,13 +110,13 @@ get((req, res, next) => {
  * Resolve URL `/auth/report`.
  */
 
-router.
-route('/report').
-all(({ }, { }, next) => {
+router
+.route('/report')
+.all(({ }, { }, next) => {
     console.error('Halmet caught error');
     next();
-}).
-post((req, res) => {
+})
+.post((req, res) => {
     console.error(req.body);
     res.sendStatus(204);
 });

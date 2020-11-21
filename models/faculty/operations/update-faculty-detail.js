@@ -129,8 +129,8 @@ module.exports = (opt) => {
                 languageId: i18nInfo.languageId,
             },
             transaction: t,
-        }))).
-        then(() => {
+        })))
+        .then(() => {
             if (Object.keys(opt.item).length > 0) {
                 return tables[dbTable].update(opt.item, {
                     where: {
@@ -139,9 +139,9 @@ module.exports = (opt) => {
                     transaction: t,
                 });
             }
-        })).
-        then(() => ({message: 'success'})).
-        catch((err) => {
+        }))
+        .then(() => ({message: 'success'}))
+        .catch((err) => {
             throw err;
         });
     }

@@ -20,7 +20,7 @@ const {
     File,
     Tag,
 } = require('./associations.js');
-const { announcement } = require('../../common/utils/connect.js');
+const {announcement} = require('../../common/utils/connect.js');
 const AnnouncementValidationConstraints = require('../constraints/put/announcement.js');
 const AnnouncementI18nValidationConstraints = require('../constraints/put/announcement-i18n.js');
 const AddedFileValidationConstraints = require('../constraints/put/addedFile.js');
@@ -94,46 +94,44 @@ module.exports = async (opt) => {
         });
 
         // Update announcement.
-        await announcement.transaction(t => Promise.all(announcementI18n.map(i18nObj =>
-            AnnouncementI18n.update(
-                i18nObj,
-                {
-                    where: {
-                        announcementId,
-                        languageId: i18nObj.languageId,
-                    },
-                    transaction: t,
-                }
-            ))).
-            then(() => Tag.destroy({
+        await announcement.transaction(t => Promise.all(announcementI18n.map(i18nObj => AnnouncementI18n.update(
+            i18nObj,
+            {
                 where: {
                     announcementId,
+                    languageId: i18nObj.languageId,
                 },
                 transaction: t,
-            })).
-            then(() => Tag.bulkCreate(tags.map(tag => ({
-                tagId: tag.tagId,
+            },
+        )))
+        .then(() => Tag.destroy({
+            where: {
                 announcementId,
-            })), {
-                transaction: t,
-            })).
-            then(() => File.destroy({
-                where: {
-                    fileId: deletedFiles.map(file => file.fileId),
-                },
-                transaction: t,
-            })).
-            then(() => File.bulkCreate(addedFiles.map(file => ({
-                name: file.name,
-                content: file.content,
-                announcementId,
-            })), {
-                transaction: t,
-            }))
-        );
+            },
+            transaction: t,
+        }))
+        .then(() => Tag.bulkCreate(tags.map(tag => ({
+            tagId: tag.tagId,
+            announcementId,
+        })), {
+            transaction: t,
+        }))
+        .then(() => File.destroy({
+            where: {
+                fileId: deletedFiles.map(file => file.fileId),
+            },
+            transaction: t,
+        }))
+        .then(() => File.bulkCreate(addedFiles.map(file => ({
+            name: file.name,
+            content: file.content,
+            announcementId,
+        })), {
+            transaction: t,
+        })));
 
         // Return success message.
-        return { message: 'Announcement updated.' };
+        return {message: 'Announcement updated.'};
     }
     catch (error) {
         if (!error.status)

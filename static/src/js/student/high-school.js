@@ -273,64 +273,64 @@ d3Data.lineChart.forEach((chart) => {
         0,
     ]);
 
-    const scaling = d3.line().x((d, i) => xScale(i + 1)).
-    y(d => yScale(d));
+    const scaling = d3.line().x((d, i) => xScale(i + 1))
+    .y(d => yScale(d));
 
     // Line chart
-    d3.select(`#${chart.selector}`).select('svg').
-    attr('preserveAspectRatio', 'xMinYMin meet').
-    attr('viewBox', `0 0 ${d3Data.plotAttribute.width + 2 * d3Data.plotAttribute.margin}
-    ${d3Data.plotAttribute.height + 2 * d3Data.plotAttribute.margin}`).
-    append('path').
-    attr('d', scaling(chart.data)).
-    attr('transform', `translate(-${d3Data.plotAttribute.margin}, -${d3Data.plotAttribute.margin})`);
+    d3.select(`#${chart.selector}`).select('svg')
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr('viewBox', `0 0 ${d3Data.plotAttribute.width + 2 * d3Data.plotAttribute.margin}
+    ${d3Data.plotAttribute.height + 2 * d3Data.plotAttribute.margin}`)
+    .append('path')
+    .attr('d', scaling(chart.data))
+    .attr('transform', `translate(-${d3Data.plotAttribute.margin}, -${d3Data.plotAttribute.margin})`);
 
     // Create x-axis
     const tickValuesXAxis = Array.from([...Array(chart.data.length).keys()].map(v => v + 1));
-    const xAxis = d3.axisBottom(xScale).tickSize(d3Data.plotAttribute.height * 0.8).
-    tickFormat(d => 105 + d - 1).
-    tickValues(tickValuesXAxis);
-    d3.select(`#${chart.selector}`).select('svg').
-    append('g').
-    attr('class', 'lineChart__axis').
-    attr('transform', `translate(-${d3Data.plotAttribute.margin}, -${d3Data.plotAttribute.margin})`).
-    call(xAxis);
+    const xAxis = d3.axisBottom(xScale).tickSize(d3Data.plotAttribute.height * 0.8)
+    .tickFormat(d => 105 + d - 1)
+    .tickValues(tickValuesXAxis);
+    d3.select(`#${chart.selector}`).select('svg')
+    .append('g')
+    .attr('class', 'lineChart__axis')
+    .attr('transform', `translate(-${d3Data.plotAttribute.margin}, -${d3Data.plotAttribute.margin})`)
+    .call(xAxis);
 
     // Create x-axis labels
-    d3.select(`#${chart.selector}`).select('svg').
-    append('text').
-    attr('y', d3Data.plotAttribute.height - 2 * d3Data.plotAttribute.margin).
-    attr('x', d3Data.plotAttribute.width).
-    attr('class', 'lineChart__axisLabel').
-    text(chart.label[WebLanguageUtils.currentLanguageId].xAxis);
+    d3.select(`#${chart.selector}`).select('svg')
+    .append('text')
+    .attr('y', d3Data.plotAttribute.height - 2 * d3Data.plotAttribute.margin)
+    .attr('x', d3Data.plotAttribute.width)
+    .attr('class', 'lineChart__axisLabel')
+    .text(chart.label[WebLanguageUtils.currentLanguageId].xAxis);
 
     // Create y-axis labels
-    d3.select(`#${chart.selector}`).select('svg').
-    append('text').
-    attr('y', 6).
-    attr('x', 2 * d3Data.plotAttribute.margin).
-    attr('dy', '.71rem').
-    attr('class', 'lineChart__axisLabel').
-    text(chart.label[WebLanguageUtils.currentLanguageId].yAxis);
+    d3.select(`#${chart.selector}`).select('svg')
+    .append('text')
+    .attr('y', 6)
+    .attr('x', 2 * d3Data.plotAttribute.margin)
+    .attr('dy', '.71rem')
+    .attr('class', 'lineChart__axisLabel')
+    .text(chart.label[WebLanguageUtils.currentLanguageId].yAxis);
 
     // Create data labels
-    d3.select(`#${chart.selector}`).select('svg').
-    selectAll('.text').
-    data(chart.data).
-    enter().
-    append('text').
-    attr('class', 'lineChart__label').
-    attr('x', (d, i) => xScale(i + 1)).
-    attr('y', d => yScale(d)).
-    attr('transform', `translate(-${d3Data.plotAttribute.margin}, ${d3Data.plotAttribute.margin - d3Data.plotAttribute.labelYTranslate})`).
-    text(d => d);
+    d3.select(`#${chart.selector}`).select('svg')
+    .selectAll('.text')
+    .data(chart.data)
+    .enter()
+    .append('text')
+    .attr('class', 'lineChart__label')
+    .attr('x', (d, i) => xScale(i + 1))
+    .attr('y', d => yScale(d))
+    .attr('transform', `translate(-${d3Data.plotAttribute.margin}, ${d3Data.plotAttribute.margin - d3Data.plotAttribute.labelYTranslate})`)
+    .text(d => d);
 
     // Create plot title
-    d3.select(`#${chart.selector}`).select('svg').
-    append('text').
-    attr('y', d3Data.plotAttribute.height - 2 * d3Data.plotAttribute.margin).
-    attr('x', d3Data.plotAttribute.width / 2 + 2 * d3Data.plotAttribute.margin).
-    attr('class', 'lineChart__title').
-    text(chart.label[WebLanguageUtils.currentLanguageId].title);
+    d3.select(`#${chart.selector}`).select('svg')
+    .append('text')
+    .attr('y', d3Data.plotAttribute.height - 2 * d3Data.plotAttribute.margin)
+    .attr('x', d3Data.plotAttribute.width / 2 + 2 * d3Data.plotAttribute.margin)
+    .attr('class', 'lineChart__title')
+    .text(chart.label[WebLanguageUtils.currentLanguageId].title);
 });
 

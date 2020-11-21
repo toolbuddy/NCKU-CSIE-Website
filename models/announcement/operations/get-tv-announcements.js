@@ -76,7 +76,7 @@ module.exports = async (opt) => {
 
             // Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
             subQuery: false,
-        })
+        });
 
         // If no announcement returned, throw 404 error.
         if (!announcements.length) {

@@ -19,8 +19,8 @@ const router = express.Router({
  * Resolve URL `/developer`.
  */
 
-router.
-route('/').
-get(staticHtml('developer/index'));
+router
+.route('/')
+.get(staticHtml('developer/index'));
 
 module.exports = router;
