@@ -55,9 +55,10 @@
         areas:
           'briefing__title   briefing__title   briefing__title'
           'briefing__article briefing__article briefing__article'
-          'briefing__tags    briefing__tags    briefing__time'
+          'briefing__tags    briefing__tags    briefing__tags'
+          'briefing__time    briefing__time    briefing__time'
           '.                 .                 briefing__button';
-        rows: min-content font__px-to-rem( 48 ) 1fr auto;
+        rows: min-content font__px-to-rem( 48 ) 1fr auto auto;
         columns: 5fr 1fr 13fr;
       }
 
@@ -81,7 +82,7 @@
 
       // [ layout ]
       display: block;
-      align-self: end;
+      align-self: flex-start;
     }
 
     // element
