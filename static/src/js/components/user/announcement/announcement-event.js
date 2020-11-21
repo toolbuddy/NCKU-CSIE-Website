@@ -52,13 +52,17 @@ export default class AnnouncementEvent {
                 [LanguageUtils.getLanguageId('en-US')]: opt.editBlockDOM.querySelector('.edit-block__language > .language__button--en-US'),
                 [LanguageUtils.getLanguageId('zh-TW')]: opt.editBlockDOM.querySelector('.edit-block__language > .language__button--zh-TW'),
             },
-            editBlock: opt.editBlockDOM,
-            title: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__title > .title__input'),
-            content: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__content > .content__textarea'),
-            uploadFile: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__attachment > .attachment__input'),
-            submit: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__release > .release__check'),
-            filePreview: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__attachment > .attachment__file'),
-            errorMessage: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__release > .release__error-message'),
+            editBlock:    opt.editBlockDOM,
+            title:        opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__title > .title__input' ),
+            content:      opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__content > .content__textarea' ),
+            uploadFile:   opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__input' ),
+            submit:       opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__check' ),
+            filePreview:  opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__attachment > .attachment__file' ),
+            errorMessage: opt.editBlockDOM.querySelector( '.edit-block__announcement > .announcement__release > .release__error-message' ),
+            options:      {
+                now:     opt.optionNowDOM,
+                private: opt.optionPrivateDOM,
+            },
         };
     }
 
@@ -296,33 +300,34 @@ export default class AnnouncementEvent {
         new Promise((res) => {
             const formData = new FormData();
             this.DOM.submit.disabled = true;
-            formData.append('announcementId', this.config.id);
-            formData.append('image', null);
-            Array.from(LanguageUtils.supportedLanguageId).forEach((languageId) => {
-                formData.append(`announcementI18n[${languageId}][languageId]`, languageId);
-                formData.append(`announcementI18n[${languageId}][title]`, this.data[languageId].title);
-                formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content.replace(/&nbsp;/gi, ' ').replace(/\n/g, ''));
-            });
-            this.state.tags.forEach((tagId, i) => {
-                formData.append(`tags[${i}][tagId]`, tagId);
-            });
-            this.state.addFiles.forEach((file) => {
-                formData.append('addedFiles', file.content);
-            });
-            this.state.deleteFiles.forEach((fileId, i) => {
-                formData.append(`deletedFiles[${i}][fileId]`, fileId);
-            });
+            formData.append( 'isPublish', this.DOM.options.now.checked );
+            formData.append( 'announcementId', this.config.id );
+            formData.append( 'image', null );
+            Array.from( LanguageUtils.supportedLanguageId ).forEach( ( languageId ) => {
+                formData.append( `announcementI18n[${ languageId }][languageId]`, languageId );
+                formData.append( `announcementI18n[${ languageId }][title]`, this.data[ languageId ].title );
+                formData.append( `announcementI18n[${ languageId }][content]`, this.data[ languageId ].content.replace( /&nbsp;/gi, ' ' ).replace( /\n/g, '' ) );
+            } );
+            this.state.tags.forEach( ( tagId, i ) => {
+                formData.append( `tags[${ i }][tagId]`, tagId );
+            } );
+            this.state.addFiles.forEach( ( file ) => {
+                formData.append( 'addedFiles', file.content );
+            } );
+            this.state.deleteFiles.forEach( ( fileId, i ) => {
+                formData.append( `deletedFiles[${ i }][fileId]`, fileId );
+            } );
 
-            res(formData);
-        }).
-        then((formData) => {
-            fetch(`${host}/user/announcement`, {
-                method: 'PUT',
-                body: formData,
-            }).
-            then((res) => {
-                if (res.ok)
-                    location.href = `${host}/announcement/${this.config.id}?languageId=${this.config.languageId}`;
+            res( formData );
+        } )
+        .then( ( formData ) => {
+            fetch( `${ host }/user/announcement`, {
+                method:   'PUT',
+                body:   formData,
+            } )
+            .then( ( res ) => {
+                if ( res.ok )
+                    location.href = `${ host }/announcement/${ this.config.id }?languageId=${ this.config.languageId }`;
                 else
                     this.DOM.submit.disabled = false;
             });

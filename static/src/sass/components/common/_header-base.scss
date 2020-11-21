@@ -37,7 +37,7 @@
     // [ position ]
     // This style is set to put `.header__menu` on the right of screen.
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: font__px-to-rem( 0 );
 
     // [ layout ]
@@ -167,7 +167,7 @@
       position: fixed;
       top: 0;
       right: -2 * $item-width;
-      z-index: 2;
+      z-index: 3;
 
       // [ layout ]
       overflow-y: auto;
@@ -382,7 +382,7 @@
             // [ position ]
             // This style is set to put `.item__link` above `.item__switch`.
             position: relative;
-            z-index: 5;
+            z-index: 6;
 
             // [ layout ]
             display: inline-block;
@@ -422,7 +422,7 @@
             text-align: right;
             left: 0;
             top: 0;
-            z-index: 4;
+            z-index: 5;
 
             // [ layout ]
             display: block;
@@ -616,7 +616,7 @@
           text-align: right;
           left: 0;
           top: 0;
-          z-index: 0;
+          z-index: 1;
 
           // [ layout ]
           display: inline-block;
@@ -778,7 +778,7 @@
           // [ position ]
           position: relative;
           top: 50%;
-          z-index: 0;
+          z-index: 1;
 
           // [ layout ]
           display: inline-block;
@@ -799,7 +799,7 @@
           // [ position ]
           position: relative;
           top: 0;
-          z-index: 0;
+          z-index: 1;
 
           // [ layout ]
           display: inline-block;
@@ -827,7 +827,7 @@
           text-align: right;
           left: 0;
           top: 0;
-          z-index: 0;
+          z-index: 1;
 
           // [ layout ]
           display: inline-block;

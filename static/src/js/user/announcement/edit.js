@@ -46,12 +46,14 @@ try {
     else
         id = id[1];
 
-    const announcementEvent = new AnnouncementEvent({
-        id: Number(id),
-        languageId: WebLanguageUtils.currentLanguageId,
-        editBlockDOM: document.getElementById('edit-block'),
-        method: 'edit',
-    });
+    const announcementEvent = new AnnouncementEvent( {
+        id:               Number( id ),
+        languageId:       WebLanguageUtils.currentLanguageId,
+        editBlockDOM:     document.getElementById( 'edit-block' ),
+        optionPrivateDOM: document.getElementById( 'private__input' ),
+        optionNowDOM:     document.getElementById( 'now__input' ),
+        method:           'edit',
+    } );
     announcementEvent.exec();
 }
 catch (err) {

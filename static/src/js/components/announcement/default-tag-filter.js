@@ -56,13 +56,13 @@ export default class DefaultTagFilter {
         });
 
         this.config = {
-            amount: opt.amount,
-            from: opt.from,
-            to: opt.to,
-            page: opt.page,
-            visiblePageNum: opt.visiblePageNum,
-            animationDelayTime: 500,
-            scrollPx: 5,
+            amount:             opt.amount,
+            from:               opt.from,
+            to:                 opt.to,
+            page:               opt.page,
+            visiblePageNum:     opt.visiblePageNum,
+            animationDelayTime: 50,
+            scrollPx:           8,
         };
 
         this.tagId = {
@@ -245,10 +245,16 @@ export default class DefaultTagFilter {
          * Render `.filter__tags.tags > .tags__tag`.
          */
 
-        this.DOM.filter.tags.forEach((tagObj) => {
-            if (tagObj.id === tagUtils.tagAllId ||
-                (this.tagId.default.length === 1 && this.tagId.default[0] === tagObj.id) ||
-                this.state.tags.indexOf(tagObj.id) >= 0
+        this.DOM.filter.tags.forEach( ( tagObj ) => {
+            if ( tagObj.id === tagUtils.tagAllId ) {
+                if ( this.state.tags.length === 0 )
+                    classAdd( tagObj.node, 'tags__tag--active' );
+
+                else
+                    classRemove( tagObj.node, 'tags__tag--active' );
+            }
+            else if ( ( this.tagId.default.length === 1 && this.tagId.default[ 0 ] === tagObj.id ) ||
+                    this.state.tags.indexOf( tagObj.id ) >= 0
             )
                 classAdd(tagObj.node, 'tags__tag--active');
             else

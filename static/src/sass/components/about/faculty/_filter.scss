@@ -82,7 +82,8 @@
         // [ interaction ]
         &:hover {
           // [ skin ]
-          background-color: lighten( #f67057, 10% );
+          background-color: #eff3f9;
+          color: #f67057;
         }
 
         // [ RWD: $small ]
@@ -95,6 +96,13 @@
         @media screen and ( min-width: $large ) {
           // [ layout ]
           min-width: 90 / 4 * 1%;
+
+          // [ interaction ]
+          &:hover {
+            // [ skin ]
+            background-color: lighten( #f67057, 10% );
+            color: white;
+          }
         }
 
         // modifier
@@ -133,7 +141,8 @@
         // [ interaction ]
         &:hover {
           // [ skin ]
-          background-color: lighten( #8caae2, 10% );
+          background-color: #eff3f9;
+          color: #8caae2;
         }
 
         // [ RWD: $small ]
@@ -147,6 +156,13 @@
         @media screen and ( min-width: $large ) {
           // [ layout ]
           min-width: $large / 5;
+
+          // [ interaction ]
+          &:hover {
+            // [ skin ]
+            background-color: lighten( #8caae2, 10% );
+            color: white;
+          }
         }
 
         // modifier
