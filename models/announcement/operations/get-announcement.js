@@ -1,11 +1,11 @@
 /**
- * A function for getting a specific announcement in specific languages by the id of the announcement.
+ * A function to get a specific announcement in specific languages by its id.
  * Everytime someone successfully get an announcement, its views will increased by 1.
  *
  * @async
- * @param {number} [language = defaultValue.language] - Language option of the announcements.
- * @param {number} [announcementId]                   - Id of the requested announcement.
- * @returns {object}                                  - Related information of the requested announcement, including:
+ * @param {number} languageId     - Language option of the announcements.
+ * @param {number} announcementId - Id of the requested announcement.
+ * @returns {object} Related information of the requested announcement, including:
  * - id
  * - title
  * - content
@@ -16,7 +16,7 @@
  * - views
  * - ispinned
  * - files
- * - tags.
+ * - tag ids
  */
 
 const {
@@ -30,23 +30,26 @@ const ValidateUtils = require('../../common/utils/validate.js');
 
 module.exports = async (opt) => {
     try {
+        // Get parameters.
         const {
-            language = null,
+            languageId = null,
             announcementId = null,
         } = opt || {};
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
-            const error = new Error('Invalid language id');
+        // Check if parameters meet constraints. If not, throw 400 error.
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
+            const error = new Error('Invalid language id.');
             error.status = 400;
             throw error;
         }
         if (!ValidateUtils.isPositiveInteger(announcementId)) {
-            const error = new Error('Invalid announcement id');
+            const error = new Error('Invalid announcement id.');
             error.status = 400;
             throw error;
         }
 
-        const data = await Announcement.findOne({
+        // Get an announcement's detail with specific id and language.
+        const announcement = await Announcement.findOne({
             attributes: [
                 'announcementId',
                 'author',
@@ -68,7 +71,7 @@ module.exports = async (opt) => {
                         'content',
                     ],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
                 {
@@ -79,23 +82,25 @@ module.exports = async (opt) => {
             ],
         });
 
-        if (!data) {
-            const error = new Error('Announcement not found');
+        // If no announcement returned, throw 404 error.
+        if (!announcement) {
+            const error = new Error('Announcement not found.');
             error.status = 404;
             throw error;
         }
 
+        // If successfully get the announcement, increase its views
         await Announcement.update({
-            views: data.views + 1,
+            views: announcement.views + 1,
         }, {
             where: {
                 announcementId,
             },
         });
 
-        // Must find files after got announcement, instead of put it in include.
-        // Because an announcement may not contain any file, if put this in include,
-        // the result will be null.
+        // Get files owned by this announcement.
+        // This must be done after we got announcement, because an announcement may not contain any file.
+        // In such case, if we put this query inside above one's `include`, the result might be null.
         const files = await File.findAll({
             attributes: [
                 'fileId',
@@ -106,17 +111,18 @@ module.exports = async (opt) => {
             },
         });
 
+        // Return everything related to this announcement in flatten format.
         return {
-            announcementId: data.announcementId,
-            author: data.author,
-            publishTime: data.publishTime,
-            updateTime: data.updateTime,
-            views: data.views,
-            isPinned: data.isPinned,
-            image: data.image,
-            title: data.announcementI18n[0].title,
-            content: data.announcementI18n[0].content,
-            tags: data.tags.map(tag => tag.tagId),
+            announcementId: announcement.announcementId,
+            author: announcement.author,
+            publishTime: announcement.publishTime,
+            updateTime: announcement.updateTime,
+            views: announcement.views,
+            isPinned: announcement.isPinned,
+            image: announcement.image,
+            title: announcement.announcementI18n[0].title,
+            content: announcement.announcementI18n[0].content,
+            tags: announcement.tags.map(tag => tag.tagId),
             files,
         };
     }

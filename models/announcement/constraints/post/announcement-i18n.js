@@ -1,7 +1,7 @@
 const LanguageUtils = require('../../../common/utils/language.js');
 
 const AnnouncementI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: true,
         type: {
             type: LanguageUtils.isSupportedLanguageId,

@@ -2,7 +2,7 @@
  * A function for getting a specific teacher's profile in detail in specific languages by the profile id.
  *
  * @async
- * @param {number} [language = defaultValue.language] - Language option of the profile.
+ * @param {number} [languageId = defaultValue.languageId] - Language option of the profile.
  * @param {number} [profileId]                        - Id of the requested profile.
  * @returns {object}                                  - Related information of the requested profile, including:
  * - award
@@ -64,11 +64,11 @@ module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
-            language = null,
+            languageId = null,
             profileId = null,
         } = opt;
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
             const error = new Error('Invalid language id');
             error.status = 400;
             throw error;
@@ -107,7 +107,7 @@ module.exports = async (opt) => {
                         as: 'awardI18n',
                         attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -126,7 +126,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -156,7 +156,7 @@ module.exports = async (opt) => {
                             'school',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -179,7 +179,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -205,7 +205,7 @@ module.exports = async (opt) => {
                             'patentOwner',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -233,7 +233,7 @@ module.exports = async (opt) => {
                     'officeAddress',
                 ],
                 where: {
-                    language,
+                    languageId,
                     profileId,
                 },
             }),
@@ -255,7 +255,7 @@ module.exports = async (opt) => {
                             'support',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -280,7 +280,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -302,7 +302,7 @@ module.exports = async (opt) => {
                         as: 'specialtyI18n',
                         attributes: ['specialty'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -323,7 +323,7 @@ module.exports = async (opt) => {
                                 as: 'studentI18n',
                                 attributes: ['name'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
@@ -333,7 +333,7 @@ module.exports = async (opt) => {
                         as: 'studentAwardI18n',
                         attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -356,7 +356,7 @@ module.exports = async (opt) => {
                                 as: 'technologyTransferPatentI18n',
                                 attributes: ['patent'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
@@ -370,7 +370,7 @@ module.exports = async (opt) => {
                             'technology',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -389,7 +389,7 @@ module.exports = async (opt) => {
                         as: 'titleI18n',
                         attributes: ['title'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -419,12 +419,12 @@ module.exports = async (opt) => {
             })),
             department: departments.map(department => departmentUtils.getValueById({
                 id: department.type,
-                languageId: language,
+                languageId,
             })),
             education: educations.map(education => ({
                 degree: degreeUtils.getValueById({
                     id: education.degree,
-                    language,
+                    languageId,
                 }),
                 from: education.from,
                 major: education.educationI18n[0].major,
@@ -459,7 +459,7 @@ module.exports = async (opt) => {
                 name: profileI18n.name,
                 nation: nationUtils.getValueById({
                     id: profile.nation,
-                    language,
+                    languageId,
                 }),
                 officeAddress: profileI18n.officeAddress,
                 officeTel: profile.officeTel,
@@ -485,7 +485,7 @@ module.exports = async (opt) => {
             })),
             researchGroup: researchGroups.map(researchGroup => researchGroupUtils.getValueById({
                 type: researchGroup.type,
-                languageId: language,
+                languageId,
             })),
             specialty: specialtys.map(specialty => specialty.specialtyI18n[0].specialty),
             studentAward: studentAwards.map(studentAward => ({
@@ -494,7 +494,7 @@ module.exports = async (opt) => {
                 student: studentAward.student.map(student => ({
                     degree: degreeUtils.getValueById({
                         id: student.degree,
-                        language,
+                        languageId,
                     }),
                     name: student.studentI18n[0].name,
                 })),

@@ -8,7 +8,7 @@ module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
-            language = null,
+            languageId = null,
             profileId = null,
         } = opt;
 
@@ -17,7 +17,7 @@ module.exports = async (opt) => {
          * Handle with 400 bad request.
          */
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
             const error = new Error('invalid language id');
             error.status = 400;
             throw error;
@@ -42,7 +42,7 @@ module.exports = async (opt) => {
                     as: 'profileI18n',
                     attributes: ['name'],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
             ],

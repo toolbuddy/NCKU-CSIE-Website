@@ -39,12 +39,12 @@ apis.get('/get-announcements-by-and-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getAnnouncementsByAndTags({
-            amount: Number(req.query.amount),
-            from: new Date(Number(req.query.from)),
-            language: Number(req.query.languageId),
-            page: Number(req.query.page),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            amount: Number(req.query.amount),
+            page: Number(req.query.page),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {
@@ -64,12 +64,12 @@ apis.get('/get-announcements-by-or-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getAnnouncementsByOrTags({
-            amount: Number(req.query.amount),
-            from: new Date(Number(req.query.from)),
-            language: Number(req.query.languageId),
-            page: Number(req.query.page),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            amount: Number(req.query.amount),
+            page: Number(req.query.page),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {
@@ -89,10 +89,10 @@ apis.get('/get-pinned-announcements-by-and-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getPinnedAnnouncementsByAndTags({
-            from: new Date(Number(req.query.from)),
-            language: Number(req.query.languageId),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {
@@ -112,10 +112,10 @@ apis.get('/get-pinned-announcements-by-or-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getPinnedAnnouncementsByOrTags({
-            from: new Date(Number(req.query.from)),
-            language: Number(req.query.languageId),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {
@@ -135,10 +135,10 @@ apis.get('/get-pages-by-and-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getPagesByAndTags({
-            amount: Number(req.query.amount),
-            from: new Date(Number(req.query.from)),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            amount: Number(req.query.amount),
         }));
     }
     catch (error) {
@@ -158,10 +158,10 @@ apis.get('/get-pages-by-or-tags', async (req, res, next) => {
         tags = tags.map(Number);
 
         res.json(await getPagesByOrTags({
-            amount: Number(req.query.amount),
-            from: new Date(Number(req.query.from)),
             tags,
+            from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
+            amount: Number(req.query.amount),
         }));
     }
     catch (error) {
@@ -183,7 +183,7 @@ apis.get('/get-hot-announcements', async (req, res, next) => {
         res.json(await getHotAnnouncements({
             amount: Number(req.query.amount),
             from: new Date(Number(req.query.from)),
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
             page: Number(req.query.page),
             tags,
             to: new Date(Number(req.query.to)),
@@ -207,7 +207,7 @@ apis.get('/get-tv-announcements', async (req, res, next) => {
 
         res.json(await getTvAnnouncements({
             amount: Number(req.query.amount),
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
             tags,
         }));
     }
@@ -224,7 +224,7 @@ apis.get('/:announcementId', async (req, res, next) => {
     try {
         res.json(await getAnnouncement({
             announcementId: Number(req.params.announcementId),
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {

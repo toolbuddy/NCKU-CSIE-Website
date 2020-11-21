@@ -38,10 +38,10 @@ module.exports = async (opt) => {
         opt = opt || {};
         const {
             profileId = null,
-            language = null,
+            languageId = null,
         } = opt;
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
             const error = new Error('invalid language id');
             error.status = 400;
             throw error;
@@ -83,7 +83,7 @@ module.exports = async (opt) => {
                         as: 'awardI18n',
                         attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -105,7 +105,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -136,7 +136,7 @@ module.exports = async (opt) => {
                             'school',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -160,7 +160,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -187,7 +187,7 @@ module.exports = async (opt) => {
                             'patentOwner',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -216,7 +216,7 @@ module.exports = async (opt) => {
                     'officeAddress',
                 ],
                 where: {
-                    language,
+                    languageId,
                     profileId,
                 },
             }),
@@ -239,7 +239,7 @@ module.exports = async (opt) => {
                             'support',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -265,7 +265,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -287,7 +287,7 @@ module.exports = async (opt) => {
                         as: 'specialtyI18n',
                         attributes: ['specialty'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -314,7 +314,7 @@ module.exports = async (opt) => {
                                 as: 'studentI18n',
                                 attributes: ['name'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
@@ -324,7 +324,7 @@ module.exports = async (opt) => {
                         as: 'studentAwardI18n',
                         attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -349,7 +349,7 @@ module.exports = async (opt) => {
                                 as: 'technologyTransferPatentI18n',
                                 attributes: ['patent'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
@@ -364,7 +364,7 @@ module.exports = async (opt) => {
                             'technology',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -387,7 +387,7 @@ module.exports = async (opt) => {
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],

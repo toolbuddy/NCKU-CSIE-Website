@@ -8,7 +8,7 @@ const StudentI18n = faculty.define('studentI18n', {
         allowNull: false,
         primaryKey: true,
     },
-    language: {
+    languageId: {
         type: Sequelize.TINYINT.UNSIGNED,
         allowNull: false,
         primaryKey: true,

@@ -8,7 +8,7 @@ const ExperienceI18n = faculty.define('experienceI18n', {
         allowNull: false,
         primaryKey: true,
     },
-    language: {
+    languageId: {
         type: Sequelize.TINYINT.UNSIGNED,
         allowNull: false,
         primaryKey: true,

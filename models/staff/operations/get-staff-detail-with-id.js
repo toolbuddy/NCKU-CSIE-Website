@@ -14,10 +14,10 @@ module.exports = async (opt) => {
         opt = opt || {};
         const {
             profileId = null,
-            language = null,
+            languageId = null,
         } = opt;
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
             const error = new Error('invalid language id');
             error.status = 400;
             throw error;
@@ -44,7 +44,7 @@ module.exports = async (opt) => {
                         as: 'businessI18n',
                         attributes: ['business'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -68,7 +68,7 @@ module.exports = async (opt) => {
                             'officeAddress',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
@@ -84,7 +84,7 @@ module.exports = async (opt) => {
                         as: 'titleI18n',
                         attributes: ['title'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],

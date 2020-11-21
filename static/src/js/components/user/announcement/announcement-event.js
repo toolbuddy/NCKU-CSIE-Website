@@ -269,7 +269,7 @@ export default class AnnouncementEvent {
         formData.append('image', null);
         formData.append('author', this.config.author);
         Array.from(LanguageUtils.supportedLanguageId).forEach((languageId) => {
-            formData.append(`announcementI18n[${languageId}][language]`, languageId);
+            formData.append(`announcementI18n[${languageId}][languageId]`, languageId);
             formData.append(`announcementI18n[${languageId}][title]`, this.data[languageId].title);
             formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content.replace(/&nbsp;/gi, ' ').replace(/\n/g, ''));
         });
@@ -299,7 +299,7 @@ export default class AnnouncementEvent {
             formData.append('announcementId', this.config.id);
             formData.append('image', null);
             Array.from(LanguageUtils.supportedLanguageId).forEach((languageId) => {
-                formData.append(`announcementI18n[${languageId}][language]`, languageId);
+                formData.append(`announcementI18n[${languageId}][languageId]`, languageId);
                 formData.append(`announcementI18n[${languageId}][title]`, this.data[languageId].title);
                 formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content.replace(/&nbsp;/gi, ' ').replace(/\n/g, ''));
             });

@@ -102,13 +102,13 @@ get(async (req, res, next) => {
         if (req.session.user.role === roleUtils.getIdByOption('faculty')) {
             res.json(await getFacultyMiniProfile({
                 profileId: req.session.user.roleId,
-                language: Number(req.query.languageId),
+                languageId: Number(req.query.languageId),
             }));
         }
         else if (req.session.user.role === roleUtils.getIdByOption('staff')) {
             res.json(await getStaffMiniProfile({
                 profileId: req.session.user.roleId,
-                language: Number(req.query.languageId),
+                languageId: Number(req.query.languageId),
             }));
         }
         else {
@@ -150,13 +150,13 @@ get(async (req, res, next) => {
         if (req.session.user.role === roleUtils.getIdByOption('faculty')) {
             res.json(await getFacultyDetailWithId({
                 profileId: req.session.user.roleId,
-                language: req.query.languageId,
+                languageId: req.query.languageId,
             }));
         }
         else if (req.session.user.role === roleUtils.getIdByOption('staff')) {
             res.json(await getStaffDetailWithId({
                 profileId: req.session.user.roleId,
-                language: req.query.languageId,
+                languageId: req.query.languageId,
             }));
         }
         else {
@@ -176,7 +176,7 @@ get(async (req, res, next) => {
     try {
         res.json(await getStaffDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         }));
     }
     catch (error) {
@@ -195,7 +195,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.faculty = {
@@ -231,7 +231,7 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
             req.session.user.roleId !== req.body.data.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -248,7 +248,7 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
             req.session.user.roleId !== req.body.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -264,7 +264,7 @@ put(upload.single('file'), async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
             req.session.user.roleId !== Number(req.body.profileId)
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -289,7 +289,7 @@ delete(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('faculty') ||
             req.session.user.roleId !== req.body.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -311,7 +311,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         await new Promise((resolve, reject) => {
@@ -345,7 +345,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.faculty = {
@@ -383,7 +383,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.faculty = {
@@ -421,7 +421,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         await new Promise((resolve, reject) => {
@@ -455,7 +455,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.faculty = {
@@ -493,7 +493,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.faculty = {
@@ -531,7 +531,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getFacultyDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         await new Promise((resolve, reject) => {
@@ -565,7 +565,7 @@ get(noCache, async (req, res, next) => {
     try {
         const data = await getStaffDetailWithId({
             profileId: req.session.user.roleId,
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         await new Promise((resolve, reject) => {
@@ -594,7 +594,7 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
             req.session.user.roleId !== req.body.data.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -611,7 +611,7 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
             req.session.user.roleId !== req.body.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -627,7 +627,7 @@ put(upload.single('file'), async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
             req.session.user.roleId !== Number(req.body.profileId)
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -652,7 +652,7 @@ delete(urlEncoded, jsonParser, async (req, res, next) => {
             req.session.user.role !== roleUtils.getIdByOption('staff') ||
             req.session.user.roleId !== req.body.profileId
         ) {
-            const error = new Error("Try to modify profile that doesn't belong to this user.");
+            const error = new Error('Try to modify profile that doesn\'t belong to this user.');
             error.status = 401;
             throw error;
         }
@@ -674,11 +674,22 @@ route('/announcement').
 get(staticHtml('user/announcement/index')).
 post(upload.array('files'), async (req, res, next) => {
     try {
-        req.body.files = req.files.map(file => ({
-            name: file.originalname,
-            content: file.buffer,
+        req.body.announcementI18n.forEach((i18nData) => {
+            i18nData.languageId = Number(i18nData.languageId);
+        });
+        req.body.tags.forEach((tag) => {
+            tag.tagId = Number(tag.tagId);
+        });
+        res.send(await postAnnouncement({
+            author: Number(req.body.author),
+            image: req.body.image === 'null' ? null : req.body.image,
+            announcementI18n: req.body.announcementI18n,
+            tags: req.body.tags,
+            files: req.files.map(file => ({
+                name: file.originalname,
+                content: file.buffer,
+            })),
         }));
-        res.send(await postAnnouncement(req.body));
     }
     catch (error) {
         next(error);
@@ -686,11 +697,17 @@ post(upload.array('files'), async (req, res, next) => {
 }).
 put(upload.array('addedFiles'), async (req, res, next) => {
     try {
-        req.body.addedFiles = req.files.map(file => ({
-            name: file.originalname,
-            content: file.buffer,
+        res.send(await updateAnnouncement({
+            announcementId: Number(req.body.announcementId),
+            image: req.body.image === 'null' ? null : req.body.image,
+            announcementI18n: req.body.announcementI18n,
+            addedFiles: req.files.map(file => ({
+                name: file.originalname,
+                content: file.buffer,
+            })),
+            deletedFiles: req.body.deletedFiles,
+            tags: req.body.tags,
         }));
-        res.send(await updateAnnouncement(req.body));
     }
     catch (error) {
         next(error);
@@ -698,7 +715,10 @@ put(upload.array('addedFiles'), async (req, res, next) => {
 }).
 patch(urlEncoded, jsonParser, async (req, res, next) => {
     try {
-        res.send(await pinAnnouncement(req.body));
+        res.send(await pinAnnouncement({
+            announcementId: Number(req.body.announcementId),
+            isPinned: req.body.isPinned,
+        }));
     }
     catch (error) {
         next(error);
@@ -706,7 +726,12 @@ patch(urlEncoded, jsonParser, async (req, res, next) => {
 }).
 delete(urlEncoded, jsonParser, async (req, res, next) => {
     try {
-        res.send(await deleteAnnouncements(req.body));
+        req.body.announcementIds.forEach((id) => {
+            id = Number(id);
+        });
+        res.send(await deleteAnnouncements({
+            announcementIds: req.body.announcementIds,
+        }));
     }
     catch (error) {
         next(error);
@@ -731,7 +756,7 @@ get(async (req, res, next) => {
     try {
         const data = await getAnnouncement({
             announcementId: Number(req.params.announcementId),
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.announcement = {
@@ -807,7 +832,7 @@ post(urlEncoded, jsonParser, async (req, res, next) => {
             password: bcrypt.hashSync(req.body.newPassword, 10),
         });
 
-        res.send('密碼修改成功，請重新登入！<br>本頁面即將跳轉...<script>setTimeout(()=>{ window.location = window.location.origin + "/auth/logout"; }, 3000)</script>');
+        res.send('密碼修改成功，請重新登入！<br>本頁面即將跳轉...<script>setTimeout(()=>{ window.location = window.location.origin + \'/auth/logout\'; }, 3000)</script>');
     }
     catch (error) {
         if (error.status === 500)

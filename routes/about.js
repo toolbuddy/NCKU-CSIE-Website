@@ -90,7 +90,7 @@ get(async (req, res, next) => {
     try {
         const data = await getFacultyDetail({
             profileId: Number(req.params.profileId),
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
         });
 
         res.locals.UTILS.faculty = {

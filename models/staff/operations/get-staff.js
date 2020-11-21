@@ -9,14 +9,14 @@ const {
     TitleI18n,
 } = require('./associations.js');
 
-module.exports = async (language = null) => {
+module.exports = async (languageId = null) => {
     try {
         /**
          * Invalid query parameter.
          * Handle with 400 bad request.
          */
 
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
             const error = new Error('invalid language id');
             error.status = 400;
             throw error;
@@ -43,7 +43,7 @@ module.exports = async (language = null) => {
                             as: 'businessI18n',
                             attributes: ['business'],
                             where: {
-                                language,
+                                languageId,
                             },
                         },
                     ],
@@ -56,7 +56,7 @@ module.exports = async (language = null) => {
                         'officeAddress',
                     ],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
                 {
@@ -69,7 +69,7 @@ module.exports = async (language = null) => {
                             as: 'titleI18n',
                             attributes: ['title'],
                             where: {
-                                language,
+                                languageId,
                             },
                         },
                     ],

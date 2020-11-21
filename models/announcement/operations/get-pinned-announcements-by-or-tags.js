@@ -1,3 +1,20 @@
+/**
+ * A function to get pinned announcement briefings which containat least one of the given tags.
+ *
+ * @async
+ * @function
+ * @param {number[]} [tags = []] - Specify the announcements with the given tag ids.
+ * @param {date}     from        - Specify the earliest time of filter interval when announcements were post.
+ * @param {date}     to          - Specify the latest time of filter interval when announcements were post.
+ * @param {number}   languageId  - Language option of the announcements.
+ * @returns {object[]} Requested announcement briefings, including:
+ * - id
+ * - title
+ * - content
+ * - updateTime
+ * - tag ids
+ */
+
 const {Op} = require('sequelize');
 const {
     Announcement,
@@ -8,57 +25,42 @@ const LanguageUtils = require('../../common/utils/language.js');
 const ValidateUtils = require('../../common/utils/validate.js');
 const tagUtils = require('../utils/tag.js');
 
-/**
- * A function for getting all pinned announcements.
- *
- * @async
- * @param {string[]} [tags = []]                              - Specifying the pinned announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime]     - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                              announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]         - A string of the js Date object, specifying the latest time of filter interval when
- *                                                              announcements were post.
- * @param {number} [language = defaultValue.language]     - Language option of the announcements.
- * @returns {object[]}                                          Requested pinned announcements, including:
- * - id
- * - title
- * - content
- * - updateTime
- * - tags(id, name)
- *
- * Announcements which contain at least one of the specified tags are taken into account.
- */
-
 module.exports = async (opt) => {
     try {
+        // Get parameters.
         const {
             tags = [],
             from = null,
             to = null,
-            language = null,
+            languageId = null,
         } = opt || {};
 
+        // Check if parameters meet constraints. If not, throw 400 error.
         if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
-            const error = new Error('invalid tag id');
+            const error = new Error('Invalid tag id.');
             error.status = 400;
             throw error;
         }
         if (!ValidateUtils.isValidDate(new Date(from))) {
-            const error = new Error('invalid time - from');
+            const error = new Error('Invalid time - from.');
             error.status = 400;
             throw error;
         }
         if (!ValidateUtils.isValidDate(new Date(to))) {
-            const error = new Error('invalid time - to');
+            const error = new Error('Invalid time - to.');
             error.status = 400;
             throw error;
         }
-        if (!LanguageUtils.isSupportedLanguageId(language)) {
-            const error = new Error('invalid language id');
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
+            const error = new Error('Invalid language id.');
             error.status = 400;
             throw error;
         }
 
-        let data = await Announcement.findAll({
+        // Get announcement briefings which contain one of the given tags and are pinned.
+        // In this step, we can only get id, updateTime, title and content, but no tag list.
+        // Because in this step, the tag list is limited to the content of given filter tags.
+        const announcements = await Announcement.findAll({
             attributes: [
                 'announcementId',
                 'updateTime',
@@ -74,6 +76,17 @@ module.exports = async (opt) => {
                 isPinned: true,
             },
             include: [
+                {
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
+                    attributes: [
+                        'title',
+                        'content',
+                    ],
+                    where: {
+                        languageId,
+                    },
+                },
                 {
                     model: Tag,
                     as: 'tags',
@@ -93,59 +106,49 @@ module.exports = async (opt) => {
             ],
         });
 
-        if (!data.length) {
-            const error = new Error('no result');
+        // If no announcement returned, throw 404 error.
+        if (!announcements.length) {
+            const error = new Error('No result.');
             error.status = 404;
             throw error;
         }
 
-        data = await Announcement.findAll({
-            attributes: [
-                'announcementId',
-                'updateTime',
-            ],
+        // If any announcement returned, we can now get their tag list in complete, according to their id.
+        const tagIds = await Announcement.findAll({
+            attributes: ['announcementId'],
             where: {
-                announcementId: data.map(id => id.announcementId),
+                announcementId: announcements.map(announcement => announcement.announcementId),
             },
             include: [
-                {
-                    model: AnnouncementI18n,
-                    as: 'announcementI18n',
-                    attributes: [
-                        'title',
-                        'content',
-                    ],
-                    where: {
-                        language,
-                    },
-                },
                 {
                     model: Tag,
                     as: 'tags',
                     attributes: ['tagId'],
                 },
             ],
-            order: [
-                [
-                    'updateTime',
-                    'DESC',
-                ],
-            ],
+        }).
+
+        // After we get tag ids, we modify their data structure to let later access more convenient.
+        then((result) => {
+            const map = {};
+            result.forEach((item) => {
+                map[item.announcementId] = item.tags.map(tag => tag.tagId);
+            });
+            return map;
         });
 
-        return data.map(announcement => ({
+        // Return announcement briefings with the flatten format.
+        return announcements.map(announcement => ({
             announcementId: announcement.announcementId,
             updateTime: announcement.updateTime,
             title: announcement.announcementI18n[0].title,
             content: announcement.announcementI18n[0].content,
-            tags: announcement.tags.map(tag => tag.tagId),
+            tags: tagIds[announcement.announcementId],
         }));
     }
-    catch (err) {
-        if (err.status)
-            throw err;
-        const error = new Error();
-        error.status = 500;
+    catch (error) {
+        if (!error.status)
+            error.status = 500;
         throw error;
     }
 };

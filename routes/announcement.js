@@ -90,7 +90,7 @@ get(async (req, res, next) => {
     try {
         const data = await getAnnouncement({
             announcementId: Number(req.params.announcementId),
-            language: req.query.languageId,
+            languageId: req.query.languageId,
         });
 
         res.locals.UTILS.announcement = {

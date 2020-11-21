@@ -8,7 +8,7 @@ const EducationI18n = faculty.define('educationI18n', {
         allowNull: false,
         primaryKey: true,
     },
-    language: {
+    languageId: {
         type: Sequelize.TINYINT.UNSIGNED,
         allowNull: false,
         primaryKey: true,

@@ -111,7 +111,7 @@ module.exports = (opt) => {
                     error.status = 400;
                     throw error;
                 }
-                langArr.push(i18nData.language);
+                langArr.push(i18nData.languageId);
             }
             if (!equalArray(langArr.sort((a, b) => a - b), languageUtils.supportedLanguageId.sort((a, b) => a - b))) {
                 const error = new Error(`Invalid length of ${dbTable}I18n object`);
@@ -126,7 +126,7 @@ module.exports = (opt) => {
         return faculty.transaction(t => Promise.all(opt.i18n.map(i18nInfo => tables[`${dbTable}I18n`].update(i18nInfo, {
             where: {
                 [`${opt.dbTable}Id`]: opt.dbTableItemId,
-                language: i18nInfo.language,
+                languageId: i18nInfo.languageId,
             },
             transaction: t,
         }))).

@@ -50,7 +50,7 @@ apis.get('/lab', async (req, res, next) => {
 apis.get('/publication', async (req, res, next) => {
     try {
         res.json(await getPublications({
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
             from: Number(req.query.from),
             to: Number(req.query.to),
         }));
@@ -68,7 +68,7 @@ apis.get('/:profileId', async (req, res, next) => {
     try {
         res.json(await getFacultyDetail({
             profileId: Number(req.params.profileId),
-            language: Number(req.query.languageId),
+            languageId: Number(req.query.languageId),
         }));
     }
     catch (error) {
