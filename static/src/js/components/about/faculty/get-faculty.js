@@ -91,8 +91,6 @@ export default class GetFaculty {
          */
 
         this.eventLock = false;
-
-        return this;
     }
 
     acquireLock () {
@@ -123,17 +121,12 @@ export default class GetFaculty {
     }
 
     async fetchData () {
-        try {
-            const res = await fetch(this.queryApi);
+        const res = await fetch(this.queryApi);
 
-            if (!res.ok)
-                throw new Error('No faculty found');
+        if (!res.ok)
+            throw new Error('No faculty found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     renderLoading () {
@@ -156,52 +149,47 @@ export default class GetFaculty {
      */
 
     renderCard (data) {
-        try {
-            this.DOM.cards.innerHTML = cardHTML({
-                data,
-                LANG: {
-                    id: this.state.languageId,
-                    getLanguageId: WebLanguageUtils.getLanguageId,
+        this.DOM.cards.innerHTML = cardHTML({
+            data,
+            LANG: {
+                id: this.state.languageId,
+                getLanguageId: WebLanguageUtils.getLanguageId,
+            },
+            UTILS: {
+                url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
+                staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
+                faculty: {
+                    departmentUtils,
                 },
-                UTILS: {
-                    url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
-                    staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
-                    faculty: {
-                        departmentUtils,
-                    },
-                },
-            });
+            },
+        });
 
-            if (!this.DOM.cards.hasChildNodes())
-                throw new Error('No data is rendered.');
+        if (!this.DOM.cards.hasChildNodes())
+            throw new Error('No data is rendered.');
 
-            this.state.DOM.show = Array
-            .from(this.DOM.cards.querySelectorAll('.cards > .cards__card'))
-            .map((node) => {
-                const department = [
-                    ...new Set(String(node.getAttribute('data-department-ids') || NaN)
-                    .split(',')
-                    .map(Number)
-                    .filter(departmentUtils.isSupportedId, departmentUtils)),
-                ];
+        this.state.DOM.show = Array
+        .from(this.DOM.cards.querySelectorAll('.cards > .cards__card'))
+        .map((node) => {
+            const department = [
+                ...new Set(String(node.getAttribute('data-department-ids') || NaN)
+                .split(',')
+                .map(Number)
+                .filter(departmentUtils.isSupportedId, departmentUtils)),
+            ];
 
-                const researchGroup = [
-                    ...new Set(String(node.getAttribute('data-research-group-ids') || NaN)
-                    .split(',')
-                    .map(Number)
-                    .filter(researchGroupUtils.isSupportedId, researchGroupUtils)),
-                ];
+            const researchGroup = [
+                ...new Set(String(node.getAttribute('data-research-group-ids') || NaN)
+                .split(',')
+                .map(Number)
+                .filter(researchGroupUtils.isSupportedId, researchGroupUtils)),
+            ];
 
-                return {
-                    node,
-                    department,
-                    researchGroup,
-                };
-            });
-        }
-        catch (err) {
-            throw err;
-        }
+            return {
+                node,
+                department,
+                researchGroup,
+            };
+        });
     }
 
     async filterEvent ({which, filterObj}) {

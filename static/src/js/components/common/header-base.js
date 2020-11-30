@@ -104,14 +104,12 @@ export default class GetHeaderBase {
         this.subscribeLanguageEvent();
         this.subscribeScrollEvent();
         this.renderLogin();
-
-        return this;
     }
 
     subscribeMenuEvent () {
-        window.addEventListener('click', (event) => {
-            if (event.target !== this.DOM.menu &&
-                 !this.DOM.navigation.contains(event.target) &&
+        window.addEventListener('click', (e) => {
+            if (e.target !== this.DOM.menu &&
+                 !this.DOM.navigation.contains(e.target) &&
                  window.getComputedStyle(this.DOM.header).display !== 'none'
             ) {
                 this.DOM.allNavigations.forEach((navigationDOM) => {
@@ -141,9 +139,9 @@ export default class GetHeaderBase {
                     itemObj.dropdowns.forEach(dropdownDOM => classRemove(dropdownDOM, 'item__dropdown--open'));
                 }
                 else {
-                    this.DOM.item.forEach((itemObj) => {
-                        itemObj.switches.forEach(switchDOM => classRemove(switchDOM, 'item__switch--active'));
-                        itemObj.dropdowns.forEach(dropdownDOM => classRemove(dropdownDOM, 'item__dropdown--open'));
+                    this.DOM.item.forEach((item) => {
+                        item.switches.forEach(switchDOM => classRemove(switchDOM, 'item__switch--active'));
+                        item.dropdowns.forEach(dropdownDOM => classRemove(dropdownDOM, 'item__dropdown--open'));
                     });
                     itemObj.switches.forEach(switchDOM => classAdd(switchDOM, 'item__switch--active'));
                     itemObj.dropdowns.forEach(dropdownDOM => classAdd(dropdownDOM, 'item__dropdown--open'));
@@ -220,7 +218,7 @@ export default class GetHeaderBase {
         });
     }
 
-    async renderLogin () {
+    renderLogin () {
         try {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
@@ -285,32 +283,22 @@ export default class GetHeaderBase {
     }
 
     async fetchData (url, opt) {
-        try {
-            const res = await fetch(`${this.host}/${url}`, opt);
+        const res = await fetch(`${this.host}/${url}`, opt);
 
-            if (!res.ok)
-                throw new Error('Fetch data failed');
+        if (!res.ok)
+            throw new Error('Fetch data failed');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     async fetchMiniProfileData () {
-        try {
-            const res = await fetch(`${this.host}/user/miniProfile?languageId=${this.languageId}`, {
-                credentials: 'include',
-            });
+        const res = await fetch(`${this.host}/user/miniProfile?languageId=${this.languageId}`, {
+            credentials: 'include',
+        });
 
-            if (!res.ok)
-                throw new Error('No miniProfile found');
+        if (!res.ok)
+            throw new Error('No miniProfile found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 }

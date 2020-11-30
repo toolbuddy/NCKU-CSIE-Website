@@ -128,13 +128,21 @@ export default class DefaultDataManagement {
     }
 
     subscribePostCheckButton () {
-        this.DOM.post.checkButton.addEventListener('click', async (e) => {
+        this.DOM.post.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
-            const isValid = await this.dataValidation('post');
 
-            if (isValid) {
-                const data = await this.formatFormData('post');
+            new Promise((res, rej)=> {
+                const isValid = this.dataValidation('post');
                 e.target.disabled = true;
+
+                if( isValid )
+                    res()
+                else
+                    rej()
+            })
+            .then( async()=>{
+                const data = await this.formatFormData('post');
+
                 fetch(`${host}/user/faculty/profile`, {
                     method: 'POST',
                     headers: {
@@ -156,7 +164,10 @@ export default class DefaultDataManagement {
                     if (res.ok)
                         window.location.reload();
                 });
-            }
+            })
+            .catch(()=>{
+                e.target.disabled = false;
+            })
         });
     }
 
@@ -171,13 +182,20 @@ export default class DefaultDataManagement {
     }
 
     subscribePatchCheckButton () {
-        this.DOM.patch.checkButton.addEventListener('click', async (e) => {
+        this.DOM.patch.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
-            const isValid = await this.dataValidation('patch');
 
-            if (isValid) {
-                const {item, i18n} = await this.formatFormData('patch');
+            new Promise( (res, rej)=> {
+                const isValid = this.dataValidation('patch');
                 e.target.disabled = true;
+
+                if( isValid )
+                    res();
+                else
+                    rej();
+            } )
+            .then(async()=> {
+                const {item, i18n} = await this.formatFormData('patch');
 
                 fetch(`${host}/user/faculty/profile`, {
                     method: 'PATCH',
@@ -204,7 +222,10 @@ export default class DefaultDataManagement {
                     if (res.ok)
                         window.location.reload();
                 });
-            }
+            })
+            .catch(()=>{
+                e.target.disabled = false;
+            })
         });
     }
 
@@ -249,17 +270,12 @@ export default class DefaultDataManagement {
     }
 
     // eslint-disable-next-line
-    async fetchData ( languageId ) {
-        try {
-            const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
-            if (!res.ok)
-                throw new Error('No faculty found');
+    async fetchData (languageId) {
+        const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
+        if (!res.ok)
+            throw new Error('No faculty found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     setPatchFormValue (data) {
@@ -323,7 +339,7 @@ export default class DefaultDataManagement {
         return `${column}${language}${error}`;
     }
 
-    async dataValidation (method) {
+    dataValidation (method) {
         const isValid = new Promise((res) => {
             let errorMessage = '';
             Array.from(this.DOM[method].input).forEach((element) => {
@@ -362,7 +378,7 @@ export default class DefaultDataManagement {
         return isValid;
     }
 
-    async formatFormData (method) {
+    formatFormData (method) {
         const item = {};
         let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
 
@@ -392,7 +408,7 @@ export default class DefaultDataManagement {
             return ({item, i18n});
     }
 
-    async exec () {
+    exec () {
         this.renderLoading();
 
         fetch(`${host}/user/id`, {

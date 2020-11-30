@@ -87,7 +87,7 @@ export default class ProfileDataManagement {
         }));
     }
 
-    async subscribeTags () {
+    subscribeTags () {
         [
             this.department,
             this.researchGroup,
@@ -147,17 +147,12 @@ export default class ProfileDataManagement {
     }
 
     // eslint-disable-next-line
-    async fetchData ( languageId ) {
-        try {
-            const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
-            if (!res.ok)
-                throw new Error('No faculty found');
+    async fetchData (languageId) {
+        const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
+        if (!res.ok)
+            throw new Error('No faculty found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     subscribeUploadImageButton () {
@@ -213,13 +208,19 @@ export default class ProfileDataManagement {
 
     subscribePatchCheckButton () {
         Object.keys(this.modifier).forEach((columnName) => {
-            this.DOM[columnName].checkButton.addEventListener('click', async (e) => {
+            this.DOM[columnName].checkButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                const isValid = await this.dataValidation(columnName);
-
-                if (isValid) {
-                    const {item, i18n} = await this.formatFormData(columnName);
+                new Promise((res, rej) => {
+                    const isValid = this.dataValidation(columnName);
                     e.target.disabled = true;
+
+                    if (isValid)
+                        res();
+                    else
+                        rej();
+                })
+                .then(async () => {
+                    const {item, i18n} = await this.formatFormData(columnName);
                     fetch(`${host}/user/faculty/profile`, {
                         method: 'PATCH',
                         headers: {
@@ -238,7 +239,10 @@ export default class ProfileDataManagement {
                         this.hideForm();
                         e.target.disabled = false;
                     });
-                }
+                })
+                .catch(() => {
+                    e.target.disabled = false;
+                });
             });
         });
     }
@@ -304,7 +308,7 @@ export default class ProfileDataManagement {
         return `${column}${language}${error}`;
     }
 
-    async dataValidation (columnName) {
+    dataValidation (columnName) {
         const isValid = new Promise((res) => {
             let errorMessage = '';
             Array.from(this.DOM[columnName].input).forEach((element) => {
@@ -343,7 +347,7 @@ export default class ProfileDataManagement {
         return isValid;
     }
 
-    async formatFormData (method) {
+    formatFormData (method) {
         const item = {};
         let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
 
@@ -364,7 +368,7 @@ export default class ProfileDataManagement {
         return {item, i18n};
     }
 
-    async exec () {
+    exec () {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',

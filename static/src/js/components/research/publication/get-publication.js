@@ -54,8 +54,6 @@ export default class GetPublications {
         this.state = {
             languageId: opt.languageId,
         };
-
-        return this;
     }
 
     get queryApi () {
@@ -63,17 +61,12 @@ export default class GetPublications {
     }
 
     async fetchData () {
-        try {
-            const res = await fetch(this.queryApi);
+        const res = await fetch(this.queryApi);
 
-            if (!res.ok)
-                throw new Error('No publication found');
+        if (!res.ok)
+            throw new Error('No publication found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     renderLoading () {
@@ -112,31 +105,26 @@ export default class GetPublications {
      */
 
     renderCards (data) {
-        try {
-            this.DOM.cards.innerHTML = '';
-            data.sort((publication1, publication2) => publication2.issueYear - publication1.issueYear);
-            data.forEach((data) => {
-                try {
-                    this.DOM.cards.innerHTML += cardHTML({
-                        data,
-                        LANG: {
-                            id: this.state.languageId,
-                            getLanguageId: WebLanguageUtils.getLanguageId,
-                        },
-                        UTILS: {
-                            url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
-                            staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
-                        },
-                    });
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            });
-        }
-        catch (err) {
-            throw err;
-        }
+        this.DOM.cards.innerHTML = '';
+        data.sort((publication1, publication2) => publication2.issueYear - publication1.issueYear);
+        data.forEach((d) => {
+            try {
+                this.DOM.cards.innerHTML += cardHTML({
+                    d,
+                    LANG: {
+                        id: this.state.languageId,
+                        getLanguageId: WebLanguageUtils.getLanguageId,
+                    },
+                    UTILS: {
+                        url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
+                        staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
+                    },
+                });
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
     }
 
     async exec () {
