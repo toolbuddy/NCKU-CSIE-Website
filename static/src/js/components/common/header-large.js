@@ -72,8 +72,6 @@ export default class GetHeaderLarge {
         this.subscribeLanguageEvent();
         this.subscribeSearchEvent();
         this.subscribeScrollEvent();
-
-        return this;
     }
 
     subscribeLanguageEvent () {
@@ -114,7 +112,7 @@ export default class GetHeaderLarge {
         });
     }
 
-    async renderLogin () {
+    renderLogin () {
         try {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
@@ -178,33 +176,23 @@ export default class GetHeaderLarge {
     }
 
     async fetchData (url, opt) {
-        try {
-            const res = await fetch(`${this.host}/${url}`, opt);
+        const res = await fetch(`${this.host}/${url}`, opt);
 
-            if (!res.ok)
-                throw new Error('Fetch data failed');
+        if (!res.ok)
+            throw new Error('Fetch data failed');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     async fetchMiniProfileData () {
-        try {
-            const res = await fetch(`${this.host}/user/miniProfile?languageId=${this.languageId}`, {
-                credentials: 'include',
-            });
+        const res = await fetch(`${this.host}/user/miniProfile?languageId=${this.languageId}`, {
+            credentials: 'include',
+        });
 
-            if (!res.ok)
-                throw new Error('No miniProfile found');
+        if (!res.ok)
+            throw new Error('No miniProfile found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 }
 

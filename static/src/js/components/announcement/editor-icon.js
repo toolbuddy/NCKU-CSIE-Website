@@ -40,7 +40,7 @@ export default class EditorIcon {
         };
     }
 
-    async insertEditorDOM () {
+    insertEditorDOM () {
         this.DOM.editor.innerHTML += editorHTML({
             host,
             announcementId: this.config.announcementId,
@@ -67,7 +67,7 @@ export default class EditorIcon {
         });
     }
 
-    async sendDeleteRequest () {
+    sendDeleteRequest () {
         fetch(`${host}/user/announcement`, {
             method: 'DELETE',
             body: JSON.stringify({
@@ -77,17 +77,17 @@ export default class EditorIcon {
                 'content-type': 'application/json',
             },
         })
-        .then(async () => {
+        .then( () => {
             window.location.replace(`${host}/announcement/all?languageId=${this.config.languageId}`);
         });
     }
 
-    async exec () {
+    exec () {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
         })
-        .then(async res => res.json())
+        .then( res => res.json())
         .then(async (res) => {
             const userData = res;
             const userRole = userData.role;

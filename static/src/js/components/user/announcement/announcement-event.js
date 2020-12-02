@@ -71,27 +71,22 @@ export default class AnnouncementEvent {
     }
 
     async fetchData (languageId) {
-        try {
-            if (this.config.method === 'edit') {
-                const res = await fetch(this.queryApi(languageId));
+        if (this.config.method === 'edit') {
+            const res = await fetch(this.queryApi(languageId));
 
-                if (!res.ok)
-                    throw new Error('No Announcement found');
+            if (!res.ok)
+                throw new Error('No Announcement found');
 
-                return res.json();
-            }
-
-            // If method is add, return empty
-            return {
-                title: '',
-                content: '',
-                tags: [],
-                files: [],
-            };
+            return res.json();
         }
-        catch (err) {
-            throw err;
-        }
+
+        // If method is add, return empty
+        return {
+            title: '',
+            content: '',
+            tags: [],
+            files: [],
+        };
     }
 
     subscribeEditor () {
@@ -206,7 +201,7 @@ export default class AnnouncementEvent {
         });
     }
 
-    async generateFilePreview (opt) {
+    generateFilePreview (opt) {
         const {file, fileId, isExist} = opt;
         new Promise((res) => {
             const tempDOM = document.createElement('temp-section');
@@ -275,7 +270,7 @@ export default class AnnouncementEvent {
         Array.from(LanguageUtils.supportedLanguageId).forEach((languageId) => {
             formData.append(`announcementI18n[${languageId}][languageId]`, languageId);
             formData.append(`announcementI18n[${languageId}][title]`, this.data[languageId].title);
-            formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content.replace(/&nbsp;/gi, ' ').replace(/\n/g, ''));
+            formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content);
         });
         this.state.addFiles.forEach((file) => {
             formData.append('files', file.content);
@@ -306,7 +301,7 @@ export default class AnnouncementEvent {
             Array.from(LanguageUtils.supportedLanguageId).forEach((languageId) => {
                 formData.append(`announcementI18n[${languageId}][languageId]`, languageId);
                 formData.append(`announcementI18n[${languageId}][title]`, this.data[languageId].title);
-                formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content.replace(/&nbsp;/gi, ' ').replace(/\n/g, ''));
+                formData.append(`announcementI18n[${languageId}][content]`, this.data[languageId].content);
             });
             this.state.tags.forEach((tagId, i) => {
                 formData.append(`tags[${i}][tagId]`, tagId);
@@ -336,13 +331,13 @@ export default class AnnouncementEvent {
 
     exec () {
         Promise.all(LanguageUtils.supportedLanguageId.map(id => this.fetchData(id)))
-        .then(async (data) => {
+        .then((data) => {
             fetch(`${host}/user/id`, {
                 credentials: 'include',
                 method: 'get',
             })
-            .then(async res => res.json())
-            .then(async (res) => {
+            .then(res => res.json())
+            .then((res) => {
                 this.config.author = res.roleId;
             });
             this.data = data;

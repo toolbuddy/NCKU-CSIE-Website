@@ -47,8 +47,6 @@ export default class GetStaff {
         this.state = {
             languageId: opt.languageId,
         };
-
-        return this;
     }
 
     get queryApi () {
@@ -56,17 +54,12 @@ export default class GetStaff {
     }
 
     async fetchData () {
-        try {
-            const res = await fetch(this.queryApi);
+        const res = await fetch(this.queryApi);
 
-            if (!res.ok)
-                throw new Error('No staff found');
+        if (!res.ok)
+            throw new Error('No staff found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     renderLoading () {
@@ -89,25 +82,20 @@ export default class GetStaff {
      */
 
     renderCard (data) {
-        try {
-            this.DOM.cards.innerHTML = cardHTML({
-                data,
-                LANG: {
-                    id: this.state.languageId,
-                    getLanguageId: WebLanguageUtils.getLanguageId,
-                },
-                UTILS: {
-                    url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
-                    staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
-                },
-            });
+        this.DOM.cards.innerHTML = cardHTML({
+            data,
+            LANG: {
+                id: this.state.languageId,
+                getLanguageId: WebLanguageUtils.getLanguageId,
+            },
+            UTILS: {
+                url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
+                staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
+            },
+        });
 
-            if (!this.DOM.cards.hasChildNodes())
-                throw new Error('No data is rendered.');
-        }
-        catch (err) {
-            throw err;
-        }
+        if (!this.DOM.cards.hasChildNodes())
+            throw new Error('No data is rendered.');
     }
 
     async exec () {

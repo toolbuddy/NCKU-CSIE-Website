@@ -39,12 +39,7 @@ catch (err) {
 }
 
 try {
-    let id = /edit\/(\d+)/.exec(window.location.pathname);
-
-    if (id === null)
-        id = 0;
-    else
-        id = id[1];
+    const id = window.location.pathname.split('/').pop();
 
     const announcementEvent = new AnnouncementEvent({
         id: Number(id),

@@ -127,14 +127,20 @@ export default class DefaultDataManagement {
     }
 
     subscribePostCheckButton () {
-        this.DOM.post.checkButton.addEventListener('click', async (e) => {
+        this.DOM.post.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
 
-            const isValid = await this.dataValidation('post');
-
-            if (isValid) {
-                const data = await this.formatFormData('post');
+            new Promise((res, rej) => {
+                const isValid = this.dataValidation('post');
                 e.target.disabled = true;
+
+                if (isValid)
+                    res();
+                else
+                    rej();
+            })
+            .then(async () => {
+                const data = await this.formatFormData('post');
                 fetch(`${host}/user/staff/profile`, {
                     method: 'POST',
                     headers: {
@@ -154,7 +160,10 @@ export default class DefaultDataManagement {
                     e.target.disabled = false;
                     window.location.reload();
                 });
-            }
+            })
+            .catch(() => {
+                e.target.disabled = false;
+            });
         });
     }
 
@@ -181,13 +190,20 @@ export default class DefaultDataManagement {
     }
 
     subscribePatchCheckButton () {
-        this.DOM.patch.checkButton.addEventListener('click', async (e) => {
+        this.DOM.patch.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
-            const isValid = await this.dataValidation('patch');
 
-            if (isValid) {
-                const {item, i18n} = await this.formatFormData('patch');
+            new Promise((res, rej) => {
+                const isValid = this.dataValidation('patch');
                 e.target.disabled = true;
+
+                if (isValid)
+                    res();
+                else
+                    rej();
+            })
+            .then(async () => {
+                const {item, i18n} = await this.formatFormData('patch');
                 fetch(`${host}/user/staff/profile`, {
                     method: 'PATCH',
                     headers: {
@@ -213,7 +229,10 @@ export default class DefaultDataManagement {
                     if (res.ok)
                         window.location.reload();
                 });
-            }
+            })
+            .catch(() => {
+                e.target.disabled = false;
+            });
         });
     }
 
@@ -256,16 +275,11 @@ export default class DefaultDataManagement {
     }
 
     async fetchData ( languageId ) { // eslint-disable-line
-        try {
-            const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
-            if (!res.ok)
-                throw new Error('No faculty found');
+        const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
+        if (!res.ok)
+            throw new Error('No faculty found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     setPatchFormValue (data) {
@@ -319,8 +333,8 @@ export default class DefaultDataManagement {
         return `${column}${error}`;
     }
 
-    async dataValidation (method) {
-        const isValid = new Promise((res) => {
+    dataValidation (method) {
+        new Promise((res) => {
             let errorMessage = '';
             Array.from(this.DOM[method].input).forEach((element) => {
                 if (element.validity.typeMismatch || element.validity.patternMismatch) {
@@ -341,11 +355,9 @@ export default class DefaultDataManagement {
             this.DOM[method].errorMessage.innerText = errorMessage;
             return false;
         });
-
-        return isValid;
     }
 
-    async formatFormData (method) {
+    formatFormData (method) {
         const item = {};
         let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
 
@@ -369,7 +381,7 @@ export default class DefaultDataManagement {
             return ({item, i18n});
     }
 
-    async exec () {
+    exec () {
         this.renderLoading();
 
         fetch(`${host}/user/id`, {

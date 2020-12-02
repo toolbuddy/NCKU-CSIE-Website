@@ -575,8 +575,8 @@ export default class DefaultTagFilter {
                             return;
                         this.acquireLock();
 
-                        pageDOMArr.forEach((pageDOM) => {
-                            classRemove(pageDOM, 'pages__page--active');
+                        pageDOMArr.forEach((page) => {
+                            classRemove(page, 'pages__page--active');
                         });
 
                         const dataPage = pageDOM.getAttribute('data-page');
@@ -854,7 +854,7 @@ export default class DefaultTagFilter {
                             e.preventDefault();
                             window.location.href = `${host}/user/announcement/edit/${briefing.announcementId}`;
                         });
-                        briefingDeleteDOM.addEventListener('click', async (e) => {
+                        briefingDeleteDOM.addEventListener('click', (e) => {
                             e.preventDefault();
                             classAdd(this.DOM.preview.block, 'delete-preview--show');
                             this.state.announcementId = briefing.announcementId;
@@ -863,7 +863,7 @@ export default class DefaultTagFilter {
                             this.DOM.preview.briefing.title.innerText = briefing.title;
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         });
-                        briefingPinDOM.addEventListener('click', async (e) => {
+                        briefingPinDOM.addEventListener('click', (e) => {
                             e.preventDefault();
                             classAdd(this.DOM.preview.block, 'delete-preview--show');
                             this.state.announcementId = briefing.announcementId;
@@ -1014,7 +1014,7 @@ export default class DefaultTagFilter {
                             e.preventDefault();
                             window.location.href = `${host}/user/announcement/edit/${briefing.announcementId}`;
                         });
-                        briefingDeleteDOM.addEventListener('click', async (e) => {
+                        briefingDeleteDOM.addEventListener('click', (e) => {
                             e.preventDefault();
                             classAdd(this.DOM.preview.block, 'delete-preview--show');
                             this.state.announcementId = briefing.announcementId;
@@ -1023,7 +1023,7 @@ export default class DefaultTagFilter {
                             this.DOM.preview.briefing.title.innerText = briefing.title;
                             this.DOM.preview.briefing.time.innerText = briefing.updateTime;
                         });
-                        briefingPinDOM.addEventListener('click', async (e) => {
+                        briefingPinDOM.addEventListener('click', (e) => {
                             e.preventDefault();
                             const isPinned = Boolean(this.state.pinnedId.includes(briefing.announcementId));
                             classAdd(this.DOM.preview.block, 'delete-preview--show');
@@ -1075,7 +1075,7 @@ export default class DefaultTagFilter {
         });
     }
 
-    async sendPinRequest () {
+    sendPinRequest () {
         this.DOM.preview.button.check.disabled = true;
         fetch(`${host}/user/announcement`, {
             method: 'PATCH',
@@ -1094,7 +1094,7 @@ export default class DefaultTagFilter {
         });
     }
 
-    async sendDeleteRequest () {
+    sendDeleteRequest () {
         this.DOM.preview.button.check.disabled = true;
         fetch(`${host}/user/announcement`, {
             method: 'DELETE',
@@ -1105,14 +1105,14 @@ export default class DefaultTagFilter {
                 'content-type': 'application/json',
             },
         })
-        .then(async () => {
+        .then( () => {
             classRemove(this.DOM.preview.block, 'delete-preview--show');
             this.DOM.preview.button.check.disabled = false;
             this.getAll();
         });
     }
 
-    async getAll () {
+    getAll () {
         try {
             fetch(`${host}/user/id`, {
                 credentials: 'include',

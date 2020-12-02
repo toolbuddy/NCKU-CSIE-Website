@@ -47,8 +47,6 @@ export default class GetLabs {
         this.state = {
             languageId: opt.languageId,
         };
-
-        return this;
     }
 
     get queryApi () {
@@ -56,17 +54,12 @@ export default class GetLabs {
     }
 
     async fetchData () {
-        try {
-            const res = await fetch(this.queryApi);
+        const res = await fetch(this.queryApi);
 
-            if (!res.ok)
-                throw new Error('No lab found');
+        if (!res.ok)
+            throw new Error('No lab found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     renderLoading () {
@@ -89,33 +82,28 @@ export default class GetLabs {
      */
 
     renderCards (data) {
-        try {
-            this.DOM.cards.innerHTML = '';
-            data.forEach((data) => {
-                try {
-                    this.DOM.cards.innerHTML += cardHTML({
-                        data,
-                        LANG: {
-                            id: this.state.languageId,
-                            getLanguageId: WebLanguageUtils.getLanguageId,
-                        },
-                        UTILS: {
-                            url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
-                            staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
-                        },
-                    });
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            });
+        this.DOM.cards.innerHTML = '';
+        data.forEach((d) => {
+            try {
+                this.DOM.cards.innerHTML += cardHTML({
+                    d,
+                    LANG: {
+                        id: this.state.languageId,
+                        getLanguageId: WebLanguageUtils.getLanguageId,
+                    },
+                    UTILS: {
+                        url: UrlUtils.serverUrl(new UrlUtils(host, this.state.languageId)),
+                        staticUrl: UrlUtils.serverUrl(new UrlUtils(staticHost, this.state.languageId)),
+                    },
+                });
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
 
-            if (!this.DOM.cards.hasChildNodes())
-                throw new Error('No data is rendered.');
-        }
-        catch (err) {
-            throw err;
-        }
+        if (!this.DOM.cards.hasChildNodes())
+            throw new Error('No data is rendered.');
     }
 
     async exec () {

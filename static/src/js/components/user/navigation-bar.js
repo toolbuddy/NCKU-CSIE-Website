@@ -62,7 +62,7 @@ class NavigationBar {
         this.config.isOpenNavigation = false;
     }
 
-    async exec () {
+    exec () {
         this.addButtonEventListener();
     }
 }

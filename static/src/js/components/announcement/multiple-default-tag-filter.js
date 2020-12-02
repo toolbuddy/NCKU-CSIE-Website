@@ -21,8 +21,8 @@ export default class MultipleDefaultTagFilter extends DefaultTagFilter {
                             return;
                         this.acquireLock();
 
-                        this.DOM.filter.tags.forEach((tagObj) => {
-                            classRemove(tagObj.node, 'tags__tag--active');
+                        this.DOM.filter.tags.forEach((tag) => {
+                            classRemove(tag.node, 'tags__tag--active');
                         });
 
                         classAdd(tagObj.node, 'tags__tag--active');

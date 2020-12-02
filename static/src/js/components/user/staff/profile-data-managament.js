@@ -71,16 +71,11 @@ export default class ProfileDataManagement {
     }
 
     async fetchData ( languageId ) {   // eslint-disable-line
-        try {
-            const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
-            if (!res.ok)
-                throw new Error('No faculty found');
+        const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
+        if (!res.ok)
+            throw new Error('No faculty found');
 
-            return res.json();
-        }
-        catch (err) {
-            throw err;
-        }
+        return res.json();
     }
 
     subscribeUploadImageButton () {
@@ -230,7 +225,7 @@ export default class ProfileDataManagement {
         return `${column}${error}`;
     }
 
-    async dataValidation (columnName) {
+    dataValidation (columnName) {
         const isValid = new Promise((res) => {
             let errorMessage = '';
             Array.from(this.DOM[columnName].input).forEach((element) => {
@@ -255,7 +250,7 @@ export default class ProfileDataManagement {
         return isValid;
     }
 
-    async exec () {
+    exec () {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
