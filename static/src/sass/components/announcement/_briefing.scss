@@ -15,11 +15,12 @@
     display: grid;
     grid-template: {
       areas:
-        'briefing__title  briefing__title  briefing__title'
         'briefing__tags   briefing__tags   briefing__tags'
+        'briefing__title  briefing__title  briefing__title'
+        'briefing__article briefing__article briefing__article'
         'briefing__time   briefing__time   .'
         'briefing__button briefing__button briefing__button';
-      rows: min-content auto 1fr;
+      rows: auto min-content font__px-to-rem( 48 ) 1fr;
       columns: 5fr 1fr 13fr auto;
     }
     margin-bottom: font__px-to-rem( 14 );
@@ -53,17 +54,17 @@
       // [ layout ]
       grid-template: {
         areas:
+          'briefing__tags    briefing__tags    briefing__tags'
           'briefing__title   briefing__title   briefing__title'
           'briefing__article briefing__article briefing__article'
-          'briefing__tags    briefing__tags    briefing__tags'
           'briefing__time    briefing__time    briefing__time'
           '.                 .                 briefing__button';
-        rows: min-content font__px-to-rem( 48 ) 1fr auto auto;
+        rows: auto min-content font__px-to-rem( 48 ) 1fr auto;
         columns: 5fr 1fr 13fr;
       }
 
       // [ skin ]
-      width: font__px-to-rem( 424 );
+      width: font__px-to-rem( 924 );
       padding: {
         top: font__px-to-rem( 26 );
         bottom: font__px-to-rem( 15 );
@@ -104,14 +105,32 @@
         size: font__px-to-rem( 16 );
         weight: bold;
       }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin: {
+          bottom: font__px-to-rem( 8 );
+          top: font__px-to-rem( 8 );
+        }
+      }
     }
 
     // element
     // `> .#{ $block } > .briefing > .briefing__article`
     > .briefing__article {
+      // [ position ]
+      grid-area: briefing__article;
+
       // [ layout ]
-      display: none;
-      margin-bottom: font__px-to-rem( 15 );
+      display: block;
+      white-space: nowrap;
+      line-height: font__px-to-rem( 14 ) * 1.2;
+
+      // [ skin ]
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: font__px-to-rem( 14 );
 
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {

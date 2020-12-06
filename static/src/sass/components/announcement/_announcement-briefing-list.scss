@@ -158,7 +158,7 @@
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           grid: {
-            template-columns: repeat( auto-fit, 12rem );
+            template-columns: repeat( auto-fit, font__px-to-rem( 924 ) );
             column-gap: font__px-to-rem( 56 );
           }
         }

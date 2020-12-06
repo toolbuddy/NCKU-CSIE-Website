@@ -176,6 +176,9 @@
 
             // [ RWD: $large ]
             @media screen and ( min-width: $large ) {
+              // [ posiotion ]
+              height: font__px-to-rem( 50 ) * 1.2;
+
               // [ layout ]
               line-height: font__px-to-rem( 50 ) * 1.2;
 

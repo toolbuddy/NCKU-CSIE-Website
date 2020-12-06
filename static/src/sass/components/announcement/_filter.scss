@@ -134,7 +134,14 @@
       display: grid;
       grid-template: {
         areas: 'filter__tags . filter__time';
-        columns: min-content 1fr min-content;
+        columns: min-content 1fr min-content ;
+      }
+
+      // [ skin ]
+      width: font__px-to-rem( 924 );
+      margin: {
+        left: auto;
+        right: auto;
       }
     }
 
@@ -168,7 +175,7 @@
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
-        align-items: end;
+        align-items: start;
         margin-bottom: 0;
       }
 
