@@ -77,7 +77,7 @@ export default class EditorIcon {
                 'content-type': 'application/json',
             },
         })
-        .then( () => {
+        .then(() => {
             window.location.replace(`${host}/announcement/all?languageId=${this.config.languageId}`);
         });
     }
@@ -87,7 +87,7 @@ export default class EditorIcon {
             credentials: 'include',
             method: 'get',
         })
-        .then( res => res.json())
+        .then(res => res.json())
         .then(async (res) => {
             const userData = res;
             const userRole = userData.role;

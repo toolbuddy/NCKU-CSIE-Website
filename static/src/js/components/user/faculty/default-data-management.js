@@ -131,16 +131,16 @@ export default class DefaultDataManagement {
         this.DOM.post.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
 
-            new Promise((res, rej)=> {
+            new Promise((res, rej) => {
                 const isValid = this.dataValidation('post');
                 e.target.disabled = true;
 
-                if( isValid )
-                    res()
+                if (isValid)
+                    res();
                 else
-                    rej()
+                    rej();
             })
-            .then( async()=>{
+            .then(async () => {
                 const data = await this.formatFormData('post');
 
                 fetch(`${host}/user/faculty/profile`, {
@@ -165,9 +165,9 @@ export default class DefaultDataManagement {
                         window.location.reload();
                 });
             })
-            .catch(()=>{
+            .catch(() => {
                 e.target.disabled = false;
-            })
+            });
         });
     }
 
@@ -185,16 +185,16 @@ export default class DefaultDataManagement {
         this.DOM.patch.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
 
-            new Promise( (res, rej)=> {
+            new Promise((res, rej) => {
                 const isValid = this.dataValidation('patch');
                 e.target.disabled = true;
 
-                if( isValid )
+                if (isValid)
                     res();
                 else
                     rej();
-            } )
-            .then(async()=> {
+            })
+            .then(async () => {
                 const {item, i18n} = await this.formatFormData('patch');
 
                 fetch(`${host}/user/faculty/profile`, {
@@ -223,9 +223,9 @@ export default class DefaultDataManagement {
                         window.location.reload();
                 });
             })
-            .catch(()=>{
+            .catch(() => {
                 e.target.disabled = false;
-            })
+            });
         });
     }
 
@@ -380,7 +380,7 @@ export default class DefaultDataManagement {
 
     formatFormData (method) {
         const item = {};
-        let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
+        let i18n = LanguageUtils.supportedLanguageId.map(id => ({languageId: id}));
 
         Array.from(this.DOM[method].form.elements).forEach((element) => {
             if (element.getAttribute('input-pattern') === 'i18n')

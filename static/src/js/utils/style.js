@@ -28,7 +28,7 @@ export function classRemove (element, className) {
 export function delay (ms = 1) {
     if (!ValidateUtils.isPositiveInteger(ms))
         throw new TypeError('Parameter `ms` should be a positive integer.');
-    return new Promise(res => {
-        setTimeout(res, ms)
+    return new Promise((res) => {
+        setTimeout(res, ms);
     });
 }
