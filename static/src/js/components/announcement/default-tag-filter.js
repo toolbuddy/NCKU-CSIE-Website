@@ -1105,7 +1105,7 @@ export default class DefaultTagFilter {
                 'content-type': 'application/json',
             },
         })
-        .then( () => {
+        .then(() => {
             classRemove(this.DOM.preview.block, 'delete-preview--show');
             this.DOM.preview.button.check.disabled = false;
             this.getAll();
