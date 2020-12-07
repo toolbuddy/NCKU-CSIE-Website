@@ -168,7 +168,7 @@ export default class DefaultDataManagement {
     }
 
     subscribePatchButton (element) {
-        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => DefaultDataManagement.fetchData(languageId)))
         .then((data) => {
             this.status.itemId = Number(element.target.getAttribute('data-id'));
             this.status.patchButton = element.target;
@@ -237,7 +237,7 @@ export default class DefaultDataManagement {
     }
 
     subscribeDeleteButton (e) {
-        this.fetchData(this.config.languageId)
+        DefaultDataManagement.fetchData(this.config.languageId)
         .then((data) => {
             this.status.itemId = Number(e.target.getAttribute('data-id'));
             const rowData = data[this.config.table].find(item => item[this.config.idColumn] === Number(e.target.getAttribute('data-id')));
@@ -274,7 +274,7 @@ export default class DefaultDataManagement {
         });
     }
 
-    async fetchData ( languageId ) { // eslint-disable-line
+    static async fetchData ( languageId ) {
         const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
         if (!res.ok)
             throw new Error('No faculty found');

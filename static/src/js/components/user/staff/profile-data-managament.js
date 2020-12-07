@@ -70,7 +70,7 @@ export default class ProfileDataManagement {
         });
     }
 
-    async fetchData ( languageId ) {   // eslint-disable-line
+    static async fetchData ( languageId ) {   // eslint-disable-line
         const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
         if (!res.ok)
             throw new Error('No faculty found');
@@ -117,7 +117,7 @@ export default class ProfileDataManagement {
     subscribePatchButton () {
         Object.keys(this.modifier).forEach((columnName) => {
             this.DOM[columnName].patchButton.addEventListener('click', () => {
-                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => ProfileDataManagement.fetchData(languageId)))
                 .then(data => ({
                     [LanguageUtils.getLanguageId('en-US')]: data[LanguageUtils.getLanguageId('en-US')].profile[columnName],
                     [LanguageUtils.getLanguageId('zh-TW')]: data[LanguageUtils.getLanguageId('zh-TW')].profile[columnName],
@@ -177,7 +177,7 @@ export default class ProfileDataManagement {
     }
 
     setProfileImage () {
-        this.fetchData(this.config.languageId)
+        ProfileDataManagement.fetchData(this.config.languageId)
         .then(data => data.profile)
         .then((data) => {
             if (data.photo.length !== 0) {
@@ -189,7 +189,7 @@ export default class ProfileDataManagement {
     }
 
     updateCard (columnName) {
-        this.fetchData(this.config.languageId)
+        ProfileDataManagement.fetchData(this.config.languageId)
         .then(data => data.profile[columnName])
         .then((data) => {
             this.DOM[columnName].cardValue.innerText = data;
