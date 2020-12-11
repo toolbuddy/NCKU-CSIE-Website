@@ -67,7 +67,7 @@
     }
     background-color: #ffffff;
 
-    // [ RWD: $small ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid: {
@@ -83,10 +83,7 @@
             '. pages                .';
         }
       }
-    }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );

@@ -71,13 +71,13 @@
     }
     background-color: #ffffff;
 
-    // [ RWD: $small ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid: {
         row-gap: font__px-to-rem( 60 );
         template: {
-          columns: 1fr 8fr 1fr;
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
           areas:
             '. breadcrumb           .'
             '. topic                .'
@@ -87,10 +87,7 @@
             '. pages                .';
         }
       }
-    }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );
