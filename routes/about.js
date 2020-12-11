@@ -18,6 +18,7 @@ const staticHtml = require('./utils/static-html.js');
 const contentSecurityPolicy = require('../settings/server/content-security-policy');
 const publicationCategoryUtils = require('../models/faculty/utils/publication-category.js');
 const projectCategoryUtils = require('../models/faculty/utils/project-category.js');
+const nationUtils = require('../models/faculty/utils/nation.js');
 
 const getFacultyDetail = require('../models/faculty/operations/get-faculty-detail.js');
 
@@ -96,6 +97,7 @@ router
         res.locals.UTILS.faculty = {
             publicationCategoryUtils,
             projectCategoryUtils,
+            nationUtils,
         };
 
         await new Promise((resolve, reject) => {
