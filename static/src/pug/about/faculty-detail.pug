@@ -11,6 +11,7 @@ append data
           about:   'About',
           faculty: 'Faculty',
         },
+        and:   'and',
         email: 'Email:',
         office: {
           address:   'Office:',
@@ -79,6 +80,7 @@ append data
           about:   '關於本系',
           faculty: '師資陣容',
         },
+        and:   '暨',
         email: '信箱：',
         office: {
           address:   '辦公室：',
@@ -140,7 +142,7 @@ append data
         conference: '參與會議',
       },
     } );
-    const currentRoute = 'about/faculty-detail';
+    const currentRoute = `about/faculty/${ profileId }`;
 
 append title
   +title( data.profile.name )
@@ -182,76 +184,76 @@ append content
             src: `icon/user.png`,
           } )
 
-      //- Faculty's information.
-      section.profile__info.info
-        //- Faculty's name.
-        header.info__name= data.profile.name
-
+      header.profile__header.header
+        h2.header__name= data.profile.name
         //- Faculty has some titles.
         if Array.isArray( data.title ) && data.title.length
-          aside.info__titles.titles
-            each titleObj in data.title
+          aside.header__titles.titles
+            each titleObj, index in data.title
               span.titles__title= titleObj.title
+              if index < data.title.length - 1
+                span.titles__title= i18n[ LANG.id ].and
 
-        //- Faculty belongs to some departments.
-        if Array.isArray( data.department ) && data.department.length
-          aside.info__departments.departments
-            each department in data.department
-              span.departments__department= department
+      //- Faculty belongs to some departments.
+      if Array.isArray( data.department ) && data.department.length
+        aside.profile__departments.departments
+          each department in data.department
+            span.departments__department= department
 
-        //- Faculty's email.
-        if data.profile.email !== null
-          aside.info__email.email
-            span.email__text= i18n[ LANG.id ].email
-            a.email__address( href = `mailto:${ data.profile.email }` )= data.profile.email
+      //- Faculty's email.
+      if data.profile.email !== null
+        aside.profile__email.email
+          span.email__text= i18n[ LANG.id ].email
+          a.email__address( href = `mailto:${ data.profile.email }` )= data.profile.email
 
-        //- Faculty owns some offices which have an address.
-        if data.profile.officeAddress !== null
-          aside.info__office-address.office-address
-            span.office-address__text= i18n[ LANG.id ].office.address
-            address.office-address__info= data.profile.officeAddress
+      //- Faculty owns some offices which have an address.
+      if data.profile.officeAddress !== null
+        aside.profile__office-address.office-address
+          span.office-address__text= i18n[ LANG.id ].office.address
+          address.office-address__info= data.profile.officeAddress
 
-        //- Faculty owns some offices which have a telephone number.
-        if data.profile.officeTel !== null
-          aside.info__office-tel.office-tel
-            span.office-tel__text= i18n[ LANG.id ].office.tel
-            a.office-tel__number( href = `tel:${ data.profile.officeTel }` )= i18n[ LANG.id ].office.telNumber
+      //- Faculty owns some offices which have a telephone number.
+      if data.profile.officeTel !== null
+        aside.profile__office-tel.office-tel
+          span.office-tel__text= i18n[ LANG.id ].office.tel
+          a.office-tel__number( href = `tel:${ data.profile.officeTel }` )= i18n[ LANG.id ].office.telNumber
 
-        //- Faculty owns some offices which have a fax.
-        if data.profile.fax !== null
-          aside.info__fax.fax
-            span.fax__text= i18n[ LANG.id ].office.fax
-            a.fax__number( href = `tel:${ data.profile.fax }` )= data.profile.fax
+      //- Faculty owns some offices which have a fax.
+      if data.profile.fax !== null
+        aside.profile__fax.fax
+          span.fax__text= i18n[ LANG.id ].office.fax
+          a.fax__number( href = `tel:${ data.profile.fax }` )= data.profile.fax
 
-        //- Faculty owns some labs which have a name, address and even a website.
-        if data.profile.labName !== null
-          aside.info__lab.lab
-            span.lab__text= i18n[ LANG.id ].lab.name
-            if data.profile.labWeb !== null
-              a.lab__name.lab__name--link( href = data.profile.labWeb )= data.profile.labName
-            else
-              span.lab__name= data.profile.labName
-            if data.profile.labAddress !== null
-              address.lab__address= data.profile.labAddress
+      //- Faculty owns some labs which have a name, address and even a website.
+      if data.profile.labName !== null
+        aside.profile__lab.lab
+          span.lab__text= i18n[ LANG.id ].lab.name
+          if data.profile.labWeb !== null
+            a.lab__name.lab__name--link( href = data.profile.labWeb )= data.profile.labName
+          else
+            span.lab__name= data.profile.labName
+          if data.profile.labAddress !== null
+            address.lab__address= data.profile.labAddress
 
-        //- Faculty owns some labs which have a telephone number.
-        if data.profile.labTel !== null
-          aside.info__lab-tel.lab-tel
-            span.lab-tel__text= i18n[ LANG.id ].lab.tel
-            a.lab-tel__number( href = `tel:${ data.profile.labTel }` )= i18n[ LANG.id ].lab.telNumber
+      //- Faculty owns some labs which have a telephone number.
+      if data.profile.labTel !== null
+        aside.profile__lab-tel.lab-tel
+          span.lab-tel__text= i18n[ LANG.id ].lab.tel
+          a.lab-tel__number( href = `tel:${ data.profile.labTel }` )= i18n[ LANG.id ].lab.telNumber
 
-        //- Faculty owns some personal website.
-        if data.profile.personalWeb !== null
-          aside.info__personal-web.personal-web
-            span.personal-web__text= i18n[ LANG.id ].personalWeb
-            a.personal-web__address( href = data.profile.personalWeb )= data.profile.personalWeb
+      //- Faculty owns some personal website.
+      if data.profile.personalWeb !== null
+        aside.profile__personal-web.personal-web
+          span.personal-web__text= i18n[ LANG.id ].personalWeb
+          a.personal-web__address( href = data.profile.personalWeb )= data.profile.personalWeb
 
-        //- Faculty has some specialties.
-        if Array.isArray( data.specialty ) && data.specialty.length
-          aside.info__specialties.specialties
-            span.specialties__text= i18n[ LANG.id ].specialty
+      //- Faculty has some specialties.
+      if Array.isArray( data.specialty ) && data.specialty.length
+        aside.profile__specialties.specialties
+          span.specialties__text= i18n[ LANG.id ].specialty
+          span.specialties__specialty.specialty
             each specialty in data.specialty
-              span.specialties__specialty= specialty
+              span.specialty__item= specialty
 
   //- Faculty has some education history.
   if Array.isArray( data.education ) && data.education.length

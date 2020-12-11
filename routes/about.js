@@ -101,6 +101,7 @@ router
         await new Promise((resolve, reject) => {
             res.render('about/faculty-detail.pug', {
                 data,
+                profileId: req.params.profileId,
             }, (err, html) => {
                 if (err)
                     reject(err);

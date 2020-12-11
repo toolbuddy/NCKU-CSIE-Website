@@ -274,7 +274,7 @@ export default class DefaultDataManagement {
         });
     }
 
-    static async fetchData ( languageId ) {
+    static async fetchData (languageId) {
         const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
         if (!res.ok)
             throw new Error('No faculty found');
