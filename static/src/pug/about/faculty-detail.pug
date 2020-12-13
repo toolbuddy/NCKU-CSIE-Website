@@ -71,6 +71,9 @@ append data
           support:  'Sponser',
         },
         conference: 'Conference',
+        studentAward: {
+          topic: 'Student Award',
+        }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         title:   '詳細資料',
@@ -140,6 +143,9 @@ append data
           support:  '補助單位',
         },
         conference: '參與會議',
+        studentAward: {
+          topic: '指導學生獲獎',
+        }
       },
     } );
     const currentRoute = `about/faculty/${ profileId }`;
@@ -494,7 +500,7 @@ append content
                   time.context__time= publicationObj.issueYear
                 if publicationObj.issueDate !== null
                   time.context__time= publicationObj.issueDate
-  
+
   mixin row__value( column, title, value )
     h4.row__title(class=`row__title--${ column }`)= title
     if value !== null
@@ -607,6 +613,49 @@ append content
               +row__value( 'name', i18n[ LANG.id ].project.name, projectObj.name )
               +row__col--duration( i18n[ LANG.id ].project.duration, projectObj.from, projectObj.to )
               +row__value( 'support', i18n[ LANG.id ].project.support, projectObj.support )
+
+  //- Faculty has some student awards.
+  if Array.isArray( data.studentAward ) && data.studentAward.length
+    section.content__student-award.student-award
+      +topic( 'student-award', i18n[ LANG.id ].studentAward.topic )
+      //- Sort awards list based on time.
+      -
+        data.studentAward.sort( ( awardA, awardB ) => {
+          if (
+            awardA.receivedYear !== null &&
+            awardB.receivedYear !== null &&
+            awardA.receivedYear !== awardB.receivedYear
+          )
+            return awardB.receivedYear - awardA.receivedYear;
+          else if (
+            awardA.receivedMonth !== null &&
+            awardB.receivedMonth !== null &&
+            awardA.receivedMonth !== awardB.receivedMonth
+          )
+            return awardB.receivedMonth - awardA.receivedMonth;
+          else if (
+            awardA.receivedDay !== null &&
+            awardB.receivedDay !== null &&
+            awardA.receivedDay !== awardB.receivedDay
+          )
+            return awardB.receivedDay - awardA.receivedDay;
+          return 0;
+        } );
+        let currentYear = data.studentAward[ 0 ].receivedYear;
+      each awardObj, index in data.studentAward
+        if awardObj.receivedYear !== currentYear || index === 0
+          - currentYear = awardObj.receivedYear
+          aside.student-award__title= awardObj.receivedYear
+        //- If there is no award at all, then there is no point to show it.
+        if awardObj.award !== null
+          article.student-award__context.context
+            aside.context__award.award
+              main.award__info= awardObj.award
+            aside.context__student.student
+              each studentObj, idx in awardObj.student
+                p.student__info= `${studentObj.name} ${studentObj.degree}`
+                if idx < awardObj.student.length - 1
+                  p.student__info= ', '
 
   //- Faculty has participate some conferences.
   if Array.isArray( data.conference ) && data.conference.length
