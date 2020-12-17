@@ -10,7 +10,7 @@
 @import 'components/common/footer';
 @import 'components/home/tv';
 @import 'components/announcement/briefing';
-@import 'components/home/hot-announcement-briefing';
+@import 'components/home/recruit-announcement-briefing';
 
 // block
 // `.body`
@@ -29,7 +29,9 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
+    $medium: 560px;
     $large: 992px;
+    $extra_large: 1440px;
 
     // [ layout ]
     display: grid;
@@ -39,11 +41,30 @@
         '.           .                .'
         '.           topic            .'
         '.           announcement     .'
-        '.           hot-announcement .'
+        '.           recruit-topic    . '
+        '.           recruit-announcement .'
         'high-school high-school      high-school'
         'master      master           master';
-      rows: 100vh font__px-to-rem( 32 ) repeat( 3, min-content ) font__px-to-rem( 70 ) auto auto;
+      rows: font__px-to-rem( 200 ) font__px-to-rem( 32 ) repeat( 4, min-content ) font__px-to-rem( 70 ) auto auto;
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          'tv          tv               tv'
+          '.           .                .'
+          '.           topic            .'
+          '.           announcement     .'
+          '.           recruit-topic    . '
+          '.           recruit-announcement .'
+          'high-school high-school      high-school'
+          'master      master           master';
+        rows: font__px-to-rem( 400 ) font__px-to-rem( 64 ) repeat( 4, auto ) font__px-to-rem( 70 ) auto;
+        columns: font__px-to-rem( 36 ) 1fr font__px-to-rem( 36 );
+      }
     }
 
     // [ RWD: $large ]
@@ -53,12 +74,29 @@
         areas:
           'tv          tv           tv          tv               tv'
           '.           .            .           .                .'
-          '.           topic        .           hot-announcement .'
-          '.           announcement .           hot-announcement .'
+          '.           topic        .           recruit-topic .'
+          '.           announcement .           recruit-announcement .'
           'high-school high-school  high-school high-school      high-school'
           'master      master       master      master           master';
-        rows: 80vh font__px-to-rem( 32 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) auto auto;
-        columns: 1fr 12fr font__px-to-rem( 128 ) 6fr 1fr;
+        rows: 60vh font__px-to-rem( 64 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) auto auto;
+        columns: 1fr font__px-to-rem( 556 ) font__px-to-rem( 67 ) font__px-to-rem( 300 ) 1fr;
+      }
+      align-items: start;
+    }
+
+    // [ RWD: $extra_large ]
+    @media screen and ( min-width: $extra_large ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          'tv          tv           tv          tv               tv'
+          '.           .            .           .                .'
+          '.           topic        .           recruit-topic    .'
+          '.           announcement .           recruit-announcement .'
+          'high-school high-school  high-school high-school      high-school'
+          'master      master       master      master           master';
+        rows: 60vh font__px-to-rem( 64 ) font__px-to-rem( 64 ) min-content font__px-to-rem( 148 ) auto auto;
+        columns: 1fr font__px-to-rem( 800 ) font__px-to-rem( 67 ) font__px-to-rem( 400 ) 1fr;
       }
       align-items: start;
     }
@@ -82,12 +120,27 @@
     }
 
     // element
+    // `.body > .content > .content__topic`
+    // block
+    // `.body > .content > .topic`
+    @include topic( $block: 'content_recruit' ) {
+      // [ position ]
+      grid-area: recruit-topic;
+    }
+
+    // element
     // `.body > .content > .content__announcement`
     // block
     // `.body > .content > .announcement`
     > .content__announcement.announcement {
       // [ position ]
       grid-area: announcement;
+      margin-bottom: font__px-to-rem( 32 );
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        margin-bottom: font__px-to-rem( 0 );
+      }
 
       // element
       // `.body > .content > .announcement > .announcement__no-result`
@@ -133,7 +186,7 @@
               right: auto;
               left: auto;
             }
-            width: 90%;
+            width: 100%;
           }
         }
       }
@@ -150,7 +203,7 @@
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
-          justify-content: flex-end;
+          justify-content: flex-start;
         }
 
         // element
@@ -493,10 +546,10 @@
     }
 
     // element
-    // `.body > .content > .hot-announcement`
-    @include hot-announcement ( $block: 'content' ) {
+    // `.body > .content > .recruit-announcement`
+    @include recruit-announcement ( $block: 'content' ) {
       // [ position ]
-      grid-area: hot-announcement;
+      grid-area: recruit-announcement;
 
       // [ layout ]
       margin-top: font__px-to-rem( 32 );
