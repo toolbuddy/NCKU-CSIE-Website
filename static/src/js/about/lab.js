@@ -1,7 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import GetLabs from 'static/src/js/components/research/lab/get-labs.js';
+import GetLabs from 'static/src/js/components/about/lab/get-labs.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {

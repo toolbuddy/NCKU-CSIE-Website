@@ -32,7 +32,6 @@ const about = require('./about.js');
 const announcement = require('./announcement.js');
 const auth = require('./auth.js');
 const developer = require('./developer.js');
-const research = require('./research.js');
 const resource = require('./resource.js');
 const student = require('./student.js');
 const user = require('./user.js');
@@ -136,12 +135,6 @@ app.use('/auth', auth);
  */
 
 app.use('/developer', developer);
-
-/**
- * Resolve URL `/research`.
- */
-
-app.use('/research', research);
 
 /**
  * Resolve URL `/resource`.

@@ -71,6 +71,7 @@ module.exports = (env, argv) => {
             'about/index': './about/index.scss',
             'about/intro': './about/intro.scss',
             'about/staff': './about/staff.scss',
+            'about/lab': './about/lab.scss',
 
             // Route `announcement`
             'announcement/activity': './announcement/activity.scss',
@@ -85,11 +86,6 @@ module.exports = (env, argv) => {
             // Route `home`
             'home/index': './home/index.scss',
             'home/search': './home/search.scss',
-
-            // Route `research`
-            'research/index': './research/index.scss',
-            'research/lab': './research/lab.scss',
-            'research/publication': './research/publication.scss',
 
             // Route `resource`
             'resource/alumni': './resource/alumni.scss',

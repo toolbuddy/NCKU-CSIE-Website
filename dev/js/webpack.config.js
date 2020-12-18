@@ -62,6 +62,7 @@ module.exports = (env, argv) => {
             'about/index': './about/index.js',
             'about/intro': './about/intro.js',
             'about/staff': './about/staff.js',
+            'about/lab': './about/lab.js',
 
             // Route `announcement`.
             'announcement/activity': './announcement/activity.js',
@@ -76,11 +77,6 @@ module.exports = (env, argv) => {
             // Route `home`.
             'home/index': './home/index.js',
             'home/search': './home/search.js',
-
-            // Route `research`.
-            'research/index': './research/index.js',
-            'research/lab': './research/lab.js',
-            'research/publication': './research/publication.js',
 
             // Route `resource`.
             'resource/alumni': './resource/alumni.js',

@@ -81,6 +81,7 @@ module.exports = (env, argv) => {
             'about/index': './about/index.pug',
             'about/intro': './about/intro.pug',
             'about/staff': './about/staff.pug',
+            'about/lab': './about/lab.pug',
 
             // Route `announcement`
             'announcement/activity': './announcement/activity.pug',
@@ -94,11 +95,6 @@ module.exports = (env, argv) => {
             // Route `home`
             'home/index': './home/index.pug',
             'home/search': './home/search.pug',
-
-            // Route `research`
-            'research/index': './research/index.pug',
-            'research/lab': './research/lab.pug',
-            'research/publication': './research/publication.pug',
 
             // Route `resource`
             'resource/alumni': './resource/alumni.pug',
