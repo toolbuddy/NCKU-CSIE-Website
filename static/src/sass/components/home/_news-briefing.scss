@@ -1,11 +1,10 @@
 @import 'components/common/font';
 @import 'components/common/no-result';
 @import 'components/common/loading';
-@import 'components/announcement/tags';
 
 // component
-// `.#{ $block } > .#{ $block }__recruit-announcement.recruit-announcement`
-@mixin recruit-announcement ( $block ) {
+// `.#{ $block } > .#{ $block }__news.news`
+@mixin news ( $block ) {
   // element
   // `.#{ $block } > .#{ $block }__recruit-announcement`
   // block

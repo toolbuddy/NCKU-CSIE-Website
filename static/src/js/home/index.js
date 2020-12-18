@@ -4,6 +4,7 @@ import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import {GetAllAnnouncement, GetRecruitAnnouncement} from 'static/src/js/components/home/get-announcement.js';
+import GetNews from 'static/src/js/components/home/get-news.js';
 import GetTvAnnouncements from 'static/src/js/components/home/get-tv-announcements.js';
 
 try {
@@ -70,16 +71,34 @@ catch (err) {
 }
 try {
     const getRecruitAnnouncement = new GetRecruitAnnouncement({
-        amount: 5,
+        amount: 7,
         announcementDOM: document.getElementById('recruit-announcement'),
         from: new Date('2019/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
-        tags: tagUtils.supportedOptions,
+        tags: ['course'],
         to: new Date(Date.now()),
         page: 1,
     });
 
     getRecruitAnnouncement.exec();
+}
+catch (err) {
+    console.error(err);
+}
+try {
+    const getNews = new GetNews({
+        amount: 4,
+        announcementDOM: document.getElementById('news'),
+        controlForwordDOM: document.getElementById('control--forword'),
+        controlBackwordDOM: document.getElementById('control--backword'),
+        from: new Date('2019/01/01'),
+        languageId: WebLanguageUtils.currentLanguageId,
+        tags: ['course'],
+        to: new Date(Date.now()),
+        page: 1,
+    });
+
+    getNews.exec();
 }
 catch (err) {
     console.error(err);

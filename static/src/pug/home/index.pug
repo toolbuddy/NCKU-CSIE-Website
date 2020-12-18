@@ -8,7 +8,7 @@ append data
         'topic': 'Latest News',
         'recruit': 'Recruit Students',
         'more':  'more...',
-        'hot':   'Hot News',
+        'news':  'Hot News',
         'highSchool': 'For High School Students',
         'imi': '',
         'imis': '',
@@ -19,8 +19,8 @@ append data
         'title': '首頁',
         'topic': '最新消息',
         'recruit': '招生訊息',
+        'news': '焦點新聞',
         'more':  '更多資訊...',
-        'hot':   '最近熱門',
         'highSchool': '高中生專區',
         'imi': '醫資所',
         'imis': '製造所',
@@ -49,20 +49,31 @@ append content
     nav.tv__series.series
 
   +topic( 'content', i18n[ LANG.id ].topic )
-  +topic( 'content_recruit', i18n[ LANG.id ].recruit )
 
   section#announcement.content__announcement.announcement
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
-    aside.announcement__more.more
-      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
+  a.content__announcement-link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
+  +topic( 'content_recruit', i18n[ LANG.id ].recruit )
 
   section#recruit-announcement.content__recruit-announcement.recruit-announcement
     +noResult( 'recruit-announcement' )
     +loading( 'recruit-announcement' )
     nav.recruit-announcement__briefings.briefings
-    a.recruit-announcement__link.link( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }`
+
+  a.content__recriut-link( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }`
+
+  +topic( 'content_news', i18n[ LANG.id ].news )
+  section#news.content__news.news
+    +noResult( 'news' )
+    +loading( 'news' )
+    nav.news__briefings.briefings
+    section.news__pages.pages
+      button#control--forword.pages__control.pages__control--forword= '<'
+      button#control--backword.pages__control.pages__control--backword= '>'
 
   section#high-school.content__high-school.high-school
     figure.high-school__banner
