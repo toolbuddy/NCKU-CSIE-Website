@@ -69,6 +69,7 @@ module.exports = (env, argv) => {
             'announcement/all': './announcement/all.js',
             'announcement/index': './announcement/index.js',
             'announcement/detail': './announcement/detail.js',
+            'announcement/admission': './announcement/admission.js',
             'announcement/recruitment': './announcement/recruitment.js',
 
             // Route `error`.

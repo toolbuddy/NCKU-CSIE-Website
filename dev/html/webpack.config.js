@@ -87,6 +87,7 @@ module.exports = (env, argv) => {
             'announcement/activity': './announcement/activity.pug',
             'announcement/all': './announcement/all.pug',
             'announcement/index': './announcement/index.pug',
+            'announcement/admission': './announcement/admission.pug',
             'announcement/recruitment': './announcement/recruitment.pug',
 
             // Route `error`

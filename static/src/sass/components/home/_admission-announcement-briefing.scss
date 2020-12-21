@@ -4,39 +4,39 @@
 @import 'components/announcement/tags';
 
 // component
-// `.#{ $block } > .#{ $block }__recruit-announcement.recruit-announcement`
-@mixin recruit-announcement ( $block ) {
+// `.#{ $block } > .#{ $block }__admission-announcement.admission-announcement`
+@mixin admission-announcement ( $block ) {
   // element
-  // `.#{ $block } > .#{ $block }__recruit-announcement`
+  // `.#{ $block } > .#{ $block }__admission-announcement`
   // block
-  // `.#{ $block } > .recruit-announcement`
-  > .#{ $block }__recruit-announcement.recruit-announcement {
+  // `.#{ $block } > .admission-announcement`
+  > .#{ $block }__admission-announcement.admission-announcement {
     // [ variable ]
     $large: 992px;
 
     // element
-    // `> .#{ $block } > .recruit-announcement > .recruit-announcement__no-result`
+    // `> .#{ $block } > .admission-announcement > .admission-announcement__no-result`
     // block
-    // `> .#{ $block } > .recruit-announcement > .no-result`
-    @include no-result( 'recruit-announcement' ) {
+    // `> .#{ $block } > .admission-announcement > .no-result`
+    @include no-result( 'admission-announcement' ) {
       // [ layout ]
       margin-top: font__px-to-rem( 64 );
     }
 
     // element
-    // `> .#{ $block } > .recruit-announcement > .recruit-announcement__loading`
+    // `> .#{ $block } > .recruiadmissiont-announcement > .admission-announcement__loading`
     // block
-    // `> .#{ $block } > .recruit-announcement > .loading`
-    @include loading( 'recruit-announcement' ) {
+    // `> .#{ $block } > .admission-announcement > .loading`
+    @include loading( 'admission-announcement' ) {
       // [ layout ]
       margin-top: font__px-to-rem( 64 );
     }
 
     // element
-    // `> .#{ $block } > .recruit-announcement > .announcement__briefings`
+    // `> .#{ $block } > .admission-announcement > .announcement__briefings`
     // block
-    // `> .#{ $block } > .recruit-announcement > .briefings`
-    > .recruit-announcement__briefings.briefings {
+    // `> .#{ $block } > .admission-announcement > .briefings`
+    > .admission-announcement__briefings.briefings {
       // [ RWD: $large ]
       @media screen and ( min-width: $large ) {
         // [ layout ]
@@ -44,9 +44,9 @@
       }
 
       // element
-      // `> .#{ $block } > .recruit-announcement > .briefings > .briefings__briefing`
+      // `> .#{ $block } > .admission-announcement > .briefings > .briefings__briefing`
       // block
-      // `> .#{ $block } > .recruit-announcement > .briefings > .briefing`
+      // `> .#{ $block } > .admission-announcement > .briefings > .briefing`
       > .briefings__briefing.briefing {
         // [ layout ]
         display: grid;
@@ -121,7 +121,7 @@
         }
 
         // element
-        // `> .#{ $block } > .recruit-announcement > .briefings > .briefing > .briefing__article`
+        // `> .#{ $block } > .admission-announcement > .briefings > .briefing > .briefing__article`
         > .briefing__article {
           // [ position ]
           grid-area: briefing__article;
@@ -146,7 +146,7 @@
         }
 
         // element
-        // `> .#{ $block } > .recruit-announcement > .briefings > .briefing > .briefing__time`
+        // `> .#{ $block } > .admission-announcement > .briefings > .briefing > .briefing__time`
         > .briefing__time {
           // [ position ]
           grid-area: briefing__time;

@@ -78,6 +78,7 @@ module.exports = (env, argv) => {
             'announcement/all': './announcement/all.scss',
             'announcement/index': './announcement/index.scss',
             'announcement/detail': './announcement/detail.scss',
+            'announcement/admission': './announcement/admission.scss',
             'announcement/recruitment': './announcement/recruitment.scss',
 
             // Route `error`

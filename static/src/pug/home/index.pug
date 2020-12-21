@@ -6,7 +6,7 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Home',
         'topic': 'Latest News',
-        'recruit': 'Recruit Students',
+        'admission': 'Admissions',
         'more':  'more...',
         'news':  'Hot News',
         'highSchool': 'For High School Students',
@@ -18,7 +18,7 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
-        'recruit': '招生訊息',
+        'admission': '招生訊息',
         'news': '焦點新聞',
         'more':  '更多資訊...',
         'highSchool': '高中生專區',
@@ -57,14 +57,14 @@ append content
 
   a.content__announcement-link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
 
-  +topic( 'content_recruit', i18n[ LANG.id ].recruit )
+  +topic( 'content_admission', i18n[ LANG.id ].admission )
 
-  section#recruit-announcement.content__recruit-announcement.recruit-announcement
-    +noResult( 'recruit-announcement' )
-    +loading( 'recruit-announcement' )
-    nav.recruit-announcement__briefings.briefings
+  section#admission-announcement.content__admission-announcement.admission-announcement
+    +noResult( 'admission-announcement' )
+    +loading( 'admission-announcement' )
+    nav.admission-announcement__briefings.briefings
 
-  a.content__recriut-link( href = UTILS.url( { href : 'announcement/all' } ) )= `${ i18n[ LANG.id ].more }`
+  a.content__recriut-link( href = UTILS.url( { href : 'announcement/admission' } ) )= `${ i18n[ LANG.id ].more }`
 
   +topic( 'content_news', i18n[ LANG.id ].news )
   section#news.content__news.news

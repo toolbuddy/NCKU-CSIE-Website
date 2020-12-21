@@ -3,7 +3,7 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import tagUtils from 'models/announcement/utils/tag.js';
-import {GetAllAnnouncement, GetRecruitAnnouncement} from 'static/src/js/components/home/get-announcement.js';
+import {GetAllAnnouncement, GetAdmissionAnnouncement} from 'static/src/js/components/home/get-announcement.js';
 import GetNews from 'static/src/js/components/home/get-news.js';
 import GetTvAnnouncements from 'static/src/js/components/home/get-tv-announcements.js';
 
@@ -70,9 +70,9 @@ catch (err) {
     console.error(err);
 }
 try {
-    const getRecruitAnnouncement = new GetRecruitAnnouncement({
+    const getAdmissionAnnouncement = new GetAdmissionAnnouncement({
         amount: 7,
-        announcementDOM: document.getElementById('recruit-announcement'),
+        announcementDOM: document.getElementById('admission-announcement'),
         from: new Date('2019/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
         tags: ['course'],
@@ -80,7 +80,7 @@ try {
         page: 1,
     });
 
-    getRecruitAnnouncement.exec();
+    getAdmissionAnnouncement.exec();
 }
 catch (err) {
     console.error(err);

@@ -10,7 +10,7 @@
 @import 'components/common/footer';
 @import 'components/home/tv';
 @import 'components/announcement/briefing';
-@import 'components/home/recruit-announcement-briefing';
+@import 'components/home/admission-announcement-briefing';
 
 // block
 // `.body`
@@ -42,9 +42,9 @@
         '.           topic            .'
         '.           announcement     .'
         '.           all-more         .'
-        '.           recruit-topic    . '
-        '.           recruit-announcement .'
-        '.           recruit-more     .'
+        '.           admission-topic    . '
+        '.           admission-announcement .'
+        '.           admission-more     .'
         '.           news-topic       .'
         '.           news             .'
         'high-school high-school      high-school'
@@ -69,9 +69,9 @@
         areas:
           'tv          tv           tv          tv                   tv'
           '.           .            .           .                    .'
-          '.           topic        .           recruit-topic        .'
-          '.           announcement .           recruit-announcement .'
-          '.           all-more     .           recruit-more         .'
+          '.           topic        .           admission-topic        .'
+          '.           announcement .           admission-announcement .'
+          '.           all-more     .           admission-more         .'
           '.           news-topic   news-topic  news-topic           .'
           '.           news         news        news                 .'
           'high-school high-school  high-school high-school          high-school'
@@ -111,9 +111,9 @@
     // `.body > .content > .content__topic`
     // block
     // `.body > .content > .topic`
-    @include topic( $block: 'content_recruit' ) {
+    @include topic( $block: 'content_admission' ) {
       // [ position ]
-      grid-area: recruit-topic;
+      grid-area: admission-topic;
     }
 
     // element
@@ -442,7 +442,7 @@
     // `.body > .content > .announcement > .more`
     > .content__recriut-link {
       // [ layout ]
-      grid-area: recruit-more;
+      grid-area: admission-more;
       @extend %announcement-link;
 
       // [ RWD: $large ]
@@ -767,10 +767,10 @@
     }
 
     // element
-    // `.body > .content > .recruit-announcement`
-    @include recruit-announcement ( $block: 'content' ) {
+    // `.body > .content > .admission-announcement`
+    @include admission-announcement ( $block: 'content' ) {
       // [ position ]
-      grid-area: recruit-announcement;
+      grid-area: admission-announcement;
 
       // [ layout ]
       margin-top: font__px-to-rem( 32 );

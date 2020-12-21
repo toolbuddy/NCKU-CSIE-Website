@@ -138,7 +138,7 @@ export class GetAllAnnouncement {
     }
 }
 
-export class GetRecruitAnnouncement extends GetAllAnnouncement {
+export class GetAdmissionAnnouncement extends GetAllAnnouncement {
     get queryString () {
         return [
             `amount=${this.amount}`,
