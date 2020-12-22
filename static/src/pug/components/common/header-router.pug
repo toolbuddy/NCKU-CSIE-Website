@@ -6,6 +6,18 @@ mixin navigation__list
   ul.navigation__list.list
     li.list__item.item
       a.item__link.item__link--no-dropdown( href = i18n[ LANG.id ].home.index.route )= i18n[ LANG.id ].home.index.text
+    li.list__item.item.list__item--announcement
+      a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
+      button.item__switch
+      ul.item__dropdown.dropdown
+        li.dropdown__item.item
+          a.item__link( href = i18n[ LANG.id ].announcement.all.route )= i18n[ LANG.id ].announcement.all.text
+        li.dropdown__item.item
+          a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
+        li.dropdown__item.item
+          a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
+        li.dropdown__item.item
+          a.item__link( href = i18n[ LANG.id ].announcement.admission.route )= i18n[ LANG.id ].announcement.admission.text
     li.list__item.item.list__item--about
       a.item__link( href = i18n[ LANG.id ].about.index.route )= i18n[ LANG.id ].about.index.text
       button.item__switch
@@ -15,19 +27,13 @@ mixin navigation__list
         li.dropdown__item.item
           a.item__link( href = i18n[ LANG.id ].about.faculty.route )= i18n[ LANG.id ].about.faculty.text
         li.dropdown__item.item
+          a.item__link( href = i18n[ LANG.id ].about.lab.route )= i18n[ LANG.id ].about.lab.text
+        li.dropdown__item.item
           a.item__link( href = i18n[ LANG.id ].about.staff.route )= i18n[ LANG.id ].about.staff.text
         li.dropdown__item.item
           a.item__link( href = i18n[ LANG.id ].about.award.route )= i18n[ LANG.id ].about.award.text
         li.dropdown__item.item
           a.item__link( href = i18n[ LANG.id ].about.contact.route )= i18n[ LANG.id ].about.contact.text
-    li.list__item.item.list__item--research
-      a.item__link( href = i18n[ LANG.id ].research.index.route )= i18n[ LANG.id ].research.index.text
-      button.item__switch
-      ul.item__dropdown.dropdown
-        li.dropdown__item.item
-          a.item__link( href = i18n[ LANG.id ].research.lab.route )= i18n[ LANG.id ].research.lab.text
-        li.dropdown__item.item
-          a.item__link( href = i18n[ LANG.id ].research.publication.route )= i18n[ LANG.id ].research.publication.text
     li.list__item.item.list__item--student
       a.item__link( href = i18n[ LANG.id ].student.index.route )= i18n[ LANG.id ].student.index.text
       button.item__switch
@@ -40,16 +46,6 @@ mixin navigation__list
           a.item__link( href = i18n[ LANG.id ].student.master.route )= i18n[ LANG.id ].student.master.text
         li.dropdown__item.item
           a.item__link( href = i18n[ LANG.id ].student.phd.route )= i18n[ LANG.id ].student.phd.text
-    li.list__item.item.list__item--announcement
-      a.item__link( href = i18n[ LANG.id ].announcement.index.route )= i18n[ LANG.id ].announcement.index.text
-      button.item__switch
-      ul.item__dropdown.dropdown
-        li.dropdown__item.item
-          a.item__link( href = i18n[ LANG.id ].announcement.all.route )= i18n[ LANG.id ].announcement.all.text
-        li.dropdown__item.item
-          a.item__link( href = i18n[ LANG.id ].announcement.activity.route )= i18n[ LANG.id ].announcement.activity.text
-        li.dropdown__item.item
-          a.item__link( href = i18n[ LANG.id ].announcement.recruitment.route )= i18n[ LANG.id ].announcement.recruitment.text
     li.list__item.item.list__item--resource
       a.item__link( href = i18n[ LANG.id ].resource.index.route )= i18n[ LANG.id ].resource.index.text
       button.item__switch

@@ -71,12 +71,14 @@ module.exports = (env, argv) => {
             'about/index': './about/index.scss',
             'about/intro': './about/intro.scss',
             'about/staff': './about/staff.scss',
+            'about/lab': './about/lab.scss',
 
             // Route `announcement`
             'announcement/activity': './announcement/activity.scss',
             'announcement/all': './announcement/all.scss',
             'announcement/index': './announcement/index.scss',
             'announcement/detail': './announcement/detail.scss',
+            'announcement/admission': './announcement/admission.scss',
             'announcement/recruitment': './announcement/recruitment.scss',
 
             // Route `error`
@@ -85,11 +87,6 @@ module.exports = (env, argv) => {
             // Route `home`
             'home/index': './home/index.scss',
             'home/search': './home/search.scss',
-
-            // Route `research`
-            'research/index': './research/index.scss',
-            'research/lab': './research/lab.scss',
-            'research/publication': './research/publication.scss',
 
             // Route `resource`
             'resource/alumni': './resource/alumni.scss',

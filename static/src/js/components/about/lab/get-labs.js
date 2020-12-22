@@ -8,7 +8,7 @@
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import {classAdd, classRemove} from 'static/src/js/utils/style.js';
 import {host, staticHost} from 'settings/server/config.js';
-import cardHTML from 'static/src/pug/components/research/lab/card.pug';
+import cardHTML from 'static/src/pug/components/about/lab/card.pug';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 
@@ -81,12 +81,12 @@ export default class GetLabs {
      * @param {object[]} data
      */
 
-    renderCards (data) {
+    renderCards (datas) {
         this.DOM.cards.innerHTML = '';
-        data.forEach((d) => {
+        datas.forEach((data) => {
             try {
                 this.DOM.cards.innerHTML += cardHTML({
-                    d,
+                    data,
                     LANG: {
                         id: this.state.languageId,
                         getLanguageId: WebLanguageUtils.getLanguageId,

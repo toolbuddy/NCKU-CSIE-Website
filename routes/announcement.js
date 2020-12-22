@@ -45,6 +45,14 @@ router
 .get(staticHtml('announcement/activity'));
 
 /**
+ * Resolve URL `/announcement/admission`.
+ */
+
+router
+.route('/admission')
+.get(staticHtml('announcement/admission'));
+
+/**
  * Resolve URL `/announcement/all`.
  */
 

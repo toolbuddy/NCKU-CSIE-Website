@@ -1,13 +1,12 @@
-import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
+import briefingHTML from 'static/src/pug/components/home/news-briefing.pug';
 import {classAdd, classRemove} from 'static/src/js/utils/style.js';
 import {host} from 'settings/server/config.js';
-import recruitAnnouncementBriefingHTML from 'static/src/pug/components/home/recruit-announcement-briefing.pug';
 import tagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
-export class GetAllAnnouncement {
+export default class GetNews {
     constructor (opt) {
         opt = opt || {};
 
@@ -16,6 +15,10 @@ export class GetAllAnnouncement {
             !ValidateUtils.isPositiveInteger(opt.amount) ||
             !opt.announcementDOM ||
             !ValidateUtils.isDomElement(opt.announcementDOM) ||
+            !opt.controlForwordDOM ||
+            !ValidateUtils.isDomElement(opt.controlForwordDOM) ||
+            !opt.controlBackwordDOM ||
+            !ValidateUtils.isDomElement(opt.controlBackwordDOM) ||
             !opt.from ||
             !ValidateUtils.isValidDate(opt.from) ||
             !WebLanguageUtils.isSupportedLanguageId(opt.languageId) ||
@@ -33,6 +36,10 @@ export class GetAllAnnouncement {
             noResult: opt.announcementDOM.querySelector(announcementQuerySelector('no-result')),
             loading: opt.announcementDOM.querySelector(announcementQuerySelector('loading')),
             briefings: opt.announcementDOM.querySelector(announcementQuerySelector('briefings')),
+            control: {
+                forword: opt.controlForwordDOM,
+                backword: opt.controlBackwordDOM,
+            },
         };
 
         if (
@@ -47,6 +54,9 @@ export class GetAllAnnouncement {
         this.tags = opt.tags;
         this.to = opt.to;
         this.page = opt.page;
+        this.state = {
+            page: 1,
+        };
     }
 
     get queryString () {
@@ -64,22 +74,30 @@ export class GetAllAnnouncement {
         return `${host}/api/announcement/get-announcements-by-or-tags?${this.queryString}`;
     }
 
+    singleNewsQueryString (page) {
+        return [
+            'amount=1',
+            `languageId=${this.languageId}`,
+            `from=${Number(this.from)}`,
+            `page=${page}`,
+            `to=${Number(this.to)}`,
+            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
+        ].join('&');
+    }
+
+    singleNewsQueryApi (page) {
+        return `${host}/api/announcement/get-announcements-by-or-tags?${this.singleNewsQueryString(page)}`;
+    }
+
     static formatUpdateTime (time) {
         if (!(ValidateUtils.isValidDate(time)))
             throw new TypeError('Invalid time.');
 
         return [
-            [
-                `${time.getFullYear()}`,
-                `${time.getMonth() < 9 ? `0${String(time.getMonth() + 1)}` : String(time.getMonth() + 1)}`,
-                `${time.getDate() < 10 ? `0${String(time.getDate())}` : String(time.getDate())}`,
-            ].join('-'),
-            [
-                `${time.getHours() < 10 ? `0${String(time.getHours())}` : String(time.getHours())}`,
-                `${time.getMinutes() < 10 ? `0${String(time.getMinutes())}` : String(time.getMinutes())}`,
-                `${time.getSeconds() < 10 ? `0${String(time.getSeconds())}` : String(time.getSeconds())}`,
-            ].join(':'),
-        ].join(' | ');
+            `${time.getFullYear()}`,
+            `${time.getMonth() < 9 ? `0${String(time.getMonth() + 1)}` : String(time.getMonth() + 1)}`,
+            `${time.getDate() < 10 ? `0${String(time.getDate())}` : String(time.getDate())}`,
+        ].join('-');
     }
 
     static formatData ({data, languageId}) {
@@ -91,7 +109,7 @@ export class GetAllAnnouncement {
                     languageId,
                 }),
             }));
-            briefing.updateTime = GetAllAnnouncement.formatUpdateTime(new Date(briefing.updateTime));
+            briefing.time = GetNews.formatUpdateTime(new Date(briefing.updateTime));
             return briefing;
         });
     }
@@ -108,6 +126,87 @@ export class GetAllAnnouncement {
                     url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
                 },
             });
+        });
+    }
+
+    insertBack (data) {
+        const extractTextObj = data;
+        extractTextObj.forEach((ann) => {
+            ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
+        });
+        this.DOM.briefings.removeChild(this.DOM.briefings.childNodes[0]);
+        extractTextObj.forEach((briefing) => {
+            this.DOM.briefings.innerHTML += briefingHTML({
+                briefing,
+                UTILS: {
+                    url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
+                },
+            });
+        });
+    }
+
+    insertFront (data) {
+        const extractTextObj = data;
+        extractTextObj.forEach((ann) => {
+            ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
+        });
+        this.DOM.briefings.removeChild(this.DOM.briefings.lastElementChild);
+        extractTextObj.forEach((briefing) => {
+            this.DOM.briefings.insertAdjacentHTML('afterbegin', briefingHTML({
+                briefing,
+                UTILS: {
+                    url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
+                },
+            }));
+        });
+    }
+
+    subscribeControl () {
+        this.DOM.control.forword.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+                const res = await fetch(this.singleNewsQueryApi(this.state.page + 4));
+
+                if (!res.ok)
+                    throw new Error('No news found');
+
+                const data = await res.json();
+
+                this.insertBack(this.constructor.formatData({
+                    data,
+                    languageId: this.languageId,
+                }));
+
+                this.state.page += 1;
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+        this.DOM.control.backword.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            try {
+                if (this.state.page > 1) {
+                    const res = await fetch(this.singleNewsQueryApi(this.state.page - 1));
+
+                    if (!res.ok)
+                        throw new Error('No news found');
+
+                    const data = await res.json();
+
+                    this.insertFront(this.constructor.formatData({
+                        data,
+                        languageId: this.languageId,
+                    }));
+
+                    this.state.page -= 1;
+                }
+            }
+            catch (err) {
+                console.error(err);
+            }
         });
     }
 
@@ -129,61 +228,13 @@ export class GetAllAnnouncement {
             }));
 
             classAdd(this.DOM.loading, 'loading--hidden');
+
+            this.subscribeControl();
         }
         catch (err) {
             classAdd(this.DOM.loading, 'loading--hidden');
             classRemove(this.DOM.noResult, 'no-result--hidden');
             console.error(err);
         }
-    }
-}
-
-export class GetAdmissionAnnouncement extends GetAllAnnouncement {
-    get queryString () {
-        return [
-            `amount=${this.amount}`,
-            `languageId=${this.languageId}`,
-            `from=${Number(this.from)}`,
-            `page=${this.page}`,
-            `to=${Number(this.to)}`,
-            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
-        ].join('&');
-    }
-
-    get queryApi () {
-        return `${host}/api/announcement/get-announcements-by-or-tags?${this.queryString}`;
-    }
-
-    static formatData ({data}) {
-        return data.map((briefing) => {
-            briefing.updateTime = GetAllAnnouncement.formatUpdateTime(new Date(briefing.updateTime));
-            return briefing;
-        });
-    }
-
-    static formatIndex (index) {
-        if (typeof index !== 'number')
-            throw new TypeError('Invalid number.');
-
-        return index + 1 >= 10 ? `${index + 1}` : `0${index + 1}`;
-    }
-
-    render (data) {
-        const extractTextObj = data;
-        extractTextObj.forEach((ann) => {
-            ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
-        });
-        extractTextObj.forEach((briefing) => {
-            this.DOM.briefings.innerHTML += recruitAnnouncementBriefingHTML({
-                briefing,
-                UTILS: {
-                    url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
-                },
-                LANG: {
-                    getLanguageId: WebLanguageUtils.getLanguageId,
-                    id: this.languageId,
-                },
-            });
-        });
     }
 }

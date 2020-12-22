@@ -1,5 +1,8 @@
 @import 'components/common/font';
 
+// [ variable ]
+$small: 500px;
+
 // template
 // `.tags > .tags__tag.tags__tag--?`
 // This mixin should not be used outside this file.
@@ -38,20 +41,32 @@
       line-height: font__px-to-rem( 14 );
 
       // [ skin ]
-      min-width: font__px-to-rem( 105 );
+      min-width: font__px-to-rem( 70 );
       height: font__px-to-rem( 30 );
       margin: {
-        right: font__px-to-rem( 16 );
+        right: font__px-to-rem( 8 );
         bottom: font__px-to-rem( 10 );
       }
       border-radius: font__px-to-rem( 15 );
       padding: {
         top: font__px-to-rem( 9 );
         bottom: font__px-to-rem( 9 );
-        left: font__px-to-rem( 14 );
-        right: font__px-to-rem( 14 );
+        left: font__px-to-rem( 8 );
+        right: font__px-to-rem( 8 );
       }
-      font-size: font__px-to-rem( 14 );
+      font-size: font__px-to-rem( 12 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
+        // [ skin ]
+        min-width: font__px-to-rem( 90 );
+        font-size: font__px-to-rem( 14 );
+        margin-right: font__px-to-rem( 16 );
+        padding: {
+          right: font__px-to-rem( 14 );
+          left: font__px-to-rem( 14 );
+        }
+      }
 
       // [ interaction ]
       &:hover {

@@ -9,18 +9,21 @@
   // `> .#{ $block } > .briefing`
   > .#{ $block }__briefing.briefing {
     // [ variable ]
+    $small: 560px;
+    $medium: 768px;
     $large: 992px;
 
     // [ layout ]
     display: grid;
     grid-template: {
       areas:
-        'briefing__title  briefing__title  briefing__title'
-        'briefing__tags   briefing__tags   briefing__tags'
-        'briefing__time   briefing__time   .'
-        'briefing__button briefing__button briefing__button';
-      rows: min-content auto 1fr;
-      columns: 5fr 1fr 13fr auto;
+        'briefing__tags    briefing__tags'
+        'briefing__title   .'
+        'briefing__article .'
+        'briefing__time    briefing__time'
+        'briefing__button  briefing__button';
+      rows: auto font__px-to-rem( 24 ) font__px-to-rem( 28 ) font__px-to-rem( 16 );
+      columns: auto font__px-to-rem( 50 );
     }
     margin-bottom: font__px-to-rem( 14 );
 
@@ -48,28 +51,39 @@
       cursor: pointer;
     }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
+    // [ RWD: $small ]
+    @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template: {
         areas:
-          'briefing__title   briefing__title   briefing__title'
-          'briefing__article briefing__article briefing__article'
           'briefing__tags    briefing__tags    briefing__tags'
-          'briefing__time    briefing__time    briefing__time'
+          'briefing__title   briefing__title   .'
+          'briefing__article briefing__article briefing__time'
           '.                 .                 briefing__button';
-        rows: min-content font__px-to-rem( 48 ) 1fr auto auto;
-        columns: 5fr 1fr 13fr;
+        rows: auto min-content font__px-to-rem( 20 ) auto;
+        columns: 5fr 1fr font__px-to-rem( 100 );
       }
 
       // [ skin ]
-      width: font__px-to-rem( 424 );
+      width: 100%;
       padding: {
         top: font__px-to-rem( 26 );
-        bottom: font__px-to-rem( 15 );
+        bottom: font__px-to-rem( 26 );
         left: font__px-to-rem( 32 );
         right: font__px-to-rem( 32 );
       }
+    }
+
+    // [ RWD: $medium ]
+    @media screen and ( min-width: $medium ) {
+      grid-template-columns: 5fr 1fr font__px-to-rem( 150 );
+    }
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ skin ]
+      grid-template-columns: 5fr 1fr 3fr;
+      width: font__px-to-rem( 924 );
     }
 
     // element
@@ -96,25 +110,46 @@
       margin-bottom: font__px-to-rem( 15 );
       line-height: font__px-to-rem( 16 ) * 1.2;
       word-wrap: break-word;
+      white-space: nowrap;
 
       // [ skin ]
+      overflow: hidden;
+      text-overflow: ellipsis;
       height: min-content;
       color: #000000;
       font: {
         size: font__px-to-rem( 16 );
         weight: bold;
       }
+
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin: {
+          bottom: font__px-to-rem( 8 );
+          top: font__px-to-rem( 8 );
+        }
+      }
     }
 
     // element
     // `> .#{ $block } > .briefing > .briefing__article`
     > .briefing__article {
-      // [ layout ]
-      display: none;
-      margin-bottom: font__px-to-rem( 15 );
+      // [ position ]
+      grid-area: briefing__article;
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
+      // [ layout ]
+      display: block;
+      white-space: nowrap;
+      line-height: font__px-to-rem( 14 ) * 1.2;
+
+      // [ skin ]
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: font__px-to-rem( 14 );
+
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
         // [ position ]
         grid-area: briefing__article;
 
@@ -135,6 +170,8 @@
     > .briefing__time {
       // [ position ]
       grid-area: briefing__time;
+      justify-self: end;
+      align-self: end;
 
       // [ layout ]
       display: block;
@@ -144,8 +181,8 @@
       color: #b5babf;
       font-size: font__px-to-rem( 14 );
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
+      // [ RWD: $small ]
+      @media screen and ( min-width: $small ) {
         // [ position ]
         justify-self: end;
         align-self: end;

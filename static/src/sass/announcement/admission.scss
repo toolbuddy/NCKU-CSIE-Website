@@ -31,7 +31,11 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'student/master' );
+  @include banner( $block: 'body' ,$image: 'student/college' ) {
+    &::before {
+      filter: blur( .1rem ) brightness( .9 );
+    }
+  }
 
   // element
   // `.body > .body__content`
@@ -133,45 +137,31 @@
         // [ layout ]
         display: grid;
         grid-template-areas:
+          'recruitment'
+          'college'
           'master'
-          'internship'
-          'scholarship'
-          'international'
-          'award'
-          'speech'
-          'conference'
-          'exhibition'
-          'competition'
-          'rule';
+          'phd';
 
         // [ RWD: $x-small ]
         @media screen and ( min-width: $x-small ) {
           // [ layout ]
           grid-template-areas:
-            'master        speech'
-            'internship    conference'
-            'international exhibition'
-            'scholarship   competition'
-            'award         rule';
+            'recruitment   college'
+            'master        phd';
         }
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'master     rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'recruitment .      .'
+            'college     master phd';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
-          grid-template-areas:
-            'master      rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+          grid-template-areas: 'recruitment college master phd';
         }
 
         // [ RWD: $x-large ]
@@ -179,53 +169,23 @@
           // [ layout ]
           grid-template: {
             areas:
-              'master speech     conference    exhibition  competition'
-              'award  internship international scholarship rule'
-              '.      .            .            .          .';
+              'recruitment college master phd';
             rows: repeat( 3, auto );
           }
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
-        > .tags__tag[ data-tag-name = 'award' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'recruitment' ]`
+        > .tags__tag[ data-tag-name = 'recruitment' ] {
           // [ position ]
-          grid-area: award;
+          grid-area: recruitment;
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'competition' ]`
-        > .tags__tag[ data-tag-name = 'competition' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
+        > .tags__tag[ data-tag-name = 'college' ] {
           // [ position ]
-          grid-area: competition;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
-        > .tags__tag[ data-tag-name = 'conference' ] {
-          // [ position ]
-          grid-area: conference;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'exhibition' ]`
-        > .tags__tag[ data-tag-name = 'exhibition' ] {
-          // [ position ]
-          grid-area: exhibition;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
-        > .tags__tag[ data-tag-name = 'international' ] {
-          // [ position ]
-          grid-area: international;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'internship' ]`
-        > .tags__tag[ data-tag-name = 'internship' ] {
-          // [ position ]
-          grid-area: internship;
+          grid-area: college;
         }
 
         // element
@@ -236,24 +196,10 @@
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'rule' ]`
-        > .tags__tag[ data-tag-name = 'rule' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'phd' ]`
+        > .tags__tag[ data-tag-name = 'phd' ] {
           // [ position ]
-          grid-area: rule;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'scholarship' ]`
-        > .tags__tag[ data-tag-name = 'scholarship' ] {
-          // [ position ]
-          grid-area: scholarship;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'speech' ]`
-        > .tags__tag[ data-tag-name = 'speech' ] {
-          // [ position ]
-          grid-area: speech;
+          grid-area: phd;
         }
       }
     }

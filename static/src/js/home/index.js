@@ -3,7 +3,8 @@ import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 import tagUtils from 'models/announcement/utils/tag.js';
-import {GetAllAnnouncement, GetHotAnnouncement} from 'static/src/js/components/home/get-announcement.js';
+import {GetAllAnnouncement, GetAdmissionAnnouncement} from 'static/src/js/components/home/get-announcement.js';
+import GetNews from 'static/src/js/components/home/get-news.js';
 import GetTvAnnouncements from 'static/src/js/components/home/get-tv-announcements.js';
 
 try {
@@ -54,7 +55,7 @@ catch (err) {
 }
 try {
     const getAllAnnouncement = new GetAllAnnouncement({
-        amount: 3,
+        amount: 5,
         announcementDOM: document.getElementById('announcement'),
         from: new Date('2019/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
@@ -69,17 +70,35 @@ catch (err) {
     console.error(err);
 }
 try {
-    const getHotAnnouncement = new GetHotAnnouncement({
-        amount: 3,
-        announcementDOM: document.getElementById('hot-announcement'),
+    const getAdmissionAnnouncement = new GetAdmissionAnnouncement({
+        amount: 7,
+        announcementDOM: document.getElementById('admission-announcement'),
         from: new Date('2019/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
-        tags: tagUtils.supportedOptions,
+        tags: ['course'],
         to: new Date(Date.now()),
         page: 1,
     });
 
-    getHotAnnouncement.exec();
+    getAdmissionAnnouncement.exec();
+}
+catch (err) {
+    console.error(err);
+}
+try {
+    const getNews = new GetNews({
+        amount: 4,
+        announcementDOM: document.getElementById('news'),
+        controlForwordDOM: document.getElementById('control--forword'),
+        controlBackwordDOM: document.getElementById('control--backword'),
+        from: new Date('2019/01/01'),
+        languageId: WebLanguageUtils.currentLanguageId,
+        tags: ['course'],
+        to: new Date(Date.now()),
+        page: 1,
+    });
+
+    getNews.exec();
 }
 catch (err) {
     console.error(err);

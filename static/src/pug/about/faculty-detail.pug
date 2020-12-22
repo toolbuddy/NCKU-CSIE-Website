@@ -11,6 +11,7 @@ append data
           about:   'About',
           faculty: 'Faculty',
         },
+        and:   'and',
         email: 'Email:',
         office: {
           address:   'Office:',
@@ -70,6 +71,9 @@ append data
           support:  'Sponser',
         },
         conference: 'Conference',
+        studentAward: {
+          topic: 'Student Award',
+        }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         title:   '詳細資料',
@@ -79,6 +83,7 @@ append data
           about:   '關於本系',
           faculty: '師資陣容',
         },
+        and:   '暨',
         email: '信箱：',
         office: {
           address:   '辦公室：',
@@ -138,9 +143,12 @@ append data
           support:  '補助單位',
         },
         conference: '參與會議',
+        studentAward: {
+          topic: '指導學生獲獎',
+        }
       },
     } );
-    const currentRoute = 'about/faculty-detail';
+    const currentRoute = `about/faculty/${ profileId }`;
 
 append title
   +title( data.profile.name )
@@ -182,76 +190,76 @@ append content
             src: `icon/user.png`,
           } )
 
-      //- Faculty's information.
-      section.profile__info.info
-        //- Faculty's name.
-        header.info__name= data.profile.name
-
+      header.profile__header.header
+        h2.header__name= data.profile.name
         //- Faculty has some titles.
         if Array.isArray( data.title ) && data.title.length
-          aside.info__titles.titles
-            each titleObj in data.title
+          aside.header__titles.titles
+            each titleObj, index in data.title
               span.titles__title= titleObj.title
+              if index < data.title.length - 1
+                span.titles__title= i18n[ LANG.id ].and
 
-        //- Faculty belongs to some departments.
-        if Array.isArray( data.department ) && data.department.length
-          aside.info__departments.departments
-            each department in data.department
-              span.departments__department= department
+      //- Faculty belongs to some departments.
+      if Array.isArray( data.department ) && data.department.length
+        aside.profile__departments.departments
+          each department in data.department
+            span.departments__department= department
 
-        //- Faculty's email.
-        if data.profile.email !== null
-          aside.info__email.email
-            span.email__text= i18n[ LANG.id ].email
-            a.email__address( href = `mailto:${ data.profile.email }` )= data.profile.email
+      //- Faculty's email.
+      if data.profile.email !== null
+        aside.profile__email.email
+          span.email__text= i18n[ LANG.id ].email
+          a.email__address( href = `mailto:${ data.profile.email }` )= data.profile.email
 
-        //- Faculty owns some offices which have an address.
-        if data.profile.officeAddress !== null
-          aside.info__office-address.office-address
-            span.office-address__text= i18n[ LANG.id ].office.address
-            address.office-address__info= data.profile.officeAddress
+      //- Faculty owns some offices which have an address.
+      if data.profile.officeAddress !== null
+        aside.profile__office-address.office-address
+          span.office-address__text= i18n[ LANG.id ].office.address
+          address.office-address__info= data.profile.officeAddress
 
-        //- Faculty owns some offices which have a telephone number.
-        if data.profile.officeTel !== null
-          aside.info__office-tel.office-tel
-            span.office-tel__text= i18n[ LANG.id ].office.tel
-            a.office-tel__number( href = `tel:${ data.profile.officeTel }` )= i18n[ LANG.id ].office.telNumber
+      //- Faculty owns some offices which have a telephone number.
+      if data.profile.officeTel !== null
+        aside.profile__office-tel.office-tel
+          span.office-tel__text= i18n[ LANG.id ].office.tel
+          a.office-tel__number( href = `tel:${ data.profile.officeTel }` )= i18n[ LANG.id ].office.telNumber
 
-        //- Faculty owns some offices which have a fax.
-        if data.profile.fax !== null
-          aside.info__fax.fax
-            span.fax__text= i18n[ LANG.id ].office.fax
-            a.fax__number( href = `tel:${ data.profile.fax }` )= data.profile.fax
+      //- Faculty owns some offices which have a fax.
+      if data.profile.fax !== null
+        aside.profile__fax.fax
+          span.fax__text= i18n[ LANG.id ].office.fax
+          a.fax__number( href = `tel:${ data.profile.fax }` )= data.profile.fax
 
-        //- Faculty owns some labs which have a name, address and even a website.
-        if data.profile.labName !== null
-          aside.info__lab.lab
-            span.lab__text= i18n[ LANG.id ].lab.name
-            if data.profile.labWeb !== null
-              a.lab__name.lab__name--link( href = data.profile.labWeb )= data.profile.labName
-            else
-              span.lab__name= data.profile.labName
-            if data.profile.labAddress !== null
-              address.lab__address= data.profile.labAddress
+      //- Faculty owns some labs which have a name, address and even a website.
+      if data.profile.labName !== null
+        aside.profile__lab.lab
+          span.lab__text= i18n[ LANG.id ].lab.name
+          if data.profile.labWeb !== null
+            a.lab__name.lab__name--link( href = data.profile.labWeb )= data.profile.labName
+          else
+            span.lab__name= data.profile.labName
+          if data.profile.labAddress !== null
+            address.lab__address= data.profile.labAddress
 
-        //- Faculty owns some labs which have a telephone number.
-        if data.profile.labTel !== null
-          aside.info__lab-tel.lab-tel
-            span.lab-tel__text= i18n[ LANG.id ].lab.tel
-            a.lab-tel__number( href = `tel:${ data.profile.labTel }` )= i18n[ LANG.id ].lab.telNumber
+      //- Faculty owns some labs which have a telephone number.
+      if data.profile.labTel !== null
+        aside.profile__lab-tel.lab-tel
+          span.lab-tel__text= i18n[ LANG.id ].lab.tel
+          a.lab-tel__number( href = `tel:${ data.profile.labTel }` )= i18n[ LANG.id ].lab.telNumber
 
-        //- Faculty owns some personal website.
-        if data.profile.personalWeb !== null
-          aside.info__personal-web.personal-web
-            span.personal-web__text= i18n[ LANG.id ].personalWeb
-            a.personal-web__address( href = data.profile.personalWeb )= data.profile.personalWeb
+      //- Faculty owns some personal website.
+      if data.profile.personalWeb !== null
+        aside.profile__personal-web.personal-web
+          span.personal-web__text= i18n[ LANG.id ].personalWeb
+          a.personal-web__address( href = data.profile.personalWeb )= data.profile.personalWeb
 
-        //- Faculty has some specialties.
-        if Array.isArray( data.specialty ) && data.specialty.length
-          aside.info__specialties.specialties
-            span.specialties__text= i18n[ LANG.id ].specialty
+      //- Faculty has some specialties.
+      if Array.isArray( data.specialty ) && data.specialty.length
+        aside.profile__specialties.specialties
+          span.specialties__text= i18n[ LANG.id ].specialty
+          span.specialties__specialty.specialty
             each specialty in data.specialty
-              span.specialties__specialty= specialty
+              span.specialty__item= specialty
 
   //- Faculty has some education history.
   if Array.isArray( data.education ) && data.education.length
@@ -493,11 +501,12 @@ append content
                 if publicationObj.issueDate !== null
                   time.context__time= publicationObj.issueDate
 
-  mixin row__col( value )
+  mixin row__value( column, title, value )
+    h4.row__title(class=`row__title--${ column }`)= title
     if value !== null
-      td.row__col= value
+      p.row__value(class=`row__value--${ column }`)= value
     else
-      td.row__col
+      p.row__value(class=`row__value--${ column }`)
 
   mixin row__col--image( src )
     if src !== null
@@ -510,95 +519,86 @@ append content
     else
       td.row__col
 
-  mixin row__col--time( time )
+  mixin row__col--time( column, title, time )
+    h4.row__title(class=`row__title--${ column }`)= title
     if time !== null && UTILS.ValidateUtils.isValidDate( new Date( time ) )
       -
         const year = new Date( time ).getFullYear();
         const month = new Date( time ).getMonth() + 1;
         const day = new Date( time ).getDay();
-      td.row__col= `${ year }.${ month }.${ day }`
+      p.row__value(class=`row__value--${ column }`)= `${ year }.${ month }.${ day }`
     else
-      td.row__col
+      p.row__value(class=`row__value--${ column }`)
 
-  mixin row__col--duration( from, to )
+  mixin row__col--duration( title, from, to )
+    h4.row__title.row__title--duration= title
     //- If there is no from time, then there must be no end time.
     if from !== null && UTILS.ValidateUtils.isValidDate( new Date( from ) )
       -
         const fromYear = new Date( from ).getFullYear();
         const fromMonth = new Date( from ).getMonth() + 1;
         const fromDay = new Date( from ).getDay();
-      td.row__col.col
-        time.col__time= `${ fromYear }.${ fromMonth }.${ fromDay }`
-        span.col__till |
+      article.row__duration.duration
+        time.duration__time= `${ fromYear }.${ fromMonth }.${ fromDay }`
+        span.duration__till
         if to !== null && UTILS.ValidateUtils.isValidDate( new Date( to ) )
           -
             const toYear = new Date( to ).getFullYear();
             const toMonth = new Date( to ).getMonth() + 1;
             const toDay = new Date( to ).getDay();
-          time.col__time= `${ toYear }.${ toMonth }.${ toDay }`
+          time.duration__time= `${ toYear }.${ toMonth }.${ toDay }`
         else
-          time.col__time
+          time.duration__time
     else
-      td.row__col
+      article.row__duration
 
-  mixin row__col--list( list )
+  mixin row__list( column, title, list )
+    h4.row__title(class=`row__title--${ column }`)= title
     if Array.isArray( list ) && list.length
-      td.row__col.col
-        ul.col__list.list
-          each item in list
-            li.list__item= item
+      article.row__list(class=`row__list--${ column }`)
+        each item, index in list
+          p.list__item= `( ${ index } ) ${item}`
     else
-      td.row__col
+      article.row__list(class=`row__list--${ column }`)
 
   //- Faculty has own some patent.
   if Array.isArray( data.patent ) && data.patent.length
     section.content__patent.patent
       +topic( 'patent', i18n[ LANG.id ].patent.topic )
-      table.patent__table.table
-        thead.table__head.head
-          tr.head__row.row
-            th.row__col= i18n[ LANG.id ].patent.name
-            th.row__col= i18n[ LANG.id ].patent.nation
-            th.row__col= i18n[ LANG.id ].patent.owner
-            th.row__col= i18n[ LANG.id ].patent.inventor
-            th.row__col= i18n[ LANG.id ].patent.certi
-            th.row__col= i18n[ LANG.id ].patent.apply
-            th.row__col= i18n[ LANG.id ].patent.duration
-        tbody.table__body.body
-          each patentObj in data.patent
-            //- If there is no patent at all, then there is no point to show it.
-            if patentObj.patent !== null
-              tr.body__row.row
-                +row__col( patentObj.patent )
-                +row__col--image( patentObj.nation )
-                +row__col( patentObj.patentOwner )
-                +row__col( patentObj.inventor )
-                +row__col( patentObj.certificationNumber )
-                +row__col--time( patentObj.applicationDate )
-                +row__col--duration( patentObj.issueDate, patentObj.expireDate )
+      each patentObj in data.patent
+        //- If there is no patent at all, then there is no point to show it.
+        if patentObj.patent !== null
+          h3.patent__name.name= patentObj.patent
+          section.patent__row.row
+            +row__value( 'name', i18n[ LANG.id ].patent.name, patentObj.patent )
+            h4.row__title.row__title--nation= i18n[ LANG.id ].patent.nation
+            article.row__image.row__image--nation.image
+              +image( {
+                alt: patentObj.nation,
+                className: 'image__icon',
+                src: `icon/${ patentObj.nation }`,
+              } )
+              p.image__value.image__value--nation=   UTILS.faculty.nationUtils.getValueByOption( {option:patentObj.nation, languageId: LANG.id} )
+            +row__value( 'owner', i18n[ LANG.id ].patent.owner, patentObj.patentOwner )
+            +row__value( 'inventor', i18n[ LANG.id ].patent.inventor, patentObj.inventor )
+            +row__value( 'certi', i18n[ LANG.id ].patent.certi, patentObj.certificationNumber )
+            +row__col--time('apply', i18n[ LANG.id ].patent.apply, patentObj.applicationDate)
+            +row__col--duration( i18n[ LANG.id ].patent.duration, patentObj.issueDate, patentObj.expireDate )
 
   //- Faculty has some technology transfer.
   if Array.isArray( data.technologyTransfer ) && data.technologyTransfer.length
     section.content__technology-transfer.technology-transfer
       +topic( 'technology-transfer', i18n[ LANG.id ].technologyTransfer.topic )
-      table.technology-transfer__table.table
-        thead.table__head.head
-          tr.head__row.row
-            th.row__col= i18n[ LANG.id ].technologyTransfer.technology
-            th.row__col= i18n[ LANG.id ].technologyTransfer.patent
-            th.row__col= i18n[ LANG.id ].technologyTransfer.authorizingParty
-            th.row__col= i18n[ LANG.id ].technologyTransfer.authorizedParty
-            th.row__col= i18n[ LANG.id ].technologyTransfer.duration
-        tbody.table__body.body
-          each technologyTransferObj in data.technologyTransfer
-            //- If there is no technology at all, then there is no point to show it.
-            if technologyTransferObj.technology !== null
-              tr.body__row.row
-                +row__col( technologyTransferObj.technology )
-                +row__col--list( technologyTransferObj.patent )
-                +row__col( technologyTransferObj.authorizingParty )
-                +row__col( technologyTransferObj.authorizedParty )
-                +row__col--duration( technologyTransferObj.from, technologyTransferObj.to )
+      each technologyTransferObj in data.technologyTransfer
+        //- If there is no technology at all, then there is no point to show it.
+        if technologyTransferObj.technology !== null
+          h3.technology-transfer__title.title= technologyTransferObj.technology
+          section.technology-transfer__row.row
+            +row__value( 'technology', i18n[ LANG.id ].technologyTransfer.technology, technologyTransferObj.technology )
+            +row__list(  'patent', i18n[ LANG.id ].technologyTransfer.patent, technologyTransferObj.patent )
+            +row__value( 'authorizingParty', i18n[ LANG.id ].technologyTransfer.authorizingParty, technologyTransferObj.authorizingParty )
+            +row__value( 'authorizedParty', i18n[ LANG.id ].technologyTransfer.authorizedParty, technologyTransferObj.authorizedParty )
+            +row__col--duration( i18n[ LANG.id ].technologyTransfer.duration, technologyTransferObj.from, technologyTransferObj.to )
 
   //- Faculty has some projects.
   if Array.isArray( data.project ) && data.project.length
@@ -606,20 +606,56 @@ append content
       +topic( 'project', i18n[ LANG.id ].project.topic )
       each id in UTILS.faculty.projectCategoryUtils.supportedId
         article.project__title= UTILS.faculty.projectCategoryUtils.getValueById( { id, languageId: LANG.id } )
-        table.project__table.table
-          thead.table__head.head
-            tr.head__row.row
-              th.row__col= i18n[ LANG.id ].project.name
-              th.row__col= i18n[ LANG.id ].project.duration
-              th.row__col= i18n[ LANG.id ].project.support
-          tbody.table__body.body
-            each projectObj in data.project
-              //- If there is no name at all, then there is no point to show it.
-              if projectObj.name !== null
-                tr.body__row.row
-                  +row__col( projectObj.name )
-                  +row__col--duration( projectObj.from, projectObj.to )
-                  +row__col( projectObj.support )
+        each projectObj in data.project
+          //- If there is no name at all, then there is no point to show it.
+          if projectObj.name !== null
+            section.project__row.row
+              +row__value( 'name', i18n[ LANG.id ].project.name, projectObj.name )
+              +row__col--duration( i18n[ LANG.id ].project.duration, projectObj.from, projectObj.to )
+              +row__value( 'support', i18n[ LANG.id ].project.support, projectObj.support )
+
+  //- Faculty has some student awards.
+  if Array.isArray( data.studentAward ) && data.studentAward.length
+    section.content__student-award.student-award
+      +topic( 'student-award', i18n[ LANG.id ].studentAward.topic )
+      //- Sort awards list based on time.
+      -
+        data.studentAward.sort( ( awardA, awardB ) => {
+          if (
+            awardA.receivedYear !== null &&
+            awardB.receivedYear !== null &&
+            awardA.receivedYear !== awardB.receivedYear
+          )
+            return awardB.receivedYear - awardA.receivedYear;
+          else if (
+            awardA.receivedMonth !== null &&
+            awardB.receivedMonth !== null &&
+            awardA.receivedMonth !== awardB.receivedMonth
+          )
+            return awardB.receivedMonth - awardA.receivedMonth;
+          else if (
+            awardA.receivedDay !== null &&
+            awardB.receivedDay !== null &&
+            awardA.receivedDay !== awardB.receivedDay
+          )
+            return awardB.receivedDay - awardA.receivedDay;
+          return 0;
+        } );
+        let currentYear = data.studentAward[ 0 ].receivedYear;
+      each awardObj, index in data.studentAward
+        if awardObj.receivedYear !== currentYear || index === 0
+          - currentYear = awardObj.receivedYear
+          aside.student-award__title= awardObj.receivedYear
+        //- If there is no award at all, then there is no point to show it.
+        if awardObj.award !== null
+          article.student-award__context.context
+            aside.context__award.award
+              main.award__info= awardObj.award
+            aside.context__student.student
+              each studentObj, idx in awardObj.student
+                p.student__info= `${studentObj.name} ${studentObj.degree}`
+                if idx < awardObj.student.length - 1
+                  p.student__info= ', '
 
   //- Faculty has participate some conferences.
   if Array.isArray( data.conference ) && data.conference.length

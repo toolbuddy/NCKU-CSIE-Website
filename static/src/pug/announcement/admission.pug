@@ -1,0 +1,70 @@
+extends /layouts/announcement/briefing.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:     'Admissions',
+        topic:     'Admissions',
+        time:   {
+          from: 'Start Date',
+          to:   'End Date',
+        },
+        pinned:    'Pinned Announcement',
+        normal:    'Announcement',
+        breadcrumb: {
+          home:    'Home',
+          admission: 'Admissions',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:     '招生資訊',
+        topic:     '招生資訊',
+        time:   {
+          from: '開始日期',
+          to:   '結束日期',
+        },
+        pinned:    '置頂貼文',
+        normal:    '一般公告',
+        breadcrumb: {
+          home:    '首頁',
+          admission: '招生資訊',
+        },
+      },
+    } );
+    const tags = [
+        'recruitment',
+        'college',
+        'master',
+        'phd',
+    ].map( tag => allTags[ tag ] );
+    const currentRoute = 'announcement/admission';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'announcement/admission' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.admission, route: 'admission' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'announcement/admission' )
