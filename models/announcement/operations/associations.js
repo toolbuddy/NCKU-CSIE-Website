@@ -1,6 +1,7 @@
 const Announcement = require('../schemas/announcement.js');
 const AnnouncementI18n = require('../schemas/announcement-i18n.js');
 const File = require('../schemas/file.js');
+const News = require('../schemas/news.js');
 const Tag = require('../schemas/tag.js');
 
 Announcement.hasMany(AnnouncementI18n, {
@@ -25,5 +26,6 @@ module.exports = {
     Announcement,
     AnnouncementI18n,
     File,
+    News,
     Tag,
 };

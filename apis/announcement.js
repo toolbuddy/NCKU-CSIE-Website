@@ -9,7 +9,7 @@
  * - `/api/announcement/get-pages-by-and-tags`
  * - `/api/announcement/get-pages-by-or-tags`
  * - `/api/announcement/get-hot-announcements`
- * - `/api/announcement/get-tv-announcements`
+ * - `/api/announcement/get-news`
  * - `/api/announcement/[id]`
  */
 
@@ -22,7 +22,7 @@ const getPinnedAnnouncementsByOrTags = require('../models/announcement/operation
 const getPagesByAndTags = require('../models/announcement/operations/get-pages-by-and-tags');
 const getPagesByOrTags = require('../models/announcement/operations/get-pages-by-or-tags.js');
 const getHotAnnouncements = require('../models/announcement/operations/get-hot-announcements.js');
-const getTvAnnouncements = require('../models/announcement/operations/get-tv-announcements.js');
+const getNews = require('../models/announcement/operations/get-news.js');
 const getAnnouncement = require('../models/announcement/operations/get-announcement.js');
 
 const apis = express.Router();
@@ -195,20 +195,14 @@ apis.get('/get-hot-announcements', async (req, res, next) => {
 });
 
 /**
- * Resolve URL `/api/announcement/get-tv-announcements`.
+ * Resolve URL `/api/announcement/get-news`.
  */
 
-apis.get('/get-tv-announcements', async (req, res, next) => {
+apis.get('/get-news', async (req, res, next) => {
     try {
-        let tags = req.query.tags || [];
-        if (!Array.isArray(tags))
-            tags = [tags];
-        tags = tags.map(Number);
-
-        res.json(await getTvAnnouncements({
+        res.json(await getNews({
             amount: Number(req.query.amount),
-            languageId: Number(req.query.languageId),
-            tags,
+            page: Number(req.query.page),
         }));
     }
     catch (error) {

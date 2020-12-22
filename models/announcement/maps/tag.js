@@ -17,6 +17,7 @@ const map = [
     'rule',
     'recruitment',
     'award',
+    'admission',
 ];
 
 const defaultOption = 'faculty';
@@ -28,6 +29,7 @@ const i18n = {
         college: '大學部',
         master: '碩士',
         phd: '博士',
+        admission: '招生',
         speech: '演講',
         conference: '研討會',
         exhibition: '展覽',
@@ -46,6 +48,7 @@ const i18n = {
         college: 'college',
         master: 'master',
         phd: 'phd',
+        admission: 'admission',
         speech: 'speech',
         conference: 'conference',
         exhibition: 'exhibition',

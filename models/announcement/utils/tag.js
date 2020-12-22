@@ -23,7 +23,7 @@ Object.assign(tagUtils, {
         const tagOption = tagUtils.getOptionById(tagId);
         if (tagOption === 'course' || tagOption === 'faculty')
             return 'yellow';
-        else if (tagOption === 'college' || tagOption === 'master' || tagOption === 'phd')
+        else if (tagOption === 'college' || tagOption === 'master' || tagOption === 'phd' || tagOption === 'admissions')
             return 'blue';
         else if (tagOption === 'internship' || tagOption === 'scholarship' || tagOption === 'international' || tagOption === 'award')
             return 'red';
