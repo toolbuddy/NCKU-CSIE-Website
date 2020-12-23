@@ -118,6 +118,7 @@
     $small: 350px;
     $medium: 768px;
     $large: 992px;
+    $extra_large: 1440px;
 
     // [ layout ]
     display: grid;
@@ -163,6 +164,12 @@
         left: auto;
         right: auto;
       }
+    }
+
+    // [ RWD: $extra_large ]
+    @media screen and ( min-width: $extra_large ) {
+      // [ layout ]
+      width: font__px-to-rem( 1200 );
     }
 
     // element

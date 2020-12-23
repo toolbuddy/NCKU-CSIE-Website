@@ -45,6 +45,7 @@
     // [ variable ]
     $small: 850px;
     $large: 992px;
+    $x-large: 1440px;
 
     // [ layout ]
     display: grid;
@@ -95,6 +96,12 @@
         left: 0;
         right: 0;
       }
+    }
+
+    // [ RWD: $x-large ]
+    @media screen and ( min-width: $x-large ) {
+      // [ layout ]
+      grid-template-columns: 1fr font__px-to-rem( 1200 ) 1fr;
     }
 
     // element
