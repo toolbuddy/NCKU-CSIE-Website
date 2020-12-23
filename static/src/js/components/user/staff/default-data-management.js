@@ -130,40 +130,34 @@ export default class DefaultDataManagement {
         this.DOM.post.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
 
-            new Promise((res, rej) => {
-                const isValid = this.dataValidation('post');
-                e.target.disabled = true;
-
-                if (isValid)
-                    res();
-                else
-                    rej();
-            })
-            .then(async () => {
-                const data = await this.formatFormData('post');
-                fetch(`${host}/user/staff/profile`, {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        dbTable: this.config.table,
-                        data,
-                    }),
-                })
-                .then(() => {
-                    this.hideForm();
-                    this.renderLoading();
-                })
-                .then(() => {
-                    this.renderSuccess();
+            this.dataValidation('post')
+            .then( async (isValid) => {
+                if( isValid ) {
+                    const data = await this.formatFormData('post');
+                    fetch(`${host}/user/staff/profile`, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            dbTable: this.config.table,
+                            data,
+                        }),
+                    })
+                    .then(() => {
+                        this.hideForm();
+                        this.renderLoading();
+                    })
+                    .then(() => {
+                        this.renderSuccess();
+                        e.target.disabled = false;
+                        window.location.reload();
+                    });
+                }
+                else {
                     e.target.disabled = false;
-                    window.location.reload();
-                });
-            })
-            .catch(() => {
-                e.target.disabled = false;
-            });
+                }
+            } )
         });
     }
 
@@ -193,46 +187,40 @@ export default class DefaultDataManagement {
         this.DOM.patch.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
 
-            new Promise((res, rej) => {
-                const isValid = this.dataValidation('patch');
-                e.target.disabled = true;
+            this.dataValidation('patch')
+            .then( async(isValid) => {
+                if(isValid) {
+                    const {item, i18n} = await this.formatFormData('patch');
+                    fetch(`${host}/user/staff/profile`, {
+                        method: 'PATCH',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            dbTable: this.config.table,
+                            profileId: this.config.profileId,
+                            dbTableItemId: this.status.itemId,
+                            item,
+                            i18n,
+                        }),
+                    })
+                    .then((res) => {
+                        this.hideForm();
+                        this.renderLoading();
 
-                if (isValid)
-                    res();
-                else
-                    rej();
-            })
-            .then(async () => {
-                const {item, i18n} = await this.formatFormData('patch');
-                fetch(`${host}/user/staff/profile`, {
-                    method: 'PATCH',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        dbTable: this.config.table,
-                        profileId: this.config.profileId,
-                        dbTableItemId: this.status.itemId,
-                        item,
-                        i18n,
-                    }),
-                })
-                .then((res) => {
-                    this.hideForm();
-                    this.renderLoading();
-
-                    return res;
-                })
-                .then((res) => {
-                    this.renderSuccess();
+                        return res;
+                    })
+                    .then((res) => {
+                        this.renderSuccess();
+                        e.target.disabled = false;
+                        if (res.ok)
+                            window.location.reload();
+                    });
+                }
+                else {
                     e.target.disabled = false;
-                    if (res.ok)
-                        window.location.reload();
-                });
+                }
             })
-            .catch(() => {
-                e.target.disabled = false;
-            });
         });
     }
 
@@ -334,7 +322,7 @@ export default class DefaultDataManagement {
     }
 
     dataValidation (method) {
-        new Promise((res) => {
+        return new Promise((res) => {
             let errorMessage = '';
             Array.from(this.DOM[method].input).forEach((element) => {
                 if (element.validity.typeMismatch || element.validity.patternMismatch) {
@@ -359,7 +347,7 @@ export default class DefaultDataManagement {
 
     formatFormData (method) {
         const item = {};
-        let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
+        let i18n = LanguageUtils.supportedLanguageId.map(id => ({languageId: id}));
 
         Array.from(this.DOM[method].input).forEach((element) => {
             if (element.getAttribute('input-pattern') === 'i18n')

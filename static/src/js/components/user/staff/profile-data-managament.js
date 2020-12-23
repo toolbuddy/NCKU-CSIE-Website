@@ -131,47 +131,53 @@ export default class ProfileDataManagement {
 
     subscribePatchCheckButton () {
         Object.keys(this.modifier).forEach((columnName) => {
-            this.DOM[columnName].checkButton.addEventListener('click', async (e) => {
+            this.DOM[columnName].checkButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                const isValid = await this.dataValidation(columnName);
+                e.target.disabled = true;
 
-                if (isValid) {
-                    new Promise((res) => {
-                        const item = {};
-                        let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
+                this.dataValidation(columnName)
+                .then( (isValid) => {
+                    if (isValid) {
+                        new Promise((res) => {
+                            const item = {};
+                            let i18n = LanguageUtils.supportedLanguageId.map(id => ({languageId: id}));
 
-                        Array.from(this.DOM[columnName].input).forEach((element) => {
-                            if (element.getAttribute('input-pattern') === 'i18n')
-                                i18n[element.getAttribute('languageid')][columnName] = element.value;
-                            else
-                                item[columnName] = element.value;
-                        });
+                            Array.from(this.DOM[columnName].input).forEach((element) => {
+                                if (element.getAttribute('input-pattern') === 'i18n')
+                                    i18n[element.getAttribute('languageid')][columnName] = element.value;
+                                else
+                                    item[columnName] = element.value;
+                            });
 
-                        if (Object.keys(i18n[0]).length === 1 && i18n[0].constructor === Object)
-                            i18n = [];
+                            if (Object.keys(i18n[0]).length === 1 && i18n[0].constructor === Object)
+                                i18n = [];
 
-                        res({item, i18n});
-                    })
-                    .then(({item, i18n}) => {
-                        fetch(`${host}/user/staff/profile`, {
-                            method: 'PATCH',
-                            headers: {
-                                'content-type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                dbTable: 'profile',
-                                profileId: this.config.profileId,
-                                dbTableItemId: this.config.profileId,
-                                item,
-                                i18n,
-                            }),
+                            res({item, i18n});
                         })
-                        .then(() => {
-                            this.updateCard(columnName);
-                            this.hideForm();
+                        .then(({item, i18n}) => {
+                            fetch(`${host}/user/staff/profile`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'content-type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    dbTable: 'profile',
+                                    profileId: this.config.profileId,
+                                    dbTableItemId: this.config.profileId,
+                                    item,
+                                    i18n,
+                                }),
+                            })
+                            .then(() => {
+                                this.updateCard(columnName);
+                                this.hideForm();
+                                e.target.disabled = false;
+                            });
                         });
-                    });
-                }
+                    }
+                    else
+                        e.target.disabled = false;
+                });
             });
         });
     }

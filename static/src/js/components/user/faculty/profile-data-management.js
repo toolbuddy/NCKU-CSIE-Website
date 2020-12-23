@@ -209,39 +209,35 @@ export default class ProfileDataManagement {
         Object.keys(this.modifier).forEach((columnName) => {
             this.DOM[columnName].checkButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                new Promise((res, rej) => {
-                    const isValid = this.dataValidation(columnName);
-                    e.target.disabled = true;
+                e.target.disabled = true;
 
-                    if (isValid)
-                        res();
-                    else
-                        rej();
-                })
-                .then(async () => {
-                    const {item, i18n} = await this.formatFormData(columnName);
-                    fetch(`${host}/user/faculty/profile`, {
-                        method: 'PATCH',
-                        headers: {
-                            'content-type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            dbTable: 'profile',
-                            profileId: this.config.profileId,
-                            dbTableItemId: this.config.profileId,
-                            item,
-                            i18n,
-                        }),
-                    })
-                    .then(() => {
-                        this.updateCard(columnName);
-                        this.hideForm();
+                this.dataValidation(columnName)
+                .then( async (isValid) => {
+                    if( isValid ) {
+                        const {item, i18n} = await this.formatFormData(columnName);
+                        fetch(`${host}/user/faculty/profile`, {
+                            method: 'PATCH',
+                            headers: {
+                                'content-type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                dbTable: 'profile',
+                                profileId: this.config.profileId,
+                                dbTableItemId: this.config.profileId,
+                                item,
+                                i18n,
+                            }),
+                        })
+                        .then(() => {
+                            this.updateCard(columnName);
+                            this.hideForm();
+                            e.target.disabled = false;
+                        });
+                    }
+                    else {
                         e.target.disabled = false;
-                    });
+                    }
                 })
-                .catch(() => {
-                    e.target.disabled = false;
-                });
             });
         });
     }
@@ -348,7 +344,7 @@ export default class ProfileDataManagement {
 
     formatFormData (method) {
         const item = {};
-        let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
+        let i18n = LanguageUtils.supportedLanguageId.map(id => ({languageId: id}));
 
         Array.from(this.DOM[method].form.elements).forEach((element) => {
             if (element.getAttribute('input-pattern') === 'i18n')
