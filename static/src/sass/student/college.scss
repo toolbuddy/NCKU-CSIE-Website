@@ -138,12 +138,12 @@
         display: grid;
         grid-template-areas:
           'college'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'rule';
@@ -152,10 +152,10 @@
         @media screen and ( min-width: $x-small ) {
           // [ layout ]
           grid-template-areas:
-            'college       speech'
-            'internship    conference'
+            'college       admission'
+            'internship    speech'
             'international exhibition'
-            'scholarship   competition'
+            'scholarship   admission'
             'award         rule';
         }
 
@@ -163,19 +163,19 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'college    rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'college    rule        admission'
+            'exhibition   speech      competition'
+            'international internship award'
+            'scholarship   .          .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'college     rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+            'college   speech      internship  international'
+            'admission competition scholarship award '
+            'rule      exhibition  .           .';
         }
 
         // [ RWD: $x-large ]
@@ -183,7 +183,7 @@
           // [ layout ]
           grid-template: {
             areas:
-              'college speech     conference    exhibition  competition'
+              'college admission  speech        exhibition  competition'
               'award   internship international scholarship rule'
               '.       .           .             .          .';
             rows: repeat( 3, auto );
@@ -212,10 +212,10 @@
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
-        > .tags__tag[ data-tag-name = 'conference' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'admission' ]`
+        > .tags__tag[ data-tag-name = 'admission' ] {
           // [ position ]
-          grid-area: conference;
+          grid-area: admission;
         }
 
         // element

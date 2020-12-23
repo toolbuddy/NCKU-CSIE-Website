@@ -1,8 +1,8 @@
-a.briefings__briefing.briefing
+a.briefings__briefing.briefing(href= briefing.url target='_blank')
   img(
-    alt = 'Google東亞獎學金 台灣學生成大資工博士生首次獲獎',
+    alt = briefing.title
     class = 'briefing__image',
-    src = 'http://localhost:3000/static/image/logo/csie-small.png?languageId=0',
+    src = `data:image/jpeg;base64,${ briefing.image }`,
   )
   article.briefing__info
     h1.info__title= briefing.title

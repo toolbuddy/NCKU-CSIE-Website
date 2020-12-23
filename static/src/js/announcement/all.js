@@ -47,7 +47,7 @@ try {
             'internship',
             'college',
             'competition',
-            'conference',
+            'admission',
             'exhibition',
             'speech',
             'master',

@@ -139,7 +139,6 @@
         grid-template-areas:
           'all'
           'speech'
-          'conference'
           'exhibition'
           'competition';
 
@@ -148,8 +147,7 @@
           // [ layout ]
           grid-template-areas:
             'all         speech'
-            'competition conference'
-            'exhibition  .';
+            'competition exhibition';
         }
 
         // [ RWD: $small ]
@@ -157,21 +155,19 @@
           // [ layout ]
           grid-template-areas:
             'all    competition exhibition'
-            'speech conference  .';
+            'speech .           .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
-          grid-template-areas:
-            'all         speech conference    exhibition'
-            'competition .      .             .';
+          grid-template-areas: 'all         speech    exhibition competition';
         }
 
         // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
-          grid-template-areas: 'all speech conference exhibition competition';
+          grid-template-areas: 'all speech exhibition competition .';
         }
 
         // element
@@ -186,13 +182,6 @@
         > .tags__tag[ data-tag-name = 'competition' ] {
           // [ position ]
           grid-area: competition;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
-        > .tags__tag[ data-tag-name = 'conference' ] {
-          // [ position ]
-          grid-area: conference;
         }
 
         // element

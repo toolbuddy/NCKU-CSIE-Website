@@ -134,12 +134,12 @@
         display: grid;
         grid-template-areas:
           'master'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'rule';
@@ -149,7 +149,7 @@
           // [ layout ]
           grid-template-areas:
             'master        speech'
-            'internship    conference'
+            'internship    admission'
             'international exhibition'
             'scholarship   competition'
             'award         rule';
@@ -159,19 +159,19 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'master     rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'master       rule        admission'
+            'exhibition   speech      competition'
+            'international internship award'
+            'scholarship   .          .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'master      rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+            'master   speech      internship  international'
+            'admission competition scholarship award '
+            'rule      exhibition  .           .';
         }
 
         // [ RWD: $x-large ]
@@ -179,9 +179,9 @@
           // [ layout ]
           grid-template: {
             areas:
-              'master speech     conference    exhibition  competition'
-              'award  internship international scholarship rule'
-              '.      .            .            .          .';
+              'master admission  speech        exhibition  competition'
+              'award   internship international scholarship rule'
+              '.       .           .             .          .';
             rows: repeat( 3, auto );
           }
         }

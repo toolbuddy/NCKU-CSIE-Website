@@ -43,13 +43,12 @@ export default class GetTvAnnouncements {
     get queryString () {
         return [
             `amount=${this.amount}`,
-            `languageId=${this.languageId}`,
-            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
+            'page=1',
         ].join('&');
     }
 
     get queryApi () {
-        return `${host}/api/announcement/get-tv-announcements?${this.queryString}`;
+        return `${host}/api/announcement/get-news?${this.queryString}`;
     }
 
     async subscribeShowEvent () {

@@ -131,8 +131,8 @@ export default class DefaultDataManagement {
             e.preventDefault();
 
             this.dataValidation('post')
-            .then( async (isValid) => {
-                if( isValid ) {
+            .then(async (isValid) => {
+                if (isValid) {
                     const data = await this.formatFormData('post');
                     fetch(`${host}/user/staff/profile`, {
                         method: 'POST',
@@ -154,10 +154,9 @@ export default class DefaultDataManagement {
                         window.location.reload();
                     });
                 }
-                else {
+                else
                     e.target.disabled = false;
-                }
-            } )
+            });
         });
     }
 
@@ -188,8 +187,8 @@ export default class DefaultDataManagement {
             e.preventDefault();
 
             this.dataValidation('patch')
-            .then( async(isValid) => {
-                if(isValid) {
+            .then(async (isValid) => {
+                if (isValid) {
                     const {item, i18n} = await this.formatFormData('patch');
                     fetch(`${host}/user/staff/profile`, {
                         method: 'PATCH',
@@ -217,10 +216,9 @@ export default class DefaultDataManagement {
                             window.location.reload();
                     });
                 }
-                else {
+                else
                     e.target.disabled = false;
-                }
-            })
+            });
         });
     }
 

@@ -59,34 +59,8 @@ export default class GetNews {
         };
     }
 
-    get queryString () {
-        return [
-            `amount=${this.amount}`,
-            `languageId=${this.languageId}`,
-            `from=${Number(this.from)}`,
-            `page=${this.page}`,
-            `to=${Number(this.to)}`,
-            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
-        ].join('&');
-    }
-
-    get queryApi () {
-        return `${host}/api/announcement/get-announcements-by-or-tags?${this.queryString}`;
-    }
-
-    singleNewsQueryString (page) {
-        return [
-            'amount=1',
-            `languageId=${this.languageId}`,
-            `from=${Number(this.from)}`,
-            `page=${page}`,
-            `to=${Number(this.to)}`,
-            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
-        ].join('&');
-    }
-
-    singleNewsQueryApi (page) {
-        return `${host}/api/announcement/get-announcements-by-or-tags?${this.singleNewsQueryString(page)}`;
+    static singleNewsQueryApi (page) {
+        return `${host}/api/announcement/get-news?amount=1&page=${page}`;
     }
 
     static formatUpdateTime (time) {
@@ -100,16 +74,9 @@ export default class GetNews {
         ].join('-');
     }
 
-    static formatData ({data, languageId}) {
+    static formatData ({data}) {
         return data.map((briefing) => {
-            briefing.tags = briefing.tags.map(tagId => ({
-                color: tagUtils.getTagColorById(tagId),
-                tag: tagUtils.getValueById({
-                    id: tagId,
-                    languageId,
-                }),
-            }));
-            briefing.time = GetNews.formatUpdateTime(new Date(briefing.updateTime));
+            briefing.time = GetNews.formatUpdateTime(new Date(briefing.publishTime));
             return briefing;
         });
     }
@@ -166,7 +133,7 @@ export default class GetNews {
             e.preventDefault();
 
             try {
-                const res = await fetch(this.singleNewsQueryApi(this.state.page + 4));
+                const res = await fetch(this.constructor.singleNewsQueryApi(this.state.page + 4));
 
                 if (!res.ok)
                     throw new Error('No news found');
@@ -189,7 +156,7 @@ export default class GetNews {
 
             try {
                 if (this.state.page > 1) {
-                    const res = await fetch(this.singleNewsQueryApi(this.state.page - 1));
+                    const res = await fetch(this.constructor.singleNewsQueryApi(this.state.page - 1));
 
                     if (!res.ok)
                         throw new Error('No news found');
@@ -215,7 +182,7 @@ export default class GetNews {
             this.DOM.briefings.innerHTML = '';
             classAdd(this.DOM.noResult, 'no-result--hidden');
 
-            const res = await fetch(this.queryApi);
+            const res = await fetch(`${host}/api/announcement/get-news?amount=4&page=1`);
 
             if (!res.ok)
                 throw new Error('No announcement found');

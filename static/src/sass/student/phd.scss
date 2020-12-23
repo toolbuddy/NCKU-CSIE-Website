@@ -138,12 +138,12 @@
         display: grid;
         grid-template-areas:
           'phd'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'rule';
@@ -152,8 +152,8 @@
         @media screen and ( min-width: $x-small ) {
           // [ layout ]
           grid-template-areas:
-            'phd       speech'
-            'internship    conference'
+            'phd        speech'
+            'internship    admission'
             'international exhibition'
             'scholarship   competition'
             'award         rule';
@@ -163,19 +163,19 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'phd    rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'phd       rule        admission'
+            'exhibition   speech      competition'
+            'international internship award'
+            'scholarship   .          .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'phd     rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+            'phd   speech      internship  international'
+            'admission competition scholarship award '
+            'rule      exhibition  .           .';
         }
 
         // [ RWD: $x-large ]
@@ -183,9 +183,9 @@
           // [ layout ]
           grid-template: {
             areas:
-              'phd speech     conference    exhibition  competition'
+              'phd admission  speech        exhibition  competition'
               'award   internship international scholarship rule'
-              '.       .          .             .           .';
+              '.       .           .             .          .';
             columns: repeat( 3, auto );
           }
         }

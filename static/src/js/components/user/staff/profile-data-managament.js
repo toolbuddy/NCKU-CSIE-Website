@@ -136,7 +136,7 @@ export default class ProfileDataManagement {
                 e.target.disabled = true;
 
                 this.dataValidation(columnName)
-                .then( (isValid) => {
+                .then((isValid) => {
                     if (isValid) {
                         new Promise((res) => {
                             const item = {};

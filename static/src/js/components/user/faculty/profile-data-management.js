@@ -212,8 +212,8 @@ export default class ProfileDataManagement {
                 e.target.disabled = true;
 
                 this.dataValidation(columnName)
-                .then( async (isValid) => {
-                    if( isValid ) {
+                .then(async (isValid) => {
+                    if (isValid) {
                         const {item, i18n} = await this.formatFormData(columnName);
                         fetch(`${host}/user/faculty/profile`, {
                             method: 'PATCH',
@@ -234,10 +234,9 @@ export default class ProfileDataManagement {
                             e.target.disabled = false;
                         });
                     }
-                    else {
+                    else
                         e.target.disabled = false;
-                    }
-                })
+                });
             });
         });
     }

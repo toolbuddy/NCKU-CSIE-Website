@@ -5,7 +5,6 @@ figure.series__show.show.show--hide
     img(
       alt = data.title,
       class = 'ad__image',
-      src = 'https://i.imgur.com/SdaweI8.jpg',
+      src = `data:image/jpeg;base64,${ data.image }`,
     )
     header.ad__title= data.title
-      //- src = `data:image/jpeg;base64,${ data.image }`

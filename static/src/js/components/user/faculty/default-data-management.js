@@ -133,7 +133,7 @@ export default class DefaultDataManagement {
             e.target.disabled = true;
 
             this.dataValidation('post')
-            .then( async (isValid) => {
+            .then(async (isValid) => {
                 if (isValid) {
                     const data = await this.formatFormData('post');
 
@@ -159,10 +159,9 @@ export default class DefaultDataManagement {
                             window.location.reload();
                     });
                 }
-                else {
+                else
                     e.target.disabled = false;
-                }
-            } )
+            });
         });
     }
 
