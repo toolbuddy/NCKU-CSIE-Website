@@ -391,7 +391,7 @@
 
       // [ skin ]
       width: font__px-to-rem( 160 );
-      border-radius: font__px-to-rem( 3 );
+      border-radius: font__px-to-rem( 6 );
       padding: {
         top: font__px-to-rem( 12 );
         bottom: font__px-to-rem( 12 );
@@ -400,7 +400,11 @@
       }
       color: white;
       background-color: #f94970;
-      font-size: font__px-to-rem( 14 );
+      border: 2px solid #f94970;
+      font: {
+        weight: 700;
+        size: font__px-to-rem( 14 );
+      }
 
       // [ RWD: $medium ]
       @media screen and ( min-width: $medium ) {
@@ -422,7 +426,6 @@
         // [ skin ]
         background-color: white;
         color: #f94970;
-        border: 2px solid #f94970;
       }
     }
 

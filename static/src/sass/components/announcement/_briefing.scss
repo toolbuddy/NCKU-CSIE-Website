@@ -12,6 +12,7 @@
     $small: 560px;
     $medium: 768px;
     $large: 992px;
+    $extra_large: 1440px;
 
     // [ layout ]
     display: grid;
@@ -84,6 +85,13 @@
       // [ skin ]
       grid-template-columns: 5fr 1fr 3fr;
       width: font__px-to-rem( 924 );
+    }
+
+    // [ RWD: $extra_large ]
+    @media screen and ( min-width: $extra_large ) {
+      // [ skin ]
+      grid-template-columns: 5fr 1fr font__px-to-rem( 200 );
+      width: font__px-to-rem( 1200 );
     }
 
     // element

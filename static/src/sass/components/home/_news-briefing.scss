@@ -110,12 +110,9 @@
           overflow: hidden;
           text-overflow: ellipsis;
           color: #000000;
-          font-size: font__px-to-rem( 16 );
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            // [ skin ]
-            font-weight: bold;
+          font: {
+            weight: bold;
+            size: font__px-to-rem( 16 );
           }
         }
 

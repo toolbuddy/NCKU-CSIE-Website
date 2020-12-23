@@ -521,11 +521,11 @@
       grid: {
         area: tags;
         template-areas:
-          ' college internship    speech    '
-          ' master  scholarship   conference '
-          ' phd     international exhibition '
-          ' course  award         competition '
-          ' faculty rule          recruitment ';
+          'speech      internship     admission'
+          'exhibition  scholarship    college'
+          'competition international  master'
+          'course      award          phd'
+          'faculty     rule           recruitment ';
       }
       display: grid;
 
@@ -540,10 +540,10 @@
       @media screen and ( min-width: $median ) {
         // [ layout ]
         grid-template-areas:
-          ' college internship    speech      rule'
-          ' master  scholarship   conference  recruitment'
-          ' phd     international exhibition  course'
-          ' .       award         competition faculty';
+          ' speech      internship    admission rule'
+          ' exhibition  scholarship   college   recruitment'
+          ' competition international master    course'
+          ' .            award        phd       faculty';
 
         // [ display ]
         width: font__px-to-rem( 550 );
@@ -566,10 +566,10 @@
       }
 
       // element
-      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'college' ]`
-      > .tags__tag[ data-tag-name = 'college' ] {
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'admission' ]`
+      > .tags__tag[ data-tag-name = 'admission' ] {
         // [ position ]
-        grid-area: college;
+        grid-area: admission;
       }
 
       // element

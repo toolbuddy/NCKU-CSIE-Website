@@ -167,7 +167,7 @@
             'personal-web   photo'
             'specialties    specialties';
           columns: auto font__px-to-rem( 318 );
-          rows: font__px-to-rem( 43 ) font__px-to-rem( 55 ) repeat( 8, auto ) auto;
+          rows: font__px-to-rem( 43 ) minmax( font__px-to-rem( 55 ), auto ) repeat( 8, auto ) auto;
         }
         row-gap: font__px-to-rem( 8 );
       }

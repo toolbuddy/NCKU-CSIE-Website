@@ -75,7 +75,7 @@ try {
         announcementDOM: document.getElementById('admission-announcement'),
         from: new Date('2019/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
-        tags: ['course'],
+        tags: ['admission'],
         to: new Date(Date.now()),
         page: 1,
     });
