@@ -8,7 +8,7 @@ append data
         topic:  'All Laboratories',
         breadcrumb: {
           home:     'Home',
-          research: 'Research',
+          about: 'About',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -16,17 +16,17 @@ append data
         topic:  '實驗室列表',
         breadcrumb: {
           home:     '首頁',
-          research: '學術研究',
+          about: '關於本系',
         },
       },
     } );
-    const currentRoute = 'research/lab';
+    const currentRoute = 'about/lab';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'research/lab' )
+  +css( 'about/lab' )
 
 append header
   +banner(
@@ -39,7 +39,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
       { text: i18n[ LANG.id ].title },
     ]
   )
@@ -59,4 +59,4 @@ append content
 append footer
 
 append scripts
-  +js( 'research/lab' )
+  +js( 'about/lab' )

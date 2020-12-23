@@ -1,7 +1,7 @@
 import briefingHTML from 'static/src/pug/components/announcement/announcement-briefing.pug';
 import {classAdd, classRemove} from 'static/src/js/utils/style.js';
 import {host} from 'settings/server/config.js';
-import hotAnnouncementBriefingHTML from 'static/src/pug/components/home/hot-announcement-briefing.pug';
+import recruitAnnouncementBriefingHTML from 'static/src/pug/components/home/recruit-announcement-briefing.pug';
 import tagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
 import ValidateUtils from 'models/common/utils/validate.js';
@@ -138,9 +138,20 @@ export class GetAllAnnouncement {
     }
 }
 
-export class GetHotAnnouncement extends GetAllAnnouncement {
+export class GetAdmissionAnnouncement extends GetAllAnnouncement {
+    get queryString () {
+        return [
+            `amount=${this.amount}`,
+            `languageId=${this.languageId}`,
+            `from=${Number(this.from)}`,
+            `page=${this.page}`,
+            `to=${Number(this.to)}`,
+            ...this.tags.map(tag => `tags=${tagUtils.getIdByOption(tag)}`),
+        ].join('&');
+    }
+
     get queryApi () {
-        return `${host}/api/announcement/get-hot-announcements?${this.queryString}`;
+        return `${host}/api/announcement/get-announcements-by-or-tags?${this.queryString}`;
     }
 
     static formatData ({data}) {
@@ -162,12 +173,11 @@ export class GetHotAnnouncement extends GetAllAnnouncement {
         extractTextObj.forEach((ann) => {
             ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
         });
-        extractTextObj.forEach((briefing, index) => {
-            this.DOM.briefings.innerHTML += hotAnnouncementBriefingHTML({
+        extractTextObj.forEach((briefing) => {
+            this.DOM.briefings.innerHTML += recruitAnnouncementBriefingHTML({
                 briefing,
                 UTILS: {
                     url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
-                    index: GetHotAnnouncement.formatIndex(index),
                 },
                 LANG: {
                     getLanguageId: WebLanguageUtils.getLanguageId,

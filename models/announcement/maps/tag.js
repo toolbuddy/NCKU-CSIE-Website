@@ -8,7 +8,7 @@ const map = [
     'master',
     'phd',
     'speech',
-    'conference',
+    'admission',
     'exhibition',
     'competition',
     'scholarship',
@@ -17,7 +17,6 @@ const map = [
     'rule',
     'recruitment',
     'award',
-    'admission',
 ];
 
 const defaultOption = 'faculty';
@@ -31,7 +30,6 @@ const i18n = {
         phd: '博士',
         admission: '招生',
         speech: '演講',
-        conference: '研討會',
         exhibition: '展覽',
         competition: '競賽',
         scholarship: '獎學金',
@@ -50,7 +48,6 @@ const i18n = {
         phd: 'phd',
         admission: 'admission',
         speech: 'speech',
-        conference: 'conference',
         exhibition: 'exhibition',
         competition: 'competition',
         scholarship: 'scholarship',

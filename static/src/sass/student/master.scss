@@ -67,13 +67,13 @@
     }
     background-color: #ffffff;
 
-    // [ RWD: $small ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid: {
         row-gap: font__px-to-rem( 60 );
         template: {
-          columns: 1fr 8fr 1fr;
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
           areas:
             '. breadcrumb           .'
             '. topic                .'
@@ -83,10 +83,7 @@
             '. pages                .';
         }
       }
-    }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );
@@ -129,20 +126,20 @@
       > .filter__tags.tags {
         // [ variable ]
         $x-small: 280px;
-        $small: 400px;
-        $large: 520px;
-        $x-large: 630px;
+        $small: 300px;
+        $large: 360px;
+        $x-large: 768px;
 
         // [ layout ]
         display: grid;
         grid-template-areas:
           'master'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'rule';
@@ -152,7 +149,7 @@
           // [ layout ]
           grid-template-areas:
             'master        speech'
-            'internship    conference'
+            'internship    admission'
             'international exhibition'
             'scholarship   competition'
             'award         rule';
@@ -162,27 +159,31 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'master     rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'master       rule        admission'
+            'exhibition   speech      competition'
+            'international internship award'
+            'scholarship   .          .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'master      rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+            'master   speech      internship  international'
+            'admission competition scholarship award '
+            'rule      exhibition  .           .';
         }
 
         // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
-          grid-template-areas:
-            'master speech     conference    exhibition  competition'
-            'award  internship international scholarship rule';
+          grid-template: {
+            areas:
+              'master admission  speech        exhibition  competition'
+              'award   internship international scholarship rule'
+              '.       .           .             .          .';
+            rows: repeat( 3, auto );
+          }
         }
 
         // element

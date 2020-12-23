@@ -3,7 +3,7 @@ import LanguageUtils from 'models/common/utils/language.js';
 
 export default class TechnologyTransferPatentDataManagement extends DefaultDataManagement {
     subscribePatchButton (element) {
-        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.constructor.fetchData(languageId)))
         .then((data) => {
             this.status.itemId = Number(element.target.getAttribute('data-id'));
             this.status.patchButton = element.target;

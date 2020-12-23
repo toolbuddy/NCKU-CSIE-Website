@@ -19,15 +19,14 @@ Object.assign(tagUtils, {
     getTagColorById (tagId) {
         if (!tagUtils.isSupportedId(tagId))
             return;
-
         const tagOption = tagUtils.getOptionById(tagId);
         if (tagOption === 'course' || tagOption === 'faculty')
             return 'yellow';
-        else if (tagOption === 'college' || tagOption === 'master' || tagOption === 'phd' || tagOption === 'admissions')
+        else if (tagOption === 'college' || tagOption === 'master' || tagOption === 'phd' || tagOption === 'admission')
             return 'blue';
         else if (tagOption === 'internship' || tagOption === 'scholarship' || tagOption === 'international' || tagOption === 'award')
             return 'red';
-        else if (tagOption === 'speech' || tagOption === 'conference' || tagOption === 'exhibition' || tagOption === 'competition')
+        else if (tagOption === 'speech' || tagOption === 'exhibition' || tagOption === 'competition')
             return 'purple';
         else if (tagOption === 'recruitment' || tagOption === 'rule')
             return 'green';

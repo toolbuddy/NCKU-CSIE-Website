@@ -372,17 +372,10 @@ export default class DefaultTagFilter {
             throw new TypeError('Invalid time.');
 
         return [
-            [
-                `${time.getFullYear()}`,
-                `${time.getMonth() < 9 ? `0${String(time.getMonth() + 1)}` : String(time.getMonth() + 1)}`,
-                `${time.getDate() < 10 ? `0${String(time.getDate())}` : String(time.getDate())}`,
-            ].join('-'),
-            [
-                `${time.getHours() < 10 ? `0${String(time.getHours())}` : String(time.getHours())}`,
-                `${time.getMinutes() < 10 ? `0${String(time.getMinutes())}` : String(time.getMinutes())}`,
-                `${time.getSeconds() < 10 ? `0${String(time.getSeconds())}` : String(time.getSeconds())}`,
-            ].join(':'),
-        ].join(' | ');
+            `${time.getFullYear()}`,
+            `${time.getMonth() < 9 ? `0${String(time.getMonth() + 1)}` : String(time.getMonth() + 1)}`,
+            `${time.getDate() < 10 ? `0${String(time.getDate())}` : String(time.getDate())}`,
+        ].join('-');
     }
 
     subscribePageControlEvent (pages, pageDOMArr) {

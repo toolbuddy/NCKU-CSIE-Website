@@ -130,49 +130,43 @@ export default class DefaultDataManagement {
     subscribePostCheckButton () {
         this.DOM.post.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
+            e.target.disabled = true;
 
-            new Promise((res, rej) => {
-                const isValid = this.dataValidation('post');
-                e.target.disabled = true;
+            this.dataValidation('post')
+            .then(async (isValid) => {
+                if (isValid) {
+                    const data = await this.formatFormData('post');
 
-                if (isValid)
-                    res();
+                    fetch(`${host}/user/faculty/profile`, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            dbTable: this.config.dbTable,
+                            data,
+                        }),
+                    })
+                    .then((res) => {
+                        this.hideForm();
+                        this.renderLoading();
+                        return res;
+                    })
+                    .then((res) => {
+                        this.renderSuccess();
+                        e.target.disabled = false;
+                        if (res.ok)
+                            window.location.reload();
+                    });
+                }
                 else
-                    rej();
-            })
-            .then(async () => {
-                const data = await this.formatFormData('post');
-
-                fetch(`${host}/user/faculty/profile`, {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        dbTable: this.config.dbTable,
-                        data,
-                    }),
-                })
-                .then((res) => {
-                    this.hideForm();
-                    this.renderLoading();
-                    return res;
-                })
-                .then((res) => {
-                    this.renderSuccess();
                     e.target.disabled = false;
-                    if (res.ok)
-                        window.location.reload();
-                });
-            })
-            .catch(() => {
-                e.target.disabled = false;
             });
         });
     }
 
     subscribePatchButton (element) {
-        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+        Promise.all(LanguageUtils.supportedLanguageId.map(languageId => DefaultDataManagement.fetchData(languageId)))
         .then((data) => {
             this.status.itemId = Number(element.target.getAttribute('data-id'));
 
@@ -184,53 +178,48 @@ export default class DefaultDataManagement {
     subscribePatchCheckButton () {
         this.DOM.patch.checkButton.addEventListener('click', (e) => {
             e.preventDefault();
+            e.target.disabled = true;
 
-            new Promise((res, rej) => {
-                const isValid = this.dataValidation('patch');
-                e.target.disabled = true;
+            this.dataValidation('patch')
+            .then(async (isValid) => {
+                if (isValid) {
+                    const {item, i18n} = await this.formatFormData('patch');
 
-                if (isValid)
-                    res();
+                    fetch(`${host}/user/faculty/profile`, {
+                        method: 'PATCH',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            dbTable: this.config.dbTable,
+                            profileId: this.config.profileId,
+                            dbTableItemId: this.status.itemId,
+                            item,
+                            i18n,
+                        }),
+                    })
+                    .then((res) => {
+                        this.hideForm();
+                        this.renderLoading();
+
+                        return res;
+                    })
+                    .then((res) => {
+                        this.renderSuccess();
+                        e.target.disabled = false;
+
+                        if (res.ok)
+                            window.location.reload();
+                    });
+                }
                 else
-                    rej();
-            })
-            .then(async () => {
-                const {item, i18n} = await this.formatFormData('patch');
-
-                fetch(`${host}/user/faculty/profile`, {
-                    method: 'PATCH',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        dbTable: this.config.dbTable,
-                        profileId: this.config.profileId,
-                        dbTableItemId: this.status.itemId,
-                        item,
-                        i18n,
-                    }),
-                })
-                .then((res) => {
-                    this.hideForm();
-                    this.renderLoading();
-
-                    return res;
-                })
-                .then((res) => {
-                    this.renderSuccess();
                     e.target.disabled = false;
-                    if (res.ok)
-                        window.location.reload();
-                });
-            })
-            .catch(() => {
-                e.target.disabled = false;
             });
         });
     }
 
     subscribeDeleteButton (e) {
-        this.fetchData(this.config.languageId)
+        DefaultDataManagement.fetchData(this.config.languageId)
         .then((data) => {
             this.status.itemId = Number(e.target.getAttribute('data-id'));
             const rowData = data[this.config.dbTable].find(item => item[this.config.idColumn] === Number(e.target.getAttribute('data-id')));
@@ -269,8 +258,7 @@ export default class DefaultDataManagement {
         });
     }
 
-    // eslint-disable-next-line
-    async fetchData (languageId) {
+    static async fetchData (languageId) {
         const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
         if (!res.ok)
             throw new Error('No faculty found');

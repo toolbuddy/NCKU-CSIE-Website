@@ -4,8 +4,8 @@ append data
   -
     const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:     'Master',
-        topic:     'Master',
+        title:     'Admissions',
+        topic:     'Admissions',
         time:   {
           from: 'Start Date',
           to:   'End Date',
@@ -14,12 +14,12 @@ append data
         normal:    'Announcement',
         breadcrumb: {
           home:    'Home',
-          student: 'Student',
+          admission: 'Admissions',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:     '碩士',
-        topic:     '碩士',
+        title:     '招生資訊',
+        topic:     '招生資訊',
         time:   {
           from: '開始日期',
           to:   '結束日期',
@@ -28,29 +28,23 @@ append data
         normal:    '一般公告',
         breadcrumb: {
           home:    '首頁',
-          student: '學生事務',
+          admission: '招生資訊',
         },
       },
     } );
     const tags = [
+        'recruitment',
+        'college',
         'master',
-        'competition',
-        'admission',
-        'exhibition',
-        'speech',
-        'award',
-        'international',
-        'scholarship',
-        'internship',
-        'rule',
+        'phd',
     ].map( tag => allTags[ tag ] );
-    const currentRoute = 'student/master';
+    const currentRoute = 'announcement/admission';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'student/master' )
+  +css( 'announcement/admission' )
 
 append header
   +banner(
@@ -63,7 +57,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },
+      { text: i18n[ LANG.id ].breadcrumb.admission, route: 'admission' },
       { text: i18n[ LANG.id ].title },
     ]
   )
@@ -73,4 +67,4 @@ append content
 append footer
 
 append scripts
-  +js( 'student/master' )
+  +js( 'announcement/admission' )

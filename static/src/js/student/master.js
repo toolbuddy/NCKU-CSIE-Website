@@ -43,7 +43,7 @@ try {
         defaultTag: ['master'],
         supportedTag: [
             'speech',
-            'conference',
+            'admission',
             'exhibition',
             'competition',
             'award',

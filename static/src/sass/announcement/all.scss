@@ -67,13 +67,13 @@
     }
     background-color: #ffffff;
 
-    // [ RWD: $small ]
+    // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
       // [ layout ]
       grid: {
         row-gap: font__px-to-rem( 60 );
         template: {
-          columns: 1fr 8fr 1fr;
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
           areas:
             '. breadcrumb           .'
             '. topic                .'
@@ -83,10 +83,7 @@
             '. pages                .';
         }
       }
-    }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );
@@ -129,9 +126,9 @@
       > .filter__tags.tags {
         // [ variable ]
         $x-small: 280px;
-        $small: 400px;
-        $large: 520px;
-        $x-large: 630px;
+        $small: 300px;
+        $large: 360px;
+        $x-large: 768px;
 
         // [ layout ]
         display: grid;
@@ -142,12 +139,12 @@
           'college'
           'master'
           'phd'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'recruitment'
@@ -161,7 +158,7 @@
             'course        master'
             'faculty       phd'
             'internship    speech'
-            'scholarship   conference'
+            'scholarship   admission'
             'international exhibition'
             'award         competition'
             'recruitment   rule';
@@ -171,32 +168,32 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'all     internship    speech'
-            'course  scholarship   conference'
-            'faculty international exhibition'
-            'college award         competition'
-            'master  recruitment   rule'
-            'phd     .             .';
+            'all         internship    college'
+            'course      scholarship   master'
+            'faculty     international phd'
+            'speech      award         admission'
+            'exhibition  recruitment   rule'
+            'competition     .             .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'all         college internship    speech'
-            'course      master  scholarship   conference'
-            'faculty     phd     international exhibition'
-            'recruitment rule    award         competition';
+            'all         speech      internship    admission'
+            'course      exhibition  scholarship   college'
+            'faculty     competition international master'
+            'recruitment rule        award         phd';
         }
 
         // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
           grid-template-areas:
-            'all     college internship    speech      rule'
-            'course  master  scholarship   conference  recruitment'
-            'faculty phd     international exhibition  .'
-            '.       .       award         competition .';
+            'all     admission internship    speech      rule'
+            'course  college   scholarship   exhibition  recruitment'
+            'faculty master    international competition .'
+            '.       phd       award         .           .';
         }
 
         // element

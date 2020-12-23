@@ -43,7 +43,7 @@ try {
         defaultTag: ['college'],
         supportedTag: [
             'speech',
-            'conference',
+            'admission',
             'exhibition',
             'competition',
             'award',

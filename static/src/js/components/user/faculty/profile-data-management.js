@@ -146,8 +146,7 @@ export default class ProfileDataManagement {
         });
     }
 
-    // eslint-disable-next-line
-    async fetchData (languageId) {
+    static async fetchData (languageId) {
         const res = await fetch(`${host}/user/profileWithId?languageId=${languageId}`);
         if (!res.ok)
             throw new Error('No faculty found');
@@ -194,7 +193,7 @@ export default class ProfileDataManagement {
     subscribePatchButton () {
         Object.keys(this.modifier).forEach((columnName) => {
             this.DOM[columnName].patchButton.addEventListener('click', () => {
-                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => this.fetchData(languageId)))
+                Promise.all(LanguageUtils.supportedLanguageId.map(languageId => ProfileDataManagement.fetchData(languageId)))
                 .then(data => ({
                     [LanguageUtils.getLanguageId('en-US')]: data[LanguageUtils.getLanguageId('en-US')].profile[columnName],
                     [LanguageUtils.getLanguageId('zh-TW')]: data[LanguageUtils.getLanguageId('zh-TW')].profile[columnName],
@@ -210,45 +209,40 @@ export default class ProfileDataManagement {
         Object.keys(this.modifier).forEach((columnName) => {
             this.DOM[columnName].checkButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                new Promise((res, rej) => {
-                    const isValid = this.dataValidation(columnName);
-                    e.target.disabled = true;
+                e.target.disabled = true;
 
-                    if (isValid)
-                        res();
+                this.dataValidation(columnName)
+                .then(async (isValid) => {
+                    if (isValid) {
+                        const {item, i18n} = await this.formatFormData(columnName);
+                        fetch(`${host}/user/faculty/profile`, {
+                            method: 'PATCH',
+                            headers: {
+                                'content-type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                dbTable: 'profile',
+                                profileId: this.config.profileId,
+                                dbTableItemId: this.config.profileId,
+                                item,
+                                i18n,
+                            }),
+                        })
+                        .then(() => {
+                            this.updateCard(columnName);
+                            this.hideForm();
+                            e.target.disabled = false;
+                        });
+                    }
                     else
-                        rej();
-                })
-                .then(async () => {
-                    const {item, i18n} = await this.formatFormData(columnName);
-                    fetch(`${host}/user/faculty/profile`, {
-                        method: 'PATCH',
-                        headers: {
-                            'content-type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            dbTable: 'profile',
-                            profileId: this.config.profileId,
-                            dbTableItemId: this.config.profileId,
-                            item,
-                            i18n,
-                        }),
-                    })
-                    .then(() => {
-                        this.updateCard(columnName);
-                        this.hideForm();
                         e.target.disabled = false;
-                    });
-                })
-                .catch(() => {
-                    e.target.disabled = false;
                 });
             });
         });
     }
 
     setProfileImage () {
-        this.fetchData(this.config.languageId)
+        ProfileDataManagement.fetchData(this.config.languageId)
         .then(data => data.profile)
         .then((data) => {
             if (data.photo.length !== 0) {
@@ -260,7 +254,7 @@ export default class ProfileDataManagement {
     }
 
     updateCard (columnName) {
-        this.fetchData(this.config.languageId)
+        ProfileDataManagement.fetchData(this.config.languageId)
         .then(data => data.profile[columnName])
         .then((data) => {
             if (columnName !== 'nation')
@@ -349,7 +343,7 @@ export default class ProfileDataManagement {
 
     formatFormData (method) {
         const item = {};
-        let i18n = LanguageUtils.supportedLanguageId.map(id => ({language: id}));
+        let i18n = LanguageUtils.supportedLanguageId.map(id => ({languageId: id}));
 
         Array.from(this.DOM[method].form.elements).forEach((element) => {
             if (element.getAttribute('input-pattern') === 'i18n')

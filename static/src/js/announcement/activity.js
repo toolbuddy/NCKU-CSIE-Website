@@ -42,7 +42,6 @@ try {
     const filter = new MultipleDefaultTagFilter({
         defaultTag: [
             'competition',
-            'conference',
             'exhibition',
             'speech',
         ],

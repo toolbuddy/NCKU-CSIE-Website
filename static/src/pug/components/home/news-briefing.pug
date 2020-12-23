@@ -1,0 +1,9 @@
+a.briefings__briefing.briefing(href= briefing.url target='_blank')
+  img(
+    alt = briefing.title
+    class = 'briefing__image',
+    src = `data:image/jpeg;base64,${ briefing.image }`,
+  )
+  article.briefing__info
+    h1.info__title= briefing.title
+    p.info__time= briefing.time

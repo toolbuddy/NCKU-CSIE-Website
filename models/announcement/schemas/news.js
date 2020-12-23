@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const { collectFormValues } = require('validate.js');
 const {announcement} = require('../../common/utils/connect.js');
 
 const News = announcement.define('news', {
