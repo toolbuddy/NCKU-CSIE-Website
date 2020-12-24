@@ -161,12 +161,13 @@ export default class GetNews {
                 this.state.loading = false;
             }
         });
-        this.DOM.control.forword.addEventListener('click', async (e) => {
+        this.DOM.control.backword.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            if (!this.state.loading & !this.state.end & this.state.page >= (this.state.newsAmount - 4)) {
+            if ((this.state.page * this.briefingWidth + this.DOM.frame.offsetWidth) <= (this.briefingWidth * this.state.newsAmount))
+                this.moveBriefing(this.state.page + 1);
+            else if( !this.state.loading & !this.state.end ) {
                 this.state.loading = true;
-
                 classAdd(this.DOM.frame, 'news__frame--hidden');
                 classRemove(this.DOM.loading, 'loading--hidden');
                 await this.getNewNews();
@@ -176,12 +177,10 @@ export default class GetNews {
                 classRemove(this.DOM.frame, 'news__frame--hidden');
 
                 this.state.loading = false;
-            }
-
-            if (this.state.page < this.state.newsAmount)
                 this.moveBriefing(this.state.page + 1);
+            }
         });
-        this.DOM.control.backword.addEventListener('click', (e) => {
+        this.DOM.control.forword.addEventListener('click', (e) => {
             e.preventDefault();
 
             if (this.state.page > 1)
