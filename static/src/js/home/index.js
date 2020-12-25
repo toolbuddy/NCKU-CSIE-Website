@@ -87,7 +87,7 @@ catch (err) {
 }
 try {
     const getNews = new GetNews({
-        amount: 4,
+        amount: 6,
         announcementDOM: document.getElementById('news'),
         controlForwordDOM: document.getElementById('control--forword'),
         controlBackwordDOM: document.getElementById('control--backword'),

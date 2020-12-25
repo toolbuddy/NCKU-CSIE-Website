@@ -1,5 +1,5 @@
 import briefingHTML from 'static/src/pug/components/home/news-briefing.pug';
-import {classAdd, classRemove} from 'static/src/js/utils/style.js';
+import {classAdd, classRemove, delay} from 'static/src/js/utils/style.js';
 import {host} from 'settings/server/config.js';
 import tagUtils from 'models/announcement/utils/tag.js';
 import UrlUtils from 'static/src/js/utils/url.js';
@@ -35,7 +35,8 @@ export default class GetNews {
         this.DOM = {
             noResult: opt.announcementDOM.querySelector(announcementQuerySelector('no-result')),
             loading: opt.announcementDOM.querySelector(announcementQuerySelector('loading')),
-            briefings: opt.announcementDOM.querySelector(announcementQuerySelector('briefings')),
+            briefings: opt.announcementDOM.querySelector('.news__frame > .frame__briefings'),
+            frame: opt.announcementDOM.querySelector('.news__frame'),
             control: {
                 forword: opt.controlForwordDOM,
                 backword: opt.controlBackwordDOM,
@@ -54,13 +55,17 @@ export default class GetNews {
         this.tags = opt.tags;
         this.to = opt.to;
         this.page = opt.page;
+        this.briefingWidth = 307;
         this.state = {
             page: 1,
+            newsAmount: 0,
+            end: false,
+            loading: false,
         };
     }
 
-    static singleNewsQueryApi (page) {
-        return `${host}/api/announcement/get-news?amount=1&page=${page}`;
+    newsQueryApi () {
+        return `${host}/api/announcement/get-news?amount=${this.amount}&page=${Math.ceil(this.state.newsAmount / this.amount) + 1}`;
     }
 
     static formatUpdateTime (time) {
@@ -96,12 +101,17 @@ export default class GetNews {
         });
     }
 
-    insertBack (data) {
+    moveBriefing (page) {
+        this.DOM.briefings.style.transform = `translate(-${307 * (page - 1)}px, 0px)`;
+        this.state.page = page;
+    }
+
+    insertBriefing (data) {
         const extractTextObj = data;
         extractTextObj.forEach((ann) => {
             ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
         });
-        this.DOM.briefings.removeChild(this.DOM.briefings.childNodes[0]);
+
         extractTextObj.forEach((briefing) => {
             this.DOM.briefings.innerHTML += briefingHTML({
                 briefing,
@@ -112,68 +122,69 @@ export default class GetNews {
         });
     }
 
-    insertFront (data) {
-        const extractTextObj = data;
-        extractTextObj.forEach((ann) => {
-            ann.content = ((new DOMParser()).parseFromString(ann.content, 'text/html')).documentElement.textContent.trim();
-        });
-        this.DOM.briefings.removeChild(this.DOM.briefings.lastElementChild);
-        extractTextObj.forEach((briefing) => {
-            this.DOM.briefings.insertAdjacentHTML('afterbegin', briefingHTML({
-                briefing,
-                UTILS: {
-                    url: UrlUtils.serverUrl(new UrlUtils(host, this.languageId)),
-                },
-            }));
-        });
-    }
-
-    subscribeControl () {
-        this.DOM.control.forword.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            try {
-                const res = await fetch(this.constructor.singleNewsQueryApi(this.state.page + 4));
-
-                if (!res.ok)
-                    throw new Error('No news found');
-
+    async getNewNews () {
+        try {
+            const res = await fetch(this.newsQueryApi());
+            if (!res.ok) {
+                this.state.end = true;
+                throw new Error('No news found');
+            }
+            else {
                 const data = await res.json();
-
-                this.insertBack(this.constructor.formatData({
+                this.insertBriefing(this.constructor.formatData({
                     data,
                     languageId: this.languageId,
                 }));
-
-                this.state.page += 1;
+                this.state.newsAmount += data.length;
+                if (data.length < this.amount)
+                    this.state.end = true;
             }
-            catch (err) {
-                console.error(err);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    subscribeControl () {
+        this.DOM.frame.addEventListener('scroll', async () => {
+            if (
+                this.DOM.frame.scrollLeft + this.DOM.frame.offsetWidth >= (this.briefingWidth * this.state.newsAmount - 1) &
+                !this.state.loading & !this.state.end
+            ) {
+                this.state.loading = true;
+                classAdd(this.DOM.frame, 'news__frame--hidden');
+                classRemove(this.DOM.loading, 'loading--hidden');
+                await this.getNewNews();
+                await delay(500);
+                classAdd(this.DOM.loading, 'loading--hidden');
+                classRemove(this.DOM.frame, 'news__frame--hidden');
+                this.state.loading = false;
             }
         });
         this.DOM.control.backword.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            try {
-                if (this.state.page > 1) {
-                    const res = await fetch(this.constructor.singleNewsQueryApi(this.state.page - 1));
+            if ((this.state.page * this.briefingWidth + this.DOM.frame.offsetWidth) <= (this.briefingWidth * this.state.newsAmount))
+                this.moveBriefing(this.state.page + 1);
+            else if( !this.state.loading & !this.state.end ) {
+                this.state.loading = true;
+                classAdd(this.DOM.frame, 'news__frame--hidden');
+                classRemove(this.DOM.loading, 'loading--hidden');
+                await this.getNewNews();
 
-                    if (!res.ok)
-                        throw new Error('No news found');
+                await delay(500);
+                classAdd(this.DOM.loading, 'loading--hidden');
+                classRemove(this.DOM.frame, 'news__frame--hidden');
 
-                    const data = await res.json();
-
-                    this.insertFront(this.constructor.formatData({
-                        data,
-                        languageId: this.languageId,
-                    }));
-
-                    this.state.page -= 1;
-                }
+                this.state.loading = false;
+                this.moveBriefing(this.state.page + 1);
             }
-            catch (err) {
-                console.error(err);
-            }
+        });
+        this.DOM.control.forword.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (this.state.page > 1)
+                this.moveBriefing(this.state.page - 1);
         });
     }
 
@@ -182,13 +193,14 @@ export default class GetNews {
             this.DOM.briefings.innerHTML = '';
             classAdd(this.DOM.noResult, 'no-result--hidden');
 
-            const res = await fetch(`${host}/api/announcement/get-news?amount=4&page=1`);
+            const res = await fetch(this.newsQueryApi());
 
             if (!res.ok)
                 throw new Error('No announcement found');
 
             const data = await res.json();
 
+            this.state.newsAmount += data.length;
             this.render(this.constructor.formatData({
                 data,
                 languageId: this.languageId,

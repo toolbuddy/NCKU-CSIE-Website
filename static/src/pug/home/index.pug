@@ -64,13 +64,14 @@ append content
     +loading( 'admission-announcement' )
     nav.admission-announcement__briefings.briefings
 
-  a.content__recriut-link( href = UTILS.url( { href : 'announcement/admission' } ) )= `${ i18n[ LANG.id ].more }`
+  a.content__admission-link( href = UTILS.url( { href : 'announcement/admission' } ) )= `${ i18n[ LANG.id ].more }`
 
   +topic( 'content_news', i18n[ LANG.id ].news )
   section#news.content__news.news
     +noResult( 'news' )
     +loading( 'news' )
-    nav.news__briefings.briefings
+    nav.news__frame.frame
+      article.frame__briefings.briefings
     section.news__pages.pages
       button#control--forword.pages__control.pages__control--forword= '<'
       button#control--backword.pages__control.pages__control--backword= '>'
