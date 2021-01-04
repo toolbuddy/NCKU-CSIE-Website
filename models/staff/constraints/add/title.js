@@ -1,15 +1,15 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const TitleValidationConstraints = {
     titleI18n: {
         presence: {
             allowEmpty: false,
         },
-        type:     'array',
+        type: 'array',
         length: {
             is: LanguageUtils.supportedLanguage.length,
         },
     },
 };
 
-export default TitleValidationConstraints;
+module.exports = TitleValidationConstraints;

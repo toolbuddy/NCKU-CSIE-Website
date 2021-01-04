@@ -2,7 +2,7 @@
  * A function for getting a specific teacher's profile in detail in specific languages by the profile id.
  *
  * @async
- * @param {number} [language = defaultValue.language] - Language option of the profile.
+ * @param {number} [languageId = defaultValue.languageId] - Language option of the profile.
  * @param {number} [profileId]                        - Id of the requested profile.
  * @returns {object}                                  - Related information of the requested profile, including:
  * - award
@@ -21,13 +21,13 @@
  * - title.
  */
 
-import LanguageUtils from 'models/common/utils/language.js';
-import degreeUtils from 'models/faculty/utils/degree.js';
-import departmentUtils from 'models/faculty/utils/department.js';
-import nationUtils from 'models/faculty/utils/nation.js';
-import researchGroupUtils from 'models/faculty/utils/research-group.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-import {
+const LanguageUtils = require('../../common/utils/language.js');
+const degreeUtils = require('../utils/degree.js');
+const departmentUtils = require('../utils/department.js');
+const nationUtils = require('../utils/nation.js');
+const researchGroupUtils = require('../utils/research-group.js');
+const ValidateUtils = require('../../common/utils/validate.js');
+const {
     AwardI18n,
     Award,
     ConferenceI18n,
@@ -58,94 +58,86 @@ import {
     TechnologyTransfer,
     Title,
     TitleI18n,
-} from 'models/faculty/operations/associations.js';
+} = require('./associations.js');
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
-            language = null,
+            languageId = null,
             profileId = null,
         } = opt;
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'Invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
+            const error = new Error('Invalid language id');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidId( profileId ) ) {
-            const error = new Error( 'Invalid profile id' );
+        if (!ValidateUtils.isValidId(profileId)) {
+            const error = new Error('Invalid profile id');
             error.status = 400;
             throw error;
         }
 
         const [
-            award,
-            conference,
-            department,
-            education,
-            experience,
-            patent,
+            awards,
+            conferences,
+            departments,
+            educations,
+            experiences,
+            patents,
             profile,
             profileI18n,
-            project,
-            publication,
-            researchGroup,
-            specialty,
-            studentAward,
-            technologyTransfer,
-            title,
-        ] = await Promise.all( [
-            Award.findAll( {
-                attributes: [
-                    'receivedYear',
-                ],
+            projects,
+            publications,
+            researchGroups,
+            specialtys,
+            studentAwards,
+            technologyTransfers,
+            titles,
+        ] = await Promise.all([
+            Award.findAll({
+                attributes: ['receivedYear'],
                 where: {
                     profileId,
                 },
                 include: [
                     {
-                        model:      AwardI18n,
-                        as:         'awardI18n',
-                        attributes: [
-                            'award',
-                        ],
+                        model: AwardI18n,
+                        as: 'awardI18n',
+                        attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Conference.findAll( {
-                attributes: [
-                    'hostYear',
-                ],
+            }),
+            Conference.findAll({
+                attributes: ['hostYear'],
                 where: {
                     profileId,
                 },
                 include: [
                     {
-                        model:      ConferenceI18n,
-                        as:         'conferenceI18n',
+                        model: ConferenceI18n,
+                        as: 'conferenceI18n',
                         attributes: [
                             'conference',
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Department.findAll( {
-                attributes: [
-                    'type',
-                ],
+            }),
+            Department.findAll({
+                attributes: ['type'],
                 where: {
                     profileId,
                 },
-            } ),
-            Education.findAll( {
+            }),
+            Education.findAll({
                 attributes: [
                     'degree',
                     'from',
@@ -157,19 +149,19 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      EducationI18n,
-                        as:         'educationI18n',
+                        model: EducationI18n,
+                        as: 'educationI18n',
                         attributes: [
                             'major',
                             'school',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Experience.findAll( {
+            }),
+            Experience.findAll({
                 attributes: [
                     'from',
                     'to',
@@ -179,20 +171,20 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      ExperienceI18n,
-                        as:         'experienceI18n',
+                        model: ExperienceI18n,
+                        as: 'experienceI18n',
                         attributes: [
                             'department',
                             'organization',
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Patent.findAll( {
+            }),
+            Patent.findAll({
                 attributes: [
                     'applicationDate',
                     'certificationNumber',
@@ -205,20 +197,20 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      PatentI18n,
-                        as:         'patentI18n',
+                        model: PatentI18n,
+                        as: 'patentI18n',
                         attributes: [
                             'inventor',
                             'patent',
                             'patentOwner',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Profile.findOne( {
+            }),
+            Profile.findOne({
                 attributes: [
                     'email',
                     'fax',
@@ -232,8 +224,8 @@ export default async ( opt ) => {
                 where: {
                     profileId,
                 },
-            } ),
-            ProfileI18n.findOne( {
+            }),
+            ProfileI18n.findOne({
                 attributes: [
                     'labAddress',
                     'labName',
@@ -241,11 +233,11 @@ export default async ( opt ) => {
                     'officeAddress',
                 ],
                 where: {
-                    language,
+                    languageId,
                     profileId,
                 },
-            } ),
-            Project.findAll( {
+            }),
+            Project.findAll({
                 attributes: [
                     'category',
                     'from',
@@ -256,19 +248,19 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      ProjectI18n,
-                        as:         'projectI18n',
+                        model: ProjectI18n,
+                        as: 'projectI18n',
                         attributes: [
                             'name',
                             'support',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Publication.findAll( {
+            }),
+            Publication.findAll({
                 attributes: [
                     'category',
                     'issueMonth',
@@ -281,84 +273,72 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      PublicationI18n,
-                        as:         'publicationI18n',
+                        model: PublicationI18n,
+                        as: 'publicationI18n',
                         attributes: [
                             'authors',
                             'title',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            ResearchGroup.findAll( {
-                attributes: [
-                    'type',
-                ],
+            }),
+            ResearchGroup.findAll({
+                attributes: ['type'],
                 where: {
                     profileId,
                 },
-            } ),
-            Specialty.findAll( {
+            }),
+            Specialty.findAll({
                 attributes: [],
-                where:      {
-                    profileId,
-                },
-                include: [
-                    {
-                        model:      SpecialtyI18n,
-                        as:         'specialtyI18n',
-                        attributes: [
-                            'specialty',
-                        ],
-                        where: {
-                            language,
-                        },
-                    },
-                ],
-            } ),
-            StudentAward.findAll( {
-                attributes: [
-                    'receivedYear',
-                ],
                 where: {
                     profileId,
                 },
                 include: [
                     {
-                        model:      Student,
-                        as:         'student',
-                        attributes: [
-                            'degree',
-                        ],
+                        model: SpecialtyI18n,
+                        as: 'specialtyI18n',
+                        attributes: ['specialty'],
+                        where: {
+                            languageId,
+                        },
+                    },
+                ],
+            }),
+            StudentAward.findAll({
+                attributes: ['receivedYear'],
+                where: {
+                    profileId,
+                },
+                include: [
+                    {
+                        model: Student,
+                        as: 'student',
+                        attributes: ['degree'],
                         include: [
                             {
-                                model:      StudentI18n,
-                                as:         'studentI18n',
-                                attributes: [
-                                    'name',
-                                ],
+                                model: StudentI18n,
+                                as: 'studentI18n',
+                                attributes: ['name'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
                     },
                     {
-                        model:      StudentAwardI18n,
-                        as:         'studentAwardI18n',
-                        attributes: [
-                            'award',
-                        ],
+                        model: StudentAwardI18n,
+                        as: 'studentAwardI18n',
+                        attributes: ['award'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            TechnologyTransfer.findAll( {
+            }),
+            TechnologyTransfer.findAll({
                 attributes: [
                     'from',
                     'to',
@@ -368,36 +348,34 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      TechnologyTransferPatent,
-                        as:         'technologyTransferPatent',
-                        include:    [
+                        model: TechnologyTransferPatent,
+                        as: 'technologyTransferPatent',
+                        include: [
                             {
-                                model:      TechnologyTransferPatentI18n,
-                                as:         'technologyTransferPatentI18n',
-                                attributes: [
-                                    'patent',
-                                ],
+                                model: TechnologyTransferPatentI18n,
+                                as: 'technologyTransferPatentI18n',
+                                attributes: ['patent'],
                                 where: {
-                                    language,
+                                    languageId,
                                 },
                             },
                         ],
                     },
                     {
-                        model:      TechnologyTransferI18n,
-                        as:         'technologyTransferI18n',
+                        model: TechnologyTransferI18n,
+                        as: 'technologyTransferI18n',
                         attributes: [
                             'authorizedParty',
                             'authorizingParty',
                             'technology',
                         ],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-            Title.findAll( {
+            }),
+            Title.findAll({
                 attributes: [
                     'from',
                     'to',
@@ -407,139 +385,137 @@ export default async ( opt ) => {
                 },
                 include: [
                     {
-                        model:      TitleI18n,
-                        as:         'titleI18n',
-                        attributes: [
-                            'title',
-                        ],
+                        model: TitleI18n,
+                        as: 'titleI18n',
+                        attributes: ['title'],
                         where: {
-                            language,
+                            languageId,
                         },
                     },
                 ],
-            } ),
-        ] );
+            }),
+        ]);
 
         /**
          * Profile not found.
          * Handle with 404 not found.
          */
 
-        if ( !profile ) {
-            const error = new Error( 'Profile not found' );
+        if (!profile) {
+            const error = new Error('Profile not found');
             error.status = 404;
             throw error;
         }
 
         return {
-            award: award.map( award => ( {
-                award:         award.awardI18n[ 0 ].award,
-                receivedYear:  award.receivedYear,
-            } ) ),
-            conference: conference.map( conference => ( {
-                conference: conference.conferenceI18n[ 0 ].conference,
-                hostYear:   conference.hostYear,
-                title:      conference.conferenceI18n[ 0 ].title,
-            } ) ),
-            department: department.map( department => departmentUtils.getValueById( {
-                id:         department.type,
-                languageId: language,
-            } ) ),
-            education:  education.map( education => ( {
-                degree: degreeUtils.getValueById( {
+            award: awards.map(award => ({
+                award: award.awardI18n[0].award,
+                receivedYear: award.receivedYear,
+            })),
+            conference: conferences.map(conference => ({
+                conference: conference.conferenceI18n[0].conference,
+                hostYear: conference.hostYear,
+                title: conference.conferenceI18n[0].title,
+            })),
+            department: departments.map(department => departmentUtils.getValueById({
+                id: department.type,
+                languageId,
+            })),
+            education: educations.map(education => ({
+                degree: degreeUtils.getValueById({
                     id: education.degree,
-                    language,
-                } ),
-                from:   education.from,
-                major:  education.educationI18n[ 0 ].major,
-                nation: nationUtils.getOptionById( education.nation ),
-                school: education.educationI18n[ 0 ].school,
-                to:     education.to,
-            } ) ),
-            experience: experience.map( experience => ( {
-                department:   experience.experienceI18n[ 0 ].department,
-                from:         experience.from,
-                organization: experience.experienceI18n[ 0 ].organization,
-                title:        experience.experienceI18n[ 0 ].title,
-                to:           experience.to,
-            } ) ),
-            patent: patent.map( patent => ( {
-                applicationDate:     patent.applicationDate,
+                    languageId,
+                }),
+                from: education.from,
+                major: education.educationI18n[0].major,
+                nation: nationUtils.getOptionById(education.nation),
+                school: education.educationI18n[0].school,
+                to: education.to,
+            })),
+            experience: experiences.map(experience => ({
+                department: experience.experienceI18n[0].department,
+                from: experience.from,
+                organization: experience.experienceI18n[0].organization,
+                title: experience.experienceI18n[0].title,
+                to: experience.to,
+            })),
+            patent: patents.map(patent => ({
+                applicationDate: patent.applicationDate,
                 certificationNumber: patent.certificationNumber,
-                expireDate:          patent.expireDate,
-                inventor:            patent.patentI18n[ 0 ].inventor,
-                issueDate:           patent.issueDate,
-                nation:              nationUtils.getOptionById( patent.nation ),
-                patent:              patent.patentI18n[ 0 ].patent,
-                patentOwner:         patent.patentI18n[ 0 ].patentOwner,
-            } ) ),
+                expireDate: patent.expireDate,
+                inventor: patent.patentI18n[0].inventor,
+                issueDate: patent.issueDate,
+                nation: nationUtils.getOptionById(patent.nation),
+                patent: patent.patentI18n[0].patent,
+                patentOwner: patent.patentI18n[0].patentOwner,
+            })),
             profile: {
-                email:         profile.email,
-                fax:           profile.fax,
-                labAddress:    profileI18n.labAddress,
-                labName:       profileI18n.labName,
-                labTel:        profile.labTel,
-                labWeb:        profile.labWeb,
-                name:          profileI18n.name,
-                nation:        nationUtils.getValueById( {
+                email: profile.email,
+                fax: profile.fax,
+                labAddress: profileI18n.labAddress,
+                labName: profileI18n.labName,
+                labTel: profile.labTel,
+                labWeb: profile.labWeb,
+                name: profileI18n.name,
+                nation: nationUtils.getValueById({
                     id: profile.nation,
-                    language,
-                } ),
+                    languageId,
+                }),
                 officeAddress: profileI18n.officeAddress,
-                officeTel:     profile.officeTel,
-                personalWeb:   profile.personalWeb,
-                photo:         profile.photo,
+                officeTel: profile.officeTel,
+                personalWeb: profile.personalWeb,
+                photo: profile.photo,
                 profileId,
             },
-            project: project.map( project => ( {
+            project: projects.map(project => ({
                 category: project.category,
-                from:     project.from,
-                name:     project.projectI18n[ 0 ].name,
-                support:  project.projectI18n[ 0 ].support,
-                to:       project.to,
-            } ) ),
-            publication: publication.map( publication => ( {
-                authors:       publication.publicationI18n[ 0 ].authors,
-                category:      publication.category,
+                from: project.from,
+                name: project.projectI18n[0].name,
+                support: project.projectI18n[0].support,
+                to: project.to,
+            })),
+            publication: publications.map(publication => ({
+                authors: publication.publicationI18n[0].authors,
+                category: publication.category,
                 international: publication.international,
-                issueDate:     publication.issueDate,
-                issueYear:     publication.issueYear,
-                refereed:      publication.refereed,
-                title:         publication.publicationI18n[ 0 ].title,
-            } ) ),
-            researchGroup: researchGroup.map( researchGroup => researchGroupUtils.getValueById( {
-                type:       researchGroup.type,
-                languageId: language,
-            } ) ),
-            specialty:     specialty.map( specialty => specialty.specialtyI18n[ 0 ].specialty ),
-            studentAward:  studentAward.map( studentAward => ( {
-                award:        studentAward.studentAwardI18n[ 0 ].award,
+                issueDate: publication.issueDate,
+                issueYear: publication.issueYear,
+                refereed: publication.refereed,
+                title: publication.publicationI18n[0].title,
+            })),
+            researchGroup: researchGroups.map(researchGroup => researchGroupUtils.getValueById({
+                type: researchGroup.type,
+                languageId,
+            })),
+            specialty: specialtys.map(specialty => specialty.specialtyI18n[0].specialty),
+            studentAward: studentAwards.map(studentAward => ({
+                award: studentAward.studentAwardI18n[0].award,
                 receivedYear: studentAward.receivedYear,
-                student:      studentAward.student.map( student => ( {
-                    degree: degreeUtils.getValueById( {
+                student: studentAward.student.map(student => ({
+                    degree: degreeUtils.getValueById({
                         id: student.degree,
-                        language,
-                    } ),
-                    name:   student.studentI18n[ 0 ].name,
-                } ) ),
-            } ) ),
-            technologyTransfer: technologyTransfer.map( technologyTransfer => ( {
-                authorizingParty: technologyTransfer.technologyTransferI18n[ 0 ].authorizingParty,
-                authorizedParty:  technologyTransfer.technologyTransferI18n[ 0 ].authorizedParty,
-                from:             technologyTransfer.from,
-                patent:           technologyTransfer.technologyTransferPatent.map( patent => patent.technologyTransferPatentI18n[ 0 ].patent ),
-                to:               technologyTransfer.to,
-                technology:       technologyTransfer.technologyTransferI18n[ 0 ].technology,
-            } ) ),
-            title: title.map( title => ( {
-                from:  title.from,
-                title: title.titleI18n[ 0 ].title,
-                to:    title.to,
-            } ) ),
+                        languageId,
+                    }),
+                    name: student.studentI18n[0].name,
+                })),
+            })),
+            technologyTransfer: technologyTransfers.map(technologyTransfer => ({
+                authorizingParty: technologyTransfer.technologyTransferI18n[0].authorizingParty,
+                authorizedParty: technologyTransfer.technologyTransferI18n[0].authorizedParty,
+                from: technologyTransfer.from,
+                patent: technologyTransfer.technologyTransferPatent.map(patent => patent.technologyTransferPatentI18n[0].patent),
+                to: technologyTransfer.to,
+                technology: technologyTransfer.technologyTransferI18n[0].technology,
+            })),
+            title: titles.map(title => ({
+                from: title.from,
+                title: title.titleI18n[0].title,
+                to: title.to,
+            })),
         };
     }
-    catch ( error ) {
-        if ( !error.status )
+    catch (error) {
+        if (!error.status)
             error.status = 500;
         throw error;
     }

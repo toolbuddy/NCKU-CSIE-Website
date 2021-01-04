@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const AwardI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -11,11 +11,11 @@ const AwardI18nValidationConstraints = {
     },
     award: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
 };
 
-export default AwardI18nValidationConstraints;
+module.exports = AwardI18nValidationConstraints;

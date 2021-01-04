@@ -1,10 +1,10 @@
-import I18nUtils from '../../common/utils/i18n.js';
-import { defaultOption, i18n, map, } from '../maps/student-columns.js';
+const I18nUtils = require('../../common/utils/i18n.js');
+const {defaultOption, i18n, map} = require('../maps/student-columns.js');
 
-export const studentColumnsUtils = new I18nUtils( {
+const studentColumnsUtils = new I18nUtils({
     defaultOption,
     i18n,
     map,
-} );
+});
 
-export default studentColumnsUtils;
+module.exports = studentColumnsUtils;

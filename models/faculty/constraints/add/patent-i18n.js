@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const PatentI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -11,25 +11,25 @@ const PatentI18nValidationConstraints = {
     },
     inventor: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     patentOwner: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     patent: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
 };
 
-export default PatentI18nValidationConstraints;
+module.exports = PatentI18nValidationConstraints;

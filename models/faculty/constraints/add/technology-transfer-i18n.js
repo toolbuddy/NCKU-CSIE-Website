@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const TechnologyTransferI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -11,25 +11,25 @@ const TechnologyTransferI18nValidationConstraints = {
     },
     technology: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     authorizingParty: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
     authorizedParty: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
 };
 
-export default TechnologyTransferI18nValidationConstraints;
+module.exports = TechnologyTransferI18nValidationConstraints;

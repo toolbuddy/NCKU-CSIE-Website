@@ -6,8 +6,9 @@ append data
       [ LANG.getLanguageId( 'en-US' ) ]: {
         'title': 'Home',
         'topic': 'Latest News',
+        'admission': 'Admissions',
         'more':  'more...',
-        'hot':   'Hot News',
+        'news':  'Hot News',
         'highSchool': 'For High School Students',
         'imi': '',
         'imis': '',
@@ -17,8 +18,9 @@ append data
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         'title': '首頁',
         'topic': '最新消息',
+        'admission': '招生訊息',
+        'news': '焦點新聞',
         'more':  '更多資訊...',
-        'hot':   '最近熱門',
         'highSchool': '高中生專區',
         'imi': '醫資所',
         'imis': '製造所',
@@ -52,14 +54,27 @@ append content
     +noResult( 'announcement' )
     +loading( 'announcement' )
     nav.announcement__briefings.briefings
-    aside.announcement__more.more
-      a.more__link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
 
-  section#hot-announcement.content__hot-announcement.hot-announcement
-    header.hot-announcement__title.title= i18n[ LANG.id ].hot
-    +noResult( 'hot-announcement' )
-    +loading( 'hot-announcement' )
-    nav.hot-announcement__briefings.briefings
+  a.content__announcement-link( href = UTILS.url( { href : 'announcement/all' } ) )= i18n[ LANG.id ].more
+
+  +topic( 'content_admission', i18n[ LANG.id ].admission )
+
+  section#admission-announcement.content__admission-announcement.admission-announcement
+    +noResult( 'admission-announcement' )
+    +loading( 'admission-announcement' )
+    nav.admission-announcement__briefings.briefings
+
+  a.content__admission-link( href = UTILS.url( { href : 'announcement/admission' } ) )= `${ i18n[ LANG.id ].more }`
+
+  +topic( 'content_news', i18n[ LANG.id ].news )
+  section#news.content__news.news
+    +noResult( 'news' )
+    +loading( 'news' )
+    nav.news__frame.frame
+      article.frame__briefings.briefings
+    section.news__pages.pages
+      button#control--forword.pages__control.pages__control--forword= '<'
+      button#control--backword.pages__control.pages__control--backword= '>'
 
   section#high-school.content__high-school.high-school
     figure.high-school__banner

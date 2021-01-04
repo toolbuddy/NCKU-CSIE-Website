@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const ProjectI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -11,18 +11,18 @@ const ProjectI18nValidationConstraints = {
     },
     name: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 300,
         },
     },
     support: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
 };
 
-export default ProjectI18nValidationConstraints;
+module.exports = ProjectI18nValidationConstraints;

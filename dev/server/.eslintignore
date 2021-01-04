@@ -7,9 +7,3 @@
 
 # NodeJS modules
 **/node_modules
-
-# Squelize generated schema
-**/models/**/tables
-
-# bin/
-../../bin

@@ -45,6 +45,7 @@
     // [ variable ]
     $small: 850px;
     $large: 992px;
+    $x-large: 1440px;
 
     // [ layout ]
     display: grid;
@@ -77,7 +78,7 @@
       grid: {
         row-gap: font__px-to-rem( 60 );
         template: {
-          columns: 1fr 8fr 1fr;
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
           areas:
             '. breadcrumb           .'
             '. topic                .'
@@ -87,10 +88,7 @@
             '. pages                .';
         }
       }
-    }
 
-    // [ RWD: $large ]
-    @media screen and ( min-width: $large ) {
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );
@@ -98,6 +96,12 @@
         left: 0;
         right: 0;
       }
+    }
+
+    // [ RWD: $x-large ]
+    @media screen and ( min-width: $x-large ) {
+      // [ layout ]
+      grid-template-columns: 1fr font__px-to-rem( 1200 ) 1fr;
     }
 
     // element
@@ -133,20 +137,20 @@
       > .filter__tags.tags {
         // [ variable ]
         $x-small: 280px;
-        $small: 400px;
-        $large: 520px;
-        $x-large: 630px;
+        $small: 300px;
+        $large: 360px;
+        $x-large: 768px;
 
         // [ layout ]
         display: grid;
         grid-template-areas:
           'phd'
+          'admission'
           'internship'
           'scholarship'
           'international'
           'award'
           'speech'
-          'conference'
           'exhibition'
           'competition'
           'rule';
@@ -155,8 +159,8 @@
         @media screen and ( min-width: $x-small ) {
           // [ layout ]
           grid-template-areas:
-            'phd       speech'
-            'internship    conference'
+            'phd        speech'
+            'internship    admission'
             'international exhibition'
             'scholarship   competition'
             'award         rule';
@@ -166,27 +170,31 @@
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'phd    rule        international'
-            'exhibition competition internship'
-            'speech     conference  scholarship'
-            '.          .           award';
+            'phd       rule        admission'
+            'exhibition   speech      competition'
+            'international internship award'
+            'scholarship   .          .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'phd     rule          speech        conference'
-            'internship  international competition   exhibition'
-            'scholarship award         .             .';
+            'phd   speech      internship  international'
+            'admission competition scholarship award '
+            'rule      exhibition  .           .';
         }
 
         // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
-          grid-template-areas:
-            'phd speech     conference    exhibition  competition'
-            'award   internship international scholarship rule';
+          grid-template: {
+            areas:
+              'phd admission  speech        exhibition  competition'
+              'award   internship international scholarship rule'
+              '.       .           .             .          .';
+            columns: repeat( 3, auto );
+          }
         }
 
         // element

@@ -1,15 +1,15 @@
-import LanguageUtils from 'models/common/utils/language.js';
-import Sequelize from 'sequelize';
-import {
+const LanguageUtils = require('../../common/utils/language.js');
+const Sequelize = require('sequelize');
+const {
     Publication,
     PublicationI18n,
-} from 'models/faculty/operations/associations.js';
+} = require('./associations.js');
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
         opt = opt || {};
         const {
-            language = null,
+            languageId = null,
             from = null,
             to = null,
         } = opt;
@@ -19,12 +19,12 @@ export default async ( opt ) => {
          * Handle with 400 bad request.
          */
 
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
+            const error = new Error('invalid language id');
             error.status = 400;
             throw error;
         }
-        const data = await Publication.findAll( {
+        const data = await Publication.findAll({
             attributes: [
                 'publicationId',
                 'profileId',
@@ -34,38 +34,38 @@ export default async ( opt ) => {
             ],
             where: {
                 issueYear: {
-                    [ Sequelize.Op.gte ]: from,
-                    [ Sequelize.Op.lte ]: to,
+                    [Sequelize.Op.gte]: from,
+                    [Sequelize.Op.lte]: to,
                 },
             },
             include: [
                 {
-                    model:      PublicationI18n,
-                    as:         'publicationI18n',
+                    model: PublicationI18n,
+                    as: 'publicationI18n',
                     attributes: [
                         'title',
                         'authors',
                     ],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
             ],
-        } );
-        return data.map( publication => ( {
+        });
+        return data.map(publication => ({
             publicationId: publication.publicationId,
-            profileId:     publication.profileId,
-            issueYear:     publication.issueYear,
-            issueMonth:    publication.issueMonth,
-            category:      publication.category,
+            profileId: publication.profileId,
+            issueYear: publication.issueYear,
+            issueMonth: publication.issueMonth,
+            category: publication.category,
             international: publication.international,
-            refereed:      publication.refereed,
-            title:         publication.publicationI18n[ 0 ].title,
-            authors:       publication.publicationI18n[ 0 ].authors,
-        } ) );
+            refereed: publication.refereed,
+            title: publication.publicationI18n[0].title,
+            authors: publication.publicationI18n[0].authors,
+        }));
     }
-    catch ( err ) {
-        if ( err.status )
+    catch (err) {
+        if (err.status)
             throw err;
         const error = new Error();
         error.status = 500;

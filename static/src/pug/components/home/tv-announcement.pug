@@ -1,20 +1,10 @@
 include /components/common/image.pug
--
-  const i18n = Object.freeze( {
-    [ LANG.getLanguageId( 'en-US' ) ]: {
-      more: 'More...',
-    },
-    [ LANG.getLanguageId( 'zh-TW' ) ]: {
-      more: '查看更多...',
-    },
-  } );
+
 figure.series__show.show.show--hide
-  img(
-    alt = data.title,
-    class = 'show__ad',
-    src = `data:image/jpeg;base64,${ data.image }`
-  )
-  figcaption.show__detail.detail
-    header.detail__title= data.title
-    p.detail__content= data.content
-    a.detail__more( href = UTILS.url( { href: `announcement/${ data.announcementId }` } ) )= i18n[ LANG.id ].more
+  section.show__ad
+    img(
+      alt = data.title,
+      class = 'ad__image',
+      src = `data:image/jpeg;base64,${ data.image }`,
+    )
+    header.ad__title= data.title

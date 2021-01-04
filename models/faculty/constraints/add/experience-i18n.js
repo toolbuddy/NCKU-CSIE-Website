@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const ExperienceI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -11,25 +11,25 @@ const ExperienceI18nValidationConstraints = {
     },
     organization: {
         presence: true,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
     department: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
     title: {
         presence: false,
-        type:       'string',
-        length:   {
+        type: 'string',
+        length: {
             maximum: 100,
         },
     },
 };
 
-export default ExperienceI18nValidationConstraints;
+module.exports = ExperienceI18nValidationConstraints;

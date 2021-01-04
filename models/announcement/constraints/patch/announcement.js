@@ -1,18 +1,18 @@
-import ValidateUtils from 'models/common/utils/validate.js';
+const ValidateUtils = require('../../../common/utils/validate.js');
 
 const AnnouncementValidationConstraints = {
     announcementId: {
         presence: true,
-        type:     {
+        type: {
             type: ValidateUtils.isValidId,
         },
     },
     isPinned: {
-        presence:     false,
-        type:     {
-            type: value => ValidateUtils.isValidBoolean( value ),
+        presence: false,
+        type: {
+            type: value => ValidateUtils.isValidBoolean(value),
         },
     },
 };
 
-export default AnnouncementValidationConstraints;
+module.exports = AnnouncementValidationConstraints;

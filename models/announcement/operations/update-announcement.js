@@ -1,144 +1,141 @@
-import LanguageUtils from 'models/common/utils/language.js';
-import {
+/**
+ * A function to update announcement with given id.
+ *
+ * @async
+ * @function
+ * @param {number}   announcementId          - Id of the requested announcement.
+ * @param {number}   image                   - Image of this announcement. An announcement can only have one image.
+ * @param {blob}     [announcementI18n = []] - Title and content of this announcement in different languages.
+ * @param {object}   [addedFiles = []]       - New files to be appended on this announcement.
+ * @param {number[]} [deletedFiles = []]     - Files which need to be deleted.
+ * @param {blob[]}   [tags = []]             - Tags of this announcement.
+ * @returns {object} On success, return an object with success message.
+ * - message
+ */
 
+const validate = require('validate.js');
+const {
     // Announcement,
     AnnouncementI18n,
     File,
     Tag,
-} from 'models/announcement/operations/associations.js';
-import { announcement, } from 'models/common/utils/connect.js';
+} = require('./associations.js');
+const {announcement} = require('../../common/utils/connect.js');
+const AnnouncementValidationConstraints = require('../constraints/put/announcement.js');
+const AnnouncementI18nValidationConstraints = require('../constraints/put/announcement-i18n.js');
+const AddedFileValidationConstraints = require('../constraints/put/addedFile.js');
+const DeletedFileValidationConstraints = require('../constraints/put/deletedFile.js');
+const TagValidationConstraints = require('../constraints/put/tag.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const equalArray = require('../../common/utils/equal-array.js');
 
-import AnnouncementValidationConstraints from 'models/announcement/constraints/put/announcement.js';
-import AnnouncementI18nValidationConstraints from 'models/announcement/constraints/put/announcement-i18n.js';
-import AddedFileValidationConstraints from 'models/announcement/constraints/put/addedFile.js';
-import DeletedFileValidationConstraints from 'models/announcement/constraints/put/deletedFile.js';
-import TagValidationConstraints from 'models/announcement/constraints/put/tag.js';
-import validate from 'validate.js';
-
-function sortByValue ( a, b ) {
-    return a - b;
-}
-
-function equalArray ( a, b ) {
-    if ( a === b )
-        return true;
-    if ( a == null || b == null )
-        return false;
-    if ( a.length !== b.length )
-        return false;
-    for ( let i = 0; i < a.length; ++i ) {
-        if ( a[ i ] !== b[ i ] )
-            return false;
-    }
-
-    return true;
-}
-
-export default ( opt ) => {
+module.exports = async (opt) => {
     try {
-        opt = opt || {};
-        const announcementId = Number( opt.announcementId );
+        // Get parameters.
         const {
+            announcementId = null,
             image = null,
-            announcementI18n = null,
+            announcementI18n = [],
             addedFiles = [],
             deletedFiles = [],
-            tags = null,
-        } = opt;
+            tags = [],
+        } = opt || {};
 
-        if ( typeof ( validate( {
+        // Check if parameters meet constraints. If not, throw 400 error.
+        if (typeof (validate({
             announcementId,
             image,
             announcementI18n,
             addedFiles,
             deletedFiles,
             tags,
-        }, AnnouncementValidationConstraints ) ) !== 'undefined' ) {
-            const error = new Error( 'Invalid announcement object' );
+        }, AnnouncementValidationConstraints)) !== 'undefined') {
+            const error = new Error('Invalid announcement object');
             error.status = 400;
             throw error;
         }
-
         const langArr = [];
-        announcementI18n.forEach( ( i18nData ) => {
-            i18nData.language = Number( i18nData.language );
-            if ( typeof ( validate( i18nData, AnnouncementI18nValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid announcementI18n object' );
+        announcementI18n.forEach((i18nData) => {
+            i18nData.languageId = Number(i18nData.languageId);
+            if (typeof (validate(i18nData, AnnouncementI18nValidationConstraints)) !== 'undefined') {
+                const error = new Error('Invalid announcementI18n object');
                 error.status = 400;
                 throw error;
             }
-            langArr.push( i18nData.language );
-        } );
-        if ( !equalArray( langArr.sort( sortByValue ), LanguageUtils.supportedLanguageId.sort( sortByValue ) ) ) {
-            const error = new Error( 'Invalid announcementI18n object' );
+            langArr.push(i18nData.languageId);
+        });
+        if (!equalArray(langArr.sort((a, b) => a - b), LanguageUtils.supportedLanguageId.sort((a, b) => a - b))) {
+            const error = new Error('Invalid announcementI18n object');
             error.status = 400;
             throw error;
         }
-
-        addedFiles.forEach( ( file ) => {
-            if ( typeof ( validate( file, AddedFileValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid added file object' );
+        addedFiles.forEach((file) => {
+            if (typeof (validate(file, AddedFileValidationConstraints)) !== 'undefined') {
+                const error = new Error('Invalid added file object');
                 error.status = 400;
                 throw error;
             }
-        } );
-
-        deletedFiles.forEach( ( file ) => {
-            file.fileId = Number( file.fileId );
-            if ( typeof ( validate( file, DeletedFileValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid deleted file object' );
+        });
+        deletedFiles.forEach((file) => {
+            file.fileId = Number(file.fileId);
+            if (typeof (validate(file, DeletedFileValidationConstraints)) !== 'undefined') {
+                const error = new Error('Invalid deleted file object');
                 error.status = 400;
                 throw error;
             }
-        } );
-
-        tags.forEach( ( tag ) => {
-            tag.tagId = Number( tag.tagId );
-            if ( typeof ( validate( tag, TagValidationConstraints ) ) !== 'undefined' ) {
-                const error = new Error( 'Invalid tag object' );
+        });
+        tags.forEach((tag) => {
+            tag.tagId = Number(tag.tagId);
+            if (typeof (validate(tag, TagValidationConstraints)) !== 'undefined') {
+                const error = new Error('Invalid tag object');
                 error.status = 400;
                 throw error;
             }
-        } );
+        });
 
-        return announcement.transaction( t => Promise.all( announcementI18n.map( i18nObj => AnnouncementI18n.update(
+        // Update announcement.
+        await announcement.transaction(t => Promise.all(announcementI18n.map(i18nObj => AnnouncementI18n.update(
             i18nObj,
             {
                 where: {
                     announcementId,
-                    language: i18nObj.language,
+                    languageId: i18nObj.languageId,
                 },
                 transaction: t,
-            }
-        ) ) ).then( () => Tag.destroy( {
+            },
+        )))
+        .then(() => Tag.destroy({
             where: {
                 announcementId,
             },
             transaction: t,
-        } ) ).then( () => Tag.bulkCreate( tags.map( tag => ( {
+        }))
+        .then(() => Tag.bulkCreate(tags.map(tag => ({
             tagId: tag.tagId,
             announcementId,
-        } ) ), {
+        })), {
             transaction: t,
-        } ) ).then( () => File.destroy( {
+        }))
+        .then(() => File.destroy({
             where: {
-                fileId: deletedFiles.map( file => file.fileId ),
+                fileId: deletedFiles.map(file => file.fileId),
             },
             transaction: t,
-        } ) ).then( () => File.bulkCreate( addedFiles.map( file => ( {
-            name:    file.name,
+        }))
+        .then(() => File.bulkCreate(addedFiles.map(file => ({
+            name: file.name,
             content: file.content,
             announcementId,
-        } ) ), {
+        })), {
             transaction: t,
-        } ) ) )
-        .then( () => ( { 'message': 'success', } ) )
-        .catch( ( err ) => {
-            err.status = 500;
-            throw err;
-        } );
+        })));
+
+        // Return success message.
+        return {message: 'Announcement updated.'};
     }
-    catch ( err ) {
-        throw err;
+    catch (error) {
+        if (!error.status)
+            error.status = 500;
+        throw error;
     }
 };

@@ -12,87 +12,87 @@
  * - `/resource/link`
  */
 
-import express from 'express';
+const express = require('express');
 
-import staticHtml from 'routes/utils/static-html.js';
+const staticHtml = require('./utils/static-html.js');
 
-const router = express.Router( {
+const router = express.Router({
     caseSensitive: true,
-    mergeParams:   false,
-    strict:        false,
-} );
+    mergeParams: false,
+    strict: false,
+});
 
 /**
  * Resolve URL `/resource`.
  */
 
 router
-.route( [
+.route([
     '/',
     '/index',
-] )
-.get( staticHtml( 'resource/index' ) );
+])
+.get(staticHtml('resource/index'));
 
 /**
  * Resolve URL `/resource/rule`.
  */
 
 router
-.route( '/rule' )
-.get( staticHtml( 'resource/rule' ) );
+.route('/rule')
+.get(staticHtml('resource/rule'));
 
 /**
  * Resolve URL `/resource/rent`.
  */
 
 router
-.route( '/rent' )
-.get( ( {}, res ) => {
-    res.redirect( 'http://www.csie.ncku.edu.tw/Class2014/' );
-} );
+.route('/rent')
+.get(({}, res) => {
+    res.redirect('http://www.csie.ncku.edu.tw/Class2014/');
+});
 
 /**
  * Resolve URL `/resource/fix`.
  */
 
 router
-.route( '/fix' )
-.get( ( {}, res ) => {
-    res.redirect( 'https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform' );
-} );
+.route('/fix')
+.get(({}, res) => {
+    res.redirect('https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform');
+});
 
 /**
  * Resolve URL `/resource/ieet`.
  */
 
 router
-.route( '/ieet' )
-.get( staticHtml( 'resource/ieet' ) );
+.route('/ieet')
+.get(staticHtml('resource/ieet'));
 
 /**
  * Resolve URL `/resource/sitemap`.
  */
 
 router
-.route( '/sitemap' )
-.get( staticHtml( 'resource/sitemap' ) );
+.route('/sitemap')
+.get(staticHtml('resource/sitemap'));
 
 /**
  * Resolve URL `/resource/alumni`.
  */
 
 router
-.route( '/alumni' )
-.get( ( {}, res ) => {
-    res.redirect( 'http://www.csie.ncku.edu.tw/classmate/index.php' );
-} );
+.route('/alumni')
+.get(({}, res) => {
+    res.redirect('http://www.csie.ncku.edu.tw/classmate/index.php');
+});
 
 /**
  * Resolve URL `/resource/link`.
  */
 
 router
-.route( '/link' )
-.get( staticHtml( 'resource/link' ) );
+.route('/link')
+.get(staticHtml('resource/link'));
 
-export default router;
+module.exports = router;

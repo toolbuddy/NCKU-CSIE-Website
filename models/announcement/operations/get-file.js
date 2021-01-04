@@ -1,24 +1,28 @@
 /**
- * A function for getting a specific file by the id of it.
+ * A function to get a specific file by its id.
  *
- * @param {number} [fileId] - Id of the requested file.
- * @returns {object}        - Related information of the requested file, including:
+ * @async
+ * @function
+ * @param {number} fileId - Id of the requested file.
+ * @returns {object} Related information of the requested file, including:
  * - content (in base64 string)
- * - file name.
+ * - file name
  */
 
-import ValidateUtils from 'models/common/utils/validate.js';
-import { File, } from 'models/announcement/operations/associations.js';
+const {File} = require('./associations.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 
-export default ( fileId ) => {
+module.exports = async (fileId) => {
     try {
-        if ( !ValidateUtils.isPositiveInteger( fileId ) ) {
-            const error = new Error( 'Invalid file id' );
+        // Check if parameter meet constraints. If not, throw 400 error.
+        if (!ValidateUtils.isPositiveInteger(fileId)) {
+            const error = new Error('Invalid file id.');
             error.status = 400;
             throw error;
         }
 
-        return File.findOne( {
+        // Get a file's detail with specific id.
+        const file = await File.findOne({
             attributes: [
                 'name',
                 'content',
@@ -26,19 +30,20 @@ export default ( fileId ) => {
             where: {
                 fileId,
             },
-        } )
-        .then( ( data ) => {
-            if ( !data ) {
-                const error = new Error( 'File not found' );
-                error.status = 404;
-                throw error;
-            }
-            else
-                return data;
-        } );
+        });
+
+        // If no file returned, throw 404 error.
+        if (!file) {
+            const error = new Error('File not found.');
+            error.status = 404;
+            throw error;
+        }
+
+        // Return this file.
+        return file;
     }
-    catch ( error ) {
-        if ( !error.status )
+    catch (error) {
+        if (!error.status)
             error.status = 500;
         throw error;
     }

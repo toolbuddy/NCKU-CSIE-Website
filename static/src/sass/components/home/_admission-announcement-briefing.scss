@@ -1,0 +1,166 @@
+@import 'components/common/font';
+@import 'components/common/no-result';
+@import 'components/common/loading';
+@import 'components/announcement/tags';
+
+// component
+// `.#{ $block } > .#{ $block }__admission-announcement.admission-announcement`
+@mixin admission-announcement ( $block ) {
+  // element
+  // `.#{ $block } > .#{ $block }__admission-announcement`
+  // block
+  // `.#{ $block } > .admission-announcement`
+  > .#{ $block }__admission-announcement.admission-announcement {
+    // [ variable ]
+    $large: 992px;
+
+    // element
+    // `> .#{ $block } > .admission-announcement > .admission-announcement__no-result`
+    // block
+    // `> .#{ $block } > .admission-announcement > .no-result`
+    @include no-result( 'admission-announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
+
+    // element
+    // `> .#{ $block } > .recruiadmissiont-announcement > .admission-announcement__loading`
+    // block
+    // `> .#{ $block } > .admission-announcement > .loading`
+    @include loading( 'admission-announcement' ) {
+      // [ layout ]
+      margin-top: font__px-to-rem( 64 );
+    }
+
+    // element
+    // `> .#{ $block } > .admission-announcement > .announcement__briefings`
+    // block
+    // `> .#{ $block } > .admission-announcement > .briefings`
+    > .admission-announcement__briefings.briefings {
+      // [ RWD: $large ]
+      @media screen and ( min-width: $large ) {
+        // [ layout ]
+        margin-top: font__px-to-rem( 22 );
+      }
+
+      // element
+      // `> .#{ $block } > .admission-announcement > .briefings > .briefings__briefing`
+      // block
+      // `> .#{ $block } > .admission-announcement > .briefings > .briefing`
+      > .briefings__briefing.briefing {
+        // [ layout ]
+        display: grid;
+        grid-template: {
+          areas:
+            'briefing__title  '
+            'briefing__article'
+            'briefing__time   ';
+          rows: font__px-to-rem( 24 ) font__px-to-rem( 28 ) font__px-to-rem( 16 );
+        }
+        margin-bottom: font__px-to-rem( 14 );
+
+        // [ skin ]
+        width: 100%;
+        border: {
+          radius: font__px-to-rem( 6 );
+          left: solid font__px-to-rem( 6 ) #213262;
+        }
+        padding: {
+          top: font__px-to-rem( 16 );
+          bottom: font__px-to-rem( 16 );
+          left: font__px-to-rem( 12 );
+          right: font__px-to-rem( 12 );
+        }
+        background-color: #ffffff;
+        box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 24 ) 0 #dbdbdb, 0 font__px-to-rem( 8 ) font__px-to-rem( 10 ) 0 #cccccc;
+
+        // [ interaction ]
+        &:hover {
+          // [ skin ]
+          background-color: #f5f5f7;
+        }
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          // [ layout ]
+          grid-template: {
+            areas:
+              'briefing__title  '
+              'briefing__article'
+              'briefing__time   ';
+            rows: font__px-to-rem( 24 ) font__px-to-rem( 28 ) font__px-to-rem( 16 );
+          }
+        }
+
+        // element
+        // `> .announcement > .briefings > .briefing > .briefing__title`
+
+        > .briefing__title {
+          // [ position ]
+          grid-area: briefing__title;
+
+          // [ layout ]
+          word: {
+            wrap: break-word;
+            break: break-all;
+          }
+          line-height: font__px-to-rem( 16 ) * 1.2;
+          white-space: nowrap;
+
+          // [ skin ]
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #000000;
+          font: {
+            weight: bold;
+            size: font__px-to-rem( 16 );
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .admission-announcement > .briefings > .briefing > .briefing__article`
+        > .briefing__article {
+          // [ position ]
+          grid-area: briefing__article;
+
+          // [ layout ]
+          display: none;
+          overflow: hidden;
+          margin-bottom: font__px-to-rem( 10 );
+          line-height: font__px-to-rem( 14 ) * 1.5;
+          white-space: nowrap;
+
+          // [ skin ]
+          color: #000000;
+          font-size: font__px-to-rem( 14 );
+          text-overflow: ellipsis;
+
+          // [ RWD: $large ]
+          @media screen and ( min-width: $large ) {
+            // [ layout ]
+            display: block;
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .admission-announcement > .briefings > .briefing > .briefing__time`
+        > .briefing__time {
+          // [ position ]
+          grid-area: briefing__time;
+          justify-self: start;
+
+          // [ layout ]
+          display: inline-block;
+          line-height: font__px-to-rem( 14 ) * 1.2;
+
+          // [ skin ]
+          color: #b5babf;
+          font-size: font__px-to-rem( 14 );
+        }
+      }
+    }
+
+    // [ customization ]
+    @content;
+  }
+}

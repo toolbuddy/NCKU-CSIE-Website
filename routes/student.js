@@ -9,58 +9,57 @@
  * - `/student/phd`
  */
 
-import express from 'express';
+const express = require('express');
 
-import staticHtml from 'routes/utils/static-html.js';
+const staticHtml = require('./utils/static-html.js');
 
-const router = express.Router( {
+const router = express.Router({
     caseSensitive: true,
-    mergeParams:   false,
-    strict:        false,
-} );
+    mergeParams: false,
+    strict: false,
+});
 
 /**
  * Resolve URL `/student`.
  */
 
 router
-.route( [
+.route([
     '/',
     '/index',
-] )
-.get( staticHtml( 'student/index' ) );
+])
+.get(staticHtml('student/index'));
 
 /**
  * Resolve URL `/student/high-school`.
  */
 
 router
-.route( '/high-school' )
-.get( staticHtml( 'student/high-school' ) );
-
+.route('/high-school')
+.get(staticHtml('student/high-school'));
 
 /**
  * Resolve URL `/student/college`.
  */
 
 router
-.route( '/college' )
-.get( staticHtml( 'student/college' ) );
+.route('/college')
+.get(staticHtml('student/college'));
 
 /**
  * Resolve URL `/student/master`.
  */
 
 router
-.route( '/master' )
-.get( staticHtml( 'student/master' ) );
+.route('/master')
+.get(staticHtml('student/master'));
 
 /**
  * Resolve URL `/student/phd`.
  */
 
 router
-.route( '/phd' )
-.get( staticHtml( 'student/phd' ) );
+.route('/phd')
+.get(staticHtml('student/phd'));
 
-export default router;
+module.exports = router;

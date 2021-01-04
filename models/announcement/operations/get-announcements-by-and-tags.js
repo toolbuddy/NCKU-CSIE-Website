@@ -1,85 +1,89 @@
-import Sequelize from 'sequelize';
-import {
-    Announcement,
-    AnnouncementI18n,
-    Tag,
-} from 'models/announcement/operations/associations.js';
-import LanguageUtils from 'models/common/utils/language.js';
-import ValidateUtils from 'models/common/utils/validate.js';
-import tagUtils from 'models/announcement/utils/tag.js';
-
 /**
- * A function for getting all announcements.
+ * A function to get announcement briefings which contain all the given tags.
  *
  * @async
- * @param {string[]} [tags = []]                            - Specifying the announcements with the given tags.
- * @param {string}   [startTime = defaultValue.startTime]   - A string of the js Date object, specifying the earliest time of filter interval when
- *                                                            announcements were post.
- * @param {string}   [endTime = defaultValue.endTime]       - A string of the js Date object, specifying the latest time of filter interval when
- *                                                            announcements were post.
- * @param {number}   [page = defaultValue.page]             - Specify the announcements under the given page number.
- * @param {number}   [language = defaultValue.language] - Language option of the announcements.
- * @returns {object[]}                                      Requested announcements, including:
+ * @function
+ * @param {number[]} [tags = []] - Specify the announcements with the given tag ids.
+ * @param {date}     from        - Specify the earliest time of filter interval when announcements were post.
+ * @param {date}     to          - Specify the latest time of filter interval when announcements were post.
+ * @param {number}   amount      - Specify how many announcements to be returned.
+ * @param {number}   page        - Specify the announcements under the given page number.
+ * @param {number}   languageId  - Language option of the announcements.
+ * @returns {object[]} Requested announcement briefings, including:
  * - id
  * - title
  * - content
  * - updateTime
- * - tags(id, name)
- *
- * Announcements which contain all the given tags are taken into account.
+ * - tag ids
  */
+
+const Sequelize = require('sequelize');
+const {
+    Announcement,
+    AnnouncementI18n,
+    Tag,
+} = require('./associations.js');
+const tagUtils = require('../utils/tag.js');
+const LanguageUtils = require('../../common/utils/language.js');
+const ValidateUtils = require('../../common/utils/validate.js');
 
 const op = Sequelize.Op;
 
-export default async ( opt ) => {
+module.exports = async (opt) => {
     try {
+        // Get parameters.
         const {
             tags = [],
-            page = null,
-            amount = null,
             from = null,
             to = null,
-            language = null,
+            amount = null,
+            page = null,
+            languageId = null,
         } = opt || {};
 
-        if ( !tags.every( tagUtils.isSupportedId, tagUtils ) ) {
-            const error = new Error( 'invalid tag id' );
+        // Check if parameters meet constraints. If not, throw 400 error.
+        if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
+            const error = new Error('Invalid tag id.');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( page ) ) {
-            const error = new Error( 'invalid page' );
+        if (!ValidateUtils.isValidDate(from)) {
+            const error = new Error('Invalid time - from.');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isPositiveInteger( amount ) ) {
-            const error = new Error( 'invalid amount' );
+        if (!ValidateUtils.isValidDate(to)) {
+            const error = new Error('Invalid time - to.');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( from ) ) {
-            const error = new Error( 'invalid time - from' );
+        if (!ValidateUtils.isPositiveInteger(amount)) {
+            const error = new Error('Invalid amount.');
             error.status = 400;
             throw error;
         }
-        if ( !ValidateUtils.isValidDate( to ) ) {
-            const error = new Error( 'invalid time - to' );
+        if (!ValidateUtils.isPositiveInteger(page)) {
+            const error = new Error('Invalid page.');
             error.status = 400;
             throw error;
         }
-        if ( !LanguageUtils.isSupportedLanguageId( language ) ) {
-            const error = new Error( 'invalid language id' );
+        if (!LanguageUtils.isSupportedLanguageId(languageId)) {
+            const error = new Error('Invalid language id.');
             error.status = 400;
             throw error;
         }
 
-        let data = await Announcement.findAll( {
+        // Get announcement briefings which contain all the given tags.
+        // In this step, we can only get id, updateTime, title and content, but no tag list.
+        // Because in this step, the tag list is limited to the content of given filter tags.
+        const announcements = await Announcement.findAll({
             attributes: [
                 'announcementId',
+                'updateTime',
             ],
             where: {
                 updateTime: {
-                    [ op.between ]: [
+                    [op.between]: [
                         from,
                         to,
                     ],
@@ -88,81 +92,85 @@ export default async ( opt ) => {
             },
             include: [
                 {
-                    model:      Tag,
-                    as:         'tags',
-                    attributes: [],
-                    where:      {
-                        tagId: {
-                            [ op.in ]: tags,
-                        },
-                    },
-                },
-            ],
-            group:    '`announcement`.`announcementId`',
-            having:   Sequelize.where( Sequelize.fn( 'count', Sequelize.col( '`announcement`.`announcementId`' ) ), tags.length ),
-            order:    [ [ 'updateTime',
-                'DESC', ], ],
-            offset:   amount * ( page - 1 ),
-            limit:    amount,
-
-            /**
-             * Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
-             */
-
-            subQuery: false,
-        } );
-
-        if ( !data.length ) {
-            const error = new Error( 'no result' );
-            error.status = 404;
-            throw error;
-        }
-
-        data = await Promise.all( data.map( ( { announcementId, } ) => Announcement.findOne( {
-            attributes: [
-                'announcementId',
-                'updateTime',
-            ],
-            where: {
-                announcementId,
-            },
-            include: [
-                {
-                    model:      AnnouncementI18n,
-                    as:         'announcementI18n',
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
                     attributes: [
                         'title',
                         'content',
                     ],
                     where: {
-                        language,
+                        languageId,
                     },
                 },
                 {
-                    model:      Tag,
-                    as:         'tags',
-                    attributes: [
-                        'tagId',
-                    ],
+                    model: Tag,
+                    as: 'tags',
+                    attributes: [],
+                    where: {
+                        tagId: {
+                            [op.in]: tags,
+                        },
+                    },
                 },
             ],
-            order:    [ [ 'updateTime',
-                'DESC', ], ],
-        } ) ) );
+            group: '`announcement`.`announcementId`',
+            having: Sequelize.where(Sequelize.fn('count', Sequelize.col('`announcement`.`announcementId`')), tags.length),
+            order: [
+                [
+                    'updateTime',
+                    'DESC',
+                ],
+            ],
+            offset: amount * (page - 1),
+            limit: amount,
 
-        return data.map( announcement => ( {
+            // Sequelize have some issue when using limit, currently solving hack can use `subQuery: fasle`.
+            subQuery: false,
+        });
+
+        // If no announcement returned, throw 404 error.
+        if (!announcements.length) {
+            const error = new Error('No result.');
+            error.status = 404;
+            throw error;
+        }
+
+        // If any announcement returned, we can now get their tag list in complete, according to their id.
+        const tagIds = await Announcement.findAll({
+            attributes: ['announcementId'],
+            where: {
+                announcementId: announcements.map(announcement => announcement.announcementId),
+            },
+            include: [
+                {
+                    model: Tag,
+                    as: 'tags',
+                    attributes: ['tagId'],
+                },
+            ],
+        })
+
+        // After we get tag ids, we modify their data structure to let later access more convenient.
+        .then((result) => {
+            const map = {};
+            result.forEach((item) => {
+                map[item.announcementId] = item.tags.map(tag => tag.tagId);
+            });
+            return map;
+        });
+
+        // Return announcement briefings with the flatten format.
+        return announcements.map(announcement => ({
             announcementId: announcement.announcementId,
-            updateTime:     announcement.updateTime,
-            title:          announcement.announcementI18n[ 0 ].title,
-            content:        announcement.announcementI18n[ 0 ].content,
-            tags:           announcement.tags.map( tag => tag.tagId ),
-        } ) );
+            updateTime: announcement.updateTime,
+            title: announcement.announcementI18n[0].title,
+            content: announcement.announcementI18n[0].content,
+            tags: tagIds[announcement.announcementId],
+        }));
     }
-    catch ( err ) {
-        if ( err.status )
-            throw err;
-        const error = new Error();
-        error.status = 500;
+    catch (error) {
+        if (!error.status)
+            error.status = 500;
         throw error;
     }
 };

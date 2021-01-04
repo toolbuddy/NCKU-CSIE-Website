@@ -11,57 +11,58 @@
  * - `/about/staff`
  */
 
-import express from 'express';
-import helmet from 'helmet';
+const express = require('express');
+const helmet = require('helmet');
 
-import staticHtml from 'routes/utils/static-html.js';
-import contentSecurityPolicy from 'settings/server/content-security-policy';
-import publicationCategoryUtils from 'models/faculty/utils/publication-category.js';
-import projectCategoryUtils from 'models/faculty/utils/project-category.js';
+const staticHtml = require('./utils/static-html.js');
+const contentSecurityPolicy = require('../settings/server/content-security-policy');
+const publicationCategoryUtils = require('../models/faculty/utils/publication-category.js');
+const projectCategoryUtils = require('../models/faculty/utils/project-category.js');
+const nationUtils = require('../models/faculty/utils/nation.js');
 
-import getFacultyDetail from 'models/faculty/operations/get-faculty-detail.js';
+const getFacultyDetail = require('../models/faculty/operations/get-faculty-detail.js');
 
-const router = express.Router( {
+const router = express.Router({
     caseSensitive: true,
-    mergeParams:   false,
-    strict:        false,
-} );
+    mergeParams: false,
+    strict: false,
+});
 
 /**
  * Resolve URL `/about`.
  */
 
 router
-.route( [
+.route([
     '/',
     '/index',
-] )
-.get( staticHtml( 'about/index' ) );
+])
+.get(staticHtml('about/index'));
 
 /**
  * Resolve URL `/about/award`.
  */
 
 router
-.route( '/award' )
-.get( staticHtml( 'about/award' ) );
+.route('/award')
+.get(staticHtml('about/award'));
 
 /**
  * Resolve URL `/about/contact`.
  */
 
 router
-.route( '/contact' )
+.route('/contact')
 .get(
-    helmet.contentSecurityPolicy( {
-        directives: contentSecurityPolicy( {
-            styleSrc:  [ "'unsafe-inline'", ],
-            scriptSrc: [ "'unsafe-inline'", ],
-        } ),
-        loose:      false,
+    helmet.contentSecurityPolicy({
+        directives: contentSecurityPolicy({
+            styleSrc: ["'unsafe-inline'"],
+            scriptSrc: ["'unsafe-inline'"],
+        }),
+        loose: false,
         reportOnly: true,
-    } ),
-    staticHtml( 'about/contact' )
+    }),
+    staticHtml('about/contact'),
 );
 
 /**
@@ -69,62 +70,72 @@ router
  */
 
 router
-.route( '/intro' )
-.get( staticHtml( 'about/intro' ) );
+.route('/intro')
+.get(staticHtml('about/intro'));
 
 /**
  * Resolve URL `/about/faculty`.
  */
 
 router
-.route( '/faculty' )
-.get( staticHtml( 'about/faculty' ) );
+.route('/faculty')
+.get(staticHtml('about/faculty'));
 
 /**
  * Resolve URL `/about/faculty/[id]`.
  */
 
 router
-.route( '/faculty/:profileId' )
-.get( async ( req, res, next ) => {
+.route('/faculty/:profileId')
+.get(async (req, res, next) => {
     try {
-        const data = await getFacultyDetail( {
-            profileId: Number( req.params.profileId ),
-            language:  Number( req.query.languageId ),
-        } );
+        const data = await getFacultyDetail({
+            profileId: Number(req.params.profileId),
+            languageId: Number(req.query.languageId),
+        });
 
         res.locals.UTILS.faculty = {
             publicationCategoryUtils,
             projectCategoryUtils,
+            nationUtils,
         };
 
-        await new Promise( ( resolve, reject ) => {
-            res.render( 'about/faculty-detail.pug', {
+        await new Promise((resolve, reject) => {
+            res.render('about/faculty-detail.pug', {
                 data,
-            }, ( err, html ) => {
-                if ( err )
-                    reject( err );
+                profileId: req.params.profileId,
+            }, (err, html) => {
+                if (err)
+                    reject(err);
                 else {
-                    res.send( html );
+                    res.send(html);
                     resolve();
                 }
-            } );
-        } );
+            });
+        });
     }
-    catch ( error ) {
-        if ( error.status === 404 )
+    catch (error) {
+        if (error.status === 404)
             next();
         else
-            next( error );
+            next(error);
     }
-} );
+});
+
+/**
+ * Resolve URL `/about/lab`.
+ */
+
+router
+.route('/lab')
+.get(staticHtml('about/lab'));
 
 /**
  * Resolve URL `/about/staff`.
  */
 
 router
-.route( '/staff' )
-.get( staticHtml( 'about/staff' ) );
+.route('/staff')
+.get(staticHtml('about/staff'));
 
-export default router;
+module.exports = router;

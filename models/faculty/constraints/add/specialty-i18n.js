@@ -1,7 +1,7 @@
-import LanguageUtils from 'models/common/utils/language.js';
+const LanguageUtils = require('../../../common/utils/language.js');
 
 const SpecialtyI18nValidationConstraints = {
-    language: {
+    languageId: {
         presence: {
             allowEmpty: false,
         },
@@ -13,11 +13,11 @@ const SpecialtyI18nValidationConstraints = {
         presence: {
             allowEmpty: false,
         },
-        type:       'string',
+        type: 'string',
         length: {
             maximum: 100,
         },
     },
 };
 
-export default SpecialtyI18nValidationConstraints;
+module.exports = SpecialtyI18nValidationConstraints;
