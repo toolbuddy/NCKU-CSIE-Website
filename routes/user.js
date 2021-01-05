@@ -856,4 +856,12 @@ router
     }
 });
 
+/**
+ * Resolve URL `/user/announcement/news`.
+ */
+
+router
+.route('/announcement/news')
+.get(staticHtml('user/announcement/news'));
+
 module.exports = router;

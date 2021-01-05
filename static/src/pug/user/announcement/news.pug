@@ -1,0 +1,79 @@
+extends /layouts/base.pug
+include /components/common/topic.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:   'News',
+        faculty: 'Faculties',
+        breadcrumb: {
+          home:    'Home',
+        },
+        content: {
+          topic: 'News',
+          image: {
+            upload: 'Choose an image',
+          },
+          title: 'News Title',
+          submit: 'Submit',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:   '新增新聞',
+        faculty: '師資陣容',
+        breadcrumb: {
+          home:    '首頁',
+        },
+        content: {
+          topic: '新增新聞',
+          image: {
+            upload: '請選擇相片',
+          },
+          title: '新聞標題',
+          submit: '提交新聞',
+        }
+      },
+    } );
+    const currentRoute = 'user/announcement/news';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/announcement/news' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  form#form.content__form.form
+    section.form__image.image
+      label.image__label(for='image__upload')
+        img.label__preview.label__preview--hidden
+        +image( {
+          alt: i18n[LANG.id].content.image.upload,
+          className: 'label__upload upload',
+          src: `icon/upload.png`,
+        } )
+        p.label__comment= i18n[LANG.id].content.image.upload
+      input.image__upload#image__upload(type= 'file')
+    label.form__label.label.form__label--title(for='title')= i18n[ LANG.id ].content.title
+    input.form__input.input.form__input--title(type='text', name='title')
+    buttom.form__submit.submit= i18n[LANG.id].content.submit
+
+append footer
+
+append scripts
+  +js( 'user/announcement/news' )

@@ -119,6 +119,7 @@ module.exports = (env, argv) => {
             'user/resetPassword': './user/resetPassword.scss',
             'user/announcement/edit': './user/announcement/edit.scss',
             'user/announcement/add': './user/announcement/add.scss',
+            'user/announcement/news': './user/announcement/news.scss',
 
             // Route `auth`
             'auth/login': './auth/login.scss',

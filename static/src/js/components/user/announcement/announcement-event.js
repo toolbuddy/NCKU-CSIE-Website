@@ -99,7 +99,7 @@ export default class AnnouncementEvent {
             plugins: 'table lists link',
             menubar: 'table',
             toolbar: `formatselect | undo redo |
-                        bold italic strikethrough forecolor backcolor link|
+                        bold italic strikethrough forecolor backcolor link table|
                         alignleft aligncenter alignright alignjustify  |
                         numlist bullist outdent indent`,
         });

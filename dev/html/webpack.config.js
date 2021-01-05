@@ -119,6 +119,7 @@ module.exports = (env, argv) => {
             'user/announcement/index': './user/announcement/index.pug',
             'user/announcement/add': './user/announcement/add.pug',
             'user/announcement/edit': './user/announcement/edit.pug',
+            'user/announcement/news': './user/announcement/news.pug',
 
             // Route `developer`
             'developer/index': './developer/index.pug',
