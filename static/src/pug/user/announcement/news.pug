@@ -15,6 +15,7 @@ append data
           image: {
             upload: 'Choose an image',
           },
+          url: 'News Link',
           title: 'News Title',
           submit: 'Submit',
         }
@@ -30,6 +31,7 @@ append data
           image: {
             upload: '請選擇相片',
           },
+          url: '新聞連結',
           title: '新聞標題',
           submit: '提交新聞',
         }
@@ -59,6 +61,10 @@ append content
 
   +topic( 'content', i18n[ LANG.id ].content.topic )
   form#form.content__form.form
+    label.form__label.label.form__label--title(for='title')= i18n[ LANG.id ].content.title
+    input.form__input.input.form__input--title(type='text', name='title')
+    label.form__label.label.form__label--url(for='title')= i18n[ LANG.id ].content.url
+    input.form__input.input.form__input--url(type='text', name='url')
     section.form__image.image
       label.image__label(for='image__upload')
         img.label__preview.label__preview--hidden
@@ -69,8 +75,6 @@ append content
         } )
         p.label__comment= i18n[LANG.id].content.image.upload
       input.image__upload#image__upload(type= 'file')
-    label.form__label.label.form__label--title(for='title')= i18n[ LANG.id ].content.title
-    input.form__input.input.form__input--title(type='text', name='title')
     buttom.form__submit.submit= i18n[LANG.id].content.submit
 
 append footer

@@ -105,11 +105,12 @@
       display: grid;
       grid-template: {
         areas:
-          'image       image'
           'title-label title-input'
+          'url-label url-input'
+          'image       image'
           'submit      submit';
         columns: max-content auto;
-        rows: font__px-to-rem( 400 ) font__px-to-rem( 80 ) auto;
+        rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto;
       }
       row-gap: font__px-to-rem( 18 );
       column-gap: font__px-to-rem( 18 );
@@ -129,8 +130,10 @@
 
         // [ skin ]
         width: 100%;
-        height: 100%;
+        height: font__px-to-rem( 400 );
         margin: {
+          top: font__px-to-rem( 20 );
+          bottom: font__px-to-rem( 20 );
           left: auto;
           right: auto;
         }
@@ -215,7 +218,6 @@
 
       > .form__label {
         // [ layout ]
-        grid-area: title-label;
         display: flex;
         align-self: center;
 
@@ -226,11 +228,20 @@
         }
         color: rgba( 0, 0, 0, .87 );
         line-height: normal;
+
+        &--title {
+          // [ layout ]
+          grid-area: title-label;
+        }
+
+        &--url {
+          // [ layout ]
+          grid-area: url-label;
+        }
       }
 
       > .form__input {
         // [ layout ]
-        grid-area: title-input;
         display: flex;
         align: {
           self: center;
@@ -251,6 +262,16 @@
         line-height: normal;
         letter-spacing: normal;
         color: rgba( 0, 0, 0, .87 );
+
+        &--title {
+          // [ layout ]
+          grid-area: title-input;
+        }
+
+        &--url {
+          // [ layout ]
+          grid-area: url-input;
+        }
       }
 
       > .form__submit {

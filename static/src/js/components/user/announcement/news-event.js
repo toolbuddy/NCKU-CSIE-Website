@@ -13,6 +13,7 @@ export default class NewsEvent {
         const imageQuerySelector = modifier => `.form__image > .image__label > .label__${ modifier }`
         this.DOM = {
             title: opt.formDOM.querySelector('.form__input--title'),
+            url:   opt.formDOM.querySelector('.form__input--url'),
             submit: opt.formDOM.querySelector('.form__submit'),
             image: {
                 label: opt.formDOM.querySelector('.form__image > .image__label'),
