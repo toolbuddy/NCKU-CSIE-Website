@@ -166,7 +166,7 @@ export default class GetNews {
 
             if ((this.state.page * this.briefingWidth + this.DOM.frame.offsetWidth) <= (this.briefingWidth * this.state.newsAmount))
                 this.moveBriefing(this.state.page + 1);
-            else if( !this.state.loading & !this.state.end ) {
+            else if (!this.state.loading & !this.state.end) {
                 this.state.loading = true;
                 classAdd(this.DOM.frame, 'news__frame--hidden');
                 classRemove(this.DOM.loading, 'loading--hidden');
