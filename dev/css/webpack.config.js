@@ -120,6 +120,7 @@ module.exports = (env, argv) => {
             'user/announcement/edit': './user/announcement/edit.scss',
             'user/announcement/add': './user/announcement/add.scss',
             'user/announcement/news': './user/announcement/news.scss',
+            'user/announcement/news-list': './user/announcement/news-list.scss',
 
             // Route `auth`
             'auth/login': './auth/login.scss',

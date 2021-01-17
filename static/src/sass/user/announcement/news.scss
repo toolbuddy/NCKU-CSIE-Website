@@ -28,7 +28,7 @@
   // `.body > .content`
   > .body__content.content {
     // [ variable ]
-    $small: 850px;
+    $medium: 850px;
     $large: 992px;
     $x-large: 1440px;
 
@@ -100,26 +100,48 @@
     }
 
     > .content__form.form {
+      // [ variable ]
+      $medium: 680px;
+      $large: 992px;
+      $x-large: 1440px;
+
       // [ layout ]
       grid-area: form;
       display: grid;
       grid-template: {
         areas:
-          'title-label title-input'
-          'url-label url-input'
-          'image       image'
-          'submit      submit';
-        columns: max-content auto;
-        rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto;
+          'title-label'
+          'title-input'
+          'url-label'
+          'url-input'
+          'image'
+          'error-message'
+          'submit';
+        rows: repeat( 4, font__px-to-rem( 40 ) ) font__px-to-rem( 240 ) auto auto;
       }
-      row-gap: font__px-to-rem( 18 );
-      column-gap: font__px-to-rem( 18 );
 
       // [ skin ]
       width: 90%;
       margin: {
         left: auto;
         right: auto;
+      }
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ skin ]
+        grid-template: {
+          areas:
+            'title-label   title-input'
+            'url-label     url-input'
+            'image         image'
+            'error-message error-message'
+            'submit        submit';
+          columns: font__px-to-rem( 100 ) auto;
+          rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto auto;
+        }
+        column-gap: font__px-to-rem( 18 );
+        row-gap: font__px-to-rem( 18 );
       }
 
       > .form__image {
@@ -130,12 +152,18 @@
 
         // [ skin ]
         width: 100%;
-        height: font__px-to-rem( 400 );
+        height: font__px-to-rem( 200 );
         margin: {
           top: font__px-to-rem( 20 );
           bottom: font__px-to-rem( 20 );
           left: auto;
           right: auto;
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ skin ]
+          height: font__px-to-rem( 400 );
         }
 
         > .image__label {
@@ -166,8 +194,10 @@
             display: block;
 
             // [ skin ]
+            max-width: 100%;
             width: auto;
             height: 100%;
+            object-fit: cover;
 
             &--hidden {
               // [ layout ]
@@ -180,8 +210,14 @@
             display: block;
 
             // [ skin ]
-            width: font__px-to-rem( 70 );
-            height: font__px-to-rem( 70 );
+            width: font__px-to-rem( 45 );
+            height: font__px-to-rem( 45 );
+
+            // [ RWD: $medium ]
+            @media screen and ( min-width: $medium ) {
+              width: font__px-to-rem( 70 );
+              height: font__px-to-rem( 70 );
+            }
 
             &--hidden {
               // [ layout ]
@@ -195,7 +231,7 @@
 
             // [ skin ]
             width: 100%;
-            height: font__px-to-rem( 50 );
+            height: font__px-to-rem( 40 );
             font: {
               size: font__px-to-rem( 18 );
               weight: 600;
@@ -220,6 +256,11 @@
         // [ layout ]
         display: flex;
         align-self: center;
+        justify-content: center;
+
+        // [ position ]
+        width: 100%;
+        margin-bottom: font__px-to-rem( 10 );
 
         // [ skin ]
         font: {
@@ -228,6 +269,13 @@
         }
         color: rgba( 0, 0, 0, .87 );
         line-height: normal;
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ position ]
+          width: fit-content;
+          margin-bottom: 0;
+        }
 
         &--title {
           // [ layout ]
@@ -251,6 +299,7 @@
         // [ position ]
         height: font__px-to-rem( 40 );
         border-radius: font__px-to-rem( 10 );
+        margin-bottom: font__px-to-rem( 20 );
 
         // [ skin ]
         padding: {
@@ -263,6 +312,11 @@
         letter-spacing: normal;
         color: rgba( 0, 0, 0, .87 );
 
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          margin-bottom: 0;
+        }
+
         &--title {
           // [ layout ]
           grid-area: title-input;
@@ -274,6 +328,21 @@
         }
       }
 
+      > .form__error-message {
+        // [ layout ]
+        display: block;
+        grid-area: error-message;
+
+        // [ position ]
+        height: fit-content;
+        padding-left: font__px-to-rem( 8 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+        line-height: normal;
+        color: red;
+      }
+
       > .form__submit {
         // [ layout ]
         display: flex;
@@ -282,9 +351,10 @@
           self: center;
           items: center;
         }
+        justify-content: center;
 
         // [ position ]
-        width: fit-content;
+        width: 100%;
         height: font__px-to-rem( 55 );
 
         // [ skin ]
@@ -300,6 +370,12 @@
           weight: bold;
         }
         line-height: normal;
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ position ]
+          width: fit-content;
+        }
 
         &:hover {
           // [ skin ]

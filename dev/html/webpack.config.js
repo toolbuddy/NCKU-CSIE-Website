@@ -115,11 +115,12 @@ module.exports = (env, argv) => {
             'student/phd': './student/phd.pug',
 
             // Route `user`
-            'user/index': './user/index.pug',
+            'user/faculty/index': './user/faculty/index.pug',
+            'user/staff/index': './user/staff/index.pug',
             'user/announcement/index': './user/announcement/index.pug',
             'user/announcement/add': './user/announcement/add.pug',
             'user/announcement/edit': './user/announcement/edit.pug',
-            'user/announcement/news': './user/announcement/news.pug',
+            'user/announcement/news-list': './user/announcement/news-list.pug',
 
             // Route `developer`
             'developer/index': './developer/index.pug',

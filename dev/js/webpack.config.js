@@ -112,6 +112,8 @@ module.exports = (env, argv) => {
             'user/announcement/add': './user/announcement/add.js',
             'user/announcement/edit': './user/announcement/edit.js',
             'user/announcement/news': './user/announcement/news.js',
+            'user/announcement/news-update': './user/announcement/news-update.js',
+            'user/announcement/news-list': './user/announcement/news-list.js',
 
             // Route `auth`.
             'auth/login': './auth/login.js',

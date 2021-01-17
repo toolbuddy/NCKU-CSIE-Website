@@ -9,6 +9,8 @@ append data
         faculty: 'Faculties',
         breadcrumb: {
           home:    'Home',
+          user:    'User Setting',
+          news:    'Add News',
         },
         content: {
           topic: 'News',
@@ -21,13 +23,15 @@ append data
         }
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:   '新增新聞',
+        title:   (method === 'update')? '編輯新聞': '新增新聞',
         faculty: '師資陣容',
         breadcrumb: {
           home:    '首頁',
+          user:    '使用者設定',
+          news:    (method === 'update')? '編輯新聞': '新增新聞',
         },
         content: {
-          topic: '新增新聞',
+          topic: (method === 'update')? '編輯新聞': '新增新聞',
           image: {
             upload: '請選擇相片',
           },
@@ -52,6 +56,8 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
+      { text: i18n[ LANG.id ].breadcrumb.news, route: 'announcement/news' },
     ]
   )
 
@@ -61,23 +67,37 @@ append content
 
   +topic( 'content', i18n[ LANG.id ].content.topic )
   form#form.content__form.form
-    label.form__label.label.form__label--title(for='title')= i18n[ LANG.id ].content.title
-    input.form__input.input.form__input--title(type='text', name='title')
+    label.form__label.label.form__label--title(for='title' )= i18n[ LANG.id ].content.title
+    input.form__input.input.form__input--title(type='text', name='title', value= briefing.title, required)
     label.form__label.label.form__label--url(for='title')= i18n[ LANG.id ].content.url
-    input.form__input.input.form__input--url(type='text', name='url')
+    input.form__input.input.form__input--url(type='text', name='url', value=briefing.url, required)
     section.form__image.image
-      label.image__label(for='image__upload')
-        img.label__preview.label__preview--hidden
-        +image( {
-          alt: i18n[LANG.id].content.image.upload,
-          className: 'label__upload upload',
-          src: `icon/upload.png`,
-        } )
-        p.label__comment= i18n[LANG.id].content.image.upload
-      input.image__upload#image__upload(type= 'file')
+      input.image__upload#image__upload(type= 'file', required, name='image')
+      if method === 'update'
+        label.image__label.image__label--preview(for='image__upload')
+          img.label__preview(src= `data:image/jpeg;base64,${ briefing.image }`)
+          +image( {
+            alt: i18n[LANG.id].content.image.upload,
+            className: 'label__upload label__upload--hidden upload',
+            src: `icon/upload.png`,
+          } )
+          p.label__comment.label__comment--hidden= i18n[LANG.id].content.image.upload
+      else
+        label.image__label(for='image__upload')
+          img.label__preview.label__preview--hidden
+          +image( {
+            alt: i18n[LANG.id].content.image.upload,
+            className: 'label__upload upload',
+            src: `icon/upload.png`,
+          } )
+          p.label__comment= i18n[LANG.id].content.image.upload
+    p.form__error-message.error-message
     buttom.form__submit.submit= i18n[LANG.id].content.submit
 
 append footer
 
 append scripts
-  +js( 'user/announcement/news' )
+  if method === 'update'
+    +js( 'user/announcement/news-update' )
+  else
+    +js( 'user/announcement/news' )

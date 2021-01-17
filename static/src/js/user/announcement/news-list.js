@@ -1,8 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import NewsEvent from 'static/src/js/components/user/announcement/news-event.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
+import NewsList from 'static/src/js/components/user/announcement/news-list.js';
 
 try {
     const headerBase = new GetHeaderBase({
@@ -38,14 +37,18 @@ catch (err) {
     console.error(err);
 }
 try {
-    const newsEvent = new NewsEvent({
-        formDOM: document.getElementById('form'),
-        languageId: WebLanguageUtils.currentLanguageId,
-        method:  'post',
+    const newsList = new NewsList({
+        newsDOM: document.getElementById('news'),
+        pagesDOM: document.getElementById('pages'),
+        scrollTopDOM: document.getElementById('news'),
+        deletePreviewDOM: document.getElementById('news--delete'),
+        amount: 12,
+        page: 1,
+        visiblePageNum: 2,
     });
-    if (!(newsEvent instanceof NewsEvent))
-        throw new Error('news event not found.');
-    newsEvent.exec();
+    if (!(newsList instanceof NewsList))
+        throw new Error('news list not found.');
+    newsList.getAll();
 }
 catch (err) {
     console.error(err);
