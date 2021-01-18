@@ -1,5 +1,5 @@
 /**
- * A function to get news for home page
+ * A function to get news list for news edit page
  *
  * @async
  * @function
@@ -7,11 +7,7 @@
  * @param {number}   page        - Specify the news under the given page number.
  * @returns {object[]} Requested news briefings, including:
  * - id
- * - author
  * - title
- * - image
- * - url
- * - publishTime
  */
 
 const {
@@ -42,10 +38,7 @@ module.exports = async (opt) => {
         const news = await News.findAll({
             attributes: [
                 'newsId',
-                'author',
                 'title',
-                'image',
-                'url',
                 'publishTime',
             ],
             order: [
@@ -68,11 +61,7 @@ module.exports = async (opt) => {
         // Return news with the flatten format.
         return news.map(report => ({
             newsId: report.newsId,
-            author: report.author,
             title: report.title,
-            image: report.image,
-            url: report.url,
-            publishTime: report.publishTime,
         }));
     }
     catch (error) {
