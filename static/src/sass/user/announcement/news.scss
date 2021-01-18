@@ -115,9 +115,10 @@
           'url-label'
           'url-input'
           'image'
+          'image-comment'
           'error-message'
           'submit';
-        rows: repeat( 4, font__px-to-rem( 40 ) ) font__px-to-rem( 240 ) auto auto;
+        rows: repeat( 4, font__px-to-rem( 40 ) ) font__px-to-rem( 240 ) auto auto auto;
       }
 
       // [ skin ]
@@ -135,10 +136,11 @@
             'title-label   title-input'
             'url-label     url-input'
             'image         image'
+            'image-comment image-comment'
             'error-message error-message'
             'submit        submit';
           columns: font__px-to-rem( 100 ) auto;
-          rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto auto;
+          rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto auto auto;
         }
         column-gap: font__px-to-rem( 18 );
         row-gap: font__px-to-rem( 18 );
@@ -325,6 +327,36 @@
         &--url {
           // [ layout ]
           grid-area: url-input;
+        }
+      }
+
+      > .form__image-comment {
+        // [ layout ]
+        display: flex;
+        grid-area: image-comment;
+        justify-content: center;
+
+        // [ position ]
+        width: 100%;
+        height: fit-content;
+        margin-bottom: font__px-to-rem( 10 );
+
+        // [ skin ]
+        font: {
+          size: font__px-to-rem( 16 );
+          weight: 600;
+        }
+        line-height: normal;
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ position ]
+          margin-bottom: 0;
+        }
+
+        &--hidden {
+          // [ layout ]
+          display: none;
         }
       }
 

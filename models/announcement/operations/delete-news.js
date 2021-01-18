@@ -33,7 +33,7 @@ module.exports = async (opt) => {
         });
 
         // Delete these news
-        await Announcement.destroy({
+        await News.destroy({
             where: {
                 newsId: newsIds,
             },

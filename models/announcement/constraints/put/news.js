@@ -11,10 +11,6 @@ const NewsValidationConstraints = {
         presence: false,
 
         // TODO: type should be blob
-        type: 'string',
-        length: {
-            maximum: 2083,
-        },
     },
     title: {
         presence: true,
@@ -24,7 +20,7 @@ const NewsValidationConstraints = {
         },
     },
     url: {
-        presence: false,
+        presence: true,
         type: 'string',
         length: {
             maximum: 2083,

@@ -38,7 +38,7 @@ module.exports = async (opt) => {
             ],
             where: {
                 newsId,
-            }
+            },
         });
 
         // If no news returned, throw 404 error.

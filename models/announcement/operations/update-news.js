@@ -40,12 +40,18 @@ module.exports = async (opt) => {
         }
 
         // Update news.
-        News.update(
-            {
-                image,
-                title,
-                url,
-            },
+        await News.update(
+            image ?
+                {
+                    image,
+                    title,
+                    url,
+                } :
+                {
+                    title,
+                    url,
+
+                },
             {
                 where: {
                     newsId,

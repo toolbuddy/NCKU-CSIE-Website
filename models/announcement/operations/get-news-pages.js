@@ -8,13 +8,10 @@
  * - pages
  */
 
-const Sequelize = require('sequelize');
 const {
     News,
 } = require('./associations.js');
 const ValidateUtils = require('../../common/utils/validate.js');
-
-const op = Sequelize.Op;
 
 module.exports = async (opt) => {
     try {

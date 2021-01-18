@@ -876,7 +876,6 @@ router
     }
 });
 
-
 /**
  * Resolve URL `/user/news`.
  * For user to manage news.
@@ -886,10 +885,9 @@ router
 .route('/news')
 .post(upload.single('image'), async (req, res, next) => {
     try {
-        console.log(req.file) // eslint-disable-line
         res.send(await postNews({
             author: Number(req.body.author),
-            image: req.file === 'null' ? null : req.file,
+            image: req.body.image === 'null' ? null : req.file.buffer,
             title: req.body.title,
             url: req.body.url,
         }));
@@ -901,8 +899,8 @@ router
 .put(upload.single('image'), async (req, res, next) => {
     try {
         res.send(await updateNews({
-            newsId: Number(req.body.announcementId),
-            image: req.file === 'null' ? null : req.file,
+            newsId: Number(req.body.newsId),
+            image: req.body.image === 'null' ? null : req.file.buffer,
             title: req.body.title,
             url: req.body.url,
         }));
@@ -973,14 +971,12 @@ router
 .route('/announcement/news/:newsId')
 .get(async (req, res, next) => {
     try {
+        const briefing = await getNewsById({
+            newsId: Number(req.params.newsId),
+        });
         await new Promise((resolve, reject) => {
             res.render('user/announcement/news.pug', {
-                briefing: {
-                    title: 'news title',
-                    updateTime: '2020-02-11',
-                    url: 'https://www.google.com.tw',
-                    image: '',
-                },
+                briefing,
                 method: 'update',
             }, (err, html) => {
                 if (err) {
