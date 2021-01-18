@@ -28,6 +28,9 @@
     box-shadow: 0 4px 6px 0 rgba( 0, 0, 0, .12 ), 0 4px 8px 0 rgba( 0, 0, 0, .56 );
     overflow: hidden;
 
+    // [ transform ]
+    transition: all .25s;
+
     // [ RWD: $medium ]
     @media screen and ( min-width: $medium ) {
       margin-bottom: font__px-to-rem( 64 );

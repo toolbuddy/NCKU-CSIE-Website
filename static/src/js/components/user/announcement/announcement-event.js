@@ -102,6 +102,7 @@ export default class AnnouncementEvent {
                         bold italic strikethrough forecolor backcolor link table|
                         alignleft aligncenter alignright alignjustify  |
                         numlist bullist outdent indent`,
+            default_link_target: '_target', // eslint-disable-line
         });
         Object.keys(this.DOM.languageButton).forEach((languageId) => {
             this.DOM.languageButton[languageId].addEventListener('click', (e) => {
