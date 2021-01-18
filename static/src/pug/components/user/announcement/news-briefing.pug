@@ -1,0 +1,21 @@
+include /components/common/image.pug
+
+a.briefings__preview.preview(href= briefing.url target='_blank')
+  img(
+    alt = briefing.title,
+    class = 'preview__image',
+    src = `data:image/jpeg;base64,${ briefing.image }`,
+  )
+  article.preview__info
+    h1.info__title= briefing.title
+    p.info__time= briefing.time
+    +image( {
+      alt: 'update',
+      className: `info__button briefing__button--update briefing__button--update-${ briefing.newsId }`,
+      src: `icon/edit.png`,
+    } )
+    +image( {
+      alt: 'delete',
+      className: `info__button briefing__button--delete briefing__button--delete-${ briefing.newsId }`,
+      src: `icon/delete.png`,
+    } )

@@ -74,7 +74,14 @@ router.use(allowUserOnly);
 
 router
 .route('/')
-.get(staticHtml('user/index'));
+.get(noCache, (req, res) => {
+    if (req.session.user.role === roleUtils.getIdByOption('faculty'))
+        res.redirect('/user/faculty');
+    else if (req.session.user.role === roleUtils.getIdByOption('staff'))
+        res.redirect('/user/staff');
+    else
+        res.redirect('/index');
+});
 
 /**
  * Resolve URL `/user/id`.
@@ -171,6 +178,10 @@ router
 });
 
 router
+.route('/staff')
+.get(staticHtml('user/staff/index'));
+
+router
 .route('/staff/staffWithId/:id')
 .get(async (req, res, next) => {
     try {
@@ -183,6 +194,10 @@ router
         next(error);
     }
 });
+
+router
+.route('/faculty')
+.get(staticHtml('user/faculty/index'));
 
 /**
  * Resolve URL `/user/faculty/profile`
@@ -853,6 +868,84 @@ router
             })
             .catch(next);
         }
+    }
+});
+
+/**
+ * Resolve URL `/user/announcement/news`.
+ */
+
+router
+.route('/announcement/news')
+.get(async (req, res, next) => {
+    try {
+        await new Promise((resolve, reject) => {
+            res.render('user/announcement/news.pug', {
+                briefing: {
+                    title: '',
+                    updateTime: '',
+                    url: '',
+                    image: '',
+                },
+                method: 'post',
+            }, (err, html) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                res.send(html);
+                resolve();
+            });
+        });
+    }
+    catch (error) {
+        if (error.status === 404)
+            next();
+        else
+            next(error);
+    }
+});
+
+/**
+ * Resolve URL `/user/announcement/news-list`.
+ */
+
+router
+.route('/announcement/news-list')
+.get(staticHtml('user/announcement/news-list'));
+
+/**
+ * Resolve URL `/user/announcement/edit/[id]`.
+ */
+
+router
+.route('/announcement/news/:newsId')
+.get(async (req, res, next) => {
+    try {
+        await new Promise((resolve, reject) => {
+            res.render('user/announcement/news.pug', {
+                briefing: {
+                    title: 'news title',
+                    updateTime: '2020-02-11',
+                    url: 'https://www.google.com.tw',
+                    image: '',
+                },
+                method: 'update',
+            }, (err, html) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                res.send(html);
+                resolve();
+            });
+        });
+    }
+    catch (error) {
+        if (error.status === 404)
+            next();
+        else
+            next(error);
     }
 });
 

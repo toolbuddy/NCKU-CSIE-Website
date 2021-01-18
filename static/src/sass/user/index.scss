@@ -4,6 +4,7 @@
 @import 'components/common/header-large';
 @import 'components/common/banner';
 @import 'components/common/breadcrumb';
+@import 'components/common/entries';
 @import 'components/common/footer';
 
 // block
@@ -24,23 +25,22 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'resource/rent' );
+  @include banner( $block: 'body', $image: 'student/index' );
 
   // element
   // `.body > .body__content`
   // block
   // `.body > .content`
   > .body__content.content {
-    // [ variable ]
-    $large: 700px;
-
     // [ skin ]
-    height: 120%;
+    width: 100%;
     background-color: #ffffff;
 
-    // template
-    // `.body > .content > .content__?.?`
-    %content__element {
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
       // [ layout ]
       margin: {
         left: auto;
@@ -48,31 +48,31 @@
       }
 
       // [ skin ]
-      max-width: font__px-to-rem( 1740 );
-      width: 94%;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        // [ skin ]
-        width: 84%;
+      max-width: font__px-to-rem( 1362 );
+      width: 80%;
+      border: {
+        style: solid;
+        top-width: font__px-to-rem( 20 );
+        color: transparent;
       }
     }
 
     // element
-    // `.body > .content > .content__breadcrumb`
+    // `.body > .content > .content__entries`
     // block
-    // `.body > .content > .breadcrumb`
-    @include breadcrumb( $block: 'content' ) {
-      // [ template ]
-      @extend %content__element;
+    // `.body > .content > .entries`
+    @include entries( $block: 'content' ) {
+      // [ layout ]
+      margin: {
+        top: font__px-to-rem( 32 );
+        left: auto;
+        right: auto;
+      }
 
       // [ skin ]
-      border: {
-        top-width: font__px-to-rem( 32 );
-        left-width: font__px-to-rem( 16 );
-        color: transparent;
-        style: solid;
-      }
+      max-width: font__px-to-rem( 1362 );
+      width: 100%;
+      border-bottom: 10px solid transparent;
     }
   }
 
