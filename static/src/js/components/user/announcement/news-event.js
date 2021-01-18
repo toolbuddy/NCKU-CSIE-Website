@@ -26,12 +26,14 @@ export default class NewsEvent {
                 upload: opt.formDOM.querySelector(imageQuerySelector('upload')),
                 comment: opt.formDOM.querySelector(imageQuerySelector('comment')),
                 file: opt.formDOM.querySelector('.form__image > .image__upload'),
+                uploadComment: opt.formDOM.querySelector('.form__image-comment'),
             },
         };
 
         this.config = {
             languageId: opt.languageId,
             method: opt.method,
+            newsId: ( opt.method === 'post' )? -1: opt.newsId,
         };
 
         this.state = {
@@ -46,8 +48,8 @@ export default class NewsEvent {
             reader.onload = (e) => {
                 classAdd(this.DOM.image.comment, 'label__comment--hidden');
                 classAdd(this.DOM.image.upload, 'label__upload--hidden');
-                classAdd(this.DOM.image.label, 'image__label--preview');
                 classRemove(this.DOM.image.preview, 'label__preview--hidden');
+                classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
                 this.DOM.image.preview.src = e.target.result;
                 this.state.image = element.target.files[0];
             };
@@ -57,27 +59,40 @@ export default class NewsEvent {
     }
 
     subscribeSubmit () {
-        this.DOM.submit.addEventListener('click', async(e) => {
+        this.DOM.submit.addEventListener('click', async (e) => {
             e.preventDefault();
 
             const isValid = await this.dataValidation();
 
-            if( isValid ) {
+            if (isValid) {
                 const formData = new FormData();
                 formData.append('userId', this.config.userId);
                 formData.append('title', this.DOM.title.value);
                 formData.append('url', this.DOM.url.value);
                 formData.append('image', this.state.image);
+
+                if (this.config.method === 'post') {
+                    fetch(`${host}/user/news`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+                }
+                else {
+                    fetch(`${host}/user/news`, {
+                        method: 'PUT',
+                        body: formData,
+                    });
+                }
             }
         });
     }
 
     dataValidation () {
-        const isValid = new Promise((res)=> {
+        const isValid = new Promise((res) => {
             let errorMessage = '';
             this.DOM.errorMessage.innerHTML = '';
-            [ this.DOM.title, this.DOM.url, this.DOM.image.file ].forEach(DOM => {
-                if( DOM.validity.valueMissing ) {
+            [this.DOM.title, this.DOM.url, this.DOM.image.file].forEach((DOM) => {
+                if (DOM.validity.valueMissing) {
                     const column = newsUtils.getValueByOption({
                         option: DOM.getAttribute('name'),
                         languageId: this.config.languageId,
@@ -87,18 +102,18 @@ export default class NewsEvent {
                         languageId: this.config.languageId,
                     });
 
-                    errorMessage = `${column}${error}`
+                    errorMessage = `${column}${error}`;
                 }
-            })
+            });
             res(errorMessage);
         })
-        .then((errorMessage)=> {
+        .then((errorMessage) => {
             this.DOM.errorMessage.innerHTML = errorMessage;
-            if( errorMessage === '' )
+            if (errorMessage === '')
                 return true;
 
             return false;
-        })
+        });
 
         return isValid;
     }
@@ -112,9 +127,11 @@ export default class NewsEvent {
         .then((res) => {
             if (res.role === roleUtils.getIdByOption('staff'))
                 this.config.userId = res.roleId;
-
             else
                 this.config.userId = -1;
+
+            if( this.config.method === 'update' )
+                classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
         });
         this.subscribeImage();
         this.subscribeSubmit();

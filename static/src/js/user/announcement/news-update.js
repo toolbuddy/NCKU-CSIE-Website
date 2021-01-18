@@ -38,10 +38,12 @@ catch (err) {
     console.error(err);
 }
 try {
+    const newsId = window.location.pathname.split('/').pop();
     const newsEvent = new NewsEvent({
         formDOM: document.getElementById('form'),
         languageId: WebLanguageUtils.currentLanguageId,
-        method:  'update',
+        method: 'update',
+        newsId: Number(newsId),
     });
     if (!(newsEvent instanceof NewsEvent))
         throw new Error('news event not found.');

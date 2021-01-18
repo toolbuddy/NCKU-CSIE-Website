@@ -16,6 +16,7 @@ append data
           topic: 'News',
           image: {
             upload: 'Choose an image',
+            comment: 'Click to upload image',
           },
           url: 'News Link',
           title: 'News Title',
@@ -34,6 +35,7 @@ append data
           topic: (method === 'update')? '編輯新聞': '新增新聞',
           image: {
             upload: '請選擇相片',
+            comment: '點擊方框上傳相片',
           },
           url: '新聞連結',
           title: '新聞標題',
@@ -74,7 +76,7 @@ append content
     section.form__image.image
       input.image__upload#image__upload(type= 'file', required, name='image')
       if method === 'update'
-        label.image__label.image__label--preview(for='image__upload')
+        label.image__label(for='image__upload')
           img.label__preview(src= `data:image/jpeg;base64,${ briefing.image }`)
           +image( {
             alt: i18n[LANG.id].content.image.upload,
@@ -91,6 +93,7 @@ append content
             src: `icon/upload.png`,
           } )
           p.label__comment= i18n[LANG.id].content.image.upload
+    p.form__image-comment.form__image-comment--hidden= i18n[LANG.id].content.image.comment
     p.form__error-message.error-message
     buttom.form__submit.submit= i18n[LANG.id].content.submit
 
