@@ -41,7 +41,7 @@ try {
     const newsEvent = new NewsEvent({
         formDOM: document.getElementById('form'),
         languageId: WebLanguageUtils.currentLanguageId,
-        method:  'post',
+        method: 'post',
     });
     if (!(newsEvent instanceof NewsEvent))
         throw new Error('news event not found.');

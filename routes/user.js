@@ -47,6 +47,11 @@ const deleteAnnouncements = require('../models/announcement/operations/delete-an
 const getAdminByAccount = require('../models/auth/operations/get-admin-by-account.js');
 const updateAdmin = require('../models/auth/operations/update-admin.js');
 
+const getNewsById = require('../models/announcement/operations/get-news-by-id.js');
+const postNews = require('../models/announcement/operations/post-news.js');
+const updateNews = require('../models/announcement/operations/update-news.js');
+const deleteNews = require('../models/announcement/operations/delete-news.js');
+
 const roleUtils = require('../models/auth/utils/role.js');
 const degreeUtils = require('../models/faculty/utils/degree.js');
 const nationUtils = require('../models/faculty/utils/nation.js');
@@ -868,6 +873,52 @@ router
             })
             .catch(next);
         }
+    }
+});
+
+
+/**
+ * Resolve URL `/user/news`.
+ * For user to manage news.
+ */
+
+router
+.route('/news')
+.post(upload.single('image'), async (req, res, next) => {
+    try {
+        console.log(req.file) // eslint-disable-line
+        res.send(await postNews({
+            author: Number(req.body.author),
+            image: req.file === 'null' ? null : req.file,
+            title: req.body.title,
+            url: req.body.url,
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+})
+.put(upload.single('image'), async (req, res, next) => {
+    try {
+        res.send(await updateNews({
+            newsId: Number(req.body.announcementId),
+            image: req.file === 'null' ? null : req.file,
+            title: req.body.title,
+            url: req.body.url,
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+})
+.delete(urlEncoded, jsonParser, async (req, res, next) => {
+    try {
+        res.send(await deleteNews({
+            newsIds: req.body.newsIds.map(id => Number(id)),
+        }));
+    }
+    catch (error) {
+        next(error);
     }
 });
 

@@ -44,7 +44,7 @@ module.exports = async (opt) => {
             {
                 image,
                 title,
-                url
+                url,
             },
             {
                 where: {
@@ -54,7 +54,7 @@ module.exports = async (opt) => {
         );
 
         // Return success message.
-        return { message: 'News updated.' };
+        return {message: 'News updated.'};
     }
     catch (error) {
         if (!error.status)

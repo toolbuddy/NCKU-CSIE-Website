@@ -57,12 +57,12 @@ export default class NewsEvent {
     }
 
     subscribeSubmit () {
-        this.DOM.submit.addEventListener('click', async(e) => {
+        this.DOM.submit.addEventListener('click', async (e) => {
             e.preventDefault();
 
             const isValid = await this.dataValidation();
 
-            if( isValid ) {
+            if (isValid) {
                 const formData = new FormData();
                 formData.append('userId', this.config.userId);
                 formData.append('title', this.DOM.title.value);
@@ -73,11 +73,11 @@ export default class NewsEvent {
     }
 
     dataValidation () {
-        const isValid = new Promise((res)=> {
+        const isValid = new Promise((res) => {
             let errorMessage = '';
             this.DOM.errorMessage.innerHTML = '';
-            [ this.DOM.title, this.DOM.url, this.DOM.image.file ].forEach(DOM => {
-                if( DOM.validity.valueMissing ) {
+            [this.DOM.title, this.DOM.url, this.DOM.image.file].forEach((DOM) => {
+                if (DOM.validity.valueMissing) {
                     const column = newsUtils.getValueByOption({
                         option: DOM.getAttribute('name'),
                         languageId: this.config.languageId,
@@ -87,18 +87,18 @@ export default class NewsEvent {
                         languageId: this.config.languageId,
                     });
 
-                    errorMessage = `${column}${error}`
+                    errorMessage = `${column}${error}`;
                 }
-            })
+            });
             res(errorMessage);
         })
-        .then((errorMessage)=> {
+        .then((errorMessage) => {
             this.DOM.errorMessage.innerHTML = errorMessage;
-            if( errorMessage === '' )
+            if (errorMessage === '')
                 return true;
 
             return false;
-        })
+        });
 
         return isValid;
     }

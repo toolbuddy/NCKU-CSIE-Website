@@ -48,7 +48,7 @@ export default class GetTvAnnouncements {
     }
 
     get queryApi () {
-        return `${host}/api/announcement/get-news?${this.queryString}`;
+        return `${host}/api/announcement/get-news-list?${this.queryString}`;
     }
 
     async subscribeShowEvent () {
