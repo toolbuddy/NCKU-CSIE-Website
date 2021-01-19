@@ -65,7 +65,7 @@ export default class GetNews {
     }
 
     newsQueryApi () {
-        return `${host}/api/announcement/get-news?amount=${this.amount}&page=${Math.ceil(this.state.newsAmount / this.amount) + 1}`;
+        return `${host}/api/announcement/get-news-list?amount=${this.amount}&page=${Math.ceil(this.state.newsAmount / this.amount) + 1}`;
     }
 
     static formatUpdateTime (time) {

@@ -422,18 +422,9 @@ export default class NewsList {
             this.DOM.pages.innerHTML = '';
             this.DOM.news.briefings.innerHTML = '';
 
-            const tags = [1];
-
-            const queryString = [
-                `amount=${this.config.amount}`,
-                `from=1514736000000`,
-                `to=1609925797285`,
-                ...tags.map(tagId => `tags=${tagId}`),
-            ].join('&');
-
             let res = null;
 
-            res = await window.fetch(`${host}/api/announcement/get-pages-by-and-tags?${queryString}`);
+            res = await window.fetch(`${host}/api/announcement/get-news-pages?amount=${this.config.amount}`);
 
             if (!res.ok)
                 throw new Error('failed to get all pages');
@@ -471,7 +462,7 @@ export default class NewsList {
 
             let res = null;
 
-            res = await window.fetch(`${host}/api/announcement/get-news?amount=${this.config.amount}&page=${this.state.page}`);
+            res = await window.fetch(`${host}/api/announcement/get-news-list?amount=${this.config.amount}&page=${this.state.page}`);
 
             if (!res.ok)
                 throw new Error('failed to get all news announcement');

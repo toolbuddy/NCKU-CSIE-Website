@@ -73,7 +73,7 @@ try {
     const getAdmissionAnnouncement = new GetAdmissionAnnouncement({
         amount: 7,
         announcementDOM: document.getElementById('admission-announcement'),
-        from: new Date('2019/01/01'),
+        from: new Date('2010/01/01'),
         languageId: WebLanguageUtils.currentLanguageId,
         tags: ['admission'],
         to: new Date(Date.now()),

@@ -76,6 +76,9 @@
         box-shadow: 0 4px 6px 0 rgba( 0, 0, 0, .12 ), 0 4px 8px 0 rgba( 0, 0, 0, .56 );
         overflow: hidden;
 
+        // [ transform ]
+        transition: all .25s;
+
         // [ hover ]
         &:hover {
           // [ layout ]
@@ -92,9 +95,6 @@
           // [ skin ]
           box-shadow: 0 4px 8px 0 rgba( 0, 0, 0, .12 ), 0 6px 12px 0 rgba( 0, 0, 0, .56 );
           cursor: pointer;
-
-          // [ transform ]
-          transition: height .25s, width, .25s;
         }
 
         > .briefing__image {

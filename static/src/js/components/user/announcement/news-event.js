@@ -33,7 +33,7 @@ export default class NewsEvent {
         this.config = {
             languageId: opt.languageId,
             method: opt.method,
-            newsId: ( opt.method === 'post' )? -1: opt.newsId,
+            newsId: (opt.method === 'post') ? -1 : opt.newsId,
         };
 
         this.state = {
@@ -66,7 +66,8 @@ export default class NewsEvent {
 
             if (isValid) {
                 const formData = new FormData();
-                formData.append('userId', this.config.userId);
+                formData.append('newsId', this.config.newsId);
+                formData.append('author', this.config.userId);
                 formData.append('title', this.DOM.title.value);
                 formData.append('url', this.DOM.url.value);
                 formData.append('image', this.state.image);
@@ -91,20 +92,38 @@ export default class NewsEvent {
         const isValid = new Promise((res) => {
             let errorMessage = '';
             this.DOM.errorMessage.innerHTML = '';
-            [this.DOM.title, this.DOM.url, this.DOM.image.file].forEach((DOM) => {
-                if (DOM.validity.valueMissing) {
-                    const column = newsUtils.getValueByOption({
-                        option: DOM.getAttribute('name'),
-                        languageId: this.config.languageId,
-                    });
-                    const error = errorMessageUtils.getValueByOption({
-                        option: 'valueMissing',
-                        languageId: this.config.languageId,
-                    });
+            if (this.config.method === 'post') {
+                [this.DOM.title, this.DOM.url, this.DOM.image.file].forEach((DOM) => {
+                    if (DOM.validity.valueMissing) {
+                        const column = newsUtils.getValueByOption({
+                            option: DOM.getAttribute('name'),
+                            languageId: this.config.languageId,
+                        });
+                        const error = errorMessageUtils.getValueByOption({
+                            option: 'valueMissing',
+                            languageId: this.config.languageId,
+                        });
 
-                    errorMessage = `${column}${error}`;
-                }
-            });
+                        errorMessage = `${column}${error}`;
+                    }
+                });
+            }
+            if (this.config.method === 'update') {
+                [this.DOM.title, this.DOM.url].forEach((DOM) => {
+                    if (DOM.validity.valueMissing) {
+                        const column = newsUtils.getValueByOption({
+                            option: DOM.getAttribute('name'),
+                            languageId: this.config.languageId,
+                        });
+                        const error = errorMessageUtils.getValueByOption({
+                            option: 'valueMissing',
+                            languageId: this.config.languageId,
+                        });
+
+                        errorMessage = `${column}${error}`;
+                    }
+                });
+            }
             res(errorMessage);
         })
         .then((errorMessage) => {
@@ -130,7 +149,7 @@ export default class NewsEvent {
             else
                 this.config.userId = -1;
 
-            if( this.config.method === 'update' )
+            if (this.config.method === 'update')
                 classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
         });
         this.subscribeImage();
