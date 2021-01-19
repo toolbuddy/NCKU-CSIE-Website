@@ -71,6 +71,7 @@ export default class NewsList {
             },
             pages: opt.pagesDOM,
             scrollTop: opt.scrollTopDOM,
+            add: document.getElementById('news--add'),
         };
 
         /**
@@ -533,6 +534,7 @@ export default class NewsList {
 
     subscribeAddButton () {
         this.DOM.add.innerHTML += addButtonHTML({
+            href: `${ host }/user/announcement/news?lanugageId=${ this.config.languageId }`,
             host,
             languageId: this.state.languageId,
         });
@@ -578,6 +580,7 @@ export default class NewsList {
                 if (res.role === roleUtils.getIdByOption('staff')) {
                     this.config.userId = res.roleId;
                     this.setPreview();
+                    this.subscribeAddButton();
                 }
                 else
                     this.config.userId = -1;

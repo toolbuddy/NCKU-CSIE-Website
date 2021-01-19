@@ -41,6 +41,7 @@ try {
         newsDOM: document.getElementById('news'),
         pagesDOM: document.getElementById('pages'),
         scrollTopDOM: document.getElementById('news'),
+        addDOM: document.getElementById('news--add'),
         deletePreviewDOM: document.getElementById('news--delete'),
         amount: 12,
         page: 1,
