@@ -72,18 +72,14 @@ export default class NewsEvent {
                 formData.append('url', this.DOM.url.value);
                 formData.append('image', this.state.image);
 
-                if (this.config.method === 'post') {
-                    fetch(`${host}/user/news`, {
-                        method: 'POST',
-                        body: formData,
-                    });
-                }
-                else {
-                    fetch(`${host}/user/news`, {
-                        method: 'PUT',
-                        body: formData,
-                    });
-                }
+                fetch(`${host}/user/news`, {
+                    method: (this.config.method === 'post')? 'POST': 'PUT',
+                    body: formData,
+                })
+                .then((res)=>{
+                    if(res.ok)
+                    location.href = `${host}/user/announcement/news-list?languageId=${this.config.languageId}`;
+                });
             }
         });
     }

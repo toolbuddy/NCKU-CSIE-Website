@@ -10,6 +10,7 @@ append data
         breadcrumb: {
           home:    'Home',
           user:    'User Setting',
+          newsList: 'News List',
           news:    'Add News',
         },
         content: {
@@ -29,6 +30,7 @@ append data
         breadcrumb: {
           home:    '首頁',
           user:    '使用者設定',
+          newsList: '新聞維護',
           news:    (method === 'update')? '編輯新聞': '新增新聞',
         },
         content: {
@@ -59,7 +61,8 @@ append breadcrumb
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
       { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
-      { text: i18n[ LANG.id ].breadcrumb.news, route: 'announcement/news' },
+      { text: i18n[ LANG.id ].breadcrumb.newsList, route: 'user/announcement/news-list' },
+      { text: i18n[ LANG.id ].breadcrumb.news, route: 'user/announcement/news' },
     ]
   )
 
