@@ -16,7 +16,7 @@ append data
         content: {
           topic: 'News',
           image: {
-            upload: 'Choose an image',
+            upload: 'Upload an image',
             comment: 'Click to upload image',
           },
           url: 'News Link',
@@ -36,7 +36,7 @@ append data
         content: {
           topic: (method === 'update')? '編輯新聞': '新增新聞',
           image: {
-            upload: '請選擇相片',
+            upload: '上傳圖片',
             comment: '點擊方框上傳相片',
           },
           url: '新聞連結',
@@ -51,6 +51,7 @@ append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
+  +css( 'user/announcement/cropper' )
   +css( 'user/announcement/news' )
 
 append header
@@ -76,29 +77,16 @@ append content
     input.form__input.input.form__input--title(type='text', name='title', value= briefing.title, required)
     label.form__label.label.form__label--url(for='title')= i18n[ LANG.id ].content.url
     input.form__input.input.form__input--url(type='text', name='url', value=briefing.url, required)
-    section.form__image.image
-      input.image__upload#image__upload(type= 'file', required, name='image')
+    section.form__image.image(class=(method === 'update')? '' : 'form__image--hidden')
       if method === 'update'
-        label.image__label(for='image__upload')
-          img.label__preview(src= `data:image/jpeg;base64,${ briefing.image }`)
-          +image( {
-            alt: i18n[LANG.id].content.image.upload,
-            className: 'label__upload label__upload--hidden upload',
-            src: `icon/upload.png`,
-          } )
-          p.label__comment.label__comment--hidden= i18n[LANG.id].content.image.upload
+        img.image__crop.crop(src= `data:image/jpeg;base64,${ briefing.image }`)
       else
-        label.image__label(for='image__upload')
-          img.label__preview.label__preview--hidden
-          +image( {
-            alt: i18n[LANG.id].content.image.upload,
-            className: 'label__upload upload',
-            src: `icon/upload.png`,
-          } )
-          p.label__comment= i18n[LANG.id].content.image.upload
-    p.form__image-comment.form__image-comment--hidden= i18n[LANG.id].content.image.comment
+        img.image__crop.crop
     p.form__error-message.error-message
-    buttom.form__submit.submit= i18n[LANG.id].content.submit
+    input#image.form__input--image(type='file', name='image')
+    section.form__button.button
+      label.button__upload-image.upload-image(for='image')= i18n[LANG.id].content.image.upload
+      buttom.button__submit.submit= i18n[LANG.id].content.submit
 
 append footer
 
