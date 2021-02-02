@@ -525,7 +525,7 @@ export default class NewsList {
 
     subscribeAddButton () {
         this.DOM.add.innerHTML += addButtonHTML({
-            href: `${ host }/user/announcement/news?lanugageId=${ this.config.languageId }`,
+            href: `${host}/user/announcement/news?lanugageId=${this.config.languageId}`,
             host,
             languageId: this.state.languageId,
         });

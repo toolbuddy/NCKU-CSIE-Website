@@ -49,7 +49,7 @@ export default class NewsEvent {
             reader.onload = (e) => {
                 classRemove(this.DOM.image.preview, 'form__image--hidden');
                 this.DOM.image.crop.src = e.target.result;
-                if( this.cropper === null )
+                if (this.cropper === null)
                     this.subscribeCropper();
                 else
                     this.cropper.replace(e.target.result);
