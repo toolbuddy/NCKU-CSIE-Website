@@ -115,10 +115,9 @@
           'url-label'
           'url-input'
           'image'
-          'image-comment'
           'error-message'
-          'submit';
-        rows: repeat( 4, font__px-to-rem( 40 ) ) font__px-to-rem( 240 ) auto auto auto;
+          'button';
+        rows: repeat( 4, font__px-to-rem( 40 ) ) auto auto auto;
       }
 
       // [ skin ]
@@ -136,11 +135,10 @@
             'title-label   title-input'
             'url-label     url-input'
             'image         image'
-            'image-comment image-comment'
             'error-message error-message'
-            'submit        submit';
+            'button        button';
           columns: font__px-to-rem( 100 ) auto;
-          rows: repeat( 2, font__px-to-rem( 40 ) ) font__px-to-rem( 440 ) auto auto auto;
+          rows: repeat( 2, font__px-to-rem( 40 ) ) auto auto auto;
         }
         column-gap: font__px-to-rem( 18 );
         row-gap: font__px-to-rem( 18 );
@@ -157,7 +155,6 @@
         height: font__px-to-rem( 200 );
         margin: {
           top: font__px-to-rem( 20 );
-          bottom: font__px-to-rem( 20 );
           left: auto;
           right: auto;
         }
@@ -168,89 +165,17 @@
           height: font__px-to-rem( 400 );
         }
 
-        > .image__label {
-          // [ layout ]
-          display: flex;
-          flex-wrap: wrap;
-          align-content: center;
-          justify-content: center;
-
-          // [ skin ]
-          height: 100%;
-          width: 100%;
-          border: 5px dashed gray;
-          border-radius: font__px-to-rem( 12 );
-
-          &--preview {
-            // [ skin ]
-            border: 5px dashed rgba( 255, 255, 255, 1 );
-          }
-
-          &:hover {
-            // [ skin ]
-            cursor: pointer;
-          }
-
-          > .label__preview {
-            // [ layout ]
-            display: block;
-
-            // [ skin ]
-            max-width: 100%;
-            width: auto;
-            height: 100%;
-            object-fit: cover;
-
-            &--hidden {
-              // [ layout ]
-              display: none;
-            }
-          }
-
-          > .label__upload {
-            // [ layout ]
-            display: block;
-
-            // [ skin ]
-            width: font__px-to-rem( 45 );
-            height: font__px-to-rem( 45 );
-
-            // [ RWD: $medium ]
-            @media screen and ( min-width: $medium ) {
-              width: font__px-to-rem( 70 );
-              height: font__px-to-rem( 70 );
-            }
-
-            &--hidden {
-              // [ layout ]
-              display: none;
-            }
-          }
-
-          > .label__comment {
-            // [ layout ]
-            display: block;
-
-            // [ skin ]
-            width: 100%;
-            height: font__px-to-rem( 40 );
-            font: {
-              size: font__px-to-rem( 18 );
-              weight: 600;
-            }
-            text-align: center;
-            line-height: normal;
-
-            &--hidden {
-              // [ layout ]
-              display: none;
-            }
-          }
-        }
-
-        > .image__upload {
+        &--hidden {
           // [ layout ]
           display: none;
+        }
+
+        > .image__crop {
+          // [ layout ]
+          display: block;
+
+          // [ position ]
+          max-width: 100%;
         }
       }
 
@@ -330,36 +255,6 @@
         }
       }
 
-      > .form__image-comment {
-        // [ layout ]
-        display: flex;
-        grid-area: image-comment;
-        justify-content: center;
-
-        // [ position ]
-        width: 100%;
-        height: fit-content;
-        margin-bottom: font__px-to-rem( 10 );
-
-        // [ skin ]
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: 600;
-        }
-        line-height: normal;
-
-        // [ RWD: $medium ]
-        @media screen and ( min-width: $medium ) {
-          // [ position ]
-          margin-bottom: 0;
-        }
-
-        &--hidden {
-          // [ layout ]
-          display: none;
-        }
-      }
-
       > .form__error-message {
         // [ layout ]
         display: block;
@@ -375,44 +270,81 @@
         color: red;
       }
 
-      > .form__submit {
+      > .form__input--image {
+        // [ layout ]
+        display: none;
+      }
+
+      > .form__button {
         // [ layout ]
         display: flex;
-        grid-area: submit;
-        align: {
-          self: center;
-          items: center;
-        }
-        justify-content: center;
-
-        // [ position ]
-        width: 100%;
-        height: font__px-to-rem( 55 );
-
-        // [ skin ]
-        padding: {
-          right: font__px-to-rem( 50 );
-          left: font__px-to-rem( 50 );
-        }
-        background-color: #213262;
-        color: rgb( 255, 255, 255 );
-        border-radius: font__px-to-rem( 5 );
-        font: {
-          size: font__px-to-rem( 16 );
-          weight: bold;
-        }
-        line-height: normal;
+        grid-area: button;
+        justify-content: space-around;
 
         // [ RWD: $medium ]
         @media screen and ( min-width: $medium ) {
-          // [ position ]
-          width: fit-content;
+          justify-content: flex-start;
         }
 
-        &:hover {
+        %button {
+          // [ layout ]
+          display: flex;
+          grid-area: submit;
+          align: {
+            self: center;
+            items: center;
+          }
+          justify-content: center;
+
+          // [ position ]
+          width: 45%;
+          height: font__px-to-rem( 45 );
+          margin-top: font__px-to-rem( 25 );
+
           // [ skin ]
-          cursor: pointer;
-          background-color: #294288c0;
+          padding: {
+            right: font__px-to-rem( 25 );
+            left: font__px-to-rem( 25 );
+          }
+          background-color: #213262;
+          color: rgb( 255, 255, 255 );
+          border-radius: font__px-to-rem( 5 );
+          font: {
+            size: font__px-to-rem( 16 );
+            weight: bold;
+          }
+          line-height: normal;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ position ]
+            width: fit-content;
+            height: font__px-to-rem( 55 );
+            padding: {
+              right: font__px-to-rem( 50 );
+              left: font__px-to-rem( 50 );
+            }
+            margin: {
+              right: font__px-to-rem( 20 );
+              top: 0;
+            }
+          }
+
+          &:hover {
+            // [ skin ]
+            cursor: pointer;
+            background-color: #294288c0;
+          }
+        }
+
+        > .button__upload-image {
+          // [ extend ]
+          @extend %button;
+        }
+
+        > .button__submit {
+          // [ extend ]
+          @extend %button;
         }
       }
     }

@@ -1,9 +1,12 @@
 import ValidateUtils from 'models/common/utils/validate.js';
 import {host} from 'settings/server/config.js';
 import roleUtils from 'models/auth/utils/role.js';
-import {classAdd, classRemove} from 'static/src/js/utils/style.js';
+import {classRemove} from 'static/src/js/utils/style.js';
 import errorMessageUtils from 'models/user/utils/error-message.js';
 import newsUtils from 'models/announcement/utils/news.js';
+import Cropper from 'cropperjs';
+
+// Import 'cropperjs/dist/cropper.css';
 
 export default class NewsEvent {
     constructor (opt) {
@@ -14,19 +17,15 @@ export default class NewsEvent {
         )
             throw new TypeError('invalid arguments');
 
-        const imageQuerySelector = modifier => `.form__image > .image__label > .label__${modifier}`;
         this.DOM = {
             title: opt.formDOM.querySelector('.form__input--title'),
             url: opt.formDOM.querySelector('.form__input--url'),
-            submit: opt.formDOM.querySelector('.form__submit'),
+            submit: opt.formDOM.querySelector('.form__button > .button__submit'),
             errorMessage: opt.formDOM.querySelector('.form__error-message'),
             image: {
-                label: opt.formDOM.querySelector('.form__image > .image__label'),
-                preview: opt.formDOM.querySelector(imageQuerySelector('preview')),
-                upload: opt.formDOM.querySelector(imageQuerySelector('upload')),
-                comment: opt.formDOM.querySelector(imageQuerySelector('comment')),
-                file: opt.formDOM.querySelector('.form__image > .image__upload'),
-                uploadComment: opt.formDOM.querySelector('.form__image-comment'),
+                crop: opt.formDOM.querySelector('.form__image > .image__crop'),
+                input: opt.formDOM.querySelector('.form__input--image'),
+                preview: opt.formDOM.querySelector('.form__image'),
             },
         };
 
@@ -36,54 +35,62 @@ export default class NewsEvent {
             newsId: (opt.method === 'post') ? -1 : opt.newsId,
         };
 
+        this.cropper = null;
+
         this.state = {
             image: null,
         };
     }
 
     subscribeImage () {
-        this.DOM.image.file.addEventListener('change', (element) => {
+        this.DOM.image.input.addEventListener('change', (element) => {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                classAdd(this.DOM.image.comment, 'label__comment--hidden');
-                classAdd(this.DOM.image.upload, 'label__upload--hidden');
-                classRemove(this.DOM.image.preview, 'label__preview--hidden');
-                classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
-                this.DOM.image.preview.src = e.target.result;
-                this.state.image = element.target.files[0];
+                classRemove(this.DOM.image.preview, 'form__image--hidden');
+                this.DOM.image.crop.src = e.target.result;
+                if (this.cropper === null)
+                    this.subscribeCropper();
+                else
+                    this.cropper.replace(e.target.result);
             };
 
             reader.readAsDataURL(element.target.files[0]);
         });
     }
 
+    subscribeCropper () {
+        const image = this.DOM.image.crop;
+        this.cropper = new Cropper(image, {
+            aspectRatio: 20 / 9,
+            dragMode: 'move',
+            viewMode: 1,
+        });
+    }
+
     subscribeSubmit () {
         this.DOM.submit.addEventListener('click', async (e) => {
             e.preventDefault();
-
             const isValid = await this.dataValidation();
 
             if (isValid) {
-                const formData = new FormData();
-                formData.append('newsId', this.config.newsId);
-                formData.append('author', this.config.userId);
-                formData.append('title', this.DOM.title.value);
-                formData.append('url', this.DOM.url.value);
-                formData.append('image', this.state.image);
+                this.cropper.getCroppedCanvas().toBlob((blob) => {
+                    const formData = new FormData();
+                    formData.append('newsId', this.config.newsId);
+                    formData.append('author', this.config.userId);
+                    formData.append('title', this.DOM.title.value);
+                    formData.append('url', this.DOM.url.value);
+                    formData.append('image', blob);
 
-                if (this.config.method === 'post') {
                     fetch(`${host}/user/news`, {
-                        method: 'POST',
+                        method: (this.config.method === 'post') ? 'POST' : 'PUT',
                         body: formData,
+                    })
+                    .then((res) => {
+                        if (res.ok)
+                            location.href = `${host}/user/announcement/news-list?languageId=${this.config.languageId}`;
                     });
-                }
-                else {
-                    fetch(`${host}/user/news`, {
-                        method: 'PUT',
-                        body: formData,
-                    });
-                }
+                });
             }
         });
     }
@@ -92,38 +99,34 @@ export default class NewsEvent {
         const isValid = new Promise((res) => {
             let errorMessage = '';
             this.DOM.errorMessage.innerHTML = '';
-            if (this.config.method === 'post') {
-                [this.DOM.title, this.DOM.url, this.DOM.image.file].forEach((DOM) => {
-                    if (DOM.validity.valueMissing) {
-                        const column = newsUtils.getValueByOption({
-                            option: DOM.getAttribute('name'),
-                            languageId: this.config.languageId,
-                        });
-                        const error = errorMessageUtils.getValueByOption({
-                            option: 'valueMissing',
-                            languageId: this.config.languageId,
-                        });
 
-                        errorMessage = `${column}${error}`;
-                    }
+            if (this.cropper === null) {
+                const column = newsUtils.getValueByOption({
+                    option: 'image',
+                    languageId: this.config.languageId,
                 });
-            }
-            if (this.config.method === 'update') {
-                [this.DOM.title, this.DOM.url].forEach((DOM) => {
-                    if (DOM.validity.valueMissing) {
-                        const column = newsUtils.getValueByOption({
-                            option: DOM.getAttribute('name'),
-                            languageId: this.config.languageId,
-                        });
-                        const error = errorMessageUtils.getValueByOption({
-                            option: 'valueMissing',
-                            languageId: this.config.languageId,
-                        });
+                const error = errorMessageUtils.getValueByOption({
+                    option: 'valueMissing',
+                    languageId: this.config.languageId,
+                });
 
-                        errorMessage = `${column}${error}`;
-                    }
-                });
+                errorMessage = `${column}${error}`;
             }
+
+            [this.DOM.title, this.DOM.url].forEach((DOM) => {
+                if (DOM.validity.valueMissing) {
+                    const column = newsUtils.getValueByOption({
+                        option: DOM.getAttribute('name'),
+                        languageId: this.config.languageId,
+                    });
+                    const error = errorMessageUtils.getValueByOption({
+                        option: 'valueMissing',
+                        languageId: this.config.languageId,
+                    });
+
+                    errorMessage = `${column}${error}`;
+                }
+            });
             res(errorMessage);
         })
         .then((errorMessage) => {
@@ -137,7 +140,7 @@ export default class NewsEvent {
         return isValid;
     }
 
-    exec () {
+    async exec () {
         fetch(`${host}/user/id`, {
             credentials: 'include',
             method: 'get',
@@ -149,9 +152,12 @@ export default class NewsEvent {
             else
                 this.config.userId = -1;
 
-            if (this.config.method === 'update')
-                classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
+            // If (this.config.method === 'update')
+            //     classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
         });
+
+        if (this.config.method === 'update')
+            await this.subscribeCropper();
         this.subscribeImage();
         this.subscribeSubmit();
     }

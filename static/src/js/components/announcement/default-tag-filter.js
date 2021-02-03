@@ -1049,6 +1049,7 @@ export default class DefaultTagFilter {
 
     subscribeAddButton () {
         this.DOM.add.innerHTML += addButtonHTML({
+            href: `${host}/user/announcement/add?lanugageId=${this.config.languageId}`,
             host,
             languageId: this.state.languageId,
         });

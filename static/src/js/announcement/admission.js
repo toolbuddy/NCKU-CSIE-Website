@@ -40,7 +40,7 @@ catch (err) {
 
 try {
     const filter = new SingleDefaultTagFilter({
-        defaultTag: ['recruitment'],
+        defaultTag: ['admission'],
         supportedTag: [
             'college',
             'master',

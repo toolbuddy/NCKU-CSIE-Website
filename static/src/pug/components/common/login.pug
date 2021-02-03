@@ -30,13 +30,6 @@
                     query: { languageId: LANG.getLanguageId( 'en-US' ) },
                 }),
             },
-            addNews: {
-                text: 'Add News',
-                route: UTILS.url({
-                    href: 'user/announcement/news',
-                    query: { languageId: LANG.getLanguageId( 'en-US' ) },
-                }),
-            },
             newsUpdate: {
                 text: 'News Update',
                 route: UTILS.url({
@@ -74,13 +67,6 @@
                     query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
                 }),
             },
-            addNews: {
-                text: '新增新聞',
-                route: UTILS.url({
-                    href: 'user/announcement/news',
-                    query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
-                }),
-            },
             newsUpdate: {
                 text: '新聞維護',
                 route: UTILS.url({
@@ -108,8 +94,6 @@ a.login( class = `${ belongBlock }__button` )= name
     if role === 'staff'
         li.dropdown__item.item
             a.item__link( href = i18n[ LANG.id ].addAnnouncement.route )= i18n[ LANG.id ].addAnnouncement.text
-        li.dropdown__item.item
-            a.item__link( href = i18n[ LANG.id ].addNews.route )= i18n[ LANG.id ].addNews.text
         li.dropdown__item.item
             a.item__link( href = i18n[ LANG.id ].newsUpdate.route )= i18n[ LANG.id ].newsUpdate.text
     li.dropdown__item.item
