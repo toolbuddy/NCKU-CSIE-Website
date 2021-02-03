@@ -6,8 +6,6 @@ import errorMessageUtils from 'models/user/utils/error-message.js';
 import newsUtils from 'models/announcement/utils/news.js';
 import Cropper from 'cropperjs';
 
-// Import 'cropperjs/dist/cropper.css';
-
 export default class NewsEvent {
     constructor (opt) {
         opt = opt || {};
@@ -151,9 +149,6 @@ export default class NewsEvent {
                 this.config.userId = res.roleId;
             else
                 this.config.userId = -1;
-
-            // If (this.config.method === 'update')
-            //     classRemove(this.DOM.image.uploadComment, 'form__image-comment--hidden');
         });
 
         if (this.config.method === 'update')
