@@ -93,9 +93,9 @@ mixin edit-block( belongBlock, method, dbData )
         article.option__now
           input.now__input.release__option( name='release__option', type='radio', value=1, id='now__input', checked)
           label.now__label( for='now__input' )= i18n[ LANG.id ].option.now
-        article.option__private
-          input.private__input.release__option( name='release__option', type='radio', value=2, id='private__input')
-          label.private__label( for='private__input' )= i18n[ LANG.id ].option.private
+        //- article.option__private
+        //-   input.private__input.release__option( name='release__option', type='radio', value=2, id='private__input')
+        //-   label.private__label( for='private__input' )= i18n[ LANG.id ].option.private
       section.announcement__release
         button.release__check= i18n[ LANG.id ].button.release
         p.release__error-message

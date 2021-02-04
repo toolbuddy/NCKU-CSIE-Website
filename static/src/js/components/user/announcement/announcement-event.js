@@ -61,7 +61,7 @@ export default class AnnouncementEvent {
             errorMessage: opt.editBlockDOM.querySelector('.edit-block__announcement > .announcement__release > .release__error-message'),
             options: {
                 now: opt.optionNowDOM,
-                private: opt.optionPrivateDOM,
+                // private: opt.optionPrivateDOM,
             },
         };
     }
