@@ -29,6 +29,13 @@
           href: 'user/announcement/add',
           query: { languageId: LANG.getLanguageId( 'en-US' ) },
         }),
+      },
+      newsUpdate: {
+        text: 'News Update',
+        route: UTILS.url({
+          href: 'user/announcement/news-list',
+          query: { languageId: LANG.getLanguageId( 'en-US' ) },
+        }),
       }
     },
     [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -59,6 +66,13 @@
           href: 'user/announcement/add',
           query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
         }),
+      },
+      newsUpdate: {
+        text: '新聞維護',
+        route: UTILS.url({
+          href: 'user/announcement/news-list',
+          query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+        }),
       }
     },
   } );
@@ -81,6 +95,8 @@ ul.login__dropdown.dropdown
   if role === 'staff'
     li.dropdown__item.item
       a.item__link.link( href = i18n[ LANG.id ].addAnnouncement.route )= i18n[ LANG.id ].addAnnouncement.text
+    li.dropdown__item.item
+      a.item__link.link( href = i18n[ LANG.id ].newsUpdate.route )= i18n[ LANG.id ].newsUpdate.text
   li.dropdown__item.item
     a.item__link.link( href = i18n[ LANG.id ].profile.route )= i18n[ LANG.id ].profile.text
   li.dropdown__item.item

@@ -670,6 +670,114 @@
           }
         }
       }
+
+      > .master__ai-ismp {
+        // [ layout ]
+        width: 100%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
+
+        > .ai-ismp__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/ai-ismp.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .ai-ismp__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
+
+      > .master__student {
+        // [ layout ]
+        width: 100%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
+
+        > .student__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/student.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .student__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
     }
 
     // element

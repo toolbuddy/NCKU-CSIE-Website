@@ -47,6 +47,11 @@ const deleteAnnouncements = require('../models/announcement/operations/delete-an
 const getAdminByAccount = require('../models/auth/operations/get-admin-by-account.js');
 const updateAdmin = require('../models/auth/operations/update-admin.js');
 
+const getNewsById = require('../models/announcement/operations/get-news-by-id.js');
+const postNews = require('../models/announcement/operations/post-news.js');
+const updateNews = require('../models/announcement/operations/update-news.js');
+const deleteNews = require('../models/announcement/operations/delete-news.js');
+
 const roleUtils = require('../models/auth/utils/role.js');
 const degreeUtils = require('../models/faculty/utils/degree.js');
 const nationUtils = require('../models/faculty/utils/nation.js');
@@ -74,7 +79,14 @@ router.use(allowUserOnly);
 
 router
 .route('/')
-.get(staticHtml('user/index'));
+.get(noCache, (req, res) => {
+    if (req.session.user.role === roleUtils.getIdByOption('faculty'))
+        res.redirect('/user/faculty');
+    else if (req.session.user.role === roleUtils.getIdByOption('staff'))
+        res.redirect('/user/staff');
+    else
+        res.redirect('/index');
+});
 
 /**
  * Resolve URL `/user/id`.
@@ -171,6 +183,10 @@ router
 });
 
 router
+.route('/staff')
+.get(staticHtml('user/staff/index'));
+
+router
 .route('/staff/staffWithId/:id')
 .get(async (req, res, next) => {
     try {
@@ -183,6 +199,10 @@ router
         next(error);
     }
 });
+
+router
+.route('/faculty')
+.get(staticHtml('user/faculty/index'));
 
 /**
  * Resolve URL `/user/faculty/profile`
@@ -853,6 +873,126 @@ router
             })
             .catch(next);
         }
+    }
+});
+
+/**
+ * Resolve URL `/user/news`.
+ * For user to manage news.
+ */
+
+router
+.route('/news')
+.post(upload.single('image'), async (req, res, next) => {
+    try {
+        res.send(await postNews({
+            author: Number(req.body.author),
+            image: req.body.image === 'null' ? null : req.file.buffer,
+            title: req.body.title,
+            url: req.body.url,
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+})
+.put(upload.single('image'), async (req, res, next) => {
+    try {
+        res.send(await updateNews({
+            newsId: Number(req.body.newsId),
+            image: req.body.image === 'null' ? null : req.file.buffer,
+            title: req.body.title,
+            url: req.body.url,
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+})
+.delete(urlEncoded, jsonParser, async (req, res, next) => {
+    try {
+        res.send(await deleteNews({
+            newsIds: req.body.newsIds.map(id => Number(id)),
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * Resolve URL `/user/announcement/news`.
+ */
+
+router
+.route('/announcement/news')
+.get(async (req, res, next) => {
+    try {
+        await new Promise((resolve, reject) => {
+            res.render('user/announcement/news.pug', {
+                briefing: {
+                    title: '',
+                    updateTime: '',
+                    url: '',
+                    image: '',
+                },
+                method: 'post',
+            }, (err, html) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                res.send(html);
+                resolve();
+            });
+        });
+    }
+    catch (error) {
+        if (error.status === 404)
+            next();
+        else
+            next(error);
+    }
+});
+
+/**
+ * Resolve URL `/user/announcement/news-list`.
+ */
+
+router
+.route('/announcement/news-list')
+.get(staticHtml('user/announcement/news-list'));
+
+/**
+ * Resolve URL `/user/announcement/edit/[id]`.
+ */
+
+router
+.route('/announcement/news/:newsId')
+.get(async (req, res, next) => {
+    try {
+        const briefing = await getNewsById({
+            newsId: Number(req.params.newsId),
+        });
+        await new Promise((resolve, reject) => {
+            res.render('user/announcement/news.pug', {
+                briefing,
+                method: 'update',
+            }, (err, html) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                res.send(html);
+                resolve();
+            });
+        });
+    }
+    catch (error) {
+        if (error.status === 404)
+            next();
+        else
+            next(error);
     }
 });
 

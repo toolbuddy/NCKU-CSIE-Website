@@ -9,7 +9,8 @@
  * - `/api/announcement/get-pages-by-and-tags`
  * - `/api/announcement/get-pages-by-or-tags`
  * - `/api/announcement/get-hot-announcements`
- * - `/api/announcement/get-news`
+ * - `/api/announcement/get-news-pages`
+ * - `/api/announcement/get-news-list`
  * - `/api/announcement/[id]`
  */
 
@@ -22,7 +23,8 @@ const getPinnedAnnouncementsByOrTags = require('../models/announcement/operation
 const getPagesByAndTags = require('../models/announcement/operations/get-pages-by-and-tags');
 const getPagesByOrTags = require('../models/announcement/operations/get-pages-by-or-tags.js');
 const getHotAnnouncements = require('../models/announcement/operations/get-hot-announcements.js');
-const getNews = require('../models/announcement/operations/get-news.js');
+const getNewsPages = require('../models/announcement/operations/get-news-pages.js');
+const getNewsList = require('../models/announcement/operations/get-news-list.js');
 const getAnnouncement = require('../models/announcement/operations/get-announcement.js');
 
 const apis = express.Router();
@@ -195,12 +197,27 @@ apis.get('/get-hot-announcements', async (req, res, next) => {
 });
 
 /**
- * Resolve URL `/api/announcement/get-news`.
+ * Resolve URL `/api/announcement/get-news-pages`.
  */
 
-apis.get('/get-news', async (req, res, next) => {
+apis.get('/get-news-pages', async (req, res, next) => {
     try {
-        res.json(await getNews({
+        res.json(await getNewsPages({
+            amount: Number(req.query.amount),
+        }));
+    }
+    catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * Resolve URL `/api/announcement/get-news-list`.
+ */
+
+apis.get('/get-news-list', async (req, res, next) => {
+    try {
+        res.json(await getNewsList({
             amount: Number(req.query.amount),
             page: Number(req.query.page),
         }));

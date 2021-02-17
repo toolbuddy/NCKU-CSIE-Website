@@ -1,8 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
-import WebLanguageUtils from 'static/src/js/utils/language.js';
+import NewsList from 'static/src/js/components/user/announcement/news-list.js';
 
 try {
     const headerBase = new GetHeaderBase({
@@ -37,30 +36,20 @@ try {
 catch (err) {
     console.error(err);
 }
-
 try {
-    const filter = new SingleDefaultTagFilter({
-        defaultTag: ['admission'],
-        supportedTag: [
-            'college',
-            'master',
-            'phd',
-        ],
-        filterDOM: document.getElementById('filter'),
-        announcementPinnedDOM: document.getElementById('announcement--pinned'),
-        announcementNormalDOM: document.getElementById('announcement--normal'),
-        addDOM: document.getElementById('announcement--add'),
-        deletePreviewDOM: document.getElementById('announcement--delete'),
+    const newsList = new NewsList({
+        newsDOM: document.getElementById('news'),
         pagesDOM: document.getElementById('pages'),
-        scrollTopDOM: document.getElementById('announcement--normal'),
-        amount: 15,
-        from: new Date('2018/01/01'),
-        to: new Date(Date.now()),
+        scrollTopDOM: document.getElementById('news'),
+        addDOM: document.getElementById('news--add'),
+        deletePreviewDOM: document.getElementById('news--delete'),
+        amount: 12,
         page: 1,
         visiblePageNum: 2,
-        currentLanguageId: WebLanguageUtils.currentLanguageId,
     });
-    filter.getAll();
+    if (!(newsList instanceof NewsList))
+        throw new Error('news list not found.');
+    newsList.getAll();
 }
 catch (err) {
     console.error(err);

@@ -1,7 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
+import NewsEvent from 'static/src/js/components/user/announcement/news-event.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
@@ -37,30 +37,15 @@ try {
 catch (err) {
     console.error(err);
 }
-
 try {
-    const filter = new SingleDefaultTagFilter({
-        defaultTag: ['admission'],
-        supportedTag: [
-            'college',
-            'master',
-            'phd',
-        ],
-        filterDOM: document.getElementById('filter'),
-        announcementPinnedDOM: document.getElementById('announcement--pinned'),
-        announcementNormalDOM: document.getElementById('announcement--normal'),
-        addDOM: document.getElementById('announcement--add'),
-        deletePreviewDOM: document.getElementById('announcement--delete'),
-        pagesDOM: document.getElementById('pages'),
-        scrollTopDOM: document.getElementById('announcement--normal'),
-        amount: 15,
-        from: new Date('2018/01/01'),
-        to: new Date(Date.now()),
-        page: 1,
-        visiblePageNum: 2,
-        currentLanguageId: WebLanguageUtils.currentLanguageId,
+    const newsEvent = new NewsEvent({
+        formDOM: document.getElementById('form'),
+        languageId: WebLanguageUtils.currentLanguageId,
+        method: 'post',
     });
-    filter.getAll();
+    if (!(newsEvent instanceof NewsEvent))
+        throw new Error('news event not found.');
+    newsEvent.exec();
 }
 catch (err) {
     console.error(err);

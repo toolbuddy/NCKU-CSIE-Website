@@ -1,0 +1,77 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:     'User Setting',
+        breadcrumb: {
+          home:    'Home',
+        },
+        entries: [
+          {
+            title: 'Update',
+            detail: 'Update',
+            modifier: 'yellow',
+            route: 'user/profile',
+          },
+          {
+            title: 'Reset Password',
+            detail: 'Reset Password',
+            modifier: 'blue',
+            route: 'user/resetPassword',
+          },
+        ]
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:     '使用者管理',
+        breadcrumb: {
+          home:    '首頁',
+        },
+        entries: [
+          {
+            title: '個人資料維護',
+            detail: '教職員工資料維護頁面',
+            modifier: 'yellow',
+            route: 'user/faculty/profile',
+          },
+          {
+            title: '密碼維護',
+            detail: '變更密碼頁面',
+            modifier: 'blue',
+            route: 'user/resetPassword',
+          },
+        ]
+      },
+    } );
+    const currentRoute = 'user/index';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/index' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/entries.pug
+  +entries( 'content', i18n[ LANG.id ].entries )
+
+append footer
+
+append scripts
+  +js( 'user/index' )

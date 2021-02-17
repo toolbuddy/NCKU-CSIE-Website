@@ -45,7 +45,7 @@ try {
         id,
         languageId: WebLanguageUtils.currentLanguageId,
         editBlockDOM: document.getElementById('edit-block'),
-        optionPrivateDOM: document.getElementById('private__input'),
+        // optionPrivateDOM: document.getElementById('private__input'),
         optionNowDOM: document.getElementById('now__input'),
         method: 'add',
     });

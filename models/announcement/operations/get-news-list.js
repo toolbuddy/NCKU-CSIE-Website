@@ -5,7 +5,7 @@
  * @function
  * @param {number}   amount      - Specify how many news to be returned.
  * @param {number}   page        - Specify the news under the given page number.
- * @returns {object[]} Requested announcement briefings, including:
+ * @returns {object[]} Requested news briefings, including:
  * - id
  * - author
  * - title

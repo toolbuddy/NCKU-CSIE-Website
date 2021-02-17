@@ -14,7 +14,8 @@ append data
         title:      'User Profile',
         breadcrumb: {
           home:     'Home',
-          user:     'User Profile',
+          user:     'User Setting',
+          profile:  'User Profile',
         },
         content: {
           topic: 'User profile settings',
@@ -38,13 +39,14 @@ append data
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title:      '使用者資料管理',
+        title:      '個人資料維護',
         breadcrumb: {
           home:     '首頁',
-          user:     '使用者資料',
+          user:     '使用者管理',
+          profile:  '個人資料維護',
         },
         content: {
-          topic: '使用者資料維護',
+          topic: '個人資料維護',
           image: {
             select:  '編輯相片',
             cancel:  '取消',
@@ -283,7 +285,8 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/faculty/profile' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user/' },
+      { text: i18n[ LANG.id ].breadcrumb.profile, route: 'user/profile' },
     ]
   )
 

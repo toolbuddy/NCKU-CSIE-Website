@@ -1,0 +1,97 @@
+extends /layouts/base.pug
+include /components/common/topic.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:   'News',
+        faculty: 'Faculties',
+        breadcrumb: {
+          home:    'Home',
+          user:    'User Setting',
+          newsList: 'News List',
+          news:    'Add News',
+        },
+        content: {
+          topic: 'News',
+          image: {
+            upload: 'Upload an image',
+            comment: 'Click to upload image',
+          },
+          url: 'News Link',
+          title: 'News Title',
+          submit: 'Submit',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:   (method === 'update')? '編輯新聞': '新增新聞',
+        faculty: '師資陣容',
+        breadcrumb: {
+          home:    '首頁',
+          user:    '使用者設定',
+          newsList: '新聞維護',
+          news:    (method === 'update')? '編輯新聞': '新增新聞',
+        },
+        content: {
+          topic: (method === 'update')? '編輯新聞': '新增新聞',
+          image: {
+            upload: '上傳圖片',
+            comment: '點擊方框上傳相片',
+          },
+          url: '新聞連結',
+          title: '新聞標題',
+          submit: '提交新聞',
+        }
+      },
+    } );
+    const currentRoute = 'user/announcement/news';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/announcement/cropper' )
+  +css( 'user/announcement/news' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
+      { text: i18n[ LANG.id ].breadcrumb.newsList, route: 'user/announcement/news-list' },
+      { text: i18n[ LANG.id ].breadcrumb.news, route: 'user/announcement/news' },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+  form#form.content__form.form
+    label.form__label.label.form__label--title(for='title' )= i18n[ LANG.id ].content.title
+    input.form__input.input.form__input--title(type='text', name='title', value= briefing.title, required)
+    label.form__label.label.form__label--url(for='title')= i18n[ LANG.id ].content.url
+    input.form__input.input.form__input--url(type='text', name='url', value=briefing.url, required)
+    section.form__image.image(class=(method === 'update')? '' : 'form__image--hidden')
+      if method === 'update'
+        img.image__crop.crop(src= `data:image/jpeg;base64,${ briefing.image }`)
+      else
+        img.image__crop.crop
+    p.form__error-message.error-message
+    input#image.form__input--image(type='file', name='image')
+    section.form__button.button
+      label.button__upload-image.upload-image(for='image')= i18n[LANG.id].content.image.upload
+      buttom.button__submit.submit= i18n[LANG.id].content.submit
+
+append footer
+
+append scripts
+  if method === 'update'
+    +js( 'user/announcement/news-update' )
+  else
+    +js( 'user/announcement/news' )

@@ -1,0 +1,86 @@
+extends /layouts/base.pug
+include /components/common/topic.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:   'News Update',
+        breadcrumb: {
+          home:    'Home',
+          user:    'User Setting',
+          news:    'News update',
+        },
+        content: {
+          topic: 'News',
+          image: {
+            upload: 'Choose an image',
+          },
+          url: 'News Link',
+          title: 'News Title',
+          submit: 'Submit',
+        }
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:   '新聞維護',
+        breadcrumb: {
+          home:    '首頁',
+          user:    '使用者設定',
+          news:    '新聞維護',
+        },
+        content: {
+          topic: '新聞維護',
+          image: {
+            upload: '請選擇相片',
+          },
+          url: '新聞連結',
+          title: '新聞標題',
+          submit: '提交新聞',
+        }
+      },
+    } );
+    const currentRoute = 'user/announcement/news-list';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'user/announcement/news-list' )
+
+append header
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.user, route: 'user' },
+      { text: i18n[ LANG.id ].breadcrumb.news, route: 'announcement/news-list' },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+  include /components/common/loading.pug
+  include /components/common/no-result.pug
+  include /components/announcement/delete-preview.pug
+
+  +topic( 'content', i18n[ LANG.id ].content.topic )
+
+  section#news.content__news.news
+    +noResultWithImage( 'news' )
+    +loading( 'news' )
+    nav.news__briefings.briefings.news__briefings--hide
+
+  section#pages.content__pages.pages
+
+  section#news--add.content__add.add
+
+  section#news--delete.content__delete.delete
+    +deletPreview( 'delete' )
+
+append footer
+
+append scripts
+  +js( 'user/announcement/news-list' )

@@ -88,7 +88,7 @@ $icon-path: '~image/icon';
       border: 2px solid gray;
       background: {
         color: white;
-        size: 100%;
+        size: cover;
         repeat: no-repeat;
         position: center;
         image: url( '~image/icon/user.png' );

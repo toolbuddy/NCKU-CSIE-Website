@@ -1,0 +1,358 @@
+@import 'components/common/reset';
+@import 'components/common/font';
+@import 'components/common/icon';
+@import 'components/common/header-base';
+@import 'components/common/header-medium';
+@import 'components/common/header-large';
+@import 'components/common/breadcrumb';
+@import 'components/common/topic';
+@import 'components/common/footer';
+
+// block
+// `.body >　.content`
+.body {
+  // [ skin ]
+  background-color: #ffffff;
+
+  // element
+  // `.body > .body__header`
+  // block
+  // `.body > .header`
+  @include header--base( $block: 'body' );
+  @include header--medium( $block: 'body' );
+  @include header--large( $block: 'body' );
+
+  // element
+  // `.body > .body__content`
+  // block
+  // `.body > .content`
+  > .body__content.content {
+    // [ variable ]
+    $medium: 850px;
+    $large: 992px;
+    $x-large: 1440px;
+
+    // [ layout ]
+    display: grid;
+    grid: {
+      row-gap: font__px-to-rem( 38 );
+      template: {
+        columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
+        areas:
+          '. breadcrumb           .'
+          '. topic               .'
+          '. form                .';
+      }
+    }
+
+    // [ skin ]
+    padding: {
+      top: font__px-to-rem( 70 );
+      bottom: font__px-to-rem( 70 );
+      left: font__px-to-rem( 16 );
+      right: font__px-to-rem( 16 );
+    }
+    background-color: #ffffff;
+
+    // [ RWD: $large ]
+    @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid: {
+        row-gap: font__px-to-rem( 60 );
+        template: {
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
+          areas:
+            '. breadcrumb           .'
+            '. topic                .'
+            '. form               .';
+        }
+      }
+
+      // [ skin ]
+      padding: {
+        top: font__px-to-rem( 40 );
+        bottom: font__px-to-rem( 70 );
+        left: 0;
+        right: 0;
+      }
+    }
+
+    // [ RWD: $x-large ]
+    @media screen and ( min-width: $x-large ) {
+      // [ layout ]
+      grid-template-columns: 1fr font__px-to-rem( 1200 ) 1fr;
+    }
+
+    // element
+    // `.body > .content > .content__breadcrumb`
+    // block
+    // `.body > .content > .breadcrumb`
+    @include breadcrumb( $block: 'content' ) {
+      // [ layout ]
+      grid-area: breadcrumb;
+
+      // [ position ]
+      width: 100%;
+    }
+    @include topic( $block: 'content' ) {
+      // [ layout ]
+      grid-area: topic;
+    }
+
+    > .content__form.form {
+      // [ variable ]
+      $medium: 680px;
+      $large: 992px;
+      $x-large: 1440px;
+
+      // [ layout ]
+      grid-area: form;
+      display: grid;
+      grid-template: {
+        areas:
+          'title-label'
+          'title-input'
+          'url-label'
+          'url-input'
+          'image'
+          'error-message'
+          'button';
+        rows: repeat( 4, font__px-to-rem( 40 ) ) auto auto auto;
+      }
+
+      // [ skin ]
+      width: 90%;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+
+      // [ RWD: $medium ]
+      @media screen and ( min-width: $medium ) {
+        // [ skin ]
+        grid-template: {
+          areas:
+            'title-label   title-input'
+            'url-label     url-input'
+            'image         image'
+            'error-message error-message'
+            'button        button';
+          columns: font__px-to-rem( 100 ) auto;
+          rows: repeat( 2, font__px-to-rem( 40 ) ) auto auto auto;
+        }
+        column-gap: font__px-to-rem( 18 );
+        row-gap: font__px-to-rem( 18 );
+      }
+
+      > .form__image {
+        // [ layout ]
+        grid-area: image;
+        display: block;
+        position: relative;
+
+        // [ skin ]
+        width: 100%;
+        height: font__px-to-rem( 200 );
+        margin: {
+          top: font__px-to-rem( 20 );
+          left: auto;
+          right: auto;
+        }
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ skin ]
+          height: font__px-to-rem( 400 );
+        }
+
+        &--hidden {
+          // [ layout ]
+          display: none;
+        }
+
+        > .image__crop {
+          // [ layout ]
+          display: block;
+
+          // [ position ]
+          max-width: 100%;
+        }
+      }
+
+      > .form__label {
+        // [ layout ]
+        display: flex;
+        align-self: center;
+        justify-content: center;
+
+        // [ position ]
+        width: 100%;
+        margin-bottom: font__px-to-rem( 10 );
+
+        // [ skin ]
+        font: {
+          size: font__px-to-rem( 18 );
+          weight: 700;
+        }
+        color: rgba( 0, 0, 0, .87 );
+        line-height: normal;
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          // [ position ]
+          width: fit-content;
+          margin-bottom: 0;
+        }
+
+        &--title {
+          // [ layout ]
+          grid-area: title-label;
+        }
+
+        &--url {
+          // [ layout ]
+          grid-area: url-label;
+        }
+      }
+
+      > .form__input {
+        // [ layout ]
+        display: flex;
+        align: {
+          self: center;
+          items: center;
+        }
+
+        // [ position ]
+        height: font__px-to-rem( 40 );
+        border-radius: font__px-to-rem( 10 );
+        margin-bottom: font__px-to-rem( 20 );
+
+        // [ skin ]
+        padding: {
+          right: font__px-to-rem( 18 );
+          left:  font__px-to-rem( 18 );
+        }
+        background-color: rgba( 0, 0, 0, .1 );
+        font-size: font__px-to-rem( 18 );
+        line-height: normal;
+        letter-spacing: normal;
+        color: rgba( 0, 0, 0, .87 );
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          margin-bottom: 0;
+        }
+
+        &--title {
+          // [ layout ]
+          grid-area: title-input;
+        }
+
+        &--url {
+          // [ layout ]
+          grid-area: url-input;
+        }
+      }
+
+      > .form__error-message {
+        // [ layout ]
+        display: block;
+        grid-area: error-message;
+
+        // [ position ]
+        height: fit-content;
+        padding-left: font__px-to-rem( 8 );
+
+        // [ skin ]
+        font-size: font__px-to-rem( 16 );
+        line-height: normal;
+        color: red;
+      }
+
+      > .form__input--image {
+        // [ layout ]
+        display: none;
+      }
+
+      > .form__button {
+        // [ layout ]
+        display: flex;
+        grid-area: button;
+        justify-content: space-around;
+
+        // [ RWD: $medium ]
+        @media screen and ( min-width: $medium ) {
+          justify-content: flex-start;
+        }
+
+        %button {
+          // [ layout ]
+          display: flex;
+          grid-area: submit;
+          align: {
+            self: center;
+            items: center;
+          }
+          justify-content: center;
+
+          // [ position ]
+          width: 45%;
+          height: font__px-to-rem( 45 );
+          margin-top: font__px-to-rem( 25 );
+
+          // [ skin ]
+          padding: {
+            right: font__px-to-rem( 25 );
+            left: font__px-to-rem( 25 );
+          }
+          background-color: #213262;
+          color: rgb( 255, 255, 255 );
+          border-radius: font__px-to-rem( 5 );
+          font: {
+            size: font__px-to-rem( 16 );
+            weight: bold;
+          }
+          line-height: normal;
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ position ]
+            width: fit-content;
+            height: font__px-to-rem( 55 );
+            padding: {
+              right: font__px-to-rem( 50 );
+              left: font__px-to-rem( 50 );
+            }
+            margin: {
+              right: font__px-to-rem( 20 );
+              top: 0;
+            }
+          }
+
+          &:hover {
+            // [ skin ]
+            cursor: pointer;
+            background-color: #294288c0;
+          }
+        }
+
+        > .button__upload-image {
+          // [ extend ]
+          @extend %button;
+        }
+
+        > .button__submit {
+          // [ extend ]
+          @extend %button;
+        }
+      }
+    }
+  }
+
+  // element
+  // `.body > .body__footer`
+  // block
+  // `.body > .footer`
+  @include footer ( $block: 'body' );
+}
