@@ -159,12 +159,11 @@
           'sitemap__title--about'
           'sitemap__link--intro'
           'sitemap__link--faculty'
+          'sitemap__link--lab'
           'sitemap__link--staff'
           'sitemap__link--award'
           'sitemap__link--contact'
           'sitemap__title--research'
-          'sitemap__link--lab'
-          'sitemap__link--publication'
           'sitemap__title--student'
           'sitemap__link--highSchool'
           'sitemap__link--college'
@@ -174,10 +173,11 @@
           'sitemap__link--all'
           'sitemap__link--activity'
           'sitemap__link--recruit'
+          'sitemap__link--admission'
           'sitemap__title--resource'
           'sitemap__link--rule'
           'sitemap__link--rent'
-          'sitemap__link--fix'
+          'sitemap__link--survey'
           'sitemap__link--alumni'
           'sitemap__link--link'
           ;
@@ -189,21 +189,21 @@
       @media screen and( min-width: $small ) {
         // [ layout ]
         grid-template-areas:
-          'sitemap__title--home    sitemap__title--about    sitemap__title--research'
-          'sitemap__link--home     sitemap__link--intro     sitemap__link--lab'
-          '.                       sitemap__link--faculty   sitemap__link--publication'
+          'sitemap__title--home    sitemap__title--about    .'
+          'sitemap__link--home     sitemap__link--intro     .'
+          '.                       sitemap__link--faculty   .'
           '.                       sitemap__link--staff     .'
           '.                       sitemap__link--award     .'
           '.                       sitemap__link--contact   .'
-          '.                       .                        .'
+          '.                       sitemap__link--lab       .'
           '.                       .                        .'
           'sitemap__hr             sitemap__hr              sitemap__hr'
           'sitemap__title--student sitemap__title--announce sitemap__title--resource'
           '.                       .                        .'
           'sitemap__link--highSchool sitemap__link--all     sitemap__link--rule'
           'sitemap__link--college  sitemap__link--activity  sitemap__link--rent'
-          'sitemap__link--master   sitemap__link--recruit   sitemap__link--fix'
-          'sitemap__link--phd      .                        sitemap__link--alumni'
+          'sitemap__link--master   sitemap__link--recruit   sitemap__link--survey'
+          'sitemap__link--phd      sitemap__link--admission   sitemap__link--alumni'
           '.                       .                        sitemap__link--link'
           '.                       .                        .'
           '.                       .                        .';
@@ -213,16 +213,16 @@
       @media screen and( min-width: $large ) {
         // [ layout ]
         grid-template-areas:
-          'sitemap__title--home sitemap__title--about  sitemap__title--research   sitemap__title--student sitemap__title--announce sitemap__title--resource .'
-          'sitemap__hr          sitemap__hr            sitemap__hr                sitemap__hr             sitemap__hr              sitemap__hr              .'
-          '.                    .                      .                          .                       .                        .                        .'
-          'sitemap__link--home  sitemap__link--intro   sitemap__link--lab         sitemap__link--highSchool sitemap__link--all     sitemap__link--rule      .'
-          '.                    sitemap__link--faculty sitemap__link--publication sitemap__link--college  sitemap__link--activity  sitemap__link--rent      .'
-          '.                    sitemap__link--staff   .                          sitemap__link--master   sitemap__link--recruit   sitemap__link--fix       .'
-          '.                    sitemap__link--award   .                          sitemap__link--phd      .                        sitemap__link--alumni    .'
-          '.                    sitemap__link--contact .                          .                       .                        sitemap__link--link      .'
-          '.                    .                      .                          .                       .                        .                        .'
-          '.                    .                      .                          .                       .                        .                        .';
+          'sitemap__title--home sitemap__title--about  sitemap__title--student   sitemap__title--announce sitemap__title--resource .'
+          'sitemap__hr          sitemap__hr            sitemap__hr               sitemap__hr              sitemap__hr              .'
+          '.                    .                      .                         .                        .                        .'
+          'sitemap__link--home  sitemap__link--intro   sitemap__link--highSchool sitemap__link--all       sitemap__link--rule      .'
+          '.                    sitemap__link--faculty sitemap__link--college    sitemap__link--activity  sitemap__link--rent      .'
+          '.                    sitemap__link--staff   sitemap__link--master     sitemap__link--recruit   sitemap__link--survey    .'
+          '.                    sitemap__link--award   sitemap__link--phd        sitemap__link--admission sitemap__link--alumni    .'
+          '.                    sitemap__link--contact .                         .                        sitemap__link--link      .'
+          '.                    sitemap__link--lab     .                         .                        .                        .'
+          '.                    .                      .                         .                        .                        .';
       }
 
       // element
@@ -375,13 +375,6 @@
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--publication
-          &publication {
-            // [ position ]
-            grid-area: sitemap__link--publication;
-          }
-
-          // modifier
           // `.body > .content > .sitemap > .sitemap__link.sitemap__link--highSchool
           &highSchool {
             // [ position ]
@@ -445,17 +438,24 @@
           }
 
           // modifier
-          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--fix
-          &fix {
-            // [ position ]
-            grid-area: sitemap__link--fix;
-          }
-
-          // modifier
           // `.body > .content > .sitemap > .sitemap__link.sitemap__link--alumni
           &alumni {
             // [ position ]
             grid-area: sitemap__link--alumni;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--survey
+          &survey {
+            // [ position ]
+            grid-area: sitemap__link--survey;
+          }
+
+          // modifier
+          // `.body > .content > .sitemap > .sitemap__link.sitemap__link--admission
+          &admission {
+            // [ position ]
+            grid-area: sitemap__link--admission;
           }
 
           // modifier
