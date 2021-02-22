@@ -8,6 +8,7 @@ mixin footer( belongBlock )
           map:     'Department Location',
         },
         follow: 'Follow us',
+        developer: 'Developer',
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
         contact: {
@@ -16,6 +17,7 @@ mixin footer( belongBlock )
           map:     '系館位置圖',
         },
         follow: '關注我們',
+        developer: '開發者',
       },
     } );
 
@@ -44,10 +46,11 @@ mixin footer( belongBlock )
       h1.contact__title= i18n[ LANG.id ].contact.title
       address.contact__address.address= `${ i18n[ LANG.id ].contact.address }｜`
         a.address__map( href = UTILS.url( { href : 'about/contact' } ) )= i18n[ LANG.id ].contact.map
-      a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@mail.csie.ncku.edu.tw
+      a.contact__email( href = 'mailto:em62500@mail.csie.ncku.edu.tw' ) em62500@ncku.edu.tw
       a.contact__phone( href = 'tel:062757575, 62500' ) 06-2757575 ext 62500
+      a.contact__fax( href = 'fax:06-2747076' ) 06-2747076
     section.footer__copyright.copyright
-      h1.copyright__title Copyright © 2018 國立成功大學資訊工程學系
+      h1.copyright__title Copyright © 2021 國立成功大學資訊工程學系
       hr.copyright__line
     section.footer__social-media.social-media
       h1.social-media__title= i18n[ LANG.id ].follow
@@ -56,4 +59,12 @@ mixin footer( belongBlock )
           alt:       'facebook',
           className: 'link__image',
           src:       'icon/facebook.png'
+        } )
+    section.footer__developer.developer
+      h1.developer__title= i18n[ LANG.id ].developer
+      a.developer__link.link( href = UTILS.url( { href : 'developer' } ), target = '_blank' )
+        +image( {
+          alt:       'developer',
+          className: 'link__image',
+          src:       'icon/laboratory.png'
         } )
