@@ -52,13 +52,13 @@ router
 });
 
 /**
- * Resolve URL `/resource/fix`.
+ * Resolve URL `/resource/survey`.
  */
 
 router
-.route('/fix')
+.route('/survey')
 .get(({}, res) => {
-    res.redirect('https://docs.google.com/forms/d/e/1FAIpQLSeo9I3KGtifD8CmgOkyw-xcxVoJlvrrczeCjvDgP9381Ef90g/viewform');
+    res.redirect('https://docs.google.com/forms/d/e/1FAIpQLSfL7RK6dqdF7lJF0QvZSqc86G6ymB8CO9eUY89_zomggrtJnA/viewform');
 });
 
 /**
