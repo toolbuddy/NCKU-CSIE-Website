@@ -36,10 +36,14 @@ const Announcement = announcement.define('announcement', {
             return null;
         },
     },
+    updateTime: {
+        type: Sequelize.DATE,
+        allowNull: false,
+    },
 }, {
     timestamps: true,
     createdAt: 'publishTime',
-    updatedAt: 'updateTime',
+    updatedAt: false,
 });
 
 module.exports = Announcement;

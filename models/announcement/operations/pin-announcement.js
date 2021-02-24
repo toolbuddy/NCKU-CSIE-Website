@@ -32,7 +32,9 @@ module.exports = async (opt) => {
         }
 
         // Update isPinned attribute of this announcement.
-        await Announcement.update({isPinned}, {
+        await Announcement.update({
+            isPinned,
+        }, {
             where: {
                 announcementId,
             },
