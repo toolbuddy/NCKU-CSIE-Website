@@ -28,6 +28,7 @@ const DeletedFileValidationConstraints = require('../constraints/put/deletedFile
 const TagValidationConstraints = require('../constraints/put/tag.js');
 const LanguageUtils = require('../../common/utils/language.js');
 const equalArray = require('../../common/utils/equal-array.js');
+const Announcement = require('../schemas/announcement.js');
 
 module.exports = async (opt) => {
     try {
@@ -104,6 +105,13 @@ module.exports = async (opt) => {
                 transaction: t,
             },
         )))
+        .then(() => Announcement.update({
+            updateTime: new Date(),
+        }, {
+            where: {
+                announcementId,
+            },
+        }))
         .then(() => Tag.destroy({
             where: {
                 announcementId,
