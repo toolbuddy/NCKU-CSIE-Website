@@ -84,6 +84,7 @@ module.exports = async (opt) => {
             announcementI18n,
             tags,
             files,
+            updateTime: new Date(),
         }, {
             include: [
                 {
