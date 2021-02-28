@@ -61,6 +61,7 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.js',
             'about/index': './about/index.js',
             'about/intro': './about/intro.js',
+            'about/venue': './about/venue.js',
             'about/staff': './about/staff.js',
 
             // Route `research`.

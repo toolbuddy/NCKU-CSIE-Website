@@ -70,6 +70,7 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.scss',
             'about/index': './about/index.scss',
             'about/intro': './about/intro.scss',
+            'about/venue': './about/venue.scss',
             'about/staff': './about/staff.scss',
 
             // Route `research`

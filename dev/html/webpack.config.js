@@ -80,6 +80,7 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.pug',
             'about/index': './about/index.pug',
             'about/intro': './about/intro.pug',
+            'about/venue': './about/venue.pug',
             'about/staff': './about/staff.pug',
 
             // Route `research`

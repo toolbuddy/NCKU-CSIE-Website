@@ -6,6 +6,7 @@
  * - `/about/award`
  * - `/about/contact`
  * - `/about/intro`
+ * - `/about/venue`
  * - `/about/faculty`
  * - `/about/faculty/[id]`
  * - `/about/staff`
@@ -72,6 +73,14 @@ router
 router
 .route('/intro')
 .get(staticHtml('about/intro'));
+
+/**
+ * Resolve URL `/about/venue`.
+ */
+
+router
+.route('/venue')
+.get(staticHtml('about/venue'));
 
 /**
  * Resolve URL `/about/faculty`.

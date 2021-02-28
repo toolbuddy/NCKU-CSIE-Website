@@ -1,0 +1,82 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:    'Venue Hire',
+        breadcrumb: {
+          home:  'Home',
+          about: 'About',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '場地租借',
+        breadcrumb: {
+          home:  '首頁',
+          about: '關於本系',
+        },
+      },
+    } );
+    const currentRoute = 'about/venue';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'about/venue' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/about/venue/venue-i18n.pug
+
+  section#venue.content__course.course
+    +topic( 'course', i18n[ LANG.id ].title )
+    each goal in venueI18n()[ LANG.id ]
+      section.course__goal.goal
+        header.goal__aspect= goal.aspect
+        article.goal__context.context
+          article.context__paragraph.paragraph
+            if Array.isArray( goal.context )
+              each context in goal.context
+                header.paragraph__title= context.title
+                if typeof context.image !== 'undefined'
+                  figure.paragraph__concept.concept
+                    +image( {
+                      alt: context.image.alt,
+                      className: context.image.className,
+                      src: context.image.src,
+                    } )
+                else
+                  each paragraph in context.paragraph
+                    if paragraph.type === 'text'
+                      p.paragraph__text= paragraph.text
+                    else if paragraph.type === 'list'
+                      ul.paragraph__list.list
+                        each list in paragraph.list
+                          li.list__text= list
+                    else
+                      p.paragraph__list-description= paragraph.listDescription
+            else
+              a.paragraph__link( href = goal.link )= goal.context
+
+append footer
+
+append scripts
+  +js( 'about/venue' )
