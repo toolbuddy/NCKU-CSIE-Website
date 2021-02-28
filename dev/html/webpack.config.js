@@ -81,7 +81,11 @@ module.exports = (env, argv) => {
             'about/index': './about/index.pug',
             'about/intro': './about/intro.pug',
             'about/staff': './about/staff.pug',
-            'about/lab': './about/lab.pug',
+
+            // Route `research`
+            'research/lab': './research/lab.pug',
+            'research/center': './research/center.pug',
+            'research/index': './research/index.pug',
 
             // Route `announcement`
             'announcement/activity': './announcement/activity.pug',

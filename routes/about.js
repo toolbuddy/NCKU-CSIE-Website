@@ -123,14 +123,6 @@ router
 });
 
 /**
- * Resolve URL `/about/lab`.
- */
-
-router
-.route('/lab')
-.get(staticHtml('about/lab'));
-
-/**
  * Resolve URL `/about/staff`.
  */
 

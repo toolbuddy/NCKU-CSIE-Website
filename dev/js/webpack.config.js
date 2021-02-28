@@ -62,7 +62,11 @@ module.exports = (env, argv) => {
             'about/index': './about/index.js',
             'about/intro': './about/intro.js',
             'about/staff': './about/staff.js',
-            'about/lab': './about/lab.js',
+
+            // Route `research`.
+            'research/lab': './research/lab.js',
+            'research/center': './research/center.js',
+            'research/index': './research/index.js',
 
             // Route `announcement`.
             'announcement/activity': './announcement/activity.js',

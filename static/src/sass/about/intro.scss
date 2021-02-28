@@ -809,24 +809,24 @@
     }
 
     // element
-    // `.body > .content > .content__ieet`
+    // `.body > .content > .content__course`
     // block
-    // `.body > .content > .ieet`
-    > .content__ieet.ieet {
+    // `.body > .content > .course`
+    > .content__course.course {
       // [ template ]
       @extend %content__element;
 
       // element
-      // `.body > .content > .ieet > .ieet__topic`
+      // `.body > .content > .course > .course__topic`
       // block
-      // `.body > .content > .ieet > .topic`
-      @include topic( $block: 'ieet' );
+      // `.body > .content > .course > .topic`
+      @include topic( $block: 'course' );
 
       // element
-      // `.body > .content > .ieet > .ieet__goal`
+      // `.body > .content > .course > .course__goal`
       // block
-      // `.body > .content > .ieet > .goal`
-      > .ieet__goal.goal {
+      // `.body > .content > .course > .goal`
+      > .course__goal.goal {
         // [ layout ]
         display: block;
         margin: {
@@ -838,7 +838,7 @@
         width: 98%;
 
         // element
-        // `.body > .content > .ieet > .goal > .goal__aspect`
+        // `.body > .content > .course > .goal > .goal__aspect`
         > .goal__aspect {
           // [ layout ]
           display: block;
@@ -860,9 +860,9 @@
         }
 
         // element
-        // `.body > .content > .ieet > .goal > .goal__context`
+        // `.body > .content > .course > .goal > .goal__context`
         // block
-        // `.body > .content > .ieet > .goal > .context`
+        // `.body > .content > .course > .goal > .context`
         > .goal__context.context {
           // [ template ]
           @extend %block__context;
@@ -874,26 +874,26 @@
           width: 100%;
 
           // element
-          // `.body > .content > .ieet > .goal > .context > .context__paragraph`
+          // `.body > .content > .course > .goal > .context > .context__paragraph`
           // block
-          // `.body > .content > .ieet > .goal > .context > .paragraph`
+          // `.body > .content > .course > .goal > .context > .paragraph`
           > .context__paragraph.paragraph {
             // element
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
+            // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
             > .paragraph__title:not( :first-of-type ) {
               // [ layout ]
               margin-top: font__px-to-rem( 60 );
             }
 
             // element
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .paragraph__text`
+            // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__text`
             > .paragraph__text {
               // [ layout ]
               margin-top: font__px-to-rem( 48 );
             }
 
             // element
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .paragraph__text`
+            // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__text`
             > .paragraph__list-description {
               // [ layout ]
               display: block;
@@ -908,9 +908,9 @@
             }
 
             // element
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .paragraph__concept`
+            // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__concept`
             // block
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .concept`
+            // `.body > .content > .course > .goal > .context > .paragraph > .concept`
             > .paragraph__concept.concept {
               // [ layout ]
               display: block;
@@ -921,7 +921,7 @@
               height: auto;
 
               // element
-              // `.body > .content > .ieet > .goal > .context > .paragraph > .concept > .concept__image`
+              // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image`
               > .concept__image {
                 // [ layout ]
                 display: inline-block;
@@ -931,7 +931,7 @@
                 height: auto;
 
                 // modifier
-                // `.body > .content > .ieet > .goal > .context > .paragraph > .concept > .concept__image.concept__image--course-improve`
+                // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image.concept__image--course-improve`
                 &.concept__image--course-improve {
                   // [ skin ]
                   max: {
@@ -941,7 +941,7 @@
                 }
 
                 // modifier
-                // `.body > .content > .ieet > .goal > .context > .paragraph > .concept > .concept__image.concept__image--teach-improve`
+                // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image.concept__image--teach-improve`
                 &.concept__image--teach-improve {
                   // [ skin ]
                   max-width: font__px-to-rem( 500 );
@@ -950,7 +950,7 @@
             }
 
             // element
-            // `.body > .content > .ieet > .goal > .context > .paragraph > .paragraph__link`
+            // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__link`
             > .paragraph__link {
               // [ layout ]
               display: block;
