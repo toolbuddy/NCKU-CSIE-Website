@@ -46,33 +46,25 @@ append content
   include /components/common/topic.pug
   include /components/about/venue/venue-i18n.pug
 
-  section#venue.content__course.course
-    +topic( 'course', i18n[ LANG.id ].title )
+  section#venue.content__venue.venue
+    +topic( 'venue', i18n[ LANG.id ].title )
     each goal in venueI18n()[ LANG.id ]
-      section.course__goal.goal
+      section.venue__goal.goal
         header.goal__aspect= goal.aspect
         article.goal__context.context
           article.context__paragraph.paragraph
             if Array.isArray( goal.context )
               each context in goal.context
                 header.paragraph__title= context.title
-                if typeof context.image !== 'undefined'
-                  figure.paragraph__concept.concept
-                    +image( {
-                      alt: context.image.alt,
-                      className: context.image.className,
-                      src: context.image.src,
-                    } )
-                else
-                  each paragraph in context.paragraph
-                    if paragraph.type === 'text'
-                      p.paragraph__text= paragraph.text
-                    else if paragraph.type === 'list'
-                      ul.paragraph__list.list
-                        each list in paragraph.list
-                          li.list__text= list
-                    else
-                      p.paragraph__list-description= paragraph.listDescription
+                each paragraph in context.paragraph
+                  if paragraph.type === 'text'
+                    p.paragraph__text= paragraph.text
+                  else if paragraph.type === 'list'
+                    ul.paragraph__list.list
+                      each list in paragraph.list
+                        li.list__text= list
+                  else
+                    p.paragraph__list-description= paragraph.listDescription
             else
               a.paragraph__link( href = goal.link )= goal.context
 
