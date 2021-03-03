@@ -7,6 +7,7 @@
  * - `/student/college`
  * - `/student/master`
  * - `/student/phd`
+ * - `/student/international`
  */
 
 const express = require('express');
@@ -61,5 +62,13 @@ router
 router
 .route('/phd')
 .get(staticHtml('student/phd'));
+
+/**
+ * Resolve URL `/student/international`.
+ */
+
+router
+.route('/international')
+.get(staticHtml('student/international'));
 
 module.exports = router;

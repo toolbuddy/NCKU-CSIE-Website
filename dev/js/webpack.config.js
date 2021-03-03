@@ -100,6 +100,7 @@ module.exports = (env, argv) => {
             'student/index': './student/index.js',
             'student/master': './student/master.js',
             'student/phd': './student/phd.js',
+            'student/international': './student/international.js',
 
             // Route `user`.
             'user/index': './user/index.js',

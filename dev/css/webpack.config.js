@@ -109,6 +109,7 @@ module.exports = (env, argv) => {
             'student/index': './student/index.scss',
             'student/master': './student/master.scss',
             'student/phd': './student/phd.scss',
+            'student/international': './student/international.scss',
 
             // Route `user`
             'user/index': './user/index.scss',

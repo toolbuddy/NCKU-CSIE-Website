@@ -118,6 +118,7 @@ module.exports = (env, argv) => {
             'student/index': './student/index.pug',
             'student/master': './student/master.pug',
             'student/phd': './student/phd.pug',
+            'student/international': './student/international.pug',
 
             // Route `user`
             'user/faculty/index': './user/faculty/index.pug',
