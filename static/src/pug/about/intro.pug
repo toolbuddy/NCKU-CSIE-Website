@@ -16,6 +16,7 @@ append data
             develop: 'Developing Directions',
             education: 'Education & Research',
             course:      'Course Info',
+            equipment: 'Equipment',
           },
         },
         history: {
@@ -36,6 +37,7 @@ append data
             develop:   '發展方向',
             education: '教育目標',
             course:    '課程介紹',
+            equipment: '設備介紹',
           },
         },
         history: {
@@ -75,6 +77,7 @@ append content
   include /components/about/intro/develop-i18n.pug
   include /components/about/intro/education-i18n.pug
   include /components/about/intro/course-i18n.pug
+  include /components/about/intro/equipment-i18n.pug
 
   section.content__index.index
     +topic( 'index', i18n[ LANG.id ].index.title )
@@ -171,6 +174,23 @@ append content
                       p.paragraph__list-description= paragraph.listDescription
             else
               a.paragraph__link( href = goal.link )= goal.context
+
+  section#equipment.content__equipment.equipment
+    +topic( 'equipment', i18n[ LANG.id ].index.link.equipment )
+    each content in equipmentI18n()[ LANG.id ]
+      section.equipment__content.content
+        header.content__header= content.aspect
+        article.content__paragraph.paragraph
+          if content.type === 'images'
+            if Array.isArray( content.context )
+              each context in content.context
+                +image( {
+                  alt: context.alt,
+                  className: context.className,
+                  src: context.src,
+                } )
+          else if content.type === 'link'
+            a.paragraph__link( href = content.link )= content.context
 
 append footer
 
