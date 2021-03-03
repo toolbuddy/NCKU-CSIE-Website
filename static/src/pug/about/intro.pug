@@ -15,7 +15,8 @@ append data
             history:   'History',
             develop: 'Developing Directions',
             education: 'Education & Research',
-            ieet:      'IEET',
+            course:      'Course Info',
+            equipment: 'Equipment',
           },
         },
         history: {
@@ -35,7 +36,8 @@ append data
             history:   '本系歷史',
             develop:   '發展方向',
             education: '教育目標',
-            ieet:      '工程認證',
+            course:    '課程介紹',
+            equipment: '設備介紹',
           },
         },
         history: {
@@ -74,7 +76,8 @@ append content
   include /components/about/intro/history-i18n.pug
   include /components/about/intro/develop-i18n.pug
   include /components/about/intro/education-i18n.pug
-  include /components/about/intro/ieet-i18n.pug
+  include /components/about/intro/course-i18n.pug
+  include /components/about/intro/equipment-i18n.pug
 
   section.content__index.index
     +topic( 'index', i18n[ LANG.id ].index.title )
@@ -142,10 +145,10 @@ append content
             src: context.image.src,
           } )
 
-  section#ieet.content__ieet.ieet
-    +topic( 'ieet', i18n[ LANG.id ].index.link.ieet )
-    each goal in ieetI18n()[ LANG.id ]
-      section.ieet__goal.goal
+  section#course.content__course.course
+    +topic( 'course', i18n[ LANG.id ].index.link.course )
+    each goal in courseI18n()[ LANG.id ]
+      section.course__goal.goal
         header.goal__aspect= goal.aspect
         article.goal__context.context
           article.context__paragraph.paragraph
@@ -171,6 +174,23 @@ append content
                       p.paragraph__list-description= paragraph.listDescription
             else
               a.paragraph__link( href = goal.link )= goal.context
+
+  section#equipment.content__equipment.equipment
+    +topic( 'equipment', i18n[ LANG.id ].index.link.equipment )
+    each content in equipmentI18n()[ LANG.id ]
+      section.equipment__content.content
+        header.content__header= content.aspect
+        article.content__paragraph.paragraph
+          if content.type === 'images'
+            if Array.isArray( content.context )
+              each context in content.context
+                +image( {
+                  alt: context.alt,
+                  className: context.className,
+                  src: context.src,
+                } )
+          else if content.type === 'link'
+            a.paragraph__link( href = content.link )= content.context
 
 append footer
 

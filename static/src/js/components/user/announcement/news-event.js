@@ -31,6 +31,7 @@ export default class NewsEvent {
             languageId: opt.languageId,
             method: opt.method,
             newsId: (opt.method === 'post') ? -1 : opt.newsId,
+            imageSize: 1024 * 1000,
         };
 
         this.cropper = null;
@@ -45,12 +46,17 @@ export default class NewsEvent {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                classRemove(this.DOM.image.preview, 'form__image--hidden');
-                this.DOM.image.crop.src = e.target.result;
-                if (this.cropper === null)
-                    this.subscribeCropper();
+                if (element.target.files[0].size <= this.config.imageSize) {
+                    this.DOM.errorMessage.innerHTML = '';
+                    classRemove(this.DOM.image.preview, 'form__image--hidden');
+                    this.DOM.image.crop.src = e.target.result;
+                    if (this.cropper === null)
+                        this.subscribeCropper();
+                    else
+                        this.cropper.replace(e.target.result);
+                }
                 else
-                    this.cropper.replace(e.target.result);
+                    this.DOM.errorMessage.innerHTML = '圖片大小須小於 1MB';
             };
 
             reader.readAsDataURL(element.target.files[0]);

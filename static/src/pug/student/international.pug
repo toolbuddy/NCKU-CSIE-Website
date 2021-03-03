@@ -1,0 +1,88 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:    'International',
+        breadcrumb: {
+          home:  'Home',
+          student: 'Students',
+        },
+        index: {
+          title: 'For High School Students',
+          link: {
+            curriculum:   'Curriculum',
+            statistics:   'Statistics',
+            event:        'Events',
+            link:         'Links',
+          },
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '國際合作交流',
+        breadcrumb: {
+          home:  '首頁',
+          student: '學生事務',
+        },
+        index: {
+          title: '高中生專區',
+          link: {
+            curriculum:   '課程資訊',
+            statistics:   '統計數據',
+            event:        '課外活動',
+            link:         'FB連結',
+          },
+        },
+      },
+    } );
+    const currentRoute = 'student/international';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'student/international' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.student, route: 'student' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/common/image.pug
+  include /components/student/international-i18n.pug
+
+  section#international.content__international.international
+    +topic( 'international', i18n[ LANG.id ].title )
+    each content in internationalI18n()[ LANG.id ]
+      section.international__content.content
+        header.content__header= content.aspect
+        article.content__paragraph.paragraph
+          if content.type === 'images'
+            if Array.isArray( content.context )
+              each context in content.context
+                +image( {
+                  alt: context.alt,
+                  className: context.className,
+                  src: context.src,
+                } )
+          else if content.type === 'link'
+            a.paragraph__link( href = content.link )= content.context
+
+append footer
+
+append scripts
+  +js( 'student/international' )

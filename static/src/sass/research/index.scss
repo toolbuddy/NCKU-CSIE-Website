@@ -25,7 +25,7 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'resource/index' );
+  @include banner( $block: 'body', $image: 'about/index' );
 
   // element
   // `.body > .body__content`

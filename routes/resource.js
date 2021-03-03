@@ -52,13 +52,13 @@ router
 });
 
 /**
- * Resolve URL `/resource/survey`.
+ * Resolve URL `/resource/ieet`.
  */
 
 router
-.route('/survey')
+.route('/ieet')
 .get(({}, res) => {
-    res.redirect('https://docs.google.com/forms/d/e/1FAIpQLSfL7RK6dqdF7lJF0QvZSqc86G6ymB8CO9eUY89_zomggrtJnA/viewform');
+    res.redirect('http://ieet.csie.ncku.edu.tw/');
 });
 
 /**
