@@ -1,0 +1,80 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:      'Center',
+        breadcrumb: {
+          home:     'Home',
+          research: 'Research',
+        },
+        entries: [
+          {
+            title: 'AIBMRC',
+            detail: 'MOST Artificial intelligence Biomedical Research Center',
+            modifier: 'red',
+            route: 'http://aibmrc.csie.ncku.edu.tw/index.php/en/',
+          },
+          {
+            title: '數位生活科技研究中心',
+            detail: '數位生活科技研究中心',
+            modifier: 'green',
+            route: 'http://credit.csie.ncku.edu.tw/',
+          },
+        ],
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:      '研究中心',
+        breadcrumb: {
+          home:     '首頁',
+          research: '學術研究',
+        },
+        entries: [
+          {
+            title: '人工智慧生技醫療創新研究中心',
+            detail: '人工智慧生技醫療創新研究中心',
+            modifier: 'red',
+            route: 'http://aibmrc.csie.ncku.edu.tw/index.php/zh/',
+          },
+          {
+            title: '數位生活科技研究中心',
+            detail: '數位生活科技研究中心',
+            modifier: 'green',
+            route: 'http://credit.csie.ncku.edu.tw/',
+          },
+        ],
+      },
+    } );
+    const currentRoute = 'research';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'research/center' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].title }
+    ]
+  )
+
+append content
+  include /components/resource/entries.pug
+  +entries( 'content', i18n[ LANG.id ].entries )
+
+append footer
+
+append scripts
+  +js( 'research/center' )

@@ -30,6 +30,7 @@ const databases = require('../models/common/utils/connect.js');
 const home = require('./home.js');
 const about = require('./about.js');
 const announcement = require('./announcement.js');
+const research = require('./research.js');
 const auth = require('./auth.js');
 const developer = require('./developer.js');
 const resource = require('./resource.js');
@@ -147,6 +148,12 @@ app.use('/resource', resource);
  */
 
 app.use('/student', student);
+
+/**
+ * Resolve URL `/research`.
+ */
+
+app.use('/research', research);
 
 /**
  * Resolve URL `/user`.
