@@ -46,10 +46,40 @@
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
+          venue: {
+            text: 'Venue Hire',
+            route: UTILS.url( {
+              href : 'about/venue',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
           staff: {
             text: 'Staff',
             route: UTILS.url( {
               href : 'about/staff',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
+        research: {
+          lab: {
+            text: 'Laboratories',
+            route: UTILS.url( {
+              href : 'research/lab',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          center: {
+            text: 'center',
+            route: UTILS.url( {
+              href : 'research/center',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+          index: {
+            text: 'Research',
+            route: UTILS.url( {
+              href : 'research',
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
@@ -118,7 +148,7 @@
           survey: {
             text: 'Survey',
             route: UTILS.url( {
-              href : 'resource/survey',
+              href : 'resource/ieet',
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
@@ -194,6 +224,13 @@
               query: { languageId: LANG.getLanguageId( 'en-US' ) },
             } ),
           },
+          international: {
+            text: 'International',
+            route: UTILS.url( {
+              href : 'student/international',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
         },
         developer: {
           index: {
@@ -259,10 +296,40 @@
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
+          venue: {
+            text: '場地租借',
+            route: UTILS.url( {
+              href : 'about/venue',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
           staff: {
             text: '行政人員',
             route: UTILS.url( {
               href : 'about/staff',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        research: {
+          lab: {
+            text: '實驗室',
+            route: UTILS.url( {
+              href : 'research/lab',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          center: {
+            text: '研究中心',
+            route: UTILS.url( {
+              href : 'research/center',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          index: {
+            text: '學術研究',
+            route: UTILS.url( {
+              href : 'research',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
@@ -329,9 +396,9 @@
             } ),
           },
           survey: {
-            text: '學生問卷調查',
+            text: '問卷系統',
             route: UTILS.url( {
-              href : 'resource/survey',
+              href : 'resource/ieet',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
@@ -404,6 +471,13 @@
             text: '博士',
             route: UTILS.url( {
               href : 'student/phd',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+          international: {
+            text: '國際合作交流',
+            route: UTILS.url( {
+              href : 'student/international',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },

@@ -6,6 +6,7 @@
  * - `/about/award`
  * - `/about/contact`
  * - `/about/intro`
+ * - `/about/venue`
  * - `/about/faculty`
  * - `/about/faculty/[id]`
  * - `/about/staff`
@@ -74,6 +75,14 @@ router
 .get(staticHtml('about/intro'));
 
 /**
+ * Resolve URL `/about/venue`.
+ */
+
+router
+.route('/venue')
+.get(staticHtml('about/venue'));
+
+/**
  * Resolve URL `/about/faculty`.
  */
 
@@ -121,14 +130,6 @@ router
             next(error);
     }
 });
-
-/**
- * Resolve URL `/about/lab`.
- */
-
-router
-.route('/lab')
-.get(staticHtml('about/lab'));
 
 /**
  * Resolve URL `/about/staff`.
