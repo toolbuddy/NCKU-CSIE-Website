@@ -14,7 +14,7 @@ append data
         normal:     'Announcement',
         breadcrumb: {
           home:     'Home',
-          resource: 'Resource',
+          about: 'About',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -28,7 +28,7 @@ append data
         normal:     '一般公告',
         breadcrumb: {
           home:     '首頁',
-          resource: '資源連結',
+          about: '關於本系',
         },
       },
     } );
@@ -41,13 +41,13 @@ append data
         'faculty',
     ].map( tag => allTags[ tag ] );
 
-    const currentRoute = 'resource/rule';
+    const currentRoute = 'about/rule';
 
 append title
   +title( i18n[ LANG.id ].title )
 
 append stylesheets
-  +css( 'resource/rule' )
+  +css( 'about/rule' )
 
 append header
   +banner(
@@ -60,7 +60,7 @@ append breadcrumb
     'content',
     [
       { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
-      { text: i18n[ LANG.id ].breadcrumb.resource, route: 'resource' },
+      { text: i18n[ LANG.id ].breadcrumb.about, route: 'about' },
       { text: i18n[ LANG.id ].title },
     ]
   )
@@ -70,4 +70,4 @@ append content
 append footer
 
 append scripts
-  +js( 'resource/rule' )
+  +js( 'about/rule' )

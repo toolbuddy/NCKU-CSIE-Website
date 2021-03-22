@@ -3,13 +3,13 @@
  *
  * Including following sub-routes:
  * - `/resource`
- * - `/resource/rule`
  * - `/resource/rent`
  * - `/resource/fix`
  * - `/resource/ieet`
  * - `/resource/sitemap`
  * - `/resource/alumni`
  * - `/resource/link`
+ * - `/resource/venue`
  */
 
 const express = require('express');
@@ -34,22 +34,12 @@ router
 .get(staticHtml('resource/index'));
 
 /**
- * Resolve URL `/resource/rule`.
+ * Resolve URL `/resource/venue`.
  */
 
 router
-.route('/rule')
-.get(staticHtml('resource/rule'));
-
-/**
- * Resolve URL `/resource/rent`.
- */
-
-router
-.route('/rent')
-.get(({}, res) => {
-    res.redirect('http://www.csie.ncku.edu.tw/Class2014/');
-});
+.route('/venue')
+.get(staticHtml('resource/venue'));
 
 /**
  * Resolve URL `/resource/ieet`.
