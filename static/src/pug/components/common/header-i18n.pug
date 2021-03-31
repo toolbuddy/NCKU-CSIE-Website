@@ -248,6 +248,15 @@
             } ),
           },
         },
+        table: {
+          index: {
+            text: 'table',
+            route: UTILS.url( {
+              href : '',
+              query: { languageId: LANG.getLanguageId( 'en-US' ) },
+            } ),
+          },
+        },
         components:{
             login: {
                 text: 'Log In',
@@ -501,6 +510,15 @@
             text: '開發者',
             route: UTILS.url( {
               href : 'developer',
+              query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
+            } ),
+          },
+        },
+        table: {
+          index: {
+            text: '常用表格',
+            route: UTILS.url( {
+              href : '',
               query: { languageId: LANG.getLanguageId( 'zh-TW' ) },
             } ),
           },
