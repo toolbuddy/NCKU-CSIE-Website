@@ -1,0 +1,74 @@
+extends /layouts/base.pug
+
+append data
+  -
+    const i18n= Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:    'Research Group',
+        breadcrumb: {
+          home:  'Home',
+          research: 'research',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title: '研究群',
+        breadcrumb: {
+          home:  '首頁',
+          research: '學術研究',
+        },
+      },
+    } );
+    const currentRoute = 'research/research-group';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'research/research-group' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.research, route: 'research' },
+      { text: i18n[ LANG.id ].title },
+    ]
+  )
+
+append content
+  include /components/common/topic.pug
+  include /components/research/research-group-i18n.pug
+
+  section#research-group.content__research-group.research-group
+    +topic( 'research-group', i18n[ LANG.id ].title )
+    each goal in researchGroupI18n()[ LANG.id ]
+      section.research-group__goal.goal
+        header.goal__aspect= goal.aspect
+        article.goal__context.context
+          article.context__paragraph.paragraph
+            if Array.isArray( goal.context )
+              each context in goal.context
+                header.paragraph__title= context.title
+                each paragraph in context.paragraph
+                  if paragraph.type === 'text'
+                    p.paragraph__text= paragraph.text
+                  else if paragraph.type === 'list'
+                    ul.paragraph__list.list
+                      each list in paragraph.list
+                        li.list__text= list
+                  else
+                    p.paragraph__list-description= paragraph.listDescription
+            else
+              a.paragraph__link( href = goal.link )= goal.context
+
+append footer
+
+append scripts
+  +js( 'research/research-group' )

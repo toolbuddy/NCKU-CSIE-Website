@@ -3,10 +3,10 @@
  *
  * Including following sub-routes:
  * - `/about/`
+ * - `/about/rule`
  * - `/about/award`
  * - `/about/contact`
  * - `/about/intro`
- * - `/about/venue`
  * - `/about/faculty`
  * - `/about/faculty/[id]`
  * - `/about/staff`
@@ -67,20 +67,20 @@ router
 );
 
 /**
+ * Resolve URL `/about/rule`.
+ */
+
+router
+.route('/rule')
+.get(staticHtml('about/rule'));
+
+/**
  * Resolve URL `/about/intro`.
  */
 
 router
 .route('/intro')
 .get(staticHtml('about/intro'));
-
-/**
- * Resolve URL `/about/venue`.
- */
-
-router
-.route('/venue')
-.get(staticHtml('about/venue'));
 
 /**
  * Resolve URL `/about/faculty`.

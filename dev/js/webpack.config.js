@@ -61,13 +61,13 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.js',
             'about/index': './about/index.js',
             'about/intro': './about/intro.js',
-            'about/venue': './about/venue.js',
             'about/staff': './about/staff.js',
 
             // Route `research`.
             'research/lab': './research/lab.js',
             'research/center': './research/center.js',
             'research/index': './research/index.js',
+            'research/research-group': './research/research-group.js',
 
             // Route `announcement`.
             'announcement/activity': './announcement/activity.js',
@@ -90,7 +90,6 @@ module.exports = (env, argv) => {
             'resource/ieet': './resource/ieet.js',
             'resource/index': './resource/index.js',
             'resource/rent': './resource/rent.js',
-            'resource/rule': './resource/rule.js',
             'resource/sitemap': './resource/sitemap.js',
             'resource/link': './resource/link.js',
 

@@ -128,6 +128,33 @@
           bottom: ( $logo-height - $caption-title-font-size - $caption-subtitle-font-size - $caption-gap ) / 2;
         }
 
+        &:hover .caption__tooltip {
+          // [ layout ]
+          visibility: visible;
+        }
+
+        > .caption__tooltip {
+          // [ layout ]
+          visibility: hidden;
+
+          // [ position ]
+          position: absolute;
+          width: auto;
+          border-radius: 6px;
+          padding: font__px-to-rem( 8 ) font__px-to-rem( 16 );
+          top: 100%;
+          left: font__px-to-rem( 40 );
+          margin-left: font__px-to-rem( 40 );
+
+          // [ skin ]
+          font-size: font__px-to-rem( 14 );
+          background-color: rgba( 0, 0, 0, .36 );
+          color: #ffffff;
+          text-align: center;
+          line-height: normal;
+          z-index: 1;
+        }
+
         // element
         // `> .#{ $block } > .header.header--medium > .logo > .caption > .caption__title`
         // block
