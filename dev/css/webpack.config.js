@@ -70,12 +70,13 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.scss',
             'about/index': './about/index.scss',
             'about/intro': './about/intro.scss',
-            'about/venue': './about/venue.scss',
             'about/staff': './about/staff.scss',
+            'about/rule': './about/rule.scss',
 
             // Route `research`
             'research/lab': './research/lab.scss',
             'research/center': './research/center.scss',
+            'research/research-group': './research/research-group.scss',
             'research/index': './research/index.scss',
 
             // Route `announcement`
@@ -99,9 +100,9 @@ module.exports = (env, argv) => {
             'resource/ieet': './resource/ieet.scss',
             'resource/index': './resource/index.scss',
             'resource/rent': './resource/rent.scss',
-            'resource/rule': './resource/rule.scss',
             'resource/sitemap': './resource/sitemap.scss',
             'resource/link': './resource/link.scss',
+            'resource/venue': './resource/venue.scss',
 
             // Route `student`
             'student/high-school': './student/high-school.scss',

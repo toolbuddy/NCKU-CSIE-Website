@@ -369,18 +369,22 @@
             > .paragraph__link {
               // [ layout ]
               display: block;
-              margin-bottom: font__px-to-rem( 60 );
-              text: {
-                align: left;
-                decoration: underline;
-              }
               line-height: font__px-to-rem( 24 );
 
               // [ skin ]
               width: auto;
-              height: font__px-to-rem( 24 );
+              height: auto;
               color: #399dff;
               font-size: font__px-to-rem( 24 );
+              padding: font__px-to-rem( 20 ) font__px-to-rem( 20 );
+              border: 2px solid #399dff;
+              border-radius: font__px-to-rem( 16 );
+
+              &:hover {
+                // [ skin ]
+                background-color: #399dff;
+                color: white;
+              }
             }
           }
         }

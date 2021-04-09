@@ -71,4 +71,14 @@ router
 .route('/international')
 .get(staticHtml('student/international'));
 
+/**
+ * Resolve URL `/student/student-association`.
+ */
+
+router
+.route('/student-association')
+.get(({}, res) => {
+    res.redirect('https://www.facebook.com/nckucsie.academy');
+});
+
 module.exports = router;
