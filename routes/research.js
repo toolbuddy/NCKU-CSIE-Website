@@ -5,6 +5,7 @@
  * - `/research`
  * - `/research/lab`
  * - `/research/center`
+ * - `/research/research-group`
  */
 
 const express = require('express');
@@ -43,5 +44,13 @@ router
 router
 .route('/center')
 .get(staticHtml('research/center'));
+
+/**
+ * Resolve URL `/research/research-group`.
+ */
+
+ router
+ .route('/research-group')
+ .get(staticHtml('research/research-group'));
 
 module.exports = router;

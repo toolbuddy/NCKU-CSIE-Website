@@ -80,13 +80,14 @@ module.exports = (env, argv) => {
             'about/faculty': './about/faculty.pug',
             'about/index': './about/index.pug',
             'about/intro': './about/intro.pug',
-            'about/venue': './about/venue.pug',
             'about/staff': './about/staff.pug',
+            'about/rule': './about/rule.pug',
 
             // Route `research`
             'research/lab': './research/lab.pug',
             'research/center': './research/center.pug',
             'research/index': './research/index.pug',
+            'research/research-group': './research/research-group.pug',
 
             // Route `announcement`
             'announcement/activity': './announcement/activity.pug',
@@ -108,9 +109,9 @@ module.exports = (env, argv) => {
             'resource/ieet': './resource/ieet.pug',
             'resource/index': './resource/index.pug',
             'resource/rent': './resource/rent.pug',
-            'resource/rule': './resource/rule.pug',
             'resource/sitemap': './resource/sitemap.pug',
             'resource/link': './resource/link.pug',
+            'resource/venue': './resource/venue.pug',
 
             // Route `student`
             'student/high-school': './student/high-school.pug',
