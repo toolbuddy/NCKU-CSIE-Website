@@ -120,6 +120,9 @@ module.exports = (env, argv) => {
             'user/announcement/news-update': './user/announcement/news-update.js',
             'user/announcement/news-list': './user/announcement/news-list.js',
 
+            // Route `attachment`.
+            'attachment/attachment': './attachment/attachment.js',
+
             // Route `auth`.
             'auth/login': './auth/login.js',
 

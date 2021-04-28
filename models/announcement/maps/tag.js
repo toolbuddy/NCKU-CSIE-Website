@@ -17,6 +17,8 @@ const map = [
     'rule',
     'recruitment',
     'award',
+    'attachment',
+    'administrative',
 ];
 
 const defaultOption = 'faculty';
@@ -29,6 +31,8 @@ const i18n = {
         master: '碩士',
         phd: '博士',
         admission: '招生',
+        administrative: '行政',
+        attachment: '常用表格',
         speech: '演講',
         exhibition: '展覽',
         competition: '競賽',
@@ -47,6 +51,8 @@ const i18n = {
         master: 'master',
         phd: 'phd',
         admission: 'admission',
+        attachment: 'attachment',
+        administrative: 'administrative',
         speech: 'speech',
         exhibition: 'exhibition',
         competition: 'competition',

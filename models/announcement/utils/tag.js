@@ -20,7 +20,7 @@ Object.assign(tagUtils, {
         if (!tagUtils.isSupportedId(tagId))
             return;
         const tagOption = tagUtils.getOptionById(tagId);
-        if (tagOption === 'course' || tagOption === 'faculty')
+        if (tagOption === 'course' || tagOption === 'faculty' || tagOption === 'administrative')
             return 'yellow';
         else if (tagOption === 'college' || tagOption === 'master' || tagOption === 'phd' || tagOption === 'admission')
             return 'blue';
@@ -28,7 +28,7 @@ Object.assign(tagUtils, {
             return 'red';
         else if (tagOption === 'speech' || tagOption === 'exhibition' || tagOption === 'competition')
             return 'purple';
-        else if (tagOption === 'recruitment' || tagOption === 'rule')
+        else if (tagOption === 'recruitment' || tagOption === 'rule' || tagOption === 'attachment')
             return 'green';
     },
 });
