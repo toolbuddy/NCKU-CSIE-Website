@@ -49,8 +49,8 @@ router
  * Resolve URL `/research/research-group`.
  */
 
- router
- .route('/research-group')
- .get(staticHtml('research/research-group'));
+router
+.route('/research-group')
+.get(staticHtml('research/research-group'));
 
 module.exports = router;
