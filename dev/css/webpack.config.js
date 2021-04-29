@@ -129,6 +129,9 @@ module.exports = (env, argv) => {
             'user/announcement/news': './user/announcement/news.scss',
             'user/announcement/news-list': './user/announcement/news-list.scss',
 
+            // Route `attachment`
+            'attachment/attachment': './attachment/attachment.scss',
+
             // Route `auth`
             'auth/login': './auth/login.scss',
 

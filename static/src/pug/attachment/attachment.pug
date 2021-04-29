@@ -1,0 +1,76 @@
+extends /layouts/announcement/briefing.pug
+
+append data
+  -
+    const i18n = Object.freeze( {
+      [ LANG.getLanguageId( 'en-US' ) ]: {
+        title:     'Attachment',
+        topic:     'Attachment',
+        time:   {
+          from: 'Start Date',
+          to:   'End Date',
+        },
+        pinned:    'Pinned Announcement',
+        normal:    'Announcement',
+        breadcrumb: {
+          home:    'Home',
+          attachment: 'Attachment',
+        },
+      },
+      [ LANG.getLanguageId( 'zh-TW' ) ]: {
+        title:     '常用表格',
+        topic:     '常用表格',
+        time:   {
+          from: '開始日期',
+          to:   '結束日期',
+        },
+        pinned:    '置頂貼文',
+        normal:    '一般公告',
+        breadcrumb: {
+          home:    '首頁',
+          attachment: '常用表格',
+        },
+      },
+    } );
+    const tags = [
+        'attachment',
+        'college',
+        'master',
+        'phd',
+        'admission',
+        'course',
+        'faculty',
+        'international',
+        'rule',
+        'administrative',
+        'recruitment'
+    ].map( tag => allTags[ tag ] );
+    const currentRoute = 'attachment/attachment';
+
+append title
+  +title( i18n[ LANG.id ].title )
+
+append stylesheets
+  +css( 'attachment/attachment' )
+
+append header
+  +banner(
+    'body',
+    i18n[ LANG.id ].title
+  )
+
+append breadcrumb
+  +breadcrumb(
+    'content',
+    [
+      { text: i18n[ LANG.id ].breadcrumb.home, route: '' },
+      { text: i18n[ LANG.id ].breadcrumb.attachment, route: 'admission' }
+    ]
+  )
+
+append content
+
+append footer
+
+append scripts
+  +js( 'attachment/attachment' )

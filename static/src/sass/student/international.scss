@@ -10,6 +10,8 @@
 @import 'components/announcement/filter';
 @import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
+@import 'components/announcement/delete-preview';
+@import 'components/announcement/add-button';
 
 // block
 // `.body`
@@ -29,9 +31,9 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body' ,$image: 'student/high-school' ) {
+  @include banner( $block: 'body', $image: 'announcement/recruitment' ) {
     &::before {
-      filter: blur( .1rem ) brightness( .9 );
+      filter: blur( .05rem );
     }
   }
 
@@ -43,943 +45,21 @@
     // [ variable ]
     $small: 850px;
     $large: 992px;
-
-    // [ skin ]
-    background-color: #ffffff;
+    $x-large: 1440px;
+    display: grid;
 
     // [ layout ]
-    display: block;
-
-    // [ skin ]
-    width: 100%;
-    height: auto;
-
-    // template
-    // `.body > .content > .content__?.?`
-    %content__element {
-      // [ layout ]
-      display: block;
-      margin: {
-        top: font__px-to-rem( 70 );
-        left: auto;
-        right: auto;
-      }
-
-      // [ skin ]
-      max-width: font__px-to-rem( 1400 );
-      width: 80%;
-      height: auto;
-    }
-
-    // element
-    // `.body > .content > .content__breadcrumb`
-    // block
-    // `.body > .content > .breadcrumb`
-    @include breadcrumb( $block: 'content' ) {
-      // [ template ]
-      @extend %content__element;
-
-      // [ layout ]
-      margin-top: 0;
-
-      // [ skin ]
-      border-top: font__px-to-rem( 50 ) solid transparent;
-    }
-
-    // element
-    // `.body > .content > .content__international`
-    // block
-    // `.body > .content > .international`
-    > .content__international.international {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .international > .international__topic`
-      // block
-      // `.body > .content > .international > .topic`
-      @include topic( $block: 'international' );
-
-      // element
-      // `.body > .content > .equipment > .equipment__content`
-      // block
-      // `.body > .content > .equipment > .content`
-      > .international__content.content {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .equipment > .content > .content__header`
-        > .content__header {
-          // [ layout ]
-          display: block;
-          margin: {
-            top: font__px-to-rem( 60 );
-            left: auto;
-            right: auto;
-          }
-          line-height: font__px-to-rem( 28 );
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-          color: #32477d;
-          font: {
-            size: font__px-to-rem( 28 );
-            weight: bold;
-          }
-        }
-
-        // element
-        // `.body > .content > .equipment > .content > .content__paragraph`
-        // block
-        // `.body > .content > .equipment > .content > .paragraph`
-        > .content__paragraph.paragraph {
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image`
-          > .paragraph__image {
-            // [ layout ]
-            display: inline-block;
-
-            // [ skin ]
-            width: 100%;
-            height: auto;
-
-            // modifier
-            // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image.concept__image--course-improve`
-            &.concept__image--course-improve {
-              // [ skin ]
-              max: {
-                width: font__px-to-rem( 1000 );
-                height: font__px-to-rem( 1000 );
-              }
-            }
-
-            // modifier
-            // `.body > .content > .course > .goal > .context > .paragraph > .concept > .concept__image.concept__image--teach-improve`
-            &.concept__image--teach-improve {
-              // [ skin ]
-              max-width: font__px-to-rem( 500 );
-            }
-          }
-
-          // element
-          // `.body > .content > .course > .goal > .context > .paragraph > .paragraph__link`
-          > .paragraph__link {
-            // [ layout ]
-            display: block;
-            padding-bottom: font__px-to-rem( 60 );
-            text: {
-              align: left;
-              decoration: underline;
-            }
-            line-height: font__px-to-rem( 24 );
-
-            // [ skin ]
-            width: auto;
-            height: font__px-to-rem( 24 );
-            color: #399dff;
-            font-size: font__px-to-rem( 24 );
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__curriculum`
-    // block
-    // `.body > .content > .curriculum`
-    > .content__curriculum.curriculum {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .curriculum > .curriculum__topic`
-      // block
-      // `.body > .content > .curriculum > .topic`
-      @include topic( $block: 'curriculum' );
-
-      // element
-      // `.body > .content > .curriculum > .curriculum__goal`
-      // block
-      // `.body > .content > .curriculum > .goal`
-      > .curriculum__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__aspect`
-        > .goal__aspect {
-          // [ layout ]
-          display: block;
-          margin: {
-            top: font__px-to-rem( 60 );
-            left: auto;
-            right: auto;
-          }
-          line-height: font__px-to-rem( 28 );
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-          color: #32477d;
-          font: {
-            size: font__px-to-rem( 28 );
-            weight: bold;
-          }
-        }
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
-        // block
-        // `.body > .content > .curriculum > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title {
-              // [ layout ]
-              margin-top: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
-              // [ layout ]
-              margin-top: font__px-to-rem( 48 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
-
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__concept`
-            // block
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .concept`
-            > .paragraph__concept.concept {
-              // [ layout ]
-              display: block;
-              text-align: center;
-
-              // [ skin ]
-              width: 100%;
-              height: auto;
-
-              // element
-              // `.body > .content > .curriculum > .goal > .context > .paragraph > .concept > .concept__image`
-              > .concept__image {
-                // [ layout ]
-                display: inline-block;
-
-                // [ skin ]
-                width: 100%;
-                height: auto;
-
-                // modifier
-                // `.body > .content > .curriculum > .goal > .context > .paragraph > .concept > .concept__image.concept__image--course-improve`
-                &.concept__image--course-improve {
-                  // [ skin ]
-                  max: {
-                    width: font__px-to-rem( 1000 );
-                    height: font__px-to-rem( 1000 );
-                  }
-                }
-
-                // modifier
-                // `.body > .content > .curriculum > .goal > .context > .paragraph > .concept > .concept__image.concept__image--teach-improve`
-                &.concept__image--teach-improve {
-                  // [ skin ]
-                  max-width: font__px-to-rem( 500 );
-                }
-              }
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__link`
-            > .paragraph__link {
-              // [ layout ]
-              display: block;
-              margin: {
-                bottom: font__px-to-rem( 60 );
-                left: font__px-to-rem( 40 );
-              }
-              text: {
-                align: left;
-                decoration: underline;
-              }
-              line-height: font__px-to-rem( 20 );
-
-              // [ skin ]
-              width: auto;
-              height: font__px-to-rem( 20 );
-              color: #395dff;
-              font-size: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__mapImg`
-            > .paragraph__mapImg {
-              > .mapImg__img {
-                // [ skin ]
-                width: 100%;
-                min-width: 20rem;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__event`
-    // block
-    // `.body > .content > .event`
-    > .content__event.event {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .event > .event__topic`
-      // block
-      // `.body > .content > .event > .topic`
-      @include topic( $block: 'event' );
-
-      // element
-      // `.body > .content > .curriculum > .curriculum__goal`
-      // block
-      // `.body > .content > .curriculum > .goal`
-      > .event__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
-        // block
-        // `.body > .content > .curriculum > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
-              // [ layout ]
-              margin-top: font__px-to-rem( 60 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__title {
-              // [ layout ]
-              display: block;
-              margin-bottom: font__px-to-rem( 60 );
-              text-align: left;
-              line-height: font__px-to-rem( 24 );
-
-              // [ skin ]
-              width: auto;
-              height: font__px-to-rem( 24 );
-              color: #399dff;
-              font-size: font__px-to-rem( 24 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__eventImg`
-            > .paragraph__eventImg {
-              display: inline-block;
-              width: font__px-to-rem( 350 );
-              height: font__px-to-rem( 400 );
-              margin: {
-                left: font__px-to-rem( 50 );
-                bottom: font__px-to-rem( 50 );
-              }
-
-              > .eventImg__helper {
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-              }
-
-              > .eventImg__img {
-                display: inline-block;
-                vertical-align: middle;
-                filter: contrast( 140% ) opacity( .85 );
-                max: {
-                  width: font__px-to-rem( 350 );
-                  height: font__px-to-rem( 350 );
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__statistics`
-    // block
-    // `.body > .content > .statistics`
-    > .content__statistics.statistics {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .statistics > .statistics__topic`
-      // block
-      // `.body > .content > .statistics > .topic`
-      @include topic( $block: 'statistics' );
-
-      // element
-      // `.body > .content > .statistics > .statistics__goal`
-      // block
-      // `.body > .content > .statistics > .goal`
-      > .statistics__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .statistics > .goal > .goal__context`
-        // block
-        // `.body > .content > .statistics > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .statistics > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .statistics > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-
-            /* stylelint-disable */
-            width: 100% !important;
-
-            /* stylelint-enable */
-
-            // element
-            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
-              // [ layout ]
-              margin-top: font__px-to-rem( 60 );
-            }
-
-            // element
-            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
-              // [ layout ]
-              margin-top: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
-
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .statistics > .goal > .context > .paragraph > .paragraph__plot`
-            > .paragraph__plot {
-              display: inline-block;
-              width: 100%;
-              max-width: font__px-to-rem( 500 );
-
-              > .plot__lineChart {
-                fill: none;
-                stroke: steelblue;
-                stroke-width: font__px-to-rem( 2 );
-                width: 100%;
-                max-width: font__px-to-rem( 500 );
-                min-width: font__px-to-rem( 300 );
-
-                > .lineChart__axis {
-                  font: {
-                    size: font__px-to-rem( 20 );
-                    weight: 500;
-                  }
-                  color: #aaaaaa;
-                  stroke: #444444;
-                  stroke-width: font__px-to-rem( .5 );
-                }
-
-                > .lineChart__label {
-                  font: {
-                    size: font__px-to-rem( 25 );
-                    weight: 500;
-                  }
-                  fill: #ffbb00;
-                  text-anchor: middle;
-                  stroke-width: 0;
-                }
-
-                > .lineChart__axisLabel {
-                  font: {
-                    size: font__px-to-rem( 20 );
-                    weight: 500;
-                  }
-                  fill: #444444;
-                  text-anchor: start;
-                  stroke-width: 0;
-                }
-
-                > .lineChart__title {
-                  font: {
-                    size: font__px-to-rem( 40 );
-                    weight: 500;
-                  }
-                  fill: steelblue;
-                  text-anchor: middle;
-                  stroke-width: 0;
-                }
-              }
-
-              > .plot__boxChart {
-                stroke: steelblue;
-                stroke-width: font__px-to-rem( 2 );
-                width: 100%;
-                max-width: font__px-to-rem( 500 );
-                min-width: font__px-to-rem( 300 );
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__qa`
-    // block
-    // `.body > .content > .qa`
-    > .content__qa.qa {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .qa > .qa__topic`
-      // block
-      // `.body > .content > .qa > .topic`
-      @include topic( $block: 'qa' );
-      display: none;
-
-      // element
-      // `.body > .content > .curriculum > .curriculum__goal`
-      // block
-      // `.body > .content > .curriculum > .goal`
-      > .qa__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
-        // block
-        // `.body > .content > .curriculum > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
-              // [ layout ]
-              margin-top: font__px-to-rem( 60 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
-              // [ layout ]
-              margin-top: font__px-to-rem( 48 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
-
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
-            }
-          }
-        }
-      }
-    }
-
-    // element
-    // `.body > .content > .content__link`
-    // block
-    // `.body > .content > .link`
-    > .content__link.link {
-      // [ template ]
-      @extend %content__element;
-
-      // element
-      // `.body > .content > .link > .link__topic`
-      // block
-      // `.body > .content > .link > .topic`
-      @include topic( $block: 'link' );
-
-      // element
-      // `.body > .content > .link > .link__goal`
-      // block
-      // `.body > .content > .link > .goal`
-      > .link__goal.goal {
-        // [ layout ]
-        display: block;
-        margin: {
-          left: auto;
-          right: auto;
-        }
-
-        // [ skin ]
-        width: 98%;
-
-        // element
-        // `.body > .content > .curriculum > .goal > .goal__context`
-        // block
-        // `.body > .content > .curriculum > .goal > .context`
-        > .goal__context.context {
-          // [ template ]
-          @extend %block__context;
-
-          // [ layout ]
-          margin-top: font__px-to-rem( 26 );
-
-          // [ skin ]
-          width: 100%;
-
-          // element
-          // `.body > .content > .curriculum > .goal > .context > .context__paragraph`
-          // block
-          // `.body > .content > .curriculum > .goal > .context > .paragraph`
-          > .context__paragraph.paragraph {
-            display: block;
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__title:not( :first-of-type )`
-            > .paragraph__title:not( :first-of-type ) {
-              // [ layout ]
-              margin-top: font__px-to-rem( 60 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__text {
-              // [ layout ]
-              margin-top: font__px-to-rem( 48 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__text`
-            > .paragraph__list-description {
-              // [ layout ]
-              display: block;
-              margin-left: font__px-to-rem( 28 );
-              line-height: font__px-to-rem( 34 );
-
-              // [ skin ]
-              width: auto;
-              height: auto;
-              color: #757575;
-              font-size: font__px-to-rem( 20 );
-            }
-
-            // element
-            // `.body > .content > .curriculum > .goal > .context > .paragraph > .paragraph__link`
-            > .paragraph__link {
-              // [ layout ]
-              display: block;
-              margin-bottom: font__px-to-rem( 20 );
-              text: {
-                align: left;
-                decoration: underline;
-              }
-              line-height: font__px-to-rem( 20 );
-
-              // [ skin ]
-              width: auto;
-              height: font__px-to-rem( 20 );
-              color: #395dff;
-              font-size: font__px-to-rem( 20 );
-
-              // [ before ]
-              &::before {
-                // [ position ]
-                position: absolute;
-                left: font__px-to-rem( -28 );
-
-                // [ layout ]
-                display: inline-block;
-                margin-top: font__px-to-rem( 10 );
-                vertical-align: top;
-
-                // [ skin ]
-                width: font__px-to-rem( 14 );
-                height: font__px-to-rem( 14 );
-                border: {
-                  color: #faad06;
-                  style: solid;
-                  width: font__px-to-rem( 7 );
-                  radius: 50%;
-                }
-                content: '';
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // template
-    // `> ? > ?__context.context`
-    %block__context {
-      // [ layout ]
-      display: block;
-      margin: {
-        left: auto;
-        right: auto;
-      }
-      text-align: left;
-      line-height: 0;
-
-      // [ skin ]
-      width: 98%;
-      height: auto;
-
-      // element
-      // `> ? > .context > .context__concept`
-      // block
-      // `> ? > .context > .concept`
-      > .context__concept.concept {
-        // [ layout ]
-        display: block;
-        text-align: center;
-
-        // [ skin ]
-        width: 100%;
-        height: auto;
-
-        // element
-        // `> ? > .context > .concept > .concept__image`
-        > .concept__image {
-          // [ layout ]
-          display: inline-block;
-
-          // [ skin ]
-          width: 100%;
-          height: auto;
-        }
-      }
-
-      // element
-      // `> ? > .context > .context__paragraph`
-      // block
-      // `> ? > .context > .paragraph`
-      > .context__paragraph.paragraph {
-        // [ layout ]
-        display: inline-block;
-        vertical-align: top;
-        text-align: left;
-
-        // [ skin ]
-        width: auto;
-        height: auto;
-
-        // element
-        // `> ? > .context > .paragraph > .paragraph__title`
-        > .paragraph__title {
-          // [ layout ]
-          display: block;
-          margin-bottom: font__px-to-rem( 60 );
-          text-align: left;
-          line-height: font__px-to-rem( 24 );
-
-          // [ skin ]
-          width: auto;
-          height: font__px-to-rem( 24 );
-          color: #399dff;
-          font-size: font__px-to-rem( 24 );
-        }
-
-        // element
-        // `> ? > .context > .paragraph > .paragraph__text`
-        > .paragraph__text {
-          // [ layout ]
-          display: block;
-          line-height: font__px-to-rem( 34 );
-
-          // [ skin ]
-          width: auto;
-          height: auto;
-          color: #757575;
-          font-size: font__px-to-rem( 20 );
-        }
-
-        // element
-        // `> ? > .context > .paragraph > .paragraph__list`
-        // block
-        // `> ? > .context > .paragraph > .list`
-        > .paragraph__list.list {
-          // [ layout ]
-          display: block;
-          margin: {
-            top: font__px-to-rem( 20 );
-            bottom: font__px-to-rem( 20 );
-          }
-          list-style: none;
-
-          // [ skin ]
-          width: auto;
-          height: auto;
-
-          // element
-          // `> ? > .context > .paragraph > .list > .list__text`
-          > .list__text {
-            // [ position ]
-            position: relative;
-
-            // [ layout ]
-            display: block;
-            margin-left: font__px-to-rem( 28 );
-            line-height: font__px-to-rem( 34 );
-
-            // [ skin ]
-            width: auto;
-            height: auto;
-            color: #757575;
-            font-size: font__px-to-rem( 20 );
-
-            // [ before ]
-            &::before {
-              // [ position ]
-              position: absolute;
-              left: font__px-to-rem( -28 );
-
-              // [ layout ]
-              display: inline-block;
-              margin-top: font__px-to-rem( 10 );
-              vertical-align: top;
-
-              // [ skin ]
-              width: font__px-to-rem( 14 );
-              height: font__px-to-rem( 14 );
-              border: {
-                color: #faad06;
-                style: solid;
-                width: font__px-to-rem( 7 );
-                radius: 50%;
-              }
-              content: '';
-            }
-          }
-        }
+    grid: {
+      row-gap: font__px-to-rem( 38 );
+      template: {
+        columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
+        areas:
+          '. breadcrumb           .'
+          '. filter               .'
+          '. topic                .'
+          '. announcement--pinned .'
+          '. announcement--normal .'
+          '. pages                .';
       }
     }
 
@@ -990,9 +70,25 @@
       left: font__px-to-rem( 16 );
       right: font__px-to-rem( 16 );
     }
+    background-color: #ffffff;
 
     // [ RWD: $large ]
     @media screen and ( min-width: $large ) {
+      // [ layout ]
+      grid: {
+        row-gap: font__px-to-rem( 60 );
+        template: {
+          columns: 1fr font__px-to-rem( 924 ) 1fr;
+          areas:
+            '. breadcrumb           .'
+            '. topic                .'
+            '. filter               .'
+            '. announcement--pinned .'
+            '. announcement--normal .'
+            '. pages                .';
+        }
+      }
+
       // [ skin ]
       padding: {
         top: font__px-to-rem( 40 );
@@ -1000,6 +96,12 @@
         left: 0;
         right: 0;
       }
+    }
+
+    // [ RWD: $x-large ]
+    @media screen and ( min-width: $x-large ) {
+      // [ layout ]
+      grid-template-columns: 1fr font__px-to-rem( 1200 ) 1fr;
     }
 
     // element
@@ -1018,6 +120,15 @@
     @include topic( $block: 'content' ) {
       // [ position ]
       grid-area: topic;
+    }
+
+    // element
+    // `.body > .content > .content__filter`
+    // block
+    // `.body > .content > .filter`
+    @include filter( $block: 'content' ) {
+      // [ position ]
+      grid-area: filter;
     }
 
     // element
@@ -1052,6 +163,19 @@
       // [ position ]
       grid-area: pages;
       justify-self: center;
+    }
+
+    > .content__add.add {
+      @include add-button();
+    }
+
+    > .content__delete.delete {
+      // [ layout ]
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include delete-preview();
     }
   }
 

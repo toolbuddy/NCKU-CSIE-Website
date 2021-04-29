@@ -8,10 +8,10 @@
 @import 'components/common/topic';
 @import 'components/common/footer';
 @import 'components/announcement/filter';
-@import 'components/announcement/add-button';
 @import 'components/announcement/announcement-briefing-list';
 @import 'components/announcement/pages';
 @import 'components/announcement/delete-preview';
+@import 'components/announcement/add-button';
 
 // block
 // `.body`
@@ -31,7 +31,11 @@
   // `.body > .body__banner`
   // block
   // `.body > .banner`
-  @include banner( $block: 'body', $image: 'announcement/all' );
+  @include banner( $block: 'body' ,$image: 'student/college' ) {
+    &::before {
+      filter: blur( .1rem ) brightness( .9 );
+    }
+  }
 
   // element
   // `.body > .body__content`
@@ -140,99 +144,59 @@
         // [ layout ]
         display: grid;
         grid-template-areas:
-          'all'
-          'course'
-          'faculty'
-          'administrative'
+          'attachment'
+          'recruitmen'
+          'rule'
+          'admission'
           'college'
           'master'
           'phd'
-          'admission'
-          'internship'
-          'scholarship'
-          'international'
-          'award'
-          'speech'
-          'exhibition'
-          'competition'
-          'recruitment'
-          'rule'
-          'attachment';
+          'faculty'
+          'administrative'
+          'course'
+          'international';
 
         // [ RWD: $x-small ]
         @media screen and ( min-width: $x-small ) {
           // [ layout ]
           grid-template-areas:
-            'all           college'
-            'course        master'
-            'faculty       phd'
-            'internship    speech'
-            'scholarship   admission'
-            'international exhibition'
-            'award         competition'
-            'recruitment   rule'
-            'attachment    administrative';
+            'attachment  .'
+            'recruitment rule'
+            'admission   college'
+            'master      phd'
+            'faculty     administrative'
+            'course      international';
         }
 
         // [ RWD: $small ]
         @media screen and ( min-width: $small ) {
           // [ layout ]
           grid-template-areas:
-            'all            internship    college'
-            'course         scholarship   master'
-            'faculty        international phd'
-            'administrative award         admission'
-            'attachment     recruitment   rule'
-            'competition    speech        exhibition';
+            'attachment    admission  faculty'
+            'rule          college    administrative'
+            'recruitment   master     course'
+            'international phd        .';
         }
 
         // [ RWD: $large ]
         @media screen and ( min-width: $large ) {
           // [ layout ]
           grid-template-areas:
-            'all         course      faculty       administrative'
-            'internship  scholarship international award'
-            'admission   college     master        phd'
-            'speech      exhibition  competition   .'
-            'recruitment rule        attachment    .';
+            'attachment rule           recruitment  international'
+            'admission  college        master       phd          '
+            'faculty    administrative course       .            ';
         }
 
         // [ RWD: $x-large ]
         @media screen and ( min-width: $x-large ) {
           // [ layout ]
-          grid-template-areas:
-            'all            admission internship    speech      rule'
-            'course         college   scholarship   exhibition  recruitment'
-            'faculty        master    international competition attachment'
-            'administrative phd       award         .           .';
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'all' ]`
-        > .tags__tag[ data-tag-name = 'all' ] {
-          // [ position ]
-          grid-area: all;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'award' ]`
-        > .tags__tag[ data-tag-name = 'award' ] {
-          // [ position ]
-          grid-area: award;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
-        > .tags__tag[ data-tag-name = 'college' ] {
-          // [ position ]
-          grid-area: college;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'competition' ]`
-        > .tags__tag[ data-tag-name = 'competition' ] {
-          // [ position ]
-          grid-area: competition;
+          grid-template: {
+            areas:
+              'attachment rule           recruitment  international .'
+              'admission  college        master       phd           .'
+              'faculty    administrative course       .             .';
+            rows: repeat( 3, auto );
+          }
         }
 
         // element
@@ -243,52 +207,10 @@
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'administrative' ]`
-        > .tags__tag[ data-tag-name = 'administrative' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'college' ]`
+        > .tags__tag[ data-tag-name = 'college' ] {
           // [ position ]
-          grid-area: administrative;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'conference' ]`
-        > .tags__tag[ data-tag-name = 'conference' ] {
-          // [ position ]
-          grid-area: conference;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'course' ]`
-        > .tags__tag[ data-tag-name = 'course' ] {
-          // [ position ]
-          grid-area: course;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'exhibition' ]`
-        > .tags__tag[ data-tag-name = 'exhibition' ] {
-          // [ position ]
-          grid-area: exhibition;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'faculty' ]`
-        > .tags__tag[ data-tag-name = 'faculty' ] {
-          // [ position ]
-          grid-area: faculty;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
-        > .tags__tag[ data-tag-name = 'international' ] {
-          // [ position ]
-          grid-area: international;
-        }
-
-        // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'internship' ]`
-        > .tags__tag[ data-tag-name = 'internship' ] {
-          // [ position ]
-          grid-area: internship;
+          grid-area: college;
         }
 
         // element
@@ -306,10 +228,31 @@
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'recruitment' ]`
-        > .tags__tag[ data-tag-name = 'recruitment' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'admission' ]`
+        > .tags__tag[ data-tag-name = 'admission' ] {
           // [ position ]
-          grid-area: recruitment;
+          grid-area: admission;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'course' ]`
+        > .tags__tag[ data-tag-name = 'course' ] {
+          // [ position ]
+          grid-area: course;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'faculty' ]`
+        > .tags__tag[ data-tag-name = 'faculty' ] {
+          // [ position ]
+          grid-area: faculty;
+        }
+
+        // element
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'international' ]`
+        > .tags__tag[ data-tag-name = 'international' ] {
+          // [ position ]
+          grid-area: international;
         }
 
         // element
@@ -320,17 +263,17 @@
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'scholarship' ]`
-        > .tags__tag[ data-tag-name = 'scholarship' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'administrative' ]`
+        > .tags__tag[ data-tag-name = 'administrative' ] {
           // [ position ]
-          grid-area: scholarship;
+          grid-area: administrative;
         }
 
         // element
-        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'speech' ]`
-        > .tags__tag[ data-tag-name = 'speech' ] {
+        // `.body > .content > .filter > .tags > .tags__tag[ data-tag-name = 'recruitment' ]`
+        > .tags__tag[ data-tag-name = 'recruitment' ] {
           // [ position ]
-          grid-area: speech;
+          grid-area: recruitment;
         }
       }
     }
