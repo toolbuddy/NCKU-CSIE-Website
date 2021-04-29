@@ -1,41 +1,40 @@
-extends /layouts/base.pug
+extends /layouts/announcement/briefing.pug
 
 append data
   -
-    const i18n= Object.freeze( {
+    const i18n = Object.freeze( {
       [ LANG.getLanguageId( 'en-US' ) ]: {
-        title:    'International',
-        breadcrumb: {
-          home:  'Home',
-          student: 'Students',
+        'title':    'International',
+        'topic':    'International',
+        'time':   {
+          'from': 'Start Date',
+          'to':   'End Date',
         },
-        index: {
-          title: 'For High School Students',
-          link: {
-            curriculum:   'Curriculum',
-            statistics:   'Statistics',
-            event:        'Events',
-            link:         'Links',
-          },
+        'pinned':   'Pinned Announcement',
+        'normal':   'Announcement',
+        'breadcrumb': {
+          'home':         'Home',
+          'student': 'Student',
         },
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
-        title: '國際合作交流',
-        breadcrumb: {
-          home:  '首頁',
-          student: '學生事務',
+        'title':    '國際合作交流',
+        'topic':    '國際合作交流',
+        'time':   {
+          'from': '開始日期',
+          'to':   '結束日期',
         },
-        index: {
-          title: '高中生專區',
-          link: {
-            curriculum:   '課程資訊',
-            statistics:   '統計數據',
-            event:        '課外活動',
-            link:         'FB連結',
-          },
+        'pinned':   '置頂貼文',
+        'normal':   '一般公告',
+        'breadcrumb': {
+          'home':         '首頁',
+          'student': '學生事務',
         },
       },
     } );
+    const tags = [
+        'international',
+    ].map( tag => allTags[ tag ] );
     const currentRoute = 'student/international';
 
 append title
@@ -61,26 +60,6 @@ append breadcrumb
   )
 
 append content
-  include /components/common/topic.pug
-  include /components/common/image.pug
-  include /components/student/international-i18n.pug
-
-  section#international.content__international.international
-    +topic( 'international', i18n[ LANG.id ].title )
-    each content in internationalI18n()[ LANG.id ]
-      section.international__content.content
-        header.content__header= content.aspect
-        article.content__paragraph.paragraph
-          if content.type === 'images'
-            if Array.isArray( content.context )
-              each context in content.context
-                +image( {
-                  alt: context.alt,
-                  className: context.className,
-                  src: context.src,
-                } )
-          else if content.type === 'link'
-            a.paragraph__link( href = content.link )= content.context
 
 append footer
 
