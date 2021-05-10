@@ -590,6 +590,10 @@
         }
 
         > .msic__text {
+          display: flex;
+          align-self: center;
+          justify-content: center;
+          flex-wrap: wrap;
           color: white;
 
           // [ position ]
@@ -599,6 +603,7 @@
           top: $text-top-space;
 
           > .text__link {
+            display: inline;
             font: {
               size: font__px-to-rem( 36 );
               weight: 500;
@@ -644,6 +649,11 @@
         }
 
         > .ai__text {
+          // [ layout ]
+          display: flex;
+          align-self: center;
+          justify-content: center;
+          flex-wrap: wrap;
           color: white;
 
           // [ position ]
@@ -653,6 +663,7 @@
           top: $text-top-space;
 
           > .text__link {
+            display: inline;
             font: {
               size: font__px-to-rem( 36 );
               weight: 500;
@@ -698,6 +709,11 @@
         }
 
         > .ai-ismp__text {
+          // [ layout ]
+          display: flex;
+          align-self: center;
+          justify-content: center;
+          flex-wrap: wrap;
           color: white;
 
           // [ position ]
@@ -707,6 +723,7 @@
           top: $text-top-space;
 
           > .text__link {
+            display: inline;
             font: {
               size: font__px-to-rem( 36 );
               weight: 500;

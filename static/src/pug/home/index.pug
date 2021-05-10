@@ -27,9 +27,15 @@ append data
         'highSchool': '高中生專區',
         'imi': '醫學資訊研究所',
         'imis': '製造資訊與系統所',
-        'msic': '多媒體學程',
-        'ai': '人工智慧科技碩士學位學程',
-        'ai-ismp': '人工智慧與資訊系統碩士在職專班',
+        'msic1': '多媒體系統',
+        'msic2': '與',
+        'msic3': '智慧型運算工程',
+        'msic4': '博士學位學程',
+        'ai1': '人工智慧科技',
+        'ai2': '碩士學位學程',
+        'ai-ismp1': '人工智慧與',
+        'ai-ismp2': '資訊系統',
+        'ai-ismp3': '碩士在職專班',
         'student': '系學會',
       },
     } );
@@ -83,8 +89,8 @@ append content
 
   section#high-school.content__high-school.high-school
     figure.high-school__banner
-    h1.high-school__text.text
-      a.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
+    a.high-school__text.text(href = UTILS.url( { href : 'student/high-school' } ))
+      p.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
 
   section#master.content__master.master
     span.master__imi.imi
@@ -97,16 +103,22 @@ append content
         a.text__link( href = 'http://www.imis.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].imis
     span.master__msic.msic
       figure.msic__banner
-      h1.msic__text.text
-        a.text__link( href = 'http://www.csie.ncku.edu.tw/msic/msic.php', target = 'blank' )= i18n[ LANG.id ].msic
+      a.msic__text.text( href = 'http://www.csie.ncku.edu.tw/msic/msic.php', target = 'blank' )
+        p.text__link= i18n[ LANG.id ].msic1
+        p.text__link= i18n[ LANG.id ].msic2
+        p.text__link= i18n[ LANG.id ].msic3
+        p.text__link= i18n[ LANG.id ].msic4
     span.master__ai.ai
       figure.ai__banner
-      h1.ai__text.text
-        a.text__link( href = 'http://aim.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].ai
+      a.ai__text.text( href = 'http://aim.ncku.edu.tw/', target = 'blank' )
+        p.text__link= i18n[ LANG.id ].ai1
+        p.text__link= i18n[ LANG.id ].ai2
     span.master__ai-ismp.ai-ismp
       figure.ai-ismp__banner
-      h1.ai-ismp__text.text
-        a.text__link( href = 'http://aigp.ncku.edu.tw/index.php', target = 'blank' )= i18n[ LANG.id ]['ai-ismp']
+      a.ai-ismp__text.text( href = 'http://aigp.ncku.edu.tw/index.php', target = 'blank' )
+        p.text__link= i18n[ LANG.id ]['ai-ismp1']
+        p.text__link= i18n[ LANG.id ]['ai-ismp2']
+        p.text__link= i18n[ LANG.id ]['ai-ismp3']
     span.master__student.student
       figure.student__banner
       h1.student__text.text
