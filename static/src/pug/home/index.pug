@@ -26,7 +26,8 @@ append data
         'more':  '更多資訊...',
         'highSchool': '高中生專區',
         'imi': '醫學資訊研究所',
-        'imis': '製造資訊與系統所',
+        'imis1': '製造資訊與',
+        'imis2': '系統研究所',
         'msic1': '多媒體系統',
         'msic2': '與',
         'msic3': '智慧型運算工程',
@@ -99,8 +100,9 @@ append content
         a.text__link( href = 'http://www.imi.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].imi
     span.master__imis.imis
       figure.imis__banner
-      h1.imis__text.text
-        a.text__link( href = 'http://www.imis.ncku.edu.tw/', target = 'blank' )= i18n[ LANG.id ].imis
+      a.imis__text.text( href = 'http://www.imis.ncku.edu.tw/', target = 'blank' )
+        p.text__link= i18n[ LANG.id ].imis1
+        p.text__link= i18n[ LANG.id ].imis2
     span.master__msic.msic
       figure.msic__banner
       a.msic__text.text( href = 'http://www.csie.ncku.edu.tw/msic/msic.php', target = 'blank' )
