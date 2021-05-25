@@ -1,4 +1,5 @@
 @import 'components/common/reset';
+@import 'components/common/icon';
 @import 'components/common/header-base';
 @import 'components/common/header-medium';
 @import 'components/common/header-large';
@@ -389,6 +390,51 @@
           }
         }
       }
+
+      // element
+      > .venue__attachment {
+        // [ position ]
+        display: block;
+        margin-bottom: font__px-to-rem( 10 );
+        align-self: start;
+
+        // [ skin ]
+        border-radius: font__px-to-rem( 4 );
+        padding: font__px-to-rem( 20 ) font__px-to-rem( 30 );
+        background-color: #6982c0;
+        font-size: font__px-to-rem( 16 );
+        box-shadow: 0 font__px-to-rem( 2 ) font__px-to-rem( 2 ) 0 #7c79ad;
+        line-height: font__px-to-rem( 20 );
+
+        // [ before ]
+        &::before {
+          // [ layout ]
+          display: inline-block;
+          margin: {
+            right: font__px-to-rem( 16 );
+            bottom: font__px-to-rem( -1 );
+          }
+
+          // [ skin ]
+          width: font__px-to-rem( 16 );
+          height: font__px-to-rem( 16 );
+          background: {
+            position: center;
+            repeat: no-repeat;
+            size: cover;
+          }
+          content: '';
+
+          // [ icon ]
+          @include icon__download();
+        }
+      }
+    }
+
+    > .content__foot {
+      // [position]
+      display: block;
+      height: 20px;
     }
   }
 
