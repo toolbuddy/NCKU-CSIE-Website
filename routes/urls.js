@@ -36,6 +36,7 @@ const developer = require('./developer.js');
 const resource = require('./resource.js');
 const student = require('./student.js');
 const user = require('./user.js');
+const attachment = require('./attachment.js');
 
 const projectRoot = path.resolve(__dirname, '..');
 const app = express();
@@ -154,6 +155,12 @@ app.use('/student', student);
  */
 
 app.use('/research', research);
+
+/**
+ * Resolve URL `/attachment`.
+ */
+
+app.use('/attachment', attachment);
 
 /**
  * Resolve URL `/user`.

@@ -521,11 +521,12 @@
       grid: {
         area: tags;
         template-areas:
-          'speech      internship     admission'
-          'exhibition  scholarship    college'
-          'competition international  master'
-          'course      award          phd'
-          'faculty     rule           recruitment ';
+          'rule        administrative speech'
+          'recruitment course         exhibition'
+          'attachment  faculty        competition'
+          'internship  scholarship    award'
+          'college     admission      international'
+          'master      phd            .';
       }
       display: grid;
 
@@ -540,10 +541,11 @@
       @media screen and ( min-width: $median ) {
         // [ layout ]
         grid-template-areas:
-          ' speech      internship    admission rule'
-          ' exhibition  scholarship   college   recruitment'
-          ' competition international master    course'
-          ' .            award        phd       faculty';
+          ' internship     scholarship   international award'
+          ' admission      college       master        phd'
+          ' rule           recruitment   attachment    .'
+          ' administrative course        faculty       .'
+          ' speech         exhibition    competition   .';
 
         // [ display ]
         width: font__px-to-rem( 550 );
@@ -570,6 +572,20 @@
       > .tags__tag[ data-tag-name = 'admission' ] {
         // [ position ]
         grid-area: admission;
+      }
+
+      // element
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'attachment' ]`
+      > .tags__tag[ data-tag-name = 'attachment' ] {
+        // [ position ]
+        grid-area: attachment;
+      }
+
+      // element
+      // `.#{ $block } > .#{ $block }__edit-block` > .edit-block__tags > .tags__tag[ data-tag-name = 'administrative' ]`
+      > .tags__tag[ data-tag-name = 'administrative' ] {
+        // [ position ]
+        grid-area: administrative;
       }
 
       // element

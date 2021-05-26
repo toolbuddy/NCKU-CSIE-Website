@@ -1,7 +1,7 @@
 import GetHeaderBase from 'static/src/js/components/common/header-base.js';
 import GetHeaderMedium from 'static/src/js/components/common/header-medium.js';
 import GetHeaderLarge from 'static/src/js/components/common/header-large.js';
-import MultipleDefaultTagFilter from 'static/src/js/components/announcement/multiple-default-tag-filter.js';
+import SingleDefaultTagFilter from 'static/src/js/components/announcement/single-default-tag-filter.js';
 import WebLanguageUtils from 'static/src/js/utils/language.js';
 
 try {
@@ -39,34 +39,20 @@ catch (err) {
 }
 
 try {
-    const filter = new MultipleDefaultTagFilter({
-        defaultTag: [
-            'award',
-            'international',
-            'scholarship',
-            'internship',
+    const filter = new SingleDefaultTagFilter({
+        defaultTag: ['attachment'],
+        supportedTag: [
             'college',
-            'competition',
-            'admission',
-            'administrative',
-            'attachment',
-            'exhibition',
-            'speech',
             'master',
-            'course',
-            'faculty',
-            'recruitment',
-            'rule',
             'phd',
         ],
-        supportedTag: [],
         filterDOM: document.getElementById('filter'),
         announcementPinnedDOM: document.getElementById('announcement--pinned'),
         announcementNormalDOM: document.getElementById('announcement--normal'),
-        pagesDOM: document.getElementById('pages'),
         addDOM: document.getElementById('announcement--add'),
-        scrollTopDOM: document.getElementById('announcement--normal'),
         deletePreviewDOM: document.getElementById('announcement--delete'),
+        pagesDOM: document.getElementById('pages'),
+        scrollTopDOM: document.getElementById('announcement--normal'),
         amount: 15,
         from: new Date('2018/01/01'),
         to: new Date(Date.now()),
