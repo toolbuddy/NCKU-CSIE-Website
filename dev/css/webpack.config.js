@@ -230,7 +230,7 @@ module.exports = (env, argv) => {
                  */
 
                 {
-                    test: /\.(?<image>gif|png|jpe?g|svg)$/u,
+                    test: /\.(?<image>gif|png|jpe?g|svg|pdf|odt)$/u,
                     use: [
                         {
                             loader: 'file-loader',
