@@ -67,7 +67,15 @@ append content
                     p.paragraph__list-description= paragraph.listDescription
             else
               a.paragraph__link( href = goal.link )= goal.context
-
+    a.venue__attachment(
+      href = UTILS.url( { href : 'static/image/asset/空間場地管理辦法-1080222-增修通過.pdf' } )
+      download
+    ) 空間場地管理辦法-1080222-增修通過.pdf
+    a.venue__attachment(
+      href = UTILS.url( { href : 'static/image/asset/資訊系場地設備借用管理要點(通過)1070530-F.pdf' } )
+      download
+    ) 資訊系場地設備借用管理要點(通過)1070530-F.pdf
+  section.content__foot
 append footer
 
 append scripts
