@@ -32,7 +32,7 @@ const i18n = {
         phd: '博士',
         admission: '招生',
         administrative: '行政',
-        attachment: '常用表格',
+        attachment: '常用表單',
         speech: '演講',
         exhibition: '展覽',
         competition: '競賽',

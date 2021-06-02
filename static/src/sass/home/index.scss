@@ -49,9 +49,8 @@
         '.           admission-more     .'
         '.           news-topic       .'
         '.           news             .'
-        'high-school high-school      high-school'
         'master      master           master';
-      rows: font__px-to-rem( 200 ) font__px-to-rem( 32 ) repeat( 8, auto ) font__px-to-rem( 70 ) auto auto;
+      rows: font__px-to-rem( 200 ) font__px-to-rem( 32 ) repeat( 8, auto ) auto;
       columns: font__px-to-rem( 16 ) 1fr font__px-to-rem( 16 );
     }
 
@@ -59,7 +58,7 @@
     @media screen and ( min-width: $small ) {
       // [ layout ]
       grid-template: {
-        rows: font__px-to-rem( 400 ) font__px-to-rem( 64 ) repeat( 8, auto ) font__px-to-rem( 70 ) auto;
+        rows: font__px-to-rem( 400 ) font__px-to-rem( 64 ) repeat( 8, auto ) auto;
         columns: font__px-to-rem( 36 ) 1fr font__px-to-rem( 36 );
       }
     }
@@ -76,10 +75,9 @@
           '.           all-more     .           admission-more         .'
           '.           news-topic   news-topic  news-topic           .'
           '.           news         news        news                 .'
-          'high-school high-school  high-school high-school          high-school'
           'master      master       master      master               master';
         rows:
-          60vh repeat( 2, font__px-to-rem( 64 ) ) max-content font__px-to-rem( 100 ) font__px-to-rem( 64 ) auto font__px-to-rem( 148 ) auto;
+          60vh repeat( 2, font__px-to-rem( 64 ) ) max-content font__px-to-rem( 100 ) font__px-to-rem( 64 ) auto auto;
         columns: 1fr font__px-to-rem( 556 ) font__px-to-rem( 67 ) font__px-to-rem( 300 ) 1fr;
       }
       align-items: start;
@@ -369,72 +367,6 @@
       }
     }
 
-    > .content__high-school.high-school {
-      // [ variable ]
-      $area-height: font__px-to-rem( 352 );
-      $text-top-space: font__px-to-rem( -176 );
-
-      // [ position ]
-      grid-area: high-school;
-      margin-top: font__px-to-rem( 16 );
-
-      // [ layout ]
-      display: block;
-      width: 100%;
-      height: font__px-to-rem( 224 );
-      overflow: hidden;
-
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
-        height: $area-height;
-      }
-
-      > .high-school__banner {
-        width: 100%;
-        height: $area-height;
-        filter: blur( .05rem ) brightness( .7 );
-        background: {
-          image: url( '~image/banner/student/high-school.jpg' );
-          attachment: fixed;
-          position: center bottom;
-          repeat: no-repeat;
-          size: cover;
-        }
-      }
-
-      > .high-school__text {
-        color: white;
-
-        // [ position ]
-        transform: translateY( -50% );
-        text-align: center;
-        position: relative;
-        top: font__px-to-rem( -224 );
-
-        // [ RWD: $large ]
-        @media screen and ( min-width: $large ) {
-          top: $text-top-space;
-        }
-
-        > .text__link {
-          font: {
-            size: font__px-to-rem( 36 );
-            weight: 500;
-          }
-          line-height: font__px-to-rem( 42 );
-
-          // [ RWD: $large ]
-          @media screen and ( min-width: $large ) {
-            // [ layout ]
-            line-height: font__px-to-rem( 60 );
-
-            // [ skin ]
-            font-size: font__px-to-rem( 50 );
-          }
-        }
-      }
-    }
-
     > .content__master.master {
       // [ variable ]
       $area-height: font__px-to-rem( 224 );
@@ -444,15 +376,116 @@
       grid-area: master;
 
       // [ layout ]
-      margin-top: font__px-to-rem( 170 );
       width: 100%;
       display: block;
       overflow: hidden;
 
-      // [ RWD: $large ]
-      @media screen and ( min-width: $large ) {
+      > .master__high-school {
         // [ layout ]
-        margin-top: font__px-to-rem( 202 );
+        width: 100%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
+
+        > .high-school__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/banner/student/high-school.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .high-school__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
+      }
+
+      > .master__student {
+        // [ layout ]
+        width: 100%;
+        height: $area-height;
+        overflow: hidden;
+        display: inline-block;
+
+        // [ RWD: $large ]
+        @media screen and ( min-width: $large ) {
+          width: 50%;
+        }
+
+        > .student__banner {
+          width: 100%;
+          height: $area-height;
+          filter: blur( .05rem ) brightness( .7 );
+          background: {
+            image: url( '~image/home/student.jpg' );
+            attachment: fixed;
+            position: center bottom;
+            repeat: no-repeat;
+            size: cover;
+          }
+          transform: scale( 1.05 );
+        }
+
+        > .student__text {
+          color: white;
+
+          // [ position ]
+          transform: translateY( -50% );
+          text-align: center;
+          position: relative;
+          top: $text-top-space;
+
+          > .text__link {
+            font: {
+              size: font__px-to-rem( 36 );
+              weight: 500;
+            }
+            line-height: font__px-to-rem( 42 );
+
+            // [ RWD: $large ]
+            @media screen and ( min-width: $large ) {
+              // [ layout ]
+              line-height: font__px-to-rem( 60 );
+
+              // [ skin ]
+              font-size: font__px-to-rem( 50 );
+            }
+          }
+        }
       }
 
       > .master__imi {
@@ -747,7 +780,7 @@
         }
       }
 
-      > .master__student {
+      > .master__ai-program {
         // [ layout ]
         width: 100%;
         height: $area-height;
@@ -759,7 +792,7 @@
           width: 50%;
         }
 
-        > .student__banner {
+        > .ai-program__banner {
           width: 100%;
           height: $area-height;
           filter: blur( .05rem ) brightness( .7 );
@@ -773,7 +806,7 @@
           transform: scale( 1.05 );
         }
 
-        > .student__text {
+        > .ai-program__text {
           color: white;
 
           // [ position ]
