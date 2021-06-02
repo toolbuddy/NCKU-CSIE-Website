@@ -15,7 +15,8 @@ append data
         'msic': 'MSIC',
         'ai': 'AI',
         'ai-ismp' : 'In-Service Master Program of AI',
-        'student': 'The Student Association'
+        'ai-program': 'AI',
+        'student': 'Student Association'
 
       },
       [ LANG.getLanguageId( 'zh-TW' ) ]: {
@@ -37,7 +38,8 @@ append data
         'ai-ismp1': '人工智慧與',
         'ai-ismp2': '資訊系統',
         'ai-ismp3': '碩士在職專班',
-        'student': '系學會',
+        'ai-program': '人工智慧學分學程',
+        'student': '系學會'
       },
     } );
     const currentRoute = '';
@@ -88,12 +90,15 @@ append content
       button#control--forword.pages__control.pages__control--forword= '<'
       button#control--backword.pages__control.pages__control--backword= '>'
 
-  section#high-school.content__high-school.high-school
-    figure.high-school__banner
-    a.high-school__text.text(href = UTILS.url( { href : 'student/high-school' } ))
-      p.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
-
   section#master.content__master.master
+    span.master__high-school.high-school
+      figure.high-school__banner
+      h1.high-school__text.text
+        a.text__link( href = UTILS.url( { href : 'student/high-school' } ) )= i18n[ LANG.id ].highSchool
+    span.master__student.student
+      figure.student__banner
+      h1.student__text.text
+        a.text__link( href = 'https://www.facebook.com/nckucsie.academy/', target = 'blank' )= i18n[ LANG.id ].student
     span.master__imi.imi
       figure.imi__banner
       h1.imi__text.text
@@ -112,19 +117,19 @@ append content
         p.text__link= i18n[ LANG.id ].msic4
     span.master__ai.ai
       figure.ai__banner
-      a.ai__text.text( href = 'http://aim.ncku.edu.tw/', target = 'blank' )
+      a.ai__text.text( href = 'http://aim.ncku.edu.tw/', target = '_blank' )
         p.text__link= i18n[ LANG.id ].ai1
         p.text__link= i18n[ LANG.id ].ai2
     span.master__ai-ismp.ai-ismp
       figure.ai-ismp__banner
-      a.ai-ismp__text.text( href = 'http://aigp.ncku.edu.tw/index.php', target = 'blank' )
+      a.ai-ismp__text.text( href = 'http://aigp.ncku.edu.tw/index.php', target = '_blank' )
         p.text__link= i18n[ LANG.id ]['ai-ismp1']
         p.text__link= i18n[ LANG.id ]['ai-ismp2']
         p.text__link= i18n[ LANG.id ]['ai-ismp3']
-    span.master__student.student
-      figure.student__banner
-      h1.student__text.text
-        a.text__link( href = 'https://www.facebook.com/nckucsie.academy', target = 'blank' )= i18n[ LANG.id ].student
+    span.master__ai-program.ai-programnt
+      figure.ai-program__banner
+      h1.ai-program__text.text
+        a.text__link( href = 'http://ai.csie.ncku.edu.tw/' target = '_blank')= i18n[ LANG.id ]['ai-program']
 
 append footer
 
