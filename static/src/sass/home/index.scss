@@ -89,6 +89,23 @@
       grid-template-columns: 1fr font__px-to-rem( 800 ) font__px-to-rem( 67 ) font__px-to-rem( 400 ) 1fr;
     }
 
+    // [ RWD: 1600px ]
+    @media screen and ( min-width: 1600px ) {
+      // [ layout ]
+      grid-template: {
+        areas:
+          '.          tv           tv          tv                    .'
+          '.           .            .           .                    .'
+          '.           topic        .           admission-topic        .'
+          '.           announcement .           admission-announcement .'
+          '.           all-more     .           admission-more         .'
+          '.           news-topic   news-topic  news-topic           .'
+          '.           news         news        news                 .'
+          'master      master       master      master               master';
+        columns: 1fr font__px-to-rem( 900 ) font__px-to-rem( 67 ) font__px-to-rem( 500 ) 1fr;
+      }
+    }
+
     // element
     // `.body > .content > .content__tv`
     // block
