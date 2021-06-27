@@ -66,7 +66,7 @@ each profile in data
           a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
 
         //- Faculty run some labs, including name, web and address.
-        if profile.labName !== null && profile.labWeb !== null
+        if profile.labName !== null
           a.intro__lab-name.lab-name( href = profile.labWeb )= profile.labName
         if profile.labAddress !== null
           address.intro__lab-address= profile.labAddress
