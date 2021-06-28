@@ -264,7 +264,7 @@
         // `> .#{ $block } > .cards > .card > .intro > .intro__titles`
         // block
         // `> .#{ $block } > .cards > .card > .intro > .titles`
-        > .intro__titles.titles {
+        > .intro__title-degree.title-degree {
           // [ layout ]
           display: block;
           text-align: center;
@@ -274,6 +274,46 @@
           @media screen and ( min-width: $medium ) {
             // [ layout ]
             display: inline-block;
+            text-align: left;
+          }
+
+          // element
+          // `> .#{ $block } > .cards > .card > .intro > .titles > .titles__title`
+          > .title-degree__degree.degree {
+            // [ layout ]
+            display: inline-block;
+            text-align: center;
+            margin: {
+              right: font__px-to-rem( 3 );
+              bottom: font__px-to-rem( 3 );
+            }
+            line-height: font__px-to-rem( 14 );
+
+            // [ skin ]
+            min-height: font__px-to-rem( 21 );
+            padding: font__px-to-rem( 5 ) font__px-to-rem( 5 );
+            color: rgba( 0, 0, 0, 1 );
+            font: {
+              size: font__px-to-rem( 14 );
+              weight: 600;
+            }
+          }
+        }
+
+        // element
+        // `> .#{ $block } > .cards > .card > .intro > .intro__titles`
+        // block
+        // `> .#{ $block } > .cards > .card > .intro > .titles`
+        > .intro__titles.titles {
+          // [ layout ]
+          display: block;
+          text-align: center;
+          margin-bottom: font__px-to-rem( 6 );
+
+          // [ RWD: $medium ]
+          @media screen and ( min-width: $medium ) {
+            // [ layout ]
+            display: block;
             text-align: left;
           }
 

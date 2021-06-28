@@ -51,8 +51,11 @@ each profile in data
 
         //- Faculty has some titles.
         if Array.isArray( profile.title ) && profile.title.length
+          aside.intro__title-degree.title-degree
+            each title in profile.title.filter(tmp => tmp.includes('教授') || tmp.includes('Professor') )
+              span.title-degree__degree.degree= title
           aside.intro__titles.titles
-            each title in profile.title
+            each title in profile.title.filter(tmp => !tmp.includes('教授') && !tmp.includes('Professor') )
               span.titles__title= title
 
         //- Faculty's email.
