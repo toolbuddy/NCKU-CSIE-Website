@@ -29,6 +29,7 @@ append content
   include /components/common/loading.pug
   include /components/common/no-result.pug
   include /components/announcement/delete-preview.pug
+  include /components/common/image.pug
 
   +topic( 'content', i18n[ LANG.id ].topic )
   section#filter.content__filter.filter
@@ -45,6 +46,15 @@ append content
           input.input__year( type = 'number', value = '', placeholder = 'yyyy', min = '2019' )
           input.input__month( type = 'number', value = '', placeholder = 'mm', min = '01', max = '12' )
           input.input__date( type = 'number', value = '', placeholder = 'dd', min = '01', max = '31' )
+    article.filter__keyword.keyword
+      label.keyword__text= '關鍵字'
+      span.keyword__input.input
+        input.input__text.text( type = 'text', value = '', placeholder = '多組關鍵字請用空白隔開')
+        +image( {
+          alt: 'search',
+          className: 'input__icon icon',
+          src: 'icon/search.png',
+        } )
     article.filter__tags.tags
       each tagObj, tagName in tags
         button.tags__tag( class = `tags__tag--${ tagObj.color }`, data-tag-id = `${ tagObj.id }`, data-tag-name = tagObj.tagName )= tagObj.tag
