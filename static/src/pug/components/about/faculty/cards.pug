@@ -51,8 +51,11 @@ each profile in data
 
         //- Faculty has some titles.
         if Array.isArray( profile.title ) && profile.title.length
+          aside.intro__title-degree.title-degree
+            each title in profile.title.filter(tmp => tmp.includes('教授') || tmp.includes('Professor') )
+              span.title-degree__degree.degree= title
           aside.intro__titles.titles
-            each title in profile.title
+            each title in profile.title.filter(tmp => !tmp.includes('教授') && !tmp.includes('Professor') )
               span.titles__title= title
 
         //- Faculty's email.
@@ -66,7 +69,7 @@ each profile in data
           a.intro__office-tel( href = `tel:${ profile.officeTel }` )= i18n[ LANG.id ].officeTel
 
         //- Faculty run some labs, including name, web and address.
-        if profile.labName !== null && profile.labWeb !== null
+        if profile.labName !== null
           a.intro__lab-name.lab-name( href = profile.labWeb )= profile.labName
         if profile.labAddress !== null
           address.intro__lab-address= profile.labAddress
