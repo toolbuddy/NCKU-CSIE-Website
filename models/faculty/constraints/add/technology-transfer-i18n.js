@@ -2,9 +2,7 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const TechnologyTransferI18nValidationConstraints = {
     languageId: {
-        presence: {
-            allowEmpty: false,
-        },
+        presence: true,
         type: {
             type: LanguageUtils.isSupportedLanguageId,
         },

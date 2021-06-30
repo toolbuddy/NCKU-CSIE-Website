@@ -16,14 +16,14 @@ const EducationValidationConstraints = {
         },
     },
     from: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     to: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,

@@ -2,7 +2,7 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const ConferenceValidationConstraints = {
     hostYear: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,

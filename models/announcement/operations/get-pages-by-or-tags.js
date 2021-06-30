@@ -4,10 +4,11 @@
  *
  * @async
  * @function
- * @param {number[]} [tags = []] - Specify the announcements with the given tag ids.
- * @param {date}     from        - Specify the earliest time of filter interval when announcements were post.
- * @param {date}     to          - Specify the latest time of filter interval when announcements were post.
- * @param {number}   amount      - Specify the number of announcements in one page.
+ * @param {number[]} [tags = []]     - Specify the announcements with the given tag ids.
+ * @param {string}   [keywords = []] - Specify the announcements with the given keywords.
+ * @param {date}     from            - Specify the earliest time of filter interval when announcements were post.
+ * @param {date}     to              - Specify the latest time of filter interval when announcements were post.
+ * @param {number}   amount          - Specify the number of announcements in one page.
  * @returns {object} The number of pages required to display all the requested announcements.
  * - pages
  */
@@ -25,6 +26,7 @@ module.exports = async (opt) => {
         // Get parameters.
         const {
             tags = [],
+            keywords = [],
             from = null,
             to = null,
             amount = null,
@@ -33,6 +35,11 @@ module.exports = async (opt) => {
         // Check if parameters meet constraints. If not, throw 400 error.
         if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
             const error = new Error('Invalid tag id.');
+            error.status = 400;
+            throw error;
+        }
+        if (!keywords.every(ValidateUtils.isValidString)) {
+            const error = new Error('Invalid keyword.');
             error.status = 400;
             throw error;
         }
@@ -52,6 +59,9 @@ module.exports = async (opt) => {
             throw error;
         }
 
+        // Prepare keyword wildcard
+        const wildcard = keywords.map(keyword => `%${keyword}%`)
+
         // Get announcementId which contain one of the given tags.
         const announcements = await Announcement.findAll({
             attributes: ['announcementId'],
@@ -65,6 +75,23 @@ module.exports = async (opt) => {
                 isPublished: true,
             },
             include: [
+                {
+                    model: AnnouncementI18n,
+                    as: 'announcementI18n',
+                    attributes: [],
+                    where: {
+                        [Op.and]: {
+                            [Op.or]: {
+                                title: {
+                                    [Op.or]: wildcard,
+                                },
+                                content: {
+                                    [Op.or]: wildcard,
+                                },
+                            },
+                        }
+                    },
+                },
                 {
                     model: Tag,
                     as: 'tags',

@@ -2,14 +2,14 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const ExperienceValidationConstraints = {
     from: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
         },
     },
     to: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,

@@ -2,7 +2,7 @@ const LanguageUtils = require('../../../common/utils/language.js');
 
 const StudentAwardValidationConstraints = {
     receivedYear: {
-        presence: true,
+        presence: false,
         type: 'integer',
         numericality: {
             greaterThanOrEqualTo: 1970,
