@@ -28,7 +28,7 @@ const tagUtils = require('../utils/tag.js');
 const LanguageUtils = require('../../common/utils/language.js');
 const ValidateUtils = require('../../common/utils/validate.js');
 
-const op = Sequelize.Op;
+const Op = Sequelize.Op;
 
 module.exports = async (opt) => {
     try {
@@ -81,7 +81,7 @@ module.exports = async (opt) => {
         }
 
         // Prepare keyword wildcard
-        const wildcard = keywords.map(keyword => `%${keyword}%`)
+        const wildcard = keywords.map(keyword => `%${keyword}%`);
 
         // Get announcement briefings which contain all the given tags.
         // In this step, we can only get id, updateTime, title and content, but no tag list.
@@ -93,7 +93,7 @@ module.exports = async (opt) => {
             ],
             where: {
                 updateTime: {
-                    [op.between]: [
+                    [Op.between]: [
                         from,
                         to,
                     ],
@@ -108,19 +108,17 @@ module.exports = async (opt) => {
                         'title',
                         'content',
                     ],
-                    where: {
-                        [Op.and]: {
-                            languageId,
-                            [Op.or]: {
-                                title: {
-                                    [Op.or]: wildcard,
-                                },
-                                content: {
-                                    [Op.or]: wildcard,
-                                },
+                    where: wildcard.length > 0 ?
+                        {
+                            [Op.and]: {
+                                languageId,
+                                [Op.or]: [
+                                    ...wildcard.map(x => ({title: {[Op.like]: x}})),
+                                    ...wildcard.map(x => ({content: {[Op.like]: x}})),
+                                ],
                             },
-                        }
-                    },
+                        } :
+                        {languageId},
                 },
                 {
                     model: Tag,
@@ -128,7 +126,7 @@ module.exports = async (opt) => {
                     attributes: [],
                     where: {
                         tagId: {
-                            [op.in]: tags,
+                            [Op.in]: tags,
                         },
                     },
                 },

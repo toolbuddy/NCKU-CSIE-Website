@@ -16,6 +16,7 @@
 const {Op} = require('sequelize');
 const {
     Announcement,
+    AnnouncementI18n,
     Tag,
 } = require('./associations.js');
 const tagUtils = require('../utils/tag.js');
@@ -60,7 +61,33 @@ module.exports = async (opt) => {
         }
 
         // Prepare keyword wildcard
-        const wildcard = keywords.map(keyword => `%${keyword}%`)
+        const wildcard = keywords.map(keyword => `%${keyword}%`);
+
+        const include = [
+            {
+                model: Tag,
+                as: 'tags',
+                attributes: [],
+                where: {
+                    tagId: {
+                        [Op.in]: tags,
+                    },
+                },
+            },
+        ];
+        if (wildcard.length > 0) {
+            include.push({
+                model: AnnouncementI18n,
+                as: 'announcementI18n',
+                attributes: [],
+                where: {
+                    [Op.or]: [
+                        ...wildcard.map(x => ({title: {[Op.like]: x}})),
+                        ...wildcard.map(x => ({content: {[Op.like]: x}})),
+                    ],
+                },
+            });
+        }
 
         // Get announcementId which contain one of the given tags.
         const announcements = await Announcement.findAll({
@@ -74,35 +101,7 @@ module.exports = async (opt) => {
                 },
                 isPublished: true,
             },
-            include: [
-                {
-                    model: AnnouncementI18n,
-                    as: 'announcementI18n',
-                    attributes: [],
-                    where: {
-                        [Op.and]: {
-                            [Op.or]: {
-                                title: {
-                                    [Op.or]: wildcard,
-                                },
-                                content: {
-                                    [Op.or]: wildcard,
-                                },
-                            },
-                        }
-                    },
-                },
-                {
-                    model: Tag,
-                    as: 'tags',
-                    attributes: [],
-                    where: {
-                        tagId: {
-                            [Op.in]: tags,
-                        },
-                    },
-                },
-            ],
+            include,
         });
 
         // If no announcement returned, throw 404 error.

@@ -40,8 +40,13 @@ apis.get('/get-announcements-by-and-tags', async (req, res, next) => {
             tags = [tags];
         tags = tags.map(Number);
 
+        let keywords = req.query.keyword || [];
+        if (!Array.isArray(keywords))
+            keywords = [keywords];
+
         res.json(await getAnnouncementsByAndTags({
             tags,
+            keywords,
             from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
             amount: Number(req.query.amount),
@@ -65,8 +70,13 @@ apis.get('/get-announcements-by-or-tags', async (req, res, next) => {
             tags = [tags];
         tags = tags.map(Number);
 
+        let keywords = req.query.keyword || [];
+        if (!Array.isArray(keywords))
+            keywords = [keywords];
+
         res.json(await getAnnouncementsByOrTags({
             tags,
+            keywords,
             from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
             amount: Number(req.query.amount),
@@ -136,8 +146,13 @@ apis.get('/get-pages-by-and-tags', async (req, res, next) => {
             tags = [tags];
         tags = tags.map(Number);
 
+        let keywords = req.query.keyword || [];
+        if (!Array.isArray(keywords))
+            keywords = [keywords];
+
         res.json(await getPagesByAndTags({
             tags,
+            keywords,
             from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
             amount: Number(req.query.amount),
@@ -159,8 +174,13 @@ apis.get('/get-pages-by-or-tags', async (req, res, next) => {
             tags = [tags];
         tags = tags.map(Number);
 
+        let keywords = req.query.keyword || [];
+        if (!Array.isArray(keywords))
+            keywords = [keywords];
+
         res.json(await getPagesByOrTags({
             tags,
+            keywords,
             from: new Date(Number(req.query.from)),
             to: new Date(Number(req.query.to)),
             amount: Number(req.query.amount),

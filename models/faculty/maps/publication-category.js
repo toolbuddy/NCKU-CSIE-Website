@@ -5,7 +5,7 @@ const map = [
     'journal',
     'conference',
     'workshop',
-    'book'
+    'book',
 ];
 
 const defaultOption = 'journal';
@@ -21,7 +21,7 @@ const i18n = {
         journal: '期刊',
         conference: '會議',
         workshop: '工作坊',
-        book: '專書'
+        book: '專書',
     },
 };
 

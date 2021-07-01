@@ -16,12 +16,13 @@
 const Sequelize = require('sequelize');
 const {
     Announcement,
+    AnnouncementI18n,
     Tag,
 } = require('./associations.js');
 const tagUtils = require('../utils/tag.js');
 const ValidateUtils = require('../../common/utils/validate.js');
 
-const op = Sequelize.Op;
+const Op = Sequelize.Op;
 
 module.exports = async (opt) => {
     try {
@@ -62,49 +63,46 @@ module.exports = async (opt) => {
         }
 
         // Prepare keyword wildcard
-        const wildcard = keywords.map(keyword => `%${keyword}%`)
+        const wildcard = keywords.map(keyword => `%${keyword}%`);
+        const include = [
+            {
+                model: Tag,
+                as: 'tags',
+                attributes: [],
+                where: {
+                    tagId: {
+                        [Op.in]: tags,
+                    },
+                },
+            },
+        ];
+        if (wildcard.length > 0) {
+            include.push({
+                model: AnnouncementI18n,
+                as: 'announcementI18n',
+                attributes: [],
+                where: {
+                    [Op.or]: [
+                        ...wildcard.map(x => ({title: {[Op.like]: x}})),
+                        ...wildcard.map(x => ({content: {[Op.like]: x}})),
+                    ],
+                },
+            });
+        }
 
         // Get announcementId which contain all the given tags.
         const announcements = await Announcement.findAll({
             attributes: ['announcementId'],
             where: {
                 updateTime: {
-                    [op.between]: [
+                    [Op.between]: [
                         from,
                         to,
                     ],
                 },
                 isPublished: true,
             },
-            include: [
-                {
-                    model: AnnouncementI18n,
-                    as: 'announcementI18n',
-                    attributes: [],
-                    where: {
-                        [Op.and]: {
-                            [Op.or]: {
-                                title: {
-                                    [Op.or]: wildcard,
-                                },
-                                content: {
-                                    [Op.or]: wildcard,
-                                },
-                            },
-                        }
-                    },
-                },
-                {
-                    model: Tag,
-                    as: 'tags',
-                    attributes: [],
-                    where: {
-                        tagId: {
-                            [op.in]: tags,
-                        },
-                    },
-                },
-            ],
+            include,
             group: '`announcement`.`announcementId`',
             having: Sequelize.where(Sequelize.fn('count', Sequelize.col('`announcement`.`announcementId`')), tags.length),
         });
