@@ -210,7 +210,7 @@
       // [ element ]
       %button {
         // [ position ]
-        height: font__px-to-rem( 20 );
+        height: font__px-to-rem( 30 );
         width: auto;
         margin: {
           top: font__px-to-rem( 10 );
@@ -233,7 +233,7 @@
         @extend %button;
 
         // [ position ]
-        margin-right: font__px-to-rem( 4 );
+        margin-right: font__px-to-rem( 12 );
       }
 
       // element
@@ -255,7 +255,7 @@
         @extend %button;
 
         // [ position ]
-        margin-right: font__px-to-rem( 4 );
+        margin-right: font__px-to-rem( 12 );
       }
 
       // element

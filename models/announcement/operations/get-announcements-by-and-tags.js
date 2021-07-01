@@ -3,12 +3,13 @@
  *
  * @async
  * @function
- * @param {number[]} [tags = []] - Specify the announcements with the given tag ids.
- * @param {date}     from        - Specify the earliest time of filter interval when announcements were post.
- * @param {date}     to          - Specify the latest time of filter interval when announcements were post.
- * @param {number}   amount      - Specify how many announcements to be returned.
- * @param {number}   page        - Specify the announcements under the given page number.
- * @param {number}   languageId  - Language option of the announcements.
+ * @param {number[]} [tags = []]     - Specify the announcements with the given tag ids.
+ * @param {string}   [keywords = []] - Specify the announcements with the given keywords.
+ * @param {date}     from            - Specify the earliest time of filter interval when announcements were post.
+ * @param {date}     to              - Specify the latest time of filter interval when announcements were post.
+ * @param {number}   amount          - Specify how many announcements to be returned.
+ * @param {number}   page            - Specify the announcements under the given page number.
+ * @param {number}   languageId      - Language option of the announcements.
  * @returns {object[]} Requested announcement briefings, including:
  * - id
  * - title
@@ -27,13 +28,14 @@ const tagUtils = require('../utils/tag.js');
 const LanguageUtils = require('../../common/utils/language.js');
 const ValidateUtils = require('../../common/utils/validate.js');
 
-const op = Sequelize.Op;
+const Op = Sequelize.Op;
 
 module.exports = async (opt) => {
     try {
         // Get parameters.
         const {
             tags = [],
+            keywords = [],
             from = null,
             to = null,
             amount = null,
@@ -44,6 +46,11 @@ module.exports = async (opt) => {
         // Check if parameters meet constraints. If not, throw 400 error.
         if (!tags.every(tagUtils.isSupportedId, tagUtils)) {
             const error = new Error('Invalid tag id.');
+            error.status = 400;
+            throw error;
+        }
+        if (!keywords.every(ValidateUtils.isValidString)) {
+            const error = new Error('Invalid keyword.');
             error.status = 400;
             throw error;
         }
@@ -73,6 +80,9 @@ module.exports = async (opt) => {
             throw error;
         }
 
+        // Prepare keyword wildcard
+        const wildcard = keywords.map(keyword => `%${keyword}%`);
+
         // Get announcement briefings which contain all the given tags.
         // In this step, we can only get id, updateTime, title and content, but no tag list.
         // Because in this step, the tag list is limited to the content of given filter tags.
@@ -83,7 +93,7 @@ module.exports = async (opt) => {
             ],
             where: {
                 updateTime: {
-                    [op.between]: [
+                    [Op.between]: [
                         from,
                         to,
                     ],
@@ -98,9 +108,17 @@ module.exports = async (opt) => {
                         'title',
                         'content',
                     ],
-                    where: {
-                        languageId,
-                    },
+                    where: wildcard.length > 0 ?
+                        {
+                            [Op.and]: {
+                                languageId,
+                                [Op.or]: [
+                                    ...wildcard.map(x => ({title: {[Op.like]: x}})),
+                                    ...wildcard.map(x => ({content: {[Op.like]: x}})),
+                                ],
+                            },
+                        } :
+                        {languageId},
                 },
                 {
                     model: Tag,
@@ -108,7 +126,7 @@ module.exports = async (opt) => {
                     attributes: [],
                     where: {
                         tagId: {
-                            [op.in]: tags,
+                            [Op.in]: tags,
                         },
                     },
                 },

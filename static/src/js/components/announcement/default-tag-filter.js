@@ -74,6 +74,7 @@ export default class DefaultTagFilter {
             languageId: opt.currentLanguageId,
             from: this.config.from,
             to: this.config.to,
+            keywords: [],
             page: this.config.page,
             announcementId: -1,
             isPinned: false,
@@ -108,6 +109,10 @@ export default class DefaultTagFilter {
                         id: Number(tagId),
                     };
                 }),
+                keyword: {
+                    text: opt.filterDOM.querySelector('.filter__keyword > .keyword__input > .input__text'),
+                    icon: opt.filterDOM.querySelector('.filter__keyword > .keyword__input > .input__icon'),
+                },
             },
             announcement: {
                 pinned: {
@@ -184,6 +189,12 @@ export default class DefaultTagFilter {
         this.subscribeTimeEvent();
 
         /**
+         * Subscribe change event for DOM elements `.time__from` and `.time__to`.
+         */
+
+        this.subscribeKeywordEvent();
+
+        /**
          * @abstract
          * Subscribe click event for DOM elements `.tags__tag`.
          */
@@ -222,6 +233,7 @@ export default class DefaultTagFilter {
     loadState () {
         const urlParams = new URLSearchParams(window.location.search);
         const tempTags = urlParams.getAll('tags');
+        const tempKeywords = urlParams.getAll('keyword');
         const tempFrom = urlParams.get('from');
         const tempTo = urlParams.get('to');
         const tempPage = urlParams.get('page');
@@ -233,6 +245,14 @@ export default class DefaultTagFilter {
                 this.state.tags.push(tagId);
         });
         this.state.tags = [...new Set(this.state.tags)];
+
+        if (tempKeywords !== null) {
+            this.state.keywords = [];
+            tempKeywords.forEach((keyword) => {
+                this.state.keywords.push(keyword);
+            });
+            this.state.keywords = [...new Set(this.state.keywords)];
+        }
 
         if (tempPage !== null && ValidateUtils.isPositiveInteger(Number(tempPage)))
             this.state.page = Number(tempPage);
@@ -282,6 +302,7 @@ export default class DefaultTagFilter {
             `languageId=${this.state.languageId}`,
             `from=${Number(this.state.from)}`,
             `to=${Number(this.state.to)}`,
+            ...this.state.keywords.map(keyword => `keyword=${keyword}`),
             ...this.state.tags.map(tagId => `tags=${tagId}`),
             `page=${this.state.page}`,
         ].join('&');
@@ -349,6 +370,43 @@ export default class DefaultTagFilter {
                     }
                 });
             });
+        });
+    }
+
+    subscribeKeywordEvent () {
+        this.DOM.filter.keyword.icon.addEventListener('click', () => {
+            try {
+                if (this.isLocked())
+                    return;
+                this.acquireLock();
+
+                this.state.keywords = this.DOM.filter.keyword.text.value.split(' ');
+                this.state.page = this.config.page;
+
+                this.pushState();
+                this.getAll();
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+        this.DOM.filter.keyword.text.addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                try {
+                    if (this.isLocked())
+                        return;
+
+                    this.acquireLock();
+                    this.state.keywords = this.DOM.filter.keyword.text.value.split(' ');
+                    this.state.page = this.config.page;
+
+                    this.pushState();
+                    this.getAll();
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }
         });
     }
 
@@ -672,6 +730,7 @@ export default class DefaultTagFilter {
                 `amount=${this.config.amount}`,
                 `from=${Number(this.state.from)}`,
                 `to=${Number(this.state.to)}`,
+                ...this.state.keywords.map(keyword => `keyword=${keyword}`),
                 ...tags.map(tagId => `tags=${tagId}`),
             ].join('&');
 
@@ -756,6 +815,7 @@ export default class DefaultTagFilter {
                 `languageId=${this.state.languageId}`,
                 `from=${Number(this.state.from)}`,
                 `to=${Number(Date.now())}`,
+                ...this.state.keywords.map(keyword => `keyword=${keyword}`),
                 ...tags.map(tagId => `tags=${tagId}`),
             ].join('&');
 
@@ -932,6 +992,7 @@ export default class DefaultTagFilter {
                 `from=${Number(this.state.from)}`,
                 `page=${this.state.page}`,
                 `to=${Number(this.state.to)}`,
+                ...this.state.keywords.map(keyword => `keyword=${keyword}`),
                 ...tags.map(tagId => `tags=${tagId}`),
             ].join('&');
 
