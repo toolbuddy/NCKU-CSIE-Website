@@ -233,6 +233,7 @@ export default class DefaultTagFilter {
     loadState () {
         const urlParams = new URLSearchParams(window.location.search);
         const tempTags = urlParams.getAll('tags');
+        const tempKeywords = urlParams.getAll('keyword');
         const tempFrom = urlParams.get('from');
         const tempTo = urlParams.get('to');
         const tempPage = urlParams.get('page');
@@ -244,6 +245,14 @@ export default class DefaultTagFilter {
                 this.state.tags.push(tagId);
         });
         this.state.tags = [...new Set(this.state.tags)];
+
+        if (tempKeywords !== null) {
+            this.state.keywords = [];
+            tempKeywords.forEach((keyword) => {
+                this.state.keywords.push(keyword);
+            });
+            this.state.keywords = [...new Set(this.state.keywords)];
+        }
 
         if (tempPage !== null && ValidateUtils.isPositiveInteger(Number(tempPage)))
             this.state.page = Number(tempPage);
