@@ -381,6 +381,24 @@ export default class DefaultTagFilter {
                 console.error(err);
             }
         });
+        this.DOM.filter.keyword.text.addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                try {
+                    if (this.isLocked())
+                        return;
+
+                    this.acquireLock();
+                    this.state.keywords = this.DOM.filter.keyword.text.value.split(' ');
+                    this.state.page = this.config.page;
+
+                    this.pushState();
+                    this.getAll();
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }
+        });
     }
 
     renderAnnouncement (currentY) {
@@ -788,6 +806,7 @@ export default class DefaultTagFilter {
                 `languageId=${this.state.languageId}`,
                 `from=${Number(this.state.from)}`,
                 `to=${Number(Date.now())}`,
+                ...this.state.keywords.map(keyword => `keyword=${keyword}`),
                 ...tags.map(tagId => `tags=${tagId}`),
             ].join('&');
 
