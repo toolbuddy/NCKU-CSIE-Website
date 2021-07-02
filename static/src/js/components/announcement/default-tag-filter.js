@@ -811,10 +811,14 @@ export default class DefaultTagFilter {
             else if (this.tagId.default.length === 1)
                 tags = tags.concat(this.tagId.default);
 
+            const date = new Date();
+
+            date.setHours(23, 59, 59, 999);
+
             const queryString = [
                 `languageId=${this.state.languageId}`,
                 `from=${Number(this.state.from)}`,
-                `to=${Number(Date.now())}`,
+                `to=${Number(date)}`,
                 ...this.state.keywords.map(keyword => `keyword=${keyword}`),
                 ...tags.map(tagId => `tags=${tagId}`),
             ].join('&');
@@ -825,7 +829,8 @@ export default class DefaultTagFilter {
 
             this.state.pinnedId.forEach((id) => {
                 const normalPinnedDOM = this.DOM.announcement.normal.briefings.querySelector(`.button__pin--${id}`);
-                classRemove(normalPinnedDOM, 'button__pin--pinned');
+                if (normalPinnedDOM !== null)
+                    classRemove(normalPinnedDOM, 'button__pin--pinned');
             });
             this.state.pinnedId = [];
 
@@ -902,7 +907,8 @@ export default class DefaultTagFilter {
                         const briefingPinDOM = this.DOM.announcement.pinned.briefings.querySelector(`.button__pin--${briefing.announcementId}`);
                         const normalPinnedDOM = this.DOM.announcement.normal.briefings.querySelector(`.button__pin--${briefing.announcementId}`);
                         classAdd(briefingPinDOM, 'button__pin--pinned');
-                        classAdd(normalPinnedDOM, 'button__pin--pinned');
+                        if (normalPinnedDOM !== null)
+                            classAdd(normalPinnedDOM, 'button__pin--pinned');
                         briefingAddDOM.addEventListener('click', (e) => {
                             e.preventDefault();
                             window.location.href = `${host}/user/announcement/edit/${briefing.announcementId}`;
@@ -1142,10 +1148,11 @@ export default class DefaultTagFilter {
                 'content-type': 'application/json',
             },
         })
-        .then(async () => {
+        .then(() => {
             classRemove(this.DOM.preview.block, 'delete-preview--show');
-            await this.getPinnedAnnouncement();
             this.DOM.preview.button.check.disabled = false;
+            this.pushState();
+            this.getAll();
         });
     }
 
